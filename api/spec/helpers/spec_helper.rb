@@ -1,0 +1,13 @@
+require 'capybara/dsl'
+require 'rspec'
+require 'sinatra'
+require "#{File.dirname(__FILE__)}/../../app/server.rb"
+
+Sinatra::Application.environment = :test
+disable :run
+
+Capybara.app = Sinatra::Application
+
+RSpec.configure do |config|
+  config.include Capybara::DSL
+end
