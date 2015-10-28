@@ -6,8 +6,8 @@
   "scripts": {
     "build": "browserify --extension .jsx -t babelify -t reactify index.js -o ../api/public/app.js",
     "watch": "watchify -v --extension .jsx -t babelify -t reactify index.js -o ../api/public/app.js",
-    "build_sass": "echo \"Error: no build_sass specified\" && exit 1",
-    "watch_sass": "echo \"Error: no watch_sass specified\" && exit 1",
+    "build_sass": "node-sass --source-map true assets/stylesheets/app.scss ../api/public/app.css",
+    "watch_sass": "node-sass -w -r --source-map true assets/stylesheets/app.scss ../api/public/app.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,7 +26,7 @@
     "eslint-plugin-react": "^3.6.3",
     "reactify": "^1.1.1",
     "redux-devtools": "^2.1.5",
-    "sass": "^0.5.0",
+    "node-sass": "^3.4.1",
     "watchify": "^3.5.0"
   },
   "dependencies": {
