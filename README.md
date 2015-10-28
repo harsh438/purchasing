@@ -33,18 +33,25 @@ bundle exec rake db:reset
 
 **Developing frontend**
 
-In one terminal run:
+In one terminal run this to start API:
 
 ```
 cd api/
 bundle exec rackup -o 0.0.0.0 -p 3000
 ```
 
-And in another run:
+And in another to watch for JS changes run:
 
 ```
 cd processing_frontend/
 npm run watch
+```
+
+And in another to watch for SCSS changes run:
+
+```
+cd processing_frontend/
+npm run watch_sass
 ```
 
 **Running tests locally**
