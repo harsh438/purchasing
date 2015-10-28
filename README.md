@@ -22,7 +22,7 @@ these you'll be okay.
 cd api/
 bundle install
 bundle exec rake db:setup
-bundle exec rails -b 0.0.0.0
+bundle exec rails
 ```
 
 **Reset your db**
