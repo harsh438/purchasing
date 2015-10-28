@@ -2,9 +2,9 @@ import React from 'react';
 
 export default class PurchaseOrdersTable extends React.Component {
   render () {
-    const rows = this.props.purchaseOrders.map(function (purchaseOrder, i) {
+    const rows = this.props.purchaseOrders.map(function (purchaseOrder) {
       return (
-        <pre key={i}>
+        <pre key={purchaseOrder.id}>
           {JSON.stringify(purchaseOrder, null, 2)}
         </pre>
       );
