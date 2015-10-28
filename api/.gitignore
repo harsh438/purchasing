@@ -16,4 +16,4 @@
 !/log/.keep
 /tmp
 
-public/app.js
+public/app*.js
