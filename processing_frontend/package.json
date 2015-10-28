@@ -1,0 +1,35 @@
+{
+  "name": "processing_frontend",
+  "version": "0.1.0",
+  "description": "Purchase order processing frontend",
+  "entry": "index.js",
+  "scripts": {
+    "build": "browserify --extension .jsx -t babelify -t reactify index.js -o ../api/public/app.js",
+    "watch": "watchify --extension .jsx -t babelify -t reactify index.js -o ../api/public/app.js",
+    "build_sass": "echo \"Error: no build_sass specified\" && exit 1",
+    "watch_sass": "echo \"Error: no watch_sass specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/surfdome/purchasing"
+  },
+  "author": "Made Tech Team",
+  "homepage": "https://github.com/surfdome/purchasing",
+  "devDependencies": {
+    "babel-eslint": "^4.1.3",
+    "babelify": "^6.4.0",
+    "browserify": "^12.0.0",
+    "eslint": "^1.7.3",
+    "eslint-plugin-react": "^3.6.3",
+    "reactify": "^1.1.1",
+    "sass": "^0.5.0",
+    "watchify": "^3.5.0"
+  },
+  "dependencies": {
+    "history": "^1.12.6",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "react-router": "^1.0.0-rc3"
+  }
+}
