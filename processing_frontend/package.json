@@ -15,6 +15,8 @@
     "url": "https://github.com/surfdome/purchasing"
   },
   "author": "Made Tech Team",
+  "license": "UNLICENSED",
+  "private": true,
   "homepage": "https://github.com/surfdome/purchasing",
   "devDependencies": {
     "babel-eslint": "^4.1.3",
