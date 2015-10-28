@@ -4,8 +4,8 @@
   "description": "Purchase order processing frontend",
   "entry": "index.js",
   "scripts": {
-    "build": "browserify --extension .jsx -t babelify -t reactify index.js -o ../api/public/app-`git rev-parse HEAD`.js",
-    "watch": "watchify -v --extension .jsx -t babelify -t reactify index.js -o ../api/public/app-`git rev-parse HEAD`.js",
+    "build": "browserify --extension .jsx -t babelify -t reactify index.js -o ../api/public/app.js",
+    "watch": "watchify -v --extension .jsx -t babelify -t reactify index.js -o ../api/public/app.js",
     "build_sass": "echo \"Error: no build_sass specified\" && exit 1",
     "watch_sass": "echo \"Error: no watch_sass specified\" && exit 1",
     "test": "echo \"Error: no test specified\" && exit 1"
