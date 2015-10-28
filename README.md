@@ -1,6 +1,6 @@
 # Purchasing
 
-An API for Surfdome Purchasing built in Sinatra. Currently comes packaged with a frontend for
+An API for Surfdome Purchasing built in Rails. Currently comes packaged with a frontend for
 purchase processing built in React.
 
 Originally brought to you by the [Made Tech team](https://github.com/madetech).
@@ -12,7 +12,7 @@ provides a few required dependencies listed below. Provided your dev env has
 these you'll be okay.
 
  - Ruby (via rbenv preferably)
- - MySQL (setup as per app/database.rb)
+ - MySQL (setup as per config/database.yml or with config injected with DATABASE_URL)
 
 ## Developing
 
@@ -21,7 +21,14 @@ these you'll be okay.
 ```
 cd api/
 bundle install
-bundle exec rackup -o 0.0.0.0 -p 3000
+bundle exec rake db:setup
+bundle exec rails -b 0.0.0.0
+```
+
+**Reset your db**
+
+```
+bundle exec rake db:reset
 ```
 
 **Developing frontend**
