@@ -140,6 +140,7 @@ DEPENDENCIES
   factory_girl
   mysql2
   rails (= 4.2.4)
+  rake
   rspec
   rspec-rails
   vcr
