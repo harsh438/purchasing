@@ -1,4 +1,4 @@
-const initialState =  { page: null, pages: {} };
+const initialState =  { page: 1, pages: { 1: [] } };
 
 export default function reducePurchaseOrders(state = initialState, action) {
   switch (action.type) {

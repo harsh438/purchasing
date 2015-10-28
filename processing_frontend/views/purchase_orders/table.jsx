@@ -2,12 +2,22 @@ import React from 'react';
 
 export default class PurchaseOrdersTable extends React.Component {
   render () {
-    const rows = [];
+    const rows = this.props.purchaseOrders.map(function (purchaseOrder, i) {
+      return (
+        <pre key={i}>
+          {JSON.stringify(purchaseOrder, null, 2)}
+        </pre>
+      );
+    });
 
-    for (let i in this.props.purchaseOrders) {
-      rows.push((<pre>{JSON.stringify(this.props.purchaseOrders[i], null, 2)}</pre>));
-    }
-
-    return (<table><tr><td>{rows}</td></tr></table>);
+    return (
+      <table>
+        <tbody>
+          <tr>
+            <td>{rows}</td>
+          </tr>
+        </tbody>
+      </table>
+    );
   }
 }
