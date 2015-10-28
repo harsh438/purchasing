@@ -1,3 +1,5 @@
+require 'dotenv'
+Dotenv.load
 require 'sinatra'
 require_relative 'database'
 require_relative 'models/purchase_order'
