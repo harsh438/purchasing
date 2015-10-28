@@ -3,5 +3,6 @@ Rails.application.routes.draw do
 
   scope :api, format: true, contraints: { format: :json } do
     resources :purchase_orders, only: :index
+    resources :products, only: :index
   end
 end
