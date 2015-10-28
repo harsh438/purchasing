@@ -1,3 +1,3 @@
-require "#{File.dirname(__FILE__)}/app/server.rb"
+require_relative 'app/server'
 
 run Sinatra::Application
