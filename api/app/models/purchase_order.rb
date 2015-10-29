@@ -52,6 +52,10 @@ class PurchaseOrder < ActiveRecord::Base
     PurchaseOrder.pluck('distinct po_season')
   end
 
+  def self.lead_genders
+    PurchaseOrder.pluck('distinct orderTool_LG')
+  end
+
   def product_price
     #nees to come from product table
     0

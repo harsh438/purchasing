@@ -7,5 +7,6 @@ Rails.application.routes.draw do
     resources :vendors, only: :index
 
     get :seasons, to: 'purchase_orders#seasons'
+    get :lead_genders, to: 'purchase_orders#lead_genders'
   end
 end

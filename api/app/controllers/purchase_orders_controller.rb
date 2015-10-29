@@ -9,6 +9,10 @@ class PurchaseOrdersController < ApplicationController
     render json: PurchaseOrder.seasons
   end
 
+  def lead_genders
+    render json: PurchaseOrder.lead_genders
+  end
+
   private
 
   def load_purchase_orders
