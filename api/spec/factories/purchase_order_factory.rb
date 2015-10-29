@@ -18,7 +18,7 @@ FactoryGirl.define do
     reporting_product_id 0
     original_product_id 0
     original_option_id 0
-    lead_gender ''
+    gender ''
     line_id 0
 
     trait :arrived do
