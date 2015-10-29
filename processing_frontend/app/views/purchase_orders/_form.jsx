@@ -15,8 +15,11 @@ export default class PurchaseOrdersForm extends React.Component {
           <div className="panel-body">
             <form className="form">
               <div className="form-group">
-                <label for="brand">Brand</label>
-                <Select name="brand" options={this.brandOptions()} />
+                <label htmlFor="brand">Brand</label>
+                <select name="brand" className="form-control">
+                  <option> -- select brand -- </option>
+                  {this.brandOptions()}
+                </select>
               </div>
 
               <div className="form-group">
@@ -31,7 +34,9 @@ export default class PurchaseOrdersForm extends React.Component {
 
   brandOptions () {
     return this.props.brands.map(function ({ id, name }) {
-      return { value: id, label: name };
+      return (
+        <option key={id} value={id}>{name}</option>
+      );
     });
   }
 }
