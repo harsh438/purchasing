@@ -5,5 +5,7 @@ Rails.application.routes.draw do
     resources :purchase_orders, only: :index
     resources :products, only: :index
     resources :vendors, only: :index
+
+    get :seasons, to: 'purchase_orders#seasons'
   end
 end

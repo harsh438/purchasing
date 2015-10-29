@@ -42,7 +42,13 @@ class PurchaseOrder < ActiveRecord::Base
                  original_option_id: :original_oID
 
   filters :vendor_id,
-          :lead_gender
+          :lead_gender,
+          :summary_id,
+          :season,
+
+  def self.seasons
+    PurchaseOrder.pluck('distinct po_season')
+  end
 
   paginates_per 50
 
