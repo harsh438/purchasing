@@ -7,7 +7,7 @@ class PurchaseOrder < ActiveRecord::Base
                  qty: :quantity,
                  qtyDone: :quantity_done,
                  status: :status,
-                 added: :added_at,
+                 added: :created_at,
                  order_date: :order_date,
                  drop_date: :drop_date,
                  arrived_date: :arrived_date,
@@ -30,5 +30,10 @@ class PurchaseOrder < ActiveRecord::Base
                  orderTool_sellPrice: :sell_price,
                  orderTool_brandSize: :brand_size,
                  orderTool_SupplierListPrice: :supplier_list_price,
-                 orderTool_RRP: :rrp
+                 orderTool_RRP: :rrp,
+
+                 # Unused but necessary
+                 reporting_pID: :reporting_product_id,
+                 original_pID: :original_product_id,
+                 original_oID: :original_option_id
 end

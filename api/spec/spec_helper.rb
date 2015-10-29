@@ -1,4 +1,5 @@
 require File.join(File.dirname(__FILE__), 'support/rails')
+require 'json'
 
 Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
 
