@@ -3,6 +3,7 @@ class PurchaseOrder < ActiveRecord::Base
   include Searchable
 
   belongs_to :vendor, foreign_key: :orderTool_venID
+  belongs_to :product, foreign_key: :pID
 
   map_attributes id: :id,
                  product_id: :pID,
@@ -63,19 +64,15 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def product_price
-    #nees to come from product table
-    0
+    product.price
   end
 
   def closing_date
-    # product details table
-    0
+    product.product_detail.closing_date
   end
 
   def weeks_on_sale
-    # product details table
-    #plannedWeeksOnSale
-    0
+    product.product_detail.planned_weeks_on_sale
   end
 
 
