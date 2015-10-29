@@ -14,9 +14,14 @@ export default class PurchaseOrdersForm extends React.Component {
 
           <div className="panel-body">
             <form className="form">
-              <Select options={this.brandOptions()} />
+              <div className="form-group">
+                <label for="brand">Brand</label>
+                <Select name="brand" options={this.brandOptions()} />
+              </div>
 
-              <button className="btn btn-success">Search</button>
+              <div className="form-group">
+                <button className="btn btn-success">Search</button>
+              </div>
             </form>
           </div>
         </div>
