@@ -12,10 +12,6 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def filter_purchase_orders
-    @purchase_orders = Search.new(PurchaseOrder, po_attrs).results
-  end
-
-  def po_attrs
-    params.permit(:page, :vendor_id, :sort_field, :sort_dir)
+    @purchase_orders = Search.new(PurchaseOrder, params).results
   end
 end

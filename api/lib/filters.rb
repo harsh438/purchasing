@@ -1,31 +1,56 @@
 class Filters
-  def initialize(attrs)
-    @attrs = attrs
+  def initialize(model, params)
+    @attrs = Attrs.new(model, params)
   end
 
   def filter(collection)
-    @model = collection.model
-    mappings = @model.mapped_attributes
-    q = map(mappings, @attrs.slice(*@model.filterable_fields))
-    sort(collection.where(q))
+    q = @attrs.reduced
+    collection.where(q).order(@attrs.order)
   end
 
   private
 
-  def map(mappings, fields)
-   mappings.reduce({}) do |out, (mapped, unmapped)|
-      o = { unmapped => fields[mapped] } if fields[mapped]
-      out.merge(o || {})
+  class Attrs
+    def initialize(model, params)
+      @model = model
+      @params = parse(params)
     end
-  end
 
-  def sort(collection)
-    if @attrs[:sort_field] and @attrs[:sort_dir]
-      collection.order(@attrs[:sort_field] => @attrs[:sort_dir])
-    elsif @attrs[:sort_field]
-      collection.order(@attrs[:sort_field])
-    else
-      collection
+    def filterable
+      @model.filterable_fields
+    end
+
+    def filtered
+      @params.slice(*@filterables)
+    end
+
+    def sortable
+      [:sort_field, :sort_dir]
+    end
+
+    def mappings
+      @model.mapped_attributes
+    end
+
+    def reduced
+      mappings.reduce({}) do |out, (mapped, unmapped)|
+        o = { unmapped => filtered[mapped] } if filtered[mapped]
+        out.merge(o || {})
+      end
+    end
+
+    def order
+      if @params[:sort_field] and @params[:sort_dir]
+        { @params[:sort_field] => @params[:sort_dir] }
+      elsif @params[:sort_field]
+        @params[:sort_field]
+      end
+    end
+
+    private
+
+    def parse(params)
+      params.permit(filterable + sortable + [:page])
     end
   end
 end
