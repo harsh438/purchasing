@@ -44,7 +44,7 @@ class PurchaseOrderTableHeader extends React.Component {
           <th>Brand Size</th>
           <th>Gender</th>
           <th>Status</th>
-          <th>Comments</th>
+          <th>Comment</th>
         </tr>
       </thead>
     );
@@ -95,7 +95,7 @@ class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.brandSize}</td>
         <td>{this.props.purchaseOrder.gender}</td>
         <td>{this.props.purchaseOrder.status}</td>
-        <td>{this.props.purchaseOrder.comments}</td>
+        <td>{this.props.purchaseOrder.comment}</td>
       </tr>
     );
   }

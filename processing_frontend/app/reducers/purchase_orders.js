@@ -37,7 +37,7 @@ function transformPurchaseOrder(purchaseOrder) {
     brandSize: purchaseOrder.brand_size,
     gender: purchaseOrder.gender,
     status: purchaseOrder.status,
-    comments: purchaseOrder.comments,
+    comment: purchaseOrder.comment,
   }
 }
 
