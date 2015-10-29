@@ -21,7 +21,7 @@ class Filters
     end
 
     def filtered
-      @params.slice(*@filterables)
+      @params.slice(*filterable)
     end
 
     def sortable

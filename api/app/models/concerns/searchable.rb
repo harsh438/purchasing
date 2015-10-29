@@ -12,7 +12,7 @@ module Searchable
     end
 
     def filters(*fields)
-      fields.each { |field| filterable_fields << field }
+      fields.each { |field| filterable_fields << field.to_s }
     end
   end
 end
