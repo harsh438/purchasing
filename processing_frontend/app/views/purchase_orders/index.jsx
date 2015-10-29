@@ -19,7 +19,10 @@ class PurchaseOrdersIndex extends React.Component {
     return (
       <div className="purchase_orders_index">
         <div className="row">
-          <PurchaseOrdersForm brands={this.props.brands} columns="6" />
+          <PurchaseOrdersForm brands={this.props.brands}
+                              columns="6"
+                              currentBrand={this.props.location.query.brand} />
+                            
           <PurchaseOrdersSummary columns="6" />
         </div>
 
@@ -39,7 +42,7 @@ class PurchaseOrdersIndex extends React.Component {
   }
 
   fetchPurchaseOrders (page) {
-    this.props.dispatch(fetchPurchaseOrders(page));
+    this.props.dispatch(fetchPurchaseOrders(this.props.location.query, page));
   }
 }
 

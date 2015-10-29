@@ -16,7 +16,7 @@ export default class PurchaseOrdersForm extends React.Component {
             <form className="form">
               <div className="form-group">
                 <label htmlFor="brand">Brand</label>
-                <select name="brand" className="form-control">
+                <select name="brand" className="form-control" value={this.props.currentBrand}>
                   <option> -- select brand -- </option>
                   {this.brandOptions()}
                 </select>
