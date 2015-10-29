@@ -19,7 +19,7 @@ class PurchaseOrdersIndex extends React.Component {
     return (
       <div className="purchase_orders_index">
         <div className="row">
-          <PurchaseOrdersForm columns="6" brands={this.props.brands} />
+          <PurchaseOrdersForm brands={this.props.brands} columns="6" />
           <PurchaseOrdersSummary columns="6" />
         </div>
 
