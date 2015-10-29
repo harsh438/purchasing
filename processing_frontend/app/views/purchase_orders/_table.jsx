@@ -22,7 +22,7 @@ class PurchaseOrderTableHeader extends React.Component {
           <th>Unit Price</th>
           <th>Size</th>
 
-          <th style={{ borderLeft: '2px solid #ddd' }}>#</th>
+          <th style={{ borderLeft: '2px solid #ddd' }}>Order #</th>
           <th>Date</th>
           <th>Type</th>
           <th>Units</th>
