@@ -33,6 +33,7 @@
   "dependencies": {
     "bootstrap": "^3.3.5",
     "history": "^1.12.6",
+    "humps": "^1.0.0",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-redux": "^4.0.0",

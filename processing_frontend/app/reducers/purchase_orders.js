@@ -1,44 +1,17 @@
+import humps from 'humps';
 const initialState =  { page: 1, purchaseOrders: [] };
 
 function transformPurchaseOrder(purchaseOrder) {
-  console.log(purchaseOrder)
-
-  return {
+  const camelizedPurchaseOrder = humps.camelizeKeys(purchaseOrder);
+  const remappedKeys = {
     poNumber: purchaseOrder.summary_id,
-
-    productId: purchaseOrder.product_id,
-    productName: purchaseOrder.product_name,
-    productSKU: purchaseOrder.product_sku,
     productCost: purchaseOrder.cost,
-    productSize: purchaseOrder.product_size,
-
     orderId: purchaseOrder.id,
-    orderDate: purchaseOrder.order_date,
     orderedUnits: purchaseOrder.quantity,
-    orderedCost: purchaseOrder.ordered_cost,
-    orderedValue: purchaseOrder.ordered_value,
-
-    deliveryDate: purchaseOrder.delivery_date,
     deliveredUnits: purchaseOrder.delivered_quantity,
-    deliveredCost: purchaseOrder.delivered_cost,
-    deliveredValue: purchaseOrder.delivered_value,
+  };
 
-    cancelledUnits: purchaseOrder.cancelled_quantity,
-    cancelledCost: purchaseOrder.cancelled_cost,
-    cancelledValue: purchaseOrder.cancelled_value,
-
-    balanceUnits: purchaseOrder.balance_quantity,
-    balanceCost: purchaseOrder.balance_cost,
-    balanceValue: purchaseOrder.balance_value,
-
-    operator: purchaseOrder.operator,
-    weeksOnSale: purchaseOrder.weeks_on_sale,
-    closingDate: purchaseOrder.closing_date,
-    brandSize: purchaseOrder.brand_size,
-    gender: purchaseOrder.gender,
-    status: purchaseOrder.status,
-    comment: purchaseOrder.comment,
-  }
+  return Object.assign({}, camelizedPurchaseOrder, remappedKeys);
 }
 
 function appendPurchaseOrders(state, action) {
