@@ -7,7 +7,7 @@ export default class PurchaseOrdersSummary extends React.Component {
       <div className={className}>
         <div className="panel panel-default">
           <div className="panel-heading">
-            Summary
+            <h3 className="panel-title">Summary</h3>
           </div>
 
           <div className="panel-body">

@@ -7,7 +7,7 @@ export default class PurchaseOrdersForm extends React.Component {
       <div className={className}>
         <div className="panel panel-default">
           <div className="panel-heading">
-            Search Purchase Orders
+            <h3 className="panel-title">Search Purchase Orders</h3>
           </div>
 
           <div className="panel-body">
