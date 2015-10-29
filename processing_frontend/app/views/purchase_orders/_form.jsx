@@ -1,4 +1,5 @@
 import React from 'react';
+import Select from 'react-select';
 
 export default class PurchaseOrdersForm extends React.Component {
   render () {
@@ -13,9 +14,8 @@ export default class PurchaseOrdersForm extends React.Component {
 
           <div className="panel-body">
             <form className="form">
-              <select>
-                {this.brandOptions()}
-              </select>
+              <Select options={this.brandOptions()} />
+
               <button className="btn btn-success">Search</button>
             </form>
           </div>
@@ -26,9 +26,7 @@ export default class PurchaseOrdersForm extends React.Component {
 
   brandOptions () {
     return this.props.brands.map(function ({ id, name }) {
-      return (
-        <option value={id} key={id}>{name}</option>
-      );
+      return { value: id, label: name };
     });
   }
 }
