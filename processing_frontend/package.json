@@ -25,9 +25,13 @@
     "browserify": "^12.0.0",
     "eslint": "^1.7.3",
     "eslint-plugin-react": "^3.6.3",
+    "gulp": "^3.9.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-sass": "^2.1.0",
+    "node-sass": "^3.4.1",
     "reactify": "^1.1.1",
     "redux-devtools": "^2.1.5",
-    "node-sass": "^3.4.1",
+    "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.5.0"
   },
   "dependencies": {
