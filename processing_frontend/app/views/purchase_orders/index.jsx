@@ -9,17 +9,20 @@ class PurchaseOrdersIndex extends React.Component {
   }
 
   render () {
-    const purchaseOrders = this.props.purchaseOrders.pages[this.props.purchaseOrders.page];
+    console.log(this.props);
+    const purchaseOrders = this.props.purchaseOrders;
+    const nextPage = this.props.page + 1;
 
     return (
       <div className="hello_world">
-        <h1>Hello World {this.props.purchaseOrders.page}</h1>
-
-        <button onClick={this.loadPurchaseOrders.bind(this, 2)}>
-          Load Orders
-        </button>
+        <h1>Hello World {this.props.page}</h1>
 
         <PurchaseOrdersTable purchaseOrders={purchaseOrders} />
+
+        <button className="btn btn-default btn-lg"
+                onClick={this.loadPurchaseOrders.bind(this, nextPage)}>
+          Load More Orders
+        </button>
       </div>
     );
   }
@@ -30,7 +33,7 @@ class PurchaseOrdersIndex extends React.Component {
 }
 
 function applyState({ purchaseOrders }) {
-  return { purchaseOrders };
+  return purchaseOrders;
 }
 
 export default connect(applyState)(PurchaseOrdersIndex);

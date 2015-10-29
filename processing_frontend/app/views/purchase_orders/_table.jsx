@@ -1,23 +1,39 @@
 import React from 'react';
 
-export default class PurchaseOrdersTable extends React.Component {
+class PurchaseOrderRow extends React.Component {
   render () {
-    const rows = this.props.purchaseOrders.map(function (purchaseOrder) {
-      return (
-        <pre key={purchaseOrder.id}>
-          {JSON.stringify(purchaseOrder, null, 2)}
-        </pre>
-      );
-    });
+    const productId = this.props.purchaseOrder.product_id;
+    const productName = this.props.purchaseOrder.product_name;
 
     return (
-      <table>
-        <tbody>
+      <tr>
+        <td>{productId}</td>
+        <td>{productName}</td>
+      </tr>
+    );
+  }
+}
+
+export default class PurchaseOrdersTable extends React.Component {
+  render () {
+    return (
+      <table className="table table-striped">
+        <thead>
           <tr>
-            <td>{rows}</td>
+            <th style={{ width: '10%' }}>Product ID</th>
+            <th>Product Name</th>
           </tr>
-        </tbody>
+        </thead>
+        <tbody>{this.rows()}</tbody>
       </table>
     );
+  }
+
+  rows () {
+    return this.props.purchaseOrders.map(function (purchaseOrder) {
+      return (
+        <PurchaseOrderRow key={purchaseOrder.id} purchaseOrder={purchaseOrder} />
+      );
+    });
   }
 }
