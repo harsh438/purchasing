@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, IndexRoute, NotFoundRoute } from 'react-router';
 import Layout from './views/layouts/application';
-import HelloWorld from './views/examples/hello_world';
+import Index from './views/purchase_orders/index';
 
 export default (
   <Route path="/" component={Layout}>
-    <IndexRoute component={HelloWorld} />
+    <IndexRoute component={Index} />
   </Route>
 );

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import fetchPurchaseOrders from '../../actions/fetch_purchase_orders';
-import PurchaseOrdersTable from '../purchase_orders/table';
+import PurchaseOrdersTable from './table';
 
-class HelloWorld extends React.Component {
+class PurchaseOrdersIndex extends React.Component {
   componentWillMount() {
     this.loadPurchaseOrders(1);
   }
@@ -33,4 +33,4 @@ function applyState({ purchaseOrders }) {
   return { purchaseOrders };
 }
 
-export default connect(applyState)(HelloWorld);
+export default connect(applyState)(PurchaseOrdersIndex);
