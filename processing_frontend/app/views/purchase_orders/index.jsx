@@ -14,9 +14,7 @@ class PurchaseOrdersIndex extends React.Component {
     const nextPage = this.props.page + 1;
 
     return (
-      <div className="hello_world">
-        <h1>Hello World {this.props.page}</h1>
-
+      <div className="purchase_orders_index">
         <PurchaseOrdersTable purchaseOrders={purchaseOrders} />
 
         <button className="btn btn-default btn-lg"

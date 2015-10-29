@@ -6,9 +6,9 @@
   "scripts": {
     "build_react": "browserify --extension .jsx -t babelify -t reactify index.js -o ../api/public/assets/app.js",
     "watch_react": "watchify -v --extension .jsx -t babelify -t reactify index.js -o ../api/public/assets/app.js",
-    "build_sass": "node-sass --include-path node_modules/bootstrap/dist/css/ --source-map true assets/stylesheets/app.scss ../api/public/assets/app.css",
-    "watch_sass": "node-sass -w -r --include-path node_modules/bootstrap/dist/css/ --source-map true assets/stylesheets/app.scss ../api/public/assets/app.css",
-    "build_images": "mkdir -p ../api/public/assets/images/ && cp -rf assets/images/* ../api/public/assets/images/",
+    "build_sass": "node-sass --include-path node_modules/bootstrap/dist/css/ --source-map true app/assets/stylesheets/app.scss ../api/public/assets/app.css",
+    "watch_sass": "node-sass -w -r --include-path node_modules/bootstrap/dist/css/ --source-map true app/assets/stylesheets/app.scss ../api/public/assets/app.css",
+    "build_images": "mkdir -p ../api/public/assets/images/ && cp -rf app/assets/images/* ../api/public/assets/images/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
