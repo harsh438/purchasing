@@ -41,7 +41,7 @@ class PurchaseOrdersIndex extends React.Component {
 
         <button className="btn btn-default btn-lg"
                 style={{ width: '100%' }}
-                onClick={this.loadMorePurchaseOrders.bind(this, this.nextPage())}>
+                onClick={this.loadMorePurchaseOrders.bind(this)}>
           Load More Orders
         </button>
       </div>
@@ -64,14 +64,15 @@ class PurchaseOrdersIndex extends React.Component {
     this.props.dispatch(loadPurchaseOrders(query));
   }
 
-  loadMorePurchaseOrders (page) {
-    this.props.dispatch(loadMorePurchaseOrders(this.props.location.query, page));
+  loadMorePurchaseOrders () {
+    this.props.dispatch(loadMorePurchaseOrders(this.props.location.query, this.nextPage()));
   }
 }
 
 function applyState({ brands, categories, purchaseOrders }) {
   return { brands,
            categories,
+           page: purchaseOrders.page,
            purchaseOrders: purchaseOrders.purchaseOrders };
 }
 
