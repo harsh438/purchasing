@@ -1,5 +1,22 @@
 import React from 'react';
 
+class PurchaseOrderHeaderRow extends React.Component {
+  render () {
+    return (
+      <tr>
+        <th>Order #</th>
+        <th>PO #</th>
+        <th>PID</th>
+        <th>Product</th>
+        <th>SKU</th>
+        <th>Unit Price</th>
+        <th>Size</th>
+        <th>Operator</th>
+      </tr>
+    );
+  }
+}
+
 class PurchaseOrderRow extends React.Component {
   render () {
     return (
@@ -23,16 +40,7 @@ export default class PurchaseOrdersTable extends React.Component {
       <div className="purchase_orders_table">
         <table className="table table-striped">
           <thead>
-            <tr>
-              <th>Order #</th>
-              <th>PO #</th>
-              <th>PID</th>
-              <th>Product</th>
-              <th>SKU</th>
-              <th>Unit Price</th>
-              <th>Size</th>
-              <th>Operator</th>
-            </tr>
+            <PurchaseOrderHeaderRow />
           </thead>
           <tbody>{this.rows()}</tbody>
         </table>
