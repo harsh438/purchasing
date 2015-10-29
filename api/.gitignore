@@ -23,4 +23,5 @@
 
 /.elasticbeanstalk
 
+public/app*.css
 public/app*.js
