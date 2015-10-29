@@ -7,7 +7,9 @@ class PurchaseOrderTableHeader extends React.Component {
         <tr>
           <th colSpan="1">&nbsp;</th>
           <th colSpan="5" style={{ borderLeft: '2px solid #ddd' }}>Product</th>
-          <th colSpan="5" style={{ borderLeft: '2px solid #ddd' }}>Order</th>
+          <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>Ordered</th>
+          <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>Delivered</th>
+          <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>Cancelled</th>
           <th colSpan="1" style={{ borderLeft: '2px solid #ddd' }}>Other</th>
         </tr>
 
@@ -21,10 +23,19 @@ class PurchaseOrderTableHeader extends React.Component {
           <th>Size</th>
 
           <th style={{ borderLeft: '2px solid #ddd' }}>#</th>
-          <th>units</th>
-          <th>cost</th>
-          <th>value</th>
-          <th>first received</th>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Units</th>
+          <th>Cost</th>
+          <th>Value</th>
+
+          <th style={{ borderLeft: '2px solid #ddd' }}>Units</th>
+          <th>Cost</th>
+          <th>Value</th>
+
+          <th style={{ borderLeft: '2px solid #ddd' }}>Units</th>
+          <th>Cost</th>
+          <th>Value</th>
 
           <th style={{ borderLeft: '2px solid #ddd' }}>Operator</th>
         </tr>
@@ -39,19 +50,38 @@ class PurchaseOrderRow extends React.Component {
       <tr className={this.props.alt ? 'active' : ''}>
         <td>{this.props.purchaseOrder.poNumber}</td>
 
-        <td>{this.props.purchaseOrder.productId}</td>
+        <td style={{ borderLeft: '2px solid #ddd' }}>
+          {this.props.purchaseOrder.productId}
+        </td>
         <td>{this.props.purchaseOrder.productName}</td>
         <td>{this.props.purchaseOrder.productSKU}</td>
         <td>{this.props.purchaseOrder.productCost}</td>
         <td>{this.props.purchaseOrder.productSize}</td>
 
-        <td>{this.props.purchaseOrder.orderId}</td>
-        <td>n/a</td>
-        <td>n/a</td>
-        <td>n/a</td>
-        <td>n/a</td>
+        <td style={{ borderLeft: '2px solid #ddd' }}>
+          {this.props.purchaseOrder.orderId}
+        </td>
+        <td>{this.props.purchaseOrder.orderDate}</td>
+        <td>{this.props.purchaseOrder.orderType}</td>
+        <td>{this.props.purchaseOrder.orderedUnits}</td>
+        <td>{this.props.purchaseOrder.orderedCost}</td>
+        <td>{this.props.purchaseOrder.orderedValue}</td>
 
-        <td>{this.props.purchaseOrder.operator}</td>
+        <td style={{ borderLeft: '2px solid #ddd' }}>
+          {this.props.purchaseOrder.deliveredUnits}
+        </td>
+        <td>{this.props.purchaseOrder.deliveredCost}</td>
+        <td>{this.props.purchaseOrder.deliveredValue}</td>
+
+        <td style={{ borderLeft: '2px solid #ddd' }}>
+          {this.props.purchaseOrder.cancelledUnits || 'n/a'}
+        </td>
+        <td>{this.props.purchaseOrder.cancelledCost || 'n/a'}</td>
+        <td>{this.props.purchaseOrder.cancelledValue || 'n/a'}</td>
+
+        <td style={{ borderLeft: '2px solid #ddd' }}>
+          {this.props.purchaseOrder.operator}
+        </td>
       </tr>
     );
   }

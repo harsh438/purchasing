@@ -8,6 +8,7 @@ class PurchaseOrder < ActiveRecord::Base
                  product_id: :pID,
                  option_id: :oID,
                  quantity: :qty,
+                 quantity_added: :qtyAdded,
                  quantity_done: :qtyDone,
                  status: :status,
                  created_at: :added,
@@ -44,4 +45,77 @@ class PurchaseOrder < ActiveRecord::Base
           :lead_gender
 
   paginates_per 50
+
+  def product_price
+    #nees to come from product table
+    0
+  end
+
+  def ordered_cost
+    quantity * cost
+  end
+
+  def ordered_value
+    quantity * product_price
+  end
+
+  def delivered_quantity
+    quantity_done + quantity_added
+  end
+
+  def delivered_cost
+    delivered_quantity * cost
+  end
+
+  def delivered_value
+    delivered_quantity * product_price
+  end
+
+  def cancelled?
+    status == '-1'
+  end
+
+  def cancelled_quantity
+    if cancelled?
+      quantity - delivered_quantity
+    end
+  end
+
+  def cancelled_cost
+    if cancelled?
+      cancelled_quantity * cost
+    end
+  end
+
+  def cancelled_value
+    if cancelled?
+      cancelled_quantity * product_price
+    end
+  end
+
+  def balance_quantity
+    quantity - delivered_quantity
+  end
+
+  def balance_cost
+    ordered_cost - delivered_cost
+  end
+
+  def balance_value
+    ordered_value - delivered_value
+  end
+
+  def as_json(*args)
+    super.merge(ordered_cost: ordered_cost,
+                ordered_value: ordered_value,
+                delivered_quantity: delivered_quantity,
+                delivered_cost: delivered_cost,
+                delivered_value: delivered_value,
+                cancelled_quantity: cancelled_quantity,
+                cancelled_cost: cancelled_cost,
+                cancelled_value: cancelled_value,
+                balance_quantity: balance_quantity,
+                balance_cost: balance_cost,
+                balance_value: balance_value)
+  end
 end

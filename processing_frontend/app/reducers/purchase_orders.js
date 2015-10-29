@@ -1,14 +1,35 @@
 const initialState =  { page: 1, purchaseOrders: [] };
 
 function transformPurchaseOrder(purchaseOrder) {
+  console.log(purchaseOrder)
+
   return {
-    orderId: purchaseOrder.id,
     poNumber: purchaseOrder.summary_id,
+
     productId: purchaseOrder.product_id,
     productName: purchaseOrder.product_name,
     productSKU: purchaseOrder.product_sku,
     productCost: purchaseOrder.cost,
     productSize: purchaseOrder.product_size,
+
+    orderId: purchaseOrder.id,
+    orderDate: purchaseOrder.order_date,
+    orderedUnits: purchaseOrder.quantity,
+    orderedCost: purchaseOrder.ordered_cost,
+    orderedValue: purchaseOrder.ordered_value,
+
+    deliveredUnits: purchaseOrder.delivered_quantity,
+    deliveredCost: purchaseOrder.delivered_cost,
+    deliveredValue: purchaseOrder.delivered_value,
+
+    cancelledUnits: purchaseOrder.cancelled_quantity,
+    cancelledCost: purchaseOrder.cancelled_cost,
+    cancelledValue: purchaseOrder.cancelled_value,
+
+    balanceUnits: purchaseOrder.balance_quantity,
+    balanceCost: purchaseOrder.balance_cost,
+    balanceValue: purchaseOrder.balance_value,
+
     operator: purchaseOrder.operator,
   }
 }
