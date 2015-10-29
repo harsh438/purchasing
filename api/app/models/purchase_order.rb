@@ -1,5 +1,6 @@
 class PurchaseOrder < ActiveRecord::Base
   include LegacyMappings
+  belongs_to :vendor, foreign_key: :orderTool_venID
 
   map_attributes id: :id,
                  pID: :product_id,

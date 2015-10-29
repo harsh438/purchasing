@@ -14,6 +14,7 @@ FactoryGirl.define do
     cancelled_date 100.years.ago
 
     season :AW15
+    vendor_id 0
     reporting_product_id 0
     original_product_id 0
     original_option_id 0
