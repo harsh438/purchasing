@@ -35,7 +35,7 @@ gulp.task('scripts', function () {
 
 gulp.task('styles', function () {
   gulp.src(config.styles.src)
-    .pipe(sass({ includePaths: ['node_modules/bootstrap/dist/css/'] }))
+    .pipe(sass())
     .pipe(gulp.dest(config.styles.dest));
 });
 
