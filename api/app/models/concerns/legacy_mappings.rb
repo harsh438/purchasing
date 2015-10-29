@@ -1,12 +1,8 @@
 module LegacyMappings
   extend ActiveSupport::Concern
 
-  included do
-    default_scope -> { select(legacy_fields) }
-  end
-
   def as_json(options)
-    Hash[*self.class.mapped_attributes.values.zip(serializable_hash.values).flatten]
+    map(self.class.mapped_attributes, serializable_hash)
   end
 
   module ClassMethods
@@ -21,10 +17,19 @@ module LegacyMappings
     def map_attributes(attrs)
       mapped_attributes.merge!(attrs)
 
-      attrs.each do |key, field|
-        legacy_fields << key
-        alias_attribute(field, key) if key != field
+      attrs.each do |new_attr, old_attr|
+        legacy_fields << old_attr
+        alias_attribute(new_attr, old_attr) if new_attr != old_attr
       end
+    end
+  end
+
+  private
+
+  def map(mappings, fields)
+   mappings.reduce({}) do |out, (mapped, unmapped)|
+      o = { mapped => fields[unmapped.to_s] }
+      out.merge(o || {})
     end
   end
 end

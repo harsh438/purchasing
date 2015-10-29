@@ -12,12 +12,10 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def filter_purchase_orders
-    @purchase_orders = PurchaseOrder
-    @purchase_orders = @purchase_orders.where(vendor_id: po_attrs[:vendor_id]) if po_attrs[:vendor_id]
-    @purchase_orders = @purchase_orders.page(po_attrs[:page])
+    @purchase_orders = Search.new(PurchaseOrder, po_attrs).results
   end
 
   def po_attrs
-    params.permit(:page, :vendor_id, :format, :constraints)
+    params.permit(:page, :vendor_id)
   end
 end
