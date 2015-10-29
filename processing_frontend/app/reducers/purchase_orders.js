@@ -18,6 +18,7 @@ function transformPurchaseOrder(purchaseOrder) {
     orderedCost: purchaseOrder.ordered_cost,
     orderedValue: purchaseOrder.ordered_value,
 
+    deliveryDate: purchaseOrder.delivery_date,
     deliveredUnits: purchaseOrder.delivered_quantity,
     deliveredCost: purchaseOrder.delivered_cost,
     deliveredValue: purchaseOrder.delivered_value,
@@ -31,6 +32,12 @@ function transformPurchaseOrder(purchaseOrder) {
     balanceValue: purchaseOrder.balance_value,
 
     operator: purchaseOrder.operator,
+    weeksOnSale: purchaseOrder.weeks_on_sale,
+    closingDate: purchaseOrder.closing_date,
+    brandSize: purchaseOrder.brand_size,
+    gender: purchaseOrder.gender,
+    status: purchaseOrder.status,
+    comments: purchaseOrder.comments,
   }
 }
 

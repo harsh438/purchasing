@@ -13,7 +13,7 @@ class PurchaseOrder < ActiveRecord::Base
                  status: :status,
                  created_at: :added,
                  order_date: :order_date,
-                 drop_date: :drop_date,
+                 delivery_date: :drop_date,
                  arrived_date: :arrived_date,
                  invoice_payable_date: :inv_date,
                  summary_id: :po_number,
@@ -24,7 +24,7 @@ class PurchaseOrder < ActiveRecord::Base
                  in_pvx: :inPVX,
                  season: :po_season,
                  report_category_id: :orderTool_RC,
-                 lead_gender: :orderTool_LG,
+                 gender: :orderTool_LG,
                  vendor_id: :orderTool_venID,
                  line_id: :orderToolItemID,
                  product_name: :orderTool_productName,
@@ -60,6 +60,18 @@ class PurchaseOrder < ActiveRecord::Base
     #nees to come from product table
     0
   end
+
+  def closing_date
+    # product details table
+    0
+  end
+
+  def weeks_on_sale
+    # product details table
+    #plannedWeeksOnSale
+    0
+  end
+
 
   def ordered_cost
     quantity * cost
@@ -126,6 +138,7 @@ class PurchaseOrder < ActiveRecord::Base
                 cancelled_value: cancelled_value,
                 balance_quantity: balance_quantity,
                 balance_cost: balance_cost,
-                balance_value: balance_value)
+                balance_value: balance_value,
+                closing_date: closing_date)
   end
 end

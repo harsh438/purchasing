@@ -8,9 +8,9 @@ class PurchaseOrderTableHeader extends React.Component {
           <th colSpan="1">&nbsp;</th>
           <th colSpan="5" style={{ borderLeft: '2px solid #ddd' }}>Product</th>
           <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>Ordered</th>
-          <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>Delivered</th>
+          <th colSpan="4" style={{ borderLeft: '2px solid #ddd' }}>Delivered</th>
           <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>Cancelled</th>
-          <th colSpan="1" style={{ borderLeft: '2px solid #ddd' }}>Other</th>
+          <th colSpan="7" style={{ borderLeft: '2px solid #ddd' }}>Other</th>
         </tr>
 
         <tr>
@@ -29,7 +29,8 @@ class PurchaseOrderTableHeader extends React.Component {
           <th>Cost</th>
           <th>Value</th>
 
-          <th style={{ borderLeft: '2px solid #ddd' }}>Units</th>
+          <th style={{ borderLeft: '2px solid #ddd' }}>Date</th>
+          <th>Units</th>
           <th>Cost</th>
           <th>Value</th>
 
@@ -38,6 +39,12 @@ class PurchaseOrderTableHeader extends React.Component {
           <th>Value</th>
 
           <th style={{ borderLeft: '2px solid #ddd' }}>Operator</th>
+          <th>Weeks on Sale</th>
+          <th>Closing</th>
+          <th>Brand Size</th>
+          <th>Gender</th>
+          <th>Status</th>
+          <th>Comments</th>
         </tr>
       </thead>
     );
@@ -54,7 +61,7 @@ class PurchaseOrderRow extends React.Component {
           {this.props.purchaseOrder.productId}
         </td>
         <td>{this.props.purchaseOrder.productName}</td>
-        <td>{this.props.purchaseOrder.productSKU}</td>
+        <td>{this.props.purchaseOrder.productSKU || 'n/a'}</td>
         <td>{this.props.purchaseOrder.productCost}</td>
         <td>{this.props.purchaseOrder.productSize}</td>
 
@@ -68,8 +75,9 @@ class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.orderedValue}</td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
-          {this.props.purchaseOrder.deliveredUnits}
+          {this.props.purchaseOrder.deliveryDate}
         </td>
+        <td>{this.props.purchaseOrder.deliveredUnits}</td>
         <td>{this.props.purchaseOrder.deliveredCost}</td>
         <td>{this.props.purchaseOrder.deliveredValue}</td>
 
@@ -82,6 +90,12 @@ class PurchaseOrderRow extends React.Component {
         <td style={{ borderLeft: '2px solid #ddd' }}>
           {this.props.purchaseOrder.operator}
         </td>
+        <td>{this.props.purchaseOrder.closingDate}</td>
+        <td>{this.props.purchaseOrder.weeksOnSale}</td>
+        <td>{this.props.purchaseOrder.brandSize}</td>
+        <td>{this.props.purchaseOrder.gender}</td>
+        <td>{this.props.purchaseOrder.status}</td>
+        <td>{this.props.purchaseOrder.comments}</td>
       </tr>
     );
   }
