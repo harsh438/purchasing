@@ -40,18 +40,11 @@ cd api/
 bundle exec rackup -o 0.0.0.0 -p 3000
 ```
 
-And in another to watch for JS changes run:
+And in another to watch for JS/SCSS/Image changes run:
 
 ```
 cd processing_frontend/
 npm run watch
-```
-
-And in another to watch for SCSS changes run:
-
-```
-cd processing_frontend/
-npm run watch_sass
 ```
 
 **Running tests locally**
