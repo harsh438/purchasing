@@ -6,8 +6,8 @@
   "scripts": {
     "build": "browserify --extension .jsx -t babelify -t reactify index.js -o ../api/public/app.js",
     "watch": "watchify -v --extension .jsx -t babelify -t reactify index.js -o ../api/public/app.js",
-    "build_sass": "node-sass --source-map true assets/stylesheets/app.scss ../api/public/app.css",
-    "watch_sass": "node-sass -w -r --source-map true assets/stylesheets/app.scss ../api/public/app.css",
+    "build_sass": "node-sass --include-path node_modules/bootstrap/dist/css/ --source-map true assets/stylesheets/app.scss ../api/public/app.css",
+    "watch_sass": "node-sass -w -r --include-path node_modules/bootstrap/dist/css/ --source-map true assets/stylesheets/app.scss ../api/public/app.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,6 +30,7 @@
     "watchify": "^3.5.0"
   },
   "dependencies": {
+    "bootstrap": "^3.3.5",
     "history": "^1.12.6",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
