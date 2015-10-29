@@ -1,7 +1,16 @@
 import React from 'react';
 import Select from 'react-select';
+import serialize from 'form-serialize';
 
 export default class PurchaseOrdersForm extends React.Component {
+  componentWillMount () {
+    this.setStateFromQuery(this.props.query);
+  }
+
+  componentWillReceiveProps({ query }) {
+    this.setStateFromQuery(query);
+  }
+
   render () {
     const className = `col-md-${this.props.columns}`;
 
@@ -13,14 +22,30 @@ export default class PurchaseOrdersForm extends React.Component {
           </div>
 
           <div className="panel-body">
-            <form className="form">
+            <form onSubmit={this.handleSubmit.bind(this)} className="form">
               <div className="form-group">
                 <label htmlFor="brand">Brand</label>
+
                 <select className="form-control"
+                        id="brand"
                         name="brand"
-                        value={this.props.currentBrand}>
-                  <option> -- select brand -- </option>
-                  {this.brandOptions()}
+                        onChange={this.handleChange.bind(this, 'brand')}
+                        value={this.state.brand}>
+                  <option value=""> -- select brand -- </option>
+                  {this.options(this.props.brands)}
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="category">Category</label>
+
+                <select className="form-control"
+                        id="category"
+                        name="category"
+                        onChange={this.handleChange.bind(this, 'category')}
+                        value={this.state.category}>
+                  <option value=""> -- select category -- </option>
+                  {this.options(this.props.categories)}
                 </select>
               </div>
 
@@ -34,11 +59,24 @@ export default class PurchaseOrdersForm extends React.Component {
     );
   }
 
-  brandOptions () {
-    return this.props.brands.map(function ({ id, name }) {
+  setStateFromQuery (query) {
+    this.setState({ brand: query.brand, category: query.category });
+  }
+
+  options (options) {
+    return options.map(function ({ id, name }) {
       return (
         <option key={id} value={id}>{name}</option>
       );
     });
+  }
+
+  handleChange (field, { target }) {
+    this.setState({ [field]: target.value });
+  }
+
+  handleSubmit (e) {
+    e.preventDefault();
+    this.props.history.pushState(null, '/', this.state);
   }
 }
