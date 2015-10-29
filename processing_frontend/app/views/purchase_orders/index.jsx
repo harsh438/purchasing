@@ -1,16 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { loadBrands, loadCategories } from '../../actions/filters';
 import { loadPurchaseOrders, loadMorePurchaseOrders } from '../../actions/purchase_orders';
-import fetchBrands from '../../actions/fetch_brands';
-import fetchCategories from '../../actions/fetch_categories';
 import PurchaseOrdersTable from './_table';
 import PurchaseOrdersForm from './_form';
 import PurchaseOrdersSummary from './_summary';
 
 class PurchaseOrdersIndex extends React.Component {
   componentWillMount () {
-    this.fetchBrands();
-    this.fetchCategories();
+    this.loadBrands();
+    this.loadCategories();
     this.loadPurchaseOrders(this.props.location.query);
   }
 
@@ -52,12 +51,12 @@ class PurchaseOrdersIndex extends React.Component {
     return this.props.page + 1;
   }
 
-  fetchBrands (page) {
-    this.props.dispatch(fetchBrands());
+  loadBrands (page) {
+    this.props.dispatch(loadBrands());
   }
 
-  fetchCategories (page) {
-    this.props.dispatch(fetchCategories());
+  loadCategories (page) {
+    this.props.dispatch(loadCategories());
   }
 
   loadPurchaseOrders (query) {
@@ -69,9 +68,9 @@ class PurchaseOrdersIndex extends React.Component {
   }
 }
 
-function applyState({ brands, categories, purchaseOrders }) {
-  return { brands,
-           categories,
+function applyState({ filters, purchaseOrders }) {
+  return { brands: filters.brands,
+           categories: filters.categories,
            page: purchaseOrders.page,
            purchaseOrders: purchaseOrders.purchaseOrders };
 }
