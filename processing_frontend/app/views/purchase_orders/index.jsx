@@ -17,11 +17,9 @@ class PurchaseOrdersIndex extends React.Component {
 
     return (
       <div className="purchase_orders_index">
-        <div className="container-fluid">
-          <div className="row">
-            <PurchaseOrdersForm columns="6" />
-            <PurchaseOrdersSummary columns="6" />
-          </div>
+        <div className="row">
+          <PurchaseOrdersForm columns="6" />
+          <PurchaseOrdersSummary columns="6" />
         </div>
 
         <PurchaseOrdersTable purchaseOrders={purchaseOrders} />
