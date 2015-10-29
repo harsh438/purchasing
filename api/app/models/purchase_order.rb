@@ -44,13 +44,13 @@ class PurchaseOrder < ActiveRecord::Base
   filters :vendor_id,
           :lead_gender,
           :summary_id,
-          :season,
+          :season
+
+  paginates_per 50
 
   def self.seasons
     PurchaseOrder.pluck('distinct po_season')
   end
-
-  paginates_per 50
 
   def product_price
     #nees to come from product table
