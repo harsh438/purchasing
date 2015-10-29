@@ -2,25 +2,16 @@ import React from 'react';
 
 class PurchaseOrderRow extends React.Component {
   render () {
-    const orderId = this.props.purchaseOrder.id;
-    const poNumber = this.props.purchaseOrder.summary_id;
-    const productId = this.props.purchaseOrder.product_id;
-    const productName = this.props.purchaseOrder.product_name;
-    const productSKU = this.props.purchaseOrder.product_sku;
-    const productCost = this.props.purchaseOrder.cost;
-    const productSize = this.props.purchaseOrder.product_size;
-    const operator = this.props.purchaseOrder.operator;
-
     return (
       <tr>
-        <td>{orderId}</td>
-        <td>{poNumber}</td>
-        <td>{productId}</td>
-        <td>{productName}</td>
-        <td>{productSKU}</td>
-        <td>{productCost}</td>
-        <td>{productSize}</td>
-        <td>{operator}</td>
+        <td>{this.props.purchaseOrder.orderId}</td>
+        <td>{this.props.purchaseOrder.poNumber}</td>
+        <td>{this.props.purchaseOrder.productId}</td>
+        <td>{this.props.purchaseOrder.productName}</td>
+        <td>{this.props.purchaseOrder.productSKU}</td>
+        <td>{this.props.purchaseOrder.productCost}</td>
+        <td>{this.props.purchaseOrder.productSize}</td>
+        <td>{this.props.purchaseOrder.operator}</td>
       </tr>
     );
   }
@@ -52,7 +43,7 @@ export default class PurchaseOrdersTable extends React.Component {
   rows () {
     return this.props.purchaseOrders.map(function (purchaseOrder) {
       return (
-        <PurchaseOrderRow key={purchaseOrder.id}
+        <PurchaseOrderRow key={purchaseOrder.orderId}
                           purchaseOrder={purchaseOrder} />
       );
     });
