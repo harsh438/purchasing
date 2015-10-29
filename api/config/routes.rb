@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   scope :api, format: true, constraints: { format: :json } do
     resources :purchase_orders, only: :index
     resources :products, only: :index
+    resources :vendors, only: :index
   end
 end
