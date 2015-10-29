@@ -105,7 +105,7 @@ export default class PurchaseOrdersTable extends React.Component {
   render () {
     return (
       <div className="purchase_orders_table">
-        <table className="table" style={{ minWidth: '1800px' }}>
+        <table className="table" style={{ minWidth: '1500px' }}>
           <PurchaseOrderTableHeader />
 
           <tbody>{this.rows()}</tbody>
