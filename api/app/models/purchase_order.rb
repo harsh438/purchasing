@@ -23,7 +23,7 @@ class PurchaseOrder < ActiveRecord::Base
                  cancelled_date: :cancelled_date,
                  in_pvx: :inPVX,
                  season: :po_season,
-                 report_category_id: :orderTool_RC,
+                 category_id: :orderTool_RC,
                  gender: :orderTool_LG,
                  vendor_id: :orderTool_venID,
                  line_id: :orderToolItemID,
@@ -44,7 +44,9 @@ class PurchaseOrder < ActiveRecord::Base
   filters :vendor_id,
           :lead_gender,
           :summary_id,
-          :season
+          :season,
+          :product_sku,
+          :category_id
 
   paginates_per 50
 
@@ -54,6 +56,10 @@ class PurchaseOrder < ActiveRecord::Base
 
   def self.lead_genders
     PurchaseOrder.pluck('distinct orderTool_LG')
+  end
+
+  def category
+    return Category.english.where(category_id: category_id)
   end
 
   def product_price
