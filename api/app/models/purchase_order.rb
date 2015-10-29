@@ -32,8 +32,10 @@ class PurchaseOrder < ActiveRecord::Base
                  orderTool_SupplierListPrice: :supplier_list_price,
                  orderTool_RRP: :rrp,
 
-                 # Unused but necessary
+                 # Unused but necessary for insertion
                  reporting_pID: :reporting_product_id,
                  original_pID: :original_product_id,
                  original_oID: :original_option_id
+
+  paginates_per 50
 end
