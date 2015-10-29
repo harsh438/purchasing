@@ -7,7 +7,7 @@ class Filters
     @model = collection.model
     mappings = @model.mapped_attributes
     q = map(mappings, @attrs.slice(*@model.filterable_fields))
-    return collection.where(q)
+    sort(collection.where(q))
   end
 
   private
@@ -16,6 +16,16 @@ class Filters
    mappings.reduce({}) do |out, (mapped, unmapped)|
       o = { unmapped => fields[mapped] } if fields[mapped]
       out.merge(o || {})
+    end
+  end
+
+  def sort(collection)
+    if @attrs[:sort_field] and @attrs[:sort_dir]
+      collection.order(@attrs[:sort_field] => @attrs[:sort_dir])
+    elsif @attrs[:sort_field]
+      collection.order(@attrs[:sort_field])
+    else
+      collection
     end
   end
 end

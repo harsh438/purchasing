@@ -16,6 +16,6 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def po_attrs
-    params.permit(:page, :vendor_id)
+    params.permit(:page, :vendor_id, :sort_field, :sort_dir)
   end
 end
