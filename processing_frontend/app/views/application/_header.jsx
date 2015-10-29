@@ -11,7 +11,7 @@ class HeaderLink extends React.Component {
   }
 
   className() {
-    return '';
+    return 'active';
   }
 }
 
