@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import fetchPurchaseOrders from '../../actions/fetch_purchase_orders';
-import PurchaseOrdersTable from './table';
+import PurchaseOrdersTable from './_table';
 
 class PurchaseOrdersIndex extends React.Component {
   componentWillMount() {
