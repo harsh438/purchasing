@@ -64,15 +64,15 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def product_price
-    product.price
+    try(:product).try(:price) || 0
   end
 
   def closing_date
-    product.product_detail.closing_date
+    try(:product).try(:product_detail).try(:closing_date) || 0
   end
 
   def weeks_on_sale
-    product.product_detail.planned_weeks_on_sale
+    try(:product).try(:product_detail).try(:planned_weeks_on_sale) || 0
   end
 
 
