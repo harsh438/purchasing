@@ -112,9 +112,7 @@ export default class PurchaseOrdersForm extends React.Component {
   }
 
   handleChange (field, { target }) {
-    if (target.value.length) {
-      this.setState({ [field]: target.value });
-    }
+    this.setState({ [field]: target.value });
   }
 
   handleSubmit (e) {
