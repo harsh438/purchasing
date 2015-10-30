@@ -25,7 +25,7 @@ function fetchPurchaseOrders(params, page, action) {
 
     const query = removeEmptyKeys(Object.assign({}, defaultParams, translatedParams));
 
-    fetch(`/api/purchase_orders.json?${queryString.stringify(query)}`)
+    fetch(`/api/purchase_orders.json?${queryString.stringify(query)}`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(purchaseOrders => dispatch(action({ page, purchaseOrders })));
   }

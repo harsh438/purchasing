@@ -14,7 +14,7 @@ function setCategories(categories) {
 
 export function loadBrands() {
   return dispatch => {
-    fetch('/api/vendors.json')
+    fetch('/api/vendors.json', { credentials: 'same-origin' })
       .then(response => response.json())
       .then(brands => dispatch(setBrands(brands)));
   }
@@ -22,7 +22,7 @@ export function loadBrands() {
 
 export function loadCategories() {
   return dispatch => {
-    fetch('/api/categories.json')
+    fetch('/api/categories.json', { credentials: 'same-origin' })
       .then(response => response.json())
       .then(categories => dispatch(setCategories(categories)));
   }
