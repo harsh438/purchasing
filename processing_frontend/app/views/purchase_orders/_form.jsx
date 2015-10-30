@@ -59,7 +59,8 @@ export default class PurchaseOrdersForm extends React.Component {
                   <input className="form-control"
                          name="poNumber"
                          onChange={this.handleChange.bind(this, 'poNumber')}
-                         type="text" />
+                         type="text"
+                         value={this.state.poNumber} />
                 </div>
 
                 <div className="form-group col-md-4">
@@ -68,7 +69,8 @@ export default class PurchaseOrdersForm extends React.Component {
                   <input className="form-control"
                          name="pid"
                          onChange={this.handleChange.bind(this, 'pid')}
-                         type="text" />
+                         type="text"
+                         value={this.state.pid} />
                 </div>
 
                 <div className="form-group col-md-4">
@@ -77,7 +79,8 @@ export default class PurchaseOrdersForm extends React.Component {
                   <input className="form-control"
                          name="sku"
                          onChange={this.handleChange.bind(this, 'sku')}
-                         type="text" />
+                         type="text"
+                         value={this.state.sku} />
                 </div>
               </div>
 
