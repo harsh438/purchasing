@@ -13,6 +13,10 @@ test:
   <<: *default
   database: purchasing_test
 
+staging:
+  <<: *default
+  database: no_thanks
+
 production:
   <<: *default
   database: no_thanks
