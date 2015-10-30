@@ -86,7 +86,11 @@ export default class PurchaseOrdersForm extends React.Component {
 
               <div className="form-group">
                 <button className="btn btn-success">Search</button>
-                <Link to="/" style={{ marginLeft: '1em' }}>clear filters</Link>
+
+                <Link style={{ marginLeft: '1em' }}
+                      to="/">
+                  clear filters
+                </Link>
               </div>
             </form>
           </div>
