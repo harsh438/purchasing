@@ -13,7 +13,7 @@ class Filters
   class Attrs
     def initialize(model, params)
       @model = model
-      @params = parse(params)
+      @params = params
     end
 
     def filterable
@@ -45,12 +45,6 @@ class Filters
       elsif @params[:sort_field]
         @params[:sort_field]
       end
-    end
-
-    private
-
-    def parse(params)
-      params.permit(filterable + sortable + [:page])
     end
   end
 end
