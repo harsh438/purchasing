@@ -38,17 +38,25 @@ class PurchaseOrdersIndex extends React.Component {
 
         <PurchaseOrdersTable purchaseOrders={this.props.purchaseOrders} />
 
-        <button className="btn btn-default btn-lg"
-                style={{ width: '100%' }}
-                onClick={this.loadMorePurchaseOrders.bind(this)}>
-          Load More Orders
-        </button>
+        {this.renderLoadMoreButton()}
       </div>
     );
   }
 
   nextPage () {
     return this.props.page + 1;
+  }
+
+  renderLoadMoreButton () {
+    if (this.props.moreResultsAvailable) {
+      return (
+        <button className="btn btn-default btn-lg"
+                style={{ width: '100%' }}
+                onClick={this.loadMorePurchaseOrders.bind(this)}>
+          Load More Orders
+        </button>
+      );
+    }
   }
 
   loadBrands (page) {
@@ -72,6 +80,8 @@ function applyState({ filters, purchaseOrders }) {
   return { brands: filters.brands,
            categories: filters.categories,
            page: purchaseOrders.page,
+           summary: purchaseOrders.summary,
+           moreResultsAvailable: purchaseOrders.moreResultsAvailable,
            purchaseOrders: purchaseOrders.purchaseOrders };
 }
 

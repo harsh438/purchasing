@@ -1,8 +1,10 @@
 class PurchaseOrdersController < ApplicationController
   def index
+    results = Search.new(PurchaseOrder, params).results
+    
     render json: { summary: {},
-                   results: Search.new(PurchaseOrder, params).results,
-                   more_results_available: true,
+                   results: results,
+                   more_results_available: !results.last_page?,
                    page: params[:page] }
   end
 
