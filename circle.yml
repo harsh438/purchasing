@@ -1,2 +1,10 @@
 general:
   build_dir: api
+
+deployment:
+  dev:
+    branch: [devops, staging, production]
+    commands:
+      - aws s3 cp --recursive "s3://$S3_DEPLOYMENT_BUCKET/devops/" .
+      - chmod +x deploy.sh
+      - ./deploy.sh
