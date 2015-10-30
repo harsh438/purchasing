@@ -5,6 +5,7 @@ import { loadPurchaseOrders, loadMorePurchaseOrders } from '../../actions/purcha
 import PurchaseOrdersTable from './_table';
 import PurchaseOrdersForm from './_form';
 import PurchaseOrdersSummary from './_summary';
+import deepEqual from 'deep-equal';
 
 class PurchaseOrdersIndex extends React.Component {
   componentWillMount () {
@@ -14,11 +15,8 @@ class PurchaseOrdersIndex extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const currentQuery = this.props.location.query;
-    const nextQuery = nextProps.location.query;
-
-    if (currentQuery.brand !== nextQuery.brand || currentQuery.category !== nextQuery.category) {
-      this.loadPurchaseOrders(nextQuery);
+    if (!deepEqual(this.props.location.query, nextProps.location.query)) {
+      this.loadPurchaseOrders(nextProps.location.query);
     }
   }
 
