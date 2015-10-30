@@ -27,26 +27,26 @@ function fetchPurchaseOrders(params, page, action) {
 
     fetch(`/api/purchase_orders.json?${queryString.stringify(query)}`, { credentials: 'same-origin' })
       .then(response => response.json())
-      .then(purchaseOrders => dispatch(action({ page, purchaseOrders })));
+      .then(purchaseOrders => dispatch(action(purchaseOrders)));
   }
 }
 
-function setAction({ page, purchaseOrders }) {
-  return { type: 'SET_PURCHASE_ORDERS',
-           page: page,
-           purchaseOrders: purchaseOrders };
-}
+function action(type) {
+  return function (purchaseOrders) {
+    const { summary, page, results, more_results_available } = purchaseOrders;
 
-function appendAction({ page, purchaseOrders }) {
-  return { type: 'APPEND_PURCHASE_ORDERS',
-           page: page,
-           purchaseOrders: purchaseOrders };
+    return { page,
+             results,
+             summary,
+             type,
+             moreResultsAvailable: purchaseOrders.more_results_available };
+  }
 }
 
 export function loadPurchaseOrders(params) {
-  return fetchPurchaseOrders(params, 1, setAction);
+  return fetchPurchaseOrders(params, 1, action('SET_PURCHASE_ORDERS'));
 }
 
 export function loadMorePurchaseOrders(params, page) {
-  return fetchPurchaseOrders(params, page, appendAction);
+  return fetchPurchaseOrders(params, page, action('APPEND_PURCHASE_ORDERS'));
 }

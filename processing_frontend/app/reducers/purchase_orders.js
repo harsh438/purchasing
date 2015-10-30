@@ -3,28 +3,37 @@ const initialState =  { page: 1, purchaseOrders: [] };
 
 function transformPurchaseOrder(purchaseOrder) {
   const camelizedPurchaseOrder = humps.camelizeKeys(purchaseOrder);
-  const remappedKeys = {
-    poNumber: purchaseOrder.summary_id,
-    productCost: purchaseOrder.cost,
-    orderId: purchaseOrder.id,
-    orderedUnits: purchaseOrder.quantity,
-  };
+
+  const remappedKeys = { poNumber: purchaseOrder.summary_id,
+                         productCost: purchaseOrder.cost,
+                         orderId: purchaseOrder.id,
+                         orderedUnits: purchaseOrder.quantity };
 
   return Object.assign({}, camelizedPurchaseOrder, remappedKeys);
 }
 
 function setPurchaseOrders(state, action) {
-  const purchaseOrders = action.purchaseOrders.map(transformPurchaseOrder);
-  return Object.assign({}, state, { purchaseOrders, page: action.page });
+  const purchaseOrders = action.results.map(transformPurchaseOrder);
+
+  return Object.assign({}, state, { purchaseOrders,
+                                    page: action.page,
+                                    summary: action.summary,
+                                    moreResultsAvailable: action.moreResultsAvailable });
 }
 
 function appendPurchaseOrders(state, action) {
-  const newPurchaseOrders = action.purchaseOrders.map(transformPurchaseOrder);
+  const newPurchaseOrders = action.results.map(transformPurchaseOrder);
   const purchaseOrders = [...state.purchaseOrders, ...newPurchaseOrders];
-  return Object.assign({}, state, { purchaseOrders, page: action.page });
+
+  return Object.assign({}, state, { purchaseOrders,
+                                    page: action.page,
+                                    summary: action.summary,
+                                    moreResultsAvailable: action.moreResultsAvailable });
 }
 
 export default function reducePurchaseOrders(state = initialState, action) {
+  console.log(action);
+
   switch (action.type) {
     case 'SET_PURCHASE_ORDERS':
       return setPurchaseOrders(state, action);

@@ -1,8 +1,9 @@
 class PurchaseOrdersController < ApplicationController
-  before_action :load_purchase_orders
-
   def index
-    render json: @purchase_orders
+    render json: { summary: {},
+                   results: Search.new(PurchaseOrder, params).results,
+                   more_results_available: true,
+                   page: params[:page] }
   end
 
   def seasons
@@ -11,15 +12,5 @@ class PurchaseOrdersController < ApplicationController
 
   def lead_genders
     render json: PurchaseOrder.lead_genders
-  end
-
-  private
-
-  def load_purchase_orders
-    @purchase_orders = filter_purchase_orders
-  end
-
-  def filter_purchase_orders
-    @purchase_orders = Search.new(PurchaseOrder, params).results
   end
 end
