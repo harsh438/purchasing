@@ -8,7 +8,6 @@ function transformPurchaseOrder(purchaseOrder) {
     productCost: purchaseOrder.cost,
     orderId: purchaseOrder.id,
     orderedUnits: purchaseOrder.quantity,
-    deliveredUnits: purchaseOrder.delivered_quantity,
   };
 
   return Object.assign({}, camelizedPurchaseOrder, remappedKeys);
