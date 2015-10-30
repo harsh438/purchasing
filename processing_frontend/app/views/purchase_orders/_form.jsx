@@ -100,7 +100,11 @@ export default class PurchaseOrdersForm extends React.Component {
   }
 
   setStateFromQuery (query) {
-    this.setState(query);
+    this.setState({ brand: query.brand || '',
+                    category: query.category || '',
+                    poNumber: query.poNumber || '',
+                    pid: query.pid || '',
+                    sku: query.sku || '' });
   }
 
   options (options) {
