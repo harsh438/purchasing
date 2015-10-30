@@ -49,6 +49,32 @@ export default class PurchaseOrdersForm extends React.Component {
                 </select>
               </div>
 
+              <div className="row no_gutter">
+                <div className="form-group col-md-4">
+                  <label htmlFor="poNumber">PO Number</label>
+
+                  <input type="text"
+                         name="poNumber"
+                         className="form-control" />
+                </div>
+
+                <div className="form-group col-md-4">
+                  <label htmlFor="pid">PID</label>
+
+                  <input type="text"
+                         name="pid"
+                         className="form-control" />
+                </div>
+
+                <div className="form-group col-md-4">
+                  <label htmlFor="sku">SKU</label>
+
+                  <input type="text"
+                         name="sku"
+                         className="form-control" />
+                </div>
+              </div>
+
               <div className="form-group">
                 <button className="btn btn-success">Search</button>
               </div>
