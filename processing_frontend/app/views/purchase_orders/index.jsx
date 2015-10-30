@@ -77,12 +77,7 @@ class PurchaseOrdersIndex extends React.Component {
 }
 
 function applyState({ filters, purchaseOrders }) {
-  return { brands: filters.brands,
-           categories: filters.categories,
-           page: purchaseOrders.page,
-           summary: purchaseOrders.summary,
-           moreResultsAvailable: purchaseOrders.moreResultsAvailable,
-           purchaseOrders: purchaseOrders.purchaseOrders };
+  return Object.assign({}, filters, purchaseOrders);
 }
 
 export default connect(applyState)(PurchaseOrdersIndex);
