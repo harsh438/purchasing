@@ -1,13 +1,33 @@
+import queryString from 'query-string';
+
+const defaultParams = { sort_field: 'id',
+                        sort_dir: 'desc' };
+
+function removeEmptyKeys(object) {
+  for (let key in object) {
+    if (object.hasOwnProperty(key) && (object[key] == null || object[key] === '')) {
+      delete object[key];
+    }
+  }
+
+  return object;
+}
+
 function fetchPurchaseOrders(params, page, action) {
   return dispatch => {
-    let query = [];
-    if (params.brand) query.push(`vendor_id=${params.brand}`);
-    if (params.category) query.push(`category_id=${params.category}`);
-    if (params.poNumber) query.push(`po_number=${params.poNumber}`);
-    if (params.pid) query.push(`pid=${params.pid}`);
-    if (params.sku) query.push(`sku=${params.sku}`);
+    const translatedParams = {
+      vendor_id: params.brand,
+      category_id: params.category,
+      po_number: params.poNumber,
+      pid: params.pid,
+      sku: params.sku,
+      status: params.status,
+      page: page,
+    };
 
-    fetch(`/api/purchase_orders.json?sort_field=id&sort_dir=desc&page=${page}&${query.join('&')}`)
+    const query = removeEmptyKeys(Object.assign({}, defaultParams, translatedParams));
+
+    fetch(`/api/purchase_orders.json?${queryString.stringify(query)}`)
       .then(response => response.json())
       .then(purchaseOrders => dispatch(action({ page, purchaseOrders })));
   }
