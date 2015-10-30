@@ -47,10 +47,15 @@ class PurchaseOrder < ActiveRecord::Base
           :summary_id,
           :season,
           :product_sku,
-          :category_id,
-          :status
+          :category_id
 
   paginates_per 50
+
+  def self.filter_status(values)
+    values = [values].flatten
+    values = Status.ints_from_filter_syms(values.map(&:to_sym))
+    where(status: values)
+  end
 
   def self.seasons
     PurchaseOrder.pluck('distinct po_season')
@@ -76,6 +81,9 @@ class PurchaseOrder < ActiveRecord::Base
     try(:product).try(:product_detail).try(:planned_weeks_on_sale) || 0
   end
 
+  def status
+    Status.sym_from_int(super)
+  end
 
   def ordered_cost
     quantity * cost

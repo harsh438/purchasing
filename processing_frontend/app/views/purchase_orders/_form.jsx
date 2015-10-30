@@ -100,6 +100,9 @@ export default class PurchaseOrdersForm extends React.Component {
                           <label className="status-label">
                             <input type="checkbox" value="received" />Received
                           </label>
+                          <label className="status-label">
+                            <input type="checkbox" value="delivered" />Delivered
+                          </label>
                       </div>
                     </CheckboxGroup>
                   </div>
@@ -145,7 +148,6 @@ export default class PurchaseOrdersForm extends React.Component {
   }
 
   handleChange (field, { target }) {
-    console.log(this)
     this.setState({ [field]: target.value });
   }
 

@@ -11,7 +11,7 @@ module Purchasing
     config.active_record.raise_in_transactional_callbacks = true
     config.autoload_paths << Rails.root.join('lib')
 
-    config.http_auth = { enabled: true,
+    config.http_auth = { enabled: false,
                          username: 'purchasing',
                          password: 'lastordersplease' }
   end

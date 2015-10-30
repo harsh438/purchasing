@@ -4,8 +4,9 @@ class Filters
   end
 
   def filter(collection)
-    q = @attrs.reduced
-    collection.where(q).order(@attrs.order)
+    scoped = @attrs.scope(collection)
+    query = @attrs.reduced
+    scoped.where(query).order(@attrs.order)
   end
 
   private
@@ -16,8 +17,23 @@ class Filters
       @params = params
     end
 
+    def scope(collection)
+      scopable.reduce(collection) do |collection, (key, values)|
+        scope = "filter_#{key}"
+        if collection.respond_to?(scope)
+          collection.send(scope, values)
+        else
+          collection
+        end
+      end
+    end
+
     def filterable
       @model.filterable_fields
+    end
+
+    def scopable
+      @params.except(*filterable)
     end
 
     def filtered

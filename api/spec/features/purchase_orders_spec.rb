@@ -3,7 +3,7 @@ feature 'Listing purchase orders' do
   let (:vendor) { create(:vendor) }
 
   before(:each) do
-    create_list(:purchase_order, 20, status: 3, season: 'AW15')
+    create_list(:purchase_order, 20, status: 4, season: 'AW15')
     create_list(:purchase_order, 16, :arrived, season: 'SS14')
     create_list(:purchase_order, 15, vendor: vendor, status: -1, season: 'SS15')
   end
@@ -64,7 +64,7 @@ def then_i_should_see_one_result
 end
 
 def when_i_filter_by_status
-  visit '/api/purchase_orders.json?status=3'
+  visit '/api/purchase_orders.json?status[]=balance'
 end
 
 def then_i_should_see_the_first_page_of_orders_with_that_status
@@ -72,7 +72,7 @@ def then_i_should_see_the_first_page_of_orders_with_that_status
 end
 
 def when_i_filter_by_multiple_statuses
-  visit '/api/purchase_orders.json?status[]=3&status[]=-1'
+  visit '/api/purchase_orders.json?status[]=balance&status[]=cancelled'
 end
 
 def then_i_should_see_the_first_page_of_orders_with_those_statuses
