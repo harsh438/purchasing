@@ -3,6 +3,9 @@ function fetchPurchaseOrders(params, page, action) {
     let query = [];
     if (params.brand) query.push(`vendor_id=${params.brand}`);
     if (params.category) query.push(`category_id=${params.category}`);
+    if (params.poNumber) query.push(`po_number=${params.poNumber}`);
+    if (params.pid) query.push(`pid=${params.pid}`);
+    if (params.sku) query.push(`sku=${params.sku}`);
 
     fetch(`/api/purchase_orders.json?sort_field=id&sort_dir=desc&page=${page}&${query.join('&')}`)
       .then(response => response.json())
