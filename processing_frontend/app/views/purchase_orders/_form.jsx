@@ -22,7 +22,7 @@ export default class PurchaseOrdersForm extends React.Component {
           </div>
 
           <div className="panel-body">
-            <form onSubmit={this.handleSubmit.bind(this)} className="form">
+            <form className="form" onSubmit={this.handleSubmit.bind(this)}>
               <div className="form-group">
                 <label htmlFor="brand">Brand</label>
 
