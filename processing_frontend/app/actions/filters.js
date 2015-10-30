@@ -1,15 +1,11 @@
 function setBrands(brands) {
-  return {
-    type: 'SET_BRANDS',
-    brands: brands
-  };
+  return { type: 'SET_BRANDS',
+           brands: brands };
 }
 
 function setCategories(categories) {
-  return {
-    type: 'SET_CATEGORIES',
-    categories: categories
-  };
+  return { type: 'SET_CATEGORIES',
+           categories: categories };
 }
 
 export function loadBrands() {
