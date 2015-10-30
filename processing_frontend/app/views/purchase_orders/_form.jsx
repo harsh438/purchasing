@@ -24,30 +24,32 @@ export default class PurchaseOrdersForm extends React.Component {
 
           <div className="panel-body">
             <form className="form" onSubmit={this.handleSubmit.bind(this)}>
-              <div className="form-group">
-                <label htmlFor="brand">Brand</label>
+              <div className="row no_gutter">
+                <div className="form-group col-md-6">
+                  <label htmlFor="brand">Brand</label>
 
-                <select className="form-control"
-                        id="brand"
-                        name="brand"
-                        onChange={this.handleChange.bind(this, 'brand')}
-                        value={this.state.brand}>
-                  <option value=""> -- select brand -- </option>
-                  {this.options(this.props.brands)}
-                </select>
-              </div>
+                  <select className="form-control"
+                          id="brand"
+                          name="brand"
+                          onChange={this.handleChange.bind(this, 'brand')}
+                          value={this.state.brand}>
+                    <option value=""> -- select brand -- </option>
+                    {this.options(this.props.brands)}
+                  </select>
+                </div>
 
-              <div className="form-group">
-                <label htmlFor="category">Category</label>
+                <div className="form-group col-md-6">
+                  <label htmlFor="category">Category</label>
 
-                <select className="form-control"
-                        id="category"
-                        name="category"
-                        onChange={this.handleChange.bind(this, 'category')}
-                        value={this.state.category}>
-                  <option value=""> -- select category -- </option>
-                  {this.options(this.props.categories)}
-                </select>
+                  <select className="form-control"
+                          id="category"
+                          name="category"
+                          onChange={this.handleChange.bind(this, 'category')}
+                          value={this.state.category}>
+                    <option value=""> -- select category -- </option>
+                    {this.options(this.props.categories)}
+                  </select>
+                </div>
               </div>
 
               <div className="row no_gutter">
