@@ -18,7 +18,7 @@ function fetchPurchaseOrders(params, page, action) {
     const translatedParams = { vendor_id: params.brand,
                                category_id: params.category,
                                summary_id: params.poNumber,
-                               pid: params.pid,
+                               product_id: params.pid,
                                sku: params.sku,
                                status: params.status,
                                page: page };
