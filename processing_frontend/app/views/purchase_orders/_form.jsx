@@ -85,14 +85,22 @@ export default class PurchaseOrdersForm extends React.Component {
               </div>
 
               <div className="row no_gutter">
-                  <div className="form-group col-md-8">
+                  <div className="col-md-8">
                     <CheckboxGroup name="status"
                                    ref="status"
                                    value={this.state.status}
                                    onChange={this.handleStatusChange.bind(this)}>
-                      <input type="checkbox" value="cancelled" />Cancelled
-                      <input type="checkbox" value="balance" />Balance
-                      <input type="checkbox" value="received" />Received
+                      <div className="form-group">
+                          <label className="status-label">
+                            <input type="checkbox" value="cancelled" />Cancelled
+                          </label>
+                          <label className="status-label">
+                            <input type="checkbox" value="balance" />Balance
+                          </label>
+                          <label className="status-label">
+                            <input type="checkbox" value="received" />Received
+                          </label>
+                      </div>
                     </CheckboxGroup>
                   </div>
 
