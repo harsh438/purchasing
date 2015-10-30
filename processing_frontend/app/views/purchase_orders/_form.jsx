@@ -1,3 +1,4 @@
+import CheckboxGroup from 'react-checkbox-group';
 import React from 'react';
 import Select from 'react-select';
 import { Link } from 'react-router';
@@ -83,6 +84,22 @@ export default class PurchaseOrdersForm extends React.Component {
                 </div>
               </div>
 
+              <div className="row no_gutter">
+                  <div className="form-group col-md-8">
+                    <CheckboxGroup name="status"
+                                   ref="status"
+                                   value={this.state.status}
+                                   onChange={this.handleStatusChange.bind(this)}>
+                      <input type="checkbox" value="cancelled" />Cancelled
+                      <input type="checkbox" value="balance" />Balance
+                      <input type="checkbox" value="received" />Received
+                    </CheckboxGroup>
+                  </div>
+
+                <div className="form-group col-md-4">
+                </div>
+              </div>
+
               <div className="form-group">
                 <button className="btn btn-success">Search</button>
 
@@ -103,7 +120,8 @@ export default class PurchaseOrdersForm extends React.Component {
                     category: query.category || '',
                     poNumber: query.poNumber || '',
                     pid: query.pid || '',
-                    sku: query.sku || '' });
+                    sku: query.sku || '',
+                    status: query.status || [] });
   }
 
   options (options) {
@@ -114,7 +132,12 @@ export default class PurchaseOrdersForm extends React.Component {
     });
   }
 
+  handleStatusChange () {
+    this.setState({ ['status']: this.refs.status.getCheckedValues() });
+  }
+
   handleChange (field, { target }) {
+    console.log(this)
     this.setState({ [field]: target.value });
   }
 
