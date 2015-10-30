@@ -3,9 +3,9 @@ feature 'Listing purchase orders' do
   let (:vendor) { create(:vendor) }
 
   before(:each) do
-    create_list(:purchase_order, 20, status: 3)
-    create_list(:purchase_order, 16, :arrived)
-    create_list(:purchase_order, 15, vendor: vendor, status: -1)
+    create_list(:purchase_order, 20, status: 3, season: 'AW15')
+    create_list(:purchase_order, 16, :arrived, season: 'SS14')
+    create_list(:purchase_order, 15, vendor: vendor, status: -1, season: 'SS15')
   end
 
   scenario 'Default purchase order list' do
@@ -31,6 +31,11 @@ feature 'Listing purchase orders' do
   scenario 'Filtering by multiple statuses' do
     when_i_filter_by_multiple_statuses
     then_i_should_see_the_first_page_of_orders_with_those_statuses
+  end
+
+  scenario 'Filtering by season' do
+    when_i_filter_by_season
+    then_i_should_see_the_first_page_of_orders_for_that_season
   end
 end
 
@@ -72,4 +77,12 @@ end
 
 def then_i_should_see_the_first_page_of_orders_with_those_statuses
   expect(subject.count).to eq(35)
+end
+
+def when_i_filter_by_season
+  visit '/api/purchase_orders.json?season=AW15'
+end
+
+def then_i_should_see_the_first_page_of_orders_for_that_season
+  expect(subject.count).to eq(20)
 end
