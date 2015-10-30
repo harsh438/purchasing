@@ -58,6 +58,14 @@ class PurchaseOrder < ActiveRecord::Base
     where(status: values)
   end
 
+  def self.filter_date_from(date)
+    where('added > ?', date)
+  end
+
+  def self.filter_date_until(date)
+    where('added < ?', date)
+  end
+
   def self.seasons
     PurchaseOrder.pluck('distinct po_season')
   end

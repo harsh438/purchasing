@@ -3,9 +3,18 @@ feature 'Listing purchase orders' do
   let (:vendor) { create(:vendor) }
 
   before(:each) do
-    create_list(:purchase_order, 20, status: 4, season: 'AW15')
-    create_list(:purchase_order, 16, :arrived, season: 'SS14')
-    create_list(:purchase_order, 15, vendor: vendor, status: -1, season: 'SS15')
+    create_list(:purchase_order, 20,
+                status: 4,
+                season: 'AW15',
+                created_at: Time.new(2013, 1, 1))
+    create_list(:purchase_order, 16, :arrived,
+                season: 'SS14',
+                created_at: Time.new(2011, 1, 1))
+    create_list(:purchase_order, 15,
+                vendor: vendor,
+                status: -1,
+                season: 'SS15',
+                created_at: Time.new(2014, 1, 1))
   end
 
   scenario 'Default purchase order list' do
@@ -36,6 +45,11 @@ feature 'Listing purchase orders' do
   scenario 'Filtering by season' do
     when_i_filter_by_season
     then_i_should_see_the_first_page_of_orders_for_that_season
+  end
+
+  scenario 'Filtering by date' do
+    when_i_filter_by_date_from
+    then_i_should_see_the_first_page_of_orders_after_that_date
   end
 end
 
@@ -85,4 +99,12 @@ end
 
 def then_i_should_see_the_first_page_of_orders_for_that_season
   expect(subject['results'].count).to eq(20)
+end
+
+def when_i_filter_by_date_from
+  visit '/api/purchase_orders.json?date_from=2012-01-01'
+end
+
+def then_i_should_see_the_first_page_of_orders_after_that_date
+  expect(subject['results'].count).to eq(35)
 end
