@@ -1,6 +1,5 @@
 import React from 'react';
 import Select from 'react-select';
-import serialize from 'form-serialize';
 import { Link } from 'react-router';
 
 export default class PurchaseOrdersForm extends React.Component {
