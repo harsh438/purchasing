@@ -111,6 +111,31 @@ export default class PurchaseOrdersForm extends React.Component {
                 </div>
               </div>
 
+              <div className="row no_gutter">
+                <div className="col-md-4 form-group">
+                  <label htmlFor="date_from">Date From</label>
+
+                  <input className="form-control"
+                         name="date_from"
+                         onChange={this.handleChange.bind(this, 'date_from')}
+                         type="date"
+                         value={this.state.date_from} />
+                </div>
+
+                <div className="col-md-4 form-group">
+                  <label htmlFor="date_until">Date Until</label>
+
+                  <input className="form-control"
+                         name="date_until"
+                         onChange={this.handleChange.bind(this, 'date_until')}
+                         type="date"
+                         value={this.state.date_until} />
+                </div>
+
+                <div className="col-md-4">
+                </div>
+              </div>
+
               <div className="form-group">
                 <button className="btn btn-success">Search</button>
 
