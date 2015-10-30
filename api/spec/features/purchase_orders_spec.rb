@@ -44,7 +44,7 @@ def when_i_visit_the_purchase_orders_route
 end
 
 def then_i_should_see_the_first_page_of_purchase_orders
-  expect(subject.count).to eq(50)
+  expect(subject['results'].count).to eq(50)
 end
 
 def when_i_filter_by_vendor
@@ -52,7 +52,7 @@ def when_i_filter_by_vendor
 end
 
 def then_i_should_see_the_first_page_of_orders_for_that_vendor
-  expect(subject.count).to eq(15)
+  expect(subject['results'].count).to eq(15)
 end
 
 def when_i_visit_the_third_page_of_results
@@ -60,7 +60,7 @@ def when_i_visit_the_third_page_of_results
 end
 
 def then_i_should_see_one_result
-  expect(subject.count).to eq(1)
+  expect(subject['results'].count).to eq(1)
 end
 
 def when_i_filter_by_status
@@ -68,7 +68,7 @@ def when_i_filter_by_status
 end
 
 def then_i_should_see_the_first_page_of_orders_with_that_status
-  expect(subject.count).to eq(20)
+  expect(subject['results'].count).to eq(20)
 end
 
 def when_i_filter_by_multiple_statuses
@@ -76,7 +76,7 @@ def when_i_filter_by_multiple_statuses
 end
 
 def then_i_should_see_the_first_page_of_orders_with_those_statuses
-  expect(subject.count).to eq(35)
+  expect(subject['results'].count).to eq(35)
 end
 
 def when_i_filter_by_season
@@ -84,5 +84,5 @@ def when_i_filter_by_season
 end
 
 def then_i_should_see_the_first_page_of_orders_for_that_season
-  expect(subject.count).to eq(20)
+  expect(subject['results'].count).to eq(20)
 end
