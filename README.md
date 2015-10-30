@@ -5,6 +5,13 @@ purchase processing built in React.
 
 Originally brought to you by the [Made Tech team](https://github.com/madetech).
 
+## Accessing the app
+
+| env        | url                             | user       | password         |
+| -----------|---------------------------------|------------|------------------|
+| production | https://purchasing.surfdome.io  | purchasing | lastordersplease |
+| staging    | https://purchasing.surfdome.cc  | purchasing | lastordersplease |
+
 ## Prerequisites
 
 The Made Team are currently running this app inside our Vagrant env. This env
