@@ -32,8 +32,6 @@ function appendPurchaseOrders(state, action) {
 }
 
 export default function reducePurchaseOrders(state = initialState, action) {
-  console.log(action);
-
   switch (action.type) {
     case 'SET_PURCHASE_ORDERS':
       return setPurchaseOrders(state, action);
