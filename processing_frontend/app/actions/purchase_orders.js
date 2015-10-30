@@ -15,15 +15,13 @@ function removeEmptyKeys(object) {
 
 function fetchPurchaseOrders(params, page, action) {
   return dispatch => {
-    const translatedParams = {
-      vendor_id: params.brand,
-      category_id: params.category,
-      po_number: params.poNumber,
-      pid: params.pid,
-      sku: params.sku,
-      status: params.status,
-      page: page,
-    };
+    const translatedParams = { vendor_id: params.brand,
+                               category_id: params.category,
+                               po_number: params.poNumber,
+                               pid: params.pid,
+                               sku: params.sku,
+                               status: params.status,
+                               page: page };
 
     const query = removeEmptyKeys(Object.assign({}, defaultParams, translatedParams));
 
@@ -34,19 +32,15 @@ function fetchPurchaseOrders(params, page, action) {
 }
 
 function setAction({ page, purchaseOrders }) {
-  return {
-    type: 'SET_PURCHASE_ORDERS',
-    page: page,
-    purchaseOrders: purchaseOrders
-  };
+  return { type: 'SET_PURCHASE_ORDERS',
+           page: page,
+           purchaseOrders: purchaseOrders };
 }
 
 function appendAction({ page, purchaseOrders }) {
-  return {
-    type: 'APPEND_PURCHASE_ORDERS',
-    page: page,
-    purchaseOrders: purchaseOrders
-  };
+  return { type: 'APPEND_PURCHASE_ORDERS',
+           page: page,
+           purchaseOrders: purchaseOrders };
 }
 
 export function loadPurchaseOrders(params) {
