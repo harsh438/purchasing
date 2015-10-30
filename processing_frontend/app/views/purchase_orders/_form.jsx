@@ -56,25 +56,28 @@ export default class PurchaseOrdersForm extends React.Component {
                 <div className="form-group col-md-4">
                   <label htmlFor="poNumber">PO Number</label>
 
-                  <input type="text"
+                  <input className="form-control"
                          name="poNumber"
-                         className="form-control" />
+                         onChange={this.handleChange.bind(this, 'poNumber')}
+                         type="text" />
                 </div>
 
                 <div className="form-group col-md-4">
                   <label htmlFor="pid">PID</label>
 
-                  <input type="text"
+                  <input className="form-control"
                          name="pid"
-                         className="form-control" />
+                         onChange={this.handleChange.bind(this, 'pid')}
+                         type="text" />
                 </div>
 
                 <div className="form-group col-md-4">
                   <label htmlFor="sku">SKU</label>
 
-                  <input type="text"
+                  <input className="form-control"
                          name="sku"
-                         className="form-control" />
+                         onChange={this.handleChange.bind(this, 'sku')}
+                         type="text" />
                 </div>
               </div>
 
@@ -90,7 +93,7 @@ export default class PurchaseOrdersForm extends React.Component {
   }
 
   setStateFromQuery (query) {
-    this.setState({ brand: query.brand, category: query.category });
+    this.setState(query);
   }
 
   options (options) {
@@ -102,7 +105,9 @@ export default class PurchaseOrdersForm extends React.Component {
   }
 
   handleChange (field, { target }) {
-    this.setState({ [field]: target.value });
+    if (target.value.length) {
+      this.setState({ [field]: target.value });
+    }
   }
 
   handleSubmit (e) {
