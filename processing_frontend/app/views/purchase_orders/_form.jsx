@@ -157,6 +157,8 @@ export default class PurchaseOrdersForm extends React.Component {
                     poNumber: query.poNumber || '',
                     pid: query.pid || '',
                     sku: query.sku || '',
+                    date_from: query.date_from || '',
+                    date_until: query.date_until || '',
                     status: query.status || [] });
   }
 

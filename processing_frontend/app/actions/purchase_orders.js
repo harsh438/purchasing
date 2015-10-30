@@ -21,6 +21,8 @@ function fetchPurchaseOrders(params, page, action) {
                                product_id: params.pid,
                                sku: params.sku,
                                status: params.status,
+                               date_from: params.date_from,
+                               date_until: params.date_until,
                                page: page };
 
     const query = removeEmptyKeys(Object.assign({}, defaultParams, translatedParams));
