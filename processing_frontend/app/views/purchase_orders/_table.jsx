@@ -6,11 +6,35 @@ class PurchaseOrderTableHeader extends React.Component {
       <thead>
         <tr>
           <th colSpan="2">&nbsp;</th>
-          <th colSpan="5" style={{ borderLeft: '2px solid #ddd' }}>Product</th>
-          <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>Ordered</th>
-          <th colSpan="4" style={{ borderLeft: '2px solid #ddd' }}>Delivered</th>
-          <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>Cancelled</th>
-          <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>Other</th>
+
+          <th colSpan="5" style={{ borderLeft: '2px solid #ddd' }}>
+            Product
+          </th>
+
+          <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>
+            Ordered
+
+            <div style={{ fontWeight: 'normal' }}>Total cost: £1,000</div>
+            <div style={{ fontWeight: 'normal' }}>Total value: £10,000</div>
+          </th>
+
+          <th colSpan="4" style={{ borderLeft: '2px solid #ddd' }}>
+            Delivered
+
+            <div style={{ fontWeight: 'normal' }}>Total cost: £1,000</div>
+            <div style={{ fontWeight: 'normal' }}>Total value: £10,000</div>
+          </th>
+
+          <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>
+            Cancelled
+
+            <div style={{ fontWeight: 'normal' }}>Total cost: £1,000</div>
+            <div style={{ fontWeight: 'normal' }}>Total value: £10,000</div>
+          </th>
+
+          <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>
+            Other
+          </th>
         </tr>
 
         <tr>

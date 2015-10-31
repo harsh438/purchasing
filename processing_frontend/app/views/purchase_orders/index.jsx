@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { loadBrands, loadCategories } from '../../actions/filters';
 import { loadPurchaseOrders, loadMorePurchaseOrders } from '../../actions/purchase_orders';
-import PurchaseOrdersTable from './_table';
 import PurchaseOrdersForm from './_form';
-import PurchaseOrdersSummary from './_summary';
+import PurchaseOrdersTable from './_table';
 import deepEqual from 'deep-equal';
 
 class PurchaseOrdersIndex extends React.Component {
@@ -28,8 +27,6 @@ class PurchaseOrdersIndex extends React.Component {
                             history={this.props.history}
                             query={this.props.location.query}
                             loadPurchaseOrders={this.loadPurchaseOrders.bind(this)} />
-
-        <PurchaseOrdersSummary />
 
         <PurchaseOrdersTable purchaseOrders={this.props.purchaseOrders} />
 
