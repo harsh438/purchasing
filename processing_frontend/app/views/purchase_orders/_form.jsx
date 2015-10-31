@@ -13,139 +13,126 @@ export default class PurchaseOrdersForm extends React.Component {
   }
 
   render () {
-    const className = `col-md-${this.props.columns}`;
-
     return (
-      <div className={className}>
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">Search Purchase Orders</h3>
-          </div>
+      <div className="panel panel-default">
+        <div className="panel-heading">
+          <h3 className="panel-title">Search Purchase Orders</h3>
+        </div>
 
-          <div className="panel-body">
-            <form className="form" onSubmit={this.handleSubmit.bind(this)}>
-              <div className="row no_gutter">
-                <div className="form-group col-md-6">
-                  <label htmlFor="brand">Brand</label>
+        <div className="panel-body">
+          <form className="form" onSubmit={this.handleSubmit.bind(this)}>
+            <div className="row no_gutter">
+              <div className="form-group col-md-3">
+                <label htmlFor="brand">Brand</label>
 
-                  <select className="form-control"
-                          id="brand"
-                          name="brand"
-                          onChange={this.handleChange.bind(this, 'brand')}
-                          value={this.state.brand}>
-                    <option value=""> -- select brand -- </option>
-                    {this.options(this.props.brands)}
-                  </select>
-                </div>
-
-                <div className="form-group col-md-6">
-                  <label htmlFor="category">Category</label>
-
-                  <select className="form-control"
-                          id="category"
-                          name="category"
-                          onChange={this.handleChange.bind(this, 'category')}
-                          value={this.state.category}>
-                    <option value=""> -- select category -- </option>
-                    {this.options(this.props.categories)}
-                  </select>
-                </div>
+                <select className="form-control"
+                        id="brand"
+                        name="brand"
+                        onChange={this.handleChange.bind(this, 'brand')}
+                        value={this.state.brand}>
+                  <option value=""> -- select brand -- </option>
+                  {this.options(this.props.brands)}
+                </select>
               </div>
 
-              <div className="row no_gutter">
-                <div className="form-group col-md-4">
-                  <label htmlFor="poNumber">PO Number</label>
+              <div className="form-group col-md-3">
+                <label htmlFor="category">Category</label>
 
-                  <input className="form-control"
-                         name="poNumber"
-                         onChange={this.handleChange.bind(this, 'poNumber')}
-                         type="text"
-                         value={this.state.poNumber} />
-                </div>
+                <select className="form-control"
+                        id="category"
+                        name="category"
+                        onChange={this.handleChange.bind(this, 'category')}
+                        value={this.state.category}>
+                  <option value=""> -- select category -- </option>
+                  {this.options(this.props.categories)}
+                </select>
+              </div>
+              <div className="form-group col-md-2">
+                <label htmlFor="poNumber">PO Number</label>
 
-                <div className="form-group col-md-4">
-                  <label htmlFor="pid">PID</label>
-
-                  <input className="form-control"
-                         name="pid"
-                         onChange={this.handleChange.bind(this, 'pid')}
-                         type="text"
-                         value={this.state.pid} />
-                </div>
-
-                <div className="form-group col-md-4">
-                  <label htmlFor="sku">SKU</label>
-
-                  <input className="form-control"
-                         name="sku"
-                         onChange={this.handleChange.bind(this, 'sku')}
-                         type="text"
-                         value={this.state.sku} />
-                </div>
+                <input className="form-control"
+                       name="poNumber"
+                       onChange={this.handleChange.bind(this, 'poNumber')}
+                       type="search"
+                       value={this.state.poNumber} />
               </div>
 
-              <div className="row no_gutter">
-                  <div className="col-md-8">
-                    <CheckboxGroup name="status"
-                                   ref="status"
-                                   value={this.state.status}
-                                   onChange={this.handleStatusChange.bind(this)}>
-                      <div className="form-group">
-                          <label className="status-label">
-                            <input type="checkbox" value="cancelled" /> Cancelled
-                          </label>
-                          <label className="status-label">
-                            <input type="checkbox" value="balance" /> Balance
-                          </label>
-                          <label className="status-label">
-                            <input type="checkbox" value="received" /> Received
-                          </label>
-                          <label className="status-label">
-                            <input type="checkbox" value="delivered" /> Delivered
-                          </label>
-                      </div>
-                    </CheckboxGroup>
+              <div className="form-group col-md-2">
+                <label htmlFor="pid">PID</label>
+
+                <input className="form-control"
+                       name="pid"
+                       onChange={this.handleChange.bind(this, 'pid')}
+                       type="search"
+                       value={this.state.pid} />
+              </div>
+
+              <div className="form-group col-md-2">
+                <label htmlFor="sku">SKU</label>
+
+                <input className="form-control"
+                       name="sku"
+                       onChange={this.handleChange.bind(this, 'sku')}
+                       type="search"
+                       value={this.state.sku} />
+              </div>
+            </div>
+
+            <div className="row no_gutter">
+              <div className="col-md-2 form-group">
+                <label htmlFor="date_from">Date From</label>
+
+                <input className="form-control"
+                       name="date_from"
+                       onChange={this.handleChange.bind(this, 'date_from')}
+                       type="date"
+                       value={this.state.date_from} />
+              </div>
+
+              <div className="col-md-2 form-group">
+                <label htmlFor="date_until">Date Until</label>
+
+                <input className="form-control"
+                       name="date_until"
+                       onChange={this.handleChange.bind(this, 'date_until')}
+                       type="date"
+                       value={this.state.date_until} />
+              </div>
+
+              <div className="col-md-4" style={{ paddingTop: '2.2em' }}>
+                <CheckboxGroup name="status"
+                               ref="status"
+                               value={this.state.status}
+                               onChange={this.handleStatusChange.bind(this)}>
+                  <div className="form-group">
+                    <label className="status-label">
+                      <input type="checkbox" value="cancelled" /> Cancelled
+                    </label>
+                    <label className="status-label">
+                      <input type="checkbox" value="balance" /> Balance
+                    </label>
+                    <label className="status-label">
+                      <input type="checkbox" value="received" /> Received
+                    </label>
+                    <label className="status-label">
+                      <input type="checkbox" value="delivered" /> Delivered
+                    </label>
                   </div>
-
-                <div className="form-group col-md-4">
-                </div>
+                </CheckboxGroup>
               </div>
 
-              <div className="row no_gutter">
-                <div className="col-md-4 form-group">
-                  <label htmlFor="date_from">Date From</label>
+              <div className="col-md-4 text-right">
+                <button className="btn btn-success" style={{ marginTop: '1.74em', width: '100%' }}>
+                  Search
+                </button>
 
-                  <input className="form-control"
-                         name="date_from"
-                         onChange={this.handleChange.bind(this, 'date_from')}
-                         type="date"
-                         value={this.state.date_from} />
-                </div>
-
-                <div className="col-md-4 form-group">
-                  <label htmlFor="date_until">Date Until</label>
-
-                  <input className="form-control"
-                         name="date_until"
-                         onChange={this.handleChange.bind(this, 'date_until')}
-                         type="date"
-                         value={this.state.date_until} />
-                </div>
-
-                <div className="col-md-4">
-                </div>
-              </div>
-
-              <div className="form-group">
-                <button className="btn btn-success">Search</button>
-
-                <Link style={{ marginLeft: '1em' }}
+                <Link style={{ display: 'block', marginTop: '1em' }}
                       to="/">
-                  clear filters
+                  clear all filters
                 </Link>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     );
