@@ -35,10 +35,6 @@ class PurchaseOrdersIndex extends React.Component {
     );
   }
 
-  nextPage () {
-    return parseInt(this.props.page, 10) + 1;
-  }
-
   renderLoadMoreButton () {
     if (this.props.moreResultsAvailable) {
       return (
@@ -65,6 +61,10 @@ class PurchaseOrdersIndex extends React.Component {
 
   loadMorePurchaseOrders () {
     this.props.dispatch(loadMorePurchaseOrders(this.props.location.query, this.nextPage()));
+  }
+
+  nextPage () {
+    return parseInt(this.props.page, 10) + 1;
   }
 }
 
