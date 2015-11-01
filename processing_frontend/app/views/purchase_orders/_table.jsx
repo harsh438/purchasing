@@ -1,9 +1,23 @@
 import React from 'react';
 
 class PurchaseOrderTableHeader extends React.Component {
+  componentWillMount () {
+    this.state = {};
+    this.onScroll();
+    window.addEventListener('scroll', this.onScroll.bind(this));
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    return this.state.sticky !== nextState.sticky;
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('scroll', this.onScroll.bind(this));
+  }
+
   render () {
     return (
-      <thead>
+      <thead className={this.className()}>
         <tr>
           <th colSpan="2">&nbsp;</th>
 
@@ -72,6 +86,32 @@ class PurchaseOrderTableHeader extends React.Component {
         </tr>
       </thead>
     );
+  }
+
+  onScroll () {
+    let newState = { x: window.pageXOffset, y: window.pageYOffset };
+
+    if (!this.state.sticky && this.shouldStick()) {
+      newState.sticky = true;
+    } else if (this.state.sticky && !this.shouldStick()) {
+      newState.sticky = false;
+    }
+
+    this.setState(newState);
+  }
+
+  shouldStick () {
+    return window.pageYOffset > 200;
+  }
+
+  className () {
+    let className = 'purchase_orders_table__thead';
+
+    if (this.state.sticky) {
+      className += '--sticky';
+    }
+
+    return className;
   }
 }
 

@@ -3,3 +3,13 @@
     font-size: .8em;
   }
 }
+
+.purchase_orders_table__thead--sticky {
+  background: white;
+  display: block;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 2335px;
+  z-index: 2000;
+}
