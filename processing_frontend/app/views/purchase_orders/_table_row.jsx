@@ -48,20 +48,4 @@ export default class PurchaseOrderRow extends React.Component {
       </tr>
     );
   }
-
-  calculateCellWidths () {
-    let rowWidths = [];
-
-    for (let i = 0; i < this.refs.row.children.length; i++) {
-      rowWidths.push(this.refs.row.children[i].clientWidth);
-    }
-
-    return rowWidths;
-  }
-
-  fixCellWidths (widths) {
-    for (let i = 0; i < this.refs.row.children.length; i++) {
-      this.refs.row.children[i].style.width = widths[i];
-    }
-  }
 }

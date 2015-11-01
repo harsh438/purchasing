@@ -5,21 +5,12 @@ import PurchaseOrderRow from './_table_row';
 export default class PurchaseOrdersTable extends React.Component {
   componentWillMount () {
     this.state = { sticky: false };
-    this.rows = [];
     this.onScroll();
     window.addEventListener('scroll', this.onScroll.bind(this));
   }
 
-  componentDidMount () {
-    this.fixWidths();
-  }
-
   shouldComponentUpdate (nextProps, nextState) {
     return this.props.purchaseOrders !== nextProps.purchaseOrders || this.state.sticky !== nextState.sticky;
-  }
-
-  componentDidUpdate () {
-    this.fixWidths();
   }
 
   componentWillUnmount () {
@@ -29,9 +20,12 @@ export default class PurchaseOrdersTable extends React.Component {
   render () {
     return (
       <div className={this.className()}>
-        <table className="table" style={{ width: '1500px' }}>
-          <PurchaseOrderTableHeader ref={(header) => this.header = header}
-                                    width="1500px" />
+        <table className="table" style={{ width: '1490px' }}>
+          <colgroup>{this.renderCols()}</colgroup>
+
+          <PurchaseOrderTableHeader cellWidths={this.cellWidths()}
+                                    ref={(header) => this.header = header}
+                                    width="1490px" />
 
           <tbody>{this.renderRows()}</tbody>
         </table>
@@ -39,10 +33,26 @@ export default class PurchaseOrdersTable extends React.Component {
     );
   }
 
+  cellWidths () {
+    return [48, 64, 54, 271, 40, 49, 57, 60, 52, 42, 35, 42, 33, 50, 35, 42, 33, 35, 42, 33, 74, 52, 57, 65, 56, 69];
+  }
+
+  renderCols () {
+    const cellWidths = this.cellWidths();
+    let cols = [];
+
+    for (let i = 0; i < cellWidths.length; i++) {
+      cols.push((
+        <col key={i} style={{ width: cellWidths[i] }} />
+      ));
+    }
+
+    return cols;
+  }
+
   renderRows () {
     let currentPoNumber;
     let alt = true;
-    console.log('renderRows', this.props.purchaseOrders.length);
 
     return this.props.purchaseOrders.map((purchaseOrder) => {
       if (currentPoNumber !== purchaseOrder.poNumber) {
@@ -50,12 +60,9 @@ export default class PurchaseOrdersTable extends React.Component {
         alt = !alt;
       }
 
-      console.log('mapping')
-
       return (
         <PurchaseOrderRow alt={alt}
                           key={purchaseOrder.orderId}
-                          ref={this.addRow.bind(this)}
                           purchaseOrder={purchaseOrder} />
       );
     });
@@ -63,11 +70,7 @@ export default class PurchaseOrdersTable extends React.Component {
 
   className () {
     let className = 'purchase_orders_table';
-
-    if (this.state.sticky) {
-      className += '--sticky';
-    }
-
+    if (this.state.sticky) className += '--sticky';
     return className;
   }
 
@@ -78,27 +81,6 @@ export default class PurchaseOrdersTable extends React.Component {
       this.setState({ sticky: true });
     } else if (this.state.sticky && !shouldStick) {
       this.setState({ sticky: false });
-    }
-  }
-
-  addRow (row) {
-    if (row === null) {
-      this.rows = [];
-    } else {
-      this.rows.push(row);
-    }
-  }
-
-  fixWidths () {
-    console.log('fixWidths', this.rows.length);
-
-    if (this.rows[0]) {
-      const widths = this.rows[0].calculateCellWidths();
-      this.header.fixCellWidths(widths);
-
-      for (let i = 0; i < this.rows.length; i++) {
-        this.rows[i].fixCellWidths(widths);
-      }
     }
   }
 }

@@ -1,6 +1,10 @@
 import React from 'react';
 
 export default class PurchaseOrderTableHeader extends React.Component {
+  componentDidMount () {
+    this.fixCellWidths();
+  }
+
   render () {
     return (
       <thead style={{ width: this.props.width }}>
@@ -74,10 +78,9 @@ export default class PurchaseOrderTableHeader extends React.Component {
     );
   }
 
-  fixCellWidths (widths) {
-    console.log('tableheader fixCellWidths')
+  fixCellWidths () {
     for (let i = 0; i < this.refs.row.children.length; i++) {
-      this.refs.row.children[i].style.width = widths[i];
+      this.refs.row.children[i].style.width = this.props.cellWidths[i];
     }
   }
 }
