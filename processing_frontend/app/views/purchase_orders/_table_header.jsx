@@ -1,23 +1,9 @@
 import React from 'react';
 
 export default class PurchaseOrderTableHeader extends React.Component {
-  componentWillMount () {
-    this.state = {};
-    this.onScroll();
-    window.addEventListener('scroll', this.onScroll.bind(this));
-  }
-
-  shouldComponentUpdate (nextProps, nextState) {
-    return this.state.sticky !== nextState.sticky;
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('scroll', this.onScroll.bind(this));
-  }
-
   render () {
     return (
-      <thead className={this.className()}>
+      <thead style={{ width: this.props.width }}>
         <tr>
           <th colSpan="2">&nbsp;</th>
 
@@ -51,7 +37,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
           </th>
         </tr>
 
-        <tr>
+        <tr ref="row">
           <th>PO #</th>
           <th>Status</th>
 
@@ -64,18 +50,18 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th style={{ borderLeft: '2px solid #ddd' }}>Order #</th>
           <th>Date</th>
           <th>Type</th>
-          <th>Units</th>
+          <th>Qty</th>
           <th>Cost</th>
-          <th>Value</th>
+          <th>Val</th>
 
           <th style={{ borderLeft: '2px solid #ddd' }}>Date</th>
-          <th>Units</th>
+          <th>Qty</th>
           <th>Cost</th>
-          <th>Value</th>
+          <th>Val</th>
 
-          <th style={{ borderLeft: '2px solid #ddd' }}>Units</th>
+          <th style={{ borderLeft: '2px solid #ddd' }}>Qty</th>
           <th>Cost</th>
-          <th>Value</th>
+          <th>Val</th>
 
           <th style={{ borderLeft: '2px solid #ddd' }}>Operator</th>
           <th>Weeks on Sale</th>
@@ -88,29 +74,10 @@ export default class PurchaseOrderTableHeader extends React.Component {
     );
   }
 
-  onScroll () {
-    let newState = { x: window.pageXOffset, y: window.pageYOffset };
-
-    if (!this.state.sticky && this.shouldStick()) {
-      newState.sticky = true;
-    } else if (this.state.sticky && !this.shouldStick()) {
-      newState.sticky = false;
+  fixCellWidths (widths) {
+    console.log('tableheader fixCellWidths')
+    for (let i = 0; i < this.refs.row.children.length; i++) {
+      this.refs.row.children[i].style.width = widths[i];
     }
-
-    this.setState(newState);
-  }
-
-  shouldStick () {
-    return window.pageYOffset > 290;
-  }
-
-  className () {
-    let className = 'purchase_orders_table__thead';
-
-    if (this.state.sticky) {
-      className += '--sticky';
-    }
-
-    return className;
   }
 }

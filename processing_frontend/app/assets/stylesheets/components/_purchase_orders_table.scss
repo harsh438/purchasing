@@ -1,14 +1,17 @@
-.purchase_orders_table {
+.purchase_orders_table,
+.purchase_orders_table--sticky {
   .table {
     font-size: .8em;
   }
 }
 
-.purchase_orders_table__thead--sticky {
-  background: white;
-  display: block;
-  left: 0;
-  position: fixed;
-  top: 51px;
-  z-index: 2000;
+.purchase_orders_table--sticky {
+  thead {
+    background: white;
+    display: block;
+    left: 14px;
+    position: fixed;
+    top: 51px;
+    z-index: 2000;
+  }
 }

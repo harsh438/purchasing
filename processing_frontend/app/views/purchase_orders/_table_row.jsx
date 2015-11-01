@@ -3,7 +3,7 @@ import React from 'react';
 export default class PurchaseOrderRow extends React.Component {
   render () {
     return (
-      <tr className={this.props.alt ? 'active' : ''}>
+      <tr className={this.props.alt ? 'active' : ''} ref="row">
         <td>{this.props.purchaseOrder.poNumber}</td>
         <td>{this.props.purchaseOrder.status}</td>
 
@@ -47,5 +47,21 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.comment}</td>
       </tr>
     );
+  }
+
+  calculateCellWidths () {
+    let rowWidths = [];
+
+    for (let i = 0; i < this.refs.row.children.length; i++) {
+      rowWidths.push(this.refs.row.children[i].clientWidth);
+    }
+
+    return rowWidths;
+  }
+
+  fixCellWidths (widths) {
+    for (let i = 0; i < this.refs.row.children.length; i++) {
+      this.refs.row.children[i].style.width = widths[i];
+    }
   }
 }
