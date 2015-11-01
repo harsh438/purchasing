@@ -36,7 +36,7 @@ class PurchaseOrdersIndex extends React.Component {
   }
 
   nextPage () {
-    return this.props.page + 1;
+    return parseInt(this.props.page, 10) + 1;
   }
 
   renderLoadMoreButton () {
