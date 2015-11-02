@@ -12,6 +12,6 @@ class Search
   end
 
   def results
-    unpaginated_result.page(@attrs[:page])
+    unpaginated_results.page(@attrs[:page])
   end
 end
