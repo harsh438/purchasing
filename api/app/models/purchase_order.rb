@@ -72,6 +72,8 @@ class PurchaseOrder < ActiveRecord::Base
 
   def self.lead_genders
     PurchaseOrder.pluck('distinct orderTool_LG')
+                 .map { |c| Gender.string_from(c) }
+                 .compact
   end
 
   def category
