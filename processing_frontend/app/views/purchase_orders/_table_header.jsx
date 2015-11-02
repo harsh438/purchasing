@@ -10,7 +10,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
       <thead style={{ width: this.props.width }}>
         <tr>
           <th colSpan="2">
-            {this.renderExportUrl()}
+            {this.renderTopCorner()}
           </th>
 
           <th colSpan="5" style={{ borderLeft: '2px solid #ddd' }}>
@@ -88,6 +88,18 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th>Comment</th>
         </tr>
       </thead>
+    );
+  }
+
+  renderTopCorner () {
+    return (
+      <div>
+        <div>
+          <strong>Total Results:</strong> {this.props.totalCount}
+        </div>
+
+        {this.renderExportUrl()}
+      </div>
     );
   }
 

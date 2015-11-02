@@ -27,6 +27,8 @@ export default class PurchaseOrdersTable extends React.Component {
                                     exportable={this.props.exportable}
                                     ref={(header) => this.header = header}
                                     summary={this.props.summary}
+                                    totalPages={this.props.totalPages}
+                                    totalCount={this.props.totalCount}
                                     width="1600px" />
 
           <tbody>{this.renderRows()}</tbody>
