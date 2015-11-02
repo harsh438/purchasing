@@ -20,22 +20,22 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>
             Ordered
 
-            <div style={{ fontWeight: 'normal' }}>Total cost: £1,000</div>
-            <div style={{ fontWeight: 'normal' }}>Total value: £10,000</div>
+            <div style={{ fontWeight: 'normal' }}>Total cost: £{this.props.summary.orderedCost}</div>
+            <div style={{ fontWeight: 'normal' }}>Total value: £{this.props.summary.orderedValue}</div>
           </th>
 
           <th colSpan="4" style={{ borderLeft: '2px solid #ddd' }}>
             Delivered
 
-            <div style={{ fontWeight: 'normal' }}>Total cost: £1,000</div>
-            <div style={{ fontWeight: 'normal' }}>Total value: £10,000</div>
+            <div style={{ fontWeight: 'normal' }}>Total cost: £{this.props.summary.deliveredCost}</div>
+            <div style={{ fontWeight: 'normal' }}>Total value: £{this.props.summary.deliveredValue}</div>
           </th>
 
           <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>
             Cancelled
 
-            <div style={{ fontWeight: 'normal' }}>Total cost: £1,000</div>
-            <div style={{ fontWeight: 'normal' }}>Total value: £10,000</div>
+            <div style={{ fontWeight: 'normal' }}>Total cost: £{this.props.summary.cancelledCost}</div>
+            <div style={{ fontWeight: 'normal' }}>Total value: £{this.props.summary.cancelledValue}</div>
           </th>
 
           <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>

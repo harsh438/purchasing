@@ -1,5 +1,10 @@
 import humps from 'humps';
-const initialState =  { page: 1, purchaseOrders: [], totalPages: 0, totalResults: 0, exportable: {} };
+const initialState =  { exportable: {},
+                        page: 1,
+                        purchaseOrders: [],
+                        totalPages: 0,
+                        totalResults: 0,
+                        summary: {} };
 
 function transformPurchaseOrder(purchaseOrder) {
   const camelizedPurchaseOrder = humps.camelizeKeys(purchaseOrder);
@@ -12,15 +17,24 @@ function transformPurchaseOrder(purchaseOrder) {
   return Object.assign({}, camelizedPurchaseOrder, remappedKeys);
 }
 
+function transformSummary(summary) {
+  const camelizedSummary = humps.camelizeKeys(summary)
+
+  return Object.keys(camelizedSummary).reduce((acc, key) => {
+    acc[key] = camelizedSummary[key].toFixed(2)
+    return acc
+  }, {});
+}
+
 function setPurchaseOrders(state, action) {
   const purchaseOrders = action.results.map(transformPurchaseOrder);
 
   return Object.assign({}, state, { purchaseOrders,
                                     page: action.page,
-                                    summary: action.summary,
                                     totalPages: action.totalPages,
                                     totalCount: action.totalCount,
                                     exportable: action.exportable,
+                                    summary: transformSummary(action.summary),
                                     moreResultsAvailable: action.moreResultsAvailable });
 }
 
@@ -30,10 +44,10 @@ function appendPurchaseOrders(state, action) {
 
   return Object.assign({}, state, { purchaseOrders,
                                     page: action.page,
-                                    summary: action.summary,
                                     totalPages: action.totalPages,
                                     totalCount: action.totalCount,
                                     exportable: action.exportable,
+                                    summary: action.summary.map(transformSummary),
                                     moreResultsAvailable: action.moreResultsAvailable });
 }
 

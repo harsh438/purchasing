@@ -12,6 +12,8 @@ class PurchaseOrder::Search
       page: attrs[:page],
       exportable: {} }.tap do |data|
       if filters.has_filters?(PurchaseOrder.mapped.with_summary)
+        data[:summary] = summarize(results)
+
         if results.total_pages > 10
           data[:exportable][:massive] = true
         else
@@ -19,5 +21,14 @@ class PurchaseOrder::Search
         end
       end
     end
+  end
+
+  def summarize(results)
+    { ordered_cost: results.map { |r| r.ordered_cost }.compact.sum,
+      ordered_value: results.map { |r| r.ordered_value }.compact.sum,
+      delivered_cost: results.map { |r| r.delivered_cost }.compact.sum,
+      delivered_value: results.map { |r| r.delivered_value }.compact.sum,
+      cancelled_cost: results.map { |r| r.cancelled_cost }.compact.sum,
+      cancelled_value: results.map { |r| r.cancelled_value }.compact.sum }
   end
 end

@@ -42,11 +42,11 @@ function action(type) {
 
     return { page,
              results,
-             summary,
              type,
              exportable,
              totalPages: purchaseOrders.total_pages,
              totalCount: purchaseOrders.total_count,
+             summary: purchaseOrders.summary,
              moreResultsAvailable: purchaseOrders.more_results_available };
   }
 }
