@@ -19,7 +19,7 @@ export default class PurchaseOrdersTable extends React.Component {
 
   render () {
     return (
-      <div className={this.className()}>
+      <div className={this.className()} style={{ paddingTop: this.paddingTop() }}>
         <table className="table" style={{ width: '1600px' }}>
           <colgroup>{this.renderCols()}</colgroup>
 
@@ -78,13 +78,25 @@ export default class PurchaseOrdersTable extends React.Component {
     return className;
   }
 
+  paddingTop () {
+    if (this.header && this.shouldStick()) {
+      return this.header.refs.thead.clientHeight;
+    }
+  }
+
   onScroll () {
-    const shouldStick = window.pageYOffset > 290;
+    const shouldStick = this.shouldStick();
 
     if (!this.state.sticky && shouldStick) {
       this.setState({ sticky: true });
     } else if (this.state.sticky && !shouldStick) {
       this.setState({ sticky: false });
+    }
+  }
+
+  shouldStick () {
+    if (this.header) {
+      return window.pageYOffset > 360;
     }
   }
 }

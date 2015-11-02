@@ -7,7 +7,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
 
   render () {
     return (
-      <thead style={{ width: this.props.width }}>
+      <thead ref="thead" style={{ width: this.props.width }}>
         <tr>
           <th colSpan="2">
             {this.renderTopCorner()}
