@@ -51,7 +51,7 @@ feature 'Download purchase orders as CSV' do
   def then_the_csv_file_should_contain_only_purchase_orders_for_that_vendor
     expect(csv_result_rows.count).to eq(15)
 
-    index = csv_header_row.find_index { |row| row == 'product_name' }
+    index = csv_header_row.find_index { |row| row == 'Product name' }
 
     csv_result_rows.each do |row|
       expect(row[index]).to include(vendor.name)

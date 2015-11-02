@@ -2,12 +2,48 @@ class PurchaseOrder < ActiveRecord::Base
   include LegacyMappings
   include Searchable
 
+  CSV_COLUMN_ORDER = %w(po_number
+                        status
+                        product_id
+                        product_name
+                        product_sku
+                        product_cost
+                        product_size
+                        order_id
+                        order_date
+                        order_type
+                        ordered_units
+                        ordered_cost
+                        ordered_value
+                        delivery_date
+                        delivered_units
+                        delivered_cost
+                        delivered_value
+                        cancelled_units
+                        cancelled_cost
+                        cancelled_value
+                        operator
+                        closing_date
+                        weeks_on_sale
+                        brand_size
+                        gender
+                        comment)
+
+  def self.to_csv
+    CSV.generate do |csv|
+      csv << CSV_COLUMN_ORDER.map(&:humanize)
+
+      where(nil).each do |purchase_order|
+        csv << purchase_order.as_json({}).values_at(*CSV_COLUMN_ORDER.map(&:to_sym))
+      end
+    end
+  end
+
   belongs_to :vendor, foreign_key: :orderTool_venID
   belongs_to :product, foreign_key: :pID
   belongs_to :summary, foreign_key: :po_number
 
   has_many :suppliers, through: :vendor, class_name: 'Supplier'
-
   map_attributes id: :id,
                  product_id: :pID,
                  option_id: :oID,
@@ -202,14 +238,5 @@ class PurchaseOrder < ActiveRecord::Base
                 balance_cost: balance_cost,
                 balance_value: balance_value,
                 closing_date: closing_date)
-  end
-
-  def self.to_csv
-    CSV.generate do |csv|
-      where(nil).each_with_index do |purchase_order, index|
-        csv << purchase_order.as_json({}).keys if index == 0
-        csv << purchase_order.as_json({}).values
-      end
-    end
   end
 end
