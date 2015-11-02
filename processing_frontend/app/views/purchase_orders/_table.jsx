@@ -20,13 +20,13 @@ export default class PurchaseOrdersTable extends React.Component {
   render () {
     return (
       <div className={this.className()}>
-        <table className="table" style={{ width: '1490px' }}>
+        <table className="table" style={{ width: '1600px' }}>
           <colgroup>{this.renderCols()}</colgroup>
 
           <PurchaseOrderTableHeader cellWidths={this.cellWidths()}
                                     exportable={this.props.exportable}
                                     ref={(header) => this.header = header}
-                                    width="1490px" />
+                                    width="1600px" />
 
           <tbody>{this.renderRows()}</tbody>
         </table>
@@ -35,7 +35,7 @@ export default class PurchaseOrdersTable extends React.Component {
   }
 
   cellWidths () {
-    return [48, 64, 54, 271, 40, 49, 57, 60, 52, 42, 35, 42, 33, 50, 35, 42, 33, 35, 42, 33, 74, 52, 57, 65, 56, 69];
+    return [48, 64, 54, 271, 40, 49, 57, 60, 52, 42, 35, 42, 33, 50, 35, 42, 33, 35, 42, 33, 35, 42, 33, 74, 52, 57, 65, 56, 69];
   }
 
   renderCols () {

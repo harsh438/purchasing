@@ -38,6 +38,12 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.cancelledValue || 'n/a'}</td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
+          {this.props.purchaseOrder.balanceUnits || 'n/a'}
+        </td>
+        <td>{this.props.purchaseOrder.balanceCost || 'n/a'}</td>
+        <td>{this.props.purchaseOrder.balanceValue || 'n/a'}</td>
+
+        <td style={{ borderLeft: '2px solid #ddd' }}>
           {this.props.purchaseOrder.operator}
         </td>
         <td>{this.props.purchaseOrder.closingDate}</td>
