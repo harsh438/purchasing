@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: 'frontend#index'
 
-  scope :api, format: true, constraints: { format: :json } do
+  scope :api, format: true, constraints: { format: /json|csv/ } do
     resources :purchase_orders, only: :index
     resources :categories, only: :index
     resources :products, only: :index

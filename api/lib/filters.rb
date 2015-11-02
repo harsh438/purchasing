@@ -5,8 +5,11 @@ class Filters
 
   def filter(collection)
     scoped = @attrs.scope(collection)
-    query = @attrs.reduced
-    scoped.where(query).order(@attrs.order)
+    scoped.where(@attrs.reduced).order(@attrs.order)
+  end
+
+  def has_filters?
+    !@attrs.reduced.empty?
   end
 
   private
