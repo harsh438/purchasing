@@ -41,8 +41,8 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>
             Balance
 
-            <div style={{ fontWeight: 'normal' }}>Total cost: £1,000</div>
-            <div style={{ fontWeight: 'normal' }}>Total value: £10,000</div>
+            <div style={{ fontWeight: 'normal' }}>Total cost: £{this.props.summary.balanceCost}</div>
+            <div style={{ fontWeight: 'normal' }}>Total value: £{this.props.summary.balanceValue}</div>
           </th>
 
           <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>
