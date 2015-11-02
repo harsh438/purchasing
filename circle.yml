@@ -1,6 +1,11 @@
 general:
   build_dir: api
 
+dependencies:
+  post:
+    - npm run build:
+        pwd: processing_frontend/
+
 deployment:
   dev:
     branch: [devops, staging, production]
