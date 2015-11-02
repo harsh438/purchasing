@@ -9,8 +9,6 @@ dependencies:
   post:
     - npm install:
         pwd: ../processing_frontend/
-    - ls -la node_modules/react-select/dist:
-        pwd: ../processing_frontend/
     - npm run build:
         pwd: ../processing_frontend/
 
