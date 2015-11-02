@@ -43,7 +43,7 @@ class PurchaseOrder < ActiveRecord::Base
                  original_option_id: :original_oID
 
   filters :vendor_id,
-          :lead_gender,
+          :gender,
           :summary_id,
           :season,
           :product_sku,
@@ -70,10 +70,17 @@ class PurchaseOrder < ActiveRecord::Base
     PurchaseOrder.pluck('distinct po_season')
   end
 
-  def self.lead_genders
+  def self.genders
     PurchaseOrder.pluck('distinct orderTool_LG')
-                 .map { |c| Gender.string_from(c) }
-                 .compact
+                 .map do |c|
+                   name = Gender.string_from(c)
+                   { id: c, name: name } if name
+                 end.compact
+
+  end
+
+  def orderTool_LG
+    Gender.string_from(super)
   end
 
   def category

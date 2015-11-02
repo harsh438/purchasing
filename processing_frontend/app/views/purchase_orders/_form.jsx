@@ -99,7 +99,35 @@ export default class PurchaseOrdersForm extends React.Component {
                        value={this.state.date_until} />
               </div>
 
-              <div className="col-md-4" style={{ paddingTop: '2.2em' }}>
+              <div className="col-md-2">
+                <label htmlFor="gender">Gender</label>
+
+                <select className="form-control"
+                        id="gender"
+                        name="gender"
+                        onChange={this.handleChange.bind(this, 'gender')}
+                        value={this.state.gender}>
+                  <option value=""> -- select gender -- </option>
+                  {this.options(this.props.genders)}
+                </select>
+              </div>
+
+              <div className="col-md-2" style={{ paddingTop: '2.2em' }}>
+              </div>
+
+              <div className="col-md-4 text-right">
+                <button className="btn btn-success" style={{ marginTop: '1.74em', width: '100%' }}>
+                  Search
+                </button>
+
+                <Link style={{ display: 'block', marginTop: '1em' }}
+                      to="/">
+                  clear all filters
+                </Link>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-4">
                 <CheckboxGroup name="status"
                                ref="status"
                                value={this.state.status}
@@ -120,16 +148,9 @@ export default class PurchaseOrdersForm extends React.Component {
                   </div>
                 </CheckboxGroup>
               </div>
-
-              <div className="col-md-4 text-right">
-                <button className="btn btn-success" style={{ marginTop: '1.74em', width: '100%' }}>
-                  Search
-                </button>
-
-                <Link style={{ display: 'block', marginTop: '1em' }}
-                      to="/">
-                  clear all filters
-                </Link>
+              <div className="col-md-4">
+              </div>
+              <div className="col-md-4">
               </div>
             </div>
           </form>
@@ -146,7 +167,8 @@ export default class PurchaseOrdersForm extends React.Component {
                     sku: query.sku || '',
                     date_from: query.date_from || '',
                     date_until: query.date_until || '',
-                    status: query.status || [] });
+                    status: query.status || [],
+                    gender: query.gender || ''});
   }
 
   options (options) {
