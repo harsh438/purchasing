@@ -166,10 +166,15 @@ export default class PurchaseOrdersForm extends React.Component {
                   Search
                 </button>
 
-                <Link style={{ display: 'block', marginTop: '1em' }}
-                      to="/">
-                  clear all filters
-                </Link>
+                <div style={{ display: 'block', marginTop: '1em' }}>
+                  <div className="pull-left">
+                    <strong>Total Results:</strong> {this.props.totalCount}
+                  </div>
+
+                  <Link className="pull-right" to="/">
+                    clear all filters
+                  </Link>
+                </div>
               </div>
             </div>
           </form>

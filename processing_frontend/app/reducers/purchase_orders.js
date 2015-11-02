@@ -1,5 +1,5 @@
 import humps from 'humps';
-const initialState =  { page: 1, purchaseOrders: [] };
+const initialState =  { page: 1, purchaseOrders: [], totalPages: 0, totalResults: 0, exportable: {} };
 
 function transformPurchaseOrder(purchaseOrder) {
   const camelizedPurchaseOrder = humps.camelizeKeys(purchaseOrder);
@@ -18,6 +18,8 @@ function setPurchaseOrders(state, action) {
   return Object.assign({}, state, { purchaseOrders,
                                     page: action.page,
                                     summary: action.summary,
+                                    totalPages: action.totalPages,
+                                    totalCount: action.totalCount,
                                     exportable: action.exportable,
                                     moreResultsAvailable: action.moreResultsAvailable });
 }
@@ -29,6 +31,8 @@ function appendPurchaseOrders(state, action) {
   return Object.assign({}, state, { purchaseOrders,
                                     page: action.page,
                                     summary: action.summary,
+                                    totalPages: action.totalPages,
+                                    totalCount: action.totalCount,
                                     exportable: action.exportable,
                                     moreResultsAvailable: action.moreResultsAvailable });
 }
