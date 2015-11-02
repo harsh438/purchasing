@@ -30,6 +30,12 @@ feature 'Download purchase orders as CSV' do
     then_the_csv_file_should_contain_only_purchase_orders_for_that_vendor
   end
 
+  scenario 'Downloaded CSV data should not be paginated' do
+    given_there_are_more_than_50_results
+    when_a_user_downloads_csv_that_matches_more_than_50_results
+    then_the_csv_file_should_contain_more_than_50_results
+  end
+
   def when_a_user_tries_to_download_csv_without_filters
     visit '/api/purchase_orders.csv'
   end
@@ -50,5 +56,21 @@ feature 'Download purchase orders as CSV' do
     csv_result_rows.each do |row|
       expect(row[index]).to include(vendor.name)
     end
+  end
+
+  def given_there_are_more_than_50_results
+    create_list(:purchase_order, 60, vendor: vendor,
+                                     status: -1,
+                                     season: 'SS15',
+                                     product_name: "#{vendor.name} item",
+                                     created_at: Time.new(2014, 1, 1))
+  end
+
+  def when_a_user_downloads_csv_that_matches_more_than_50_results
+    visit "/api/purchase_orders.csv?vendor_id=#{vendor.id}"
+  end
+
+  def then_the_csv_file_should_contain_more_than_50_results
+    expect(csv_result_rows.count).to be > 50
   end
 end

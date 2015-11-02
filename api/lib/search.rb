@@ -1,9 +1,17 @@
 class Search
   attr_reader :filters
-  attr_reader :results
 
   def initialize(model, attrs)
+    @model = model
+    @attrs = attrs
     @filters = Filters.new(model, attrs)
-    @results = filters.filter(model.mapped).page(attrs[:page])
+  end
+
+  def unpaginated_results
+    filters.filter(@model.mapped)
+  end
+
+  def results
+    unpaginated_result.page(@attrs[:page])
   end
 end
