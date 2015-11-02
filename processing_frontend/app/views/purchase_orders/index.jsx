@@ -26,13 +26,13 @@ class PurchaseOrdersIndex extends React.Component {
     return (
       <div className="purchase_orders_index">
         <PurchaseOrdersForm brands={this.props.brands}
-                            suppliers={this.props.suppliers}
-                            genders={this.props.genders}
-                            orderTypes={this.props.orderTypes}
                             categories={this.props.categories}
+                            genders={this.props.genders}
                             history={this.props.history}
-                            query={this.props.location.query}
-                            loadPurchaseOrders={this.loadPurchaseOrders.bind(this)} />
+                            loadPurchaseOrders={this.loadPurchaseOrders.bind(this)}
+                            orderTypes={this.props.orderTypes}
+                            suppliers={this.props.suppliers}
+                            query={this.props.location.query} />
 
         <PurchaseOrdersTable purchaseOrders={this.props.purchaseOrders}
                              exportable={this.props.exportable} />
