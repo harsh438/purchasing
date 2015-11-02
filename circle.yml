@@ -3,7 +3,7 @@ general:
 
 dependencies:
   post:
-    - npm intall --production:
+    - npm intall:
         pwd: ../processing_frontend/
     - npm run build:
         pwd: ../processing_frontend/
