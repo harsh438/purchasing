@@ -1,6 +1,6 @@
 class PurchaseOrdersController < ApplicationController
   def index
-    results = Search.new(PurchaseOrder, params).results
+    results = Search.new(PurchaseOrder.with_summary, params).results
 
     render json: { summary: {},
                    results: results,

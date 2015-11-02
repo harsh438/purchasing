@@ -4,6 +4,7 @@ class PurchaseOrder < ActiveRecord::Base
 
   belongs_to :vendor, foreign_key: :orderTool_venID
   belongs_to :product, foreign_key: :pID
+  belongs_to :summary, foreign_key: :po_number
 
   map_attributes id: :id,
                  product_id: :pID,
@@ -52,10 +53,16 @@ class PurchaseOrder < ActiveRecord::Base
 
   paginates_per 50
 
+  scope :with_summary, -> { where.not(summary_id: '') }
+
   def self.filter_status(values)
     values = [values].flatten
     values = Status.ints_from_filter_syms(values.map(&:to_sym))
     where(status: values)
+  end
+
+  def self.filter_order_type(char)
+    joins(:summary).where(po_summary: { orderType: char })
   end
 
   def self.filter_date_from(date)
@@ -64,6 +71,17 @@ class PurchaseOrder < ActiveRecord::Base
 
   def self.filter_date_until(date)
     where('added < ?', date)
+  end
+
+  def self.order_types
+    PurchaseOrder.joins(:summary)
+                 .pluck(:orderType)
+                 .uniq
+                 .map do |c|
+                   name = OrderType.string_from(c)
+                   { id: c, name: name } if name
+                 end.compact
+
   end
 
   def self.seasons
@@ -157,8 +175,15 @@ class PurchaseOrder < ActiveRecord::Base
     ordered_value - delivered_value
   end
 
+  def order_type
+    t = try(:summary).try(:order_type)
+    return '' unless t.present?
+    OrderType.string_from(t)
+  end
+
   def as_json(*args)
-    super.merge(ordered_cost: ordered_cost,
+    super.merge(order_type: order_type,
+                ordered_cost: ordered_cost,
                 ordered_value: ordered_value,
                 delivered_quantity: delivered_quantity,
                 delivered_cost: delivered_cost,
