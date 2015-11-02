@@ -1,14 +1,12 @@
 class PurchaseOrder::Search
   def search(attrs)
+    results = Filters.new(PurchaseOrder, attrs)
+      .filter(PurchaseOrder.mapped.with_summary)
+      .page(attrs[:page])
+
     { summary: {},
-      results: searcher(attrs).results,
-      more_results_available: !searcher(attrs).results.last_page?,
+      results: results,
+      more_results_available: !results.last_page?,
       page: attrs[:page] }
-  end
-
-  private
-
-  def searcher(attrs)
-    ::Search.new(PurchaseOrder.with_summary, attrs)
   end
 end
