@@ -4,7 +4,7 @@ general:
 dependencies:
   post:
     - npm run build:
-        pwd: processing_frontend/
+        pwd: ../processing_frontend/
 
 deployment:
   dev:
