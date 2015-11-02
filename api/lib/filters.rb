@@ -8,8 +8,8 @@ class Filters
     scoped.where(@attrs.reduced).order(@attrs.order)
   end
 
-  def has_filters?
-    !@attrs.reduced.empty?
+  def has_filters?(collection)
+    !@attrs.reduced.empty? or !@attrs.scopable(collection).empty?
   end
 
   private
@@ -21,13 +21,8 @@ class Filters
     end
 
     def scope(collection)
-      scopable.reduce(collection) do |collection, (key, values)|
-        scope = "filter_#{key}"
-        if collection.respond_to?(scope)
-          collection.send(scope, values)
-        else
-          collection
-        end
+      scopable(collection).reduce(collection) do |collection, (key, values)|
+        collection.send("filter_#{key}", values)
       end
     end
 
@@ -35,8 +30,10 @@ class Filters
       @model.filterable_fields
     end
 
-    def scopable
-      @params.except(*filterable)
+    def scopable(collection)
+      @params.except(*filterable).keep_if do |(key, values)|
+        collection.respond_to?("filter_#{key}")
+      end
     end
 
     def filtered

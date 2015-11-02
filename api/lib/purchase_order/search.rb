@@ -8,7 +8,7 @@ class PurchaseOrder::Search
       results: results,
       more_results_available: !results.last_page?,
       page: attrs[:page] }.tap do |data|
-      if filters.has_filters?
+      if filters.has_filters?(PurchaseOrder.mapped.with_summary)
         data[:export_url] = additional_data[:export_url]
       end
     end
