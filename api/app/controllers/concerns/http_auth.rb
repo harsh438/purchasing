@@ -6,7 +6,7 @@ module HttpAuth
   end
 
   def http_authenticate
-    return if session[:all_good]
+    return if session[:all_good] == true
 
     authenticate_or_request_with_http_basic(t(:http_challenge)) do |username, password|
       if valid_credentials?(username, password)
