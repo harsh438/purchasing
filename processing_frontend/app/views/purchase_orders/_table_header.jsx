@@ -9,7 +9,9 @@ export default class PurchaseOrderTableHeader extends React.Component {
     return (
       <thead style={{ width: this.props.width }}>
         <tr>
-          <th colSpan="2">&nbsp;</th>
+          <th colSpan="2">
+            {this.renderExportUrl()}
+          </th>
 
           <th colSpan="5" style={{ borderLeft: '2px solid #ddd' }}>
             Product
@@ -76,6 +78,14 @@ export default class PurchaseOrderTableHeader extends React.Component {
         </tr>
       </thead>
     );
+  }
+
+  renderExportUrl () {
+    if (this.props.exportUrl) {
+      return (
+        <a href={this.props.exportUrl} target="_blank">export as .csv</a>
+      );
+    }
   }
 
   fixCellWidths () {

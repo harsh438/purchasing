@@ -34,7 +34,8 @@ class PurchaseOrdersIndex extends React.Component {
                             query={this.props.location.query}
                             loadPurchaseOrders={this.loadPurchaseOrders.bind(this)} />
 
-        <PurchaseOrdersTable purchaseOrders={this.props.purchaseOrders} />
+        <PurchaseOrdersTable purchaseOrders={this.props.purchaseOrders}
+                             exportUrl={this.props.exportUrl} />
 
         {this.renderLoadMoreButton()}
       </div>

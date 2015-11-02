@@ -18,6 +18,7 @@ function setPurchaseOrders(state, action) {
   return Object.assign({}, state, { purchaseOrders,
                                     page: action.page,
                                     summary: action.summary,
+                                    exportUrl: action.exportUrl,
                                     moreResultsAvailable: action.moreResultsAvailable });
 }
 
@@ -28,6 +29,7 @@ function appendPurchaseOrders(state, action) {
   return Object.assign({}, state, { purchaseOrders,
                                     page: action.page,
                                     summary: action.summary,
+                                    exportUrl: action.exportUrl,
                                     moreResultsAvailable: action.moreResultsAvailable });
 }
 
