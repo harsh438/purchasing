@@ -1,6 +1,10 @@
 general:
   build_dir: api
 
+machine:
+  node:
+    version: 4.1.0
+
 dependencies:
   post:
     - npm install:
