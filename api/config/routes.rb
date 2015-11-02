@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :categories, only: :index
     resources :products, only: :index
     resources :vendors, only: :index
+    resources :suppliers, only: :index
 
     get :seasons, to: 'purchase_orders#seasons'
     get :genders, to: 'purchase_orders#genders'

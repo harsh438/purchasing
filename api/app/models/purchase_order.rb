@@ -6,6 +6,8 @@ class PurchaseOrder < ActiveRecord::Base
   belongs_to :product, foreign_key: :pID
   belongs_to :summary, foreign_key: :po_number
 
+  has_many :suppliers, through: :vendor, class_name: 'Supplier'
+
   map_attributes id: :id,
                  product_id: :pID,
                  option_id: :oID,
@@ -54,6 +56,11 @@ class PurchaseOrder < ActiveRecord::Base
   paginates_per 50
 
   scope :with_summary, -> { where.not(summary_id: '') }
+
+  def self.filter_supplier(id)
+    joins(vendor: :supplier_vendors)
+      .where(suppliers_to_brands: { SupplierID: id })
+  end
 
   def self.filter_status(values)
     values = [values].flatten
