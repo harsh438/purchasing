@@ -1,5 +1,5 @@
 Rails.application.configure do
-  config.http_auth[:enabled] = true
+  config.http_auth[:enabled] = false
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
