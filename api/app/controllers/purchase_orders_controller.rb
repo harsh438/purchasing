@@ -1,13 +1,8 @@
 class PurchaseOrdersController < ApplicationController
   def index
     respond_to do |format|
-      format.json do
-        render json: PurchaseOrder::Search.new.search(params)
-      end
-
-      format.csv do
-        render_csv
-      end
+      format.json { render_json }
+      format.csv { render_csv }
     end
   end
 
@@ -24,6 +19,11 @@ class PurchaseOrdersController < ApplicationController
   end
 
   private
+
+  def render_json
+    export_url = url_for(params.merge(format: :csv))
+    render json: PurchaseOrder::Search.new.search(params, export_url: export_url)
+  end
 
   def render_csv
     render csv: PurchaseOrder::CsvExporter.new.export(params)

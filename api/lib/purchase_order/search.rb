@@ -1,12 +1,16 @@
 class PurchaseOrder::Search
-  def search(attrs)
-    results = Filters.new(PurchaseOrder, attrs)
-      .filter(PurchaseOrder.mapped.with_summary)
-      .page(attrs[:page])
+  def search(attrs, additional_data)
+    filters = Filters.new(PurchaseOrder, attrs)
+
+    results = filters.filter(PurchaseOrder.mapped.with_summary).page(attrs[:page])
 
     { summary: {},
       results: results,
       more_results_available: !results.last_page?,
-      page: attrs[:page] }
+      page: attrs[:page] }.tap do |data|
+      if filters.has_filters?
+        data[:export_url] = additional_data[:export_url]
+      end
+    end
   end
 end
