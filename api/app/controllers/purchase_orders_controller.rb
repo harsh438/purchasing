@@ -10,7 +10,7 @@ class PurchaseOrdersController < ApplicationController
 
       format.csv do
         if search.filters.has_filters?
-          render :nothing
+          render csv: search.results
         else
           render plain: 'Please select filters'
         end

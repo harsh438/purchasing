@@ -203,4 +203,13 @@ class PurchaseOrder < ActiveRecord::Base
                 balance_value: balance_value,
                 closing_date: closing_date)
   end
+
+  def self.to_csv
+    CSV.generate do |csv|
+      where(nil).each_with_index do |purchase_order, index|
+        csv << purchase_order.as_json({}).keys if index == 0
+        csv << purchase_order.as_json({}).values
+      end
+    end
+  end
 end
