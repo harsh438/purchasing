@@ -112,7 +112,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
       );
     } else if (this.props.exportable.massive) {
       return (
-        <strong>Result set too big to export :(</strong>
+        <span style={{ fontWeight: 'normal' }}>Result set too big to export :(</span>
       );
     }
   }
