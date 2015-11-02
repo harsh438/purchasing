@@ -38,13 +38,13 @@ function fetchPurchaseOrders(params, page, action) {
 
 function action(type) {
   return function (purchaseOrders) {
-    const { summary, page, results, export_url, more_results_available } = purchaseOrders;
+    const { summary, page, results, exportable, more_results_available } = purchaseOrders;
 
     return { page,
              results,
              summary,
              type,
-             exportUrl: export_url,
+             exportable,
              moreResultsAvailable: purchaseOrders.more_results_available };
   }
 }

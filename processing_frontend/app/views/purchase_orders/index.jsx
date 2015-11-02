@@ -35,7 +35,7 @@ class PurchaseOrdersIndex extends React.Component {
                             loadPurchaseOrders={this.loadPurchaseOrders.bind(this)} />
 
         <PurchaseOrdersTable purchaseOrders={this.props.purchaseOrders}
-                             exportUrl={this.props.exportUrl} />
+                             exportable={this.props.exportable} />
 
         {this.renderLoadMoreButton()}
       </div>

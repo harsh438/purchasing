@@ -24,7 +24,7 @@ export default class PurchaseOrdersTable extends React.Component {
           <colgroup>{this.renderCols()}</colgroup>
 
           <PurchaseOrderTableHeader cellWidths={this.cellWidths()}
-                                    exportUrl={this.props.exportUrl}
+                                    exportable={this.props.exportable}
                                     ref={(header) => this.header = header}
                                     width="1490px" />
 

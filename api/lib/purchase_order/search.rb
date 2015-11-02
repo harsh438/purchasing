@@ -7,9 +7,14 @@ class PurchaseOrder::Search
     { summary: {},
       results: results,
       more_results_available: !results.last_page?,
-      page: attrs[:page] }.tap do |data|
+      page: attrs[:page],
+      exportable: {} }.tap do |data|
       if filters.has_filters?(PurchaseOrder.mapped.with_summary)
-        data[:export_url] = additional_data[:export_url]
+        if results.total_pages > 10
+          data[:exportable][:massive] = true
+        else
+          data[:exportable][:url] = additional_data[:export_url]
+        end
       end
     end
   end

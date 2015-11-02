@@ -81,9 +81,15 @@ export default class PurchaseOrderTableHeader extends React.Component {
   }
 
   renderExportUrl () {
-    if (this.props.exportUrl) {
+    if (!this.props.exportable) return;
+
+    if (this.props.exportable.url) {
       return (
-        <a href={this.props.exportUrl} target="_blank">export as .csv</a>
+        <a href={this.props.exportable.url} target="_blank">export as .csv</a>
+      );
+    } else if (this.props.exportable.massive) {
+      return (
+        <strong>Result set too big to export :(</strong>
       );
     }
   }
