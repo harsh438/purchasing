@@ -2,18 +2,11 @@ class PurchaseOrdersController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        render json: { summary: {},
-                       results: search.results,
-                       more_results_available: !search.results.last_page?,
-                       page: params[:page] }
+        render json: PurchaseOrder::Search.new.search(params)
       end
 
       format.csv do
-        if search.filters.has_filters?
-          render csv: search.unpaginated_results
-        else
-          render plain: 'Please select filters'
-        end
+        render_csv
       end
     end
   end
@@ -32,7 +25,9 @@ class PurchaseOrdersController < ApplicationController
 
   private
 
-  def search
-    @search ||= Search.new(PurchaseOrder.with_summary, params)
+  def render_csv
+    render csv: PurchaseOrder::CsvExporter.new.export(params)
+  rescue PurchaseOrder::CsvExporter::NoFiltersError => e
+    render plain: 'Please select filters'
   end
 end
