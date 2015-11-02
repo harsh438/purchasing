@@ -9,6 +9,8 @@ dependencies:
   post:
     - npm install:
         pwd: ../processing_frontend/
+    - ls -la:
+        pwd: ../processing_frontend/
     - npm run build:
         pwd: ../processing_frontend/
 
