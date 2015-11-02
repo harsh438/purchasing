@@ -180,7 +180,7 @@ export default class PurchaseOrdersForm extends React.Component {
   }
 
   handleStatusChange () {
-    this.setState({ ['status']: this.refs.status.getCheckedValues() });
+    this.setState({ status: this.refs.status.getCheckedValues() });
   }
 
   handleChange (field, { target }) {
