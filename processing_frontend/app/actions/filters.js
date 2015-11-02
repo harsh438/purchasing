@@ -3,6 +3,11 @@ function setBrands(brands) {
            brands: brands };
 }
 
+function setSuppliers(suppliers) {
+  return { type: 'SET_SUPPLIERS',
+           suppliers: suppliers };
+}
+
 function setGenders(genders) {
   return { type: 'SET_GENDERS',
            genders: genders };
@@ -47,5 +52,13 @@ export function loadCategories() {
     fetch('/api/categories.json', { credentials: 'same-origin' })
       .then(response => response.json())
       .then(categories => dispatch(setCategories(categories)));
+  }
+}
+
+export function loadSuppliers() {
+  return dispatch => {
+    fetch('/api/suppliers.json', { credentials: 'same-origin' })
+      .then(response => response.json())
+      .then(suppliers => dispatch(setSuppliers(suppliers)));
   }
 }

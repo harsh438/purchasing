@@ -124,19 +124,7 @@ export default class PurchaseOrdersForm extends React.Component {
                 </select>
               </div>
 
-              <div className="col-md-4 text-right">
-                <button className="btn btn-success" style={{ marginTop: '1.74em', width: '100%' }}>
-                  Search
-                </button>
-
-                <Link style={{ display: 'block', marginTop: '1em' }}
-                      to="/">
-                  clear all filters
-                </Link>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-4">
+              <div className="col-md-4" style={{ paddingTop: '2.2em' }}>
                 <CheckboxGroup name="status"
                                ref="status"
                                value={this.state.status}
@@ -157,9 +145,31 @@ export default class PurchaseOrdersForm extends React.Component {
                   </div>
                 </CheckboxGroup>
               </div>
+            </div>
+            <div className="row">
               <div className="col-md-4">
+                <label htmlFor="supplier">Supplier</label>
+
+                <select className="form-control"
+                        id="supplier"
+                        name="supplier"
+                        onChange={this.handleChange.bind(this, 'supplier')}
+                        value={this.state.supplier}>
+                  <option value=""> -- select supplier -- </option>
+                  {this.options(this.props.suppliers)}
+                </select>
               </div>
               <div className="col-md-4">
+              </div>
+              <div className="col-md-4 text-right">
+               <button className="btn btn-success" style={{ marginTop: '1.74em', width: '100%' }}>
+                  Search
+                </button>
+
+                <Link style={{ display: 'block', marginTop: '1em' }}
+                      to="/">
+                  clear all filters
+                </Link>
               </div>
             </div>
           </form>
@@ -178,7 +188,8 @@ export default class PurchaseOrdersForm extends React.Component {
                     date_until: query.date_until || '',
                     status: query.status || [],
                     gender: query.gender || '',
-                    orderType: query.orderType || ''});
+                    orderType: query.orderType || '',
+                    supplier: query.supplier || ''});
   }
 
   options (options) {

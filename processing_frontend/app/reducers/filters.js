@@ -1,4 +1,4 @@
-const initialState = { brands: [], categories: [], genders: [], orderTypes: [] };
+const initialState = { brands: [], suppliers: [], categories: [], genders: [], orderTypes: [] };
 
 function removeEmpty(filters) {
   return filters.filter(function (filter) {
@@ -16,6 +16,8 @@ export default function reduceFilters(state = initialState, action) {
       return Object.assign({}, state, { brands: removeEmpty(action.brands) });
     case 'SET_CATEGORIES':
       return Object.assign({}, state, { categories: removeEmpty(action.categories) });
+    case 'SET_SUPPLIERS':
+      return Object.assign({}, state, { suppliers: removeEmpty(action.suppliers) });
     default:
       return state;
   }

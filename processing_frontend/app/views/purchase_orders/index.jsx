@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadBrands, loadCategories, loadGenders, loadOrderTypes } from '../../actions/filters';
+import { loadBrands, loadSuppliers, loadCategories, loadGenders, loadOrderTypes } from '../../actions/filters';
 import { loadPurchaseOrders, loadMorePurchaseOrders } from '../../actions/purchase_orders';
 import PurchaseOrdersForm from './_form';
 import PurchaseOrdersTable from './_table';
@@ -9,6 +9,7 @@ import deepEqual from 'deep-equal';
 class PurchaseOrdersIndex extends React.Component {
   componentWillMount () {
     this.loadBrands();
+    this.loadSuppliers();
     this.loadGenders();
     this.loadOrderTypes();
     this.loadCategories();
@@ -25,6 +26,7 @@ class PurchaseOrdersIndex extends React.Component {
     return (
       <div className="purchase_orders_index">
         <PurchaseOrdersForm brands={this.props.brands}
+                            suppliers={this.props.suppliers}
                             genders={this.props.genders}
                             orderTypes={this.props.orderTypes}
                             categories={this.props.categories}
@@ -53,6 +55,10 @@ class PurchaseOrdersIndex extends React.Component {
 
   loadBrands (page) {
     this.props.dispatch(loadBrands());
+  }
+
+  loadSuppliers (page) {
+    this.props.dispatch(loadSuppliers());
   }
 
   loadGenders (page) {
