@@ -15,4 +15,8 @@ class PurchaseOrdersController < ApplicationController
   def genders
     render json: PurchaseOrder.genders
   end
+
+  def order_types
+    render json: PurchaseOrder.order_types
+  end
 end

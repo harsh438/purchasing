@@ -112,7 +112,17 @@ export default class PurchaseOrdersForm extends React.Component {
                 </select>
               </div>
 
-              <div className="col-md-2" style={{ paddingTop: '2.2em' }}>
+              <div className="col-md-2">
+                <label htmlFor="orderType">Order Type</label>
+
+                <select className="form-control"
+                        id="orderType"
+                        name="orderType"
+                        onChange={this.handleChange.bind(this, 'orderType')}
+                        value={this.state.orderType}>
+                  <option value=""> -- select order type -- </option>
+                  {this.options(this.props.orderTypes)}
+                </select>
               </div>
 
               <div className="col-md-4 text-right">
@@ -168,7 +178,8 @@ export default class PurchaseOrdersForm extends React.Component {
                     date_from: query.date_from || '',
                     date_until: query.date_until || '',
                     status: query.status || [],
-                    gender: query.gender || ''});
+                    gender: query.gender || '',
+                    orderType: query.orderType || ''});
   }
 
   options (options) {

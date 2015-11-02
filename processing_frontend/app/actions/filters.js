@@ -8,6 +8,11 @@ function setGenders(genders) {
            genders: genders };
 }
 
+function setOrderTypes(orderTypes) {
+  return { type: 'SET_ORDER_TYPES',
+           orderTypes: orderTypes };
+}
+
 function setCategories(categories) {
   return { type: 'SET_CATEGORIES',
            categories: categories };
@@ -26,6 +31,14 @@ export function loadGenders() {
     fetch('/api/genders.json', { credentials: 'same-origin' })
       .then(response => response.json())
       .then(genders => dispatch(setGenders(genders)));
+  }
+}
+
+export function loadOrderTypes() {
+  return dispatch => {
+    fetch('/api/order_types.json', { credentials: 'same-origin' })
+      .then(response => response.json())
+      .then(orderTypes => dispatch(setOrderTypes(orderTypes)));
   }
 }
 

@@ -9,5 +9,6 @@ Rails.application.routes.draw do
 
     get :seasons, to: 'purchase_orders#seasons'
     get :genders, to: 'purchase_orders#genders'
+    get :order_types, to: 'purchase_orders#order_types'
   end
 end
