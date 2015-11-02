@@ -7,7 +7,7 @@ machine:
 
 dependencies:
   post:
-    - npm install:
+    - npm install --dev:
         pwd: ../processing_frontend/
     - ls -la:
         pwd: ../processing_frontend/
