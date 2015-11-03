@@ -200,7 +200,7 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def cancelled?
-    status == '-1'
+    status == :cancelled
   end
 
   def cancelled_quantity
