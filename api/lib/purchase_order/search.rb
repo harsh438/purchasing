@@ -24,7 +24,7 @@ class PurchaseOrder::Search
   end
 
   def summarize(results)
-    { ordered_quantity: results.map { |r| r.ordered_quantity }.compact.sum,
+    { ordered_quantity: results.map { |r| r.quantity }.compact.sum,
       ordered_cost: results.map { |r| r.ordered_cost }.compact.sum,
       ordered_value: results.map { |r| r.ordered_value }.compact.sum,
       delivered_quantity: results.map { |r| r.delivered_quantity }.compact.sum,
