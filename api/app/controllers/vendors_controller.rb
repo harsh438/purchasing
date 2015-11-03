@@ -1,5 +1,5 @@
 class VendorsController < ApplicationController
   def index
-    render json: Vendor.mapped
+    render json: Vendor.mapped.relevant
   end
 end

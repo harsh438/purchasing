@@ -6,7 +6,11 @@ class Vendor < ActiveRecord::Base
   has_many :suppliers, through: :supplier_vendors
 
   self.table_name = :ds_vendors
-  
+
   map_attributes id: :venID,
                  name: :venCompany
+
+  def self.relevant
+     where('venID in (select distinct orderTool_venId from purchase_orders)')
+  end
 end
