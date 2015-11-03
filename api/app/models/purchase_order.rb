@@ -255,6 +255,7 @@ class PurchaseOrder < ActiveRecord::Base
     super.merge(po_number: po_number,
                 product_cost: product_cost,
                 product_size: product_size,
+                order_id: id,
                 order_type: order_type,
                 ordered_quantity: ordered_quantity,
                 ordered_cost: monetize(ordered_cost),
