@@ -130,6 +130,10 @@ class PurchaseOrder < ActiveRecord::Base
 
   def self.seasons
     PurchaseOrder.pluck('distinct po_season')
+                 .map do |season|
+                   { id: season, name: season } if season.present?
+                 end
+                 .compact
   end
 
   def self.genders
@@ -137,8 +141,8 @@ class PurchaseOrder < ActiveRecord::Base
                  .map do |c|
                    name = Gender.string_from(c)
                    { id: c, name: name } if name
-                 end.compact
-
+                 end
+                 .compact
   end
 
   def orderTool_LG
