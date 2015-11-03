@@ -138,8 +138,8 @@ class PurchaseOrder < ActiveRecord::Base
                  .map do |c|
                    name = OrderType.string_from(c)
                    { id: c, name: name } if name
-                 end.compact
-
+                 end
+                 .compact
   end
 
   def self.seasons
