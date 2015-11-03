@@ -94,27 +94,36 @@ class PurchaseOrder < ActiveRecord::Base
 
   scope :with_summary, -> { where.not(summary_id: '') }
 
-  def self.filter_supplier(id)
+  def self.filter_supplier(context)
     joins(vendor: :supplier_vendors)
-      .where(suppliers_to_brands: { SupplierID: id })
+      .where(suppliers_to_brands: { SupplierID: context[:supplier] })
   end
 
-  def self.filter_status(values)
-    values = [values].flatten
+  def self.filter_status(context)
+    values = [context[:status]].flatten
     values = Status.ints_from_filter_syms(values.map(&:to_sym))
     where(status: values)
   end
 
-  def self.filter_order_type(char)
-    joins(:summary).where(po_summary: { orderType: char })
+  def self.filter_order_type(context)
+    joins(:summary).where(po_summary: { orderType: context[:order_type] })
   end
 
-  def self.filter_date_from(date)
-    where('drop_date > ?', date)
+  def self.filter_date_from(context)
+    binding.pry
+    if context[:status] and context[:status].include?('cancelled')
+      where('(drop_date > ? or cancelled_date > ?)', context[:date_from])
+    else
+      where('(drop_date > ?)', context[:date_from])
+    end
   end
 
-  def self.filter_date_until(date)
-    where('drop_date < ?', date)
+  def self.filter_date_until(context)
+    if context[:status] and context[:status].include?('cancelled')
+      where('(drop_date < ? or cancelled_date < ?)', context[:date_until])
+    else
+      where('(drop_date < ?)', context[:date_until])
+    end
   end
 
   def self.order_types

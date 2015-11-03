@@ -93,23 +93,23 @@ export default class PurchaseOrdersForm extends React.Component {
 
             <div className="row no_gutter">
               <div className="col-md-2 form-group">
-                <label htmlFor="date_from">Date From</label>
+                <label htmlFor="dateFrom">Date From</label>
 
                 <input className="form-control"
-                       name="date_from"
-                       onChange={this.handleChange.bind(this, 'date_from')}
+                       name="dateFrom"
+                       onChange={this.handleChange.bind(this, 'dateFrom')}
                        type="date"
-                       value={this.state.date_from} />
+                       value={this.state.dateFrom} />
               </div>
 
               <div className="col-md-2 form-group">
-                <label htmlFor="date_until">Date Until</label>
+                <label htmlFor="dateUntil">Date Until</label>
 
                 <input className="form-control"
-                       name="date_until"
-                       onChange={this.handleChange.bind(this, 'date_until')}
+                       name="dateUntil"
+                       onChange={this.handleChange.bind(this, 'dateUntil')}
                        type="date"
-                       value={this.state.date_until} />
+                       value={this.state.dateUntil} />
               </div>
 
               <div className="col-md-2">
@@ -198,8 +198,8 @@ export default class PurchaseOrdersForm extends React.Component {
                     poNumber: query.poNumber || '',
                     pid: query.pid || '',
                     sku: query.sku || '',
-                    date_from: query.date_from || '',
-                    date_until: query.date_until || '',
+                    dateFrom: query.dateFrom || {},
+                    dateUntil: query.dateUntil || {},
                     status: query.status || [],
                     gender: query.gender || '',
                     orderType: query.orderType || '',

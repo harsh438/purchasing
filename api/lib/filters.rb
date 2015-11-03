@@ -22,7 +22,7 @@ class Filters
 
     def scope(collection)
       scopable(collection).reduce(collection) do |collection, (key, values)|
-        collection.send("filter_#{key}", values)
+        collection.send("filter_#{key}", scopable(collection))
       end
     end
 
