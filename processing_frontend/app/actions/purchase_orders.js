@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import { omit, isEmpty } from 'lodash';
+import { assign, omit, isEmpty } from 'lodash';
 
 const defaultParams = { sort_field: 'id',
                         sort_dir: 'desc' };
@@ -23,7 +23,7 @@ function fetchPurchaseOrders(params, page, action) {
                                supplier: params.supplier,
                                page: page };
 
-    const query = removeEmptyKeys(Object.assign({}, defaultParams, translatedParams));
+    const query = removeEmptyKeys(assign({}, defaultParams, translatedParams));
 
     fetch(`/api/purchase_orders.json?${queryString.stringify(query)}`, { credentials: 'same-origin' })
       .then(response => response.json())

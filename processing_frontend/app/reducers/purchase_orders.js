@@ -1,4 +1,6 @@
 import humps from 'humps';
+import { assign } from 'lodash';
+
 const initialState =  { exportable: {},
                         page: 1,
                         purchaseOrders: [],
@@ -14,7 +16,7 @@ function transformPurchaseOrder(purchaseOrder) {
                          orderId: purchaseOrder.id,
                          orderedUnits: purchaseOrder.quantity };
 
-  return Object.assign({}, camelizedPurchaseOrder, remappedKeys);
+  return assign({}, camelizedPurchaseOrder, remappedKeys);
 }
 
 function transformSummary(summary) {
@@ -24,30 +26,30 @@ function transformSummary(summary) {
 function setPurchaseOrders(state, action) {
   const purchaseOrders = action.results.map(transformPurchaseOrder);
 
-  return Object.assign({}, state, { purchaseOrders,
-                                    page: action.page,
-                                    totalPages: action.totalPages,
-                                    totalCount: action.totalCount,
-                                    exportable: action.exportable,
-                                    summary: transformSummary(action.summary),
-                                    moreResultsAvailable: action.moreResultsAvailable });
+  return assign({}, state, { purchaseOrders,
+                             page: action.page,
+                             totalPages: action.totalPages,
+                             totalCount: action.totalCount,
+                             exportable: action.exportable,
+                             summary: transformSummary(action.summary),
+                             moreResultsAvailable: action.moreResultsAvailable });
 }
 
 function appendPurchaseOrders(state, action) {
   const newPurchaseOrders = action.results.map(transformPurchaseOrder);
   const purchaseOrders = [...state.purchaseOrders, ...newPurchaseOrders];
 
-  return Object.assign({}, state, { purchaseOrders,
-                                    page: action.page,
-                                    totalPages: action.totalPages,
-                                    totalCount: action.totalCount,
-                                    exportable: action.exportable,
-                                    summary: transformSummary(action.summary),
-                                    moreResultsAvailable: action.moreResultsAvailable });
+  return assign({}, state, { purchaseOrders,
+                             page: action.page,
+                             totalPages: action.totalPages,
+                             totalCount: action.totalCount,
+                             exportable: action.exportable,
+                             summary: transformSummary(action.summary),
+                             moreResultsAvailable: action.moreResultsAvailable });
 }
 
 function clearPurchaseOrders(state, action) {
-  return Object.assign({}, state, initialState);
+  return assign({}, state, initialState);
 }
 
 export default function reducePurchaseOrders(state = initialState, action) {

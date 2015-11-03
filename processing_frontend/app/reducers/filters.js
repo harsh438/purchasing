@@ -1,3 +1,5 @@
+import { assign } from 'lodash';
+
 const initialState = { brands: [],
                        categories: [],
                        genders: [],
@@ -14,17 +16,17 @@ function removeEmpty(filters) {
 export default function reduceFilters(state = initialState, action) {
   switch (action.type) {
     case 'SET_BRANDS':
-      return Object.assign({}, state, { brands: removeEmpty(action.brands) });
+      return assign({}, state, { brands: removeEmpty(action.brands) });
     case 'SET_CATEGORIES':
-      return Object.assign({}, state, { categories: removeEmpty(action.categories) });
+      return assign({}, state, { categories: removeEmpty(action.categories) });
     case 'SET_GENDERS':
-      return Object.assign({}, state, { genders: removeEmpty(action.genders) });
+      return assign({}, state, { genders: removeEmpty(action.genders) });
     case 'SET_ORDER_TYPES':
-      return Object.assign({}, state, { orderTypes: removeEmpty(action.orderTypes) });
+      return assign({}, state, { orderTypes: removeEmpty(action.orderTypes) });
     case 'SET_SEASONS':
-      return Object.assign({}, state, { seasons: removeEmpty(action.seasons) });
+      return assign({}, state, { seasons: removeEmpty(action.seasons) });
     case 'SET_SUPPLIERS':
-      return Object.assign({}, state, { suppliers: removeEmpty(action.suppliers) });
+      return assign({}, state, { suppliers: removeEmpty(action.suppliers) });
     default:
       return state;
   }
