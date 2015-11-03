@@ -124,7 +124,21 @@ export default class PurchaseOrdersForm extends React.Component {
                 </select>
               </div>
 
-              <div className="col-md-4" style={{ paddingTop: '2.2em' }}>
+              <div className="col-md-4">
+                <label htmlFor="supplier">Supplier</label>
+
+                <select className="form-control"
+                        id="supplier"
+                        name="supplier"
+                        onChange={this.handleChange.bind(this, 'supplier')}
+                        value={this.state.supplier}>
+                  <option value=""> -- select supplier -- </option>
+                  {this.options(this.props.suppliers)}
+                </select>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-3" style={{ paddingTop: '2.2em' }}>
                 <CheckboxGroup name="status"
                                ref="status"
                                value={this.state.status}
@@ -139,29 +153,14 @@ export default class PurchaseOrdersForm extends React.Component {
                     <label className="status-label">
                       <input type="checkbox" value="received" /> Received
                     </label>
-                    <label className="status-label">
-                      <input type="checkbox" value="delivered" /> Delivered
-                    </label>
                   </div>
                 </CheckboxGroup>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-md-4">
-                <label htmlFor="supplier">Supplier</label>
-
-                <select className="form-control"
-                        id="supplier"
-                        name="supplier"
-                        onChange={this.handleChange.bind(this, 'supplier')}
-                        value={this.state.supplier}>
-                  <option value=""> -- select supplier -- </option>
-                  {this.options(this.props.suppliers)}
-                </select>
+              <div className="col-md-3">
               </div>
               <div className="col-md-4">
               </div>
-              <div className="col-md-4 text-right">
+              <div className="col-md-2 text-right">
                <button className="btn btn-success" style={{ marginTop: '1.74em', width: '100%' }}>
                   Search
                 </button>

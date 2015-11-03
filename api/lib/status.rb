@@ -23,9 +23,7 @@ class Status
       when :balance
         [2, 4]
       when :received
-        [3, 4]
-      when :delivered
-        [5]
+        [3, 4, 5]
     end
   end
 
