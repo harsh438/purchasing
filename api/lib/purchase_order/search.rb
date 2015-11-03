@@ -16,7 +16,7 @@ class PurchaseOrder::Search
       if filters.has_filters?(PurchaseOrder.mapped.with_summary)
         data[:summary] = summarize(unpaged_results)
 
-        if results.total_pages > 10
+        if results.total_pages > 20
           data[:exportable][:massive] = true
         else
           data[:exportable][:url] = additional_data[:export_url]
