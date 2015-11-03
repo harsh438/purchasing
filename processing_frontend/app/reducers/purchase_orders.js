@@ -5,8 +5,9 @@ const initialState =  { exportable: {},
                         page: 1,
                         purchaseOrders: [],
                         totalPages: 0,
-                        totalResults: 0,
-                        summary: {} };
+                        totalCount: 0,
+                        summary: {},
+                        moreResultsAvailable: false };
 
 function transformPurchaseOrder(purchaseOrder) {
   const camelizedPurchaseOrder = humps.camelizeKeys(purchaseOrder);
