@@ -41,7 +41,7 @@ class Filters
     end
 
     def sortable
-      [:sort_field, :sort_dir]
+      [:sort_by, :sort_dir]
     end
 
     def mappings
@@ -56,10 +56,10 @@ class Filters
     end
 
     def order
-      if @params[:sort_field] and @params[:sort_dir]
-        { @params[:sort_field] => @params[:sort_dir] }
-      elsif @params[:sort_field]
-        @params[:sort_field]
+      if @params[:sort_by] and @params[:sort_dir]
+        { @params[:sort_by] => @params[:sort_dir] }
+      elsif @params[:sort_by]
+        @params[:sort_by]
       end
     end
   end
