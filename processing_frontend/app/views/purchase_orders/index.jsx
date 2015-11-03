@@ -24,7 +24,7 @@ class PurchaseOrdersIndex extends React.Component {
     this.props.dispatch(loadOrderTypes());
     this.props.dispatch(loadCategories());
     this.props.dispatch(loadSeasons());
-    this.loadPurchaseOrders(this.props.location.query);
+    this.loadPurchaseOrdersIfQuery();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -75,6 +75,14 @@ class PurchaseOrdersIndex extends React.Component {
 
   loadPurchaseOrders (query) {
     this.props.dispatch(loadPurchaseOrders(query));
+  }
+
+  loadPurchaseOrdersIfQuery () {
+    let query = this.props.location.query
+
+    if (!this.isObjectEmpty(query)) {
+      this.loadPurchaseOrders(query);
+    }
   }
 
   clearPurchaseOrders () {
