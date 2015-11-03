@@ -4,7 +4,7 @@ class PurchaseOrder::Search
   def search(attrs, additional_data)
     filters = Filters.new(PurchaseOrder, attrs)
 
-    results = filters.filter(PurchaseOrder.mapped.with_summary).page(attrs[:page])
+    results = filters.filter(PurchaseOrder.mapped.with_valid_status.with_summary).page(attrs[:page])
 
     { summary: {},
       results: results,

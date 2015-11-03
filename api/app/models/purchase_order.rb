@@ -93,6 +93,7 @@ class PurchaseOrder < ActiveRecord::Base
   paginates_per 50
 
   scope :with_summary, -> { where.not(summary_id: '') }
+  scope :with_valid_status, -> { where('status in (-1,2,3,4,5)') }
 
   def self.filter_supplier(context)
     joins(vendor: :supplier_vendors)
@@ -111,7 +112,7 @@ class PurchaseOrder < ActiveRecord::Base
 
   def self.filter_date_from(context)
     if context[:status] and context[:status].include?('cancelled')
-      where('(drop_date > ? or cancelled_date > ?)', context[:date_from])
+      where('(drop_date > ? or cancelled_date > ?)', context[:date_from], context[:date_from])
     else
       where('(drop_date > ?)', context[:date_from])
     end
@@ -119,7 +120,7 @@ class PurchaseOrder < ActiveRecord::Base
 
   def self.filter_date_until(context)
     if context[:status] and context[:status].include?('cancelled')
-      where('(drop_date < ? or cancelled_date < ?)', context[:date_until])
+      where('(drop_date < ? or cancelled_date < ?)', context[:date_until], context[:date_until])
     else
       where('(drop_date < ?)', context[:date_until])
     end
