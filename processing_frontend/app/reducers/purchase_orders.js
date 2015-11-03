@@ -18,12 +18,7 @@ function transformPurchaseOrder(purchaseOrder) {
 }
 
 function transformSummary(summary) {
-  const camelizedSummary = humps.camelizeKeys(summary);
-
-  return Object.keys(camelizedSummary).reduce((acc, key) => {
-    acc[key] = camelizedSummary[key].toFixed(2)
-    return acc
-  }, {});
+  return humps.camelizeKeys(summary);
 }
 
 function setPurchaseOrders(state, action) {
