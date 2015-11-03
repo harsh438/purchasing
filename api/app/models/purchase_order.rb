@@ -112,16 +112,20 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def self.filter_date_from(context)
-    if context[:status] and context[:status].include?('cancelled')
-      where('(drop_date > ? or cancelled_date > ?)', context[:date_from], context[:date_from])
+    if context[:status] == ['cancelled']
+      where('cancelled_date > ?', context[:date_from])
+    elsif context[:status] and context[:status].include?('cancelled')
+      where('(drop_date > ? or (cancelled_date > ?))', context[:date_from], context[:date_from])
     else
       where('(drop_date > ?)', context[:date_from])
     end
   end
 
   def self.filter_date_until(context)
-    if context[:status] and context[:status].include?('cancelled')
-      where('(drop_date < ? or cancelled_date < ?)', context[:date_until], context[:date_until])
+    if context[:status] == ['cancelled']
+      where('cancelled_date < ?', context[:date_from])
+    elsif context[:status] and context[:status].include?('cancelled')
+      where('(drop_date < ? or (cancelled_date < ?)', context[:date_until], context[:date_until])
     else
       where('(drop_date < ?)', context[:date_until])
     end
