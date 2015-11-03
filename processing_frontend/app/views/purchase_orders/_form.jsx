@@ -175,13 +175,13 @@ export default class PurchaseOrdersForm extends React.Component {
                   {Radio => (
                     <div className="form-group">
                       <label className="status-label">
-                        <Radio value="pid" /> PID
+                        <Radio value="product_id" /> PID
                       </label>
                       <label className="status-label">
-                        <Radio value="sku" /> SKU
+                        <Radio value="product_sku" /> SKU
                       </label>
                        <label className="status-label">
-                        <Radio value="dropDate" /> Drop Date
+                        <Radio value="drop_date" /> Drop Date
                       </label>
                     </div>
                   )}
