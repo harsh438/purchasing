@@ -6,7 +6,9 @@ import { loadBrands,
          loadOrderTypes,
          loadSeasons,
          loadSuppliers } from '../../actions/filters';
-import { loadPurchaseOrders, loadMorePurchaseOrders } from '../../actions/purchase_orders';
+import { loadPurchaseOrders,
+         loadMorePurchaseOrders,
+         clearPurchaseOrders } from '../../actions/purchase_orders';
 import PurchaseOrdersForm from './_form';
 import PurchaseOrdersTable from './_table';
 import deepEqual from 'deep-equal';
@@ -17,14 +19,18 @@ class PurchaseOrdersIndex extends React.Component {
     this.props.dispatch(loadSuppliers());
     this.props.dispatch(loadGenders());
     this.props.dispatch(loadOrderTypes());
-    this.loadPurchaseOrders(this.props.location.query);
     this.props.dispatch(loadCategories());
     this.props.dispatch(loadSeasons());
+    this.loadPurchaseOrders(this.props.location.query);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!deepEqual(this.props.location.query, nextProps.location.query)) {
-      this.loadPurchaseOrders(nextProps.location.query);
+    const nextQuery = nextProps.location.query;
+
+    if (Object.keys(nextQuery).length < 1) {
+      this.clearPurchaseOrders();
+    } else if (!deepEqual(this.props.location.query, nextQuery)) {
+      this.loadPurchaseOrders(nextQuery);
     }
   }
 
@@ -66,6 +72,10 @@ class PurchaseOrdersIndex extends React.Component {
 
   loadPurchaseOrders (query) {
     this.props.dispatch(loadPurchaseOrders(query));
+  }
+
+  clearPurchaseOrders () {
+    this.props.dispatch(clearPurchaseOrders());
   }
 
   loadMorePurchaseOrders () {

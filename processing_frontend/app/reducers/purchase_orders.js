@@ -46,12 +46,18 @@ function appendPurchaseOrders(state, action) {
                                     moreResultsAvailable: action.moreResultsAvailable });
 }
 
+function clearPurchaseOrders(state, action) {
+  return Object.assign({}, state, initialState);
+}
+
 export default function reducePurchaseOrders(state = initialState, action) {
   switch (action.type) {
     case 'SET_PURCHASE_ORDERS':
       return setPurchaseOrders(state, action);
     case 'APPEND_PURCHASE_ORDERS':
       return appendPurchaseOrders(state, action);
+    case 'CLEAR_PURCHASE_ORDERS':
+      return clearPurchaseOrders(state, action);
     default:
       return state;
   }

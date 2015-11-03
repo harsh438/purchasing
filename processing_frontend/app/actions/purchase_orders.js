@@ -58,3 +58,9 @@ export function loadPurchaseOrders(params) {
 export function loadMorePurchaseOrders(params, page) {
   return fetchPurchaseOrders(params, page, action('APPEND_PURCHASE_ORDERS'));
 }
+
+export function clearPurchaseOrders() {
+  return dispatch => {
+    dispatch({ type: 'CLEAR_PURCHASE_ORDERS' });
+  }
+}
