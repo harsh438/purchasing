@@ -1,6 +1,7 @@
 import CheckboxGroup from 'react-checkbox-group';
 import React from 'react';
 import { Link } from 'react-router';
+import { map } from 'lodash';
 
 export default class PurchaseOrdersForm extends React.Component {
   componentWillMount () {
@@ -208,7 +209,7 @@ export default class PurchaseOrdersForm extends React.Component {
   }
 
   options (options) {
-    return options.map(function ({ id, name }) {
+    return map(options, function ({ id, name }) {
       return (
         <option key={id} value={id}>{name}</option>
       );
