@@ -1,10 +1,11 @@
 source 'https://rubygems.org'
 ruby '2.2.2'
 
+gem 'kaminari'
 gem 'mysql2'
 gem 'rails', '4.2.4'
 gem 'rake'
-gem 'kaminari'
+gem 'sentry-raven'
 
 group :test do
   gem 'brakeman'                  # Always latest
