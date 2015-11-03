@@ -23,6 +23,7 @@ function fetchPurchaseOrders(params, page, action) {
                                supplier: params.supplier,
                                operator: params.operator,
                                season: params.season,
+                               sort_by: params.sortBy,
                                page: page };
 
     const query = removeEmptyKeys(assign({}, defaultParams, translatedParams));

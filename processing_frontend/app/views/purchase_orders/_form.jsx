@@ -1,4 +1,5 @@
 import CheckboxGroup from 'react-checkbox-group';
+import RadioGroup from 'react-radio-group';
 import React from 'react';
 import { Link } from 'react-router';
 import { map } from 'lodash';
@@ -162,8 +163,32 @@ export default class PurchaseOrdersForm extends React.Component {
                        value={this.state.operator} />
               </div>
             </div>
+
             <div className="row">
-              <div className="col-md-3" style={{ paddingTop: '2.2em' }}>
+              <div className="col-md-4" style={{ paddingTop: '0.5em' }}>
+                <label>Sort by</label>
+
+                <RadioGroup name="sortBy"
+                            ref="sortBy"
+                            selectedValue={this.state.sortBy}
+                            onChange={this.handleSortChange.bind(this)}>
+                  {Radio => (
+                    <div className="form-group">
+                      <label className="status-label">
+                        <Radio value="pid" /> PID
+                      </label>
+                      <label className="status-label">
+                        <Radio value="sku" /> SKU
+                      </label>
+                       <label className="status-label">
+                        <Radio value="dropDate" /> Drop Date
+                      </label>
+                    </div>
+                  )}
+                </RadioGroup>
+              </div>
+
+              <div className="col-md-4" style={{ paddingTop: '2.2em' }}>
                 <CheckboxGroup name="status"
                                ref="status"
                                value={this.state.status}
@@ -216,7 +241,8 @@ export default class PurchaseOrdersForm extends React.Component {
                     orderType: query.orderType || '',
                     season: query.season || '',
                     supplier: query.supplier || '',
-                    operator: query.operator || ''});
+                    operator: query.operator || '',
+                    sortBy: query.sortBy || ''});
   }
 
   options (options) {
@@ -225,6 +251,10 @@ export default class PurchaseOrdersForm extends React.Component {
         <option key={id} value={id}>{name}</option>
       );
     });
+  }
+
+  handleSortChange (value) {
+    this.setState({ sortBy: value });
   }
 
   handleStatusChange () {
