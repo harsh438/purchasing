@@ -25,7 +25,7 @@ these you'll be okay.
 
 **Booting API for the first time**
 
-```
+```sh
 cd api/
 bundle install
 bundle exec rake db:setup
@@ -34,14 +34,14 @@ bundle exec rails
 
 **Booting frontend for the first time**
 
-```
+```sh
 cd processing_frontend/
 npm install
 ```
 
 **Reset your db**
 
-```
+```sh
 bundle exec rake db:reset
 ```
 
@@ -49,21 +49,21 @@ bundle exec rake db:reset
 
 In one terminal run this to start API:
 
-```
+```sh
 cd api/
 bundle exec rackup -o 0.0.0.0 -p 3000
 ```
 
 And in another to watch for JS/SCSS/Image changes run:
 
-```
+```sh
 cd processing_frontend/
 npm run watch
 ```
 
 **Running tests locally**
 
-```
+```sh
 cd api/
 bundle exec rspec
 ```
