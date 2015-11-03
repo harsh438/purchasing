@@ -67,6 +67,7 @@ export default class PurchaseOrdersForm extends React.Component {
 
                 <input className="form-control"
                        name="poNumber"
+                       id="poNumber"
                        onChange={this.handleChange.bind(this, 'poNumber')}
                        type="search"
                        value={this.state.poNumber} />
@@ -77,6 +78,7 @@ export default class PurchaseOrdersForm extends React.Component {
 
                 <input className="form-control"
                        name="pid"
+                       id="pid"
                        onChange={this.handleChange.bind(this, 'pid')}
                        type="search"
                        value={this.state.pid} />
@@ -87,6 +89,7 @@ export default class PurchaseOrdersForm extends React.Component {
 
                 <input className="form-control"
                        name="sku"
+                       id="sku"
                        onChange={this.handleChange.bind(this, 'sku')}
                        type="search"
                        value={this.state.sku} />
@@ -99,6 +102,7 @@ export default class PurchaseOrdersForm extends React.Component {
 
                 <input className="form-control"
                        name="dateFrom"
+                       id="dateFrom"
                        onChange={this.handleChange.bind(this, 'dateFrom')}
                        type="date"
                        value={this.state.dateFrom} />
@@ -109,6 +113,7 @@ export default class PurchaseOrdersForm extends React.Component {
 
                 <input className="form-control"
                        name="dateUntil"
+                       id="dateUntil"
                        onChange={this.handleChange.bind(this, 'dateUntil')}
                        type="date"
                        value={this.state.dateUntil} />
@@ -158,6 +163,7 @@ export default class PurchaseOrdersForm extends React.Component {
 
                 <input className="form-control"
                        name="operator"
+                       id="operator"
                        onChange={this.handleChange.bind(this, 'operator')}
                        type="search"
                        value={this.state.operator}
