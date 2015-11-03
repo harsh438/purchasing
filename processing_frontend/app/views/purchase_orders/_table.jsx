@@ -20,7 +20,7 @@ export default class PurchaseOrdersTable extends React.Component {
   render () {
     return (
       <div className={this.className()} style={{ paddingTop: this.paddingTop() }}>
-        <table className="table" style={{ width: '1600px' }}>
+        <table className="table" style={{ width: '1669px' }}>
           <colgroup>{this.renderCols()}</colgroup>
 
           <PurchaseOrderTableHeader cellWidths={this.cellWidths()}
@@ -29,7 +29,7 @@ export default class PurchaseOrdersTable extends React.Component {
                                     summary={this.props.summary}
                                     totalPages={this.props.totalPages}
                                     totalCount={this.props.totalCount}
-                                    width="1600px" />
+                                    width="1669px" />
 
           <tbody>{this.renderRows()}</tbody>
         </table>
@@ -38,7 +38,13 @@ export default class PurchaseOrdersTable extends React.Component {
   }
 
   cellWidths () {
-    return [48, 64, 54, 271, 40, 49, 57, 60, 52, 42, 35, 42, 33, 50, 35, 42, 33, 35, 42, 33, 35, 42, 33, 74, 52, 57, 65, 56, 69];
+    return [48, 64,
+            54, 240, 40, 49, 57,
+            60, 52, 42, 35, 50, 50,
+            50, 35, 50, 50,
+            35, 50, 50,
+            35, 50, 50,
+            74, 52, 57, 65, 56, 69];
   }
 
   renderCols () {
