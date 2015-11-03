@@ -129,7 +129,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
     if (!totalValue) return;
 
     return (
-      <div style={{ fontWeight: 'normal' }}>Total cost: £{totalValue}</div>
+      <div style={{ fontWeight: 'normal' }}>Total value: £{totalValue}</div>
     );
   }
 
