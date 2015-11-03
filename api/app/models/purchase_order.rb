@@ -94,7 +94,7 @@ class PurchaseOrder < ActiveRecord::Base
   paginates_per 50
 
   scope :with_summary, -> { where.not(summary_id: '') }
-  scope :with_valid_status, -> { where('purchase_order.status in (-1,2,3,4,5)') }
+  scope :with_valid_status, -> { where('purchase_orders.status in (-1,2,3,4,5)') }
 
   def self.filter_supplier(context)
     joins(vendor: :supplier_vendors)
