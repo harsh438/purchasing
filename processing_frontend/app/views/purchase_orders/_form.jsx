@@ -43,7 +43,7 @@ export default class PurchaseOrdersForm extends React.Component {
                         onChange={this.handleChange.bind(this, 'category')}
                         value={this.state.category}>
                   <option value=""> -- select category -- </option>
-                  {this.options(this.props.categories)}
+                  {this.categoryOptions(this.props.categories)}
                 </select>
               </div>
               <div className="form-group col-md-2">
@@ -197,6 +197,14 @@ export default class PurchaseOrdersForm extends React.Component {
     return options.map(function ({ id, name }) {
       return (
         <option key={id} value={id}>{name}</option>
+      );
+    });
+  }
+
+  categoryOptions (options) {
+    return options.map(function ({ category_id, name }) {
+      return (
+        <option key={category_id} value={category_id}>{name}</option>
       );
     });
   }
