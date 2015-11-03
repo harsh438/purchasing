@@ -13,14 +13,14 @@ class PurchaseOrder < ActiveRecord::Base
                         order_id
                         order_date
                         order_type
-                        ordered_units
+                        ordered_quantity
                         ordered_cost
                         ordered_value
                         delivery_date
-                        delivered_units
+                        delivered_quantity
                         delivered_cost
                         delivered_value
-                        cancelled_units
+                        cancelled_quantity
                         cancelled_cost
                         cancelled_value
                         operator
@@ -167,10 +167,6 @@ class PurchaseOrder < ActiveRecord::Base
     return Category.english.where(category_id: category_id)
   end
 
-  def product_price
-    try(:product).try(:price) || 0
-  end
-
   def closing_date
     try(:product).try(:product_detail).try(:closing_date) || 0
   end
@@ -183,12 +179,24 @@ class PurchaseOrder < ActiveRecord::Base
     Status.sym_from_int(super)
   end
 
+  def product_price
+    try(:product).try(:price) || 0
+  end
+
+  def product_cost
+    cost
+  end
+
+  def ordered_quantity
+    quantity
+  end
+
   def ordered_cost
-    quantity * cost
+    ordered_quantity * cost
   end
 
   def ordered_value
-    quantity * product_price
+    ordered_quantity * product_price
   end
 
   def delivered_quantity
@@ -244,7 +252,11 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def as_json(*args)
-    super.merge(order_type: order_type,
+    super.merge(po_number: po_number,
+                product_cost: product_cost,
+                product_size: product_size,
+                order_type: order_type,
+                ordered_quantity: ordered_quantity,
                 ordered_cost: monetize(ordered_cost),
                 ordered_value: monetize(ordered_value),
                 delivered_quantity: delivered_quantity,
