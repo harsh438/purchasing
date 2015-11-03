@@ -11,7 +11,7 @@ export default class PurchaseOrderRow extends React.Component {
           {this.props.purchaseOrder.productId}
         </td>
         <td>{this.props.purchaseOrder.productName}</td>
-        <td>{this.props.purchaseOrder.productSKU || 'n/a'}</td>
+        <td>{this.props.purchaseOrder.productSku || 'n/a'}</td>
         <td>{this.props.purchaseOrder.productCost}</td>
         <td>{this.props.purchaseOrder.productSize}</td>
 
