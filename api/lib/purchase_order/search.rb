@@ -3,8 +3,8 @@ class PurchaseOrder::Search
 
   def search(attrs, additional_data)
     filters = Filters.new(PurchaseOrder, attrs)
-
-    results = filters.filter(PurchaseOrder.mapped.with_valid_status.with_summary).page(attrs[:page])
+    unpaged_results = filters.filter(PurchaseOrder.mapped.with_valid_status.with_summary)
+    results = unpaged_results.page(attrs[:page])
 
     { summary: {},
       results: results,
@@ -14,7 +14,7 @@ class PurchaseOrder::Search
       page: attrs[:page],
       exportable: {} }.tap do |data|
       if filters.has_filters?(PurchaseOrder.mapped.with_summary)
-        data[:summary] = summarize(results)
+        data[:summary] = summarize(unpaged_results)
 
         if results.total_pages > 10
           data[:exportable][:massive] = true

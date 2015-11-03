@@ -6,9 +6,11 @@ import { loadBrands,
          loadOrderTypes,
          loadSeasons,
          loadSuppliers } from '../../actions/filters';
+
 import { loadPurchaseOrders,
          loadMorePurchaseOrders,
          clearPurchaseOrders } from '../../actions/purchase_orders';
+
 import PurchaseOrdersForm from './_form';
 import PurchaseOrdersTable from './_table';
 import deepEqual from 'deep-equal';
