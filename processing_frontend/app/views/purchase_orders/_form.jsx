@@ -139,7 +139,7 @@ export default class PurchaseOrdersForm extends React.Component {
                 </select>
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-2">
                 <label htmlFor="supplier">Supplier</label>
 
                 <select className="form-control"
@@ -150,6 +150,16 @@ export default class PurchaseOrdersForm extends React.Component {
                   <option value=""> -- select supplier -- </option>
                   {this.options(this.props.suppliers)}
                 </select>
+              </div>
+
+              <div className="col-md-2">
+                <label htmlFor="operator">Order Number (OT_)</label>
+
+                <input className="form-control"
+                       name="operator"
+                       onChange={this.handleChange.bind(this, 'operator')}
+                       type="search"
+                       value={this.state.operator} />
               </div>
             </div>
             <div className="row">
@@ -205,7 +215,8 @@ export default class PurchaseOrdersForm extends React.Component {
                     gender: query.gender || '',
                     orderType: query.orderType || '',
                     season: query.season || '',
-                    supplier: query.supplier || ''});
+                    supplier: query.supplier || '',
+                    operator: query.operator || ''});
   }
 
   options (options) {

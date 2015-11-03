@@ -88,7 +88,8 @@ class PurchaseOrder < ActiveRecord::Base
           :season,
           :product_sku,
           :category_id,
-          :product_id
+          :product_id,
+          :operator
 
   paginates_per 50
 
