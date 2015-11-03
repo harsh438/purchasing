@@ -7,10 +7,12 @@ feature 'Listing purchase orders' do
                 status: 4,
                 season: 'AW15',
                 drop_date: Time.new(2013, 1, 1))
+
     create_list(:purchase_order, 16, :arrived,
                 status: 5,
                 season: 'SS14',
                 drop_date: Time.new(2011, 1, 1))
+
     create_list(:purchase_order, 15,
                 vendor: vendor,
                 status: -1,
