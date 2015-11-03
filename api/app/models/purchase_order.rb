@@ -1,4 +1,5 @@
 class PurchaseOrder < ActiveRecord::Base
+  include ActionView::Helpers::NumberHelper
   include LegacyMappings
   include Searchable
 
@@ -226,17 +227,23 @@ class PurchaseOrder < ActiveRecord::Base
 
   def as_json(*args)
     super.merge(order_type: order_type,
-                ordered_cost: ordered_cost,
-                ordered_value: ordered_value,
+                ordered_cost: monetize(ordered_cost),
+                ordered_value: monetize(ordered_value),
                 delivered_quantity: delivered_quantity,
-                delivered_cost: delivered_cost,
-                delivered_value: delivered_value,
+                delivered_cost: monetize(delivered_cost),
+                delivered_value: monetize(delivered_value),
                 cancelled_quantity: cancelled_quantity,
-                cancelled_cost: cancelled_cost,
-                cancelled_value: cancelled_value,
+                cancelled_cost: monetize(cancelled_cost),
+                cancelled_value: monetize(cancelled_value),
                 balance_quantity: balance_quantity,
-                balance_cost: balance_cost,
-                balance_value: balance_value,
+                balance_cost: monetize(balance_cost),
+                balance_value: monetize(balance_value),
                 closing_date: closing_date)
+  end
+
+  private
+
+  def monetize(figure)
+    number_to_currency(figure, unit: '£')
   end
 end
