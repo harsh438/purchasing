@@ -20,25 +20,25 @@ export default class PurchaseOrderRow extends React.Component {
         </td>
         <td>{this.props.purchaseOrder.orderDate}</td>
         <td>{this.props.purchaseOrder.orderType}</td>
-        <td>{this.props.purchaseOrder.orderedUnits}</td>
+        <td>{this.props.purchaseOrder.orderedQuantity}</td>
         <td>{this.props.purchaseOrder.orderedCost}</td>
         <td>{this.props.purchaseOrder.orderedValue}</td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
           {this.props.purchaseOrder.deliveryDate}
         </td>
-        <td>{this.props.purchaseOrder.deliveredUnits}</td>
+        <td>{this.props.purchaseOrder.deliveredQuantity}</td>
         <td>{this.props.purchaseOrder.deliveredCost}</td>
         <td>{this.props.purchaseOrder.deliveredValue}</td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
-          {this.props.purchaseOrder.cancelledUnits || 'n/a'}
+          {this.props.purchaseOrder.cancelledQuantity || 'n/a'}
         </td>
         <td>{this.props.purchaseOrder.cancelledCost || 'n/a'}</td>
         <td>{this.props.purchaseOrder.cancelledValue || 'n/a'}</td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
-          {this.props.purchaseOrder.balanceUnits || 'n/a'}
+          {this.props.purchaseOrder.balanceQuantity || 'n/a'}
         </td>
         <td>{this.props.purchaseOrder.balanceCost || 'n/a'}</td>
         <td>{this.props.purchaseOrder.balanceValue || 'n/a'}</td>

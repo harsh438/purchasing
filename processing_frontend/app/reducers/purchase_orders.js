@@ -15,7 +15,7 @@ function transformPurchaseOrder(purchaseOrder) {
   const remappedKeys = { poNumber: purchaseOrder.summary_id,
                          productCost: purchaseOrder.cost,
                          orderId: purchaseOrder.id,
-                         orderedUnits: purchaseOrder.quantity };
+                         orderedQuantity: purchaseOrder.quantity };
 
   return assign({}, camelizedPurchaseOrder, remappedKeys);
 }
