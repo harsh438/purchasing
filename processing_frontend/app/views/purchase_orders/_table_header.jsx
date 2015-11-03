@@ -20,6 +20,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>
             Ordered
 
+            {this.renderTotalQuantity(this.props.summary.orderedQuantity)}
             {this.renderTotalCost(this.props.summary.orderedCost)}
             {this.renderTotalValue(this.props.summary.orderedValue)}
           </th>
@@ -27,6 +28,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th colSpan="4" style={{ borderLeft: '2px solid #ddd' }}>
             Delivered
 
+            {this.renderTotalQuantity(this.props.summary.deliveredQuantity)}
             {this.renderTotalCost(this.props.summary.deliveredCost)}
             {this.renderTotalValue(this.props.summary.deliveredValue)}
           </th>
@@ -34,6 +36,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>
             Cancelled
 
+            {this.renderTotalQuantity(this.props.summary.cancelledQuantity)}
             {this.renderTotalCost(this.props.summary.cancelledCost)}
             {this.renderTotalValue(this.props.summary.cancelledValue)}
           </th>
@@ -41,6 +44,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>
             Balance
 
+            {this.renderTotalQuantity(this.props.summary.balanceQuantity)}
             {this.renderTotalCost(this.props.summary.balanceCost)}
             {this.renderTotalValue(this.props.summary.balanceValue)}
           </th>
@@ -115,6 +119,14 @@ export default class PurchaseOrderTableHeader extends React.Component {
         <span style={{ fontWeight: 'normal' }}>Result set too big to export :(</span>
       );
     }
+  }
+
+  renderTotalQuantity (totalQuantity) {
+    if (!totalQuantity) return;
+
+    return (
+      <div style={{ fontWeight: 'normal' }}>Total quantity: {totalQuantity}</div>
+    );
   }
 
   renderTotalCost (totalCost) {
