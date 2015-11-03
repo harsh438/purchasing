@@ -12,5 +12,6 @@ class Category < ActiveRecord::Base
   def self.relevant
     english.where('catId in (select distinct(orderTool_RC) from purchase_orders)')
            .where('langId = 1')
+           .order('catName asc')
   end
 end
