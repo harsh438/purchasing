@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
   def index
-    render json: Category.english
+    render json: Category.relevant
   end
 end
