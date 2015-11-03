@@ -1,16 +1,11 @@
 import queryString from 'query-string';
+import { omit, isEmpty } from 'lodash';
 
 const defaultParams = { sort_field: 'id',
                         sort_dir: 'desc' };
 
 function removeEmptyKeys(object) {
-  for (let key in object) {
-    if (object.hasOwnProperty(key) && (object[key] == null || object[key] === '')) {
-      delete object[key];
-    }
-  }
-
-  return object;
+  return omit(object, isEmpty);
 }
 
 function fetchPurchaseOrders(params, page, action) {
