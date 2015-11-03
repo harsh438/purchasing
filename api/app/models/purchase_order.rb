@@ -110,7 +110,6 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def self.filter_date_from(context)
-    binding.pry
     if context[:status] and context[:status].include?('cancelled')
       where('(drop_date > ? or cancelled_date > ?)', context[:date_from])
     else
