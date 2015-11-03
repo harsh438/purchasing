@@ -32,17 +32,35 @@ bundle exec rake db:setup
 bundle exec rails
 ```
 
-**Booting frontend for the first time**
-
-```sh
-cd processing_frontend/
-npm install
-```
-
 **Reset your db**
 
 ```sh
 bundle exec rake db:reset
+```
+
+**Booting frontend for the first time**
+
+You're recommended to run the frontend outside of Vagrant or other virtualised environments. You may need some additional dependencies.
+
+Install Homebrew if you don't already have it:
+```sh
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+Install node if you don't already have it:
+```sh
+brew install node
+```
+
+Rebuild node-sass:
+```sh
+npm rebuild node-sass
+```
+
+Finally you can install the local node packages:
+```sh
+cd processing_frontend/
+npm install
 ```
 
 **Developing frontend**
