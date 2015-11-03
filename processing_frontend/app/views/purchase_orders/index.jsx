@@ -1,6 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadBrands, loadSuppliers, loadCategories, loadGenders, loadOrderTypes } from '../../actions/filters';
+import { loadBrands,
+         loadCategories,
+         loadGenders,
+         loadOrderTypes,
+         loadSeasons,
+         loadSuppliers } from '../../actions/filters';
 import { loadPurchaseOrders, loadMorePurchaseOrders } from '../../actions/purchase_orders';
 import PurchaseOrdersForm from './_form';
 import PurchaseOrdersTable from './_table';
@@ -9,11 +14,12 @@ import deepEqual from 'deep-equal';
 class PurchaseOrdersIndex extends React.Component {
   componentWillMount () {
     this.loadBrands();
-    this.loadSuppliers();
+    this.loadCategories();
     this.loadGenders();
     this.loadOrderTypes();
-    this.loadCategories();
     this.loadPurchaseOrders(this.props.location.query);
+    this.loadSeasons();
+    this.loadSuppliers();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -31,6 +37,7 @@ class PurchaseOrdersIndex extends React.Component {
                             history={this.props.history}
                             loadPurchaseOrders={this.loadPurchaseOrders.bind(this)}
                             orderTypes={this.props.orderTypes}
+                            seasons={this.props.seasons}
                             suppliers={this.props.suppliers}
                             query={this.props.location.query} />
 
@@ -57,24 +64,28 @@ class PurchaseOrdersIndex extends React.Component {
     }
   }
 
-  loadBrands (page) {
+  loadBrands () {
     this.props.dispatch(loadBrands());
   }
 
-  loadSuppliers (page) {
+  loadSuppliers () {
     this.props.dispatch(loadSuppliers());
   }
 
-  loadGenders (page) {
+  loadGenders () {
     this.props.dispatch(loadGenders());
   }
 
-  loadOrderTypes (page) {
+  loadOrderTypes () {
     this.props.dispatch(loadOrderTypes());
   }
 
-  loadCategories (page) {
+  loadCategories () {
     this.props.dispatch(loadCategories());
+  }
+
+  loadSeasons () {
+    this.props.dispatch(loadSeasons());
   }
 
   loadPurchaseOrders (query) {

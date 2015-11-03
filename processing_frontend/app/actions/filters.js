@@ -3,9 +3,9 @@ function setBrands(brands) {
            brands: brands };
 }
 
-function setSuppliers(suppliers) {
-  return { type: 'SET_SUPPLIERS',
-           suppliers: suppliers };
+function setCategories(categories) {
+  return { type: 'SET_CATEGORIES',
+           categories: categories };
 }
 
 function setGenders(genders) {
@@ -18,9 +18,14 @@ function setOrderTypes(orderTypes) {
            orderTypes: orderTypes };
 }
 
-function setCategories(categories) {
-  return { type: 'SET_CATEGORIES',
-           categories: categories };
+function setSeasons(seasons) {
+  return { type: 'SET_SEASONS',
+           seasons: seasons };
+}
+
+function setSuppliers(suppliers) {
+  return { type: 'SET_SUPPLIERS',
+           suppliers: suppliers };
 }
 
 export function loadBrands() {
@@ -28,6 +33,14 @@ export function loadBrands() {
     fetch('/api/vendors.json', { credentials: 'same-origin' })
       .then(response => response.json())
       .then(brands => dispatch(setBrands(brands)));
+  }
+}
+
+export function loadCategories() {
+  return dispatch => {
+    fetch('/api/categories.json', { credentials: 'same-origin' })
+      .then(response => response.json())
+      .then(categories => dispatch(setCategories(categories)));
   }
 }
 
@@ -47,11 +60,11 @@ export function loadOrderTypes() {
   }
 }
 
-export function loadCategories() {
+export function loadSeasons() {
   return dispatch => {
-    fetch('/api/categories.json', { credentials: 'same-origin' })
+    fetch('/api/seasons.json', { credentials: 'same-origin' })
       .then(response => response.json())
-      .then(categories => dispatch(setCategories(categories)));
+      .then(seasons => dispatch(setSeasons(seasons)));
   }
 }
 

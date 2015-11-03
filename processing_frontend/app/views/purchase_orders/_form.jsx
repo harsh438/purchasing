@@ -21,7 +21,7 @@ export default class PurchaseOrdersForm extends React.Component {
         <div className="panel-body">
           <form className="form" onSubmit={this.handleSubmit.bind(this)}>
             <div className="row no_gutter">
-              <div className="form-group col-md-3">
+              <div className="form-group col-md-2">
                 <label htmlFor="brand">Brand</label>
 
                 <select className="form-control"
@@ -34,7 +34,7 @@ export default class PurchaseOrdersForm extends React.Component {
                 </select>
               </div>
 
-              <div className="form-group col-md-3">
+              <div className="form-group col-md-2">
                 <label htmlFor="category">Category</label>
 
                 <select className="form-control"
@@ -46,6 +46,20 @@ export default class PurchaseOrdersForm extends React.Component {
                   {this.options(this.props.categories)}
                 </select>
               </div>
+
+              <div className="form-group col-md-2">
+                <label htmlFor="season">Season</label>
+
+                <select className="form-control"
+                        id="season"
+                        name="season"
+                        onChange={this.handleChange.bind(this, 'season')}
+                        value={this.state.season}>
+                  <option value=""> -- select season -- </option>
+                  {this.options(this.props.seasons)}
+                </select>
+              </div>
+
               <div className="form-group col-md-2">
                 <label htmlFor="poNumber">PO Number</label>
 
