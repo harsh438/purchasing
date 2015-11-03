@@ -18,7 +18,12 @@ function transformPurchaseOrder(purchaseOrder) {
 }
 
 function transformSummary(summary) {
-  return humps.camelizeKeys(summary)
+  const camelizedSummary = humps.camelizeKeys(summary);
+
+  return Object.keys(camelizedSummary).reduce((acc, key) => {
+    acc[key] = camelizedSummary[key].toFixed(2)
+    return acc
+  }, {});
 }
 
 function setPurchaseOrders(state, action) {
@@ -42,7 +47,7 @@ function appendPurchaseOrders(state, action) {
                                     totalPages: action.totalPages,
                                     totalCount: action.totalCount,
                                     exportable: action.exportable,
-                                    summary: action.summary.map(transformSummary),
+                                    summary: transformSummary(action.summary),
                                     moreResultsAvailable: action.moreResultsAvailable });
 }
 
