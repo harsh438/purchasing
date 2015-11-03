@@ -13,13 +13,13 @@ import deepEqual from 'deep-equal';
 
 class PurchaseOrdersIndex extends React.Component {
   componentWillMount () {
-    this.loadBrands();
-    this.loadCategories();
-    this.loadGenders();
-    this.loadOrderTypes();
+    this.props.dispatch(loadBrands());
+    this.props.dispatch(loadSuppliers());
+    this.props.dispatch(loadGenders());
+    this.props.dispatch(loadOrderTypes());
     this.loadPurchaseOrders(this.props.location.query);
-    this.loadSeasons();
-    this.loadSuppliers();
+    this.props.dispatch(loadCategories());
+    this.props.dispatch(loadSeasons());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,30 +62,6 @@ class PurchaseOrdersIndex extends React.Component {
         </button>
       );
     }
-  }
-
-  loadBrands () {
-    this.props.dispatch(loadBrands());
-  }
-
-  loadSuppliers () {
-    this.props.dispatch(loadSuppliers());
-  }
-
-  loadGenders () {
-    this.props.dispatch(loadGenders());
-  }
-
-  loadOrderTypes () {
-    this.props.dispatch(loadOrderTypes());
-  }
-
-  loadCategories () {
-    this.props.dispatch(loadCategories());
-  }
-
-  loadSeasons () {
-    this.props.dispatch(loadSeasons());
   }
 
   loadPurchaseOrders (query) {
