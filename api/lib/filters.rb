@@ -60,6 +60,8 @@ class Filters
         { @params[:sort_by] => @params[:sort_dir] }
       elsif @params[:sort_by]
         @params[:sort_by]
+      else
+        { delivery_date: :desc }
       end
     end
   end
