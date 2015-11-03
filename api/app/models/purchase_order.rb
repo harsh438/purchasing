@@ -110,11 +110,11 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def self.filter_date_from(date)
-    where('added > ?', date)
+    where('drop_date > ?', date)
   end
 
   def self.filter_date_until(date)
-    where('added < ?', date)
+    where('drop_date < ?', date)
   end
 
   def self.order_types
