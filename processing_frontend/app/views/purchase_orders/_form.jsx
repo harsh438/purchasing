@@ -203,6 +203,7 @@ export default class PurchaseOrdersForm extends React.Component {
                     status: query.status || [],
                     gender: query.gender || '',
                     orderType: query.orderType || '',
+                    season: query.season || '',
                     supplier: query.supplier || ''});
   }
 
