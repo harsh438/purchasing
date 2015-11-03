@@ -125,7 +125,7 @@ class PurchaseOrder < ActiveRecord::Base
     if context[:status] == ['cancelled']
       where('cancelled_date < ?', context[:date_from])
     elsif context[:status] and context[:status].include?('cancelled')
-      where('(drop_date < ? or (cancelled_date < ?)', context[:date_until], context[:date_until])
+      where('(drop_date < ? or (cancelled_date < ?))', context[:date_until], context[:date_until])
     else
       where('(drop_date < ?)', context[:date_until])
     end
