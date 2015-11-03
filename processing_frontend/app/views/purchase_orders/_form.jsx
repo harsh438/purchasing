@@ -154,13 +154,14 @@ export default class PurchaseOrdersForm extends React.Component {
               </div>
 
               <div className="col-md-2">
-                <label htmlFor="operator">Order Number (OT_)</label>
+                <label htmlFor="operator">Order Tool Number</label>
 
                 <input className="form-control"
                        name="operator"
                        onChange={this.handleChange.bind(this, 'operator')}
                        type="search"
-                       value={this.state.operator} />
+                       value={this.state.operator}
+                       placeholder="OT_" />
               </div>
             </div>
 
