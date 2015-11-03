@@ -32,6 +32,13 @@ bundle exec rake db:setup
 bundle exec rails
 ```
 
+**Booting frontend for the first time**
+
+```
+cd processing_frontend/
+npm install
+```
+
 **Reset your db**
 
 ```
