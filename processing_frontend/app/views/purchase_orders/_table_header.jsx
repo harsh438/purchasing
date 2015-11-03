@@ -50,7 +50,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
           </th>
 
           <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>
-            Other
+            {this.renderExportButton()}
           </th>
         </tr>
 
@@ -101,18 +101,16 @@ export default class PurchaseOrderTableHeader extends React.Component {
         <div>
           <strong>Total Results:</strong> {this.props.totalCount}
         </div>
-
-        {this.renderExportUrl()}
       </div>
     );
   }
 
-  renderExportUrl () {
+  renderExportButton () {
     if (!this.props.exportable) return;
 
     if (this.props.exportable.url) {
       return (
-        <a href={this.props.exportable.url} target="_blank">export as .csv</a>
+        <a href={this.props.exportable.url} className="btn btn-default btn-sm" target="_blank">export as .csv</a>
       );
     } else if (this.props.exportable.massive) {
       return (
