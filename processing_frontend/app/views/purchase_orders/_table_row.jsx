@@ -44,13 +44,9 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.balanceValue || 'n/a'}</td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
-          {this.props.purchaseOrder.operator}
+          {this.props.purchaseOrder.weeksOnSale}
         </td>
-        <td>{this.props.purchaseOrder.weeksOnSale}</td>
         <td>{this.props.purchaseOrder.closingDate}</td>
-        <td>{this.props.purchaseOrder.brandSize}</td>
-        <td>{this.props.purchaseOrder.gender}</td>
-        <td>{this.props.purchaseOrder.comment}</td>
       </tr>
     );
   }

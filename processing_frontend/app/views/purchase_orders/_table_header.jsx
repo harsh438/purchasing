@@ -49,7 +49,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
             {this.renderTotalValue(this.props.summary.balanceValue)}
           </th>
 
-          <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>
+          <th colSpan="2" style={{ borderLeft: '2px solid #ddd' }}>
             {this.renderExportButton()}
           </th>
         </tr>
@@ -84,12 +84,8 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th>Cost</th>
           <th>Val</th>
 
-          <th style={{ borderLeft: '2px solid #ddd' }}>Operator</th>
-          <th>Weeks on Sale</th>
+          <th style={{ borderLeft: '2px solid #ddd' }}>Weeks on Sale</th>
           <th>Closing</th>
-          <th>Brand Size</th>
-          <th>Gender</th>
-          <th>Comment</th>
         </tr>
       </thead>
     );

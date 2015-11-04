@@ -1,6 +1,7 @@
 import React from 'react';
 import PurchaseOrderTableHeader from './_table_header';
 import PurchaseOrderRow from './_table_row';
+import { sum } from 'lodash';
 
 export default class PurchaseOrdersTable extends React.Component {
   componentWillMount () {
@@ -20,7 +21,7 @@ export default class PurchaseOrdersTable extends React.Component {
   render () {
     return (
       <div className={this.className()} style={{ paddingTop: this.paddingTop() }}>
-        <table className="table" style={{ width: '1669px' }}>
+        <table className="table" style={{ width: this.tableWidth() }}>
           <colgroup>{this.renderCols()}</colgroup>
 
           <PurchaseOrderTableHeader cellWidths={this.cellWidths()}
@@ -29,7 +30,7 @@ export default class PurchaseOrdersTable extends React.Component {
                                     summary={this.props.summary}
                                     totalPages={this.props.totalPages}
                                     totalCount={this.props.totalCount}
-                                    width="1669px" />
+                                    width={this.tableWidth()} />
 
           <tbody>{this.renderRows()}</tbody>
         </table>
@@ -40,12 +41,16 @@ export default class PurchaseOrdersTable extends React.Component {
 
   cellWidths () {
     return [48, 64,
-            54, 170, 90, 49, 57,
+            54, 120, 90, 49, 57,
             60, 52, 42, 35, 50, 50,
             50, 35, 50, 50,
             35, 50, 50,
             35, 50, 50,
-            74, 52, 57, 65, 56, 69];
+            74, 52];
+  }
+
+  tableWidth () {
+    return `${sum(this.cellWidths())}px`;
   }
 
   renderCols () {

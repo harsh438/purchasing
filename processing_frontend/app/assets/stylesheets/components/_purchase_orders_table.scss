@@ -4,11 +4,21 @@
     font-size: .8em;
     table-layout: fixed;
   }
+
+  .table > thead > tr > th,
+  .table > tbody > tr > th,
+  .table > tfoot > tr > th,
+  .table > thead > tr > td,
+  .table > tbody > tr > td,
+  .table > tfoot > tr > td {
+    padding: 5px;
+  }
 }
 
 .purchase_orders_table--sticky {
   thead {
     background: white;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0, .2);
     display: block;
     left: 14px;
     position: fixed;
