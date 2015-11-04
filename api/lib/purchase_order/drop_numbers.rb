@@ -6,16 +6,9 @@ class PurchaseOrder::DropNumbers
     return {} unless previous_drops.any?
 
     results.reduce({}) do |drops, purchase_order|
-      previous_drops_key = [purchase_order.delivery_date,
-                            purchase_order.product_id,
-                            purchase_order.option_id]
-
-      total_drops_key = [purchase_order.product_id,
-                         purchase_order.option_id]
-
-      previous_drops_value = (previous_drops[previous_drops_key] || 0) + 1
-
-      drops.merge(purchase_order.id => "#{previous_drops_value}/#{total_drops[total_drops_key]}")
+      previous_drops_value = find_previous_drops_value(previous_drops, purchase_order)
+      total_drops_value = find_total_drops_value(total_drops, purchase_order)
+      drops.merge(purchase_order.id => "#{previous_drops_value}/#{total_drops_value}")
     end
   end
 
@@ -62,5 +55,20 @@ class PurchaseOrder::DropNumbers
                   .where(query, *criteria)
                   .group(:drop_date, :pID, :oID)
                   .count
+  end
+
+  def find_total_drops_value(total_drops, purchase_order)
+    total_drops_key = [purchase_order.product_id,
+                       purchase_order.option_id]
+
+    total_drops[total_drops_key]
+  end
+
+  def find_previous_drops_value(previous_drops, purchase_order)
+    previous_drops_key = [purchase_order.delivery_date,
+                          purchase_order.product_id,
+                          purchase_order.option_id]
+
+    (previous_drops[previous_drops_key] || 0) + 1
   end
 end
