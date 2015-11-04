@@ -9,8 +9,107 @@ export default class PurchaseOrderTableHeader extends React.Component {
     return (
       <thead ref="thead" style={{ width: this.props.width }}>
         <tr>
+          <th colSpan="26">
+            <div className="row">
+              <div className="col-md-2 col-md-offset-2">
+                <table className="purchase_orders_summary__table">
+                  <tbody>
+                    <tr>
+                      <th className="text-center" colSpan="2">Ordered</th>
+                    </tr>
+                    <tr>
+                      <th>Quantity</th>
+                      <td>{this.renderTotalQuantity(this.props.summary.orderedQuantity)}</td>
+                    </tr>
+                    <tr>
+                      <th>Cost</th>
+                      <td>{this.renderTotalQuantity(this.props.summary.orderedCost)}</td>
+                    </tr>
+                    <tr>
+                      <th>Value</th>
+                      <td>{this.renderTotalQuantity(this.props.summary.orderedValue)}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="col-md-2">
+                <table className="purchase_orders_summary__table">
+                  <tbody>
+                    <tr>
+                      <th className="text-center" colSpan="2">Delivered</th>
+                    </tr>
+                    <tr>
+                      <th>Quantity</th>
+                      <td>{this.renderTotalQuantity(this.props.summary.deliveredQuantity)}</td>
+                    </tr>
+                    <tr>
+                      <th>Cost</th>
+                      <td>{this.renderTotalQuantity(this.props.summary.deliveredCost)}</td>
+                    </tr>
+                    <tr>
+                      <th>Value</th>
+                      <td>{this.renderTotalQuantity(this.props.summary.deliveredValue)}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="col-md-2">
+                <table className="purchase_orders_summary__table">
+                  <tbody>
+                    <tr>
+                      <th className="text-center" colSpan="2">Cancelled</th>
+                    </tr>
+                    <tr>
+                      <th>Quantity</th>
+                      <td>{this.renderTotalQuantity(this.props.summary.cancelledQuantity)}</td>
+                    </tr>
+                    <tr>
+                      <th>Cost</th>
+                      <td>{this.renderTotalQuantity(this.props.summary.cancelledCost)}</td>
+                    </tr>
+                    <tr>
+                      <th>Value</th>
+                      <td>{this.renderTotalQuantity(this.props.summary.cancelledValue)}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="col-md-2">
+                <table className="purchase_orders_summary__table">
+                  <tbody>
+                    <tr>
+                      <th className="text-center" colSpan="2">Balance</th>
+                    </tr>
+                    <tr>
+                      <th>Quantity</th>
+                      <td>{this.renderTotalQuantity(this.props.summary.balanceQuantity)}</td>
+                    </tr>
+                    <tr>
+                      <th>Cost</th>
+                      <td>{this.renderTotalQuantity(this.props.summary.balanceCost)}</td>
+                    </tr>
+                    <tr>
+                      <th>Value</th>
+                      <td>{this.renderTotalQuantity(this.props.summary.balanceValue)}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="col-md-2">
+                {this.renderExportButton()}
+              </div>
+            </div>
+
+          </th>
+        </tr>
+
+        <tr>
           <th colSpan="2">
-            {this.renderTopCorner()}
+            {this.props.totalCount} results
           </th>
 
           <th colSpan="5" style={{ borderLeft: '2px solid #ddd' }}>
@@ -19,38 +118,22 @@ export default class PurchaseOrderTableHeader extends React.Component {
 
           <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>
             Ordered
-
-            {this.renderTotalQuantity(this.props.summary.orderedQuantity)}
-            {this.renderTotalCost(this.props.summary.orderedCost)}
-            {this.renderTotalValue(this.props.summary.orderedValue)}
           </th>
 
           <th colSpan="5" style={{ borderLeft: '2px solid #ddd' }}>
             Delivered
-
-            {this.renderTotalQuantity(this.props.summary.deliveredQuantity)}
-            {this.renderTotalCost(this.props.summary.deliveredCost)}
-            {this.renderTotalValue(this.props.summary.deliveredValue)}
           </th>
 
           <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>
             Cancelled
-
-            {this.renderTotalQuantity(this.props.summary.cancelledQuantity)}
-            {this.renderTotalCost(this.props.summary.cancelledCost)}
-            {this.renderTotalValue(this.props.summary.cancelledValue)}
           </th>
 
           <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>
             Balance
-
-            {this.renderTotalQuantity(this.props.summary.balanceQuantity)}
-            {this.renderTotalCost(this.props.summary.balanceCost)}
-            {this.renderTotalValue(this.props.summary.balanceValue)}
           </th>
 
           <th colSpan="2" style={{ borderLeft: '2px solid #ddd' }}>
-            {this.renderExportButton()}
+            &nbsp;
           </th>
         </tr>
 
@@ -92,22 +175,16 @@ export default class PurchaseOrderTableHeader extends React.Component {
     );
   }
 
-  renderTopCorner () {
-    return (
-      <div>
-        <div>
-          <strong>Total Results:</strong> {this.props.totalCount}
-        </div>
-      </div>
-    );
-  }
-
   renderExportButton () {
     if (!this.props.exportable) return;
 
     if (this.props.exportable.url) {
       return (
-        <a href={this.props.exportable.url} className="btn btn-default btn-sm" target="_blank">export as .csv</a>
+        <a href={this.props.exportable.url}
+           className="btn btn-default btn-sm pull-right"
+           target="_blank">
+          export as .csv
+        </a>
       );
     } else if (this.props.exportable.massive) {
       return (
@@ -120,7 +197,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
     if (!totalQuantity) return;
 
     return (
-      <div style={{ fontWeight: 'normal' }}>Total quantity: {totalQuantity}</div>
+      <div style={{ fontWeight: 'normal' }}>{totalQuantity}</div>
     );
   }
 
@@ -128,7 +205,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
     if (!totalCost) return;
 
     return (
-      <div style={{ fontWeight: 'normal' }}>Total cost: {totalCost}</div>
+      <div style={{ fontWeight: 'normal' }}>{totalCost}</div>
     );
   }
 
@@ -136,7 +213,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
     if (!totalValue) return;
 
     return (
-      <div style={{ fontWeight: 'normal' }}>Total value: {totalValue}</div>
+      <div style={{ fontWeight: 'normal' }}>{totalValue}</div>
     );
   }
 

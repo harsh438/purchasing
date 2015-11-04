@@ -1,5 +1,14 @@
 .purchase_orders_summary {
-  .table {
-    font-size: .8em;
+}
+
+.purchase_orders_summary__table {
+  font-size: 1.1em;
+
+  th, td {
+    padding: 2px 5px;
+  }
+
+  td {
+    text-align: right;
   }
 }
