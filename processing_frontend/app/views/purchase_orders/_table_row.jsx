@@ -4,7 +4,17 @@ export default class PurchaseOrderRow extends React.Component {
   render () {
     return (
       <tr className={this.props.alt ? 'active' : ''} ref="row">
-        <td>{this.props.purchaseOrder.poNumber}</td>
+        <td>
+          <input type="checkbox"
+                 name="selected"
+                 ref="selected"
+                 onChange={this.handleChange.bind(this, 'selected')}
+                 value={this.props.purchaseOrder.id}
+                 style={{ margin: '7px auto 0', display: 'block' }} />
+        </td>
+        <td style={{ borderLeft: '2px solid #ddd' }}>
+          {this.props.purchaseOrder.poNumber}
+        </td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
           {this.props.purchaseOrder.productId}
@@ -48,5 +58,13 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.gender}</td>
       </tr>
     );
+  }
+
+  handleChange (field, { target }) {
+    if (target.checked) {
+      this.props.table.selectRow(target.value)
+    } else {
+      this.props.table.unSelectRow(target.value)
+    }
   }
 }

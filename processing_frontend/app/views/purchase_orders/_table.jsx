@@ -5,13 +5,19 @@ import { sum } from 'lodash';
 
 export default class PurchaseOrdersTable extends React.Component {
   componentWillMount () {
-    this.state = { sticky: false };
+    this.state = { sticky: false, selected: [] };
     this.onScroll();
     window.addEventListener('scroll', this.onScroll.bind(this));
   }
 
   shouldComponentUpdate (nextProps, nextState) {
     return this.props.purchaseOrders !== nextProps.purchaseOrders || this.state.sticky !== nextState.sticky;
+  }
+
+  componentWillReceiveProps(nextProps, nextState) {
+    if (this.props.purchaseOrders !== nextProps.purchaseOrders) {
+      this.setState({ selected: [] })
+    }
   }
 
   componentWillUnmount () {
@@ -37,6 +43,22 @@ export default class PurchaseOrdersTable extends React.Component {
         {this.renderEmpty()}
       </div>
     );
+  }
+
+  selectRow (id) {
+    var selected = this.state.selected.slice();
+    selected.push(id);
+    this.setState({ selected: selected });
+  }
+
+  unSelectRow (id) {
+    var selected = this.state.selected.slice();
+    var index = selected.indexOf(id);
+    while (index != -1) {
+      selected.splice(index, 1);
+      index = selected.indexOf(id);
+    }
+    this.setState({ selected: selected });
   }
 
   cellWidths () {
@@ -78,6 +100,7 @@ export default class PurchaseOrdersTable extends React.Component {
 
       return (
         <PurchaseOrderRow alt={alt}
+                          table={this}
                           key={purchaseOrder.orderId}
                           purchaseOrder={purchaseOrder} />
       );
