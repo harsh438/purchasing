@@ -14,7 +14,7 @@ function fetchPurchaseOrders(params, page, action) {
                                category_id: params.category,
                                summary_id: params.poNumber,
                                product_id: params.pid,
-                               sku: params.sku,
+                               product_sku: params.sku,
                                status: params.status,
                                date_from: params.dateFrom,
                                date_until: params.dateUntil,
