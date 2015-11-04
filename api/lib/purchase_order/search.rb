@@ -7,6 +7,8 @@ class PurchaseOrder::Search
     enrich_response_if_filters_applied(response, unpaged_results, filters, additional_data)
   end
 
+  private
+
   def build_response(results, attrs)
     { summary: {},
       results: results,
