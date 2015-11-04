@@ -25,7 +25,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
             {this.renderTotalValue(this.props.summary.orderedValue)}
           </th>
 
-          <th colSpan="4" style={{ borderLeft: '2px solid #ddd' }}>
+          <th colSpan="5" style={{ borderLeft: '2px solid #ddd' }}>
             Delivered
 
             {this.renderTotalQuantity(this.props.summary.deliveredQuantity)}
@@ -72,6 +72,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th>Val</th>
 
           <th style={{ borderLeft: '2px solid #ddd' }}>Date</th>
+          <th>#</th>
           <th>Qty</th>
           <th>Cost</th>
           <th>Val</th>

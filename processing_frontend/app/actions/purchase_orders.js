@@ -42,6 +42,7 @@ function action(type) {
              results,
              type,
              exportable,
+             dropNumbers: purchaseOrders.drop_numbers,
              totalPages: purchaseOrders.total_pages,
              totalCount: purchaseOrders.total_count,
              summary: purchaseOrders.summary,

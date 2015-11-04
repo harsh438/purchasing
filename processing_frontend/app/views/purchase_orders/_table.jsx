@@ -43,10 +43,10 @@ export default class PurchaseOrdersTable extends React.Component {
     return [48, 64,
             54, 120, 90, 49, 57,
             60, 52, 42, 35, 50, 50,
-            50, 35, 50, 50,
+            50, 35, 35, 50, 50,
             35, 50, 50,
             35, 50, 50,
-            74, 52];
+            50, 50];
   }
 
   tableWidth () {

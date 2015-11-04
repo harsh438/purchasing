@@ -9,8 +9,11 @@ const initialState =  { exportable: {},
                         summary: {},
                         moreResultsAvailable: false };
 
-function transformPurchaseOrder(purchaseOrder) {
-  return humps.camelizeKeys(purchaseOrder);
+function transformPurchaseOrder(action) {
+  return function (purchaseOrder) {
+    purchaseOrder.drop_number = action.dropNumbers[purchaseOrder.order_id];
+    return humps.camelizeKeys(purchaseOrder);
+  };
 }
 
 function transformSummary(summary) {
@@ -18,7 +21,7 @@ function transformSummary(summary) {
 }
 
 function setPurchaseOrders(state, action) {
-  const purchaseOrders = action.results.map(transformPurchaseOrder);
+  const purchaseOrders = action.results.map(transformPurchaseOrder(action));
 
   return assign({}, state, { purchaseOrders,
                              page: action.page,
@@ -30,7 +33,7 @@ function setPurchaseOrders(state, action) {
 }
 
 function appendPurchaseOrders(state, action) {
-  const newPurchaseOrders = action.results.map(transformPurchaseOrder);
+  const newPurchaseOrders = action.results.map(transformPurchaseOrder(action));
   const purchaseOrders = [...state.purchaseOrders, ...newPurchaseOrders];
 
   return assign({}, state, { purchaseOrders,

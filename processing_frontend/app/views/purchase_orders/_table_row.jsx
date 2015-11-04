@@ -27,6 +27,7 @@ export default class PurchaseOrderRow extends React.Component {
         <td style={{ borderLeft: '2px solid #ddd' }}>
           {this.props.purchaseOrder.deliveryDate}
         </td>
+        <td>{this.props.purchaseOrder.dropNumber}</td>
         <td>{this.props.purchaseOrder.deliveredQuantity}</td>
         <td>{this.props.purchaseOrder.deliveredCost}</td>
         <td>{this.props.purchaseOrder.deliveredValue}</td>
