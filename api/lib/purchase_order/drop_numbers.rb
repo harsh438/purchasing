@@ -1,23 +1,7 @@
 class PurchaseOrder::DropNumbers
   def calculate(results)
-    criteria = results.reduce([]) do |criteria, purchase_order|
-      if purchase_order.product_id > 0 and purchase_order.option_id > 0
-        criteria << purchase_order.product_id
-        criteria << purchase_order.option_id
-      else
-        criteria
-      end
-    end
-
-    return [] unless criteria.count > 0
-
-    query = (criteria.count / 2).times.map { '(pID = ? AND oID = ?)' }.join(' OR ')
-
-    total_drops = PurchaseOrder.with_summary
-                               .with_valid_status
-                               .where(query, *criteria)
-                               .group(:pID, :oID)
-                               .count
+    total_drops = find_total_drops(results)
+    return {} unless total_drops.any?
 
     criteria = results.reduce([]) do |criteria, purchase_order|
       if purchase_order.product_id > 0 and purchase_order.option_id > 0
@@ -53,5 +37,28 @@ class PurchaseOrder::DropNumbers
     end
 
     drops
+  end
+
+  private
+
+  def find_total_drops(results)
+    criteria = results.reduce([]) do |criteria, purchase_order|
+      if purchase_order.product_id > 0 and purchase_order.option_id > 0
+        criteria << purchase_order.product_id
+        criteria << purchase_order.option_id
+      else
+        criteria
+      end
+    end
+
+    return PurchaseOrder.none unless criteria.count > 0
+
+    query = (criteria.count / 2).times.map { '(pID = ? AND oID = ?)' }.join(' OR ')
+
+    PurchaseOrder.with_summary
+                 .with_valid_status
+                 .where(query, *criteria)
+                 .group(:pID, :oID)
+                 .count
   end
 end
