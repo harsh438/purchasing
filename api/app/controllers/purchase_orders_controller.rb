@@ -37,7 +37,7 @@ class PurchaseOrdersController < ApplicationController
 
   def render_csv
     render csv: PurchaseOrder::CsvExporter.new.export(params)
-  rescue PurchaseOrder::CsvExporter::NoFiltersError => e
+  rescue PurchaseOrder::Filter::NoFiltersError => e
     render plain: 'Please select filters'
   end
 end
