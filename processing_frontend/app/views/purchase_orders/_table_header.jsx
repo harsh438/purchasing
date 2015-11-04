@@ -9,9 +9,9 @@ export default class PurchaseOrderTableHeader extends React.Component {
     return (
       <thead ref="thead" style={{ width: this.props.width }}>
         <tr>
-          <th colSpan="24">
+          <th colSpan="23">
             <div className="row">
-              <div className="col-md-2 col-md-offset-1">
+              <div className="col-md-2 col-md-offset-2">
                 <table className="purchase_orders_summary__table">
                   <tbody>
                     <tr>
@@ -98,12 +98,11 @@ export default class PurchaseOrderTableHeader extends React.Component {
                   </tbody>
                 </table>
               </div>
-
-              <div className="col-md-2">
-                {this.renderExportButton()}
-              </div>
             </div>
+          </th>
 
+          <th style={{ verticalAlign: 'bottom' }}>
+            {this.renderExportButton()}
           </th>
         </tr>
 
