@@ -10,14 +10,7 @@ const initialState =  { exportable: {},
                         moreResultsAvailable: false };
 
 function transformPurchaseOrder(purchaseOrder) {
-  const camelizedPurchaseOrder = humps.camelizeKeys(purchaseOrder);
-
-  const remappedKeys = { poNumber: purchaseOrder.summary_id,
-                         productCost: purchaseOrder.cost,
-                         orderId: purchaseOrder.id,
-                         orderedQuantity: purchaseOrder.quantity };
-
-  return assign({}, camelizedPurchaseOrder, remappedKeys);
+  return humps.camelizeKeys(purchaseOrder);
 }
 
 function transformSummary(summary) {
