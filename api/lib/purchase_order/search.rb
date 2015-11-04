@@ -56,16 +56,16 @@ class PurchaseOrder::Search
                sum((qty - (qtyDone + qtyAdded)) * p.pPrice)')
        .flatten
 
-    { ordered_quantity: ordered_quantity,
+    { ordered_quantity: number_with_delimiter(ordered_quantity),
       ordered_cost: monetize(ordered_cost),
       ordered_value: monetize(ordered_value),
-      delivered_quantity: delivered_quantity,
+      delivered_quantity: number_with_delimiter(delivered_quantity),
       delivered_cost: monetize(delivered_cost),
       delivered_value: monetize(delivered_value),
-      balance_quantity: balance_quantity,
+      balance_quantity: number_with_delimiter(balance_quantity),
       balance_cost: monetize(balance_cost),
       balance_value: monetize(balance_value),
-      cancelled_quantity: cancelled_quantity || 0,
+      cancelled_quantity: number_with_delimiter(cancelled_quantity || 0),
       cancelled_cost: monetize(cancelled_cost || 0),
       cancelled_value: monetize(cancelled_value || 0) }
   end
