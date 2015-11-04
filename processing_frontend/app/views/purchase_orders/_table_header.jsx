@@ -72,7 +72,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th>Val</th>
 
           <th style={{ borderLeft: '2px solid #ddd' }}>Date</th>
-          <th>#</th>
+          <th>Drop #</th>
           <th>Qty</th>
           <th>Cost</th>
           <th>Val</th>
