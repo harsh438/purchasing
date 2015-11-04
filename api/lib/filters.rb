@@ -56,12 +56,7 @@ class Filters
     end
 
     def order
-      if @params[:sort_by]
-        *sort_by, sort_dir = @params[:sort_by].to_s.split('_')
-        { sort_by.join('_') => sort_dir }
-      else
-        { delivery_date: :asc }
-      end
+      @params[:sort_by]
     end
   end
 end
