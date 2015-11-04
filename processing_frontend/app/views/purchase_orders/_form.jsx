@@ -213,6 +213,7 @@ export default class PurchaseOrdersForm extends React.Component {
                   </div>
                 </CheckboxGroup>
               </div>
+              
               <div className="col-md-4 text-right">
                <button className="btn btn-success" style={{ marginTop: '1.74em', width: '100%' }}>
                   Search
