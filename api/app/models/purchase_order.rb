@@ -164,7 +164,7 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def category
-    return Category.english.where(category_id: category_id)
+    Category.english.where(category_id: category_id)
   end
 
   def closing_date
@@ -281,7 +281,7 @@ class PurchaseOrder < ActiveRecord::Base
 
   def cancel
     update!({ cancelled_date: Date.today, status: -1 })
-    return id
+    id
   end
 
   def cancel_order
@@ -289,7 +289,7 @@ class PurchaseOrder < ActiveRecord::Base
     items.each do |item|
       item.cancel
     end
-    return items.map { |i| i.id }
+    items.map { |i| i.id }
   end
 
   private
