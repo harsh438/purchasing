@@ -6,6 +6,16 @@ class PurchaseOrdersController < ApplicationController
     end
   end
 
+  def cancel
+    id = PurchaseOrder.find(params[:id]).try(:cancel)
+    render json: { id: id }
+  end
+
+  def cancel_order
+    ids = PurchaseOrder.find(params[:id]).try(:cancel_order)
+    render json: { ids: ids }
+  end
+
   def seasons
     render json: PurchaseOrder.seasons
   end

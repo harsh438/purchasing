@@ -279,6 +279,19 @@ class PurchaseOrder < ActiveRecord::Base
                 closing_date: closing_date)
   end
 
+  def cancel
+    update!({ cancelled_date: Date.today, status: -1 })
+    return id
+  end
+
+  def cancel_order
+    items = PurchaseOrder.with_summary.where(po_number: po_number)
+    items.each do |item|
+      item.cancel
+    end
+    return items.map { |i| i.id }
+  end
+
   private
 
   def monetize(figure)

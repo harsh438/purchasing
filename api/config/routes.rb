@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   root to: 'frontend#index'
 
+  scope :api do
+    post 'cancel/:id', to: 'purchase_orders#cancel'
+    post 'cancel/:id/order', to: 'purchase_orders#cancel_order'
+  end
+
   scope :api, format: true, constraints: { format: /json|csv/ } do
     resources :purchase_orders, only: :index
     resources :categories, only: :index
