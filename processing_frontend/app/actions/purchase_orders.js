@@ -1,8 +1,7 @@
 import queryString from 'query-string';
 import { assign, omit, isEmpty, compose, isNumber } from 'lodash';
 
-const defaultParams = { sort_by: 'id',
-                        sort_dir: 'desc' };
+const defaultParams = { sort_by: 'drop_date_asc' };
 
 function removeEmptyKeys(object) {
   return omit(object, v => !isNumber(v) && isEmpty(v));

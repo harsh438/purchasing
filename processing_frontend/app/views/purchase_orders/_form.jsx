@@ -182,13 +182,13 @@ export default class PurchaseOrdersForm extends React.Component {
                   {Radio => (
                     <div className="form-group">
                       <label className="status-label">
-                        <Radio value="product_id" /> PID
+                        <Radio value="product_id_desc" /> PID
                       </label>
                       <label className="status-label">
-                        <Radio value="product_sku" /> SKU
+                        <Radio value="product_sku_desc" /> SKU
                       </label>
                        <label className="status-label">
-                        <Radio value="drop_date" /> Drop Date
+                        <Radio value="drop_date_asc" /> Drop Date
                       </label>
                     </div>
                   )}
@@ -213,7 +213,7 @@ export default class PurchaseOrdersForm extends React.Component {
                   </div>
                 </CheckboxGroup>
               </div>
-              
+
               <div className="col-md-4 text-right">
                <button className="btn btn-success" style={{ marginTop: '1.74em', width: '100%' }}>
                   Search
@@ -246,7 +246,7 @@ export default class PurchaseOrdersForm extends React.Component {
                     season: query.season || '',
                     supplier: query.supplier || '',
                     operator: query.operator || '',
-                    sortBy: query.sortBy || 'drop_date'});
+                    sortBy: query.sortBy || 'drop_date_asc'});
   }
 
   options (options) {
