@@ -39,63 +39,7 @@ class PurchaseOrder < ActiveRecord::Base
       end
     end
   end
-
-  belongs_to :vendor, foreign_key: :orderTool_venID
-  belongs_to :product, foreign_key: :pID
-  belongs_to :summary, foreign_key: :po_number
-
-  has_many :suppliers, through: :vendor, class_name: 'Supplier'
-  map_attributes id: :id,
-                 product_id: :pID,
-                 option_id: :oID,
-                 quantity: :qty,
-                 quantity_added: :qtyAdded,
-                 quantity_done: :qtyDone,
-                 status: :status,
-                 created_at: :added,
-                 order_date: :order_date,
-                 delivery_date: :drop_date,
-                 arrived_date: :arrived_date,
-                 invoice_payable_date: :inv_date,
-                 summary_id: :po_number,
-                 operator: :operator,
-                 comment: :comment,
-                 cost: :cost,
-                 cancelled_date: :cancelled_date,
-                 in_pvx: :inPVX,
-                 season: :po_season,
-                 category_id: :orderTool_RC,
-                 gender: :orderTool_LG,
-                 vendor_id: :orderTool_venID,
-                 line_id: :orderToolItemID,
-                 product_name: :orderTool_productName,
-                 product_sku: :orderTool_SKU,
-                 product_size: :orderTool_SDsize,
-                 product_barcode: :orderTool_barcode,
-                 sell_price: :orderTool_sellPrice,
-                 brand_size: :orderTool_brandSize,
-                 supplier_list_price: :orderTool_SupplierListPrice,
-                 rrp: :orderTool_RRP,
-
-                 # Unused but necessary for insertion
-                 reporting_product_id: :reporting_pID,
-                 original_product_id: :original_pID,
-                 original_option_id: :original_oID
-
-  filters :vendor_id,
-          :gender,
-          :summary_id,
-          :season,
-          :product_sku,
-          :category_id,
-          :product_id,
-          :operator
-
-  paginates_per 50
-
-  scope :with_summary, -> { where.not(summary_id: '') }
-  scope :with_valid_status, -> { where('purchase_orders.status in (-1,2,3,4,5)') }
-
+  
   def self.filter_supplier(context)
     joins(vendor: :supplier_vendors)
       .where(suppliers_to_brands: { SupplierID: context[:supplier] })
@@ -158,6 +102,62 @@ class PurchaseOrder < ActiveRecord::Base
                  end
                  .compact
   end
+
+  scope :with_summary, -> { where.not(summary_id: '') }
+  scope :with_valid_status, -> { where('purchase_orders.status in (-1,2,3,4,5)') }
+
+  belongs_to :vendor, foreign_key: :orderTool_venID
+  belongs_to :product, foreign_key: :pID
+  belongs_to :summary, foreign_key: :po_number
+
+  has_many :suppliers, through: :vendor, class_name: 'Supplier'
+  map_attributes id: :id,
+                 product_id: :pID,
+                 option_id: :oID,
+                 quantity: :qty,
+                 quantity_added: :qtyAdded,
+                 quantity_done: :qtyDone,
+                 status: :status,
+                 created_at: :added,
+                 order_date: :order_date,
+                 delivery_date: :drop_date,
+                 arrived_date: :arrived_date,
+                 invoice_payable_date: :inv_date,
+                 summary_id: :po_number,
+                 operator: :operator,
+                 comment: :comment,
+                 cost: :cost,
+                 cancelled_date: :cancelled_date,
+                 in_pvx: :inPVX,
+                 season: :po_season,
+                 category_id: :orderTool_RC,
+                 gender: :orderTool_LG,
+                 vendor_id: :orderTool_venID,
+                 line_id: :orderToolItemID,
+                 product_name: :orderTool_productName,
+                 product_sku: :orderTool_SKU,
+                 product_size: :orderTool_SDsize,
+                 product_barcode: :orderTool_barcode,
+                 sell_price: :orderTool_sellPrice,
+                 brand_size: :orderTool_brandSize,
+                 supplier_list_price: :orderTool_SupplierListPrice,
+                 rrp: :orderTool_RRP,
+
+                 # Unused but necessary for insertion
+                 reporting_product_id: :reporting_pID,
+                 original_product_id: :original_pID,
+                 original_option_id: :original_oID
+
+  filters :vendor_id,
+          :gender,
+          :summary_id,
+          :season,
+          :product_sku,
+          :category_id,
+          :product_id,
+          :operator
+
+  paginates_per 50
 
   def orderTool_LG
     Gender.string_from(super)
