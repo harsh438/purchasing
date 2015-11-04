@@ -50,7 +50,6 @@ export default class PurchaseOrdersTable extends React.Component {
   }
 
   tableWidth () {
-    console.log(sum(this.cellWidths()))
     return `${sum(this.cellWidths())}px`;
   }
 
