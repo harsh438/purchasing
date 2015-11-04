@@ -33,6 +33,7 @@ export default class PurchaseOrdersTable extends React.Component {
 
           <tbody>{this.renderRows()}</tbody>
         </table>
+        {this.renderEmpty()}
       </div>
     );
   }
@@ -76,6 +77,16 @@ export default class PurchaseOrdersTable extends React.Component {
                           purchaseOrder={purchaseOrder} />
       );
     });
+  }
+
+  renderEmpty () {
+    if (this.props.purchaseOrders.length == 0) {
+      return(
+        <div style={{ width: '100%', textAlign: 'center' }}>
+          No results to show.
+        </div>
+      );
+    }
   }
 
   className () {
