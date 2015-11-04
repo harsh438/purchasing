@@ -24,8 +24,8 @@ class PurchaseOrder < ActiveRecord::Base
                         cancelled_cost
                         cancelled_value
                         operator
-                        closing_date
                         weeks_on_sale
+                        closing_date
                         brand_size
                         gender
                         comment)
@@ -168,7 +168,7 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def closing_date
-    try(:product).try(:product_detail).try(:closing_date) || 0
+    try(:product).try(:product_detail).try(:closing_date)
   end
 
   def weeks_on_sale
@@ -269,6 +269,7 @@ class PurchaseOrder < ActiveRecord::Base
                 balance_quantity: balance_quantity,
                 balance_cost: monetize(balance_cost),
                 balance_value: monetize(balance_value),
+                weeks_on_sale: weeks_on_sale,
                 closing_date: closing_date)
   end
 
