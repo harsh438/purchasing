@@ -245,7 +245,7 @@ export default class PurchaseOrdersForm extends React.Component {
                     season: query.season || '',
                     supplier: query.supplier || '',
                     operator: query.operator || '',
-                    sortBy: query.sortBy || ''});
+                    sortBy: query.sortBy || 'drop_date'});
   }
 
   options (options) {
