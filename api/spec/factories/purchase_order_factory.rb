@@ -25,5 +25,13 @@ FactoryGirl.define do
     trait :arrived do
       arrived_date 1.day.ago
     end
+
+    trait :with_product do
+      product
+    end
+
+    trait :with_option do
+      option_id 1
+    end
   end
 end
