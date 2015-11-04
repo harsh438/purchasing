@@ -5,9 +5,7 @@ class PurchaseOrder::DropNumbers
     previous_drops = find_previous_drops(results)
     return {} unless previous_drops.any?
 
-    drops = {}
-
-    results.each do |purchase_order|
+    results.reduce({}) do |drops, purchase_order|
       previous_drops_key = [purchase_order.delivery_date,
                             purchase_order.product_id,
                             purchase_order.option_id]
@@ -17,10 +15,8 @@ class PurchaseOrder::DropNumbers
 
       previous_drops_value = (previous_drops[previous_drops_key] || 0) + 1
 
-      drops[purchase_order.id] = "#{previous_drops_value}/#{total_drops[total_drops_key]}"
+      drops.merge(purchase_order.id => "#{previous_drops_value}/#{total_drops[total_drops_key]}")
     end
-
-    drops
   end
 
   private
