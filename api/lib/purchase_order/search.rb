@@ -65,8 +65,8 @@ class PurchaseOrder::Search
       balance_quantity: balance_quantity,
       balance_cost: monetize(balance_cost),
       balance_value: monetize(balance_value),
-      cancelled_quantity: cancelled_quantity,
-      cancelled_cost: monetize(cancelled_cost),
-      cancelled_value: monetize(cancelled_value) }
+      cancelled_quantity: cancelled_quantity || 0,
+      cancelled_cost: monetize(cancelled_cost || 0),
+      cancelled_value: monetize(cancelled_value || 0) }
   end
 end

@@ -192,7 +192,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
   }
 
   renderNormalFontWeight (value) {
-    if (!value) return;
+    if (value == null) return;
 
     return (
       <div style={{ fontWeight: 'normal' }}>{value}</div>

@@ -39,7 +39,7 @@ class PurchaseOrder < ActiveRecord::Base
       end
     end
   end
-  
+
   def self.filter_supplier(context)
     joins(vendor: :supplier_vendors)
       .where(suppliers_to_brands: { SupplierID: context[:supplier] })
@@ -218,18 +218,24 @@ class PurchaseOrder < ActiveRecord::Base
   def cancelled_quantity
     if cancelled?
       quantity - delivered_quantity
+    else
+      0
     end
   end
 
   def cancelled_cost
     if cancelled?
       cancelled_quantity * cost
+    else
+      0
     end
   end
 
   def cancelled_value
     if cancelled?
       cancelled_quantity * product_price
+    else
+      0
     end
   end
 
