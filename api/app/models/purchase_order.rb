@@ -3,20 +3,31 @@ class PurchaseOrder < ActiveRecord::Base
   include LegacyMappings
   include Searchable
 
-  CSV_COLUMN_ORDER = %w(po_number
-                        status
+  CSV_COLUMN_ORDER = %w(product_barcode
+                        po_number
+                        order_type
                         product_id
-                        product_name
                         product_sku
-                        product_cost
+                        season
+                        brand
+                        category
+                        gender
+                        product_name
                         product_size
+                        supplier_style_code
+                        supplier_color_code
+                        supplier_product_name
+                        supplier_color_name
+                        brand_size
+                        product_cost
+                        status
                         order_id
                         order_date
-                        order_type
                         ordered_quantity
                         ordered_cost
                         ordered_value
                         delivery_date
+                        order_first_received
                         delivered_quantity
                         delivered_cost
                         delivered_value
@@ -26,8 +37,6 @@ class PurchaseOrder < ActiveRecord::Base
                         operator
                         weeks_on_sale
                         closing_date
-                        brand_size
-                        gender
                         comment)
 
   def self.to_csv
@@ -111,6 +120,7 @@ class PurchaseOrder < ActiveRecord::Base
   belongs_to :summary, foreign_key: :po_number
 
   has_many :suppliers, through: :vendor, class_name: 'Supplier'
+
   map_attributes id: :id,
                  product_id: :pID,
                  option_id: :oID,
@@ -163,8 +173,12 @@ class PurchaseOrder < ActiveRecord::Base
     Gender.string_from(super)
   end
 
+  def brand
+    vendor.name
+  end
+
   def category
-    Category.english.where(category_id: category_id)
+    Category.english.find_by(category_id: category_id).try(:name)
   end
 
   def closing_date
@@ -180,11 +194,31 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def product_price
-    try(:product).try(:price) || 0
+    product.try(:price) || 0
   end
 
   def product_cost
     cost
+  end
+
+  def supplier_style_code
+    product.try(:product_detail).try(:supplier_style_code)
+  end
+
+  def supplier_color_code
+    product.try(:product_detail).try(:supplier_color_code)
+  end
+
+  def supplier_product_name
+    product.try(:product_detail).try(:supplier_product_name)
+  end
+
+  def supplier_color_name
+    product.try(:product_detail).try(:supplier_color_name)
+  end
+
+  def order_first_received
+    invoice_payable_date
   end
 
   def ordered_quantity
@@ -261,8 +295,16 @@ class PurchaseOrder < ActiveRecord::Base
     super.merge(po_number: po_number,
                 product_cost: product_cost,
                 product_size: product_size,
+                category: category,
+                brand: brand,
+                product_size: product_size,
+                supplier_style_code: supplier_style_code,
+                supplier_color_code: supplier_color_code,
+                supplier_product_name: supplier_product_name,
+                supplier_color_name: supplier_color_name,
                 order_id: id,
                 order_type: order_type,
+                order_first_received: order_first_received,
                 ordered_quantity: ordered_quantity,
                 ordered_cost: monetize(ordered_cost),
                 ordered_value: monetize(ordered_value),
