@@ -7,8 +7,9 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def cancel
-    id = PurchaseOrder.find(params[:id]).try(:cancel)
-    render json: { id: id }
+    orders = PurchaseOrder.find(params[:id])
+    orders = [orders].flatten
+    render json: { ids: orders.map { |o| o.cancel } }
   end
 
   def cancel_order

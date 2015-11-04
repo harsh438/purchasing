@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root to: 'frontend#index'
 
   scope :api do
-    post 'cancel/:id', to: 'purchase_orders#cancel'
+    post 'cancel/', to: 'purchase_orders#cancel'
     post 'cancel/:id/order', to: 'purchase_orders#cancel_order'
   end
 

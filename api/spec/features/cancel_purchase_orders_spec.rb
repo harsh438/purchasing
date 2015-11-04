@@ -28,18 +28,33 @@ feature 'Cancelling purchase orders' do
     then_the_line_item_should_be_cancelled
   end
 
+  scenario 'Cancelling multiple purchase order line items' do
+    when_i_cancel_multiple_line_items
+    then_the_line_items_should_be_cancelled
+  end
+
   scenario 'Cancelling an entire purchase order' do
     when_i_cancel_an_entire_purchase_order
     then_the_entire_purchase_order_should_be_cancelled
   end
 
   def when_i_cancel_a_line_item
-    page.driver.post "/api/cancel/#{PurchaseOrder.first.id}"
+    page.driver.post "/api/cancel?id=#{PurchaseOrder.first.id}"
+  end
+
+  def when_i_cancel_multiple_line_items
+    page.driver.post "/api/cancel?id[]=#{PurchaseOrder.first.id}&id[]=#{PurchaseOrder.second.id}"
   end
 
   def then_the_line_item_should_be_cancelled
     expect(PurchaseOrder.first).to be_cancelled
     expect(PurchaseOrder.second).to_not be_cancelled
+  end
+
+  def then_the_line_items_should_be_cancelled
+    expect(PurchaseOrder.first).to be_cancelled
+    expect(PurchaseOrder.second).to be_cancelled
+    expect(PurchaseOrder.third).to_not be_cancelled
   end
 
   def when_i_cancel_an_entire_purchase_order
