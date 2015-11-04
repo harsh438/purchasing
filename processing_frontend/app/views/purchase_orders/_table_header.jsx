@@ -19,15 +19,15 @@ export default class PurchaseOrderTableHeader extends React.Component {
                     </tr>
                     <tr>
                       <th>Quantity</th>
-                      <td>{this.renderTotalQuantity(this.props.summary.orderedQuantity)}</td>
+                      <td>{this.renderNormalFontWeight(this.props.summary.orderedQuantity)}</td>
                     </tr>
                     <tr>
                       <th>Cost</th>
-                      <td>{this.renderTotalQuantity(this.props.summary.orderedCost)}</td>
+                      <td>{this.renderNormalFontWeight(this.props.summary.orderedCost)}</td>
                     </tr>
                     <tr>
                       <th>Value</th>
-                      <td>{this.renderTotalQuantity(this.props.summary.orderedValue)}</td>
+                      <td>{this.renderNormalFontWeight(this.props.summary.orderedValue)}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -41,15 +41,15 @@ export default class PurchaseOrderTableHeader extends React.Component {
                     </tr>
                     <tr>
                       <th>Quantity</th>
-                      <td>{this.renderTotalQuantity(this.props.summary.deliveredQuantity)}</td>
+                      <td>{this.renderNormalFontWeight(this.props.summary.deliveredQuantity)}</td>
                     </tr>
                     <tr>
                       <th>Cost</th>
-                      <td>{this.renderTotalQuantity(this.props.summary.deliveredCost)}</td>
+                      <td>{this.renderNormalFontWeight(this.props.summary.deliveredCost)}</td>
                     </tr>
                     <tr>
                       <th>Value</th>
-                      <td>{this.renderTotalQuantity(this.props.summary.deliveredValue)}</td>
+                      <td>{this.renderNormalFontWeight(this.props.summary.deliveredValue)}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -63,15 +63,15 @@ export default class PurchaseOrderTableHeader extends React.Component {
                     </tr>
                     <tr>
                       <th>Quantity</th>
-                      <td>{this.renderTotalQuantity(this.props.summary.cancelledQuantity)}</td>
+                      <td>{this.renderNormalFontWeight(this.props.summary.cancelledQuantity)}</td>
                     </tr>
                     <tr>
                       <th>Cost</th>
-                      <td>{this.renderTotalQuantity(this.props.summary.cancelledCost)}</td>
+                      <td>{this.renderNormalFontWeight(this.props.summary.cancelledCost)}</td>
                     </tr>
                     <tr>
                       <th>Value</th>
-                      <td>{this.renderTotalQuantity(this.props.summary.cancelledValue)}</td>
+                      <td>{this.renderNormalFontWeight(this.props.summary.cancelledValue)}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -85,15 +85,15 @@ export default class PurchaseOrderTableHeader extends React.Component {
                     </tr>
                     <tr>
                       <th>Quantity</th>
-                      <td>{this.renderTotalQuantity(this.props.summary.balanceQuantity)}</td>
+                      <td>{this.renderNormalFontWeight(this.props.summary.balanceQuantity)}</td>
                     </tr>
                     <tr>
                       <th>Cost</th>
-                      <td>{this.renderTotalQuantity(this.props.summary.balanceCost)}</td>
+                      <td>{this.renderNormalFontWeight(this.props.summary.balanceCost)}</td>
                     </tr>
                     <tr>
                       <th>Value</th>
-                      <td>{this.renderTotalQuantity(this.props.summary.balanceValue)}</td>
+                      <td>{this.renderNormalFontWeight(this.props.summary.balanceValue)}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -193,27 +193,11 @@ export default class PurchaseOrderTableHeader extends React.Component {
     }
   }
 
-  renderTotalQuantity (totalQuantity) {
-    if (!totalQuantity) return;
+  renderNormalFontWeight (value) {
+    if (!value) return;
 
     return (
-      <div style={{ fontWeight: 'normal' }}>{totalQuantity}</div>
-    );
-  }
-
-  renderTotalCost (totalCost) {
-    if (!totalCost) return;
-
-    return (
-      <div style={{ fontWeight: 'normal' }}>{totalCost}</div>
-    );
-  }
-
-  renderTotalValue (totalValue) {
-    if (!totalValue) return;
-
-    return (
-      <div style={{ fontWeight: 'normal' }}>{totalValue}</div>
+      <div style={{ fontWeight: 'normal' }}>{value}</div>
     );
   }
 
