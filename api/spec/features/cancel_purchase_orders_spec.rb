@@ -47,7 +47,9 @@ feature 'Cancelling purchase orders' do
   end
 
   def then_the_entire_purchase_order_should_be_cancelled
-    not_cancelled = PurchaseOrder.where.not(status: -1).where.not(po_number: PurchaseOrder.first.po_number)
+    not_cancelled = PurchaseOrder.where.not(status: -1)
+                                 .where.not(po_number: PurchaseOrder.first.po_number)
+
     items = PurchaseOrder.where(po_number: PurchaseOrder.first.po_number)
     items.each do |item|
       expect(item).to be_cancelled
