@@ -174,7 +174,7 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def brand
-    vendor.name
+    vendor.try(:name)
   end
 
   def category
