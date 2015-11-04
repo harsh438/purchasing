@@ -40,7 +40,7 @@ export default class PurchaseOrdersTable extends React.Component {
   }
 
   cellWidths () {
-    return [48,
+    return [48, 48,
             54, 180, 90, 49, 57,
             70, 60, 35, 50, 60,
             70, 35, 35, 50, 50,

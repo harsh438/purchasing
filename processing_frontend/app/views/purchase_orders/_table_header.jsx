@@ -107,7 +107,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
         </tr>
 
         <tr>
-          <th colSpan="1">
+          <th colSpan="2">
             {this.props.totalCount} results
           </th>
 
@@ -137,7 +137,8 @@ export default class PurchaseOrderTableHeader extends React.Component {
         </tr>
 
         <tr ref="row">
-          <th>PO #</th>
+          <th>Select</th>
+          <th style={{ borderLeft: '2px solid #ddd' }}>PO #</th>
 
           <th style={{ borderLeft: '2px solid #ddd' }}>PID</th>
           <th>Product</th>
