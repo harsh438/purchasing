@@ -5,7 +5,6 @@ export default class PurchaseOrderRow extends React.Component {
     return (
       <tr className={this.props.alt ? 'active' : ''} ref="row">
         <td>{this.props.purchaseOrder.poNumber}</td>
-        <td>{this.props.purchaseOrder.status}</td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
           {this.props.purchaseOrder.productId}
@@ -16,9 +15,8 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.productSize}</td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
-          {this.props.purchaseOrder.orderId}
+          {this.props.purchaseOrder.orderDate}
         </td>
-        <td>{this.props.purchaseOrder.orderDate}</td>
         <td>{this.props.purchaseOrder.orderType}</td>
         <td>{this.props.purchaseOrder.orderedQuantity}</td>
         <td>{this.props.purchaseOrder.orderedCost}</td>
@@ -45,9 +43,9 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.balanceValue || 'n/a'}</td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
-          {this.props.purchaseOrder.weeksOnSale}
+          {this.props.purchaseOrder.brandSize}
         </td>
-        <td>{this.props.purchaseOrder.closingDate}</td>
+        <td>{this.props.purchaseOrder.gender}</td>
       </tr>
     );
   }

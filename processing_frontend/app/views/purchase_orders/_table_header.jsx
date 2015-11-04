@@ -9,9 +9,9 @@ export default class PurchaseOrderTableHeader extends React.Component {
     return (
       <thead ref="thead" style={{ width: this.props.width }}>
         <tr>
-          <th colSpan="26">
+          <th colSpan="24">
             <div className="row">
-              <div className="col-md-2 col-md-offset-2">
+              <div className="col-md-2 col-md-offset-1">
                 <table className="purchase_orders_summary__table">
                   <tbody>
                     <tr>
@@ -108,7 +108,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
         </tr>
 
         <tr>
-          <th colSpan="2">
+          <th colSpan="1">
             {this.props.totalCount} results
           </th>
 
@@ -116,7 +116,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
             Product
           </th>
 
-          <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>
+          <th colSpan="5" style={{ borderLeft: '2px solid #ddd' }}>
             Ordered
           </th>
 
@@ -139,7 +139,6 @@ export default class PurchaseOrderTableHeader extends React.Component {
 
         <tr ref="row">
           <th>PO #</th>
-          <th>Status</th>
 
           <th style={{ borderLeft: '2px solid #ddd' }}>PID</th>
           <th>Product</th>
@@ -147,8 +146,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th>Unit Price</th>
           <th>Size</th>
 
-          <th style={{ borderLeft: '2px solid #ddd' }}>Order #</th>
-          <th>Date</th>
+          <th style={{ borderLeft: '2px solid #ddd' }}>Date</th>
           <th>Type</th>
           <th>Qty</th>
           <th>Cost</th>
@@ -168,8 +166,8 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th>Cost</th>
           <th>Val</th>
 
-          <th style={{ borderLeft: '2px solid #ddd' }}>Weeks on Sale</th>
-          <th>Closing</th>
+          <th style={{ borderLeft: '2px solid #ddd' }}>Brand Size</th>
+          <th>Gender</th>
         </tr>
       </thead>
     );

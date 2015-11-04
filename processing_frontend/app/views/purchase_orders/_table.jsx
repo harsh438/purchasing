@@ -40,16 +40,17 @@ export default class PurchaseOrdersTable extends React.Component {
   }
 
   cellWidths () {
-    return [48, 64,
-            54, 120, 90, 49, 57,
-            60, 52, 42, 35, 50, 50,
-            50, 35, 35, 50, 50,
+    return [48,
+            54, 180, 90, 49, 57,
+            70, 60, 35, 50, 50,
+            70, 35, 35, 50, 50,
             35, 50, 50,
             35, 50, 50,
             50, 50];
   }
 
   tableWidth () {
+    console.log(sum(this.cellWidths()))
     return `${sum(this.cellWidths())}px`;
   }
 
