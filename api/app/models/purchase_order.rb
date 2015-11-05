@@ -297,7 +297,6 @@ class PurchaseOrder < ActiveRecord::Base
                 product_size: product_size,
                 category: category,
                 brand: brand,
-                product_size: product_size,
                 supplier_style_code: supplier_style_code,
                 supplier_color_code: supplier_color_code,
                 supplier_product_name: supplier_product_name,
