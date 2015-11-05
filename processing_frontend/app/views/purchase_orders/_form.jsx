@@ -295,6 +295,6 @@ export default class PurchaseOrdersForm extends React.Component {
 
   handleDeliveryDateChange (e) {
     e.preventDefault();
-    this.props.index.updateSelected();
+    this.props.index.changeDeliveryDateSelected();
   }
 }

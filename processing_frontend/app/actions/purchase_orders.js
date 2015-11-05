@@ -79,12 +79,10 @@ export function clearPurchaseOrders() {
   };
 }
 
-export function cancelPurchaseOrders(ids) {
-  return makeApiRequest(`/api/purchase_orders/cancel`, { id: ids })
+export function cancelPurchaseOrders(id) {
+  return makeApiRequest(`/api/purchase_orders/cancel`, { id })
 }
 
-export function updatePurchaseOrders(ids) {
-  return makeApiRequest(`/api/purchase_orders/update`, { id: ids,
-                                                         delivery_date: '2012-01-01' })
+export function updatePurchaseOrders(id, params = {}) {
+  return makeApiRequest(`/api/purchase_orders/update`, { id, ...params });
 }
-
