@@ -112,7 +112,7 @@ class PurchaseOrder < ActiveRecord::Base
                  .compact
   end
 
-  scope :with_summary, -> { where.not(summary_id: '') }
+  scope :with_summary, -> { where.not(summary_id: '').where.not(summary_id: 0) }
   scope :with_valid_status, -> { where('purchase_orders.status in (-1,2,3,4,5)') }
 
   belongs_to :vendor, foreign_key: :orderTool_venID
