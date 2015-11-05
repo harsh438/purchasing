@@ -6,16 +6,14 @@ class PurchaseOrder::SummaryBuilder
           .joins('inner join ds_products p on purchase_orders.pID = p.pID')
 
     ordered_quantity, ordered_cost, ordered_value =
-      r.where(status: [-1, 2, 3, 4, 5])
-       .pluck('sum(qty) as ordered_quantity,
+      r.pluck('sum(qty) as ordered_quantity,
                sum(qty * cost) as ordered_cost,
                sum(qty * p.pPrice) as ordered_value')
        .flatten
 
     delivered_quantity, delivered_cost, delivered_value,
     balance_quantity, balance_cost, balance_value =
-      r.where.not(status: -1)
-       .pluck('sum((qtyDone + qtyAdded)) as delivered_quantity,
+      r.pluck('sum((qtyDone + qtyAdded)) as delivered_quantity,
                sum((qtyDone + qtyAdded) * cost) as delivered_cost,
                sum((qtyDone + qtyAdded) * p.pPrice) as delivered_value,
 
@@ -31,9 +29,9 @@ class PurchaseOrder::SummaryBuilder
                sum((qty - (qtyDone + qtyAdded)) * p.pPrice)')
        .flatten
 
-    { ordered_quantity: number_with_delimiter(ordered_quantity),
-      ordered_cost: monetize(ordered_cost),
-      ordered_value: monetize(ordered_value),
+    { ordered_quantity: number_with_delimiter(ordered_quantity + cancelled_quantity),
+      ordered_cost: monetize(ordered_cost + cancelled_cost),
+      ordered_value: monetize(ordered_value + cancelled_value),
       delivered_quantity: number_with_delimiter(delivered_quantity),
       delivered_cost: monetize(delivered_cost),
       delivered_value: monetize(delivered_value),
