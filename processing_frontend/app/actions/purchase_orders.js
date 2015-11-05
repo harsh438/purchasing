@@ -60,5 +60,5 @@ export function loadMorePurchaseOrders(params, page) {
 export function clearPurchaseOrders() {
   return dispatch => {
     dispatch({ type: 'CLEAR_PURCHASE_ORDERS' });
-  }
+  };
 }

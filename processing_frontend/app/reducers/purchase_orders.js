@@ -1,5 +1,5 @@
 import humps from 'humps';
-import { assign } from 'lodash';
+import { assign, map, reduce } from 'lodash';
 
 const initialState =  { exportable: {},
                         page: 1,
@@ -10,9 +10,9 @@ const initialState =  { exportable: {},
                         moreResultsAvailable: false };
 
 function transformPurchaseOrder(action) {
-  return function (purchaseOrder) {
-    purchaseOrder.drop_number = action.dropNumbers[purchaseOrder.order_id];
-    return humps.camelizeKeys(purchaseOrder);
+  return function (purchaseOrders, purchaseOrder, id) {
+    purchaseOrder.drop_number = action.dropNumbers[id];
+    return assign({}, purchaseOrders, { [id]: humps.camelizeKeys(purchaseOrder) });
   };
 }
 
@@ -21,8 +21,7 @@ function transformSummary(summary) {
 }
 
 function setPurchaseOrders(state, action) {
-  const purchaseOrders = action.results.map(transformPurchaseOrder(action));
-
+  const purchaseOrders = reduce(action.results, transformPurchaseOrder(action), {});
   return assign({}, state, { purchaseOrders,
                              page: action.page,
                              totalPages: action.totalPages,
@@ -33,8 +32,9 @@ function setPurchaseOrders(state, action) {
 }
 
 function appendPurchaseOrders(state, action) {
-  const newPurchaseOrders = action.results.map(transformPurchaseOrder(action));
-  const purchaseOrders = [...state.purchaseOrders, ...newPurchaseOrders];
+  const purchaseOrders = reduce(action.results,
+                                transformPurchaseOrder(action),
+                                state.purchaseOrders);
 
   return assign({}, state, { purchaseOrders,
                              page: action.page,

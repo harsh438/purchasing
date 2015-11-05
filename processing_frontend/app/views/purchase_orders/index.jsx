@@ -9,7 +9,8 @@ import { loadBrands,
 
 import { loadPurchaseOrders,
          loadMorePurchaseOrders,
-         clearPurchaseOrders } from '../../actions/purchase_orders';
+         clearPurchaseOrders,
+         cancelPurchaseOrders } from '../../actions/purchase_orders';
 
 import PurchaseOrdersForm from './_form';
 import PurchaseOrdersTable from './_table';
@@ -35,6 +36,10 @@ class PurchaseOrdersIndex extends React.Component {
     } else if (!deepEqual(this.props.location.query, nextQuery)) {
       this.loadPurchaseOrders(nextQuery);
     }
+
+    if (this.props.purchaseOrders !== nextProps.purchaseOrders) {
+      this.setState({ selected: [] })
+    }
   }
 
   render () {
@@ -44,6 +49,7 @@ class PurchaseOrdersIndex extends React.Component {
                             categories={this.props.categories}
                             genders={this.props.genders}
                             history={this.props.history}
+                            index={this}
                             loadPurchaseOrders={this.loadPurchaseOrders.bind(this)}
                             orderTypes={this.props.orderTypes}
                             seasons={this.props.seasons}
@@ -51,6 +57,7 @@ class PurchaseOrdersIndex extends React.Component {
                             query={this.props.location.query} />
 
         <PurchaseOrdersTable exportable={this.props.exportable}
+                             index={this}
                              purchaseOrders={this.props.purchaseOrders}
                              summary={this.props.summary}
                              totalPages={this.props.totalPages}
@@ -59,6 +66,26 @@ class PurchaseOrdersIndex extends React.Component {
         {this.renderLoadMoreButton()}
       </div>
     );
+  }
+
+  selectRow (id) {
+    var selected = this.state.selected.slice();
+    selected.push(id);
+    this.setState({ selected: selected });
+  }
+
+  unSelectRow (id) {
+    var selected = this.state.selected.slice();
+    var index = selected.indexOf(id);
+    while (index != -1) {
+      selected.splice(index, 1);
+      index = selected.indexOf(id);
+    }
+    this.setState({ selected: selected });
+  }
+
+  cancelSelected () {
+    this.props.dispatch(cancelPurchaseOrders(this.state.selected));
   }
 
   renderLoadMoreButton () {

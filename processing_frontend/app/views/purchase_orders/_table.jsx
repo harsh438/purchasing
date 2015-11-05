@@ -1,23 +1,17 @@
 import React from 'react';
 import PurchaseOrderTableHeader from './_table_header';
 import PurchaseOrderRow from './_table_row';
-import { sum } from 'lodash';
+import { sum, map } from 'lodash';
 
 export default class PurchaseOrdersTable extends React.Component {
   componentWillMount () {
-    this.state = { sticky: false, selected: [] };
+    this.state = { sticky: false };
     this.onScroll();
     window.addEventListener('scroll', this.onScroll.bind(this));
   }
 
   shouldComponentUpdate (nextProps, nextState) {
     return this.props.purchaseOrders !== nextProps.purchaseOrders || this.state.sticky !== nextState.sticky;
-  }
-
-  componentWillReceiveProps(nextProps, nextState) {
-    if (this.props.purchaseOrders !== nextProps.purchaseOrders) {
-      this.setState({ selected: [] })
-    }
   }
 
   componentWillUnmount () {
@@ -43,22 +37,6 @@ export default class PurchaseOrdersTable extends React.Component {
         {this.renderEmpty()}
       </div>
     );
-  }
-
-  selectRow (id) {
-    var selected = this.state.selected.slice();
-    selected.push(id);
-    this.setState({ selected: selected });
-  }
-
-  unSelectRow (id) {
-    var selected = this.state.selected.slice();
-    var index = selected.indexOf(id);
-    while (index != -1) {
-      selected.splice(index, 1);
-      index = selected.indexOf(id);
-    }
-    this.setState({ selected: selected });
   }
 
   cellWidths () {
@@ -92,7 +70,7 @@ export default class PurchaseOrdersTable extends React.Component {
     let currentPoNumber;
     let alt = true;
 
-    return this.props.purchaseOrders.map((purchaseOrder) => {
+    return map(this.props.purchaseOrders, (purchaseOrder) => {
       if (currentPoNumber !== purchaseOrder.poNumber) {
         currentPoNumber = purchaseOrder.poNumber;
         alt = !alt;
@@ -100,7 +78,7 @@ export default class PurchaseOrdersTable extends React.Component {
 
       return (
         <PurchaseOrderRow alt={alt}
-                          table={this}
+                          index={this.props.index}
                           key={purchaseOrder.orderId}
                           purchaseOrder={purchaseOrder} />
       );
