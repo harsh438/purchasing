@@ -227,6 +227,20 @@ export default class PurchaseOrdersForm extends React.Component {
               </div>
             </div>
           </form>
+
+          <div className="row">
+            <div className="col-md-2">
+              <button className="btn btn-warning"
+                      style={{ marginTop: '1.74em', width: '100%' }}
+                      onClick={this.handleDeliveryDateChange.bind(this)}>
+                Change Delivery Date
+              </button>
+           </div>
+           <div className="col-md-4">
+           </div>
+           <div className="col-md-4">
+           </div>
+         </div>
         </div>
       </div>
     );
@@ -276,6 +290,11 @@ export default class PurchaseOrdersForm extends React.Component {
 
   handleCancelSubmit (e) {
     e.preventDefault();
-    this.props.index.cancelSelected()
+    this.props.index.cancelSelected();
+  }
+
+  handleDeliveryDateChange (e) {
+    e.preventDefault();
+    this.props.index.updateSelected();
   }
 }

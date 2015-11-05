@@ -10,7 +10,8 @@ import { loadBrands,
 import { loadPurchaseOrders,
          loadMorePurchaseOrders,
          clearPurchaseOrders,
-         cancelPurchaseOrders } from '../../actions/purchase_orders';
+         cancelPurchaseOrders,
+         updatePurchaseOrders } from '../../actions/purchase_orders';
 
 import PurchaseOrdersForm from './_form';
 import PurchaseOrdersTable from './_table';
@@ -88,6 +89,10 @@ class PurchaseOrdersIndex extends React.Component {
     this.props.dispatch(cancelPurchaseOrders(this.state.selected));
   }
 
+  updateSelected () {
+    this.props.dispatch(updatePurchaseOrders(this.state.selected));
+  }
+
   renderLoadMoreButton () {
     if (this.props.moreResultsAvailable) {
       return (
@@ -125,8 +130,8 @@ class PurchaseOrdersIndex extends React.Component {
   }
 
   isObjectEmpty (obj) {
-    for(let prop in obj) {
-      if(!isEmpty(obj[prop])) {
+    for (let prop in obj) {
+      if (!isEmpty(obj[prop])) {
         return false;
       }
     }

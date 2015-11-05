@@ -1,5 +1,5 @@
 class PurchaseOrdersController < ApplicationController
-  protect_from_forgery except: [:cancel, :cancel_order]
+  protect_from_forgery except: [:cancel, :cancel_order, :update]
 
   def index
     respond_to do |format|
@@ -11,7 +11,7 @@ class PurchaseOrdersController < ApplicationController
   def update
     orders = PurchaseOrder.where(id: params[:id])
     orders.each { |o| o.update_attributes(permitted_params) }
-    render json: { orders: orders }
+    render json: orders
   end
 
   def cancel

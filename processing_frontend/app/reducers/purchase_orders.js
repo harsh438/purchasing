@@ -1,5 +1,5 @@
 import humps from 'humps';
-import { assign, map, reduce } from 'lodash';
+import { assign, map, reduce, findIndex } from 'lodash';
 
 const initialState =  { exportable: {},
                         page: 1,
@@ -42,11 +42,12 @@ function appendPurchaseOrders(state, action) {
 function updatePurchaseOrder(purchaseOrders, purchaseOrder) {
   const index = findIndex(purchaseOrders, 'orderId', purchaseOrder.orderId);
   const updatedPurchaseOrder = assign({}, purchaseOrders[index], purchaseOrder);
-  return purchaseOrders.splice(index, 1, updatedPurchaseOrder);
+  purchaseOrders.splice(index, 1, updatedPurchaseOrder);
+  return [...purchaseOrders];
 }
 
 function updatePurchaseOrders(state, action) {
-  const updatedPurchaseOrders = map(action.results, transformPurchaseOrder(action));
+  const updatedPurchaseOrders = map(action.purchaseOrders, transformPurchaseOrder(action));
   const purchaseOrders = reduce(updatedPurchaseOrders, updatePurchaseOrder, state.purchaseOrders);
   return assign({}, state, { purchaseOrders });
 }

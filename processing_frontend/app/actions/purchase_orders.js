@@ -78,3 +78,17 @@ export function cancelPurchaseOrders(ids) {
                                          type: 'UPDATE_PURCHASE_ORDERS' }));
   };
 }
+
+export function updatePurchaseOrders(ids) {
+  return dispatch => {
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    fetch(`/api/purchase_orders/update`, { credentials: 'same-origin',
+                                           method: 'POST',
+                                           headers: headers,
+                                           body: JSON.stringify({ id: ids, delivery_date: '2012-01-01' }) })
+      .then(response => response.json())
+      .then(purchaseOrders => dispatch({ type: 'UPDATE_PURCHASE_ORDERS', purchaseOrders }));
+  };
+}
