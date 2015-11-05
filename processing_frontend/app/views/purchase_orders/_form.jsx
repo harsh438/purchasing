@@ -227,7 +227,6 @@ export default class PurchaseOrdersForm extends React.Component {
               </div>
             </div>
           </form>
-          
         </div>
       </div>
     );
