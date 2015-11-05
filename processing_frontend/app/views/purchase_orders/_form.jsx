@@ -227,27 +227,6 @@ export default class PurchaseOrdersForm extends React.Component {
               </div>
             </div>
           </form>
-
-          <div className="row">
-            <div className="col-md-2">
-              <div className="input-group">
-                <input type="date"
-                       name="deliveryDate"
-                       className="form-control"
-                       onChange={this.handleDeliveryDateChange.bind(this, "deliveryDate")} />
-
-                <div className="input-group-addon label-warning"
-                     style={{ color: "white", cursor: "pointer" }}
-                     onClick={this.handleDeliveryDateSubmit.bind(this)}>
-                  Change Delivery Date
-                </div>
-              </div>
-           </div>
-           <div className="col-md-4">
-           </div>
-           <div className="col-md-4">
-           </div>
-         </div>
         </div>
       </div>
     );
