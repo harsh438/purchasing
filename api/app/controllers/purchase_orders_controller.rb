@@ -6,6 +6,12 @@ class PurchaseOrdersController < ApplicationController
     end
   end
 
+  def update
+    order = PurchaseOrder.find(params[:id])
+    order.update_attributes(permitted_params)
+    render json: { id: params[:id] }
+  end
+
   def cancel
     orders = PurchaseOrder.find(params[:id])
     orders = [orders].flatten
@@ -40,5 +46,9 @@ class PurchaseOrdersController < ApplicationController
     render csv: PurchaseOrder::CsvExporter.new.export(params)
   rescue PurchaseOrder::Filter::NoFiltersError => e
     render plain: 'Please select filters'
+  end
+
+  def permitted_params
+    params.permit(:delivery_date)
   end
 end

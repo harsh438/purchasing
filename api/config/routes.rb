@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   scope :api do
     post 'cancel/', to: 'purchase_orders#cancel'
     post 'cancel/:id/order', to: 'purchase_orders#cancel_order'
+    post 'purchase_orders/:id/update', to: 'purchase_orders#update', as: :purchase_order
   end
 
   scope :api, format: true, constraints: { format: /json|csv/ } do
