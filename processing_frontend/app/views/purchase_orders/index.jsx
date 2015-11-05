@@ -89,8 +89,12 @@ class PurchaseOrdersIndex extends React.Component {
     this.props.dispatch(updatePurchaseOrders(this.state.selected));
   }
 
+  setDeliveryDate (value) {
+    this.setState({ deliveryDate: value });
+  }
+
   changeDeliveryDateSelected () {
-    this.props.dispatch(updatePurchaseOrders(this.state.selected, { delivery_date: '2011-01-01' }));
+    this.props.dispatch(updatePurchaseOrders(this.state.selected, { delivery_date: this.state.deliveryDate }));
   }
 
   renderLoadMoreButton () {

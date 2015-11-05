@@ -230,11 +230,18 @@ export default class PurchaseOrdersForm extends React.Component {
 
           <div className="row">
             <div className="col-md-2">
-              <button className="btn btn-warning"
-                      style={{ marginTop: '1.74em', width: '100%' }}
-                      onClick={this.handleDeliveryDateChange.bind(this)}>
-                Change Delivery Date
-              </button>
+              <div className="input-group">
+                <input type="date"
+                       name="deliveryDate"
+                       className="form-control"
+                       onChange={this.handleDeliveryDateChange.bind(this, "deliveryDate")} />
+
+                <div className="input-group-addon label-warning"
+                     style={{ color: "white", cursor: "pointer" }}
+                     onClick={this.handleDeliveryDateSubmit.bind(this)}>
+                  Change Delivery Date
+                </div>
+              </div>
            </div>
            <div className="col-md-4">
            </div>
@@ -293,7 +300,11 @@ export default class PurchaseOrdersForm extends React.Component {
     this.props.index.cancelSelected();
   }
 
-  handleDeliveryDateChange (e) {
+  handleDeliveryDateChange (field, { target }) {
+    this.props.index.setDeliveryDate(target.value);
+  }
+
+  handleDeliveryDateSubmit (e) {
     e.preventDefault();
     this.props.index.changeDeliveryDateSelected();
   }
