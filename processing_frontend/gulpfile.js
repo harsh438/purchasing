@@ -51,7 +51,8 @@ function bundler () {
                       fullPaths: false,
                       cache: {},
                       packageCache: {},
-                      verbose: true });
+                      verbose: true,
+                      debug: true });
 }
 
 function watchBundle (src) {
