@@ -86,7 +86,7 @@ class PurchaseOrdersIndex extends React.Component {
   }
 
   cancelSelected () {
-    this.props.dispatch(updatePurchaseOrders(this.state.selected));
+    this.props.dispatch(cancelPurchaseOrders(this.state.selected));
   }
 
   setDeliveryDate (value) {
