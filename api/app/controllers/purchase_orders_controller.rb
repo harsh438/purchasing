@@ -16,7 +16,7 @@ class PurchaseOrdersController < ApplicationController
 
   def cancel
     orders = PurchaseOrder.where(id: params[:id])
-    orders.values.each(&:cancel)
+    orders.each(&:cancel)
     render json: orders
   end
 
