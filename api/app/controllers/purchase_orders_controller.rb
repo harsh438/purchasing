@@ -3,8 +3,8 @@ class PurchaseOrdersController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render_json }
-      format.csv { render_csv }
+      format.json { render_index_json }
+      format.csv { render_index_csv }
     end
   end
 
@@ -39,12 +39,12 @@ class PurchaseOrdersController < ApplicationController
 
   private
 
-  def render_json
+  def render_index_json
     export_url = url_for(params.merge(format: :csv))
     render json: PurchaseOrder::Search.new.search(params, export_url: export_url)
   end
 
-  def render_csv
+  def render_index_csv
     render csv: PurchaseOrder::CsvExporter.new.export(params)
   rescue PurchaseOrder::Filter::NoFiltersError => e
     render plain: 'Please select filters'
