@@ -23,9 +23,7 @@ function transformSummary(summary) {
   return humps.camelizeKeys(summary);
 }
 
-function setPurchaseOrders(state, action) {
-  const purchaseOrders = map(action.results, transformPurchaseOrder(action));
-
+function setPurchaseOrders(state, action, purchaseOrders) {
   return assign({}, state, { purchaseOrders,
                              page: action.page,
                              totalPages: action.totalPages,
@@ -37,15 +35,8 @@ function setPurchaseOrders(state, action) {
 
 function appendPurchaseOrders(state, action) {
   const newPurchaseOrders = map(action.results, transformPurchaseOrder(action));
-  const purchaseOrders = [...purchaseOrders, ...newPurchaseOrders];
-
-  return assign({}, state, { purchaseOrders,
-                             page: action.page,
-                             totalPages: action.totalPages,
-                             totalCount: action.totalCount,
-                             exportable: action.exportable,
-                             summary: transformSummary(action.summary),
-                             moreResultsAvailable: action.moreResultsAvailable });
+  const purchaseOrders = [...state.purchaseOrders, ...newPurchaseOrders];
+  return setPurchaseOrders(state, action, purchaseOrders);
 }
 
 function updatePurchaseOrder(purchaseOrders, purchaseOrder) {
@@ -67,7 +58,8 @@ function clearPurchaseOrders(state, action) {
 export default function reducePurchaseOrders(state = initialState, action) {
   switch (action.type) {
     case 'SET_PURCHASE_ORDERS':
-      return setPurchaseOrders(state, action);
+      const purchaseOrders = map(action.results, transformPurchaseOrder(action));
+      return setPurchaseOrders(state, action, purchaseOrders);
     case 'APPEND_PURCHASE_ORDERS':
       return appendPurchaseOrders(state, action);
     case 'UPDATE_PURCHASE_ORDERS':
