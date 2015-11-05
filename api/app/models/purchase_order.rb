@@ -322,8 +322,8 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def cancel
-    if status != -1
-      update!({ cancelled_date: Date.today, status: -1 })
+    unless cancelled?
+      update!(cancelled_date: Date.today, status: -1)
     end
 
     self
@@ -331,10 +331,8 @@ class PurchaseOrder < ActiveRecord::Base
 
   def cancel_order
     items = PurchaseOrder.with_summary.where(po_number: po_number)
-    items.each do |item|
-      item.cancel
-    end
-    items.map { |i| i.id }
+    items.each(&:cancel)
+    items.map(&:id)
   end
 
   private
