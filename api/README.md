@@ -1,3 +1,3 @@
 # Processing frontend
 
-See README in parent directory, thanks :)
+See README in parent directory, thanks :D
