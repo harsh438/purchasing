@@ -293,9 +293,9 @@ class PurchaseOrder < ActiveRecord::Base
 
   def as_json(*args)
     super.merge(po_number: po_number,
-                product_cost: product_cost,
+                product_cost: monetize(product_cost),
                 product_size: product_size,
-                product_rrp: product_rrp,
+                product_rrp: monetize(product_rrp),
                 category: category,
                 brand: brand,
                 supplier_style_code: supplier_style_code,
