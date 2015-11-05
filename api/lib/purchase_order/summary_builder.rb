@@ -29,9 +29,9 @@ class PurchaseOrder::SummaryBuilder
                sum((qty - (qtyDone + qtyAdded)) * p.pPrice)')
        .flatten
 
-    { ordered_quantity: number_with_delimiter(ordered_quantity + cancelled_quantity),
-      ordered_cost: monetize(ordered_cost + cancelled_cost),
-      ordered_value: monetize(ordered_value + cancelled_value),
+    { ordered_quantity: number_with_delimiter((ordered_quantity || 0) + (cancelled_quantity || 0)),
+      ordered_cost: monetize((ordered_cost || 0) + (cancelled_cost || 0)),
+      ordered_value: monetize((ordered_value || 0) + (cancelled_value || 0)),
       delivered_quantity: number_with_delimiter(delivered_quantity),
       delivered_cost: monetize(delivered_cost),
       delivered_value: monetize(delivered_value),
