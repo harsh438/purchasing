@@ -2,9 +2,11 @@ Rails.application.routes.draw do
   root to: 'frontend#index'
 
   scope :api do
-    post 'cancel/', to: 'purchase_orders#cancel'
-    post 'cancel/:id/order', to: 'purchase_orders#cancel_order'
-    post 'purchase_orders/:id/update', to: 'purchase_orders#update', as: :purchase_order
+    scope :purchase_orders do
+      post 'cancel', to: 'purchase_orders#cancel', as: :cancel_purchase_order
+      post ':id/cancel/order', to: 'purchase_orders#cancel_order', as: :cancel_order_purchase_order
+      post ':id/update', to: 'purchase_orders#update', as: :purchase_order
+    end
   end
 
   scope :api, format: true, constraints: { format: /json|csv/ } do

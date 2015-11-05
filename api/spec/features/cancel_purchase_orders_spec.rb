@@ -39,11 +39,11 @@ feature 'Cancelling purchase orders' do
   end
 
   def when_i_cancel_a_line_item
-    page.driver.post "/api/cancel?id=#{PurchaseOrder.first.id}"
+    page.driver.post cancel_purchase_order_path(id: PurchaseOrder.first)
   end
 
   def when_i_cancel_multiple_line_items
-    page.driver.post "/api/cancel?id[]=#{PurchaseOrder.first.id}&id[]=#{PurchaseOrder.second.id}"
+    page.driver.post cancel_purchase_order_path(id: [PurchaseOrder.first, PurchaseOrder.second])
   end
 
   def then_the_line_item_should_be_cancelled
@@ -58,7 +58,7 @@ feature 'Cancelling purchase orders' do
   end
 
   def when_i_cancel_an_entire_purchase_order
-    page.driver.post "/api/cancel/#{PurchaseOrder.first.id}/order"
+    page.driver.post cancel_order_purchase_order_path(PurchaseOrder.first)
   end
 
   def then_the_entire_purchase_order_should_be_cancelled
