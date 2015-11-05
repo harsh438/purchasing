@@ -151,7 +151,7 @@ class PurchaseOrder < ActiveRecord::Base
                  sell_price: :orderTool_sellPrice,
                  brand_size: :orderTool_brandSize,
                  supplier_list_price: :orderTool_SupplierListPrice,
-                 rrp: :orderTool_RRP,
+                 product_rrp: :orderTool_RRP,
 
                  # Unused but necessary for insertion
                  reporting_product_id: :reporting_pID,
@@ -295,6 +295,7 @@ class PurchaseOrder < ActiveRecord::Base
     super.merge(po_number: po_number,
                 product_cost: product_cost,
                 product_size: product_size,
+                product_rrp: product_rrp,
                 category: category,
                 brand: brand,
                 supplier_style_code: supplier_style_code,

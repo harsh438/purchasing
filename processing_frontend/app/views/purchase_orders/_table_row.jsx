@@ -22,12 +22,12 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.productName}</td>
         <td>{this.props.purchaseOrder.productSku}</td>
         <td>{this.props.purchaseOrder.productCost}</td>
+        <td>{this.props.purchaseOrder.productRrp}</td>
         <td>{this.props.purchaseOrder.productSize}</td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
-          {this.props.purchaseOrder.orderDate}
+          {this.props.purchaseOrder.orderType}
         </td>
-        <td>{this.props.purchaseOrder.orderType}</td>
         <td>{this.props.purchaseOrder.orderedQuantity}</td>
         <td>{this.props.purchaseOrder.orderedCost}</td>
         <td>{this.props.purchaseOrder.orderedValue}</td>
