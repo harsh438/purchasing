@@ -321,8 +321,11 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def cancel
-    update!({ cancelled_date: Date.today, status: -1 })
-    id
+    if status != -1
+      update!({ cancelled_date: Date.today, status: -1 })
+    end
+
+    self
   end
 
   def cancel_order

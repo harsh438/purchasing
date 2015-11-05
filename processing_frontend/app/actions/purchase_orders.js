@@ -54,11 +54,25 @@ export function loadPurchaseOrders(params) {
 }
 
 export function loadMorePurchaseOrders(params, page) {
-  return fetchPurchaseOrders(params, page, action('APPEND_PURCHASE_ORDERS'));
+  return fetchPurchaseOrders(params, page, action('MERGE_PURCHASE_ORDERS'));
 }
 
 export function clearPurchaseOrders() {
   return dispatch => {
     dispatch({ type: 'CLEAR_PURCHASE_ORDERS' });
+  };
+}
+
+export function cancelPurchaseOrders(ids) {
+  return dispatch => {
+    var headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
+    fetch(`/api/cancel`, { credentials: 'same-origin',
+                           method: 'POST',
+                           headers: headers,
+                           body: JSON.stringify({ id: ids }) })
+      .then(response => response.json())
+      .then(purchaseOrders => dispatch({ type: 'UPDATE_PURCHASE_ORDERS', purchaseOrders }));
   };
 }

@@ -1,4 +1,6 @@
 class PurchaseOrdersController < ApplicationController
+  protect_from_forgery except: [:cancel, :cancel_order]
+
   def index
     respond_to do |format|
       format.json { render_json }
@@ -13,9 +15,9 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def cancel
-    orders = PurchaseOrder.find(params[:id])
-    orders = [orders].flatten
-    render json: { ids: orders.map { |o| o.cancel } }
+    orders = PurchaseOrder.where(id: params[:id]).index_by(&:id)
+    orders.values.each(&:cancel)
+    render json: orders
   end
 
   def cancel_order

@@ -38,7 +38,7 @@ class PurchaseOrder::Search
   def enrich_response(response, unpaged_results, additional_data)
     response[:summary] = PurchaseOrder::SummaryBuilder.new.build(unpaged_results)
 
-    if response[:results].total_pages > 20
+    if response[:total_pages] > 20
       response[:exportable][:massive] = true
     else
       response[:exportable][:url] = additional_data[:export_url]

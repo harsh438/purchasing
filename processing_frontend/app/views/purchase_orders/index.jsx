@@ -15,7 +15,7 @@ import { loadPurchaseOrders,
 import PurchaseOrdersForm from './_form';
 import PurchaseOrdersTable from './_table';
 import deepEqual from 'deep-equal';
-import { isEmpty } from 'lodash';
+import { isEmpty, assign } from 'lodash';
 
 class PurchaseOrdersIndex extends React.Component {
   componentWillMount () {
@@ -136,7 +136,7 @@ class PurchaseOrdersIndex extends React.Component {
 }
 
 function applyState({ filters, purchaseOrders }) {
-  return Object.assign({}, filters, purchaseOrders);
+  return assign({}, filters, purchaseOrders);
 }
 
 export default connect(applyState)(PurchaseOrdersIndex);
