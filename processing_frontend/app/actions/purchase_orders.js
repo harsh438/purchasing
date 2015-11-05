@@ -50,6 +50,21 @@ function action(type) {
   }
 }
 
+function makeApiRequest(url, params) {
+  return dispatch => {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    fetch(url, { credentials: 'same-origin',
+                 method: 'POST',
+                 headers: headers,
+                 body: JSON.stringify(params) })
+      .then(response => response.json())
+      .then(purchaseOrders => dispatch({ purchaseOrders,
+                                         type: 'UPDATE_PURCHASE_ORDERS' }));
+  };
+}
+
 export function loadPurchaseOrders(params) {
   return fetchPurchaseOrders(params, 1, action('SET_PURCHASE_ORDERS'));
 }
@@ -65,30 +80,10 @@ export function clearPurchaseOrders() {
 }
 
 export function cancelPurchaseOrders(ids) {
-  return dispatch => {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    fetch(`/api/purchase_orders/cancel`, { credentials: 'same-origin',
-                                           method: 'POST',
-                                           headers: headers,
-                                           body: JSON.stringify({ id: ids }) })
-      .then(response => response.json())
-      .then(purchaseOrders => dispatch({ purchaseOrders,
-                                         type: 'UPDATE_PURCHASE_ORDERS' }));
-  };
+  return makeApiRequest(`/api/purchase_orders/cancel`, { id: ids })
 }
 
 export function updatePurchaseOrders(ids) {
-  return dispatch => {
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    fetch(`/api/purchase_orders/update`, { credentials: 'same-origin',
-                                           method: 'POST',
-                                           headers: headers,
-                                           body: JSON.stringify({ id: ids, delivery_date: '2012-01-01' }) })
-      .then(response => response.json())
-      .then(purchaseOrders => dispatch({ type: 'UPDATE_PURCHASE_ORDERS', purchaseOrders }));
-  };
+  return makeApiRequest(`/api/purchase_orders/update`, { id: ids,
+                                                         delivery_date: '2012-01-01' }) })
 }
