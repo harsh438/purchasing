@@ -66,7 +66,7 @@ export function clearPurchaseOrders() {
 
 export function cancelPurchaseOrders(ids) {
   return dispatch => {
-    var headers = new Headers();
+    let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     fetch(`/api/purchase_orders/cancel`, { credentials: 'same-origin',
@@ -74,6 +74,7 @@ export function cancelPurchaseOrders(ids) {
                                            headers: headers,
                                            body: JSON.stringify({ id: ids }) })
       .then(response => response.json())
-      .then(purchaseOrders => dispatch({ type: 'UPDATE_PURCHASE_ORDERS', purchaseOrders }));
+      .then(purchaseOrders => dispatch({ purchaseOrders,
+                                         type: 'UPDATE_PURCHASE_ORDERS' }));
   };
 }
