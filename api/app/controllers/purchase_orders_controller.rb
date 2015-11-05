@@ -9,9 +9,9 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def update
-    order = PurchaseOrder.find(params[:id])
-    order.update_attributes(permitted_params)
-    render json: { id: params[:id] }
+    orders = PurchaseOrder.where(id: params[:id])
+    orders.each { |o| o.update_attributes(permitted_params) }
+    render json: { orders: orders }
   end
 
   def cancel
