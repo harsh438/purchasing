@@ -85,5 +85,6 @@ export function cancelPurchaseOrders(ids) {
 
 export function updatePurchaseOrders(ids) {
   return makeApiRequest(`/api/purchase_orders/update`, { id: ids,
-                                                         delivery_date: '2012-01-01' }) })
+                                                         delivery_date: '2012-01-01' })
 }
+
