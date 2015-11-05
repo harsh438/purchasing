@@ -26,7 +26,7 @@ class PurchaseOrder::Search
 
   def build_response(results, attrs)
     { summary: {},
-      results: results.index_by(&:id),
+      results: results,
       drop_numbers: PurchaseOrder::DropNumbers.new.calculate(results),
       more_results_available: !results.last_page?,
       total_count: results.total_count,

@@ -3,20 +3,19 @@ import { assign, map, reduce } from 'lodash';
 
 const initialState =  { exportable: {},
                         page: 1,
-                        purchaseOrders: {},
+                        purchaseOrders: [],
                         totalPages: 0,
                         totalCount: 0,
                         summary: {},
                         moreResultsAvailable: false };
 
 function transformPurchaseOrder(action) {
-  return function (purchaseOrders, purchaseOrder, id) {
+  return function (purchaseOrder) {
     if (action.dropNumbers) {
-      purchaseOrder.drop_number = action.dropNumbers[id];
+      purchaseOrder.drop_number = action.dropNumbers[purchaseOrder.order_id];
     }
 
-    const newPurchaseOrder = assign({}, purchaseOrders[id], humps.camelizeKeys(purchaseOrder));
-    return assign({}, purchaseOrders, { [id]: newPurchaseOrder });
+    return humps.camelizeKeys(purchaseOrder);
   };
 }
 
@@ -25,7 +24,8 @@ function transformSummary(summary) {
 }
 
 function setPurchaseOrders(state, action) {
-  const purchaseOrders = reduce(action.results, transformPurchaseOrder(action), {});
+  const purchaseOrders = map(action.results, transformPurchaseOrder(action));
+
   return assign({}, state, { purchaseOrders,
                              page: action.page,
                              totalPages: action.totalPages,
@@ -35,10 +35,9 @@ function setPurchaseOrders(state, action) {
                              moreResultsAvailable: action.moreResultsAvailable });
 }
 
-function mergePurchaseOrders(state, action) {
-  const purchaseOrders = reduce(action.results,
-                                transformPurchaseOrder(action),
-                                state.purchaseOrders);
+function appendPurchaseOrders(state, action) {
+  const newPurchaseOrders = map(action.results, transformPurchaseOrder(action));
+  const purchaseOrders = [...purchaseOrders, ...newPurchaseOrders];
 
   return assign({}, state, { purchaseOrders,
                              page: action.page,
@@ -47,13 +46,17 @@ function mergePurchaseOrders(state, action) {
                              exportable: action.exportable,
                              summary: transformSummary(action.summary),
                              moreResultsAvailable: action.moreResultsAvailable });
+}
+
+function updatePurchaseOrder(purchaseOrders, purchaseOrder) {
+  const index = findIndex(purchaseOrders, 'orderId', purchaseOrder.orderId);
+  const updatedPurchaseOrder = assign({}, purchaseOrders[index], purchaseOrder);
+  return purchaseOrders.splice(index, 1, updatedPurchaseOrder);
 }
 
 function updatePurchaseOrders(state, action) {
-  const purchaseOrders = reduce(action.purchaseOrders,
-                                transformPurchaseOrder(action),
-                                state.purchaseOrders);
-
+  const updatedPurchaseOrders = map(action.results, transformPurchaseOrder(action));
+  const purchaseOrders = reduce(updatedPurchaseOrders, updatePurchaseOrder, state.purchaseOrders);
   return assign({}, state, { purchaseOrders });
 }
 
@@ -65,8 +68,8 @@ export default function reducePurchaseOrders(state = initialState, action) {
   switch (action.type) {
     case 'SET_PURCHASE_ORDERS':
       return setPurchaseOrders(state, action);
-    case 'MERGE_PURCHASE_ORDERS':
-      return mergePurchaseOrders(state, action);
+    case 'APPEND_PURCHASE_ORDERS':
+      return appendPurchaseOrders(state, action);
     case 'UPDATE_PURCHASE_ORDERS':
       return updatePurchaseOrders(state, action);
     case 'CLEAR_PURCHASE_ORDERS':
