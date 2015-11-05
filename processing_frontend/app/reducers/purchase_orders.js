@@ -50,7 +50,6 @@ function mergePurchaseOrders(state, action) {
 }
 
 function updatePurchaseOrders(state, action) {
-  console.log(state.purchaseOrders)
   const purchaseOrders = reduce(action.purchaseOrders,
                                 transformPurchaseOrder(action),
                                 state.purchaseOrders);
