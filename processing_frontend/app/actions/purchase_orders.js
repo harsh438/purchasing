@@ -1,4 +1,4 @@
-import queryString from 'query-string';
+import Qs from 'qs';
 import { assign, omit, isEmpty, compose, isNumber } from 'lodash';
 
 const defaultParams = { sort_by: 'drop_date_asc' };
@@ -26,8 +26,9 @@ function fetchPurchaseOrders(params, page, action) {
                                page: page };
 
     const query = removeEmptyKeys(assign({}, defaultParams, translatedParams));
+    const queryString = Qs.stringify(query, { arrayFormat: 'brackets' });
 
-    fetch(`/api/purchase_orders.json?${queryString.stringify(query)}`, { credentials: 'same-origin' })
+    fetch(`/api/purchase_orders.json?${queryString}`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(purchaseOrders => dispatch(action(purchaseOrders)));
   }
