@@ -1,4 +1,5 @@
 import React from 'react';
+import PurchaseOrdersSummary from './_summary';
 
 export default class PurchaseOrderTableHeader extends React.Component {
   componentDidMount () {
@@ -10,95 +11,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
       <thead ref="thead" style={{ width: this.props.width }}>
         <tr>
           <th colSpan="20">
-            <div className="row">
-              <div className="col-md-2 col-md-offset-2">
-                <table className="purchase_orders_summary__table">
-                  <tbody>
-                    <tr>
-                      <th className="text-center" colSpan="2">Ordered</th>
-                    </tr>
-                    <tr>
-                      <th>Quantity</th>
-                      <td>{this.renderNormalFontWeight(this.props.summary.orderedQuantity)}</td>
-                    </tr>
-                    <tr>
-                      <th>Cost</th>
-                      <td>{this.renderNormalFontWeight(this.props.summary.orderedCost)}</td>
-                    </tr>
-                    <tr>
-                      <th>Value</th>
-                      <td>{this.renderNormalFontWeight(this.props.summary.orderedValue)}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="col-md-2">
-                <table className="purchase_orders_summary__table">
-                  <tbody>
-                    <tr>
-                      <th className="text-center" colSpan="2">Delivered</th>
-                    </tr>
-                    <tr>
-                      <th>Quantity</th>
-                      <td>{this.renderNormalFontWeight(this.props.summary.deliveredQuantity)}</td>
-                    </tr>
-                    <tr>
-                      <th>Cost</th>
-                      <td>{this.renderNormalFontWeight(this.props.summary.deliveredCost)}</td>
-                    </tr>
-                    <tr>
-                      <th>Value</th>
-                      <td>{this.renderNormalFontWeight(this.props.summary.deliveredValue)}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="col-md-2">
-                <table className="purchase_orders_summary__table">
-                  <tbody>
-                    <tr>
-                      <th className="text-center" colSpan="2">Cancelled</th>
-                    </tr>
-                    <tr>
-                      <th>Quantity</th>
-                      <td>{this.renderNormalFontWeight(this.props.summary.cancelledQuantity)}</td>
-                    </tr>
-                    <tr>
-                      <th>Cost</th>
-                      <td>{this.renderNormalFontWeight(this.props.summary.cancelledCost)}</td>
-                    </tr>
-                    <tr>
-                      <th>Value</th>
-                      <td>{this.renderNormalFontWeight(this.props.summary.cancelledValue)}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="col-md-2">
-                <table className="purchase_orders_summary__table">
-                  <tbody>
-                    <tr>
-                      <th className="text-center" colSpan="2">Balance</th>
-                    </tr>
-                    <tr>
-                      <th>Quantity</th>
-                      <td>{this.renderNormalFontWeight(this.props.summary.balanceQuantity)}</td>
-                    </tr>
-                    <tr>
-                      <th>Cost</th>
-                      <td>{this.renderNormalFontWeight(this.props.summary.balanceCost)}</td>
-                    </tr>
-                    <tr>
-                      <th>Value</th>
-                      <td>{this.renderNormalFontWeight(this.props.summary.balanceValue)}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            <PurchaseOrdersSummary {...this.props.summary} />
           </th>
 
           <th colSpan="4" className="text-right" style={{ verticalAlign: 'bottom' }}>
@@ -189,14 +102,6 @@ export default class PurchaseOrderTableHeader extends React.Component {
         <span style={{ fontWeight: 'normal' }}>Result set too big to export :(</span>
       );
     }
-  }
-
-  renderNormalFontWeight (value) {
-    if (value == null) return;
-
-    return (
-      <div style={{ fontWeight: 'normal' }}>{value}</div>
-    );
   }
 
   fixCellWidths () {

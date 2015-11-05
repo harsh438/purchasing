@@ -54,7 +54,6 @@ function updatePurchaseOrders(state, action) {
                                 transformPurchaseOrder(action),
                                 state.purchaseOrders);
 
-
   return assign({}, state, { purchaseOrders });
 }
 
