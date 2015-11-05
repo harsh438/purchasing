@@ -68,7 +68,7 @@ export function cancelPurchaseOrders(ids) {
     var headers = new Headers();
     headers.append("Content-Type", "application/json");
 
-    fetch(`/api/cancel`, { credentials: 'same-origin',
+    fetch(`/api/purchase_orders/cancel`, { credentials: 'same-origin',
                            method: 'POST',
                            headers: headers,
                            body: JSON.stringify({ id: ids }) })
