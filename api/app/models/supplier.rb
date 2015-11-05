@@ -6,6 +6,7 @@ class Supplier < ActiveRecord::Base
   has_many :vendors, through: :supplier_vendors
 
   self.table_name = :suppliers
+
   map_attributes id: :SupplierID,
                  name: :SupplierName
 
@@ -13,5 +14,9 @@ class Supplier < ActiveRecord::Base
     joins('inner join suppliers_to_brands sb on suppliers.SupplierID = sb.SupplierID')
       .where('sb.BrandID in (select distinct orderTool_venId from purchase_orders)')
       .uniq
+  end
+
+  def self.alphabetical
+    order(name: :asc)
   end
 end
