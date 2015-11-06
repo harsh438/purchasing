@@ -21,6 +21,7 @@ import { isEmpty, assign, map, intersection } from 'lodash';
 
 class PurchaseOrdersIndex extends React.Component {
   componentWillMount () {
+    this.state = { selected: [] };
     this.props.dispatch(loadBrands());
     this.props.dispatch(loadSuppliers());
     this.props.dispatch(loadGenders());
@@ -40,12 +41,8 @@ class PurchaseOrdersIndex extends React.Component {
     }
 
     if (this.props.purchaseOrders !== nextProps.purchaseOrders) {
-      if (this.state && this.state.selected) {
-        let newIds = map(nextProps.purchaseOrders, o => { return String(o.orderId) })
-        this.setState({ selected: intersection(this.state.selected, newIds) })
-      } else {
-        this.setState({ selected: [] })
-      }
+      let newIds = map(nextProps.purchaseOrders, o => { return String(o.orderId) })
+      this.setState({ selected: intersection(this.state.selected, newIds) })
     }
   }
 
