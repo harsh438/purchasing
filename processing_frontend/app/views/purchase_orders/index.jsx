@@ -33,7 +33,7 @@ class PurchaseOrdersIndex extends React.Component {
   componentWillReceiveProps(nextProps) {
     const nextQuery = nextProps.location.query;
 
-    if (isObjectEmpty(nextQuery)) {
+    if (isEmptyObject(nextQuery)) {
       this.clearPurchaseOrders();
     } else if (!deepEqual(this.props.location.query, nextQuery)) {
       this.loadPurchaseOrders(nextQuery);
@@ -48,6 +48,7 @@ class PurchaseOrdersIndex extends React.Component {
                             categories={this.props.categories}
                             genders={this.props.genders}
                             history={this.props.history}
+                            loading={this.props.loading}
                             loadPurchaseOrders={this.loadPurchaseOrders.bind(this)}
                             orderTypes={this.props.orderTypes}
                             seasons={this.props.seasons}

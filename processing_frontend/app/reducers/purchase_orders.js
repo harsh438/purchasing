@@ -74,6 +74,8 @@ export default function reducePurchaseOrders(state = initialState, action) {
       return updatePurchaseOrders(state, action);
     case 'CLEAR_PURCHASE_ORDERS':
       return clearPurchaseOrders(state, action);
+    case 'IS_LOADING_PURCHASE_ORDERS':
+      return assign({}, state, { loading: action.loading });
     default:
       return state;
   }

@@ -19,9 +19,14 @@ function fetchPurchaseOrders(params, page, action) {
     const query = removeEmptyKeys(assign({}, defaultParams, translatedParams));
     const queryString = Qs.stringify(query, { arrayFormat: 'brackets' });
 
+    dispatch(purchaseOrdersLoading(true));
+
     fetch(`/api/purchase_orders.json?${queryString}`, { credentials: 'same-origin' })
       .then(response => response.json())
-      .then(purchaseOrders => dispatch(action(purchaseOrders)));
+      .then(purchaseOrders => {
+        dispatch(purchaseOrdersLoading(false));
+        dispatch(action(purchaseOrders));
+      });
   }
 }
 
@@ -87,9 +92,7 @@ export function loadMorePurchaseOrders(params, page) {
 }
 
 export function clearPurchaseOrders() {
-  return dispatch => {
-    dispatch({ type: 'CLEAR_PURCHASE_ORDERS' });
-  };
+  return { type: 'CLEAR_PURCHASE_ORDERS' };
 }
 
 export function cancelPurchaseOrders(id) {
@@ -102,4 +105,8 @@ export function uncancelPurchaseOrders(id) {
 
 export function updatePurchaseOrders(id, params = {}) {
   return makeApiRequest(`/api/purchase_orders/update`, { id, ...params });
+}
+
+export function purchaseOrdersLoading(loading) {
+  return { loading, type: 'IS_LOADING_PURCHASE_ORDERS' }
 }

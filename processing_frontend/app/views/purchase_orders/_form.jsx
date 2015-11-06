@@ -9,7 +9,7 @@ export default class PurchaseOrdersForm extends React.Component {
     this.setStateFromQuery(this.props.query);
   }
 
-  componentWillReceiveProps({ query }) {
+  componentWillReceiveProps({ loaded, query }) {
     this.setStateFromQuery(query);
   }
 
@@ -216,9 +216,7 @@ export default class PurchaseOrdersForm extends React.Component {
                 </div>
 
                 <div className="col-md-4 text-right">
-                 <button className="btn btn-success" style={{ marginTop: '1.74em', width: '100%' }}>
-                    Search
-                  </button>
+                  {this.renderSubmit()}
 
                   <div style={{ marginTop: '1em' }}>
                     <Link to="/">
@@ -232,6 +230,25 @@ export default class PurchaseOrdersForm extends React.Component {
         </div>
       </div>
     );
+  }
+
+  renderSubmit () {
+    if (this.props.loading) {
+      return (
+        <button className="btn btn-success"
+                disabled="disabled"
+                style={{ marginTop: '1.74em', width: '100%' }}>
+          Searching...
+        </button>
+      );
+    } else {
+      return (
+        <button className="btn btn-success"
+                style={{ marginTop: '1.74em', width: '100%' }}>
+          Search
+        </button>
+      );
+    }
   }
 
   setStateFromQuery (query) {
