@@ -1,4 +1,5 @@
 import React from 'react';
+import OrderedEdit from './_ordered_edit';
 
 export default class PurchaseOrderRow extends React.Component {
   render () {
@@ -31,7 +32,13 @@ export default class PurchaseOrderRow extends React.Component {
         <td style={{ borderLeft: '2px solid #ddd' }}>
           {this.props.purchaseOrder.orderType}
         </td>
-        <td>{this.props.purchaseOrder.orderedQuantity}</td>
+
+        <OrderedEdit id={this.props.purchaseOrder.id}
+                     table={this.props.table}
+                     orderId={this.props.purchaseOrder.orderId}
+                     orderedQuantity={this.props.purchaseOrder.orderedQuantity}
+                     orderedCost={this.props.purchaseOrder.orderedCost} />
+
         <td>{this.props.purchaseOrder.orderedCost}</td>
         <td>{this.props.purchaseOrder.orderedValue}</td>
 
@@ -50,9 +57,7 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.cancelledValue}</td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
-          <a href={this.changeBalanceQuantityUrl()} target="_blank">
-            {this.props.purchaseOrder.balanceQuantity}
-          </a>
+          {this.props.purchaseOrder.balanceQuantity}
         </td>
         <td>{this.props.purchaseOrder.balanceCost}</td>
         <td>{this.props.purchaseOrder.balanceValue}</td>

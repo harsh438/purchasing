@@ -14,7 +14,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
             <PurchaseOrdersSummary summary={this.props.summary} />
           </th>
 
-          <th colSpan="4" className="text-right" style={{ verticalAlign: 'bottom' }}>
+          <th colSpan="3" className="text-right" style={{ verticalAlign: 'bottom' }}>
 
           </th>
         </tr>
@@ -44,7 +44,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
             Balance
           </th>
 
-          <th colSpan="2" style={{ borderLeft: '2px solid #ddd' }}>
+          <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>
             &nbsp;
           </th>
         </tr>

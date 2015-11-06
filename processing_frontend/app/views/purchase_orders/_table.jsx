@@ -93,6 +93,7 @@ export default class PurchaseOrdersTable extends React.Component {
 
       return (
         <PurchaseOrderRow alt={alt}
+                          table={this}
                           checked={contains(this.state.selected, purchaseOrder.orderId)}
                           key={purchaseOrder.orderId}
                           onChange={this.handleRowChange.bind(this)}
@@ -187,6 +188,10 @@ export default class PurchaseOrdersTable extends React.Component {
 
   uncancelSelected () {
     this.props.dispatch(uncancelPurchaseOrders(this.state.selected));
+  }
+
+  updateQtyCost(id, qty, cost) {
+    this.props.dispatch(updatePurchaseOrders([id], { quantity: qty }));
   }
 
   setDeliveryDate (value) {
