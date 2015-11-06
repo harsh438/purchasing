@@ -283,6 +283,14 @@ class PurchaseOrder < ActiveRecord::Base
     self
   end
 
+  def uncancel
+    if cancelled?
+      update_columns(cancelled_date: '0000-00-00', status: 2)
+    end
+
+    self
+  end
+
   def cancel_order
     items = PurchaseOrder.with_summary.where(po_number: po_number)
     items.each(&:cancel)

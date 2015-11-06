@@ -25,6 +25,12 @@ class PurchaseOrdersController < ApplicationController
     render json: { ids: ids }
   end
 
+  def uncancel
+    orders = PurchaseOrder.where(id: params[:id])
+    orders.each(&:uncancel)
+    render json: orders
+  end
+
   def seasons
     render json: PurchaseOrder.seasons
   end
