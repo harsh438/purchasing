@@ -258,6 +258,11 @@ export default class PurchaseOrdersForm extends React.Component {
                 </button>
               </div>
               <div className="col-md-2">
+                <button className="btn btn-warning"
+                        style={{ width: '100%' }}
+                        onClick={this.handleUncancelSubmit.bind(this)}>
+                  Un-cancel Selected
+                </button>
               </div>
               <div className="col-md-4">
               </div>
@@ -313,6 +318,11 @@ export default class PurchaseOrdersForm extends React.Component {
   handleCancelSubmit (e) {
     e.preventDefault();
     this.props.index.cancelSelected();
+  }
+
+  handleUncancelSubmit (e) {
+    e.preventDefault();
+    this.props.index.uncancelSelected();
   }
 
   handleDeliveryDateChange (field, { target }) {

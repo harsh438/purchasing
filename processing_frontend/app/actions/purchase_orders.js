@@ -83,6 +83,10 @@ export function cancelPurchaseOrders(id) {
   return makeApiRequest(`/api/purchase_orders/cancel`, { id })
 }
 
+export function uncancelPurchaseOrders(id) {
+  return makeApiRequest(`/api/purchase_orders/uncancel`, { id })
+}
+
 export function updatePurchaseOrders(id, params = {}) {
   return makeApiRequest(`/api/purchase_orders/update`, { id, ...params });
 }

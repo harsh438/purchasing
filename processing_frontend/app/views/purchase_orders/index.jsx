@@ -11,6 +11,7 @@ import { loadPurchaseOrders,
          loadMorePurchaseOrders,
          clearPurchaseOrders,
          cancelPurchaseOrders,
+         uncancelPurchaseOrders,
          updatePurchaseOrders } from '../../actions/purchase_orders';
 
 import PurchaseOrdersForm from './_form';
@@ -94,6 +95,10 @@ class PurchaseOrdersIndex extends React.Component {
 
   cancelSelected () {
     this.props.dispatch(cancelPurchaseOrders(this.state.selected));
+  }
+
+  uncancelSelected () {
+    this.props.dispatch(uncancelPurchaseOrders(this.state.selected));
   }
 
   setDeliveryDate (value) {
