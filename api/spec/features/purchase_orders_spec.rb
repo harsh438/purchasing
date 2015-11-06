@@ -21,11 +21,13 @@ feature 'Listing purchase orders' do
   end
 
   scenario 'Default purchase order list' do
+    given_there_are_many_pages_of_purchase_orders
     when_i_visit_the_purchase_orders_route
     then_i_should_see_the_first_page_of_purchase_orders
   end
 
   scenario 'Pagination of purchase orders' do
+    given_there_are_many_pages_of_purchase_orders
     when_i_visit_the_third_page_of_results
     then_i_should_see_one_result
   end
@@ -55,12 +57,19 @@ feature 'Listing purchase orders' do
     then_i_should_see_the_first_page_of_orders_after_that_date
   end
 
+  def given_there_are_many_pages_of_purchase_orders
+    create_list(:purchase_order, 150,
+                status: 4,
+                season: 'AW15',
+                delivery_date: Time.new(2013, 1, 1))
+  end
+
   def when_i_visit_the_purchase_orders_route
     visit '/api/purchase_orders.json'
   end
 
   def then_i_should_see_the_first_page_of_purchase_orders
-    expect(subject['results'].count).to eq(50)
+    expect(subject['results'].count).to eq(200)
   end
 
   def when_i_filter_by_vendor
