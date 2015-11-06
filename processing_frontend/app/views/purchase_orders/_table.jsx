@@ -23,7 +23,7 @@ export default class PurchaseOrdersTable extends React.Component {
            this.state.selected !== nextState.selected;
   }
 
-  componentWillReceiveProps (nextProps, nextState) {
+  componentWillReceiveProps (nextProps) {
     if (this.props.purchaseOrders !== nextProps.purchaseOrders) {
       const newIds = map(nextProps.purchaseOrders, o => o.orderId)
       this.setState({ selected: intersection(this.state.selected, newIds) })
