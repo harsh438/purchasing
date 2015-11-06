@@ -121,7 +121,7 @@ class PurchaseOrder < ActiveRecord::Base
           :product_id,
           :operator
 
-  paginates_per 50
+  paginates_per 200
 
   def orderTool_LG
     Gender.string_from(super)
