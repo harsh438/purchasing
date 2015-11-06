@@ -89,19 +89,20 @@ export default class PurchaseOrderTableHeader extends React.Component {
   renderExportButton () {
     if (!this.props.exportable) return;
 
-    if (this.props.exportable.url) {
-      return (
-        <a href={this.props.exportable.url}
-           className="btn btn-default btn-sm pull-right"
-           target="_blank">
-          export as .csv
-        </a>
-      );
-    } else if (this.props.exportable.massive) {
-      return (
-        <span style={{ fontWeight: 'normal' }}>Result set too big to export :(</span>
-      );
+    let additionalParams = {}
+    if (this.props.exportable.massive) {
+      additionalParams = { disabled: 'disabled',
+                           title: 'Result set too big to export' }
     }
+
+    return (
+      <a href={this.props.exportable.url}
+         className="btn btn-default btn-sm pull-right"
+         target="_blank"
+         {...additionalParams}>
+        export as .csv
+      </a>
+    );
   }
 
   fixCellWidths () {
