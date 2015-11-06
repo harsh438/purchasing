@@ -78,6 +78,7 @@ export default class PurchaseOrderRow extends React.Component {
 
   changeBalanceQuantityUrl () {
     return ENV['QUANTITY_EDIT_PATH']
-      .replace(':pid', this.props.purchaseOrder.productId);
+      .replace(':pid', this.props.purchaseOrder.productId)
+      .replace(':date', this.props.purchaseOrder.deliveryDate);
   }
 }
