@@ -65,7 +65,7 @@ feature 'Listing purchase orders' do
   end
 
   def when_i_visit_the_purchase_orders_route
-    visit '/api/purchase_orders.json'
+    visit purchase_orders_path(format: :json)
   end
 
   def then_i_should_see_the_first_page_of_purchase_orders
@@ -73,7 +73,7 @@ feature 'Listing purchase orders' do
   end
 
   def when_i_filter_by_vendor
-    visit "/api/purchase_orders.json?vendor_id=#{vendor.id}"
+    visit purchase_orders_path(format: :json, vendor_id: vendor)
   end
 
   def then_i_should_see_the_first_page_of_orders_for_that_vendor
@@ -81,7 +81,7 @@ feature 'Listing purchase orders' do
   end
 
   def when_i_visit_the_third_page_of_results
-    visit '/api/purchase_orders.json?page=2'
+    visit purchase_orders_path(format: :json, page: 2)
   end
 
   def then_i_should_see_one_result
@@ -89,7 +89,7 @@ feature 'Listing purchase orders' do
   end
 
   def when_i_filter_by_status
-    visit '/api/purchase_orders.json?status[]=balance'
+    visit purchase_orders_path(format: :json, status: [:balance])
   end
 
   def then_i_should_see_the_first_page_of_orders_with_that_status
@@ -97,7 +97,7 @@ feature 'Listing purchase orders' do
   end
 
   def when_i_filter_by_multiple_statuses
-    visit '/api/purchase_orders.json?status[]=balance&status[]=cancelled'
+    visit purchase_orders_path(format: :json, status: [:balance, :cancelled])
   end
 
   def then_i_should_see_the_first_page_of_orders_with_those_statuses
@@ -105,7 +105,7 @@ feature 'Listing purchase orders' do
   end
 
   def when_i_filter_by_season
-    visit '/api/purchase_orders.json?season=AW15'
+    visit purchase_orders_path(format: :json, season: :AW15)
   end
 
   def then_i_should_see_the_first_page_of_orders_for_that_season
@@ -113,7 +113,7 @@ feature 'Listing purchase orders' do
   end
 
   def when_i_filter_by_date_from
-    visit '/api/purchase_orders.json?date_from=2012-01-01'
+    visit purchase_orders_path(format: :json, date_from: '2012-01-01')
   end
 
   def then_i_should_see_the_first_page_of_orders_after_that_date
