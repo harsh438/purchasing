@@ -10,7 +10,8 @@ function removeEmptyKeys(object) {
 function fetchPurchaseOrders(params, page, action) {
   return dispatch => {
     const snakeCasedParams = mapKeys(params, rearg(snakeCase, [1, 0]));
-    const translatedParams = assign({}, snakeCasedParams, { vendor_id: params.brand,
+    const translatedParams = assign({}, snakeCasedParams, { page,
+                                                            vendor_id: params.brand,
                                                             summary_id: params.poNumber,
                                                             category_id: params.category,
                                                             product_id: params.pid,
