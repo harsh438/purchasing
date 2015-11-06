@@ -6,10 +6,22 @@ class PurchaseOrder::Search
     response = build_response(paginated_query, attrs)
 
     if has_filters
-      enrich_response(response, query, additional_data)
+      enrich_response(response, additional_data)
     end
 
     response
+  end
+
+  def summary(attrs)
+    query = PurchaseOrder.mapped.with_valid_status.with_summary
+    results, has_filters = apply_filters(query, attrs)
+    summary = {}
+
+    if has_filters
+      summary = PurchaseOrder::SummaryBuilder.new.build(results)
+    end
+
+    { summary: summary }
   end
 
   private
@@ -25,8 +37,7 @@ class PurchaseOrder::Search
   end
 
   def build_response(results, attrs)
-    { summary: {},
-      results: results,
+    { results: results,
       drop_numbers: PurchaseOrder::DropNumbers.new.calculate(results),
       more_results_available: !results.last_page?,
       total_count: results.total_count,
@@ -35,9 +46,7 @@ class PurchaseOrder::Search
       exportable: {} }
   end
 
-  def enrich_response(response, unpaged_results, additional_data)
-    response[:summary] = PurchaseOrder::SummaryBuilder.new.build(unpaged_results)
-
+  def enrich_response(response, additional_data)
     if response[:total_pages] > 20
       response[:exportable][:massive] = true
     else

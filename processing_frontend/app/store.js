@@ -8,4 +8,6 @@ const middleware = [thunk];
 const reducer = combineReducers({ filters: reduceFilters,
                                   purchaseOrders: reducePurchaseOrder });
 
-export default applyMiddleware(...middleware)(createStore)(reducer);
+const store = applyMiddleware(...middleware)(createStore)(reducer);
+
+export default store;

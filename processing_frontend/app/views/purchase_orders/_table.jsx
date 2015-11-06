@@ -17,7 +17,9 @@ export default class PurchaseOrdersTable extends React.Component {
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    return this.props.purchaseOrders !== nextProps.purchaseOrders || this.state.sticky !== nextState.sticky;
+    return this.props.purchaseOrders !== nextProps.purchaseOrders ||
+      this.state.sticky !== nextState.sticky ||
+      this.props.summary !== nextProps.summary;
   }
 
   componentWillReceiveProps (nextProps, nextState) {

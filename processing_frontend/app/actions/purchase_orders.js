@@ -24,6 +24,23 @@ function fetchPurchaseOrders(params, page, action) {
   }
 }
 
+function fetchSummary(params) {
+  return dispatch => {
+    const snakeCasedParams = mapKeys(params, rearg(snakeCase, [1, 0]));
+    const translatedParams = assign({}, snakeCasedParams, { vendor_id: params.brand,
+                                                            summary_id: params.poNumber,
+                                                            category_id: params.category,
+                                                            product_id: params.pid,
+                                                            product_sku: params.sku });
+    const query = removeEmptyKeys(assign({}, defaultParams, translatedParams));
+    const queryString = Qs.stringify(query, { arrayFormat: 'brackets' });
+
+    fetch(`/api/purchase_orders/summary.json?${queryString}`, { credentials: 'same-origin' })
+      .then(response => response.json())
+      .then(summary => dispatch({ ...summary, type:'SET_SUMMARY' }));
+  }
+}
+
 function action(type) {
   return function (purchaseOrders) {
     const { summary, page, results, exportable } = purchaseOrders;
@@ -50,9 +67,14 @@ function makeApiRequest(url, params) {
                  headers: headers,
                  body: JSON.stringify(params) })
       .then(response => response.json())
-      .then(purchaseOrders => dispatch({ purchaseOrders,
-                                         type: 'UPDATE_PURCHASE_ORDERS' }));
+      .then(purchaseOrders => {
+        dispatch({ purchaseOrders, type: 'UPDATE_PURCHASE_ORDERS' });
+      });
   };
+}
+
+export function loadSummary(params) {
+  return fetchSummary(params);
 }
 
 export function loadPurchaseOrders(params) {

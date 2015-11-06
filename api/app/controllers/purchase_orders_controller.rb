@@ -8,6 +8,10 @@ class PurchaseOrdersController < ApplicationController
     end
   end
 
+  def summary
+    render json: PurchaseOrder::Search.new.summary(params)
+  end
+
   def update
     orders = PurchaseOrder.where(id: params[:id])
     orders.each { |o| o.update_attributes(permitted_params) }

@@ -30,7 +30,6 @@ function setPurchaseOrders(state, action, purchaseOrders) {
                              totalPages: action.totalPages,
                              totalCount: action.totalCount,
                              exportable: action.exportable,
-                             summary: transformSummary(action.summary),
                              moreResultsAvailable: action.moreResultsAvailable });
 }
 
@@ -57,8 +56,15 @@ function clearPurchaseOrders(state, action) {
   return assign({}, state, initialState);
 }
 
+function setSummary(state, action) {
+
+  return assign({}, state, { summary: transformSummary(action.summary) });
+}
+
 export default function reducePurchaseOrders(state = initialState, action) {
   switch (action.type) {
+    case 'SET_SUMMARY':
+      return setSummary(state, action);
     case 'SET_PURCHASE_ORDERS':
       const purchaseOrders = map(action.results, transformPurchaseOrder(action));
       return setPurchaseOrders(state, action, purchaseOrders);

@@ -7,7 +7,8 @@ import { loadBrands,
          loadSeasons,
          loadSuppliers } from '../../actions/filters';
 
-import { loadPurchaseOrders,
+import { loadSummary,
+         loadPurchaseOrders,
          loadMorePurchaseOrders,
          clearPurchaseOrders } from '../../actions/purchase_orders';
 
@@ -35,6 +36,7 @@ class PurchaseOrdersIndex extends React.Component {
       this.clearPurchaseOrders();
     } else if (!deepEqual(this.props.location.query, nextQuery)) {
       this.loadPurchaseOrders(nextQuery);
+      this.loadSummary(nextQuery);
     }
 
   }
@@ -80,11 +82,16 @@ class PurchaseOrdersIndex extends React.Component {
     this.props.dispatch(loadPurchaseOrders(query));
   }
 
+  loadSummary (query) {
+    this.props.dispatch(loadSummary(query));
+  }
+
   loadPurchaseOrdersIfQuery () {
     let query = this.props.location.query;
 
     if (!this.isObjectEmpty(query)) {
       this.loadPurchaseOrders(query);
+      this.loadSummary(query);
     }
   }
 

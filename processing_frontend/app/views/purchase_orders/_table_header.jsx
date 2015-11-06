@@ -11,7 +11,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
       <thead ref="thead" style={{ width: this.props.width }}>
         <tr>
           <th colSpan="20">
-            <PurchaseOrdersSummary {...this.props.summary} />
+            <PurchaseOrdersSummary summary={this.props.summary} />
           </th>
 
           <th colSpan="4" className="text-right" style={{ verticalAlign: 'bottom' }}>

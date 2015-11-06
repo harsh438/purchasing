@@ -1,7 +1,14 @@
 import React from 'react';
+import { isEmptyObject } from '../../utilities/empty'
 
 export default class PurchaseOrdersSummary extends React.Component {
   render () {
+    let summary = this.props.summary;
+
+    if (isEmptyObject(summary)) {
+      return (<div></div>);
+    }
+
     return (
       <div className="row">
         <div className="col-md-2 col-md-offset-2">
@@ -12,15 +19,15 @@ export default class PurchaseOrdersSummary extends React.Component {
               </tr>
               <tr>
                 <th>Quantity</th>
-                <td>{this.renderNormalFontWeight(this.props.orderedQuantity)}</td>
+                <td>{this.renderNormalFontWeight(summary.orderedQuantity)}</td>
               </tr>
               <tr>
                 <th>Cost</th>
-                <td>{this.renderNormalFontWeight(this.props.orderedCost)}</td>
+                <td>{this.renderNormalFontWeight(summary.orderedCost)}</td>
               </tr>
               <tr>
                 <th>Value</th>
-                <td>{this.renderNormalFontWeight(this.props.orderedValue)}</td>
+                <td>{this.renderNormalFontWeight(summary.orderedValue)}</td>
               </tr>
             </tbody>
           </table>
@@ -34,15 +41,15 @@ export default class PurchaseOrdersSummary extends React.Component {
               </tr>
               <tr>
                 <th>Quantity</th>
-                <td>{this.renderNormalFontWeight(this.props.deliveredQuantity)}</td>
+                <td>{this.renderNormalFontWeight(summary.deliveredQuantity)}</td>
               </tr>
               <tr>
                 <th>Cost</th>
-                <td>{this.renderNormalFontWeight(this.props.deliveredCost)}</td>
+                <td>{this.renderNormalFontWeight(summary.deliveredCost)}</td>
               </tr>
               <tr>
                 <th>Value</th>
-                <td>{this.renderNormalFontWeight(this.props.deliveredValue)}</td>
+                <td>{this.renderNormalFontWeight(summary.deliveredValue)}</td>
               </tr>
             </tbody>
           </table>
@@ -56,15 +63,15 @@ export default class PurchaseOrdersSummary extends React.Component {
               </tr>
               <tr>
                 <th>Quantity</th>
-                <td>{this.renderNormalFontWeight(this.props.cancelledQuantity)}</td>
+                <td>{this.renderNormalFontWeight(summary.cancelledQuantity)}</td>
               </tr>
               <tr>
                 <th>Cost</th>
-                <td>{this.renderNormalFontWeight(this.props.cancelledCost)}</td>
+                <td>{this.renderNormalFontWeight(summary.cancelledCost)}</td>
               </tr>
               <tr>
                 <th>Value</th>
-                <td>{this.renderNormalFontWeight(this.props.cancelledValue)}</td>
+                <td>{this.renderNormalFontWeight(summary.cancelledValue)}</td>
               </tr>
             </tbody>
           </table>
@@ -78,15 +85,15 @@ export default class PurchaseOrdersSummary extends React.Component {
               </tr>
               <tr>
                 <th>Quantity</th>
-                <td>{this.renderNormalFontWeight(this.props.balanceQuantity)}</td>
+                <td>{this.renderNormalFontWeight(summary.balanceQuantity)}</td>
               </tr>
               <tr>
                 <th>Cost</th>
-                <td>{this.renderNormalFontWeight(this.props.balanceCost)}</td>
+                <td>{this.renderNormalFontWeight(summary.balanceCost)}</td>
               </tr>
               <tr>
                 <th>Value</th>
-                <td>{this.renderNormalFontWeight(this.props.balanceValue)}</td>
+                <td>{this.renderNormalFontWeight(summary.balanceValue)}</td>
               </tr>
             </tbody>
           </table>
