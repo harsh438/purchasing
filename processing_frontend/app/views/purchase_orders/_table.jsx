@@ -25,7 +25,7 @@ export default class PurchaseOrdersTable extends React.Component {
 
   componentWillReceiveProps (nextProps, nextState) {
     if (this.props.purchaseOrders !== nextProps.purchaseOrders) {
-      const newIds = map(nextProps.purchaseOrders, o => { return String(o.orderId) })
+      const newIds = map(nextProps.purchaseOrders, o => o.orderId)
       this.setState({ selected: intersection(this.state.selected, newIds) })
     }
   }
@@ -145,9 +145,9 @@ export default class PurchaseOrdersTable extends React.Component {
 
   handleRowChange ({ target }) {
     if (target.checked) {
-      this.selectRow(target.value);
+      this.selectRow(parseInt(target.value, 10));
     } else {
-      this.unSelectRow(target.value);
+      this.unSelectRow(parseInt(target.value, 10));
     }
   }
 
@@ -163,7 +163,9 @@ export default class PurchaseOrdersTable extends React.Component {
 
   selectRow (id) {
     var selected = this.state.selected.slice();
-    selected.push(id);
+    if (!contains(selected, id)) {
+      selected.push(id);
+    }
     this.setState({ selected: selected });
   }
 
