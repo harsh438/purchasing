@@ -49,10 +49,6 @@ export default class PurchaseOrdersTable extends React.Component {
             50, 50];
   }
 
-  tableWidth () {
-    return `${sum(this.cellWidths())}px`;
-  }
-
   renderCols () {
     const cellWidths = this.cellWidths();
     let cols = [];
@@ -93,6 +89,10 @@ export default class PurchaseOrdersTable extends React.Component {
         </div>
       );
     }
+  }
+
+  tableWidth () {
+    return `${sum(this.cellWidths())}px`;
   }
 
   className () {
