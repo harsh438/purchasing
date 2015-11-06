@@ -69,13 +69,23 @@ class PurchaseOrdersIndex extends React.Component {
 
   renderLoadMoreButton () {
     if (this.props.moreResultsAvailable) {
-      return (
-        <button className="btn btn-default btn-lg"
-                style={{ width: '100%' }}
-                onClick={this.loadMorePurchaseOrders.bind(this)}>
-          Load More Orders
-        </button>
-      );
+      if (this.props.loading) {
+        return (
+          <button className="btn btn-default btn-lg"
+                  style={{ width: '100%' }}
+                  disabled="disabled">
+            Loading...
+          </button>
+        );
+      } else {
+        return (
+          <button className="btn btn-default btn-lg"
+                  style={{ width: '100%' }}
+                  onClick={this.loadMorePurchaseOrders.bind(this)}>
+            Load More Orders
+          </button>
+        );
+      }
     }
   }
 
