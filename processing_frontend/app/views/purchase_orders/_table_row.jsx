@@ -3,7 +3,7 @@ import React from 'react';
 export default class PurchaseOrderRow extends React.Component {
   render () {
     return (
-      <tr className={this.props.alt ? 'active' : ''} ref="row">
+      <tr className={this.classes()} ref="row">
         <td>
           <input type="checkbox"
                  name="selected"
@@ -58,6 +58,19 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.gender}</td>
       </tr>
     );
+  }
+
+  classes () {
+    let c = '';
+    if (this.props.alt) {
+      c += ' active'
+    }
+
+    if (this.props.purchaseOrder.status == 'cancelled') {
+      c += ' danger'
+    }
+
+    return c
   }
 
   handleChange (field, { target }) {
