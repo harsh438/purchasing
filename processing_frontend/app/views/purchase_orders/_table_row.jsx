@@ -47,7 +47,9 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.cancelledValue}</td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
-          {this.props.purchaseOrder.balanceQuantity}
+          <a href={this.changeBalanceQuantityUrl()}>
+            {this.props.purchaseOrder.balanceQuantity}
+          </a>
         </td>
         <td>{this.props.purchaseOrder.balanceCost}</td>
         <td>{this.props.purchaseOrder.balanceValue}</td>
@@ -61,15 +63,21 @@ export default class PurchaseOrderRow extends React.Component {
   }
 
   classes () {
-    let c = '';
+    let classes = '';
+
     if (this.props.alt) {
-      c += ' active'
+      classes += ' active';
     }
 
     if (this.props.purchaseOrder.status == 'cancelled') {
-      c += ' danger'
+      classes += ' danger';
     }
 
-    return c
+    return classes;
+  }
+
+  changeBalanceQuantityUrl () {
+    return ENV['QUANTITY_EDIT_PATH']
+      .replace(':pid', this.props.purchaseOrder.productId);
   }
 }
