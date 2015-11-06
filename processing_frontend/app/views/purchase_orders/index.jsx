@@ -72,6 +72,18 @@ class PurchaseOrdersIndex extends React.Component {
     );
   }
 
+  renderLoadMoreButton () {
+    if (this.props.moreResultsAvailable) {
+      return (
+        <button className="btn btn-default btn-lg"
+                style={{ width: '100%' }}
+                onClick={this.loadMorePurchaseOrders.bind(this)}>
+          Load More Orders
+        </button>
+      );
+    }
+  }
+
   selectRow (id) {
     var selected = this.state.selected.slice();
     selected.push(id);
@@ -104,18 +116,6 @@ class PurchaseOrdersIndex extends React.Component {
 
   changeDeliveryDateSelected () {
     this.props.dispatch(updatePurchaseOrders(this.state.selected, { delivery_date: this.state.deliveryDate }));
-  }
-
-  renderLoadMoreButton () {
-    if (this.props.moreResultsAvailable) {
-      return (
-        <button className="btn btn-default btn-lg"
-                style={{ width: '100%' }}
-                onClick={this.loadMorePurchaseOrders.bind(this)}>
-          Load More Orders
-        </button>
-      );
-    }
   }
 
   loadPurchaseOrders (query) {
