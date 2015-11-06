@@ -262,6 +262,7 @@ class PurchaseOrder < ActiveRecord::Base
                 ordered_quantity: ordered_quantity,
                 ordered_cost: monetize(ordered_cost),
                 ordered_value: monetize(ordered_value),
+                delivery_date: delivery_date.to_s,
                 delivered_quantity: delivered_quantity,
                 delivered_cost: monetize(delivered_cost),
                 delivered_value: monetize(delivered_value),
