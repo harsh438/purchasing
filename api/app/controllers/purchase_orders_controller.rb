@@ -14,7 +14,7 @@ class PurchaseOrdersController < ApplicationController
 
   def update
     orders = PurchaseOrder.where(id: params[:id])
-    orders.each { |o| o.update_attributes(permitted_params) }
+    orders.each { |o| o.update!(permitted_params) }
     render json: orders
   end
 
@@ -61,6 +61,6 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def permitted_params
-    params.permit(:delivery_date)
+    params.permit(:delivery_date, :quantity, :cost)
   end
 end
