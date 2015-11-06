@@ -16,7 +16,7 @@ import { loadPurchaseOrders,
 import PurchaseOrdersForm from './_form';
 import PurchaseOrdersTable from './_table';
 import deepEqual from 'deep-equal';
-import { isEmpty, assign } from 'lodash';
+import { isEmpty, assign, map, intersection } from 'lodash';
 
 class PurchaseOrdersIndex extends React.Component {
   componentWillMount () {
@@ -39,7 +39,12 @@ class PurchaseOrdersIndex extends React.Component {
     }
 
     if (this.props.purchaseOrders !== nextProps.purchaseOrders) {
-      this.setState({ selected: [] })
+      if (this.state && this.state.selected) {
+        let newIds = map(nextProps.purchaseOrders, o => { return String(o.orderId) })
+        this.setState({ selected: intersection(this.state.selected, newIds) })
+      } else {
+        this.setState({ selected: [] })
+      }
     }
   }
 
@@ -78,10 +83,12 @@ class PurchaseOrdersIndex extends React.Component {
   unSelectRow (id) {
     var selected = this.state.selected.slice();
     var index = selected.indexOf(id);
+
     while (index != -1) {
       selected.splice(index, 1);
       index = selected.indexOf(id);
     }
+
     this.setState({ selected: selected });
   }
 
