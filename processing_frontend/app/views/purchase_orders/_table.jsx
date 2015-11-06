@@ -89,7 +89,7 @@ export default class PurchaseOrdersTable extends React.Component {
 
       return (
         <PurchaseOrderRow alt={alt}
-                          table={this}
+                          onChange={this.handleRowChange.bind(this)}
                           key={purchaseOrder.orderId}
                           purchaseOrder={purchaseOrder} />
       );
@@ -135,6 +135,14 @@ export default class PurchaseOrdersTable extends React.Component {
   shouldStick () {
     if (this.header) {
       return window.pageYOffset > 444;
+    }
+  }
+
+  handleRowChange ({ target }) {
+    if (target.checked) {
+      this.selectRow(target.value);
+    } else {
+      this.unSelectRow(target.value);
     }
   }
 

@@ -8,7 +8,7 @@ export default class PurchaseOrderRow extends React.Component {
           <input type="checkbox"
                  name="selected"
                  ref="selected"
-                 onChange={this.handleChange.bind(this, 'selected')}
+                 onChange={this.props.onChange.bind(this)}
                  value={this.props.purchaseOrder.id}
                  style={{ margin: '7px auto 0', display: 'block' }} />
         </td>
@@ -71,13 +71,5 @@ export default class PurchaseOrderRow extends React.Component {
     }
 
     return c
-  }
-
-  handleChange (field, { target }) {
-    if (target.checked) {
-      this.props.table.selectRow(target.value)
-    } else {
-      this.props.table.unSelectRow(target.value)
-    }
   }
 }
