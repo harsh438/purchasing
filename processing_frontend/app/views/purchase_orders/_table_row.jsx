@@ -75,9 +75,9 @@ export default class PurchaseOrderRow extends React.Component {
 
   handleChange (field, { target }) {
     if (target.checked) {
-      this.props.index.selectRow(target.value)
+      this.props.table.selectRow(target.value)
     } else {
-      this.props.index.unSelectRow(target.value)
+      this.props.table.unSelectRow(target.value)
     }
   }
 }

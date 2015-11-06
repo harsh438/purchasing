@@ -49,20 +49,20 @@ export default class PurchaseOrdersTableActions extends React.Component {
 
   handleCancelSubmit (e) {
     e.preventDefault();
-    this.props.index.cancelSelected();
+    this.props.table.cancelSelected();
   }
 
   handleUncancelSubmit (e) {
     e.preventDefault();
-    this.props.index.uncancelSelected();
+    this.props.table.uncancelSelected();
   }
 
   handleDeliveryDateChange ({ target }) {
-    this.props.index.setDeliveryDate(target.value);
+    this.props.table.setDeliveryDate(target.value);
   }
 
   handleDeliveryDateSubmit (e) {
     e.preventDefault();
-    this.props.index.changeDeliveryDateSelected();
+    this.props.table.changeDeliveryDateSelected();
   }
 }

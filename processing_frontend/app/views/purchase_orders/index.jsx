@@ -9,19 +9,16 @@ import { loadBrands,
 
 import { loadPurchaseOrders,
          loadMorePurchaseOrders,
-         clearPurchaseOrders,
-         cancelPurchaseOrders,
-         uncancelPurchaseOrders,
-         updatePurchaseOrders } from '../../actions/purchase_orders';
+         clearPurchaseOrders } from '../../actions/purchase_orders';
 
 import PurchaseOrdersForm from './_form';
 import PurchaseOrdersTable from './_table';
+
 import deepEqual from 'deep-equal';
 import { isEmpty, assign, map, intersection } from 'lodash';
 
 class PurchaseOrdersIndex extends React.Component {
   componentWillMount () {
-    this.state = { selected: [] };
     this.props.dispatch(loadBrands());
     this.props.dispatch(loadSuppliers());
     this.props.dispatch(loadGenders());
@@ -40,10 +37,6 @@ class PurchaseOrdersIndex extends React.Component {
       this.loadPurchaseOrders(nextQuery);
     }
 
-    if (this.props.purchaseOrders !== nextProps.purchaseOrders) {
-      let newIds = map(nextProps.purchaseOrders, o => { return String(o.orderId) })
-      this.setState({ selected: intersection(this.state.selected, newIds) })
-    }
   }
 
   render () {
@@ -59,8 +52,8 @@ class PurchaseOrdersIndex extends React.Component {
                             suppliers={this.props.suppliers}
                             query={this.props.location.query} />
 
-        <PurchaseOrdersTable exportable={this.props.exportable}
-                             index={this}
+        <PurchaseOrdersTable dispatch={this.props.dispatch}
+                             exportable={this.props.exportable}
                              purchaseOrders={this.props.purchaseOrders}
                              summary={this.props.summary}
                              totalPages={this.props.totalPages}
@@ -81,40 +74,6 @@ class PurchaseOrdersIndex extends React.Component {
         </button>
       );
     }
-  }
-
-  selectRow (id) {
-    var selected = this.state.selected.slice();
-    selected.push(id);
-    this.setState({ selected: selected });
-  }
-
-  unSelectRow (id) {
-    var selected = this.state.selected.slice();
-    var index = selected.indexOf(id);
-
-    while (index != -1) {
-      selected.splice(index, 1);
-      index = selected.indexOf(id);
-    }
-
-    this.setState({ selected: selected });
-  }
-
-  cancelSelected () {
-    this.props.dispatch(cancelPurchaseOrders(this.state.selected));
-  }
-
-  uncancelSelected () {
-    this.props.dispatch(uncancelPurchaseOrders(this.state.selected));
-  }
-
-  setDeliveryDate (value) {
-    this.setState({ deliveryDate: value });
-  }
-
-  changeDeliveryDateSelected () {
-    this.props.dispatch(updatePurchaseOrders(this.state.selected, { delivery_date: this.state.deliveryDate }));
   }
 
   loadPurchaseOrders (query) {

@@ -2,17 +2,29 @@ import React from 'react';
 import PurchaseOrdersTableActions from './_table_actions';
 import PurchaseOrderTableHeader from './_table_header';
 import PurchaseOrderRow from './_table_row';
-import { sum, map } from 'lodash';
+
+import { cancelPurchaseOrders,
+         uncancelPurchaseOrders,
+         updatePurchaseOrders } from '../../actions/purchase_orders';
+
+import { sum, map, intersection } from 'lodash';
 
 export default class PurchaseOrdersTable extends React.Component {
   componentWillMount () {
-    this.state = { sticky: false };
+    this.state = { sticky: false, selected: [] };
     this.onScroll();
     window.addEventListener('scroll', this.onScroll.bind(this));
   }
 
   shouldComponentUpdate (nextProps, nextState) {
     return this.props.purchaseOrders !== nextProps.purchaseOrders || this.state.sticky !== nextState.sticky;
+  }
+
+  componentWillReceiveProps (nextProps, nextState) {
+    if (this.props.purchaseOrders !== nextProps.purchaseOrders) {
+      const newIds = map(nextProps.purchaseOrders, o => { return String(o.orderId) })
+      this.setState({ selected: intersection(this.state.selected, newIds) })
+    }
   }
 
   componentWillUnmount () {
@@ -22,7 +34,7 @@ export default class PurchaseOrdersTable extends React.Component {
   render () {
     return (
       <div className={this.className()} style={{ paddingTop: this.paddingTop() }}>
-        <PurchaseOrdersTableActions index={this.props.index} />
+        <PurchaseOrdersTableActions table={this} />
 
         <table className="table" style={{ width: this.tableWidth() }}>
           <colgroup>{this.renderCols()}</colgroup>
@@ -77,7 +89,7 @@ export default class PurchaseOrdersTable extends React.Component {
 
       return (
         <PurchaseOrderRow alt={alt}
-                          index={this.props.index}
+                          table={this}
                           key={purchaseOrder.orderId}
                           purchaseOrder={purchaseOrder} />
       );
@@ -124,5 +136,39 @@ export default class PurchaseOrdersTable extends React.Component {
     if (this.header) {
       return window.pageYOffset > 444;
     }
+  }
+
+  selectRow (id) {
+    var selected = this.state.selected.slice();
+    selected.push(id);
+    this.setState({ selected: selected });
+  }
+
+  unSelectRow (id) {
+    var selected = this.state.selected.slice();
+    var index = selected.indexOf(id);
+
+    while (index != -1) {
+      selected.splice(index, 1);
+      index = selected.indexOf(id);
+    }
+
+    this.setState({ selected: selected });
+  }
+
+  cancelSelected () {
+    this.props.dispatch(cancelPurchaseOrders(this.state.selected));
+  }
+
+  uncancelSelected () {
+    this.props.dispatch(uncancelPurchaseOrders(this.state.selected));
+  }
+
+  setDeliveryDate (value) {
+    this.setState({ deliveryDate: value });
+  }
+
+  changeDeliveryDateSelected () {
+    this.props.dispatch(updatePurchaseOrders(this.state.selected, { delivery_date: this.state.deliveryDate }));
   }
 }
