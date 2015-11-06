@@ -50,7 +50,9 @@ export default class PurchaseOrderTableHeader extends React.Component {
         </tr>
 
         <tr ref="row">
-          <th>&nbsp;</th>
+          <th><input type="checkbox"
+                     style={{ display: 'block', margin: '7px auto 0' }}
+                     onClick={this.props.onSelectAll} /></th>
           <th style={{ borderLeft: '2px solid #ddd' }}>PO #</th>
 
           <th style={{ borderLeft: '2px solid #ddd' }}>PID</th>

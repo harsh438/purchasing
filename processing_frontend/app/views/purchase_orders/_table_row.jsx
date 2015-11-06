@@ -8,6 +8,7 @@ export default class PurchaseOrderRow extends React.Component {
           <input type="checkbox"
                  name="selected"
                  ref="selected"
+                 checked={this.props.checked}
                  onChange={this.props.onChange.bind(this)}
                  value={this.props.purchaseOrder.id}
                  style={{ margin: '7px auto 0', display: 'block' }} />

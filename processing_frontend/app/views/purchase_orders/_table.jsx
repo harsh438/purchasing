@@ -7,7 +7,7 @@ import { cancelPurchaseOrders,
          uncancelPurchaseOrders,
          updatePurchaseOrders } from '../../actions/purchase_orders';
 
-import { sum, map, intersection } from 'lodash';
+import { sum, map, intersection, pluck, contains } from 'lodash';
 
 export default class PurchaseOrdersTable extends React.Component {
   componentWillMount () {
@@ -18,8 +18,9 @@ export default class PurchaseOrdersTable extends React.Component {
 
   shouldComponentUpdate (nextProps, nextState) {
     return this.props.purchaseOrders !== nextProps.purchaseOrders ||
-      this.state.sticky !== nextState.sticky ||
-      this.props.summary !== nextProps.summary;
+           this.state.sticky !== nextState.sticky ||
+           this.props.summary !== nextProps.summary ||
+           this.state.selected !== nextState.selected;
   }
 
   componentWillReceiveProps (nextProps, nextState) {
@@ -47,7 +48,8 @@ export default class PurchaseOrdersTable extends React.Component {
                                     summary={this.props.summary}
                                     totalPages={this.props.totalPages}
                                     totalCount={this.props.totalCount}
-                                    width={this.tableWidth()} />
+                                    width={this.tableWidth()}
+                                    onSelectAll={this.handleSelectAll.bind(this)} />
 
           <tbody>{this.renderRows()}</tbody>
         </table>
@@ -91,8 +93,9 @@ export default class PurchaseOrdersTable extends React.Component {
 
       return (
         <PurchaseOrderRow alt={alt}
-                          onChange={this.handleRowChange.bind(this)}
+                          checked={contains(this.state.selected, purchaseOrder.orderId)}
                           key={purchaseOrder.orderId}
+                          onChange={this.handleRowChange.bind(this)}
                           purchaseOrder={purchaseOrder} />
       );
     });
@@ -146,6 +149,16 @@ export default class PurchaseOrdersTable extends React.Component {
     } else {
       this.unSelectRow(target.value);
     }
+  }
+
+  handleSelectAll ({ target }) {
+    let orderIds = [];
+
+    if (target.checked) {
+      orderIds = pluck(this.props.purchaseOrders, 'orderId');
+    }
+
+    this.setState({ selected: orderIds });
   }
 
   selectRow (id) {
