@@ -90,7 +90,7 @@ class PurchaseOrdersIndex extends React.Component {
   loadPurchaseOrdersIfQuery () {
     let query = this.props.location.query;
 
-    if (!isObjectEmpty(query)) {
+    if (!isEmptyObject(query)) {
       this.loadPurchaseOrders(query);
       this.loadSummary(query);
     }
