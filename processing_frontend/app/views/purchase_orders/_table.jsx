@@ -1,4 +1,5 @@
 import React from 'react';
+import PurchaseOrdersTableActions from './_table_actions';
 import PurchaseOrderTableHeader from './_table_header';
 import PurchaseOrderRow from './_table_row';
 import { sum, map } from 'lodash';
@@ -21,6 +22,8 @@ export default class PurchaseOrdersTable extends React.Component {
   render () {
     return (
       <div className={this.className()} style={{ paddingTop: this.paddingTop() }}>
+        <PurchaseOrdersTableActions index={this.props.index} />
+
         <table className="table" style={{ width: this.tableWidth() }}>
           <colgroup>{this.renderCols()}</colgroup>
 

@@ -53,7 +53,6 @@ class PurchaseOrdersIndex extends React.Component {
                             categories={this.props.categories}
                             genders={this.props.genders}
                             history={this.props.history}
-                            index={this}
                             loadPurchaseOrders={this.loadPurchaseOrders.bind(this)}
                             orderTypes={this.props.orderTypes}
                             seasons={this.props.seasons}
