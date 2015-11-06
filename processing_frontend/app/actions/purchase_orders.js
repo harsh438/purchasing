@@ -1,5 +1,5 @@
 import Qs from 'qs';
-import { assign, omit, isEmpty, compose, isNumber } from 'lodash';
+import { assign, omit, isEmpty, isNumber, mapKeys, snakeCase, rearg } from 'lodash';
 
 const defaultParams = { sort_by: 'drop_date_asc' };
 
@@ -9,22 +9,12 @@ function removeEmptyKeys(object) {
 
 function fetchPurchaseOrders(params, page, action) {
   return dispatch => {
-    const translatedParams = { vendor_id: params.brand,
-                               category_id: params.category,
-                               summary_id: params.poNumber,
-                               product_id: params.pid,
-                               product_sku: params.sku,
-                               status: params.status,
-                               date_from: params.dateFrom,
-                               date_until: params.dateUntil,
-                               gender: params.gender,
-                               order_type: params.orderType,
-                               supplier: params.supplier,
-                               operator: params.operator,
-                               season: params.season,
-                               sort_by: params.sortBy,
-                               page: page };
-
+    const snakeCasedParams = mapKeys(params, rearg(snakeCase, [1, 0]));
+    const translatedParams = assign({}, snakeCasedParams, { vendor_id: params.brand,
+                                                            summary_id: params.poNumber,
+                                                            category_id: params.category,
+                                                            product_id: params.pid,
+                                                            product_sku: params.sku });
     const query = removeEmptyKeys(assign({}, defaultParams, translatedParams));
     const queryString = Qs.stringify(query, { arrayFormat: 'brackets' });
 

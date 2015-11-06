@@ -1,5 +1,6 @@
-import humps from 'humps';
-import { assign, map, reduce, findIndex } from 'lodash';
+import { assign, map, reduce, findIndex, camelCase, mapKeys, rearg } from 'lodash';
+
+const camelizeKeys = obj => mapKeys(obj, rearg(camelCase, [1, 0]));
 
 const initialState =  { exportable: {},
                         page: 1,
@@ -15,12 +16,12 @@ function transformPurchaseOrder(action) {
       purchaseOrder.drop_number = action.dropNumbers[purchaseOrder.order_id];
     }
 
-    return humps.camelizeKeys(purchaseOrder);
+    return camelizeKeys(purchaseOrder);
   };
 }
 
 function transformSummary(summary) {
-  return humps.camelizeKeys(summary);
+  return camelizeKeys(summary);
 }
 
 function setPurchaseOrders(state, action, purchaseOrders) {
