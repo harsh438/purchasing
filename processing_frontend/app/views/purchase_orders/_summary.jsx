@@ -1,5 +1,5 @@
 import React from 'react';
-import { isEmptyObject } from '../../utilities/empty'
+import { isEmptyObject } from '../../utilities/inspection';
 
 export default class PurchaseOrdersSummary extends React.Component {
   render () {

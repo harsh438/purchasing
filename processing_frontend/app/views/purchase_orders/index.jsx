@@ -16,7 +16,8 @@ import PurchaseOrdersForm from './_form';
 import PurchaseOrdersTable from './_table';
 
 import deepEqual from 'deep-equal';
-import { isEmpty, assign, map, intersection } from 'lodash';
+import { assign, map, intersection } from 'lodash';
+import { isEmptyObject } from '../../utilities/inspection';
 
 class PurchaseOrdersIndex extends React.Component {
   componentWillMount () {
@@ -32,13 +33,12 @@ class PurchaseOrdersIndex extends React.Component {
   componentWillReceiveProps(nextProps) {
     const nextQuery = nextProps.location.query;
 
-    if (this.isObjectEmpty(nextQuery)) {
+    if (isObjectEmpty(nextQuery)) {
       this.clearPurchaseOrders();
     } else if (!deepEqual(this.props.location.query, nextQuery)) {
       this.loadPurchaseOrders(nextQuery);
       this.loadSummary(nextQuery);
     }
-
   }
 
   render () {
@@ -89,7 +89,7 @@ class PurchaseOrdersIndex extends React.Component {
   loadPurchaseOrdersIfQuery () {
     let query = this.props.location.query;
 
-    if (!this.isObjectEmpty(query)) {
+    if (!isObjectEmpty(query)) {
       this.loadPurchaseOrders(query);
       this.loadSummary(query);
     }
@@ -105,16 +105,6 @@ class PurchaseOrdersIndex extends React.Component {
 
   nextPage () {
     return parseInt(this.props.page, 10) + 1;
-  }
-
-  isObjectEmpty (obj) {
-    for (let prop in obj) {
-      if (!isEmpty(obj[prop])) {
-        return false;
-      }
-    }
-
-    return true;
   }
 }
 
