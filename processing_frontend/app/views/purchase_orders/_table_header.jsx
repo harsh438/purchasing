@@ -15,13 +15,13 @@ export default class PurchaseOrderTableHeader extends React.Component {
           </th>
 
           <th colSpan="4" className="text-right" style={{ verticalAlign: 'bottom' }}>
-            {this.renderExportButton()}
+
           </th>
         </tr>
 
         <tr>
           <th colSpan="2">
-            {this.props.totalCount} results
+
           </th>
 
           <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>
@@ -85,25 +85,6 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th>Gender</th>
         </tr>
       </thead>
-    );
-  }
-
-  renderExportButton () {
-    if (!this.props.exportable) return;
-
-    let additionalParams = {}
-    if (this.props.exportable.massive) {
-      additionalParams = { disabled: 'disabled',
-                           title: 'Result set too big to export' }
-    }
-
-    return (
-      <a href={this.props.exportable.url}
-         className="btn btn-default btn-sm pull-right"
-         target="_blank"
-         {...additionalParams}>
-        export as .csv
-      </a>
     );
   }
 

@@ -39,11 +39,35 @@ export default class PurchaseOrdersTableActions extends React.Component {
               </button>
             </div>
 
-            <div className="col-md-4">
+            <div className="col-md-2" style={{ marginTop: '0.5em' }}>
+              {this.props.totalCount} results
+            </div>
+
+            <div className="col-md-2">
+              {this.renderExportButton()}
             </div>
           </div>
         </div>
       </div>
+    );
+  }
+
+  renderExportButton () {
+    if (!this.props.exportable) return;
+
+    let additionalParams = {}
+    if (this.props.exportable.massive) {
+      additionalParams = { disabled: 'disabled',
+                           title: 'Result set too big to export' }
+    }
+
+    return (
+      <a href={this.props.exportable.url}
+         className="btn btn-default btn-sm pull-right"
+         target="_blank"
+         {...additionalParams}>
+        export as .csv
+      </a>
     );
   }
 

@@ -37,20 +37,19 @@ export default class PurchaseOrdersTable extends React.Component {
   render () {
     return (
       <div className={this.className()} style={{ paddingTop: this.paddingTop() }}>
-        <PurchaseOrdersTableActions table={this} />
+        <PurchaseOrdersTableActions table={this}
+                                    exportable={this.props.exportable}
+                                    totalCount={this.props.totalCount} />
 
         <table className="table" style={{ width: this.tableWidth() }}>
           <colgroup>{this.renderCols()}</colgroup>
 
           <PurchaseOrderTableHeader cellWidths={this.cellWidths()}
-                                    exportable={this.props.exportable}
                                     ref={(header) => this.header = header}
                                     summary={this.props.summary}
                                     totalPages={this.props.totalPages}
-                                    totalCount={this.props.totalCount}
                                     width={this.tableWidth()}
                                     onSelectAll={this.handleSelectAll.bind(this)} />
-
           <tbody>{this.renderRows()}</tbody>
         </table>
         {this.renderEmpty()}
