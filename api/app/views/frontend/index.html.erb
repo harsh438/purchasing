@@ -5,8 +5,15 @@
     <link rel="stylesheet" href="/assets/app.css" />
     <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico" />
   </head>
-  <body data-env="<%= Rails.env %>">
+  <body>
     <div id="app"></div>
+
+    <script>
+      ENV = { RAILS_ENV: "<%= Rails.env %>",
+              STOCKBUG_PATH: "<%= ENV['STOCKBUG_PATH'] %>",
+              QUANTITY_EDIT_PATH: "<%= ENV['QUANTITY_EDIT_PATH'] %>" }
+    </script>
+
     <script src="/assets/app.js"></script>
   </body>
 </html>
