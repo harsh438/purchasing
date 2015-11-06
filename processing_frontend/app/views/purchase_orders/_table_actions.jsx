@@ -40,7 +40,7 @@ export default class PurchaseOrdersTableActions extends React.Component {
             </div>
 
             <div className="col-md-2" style={{ marginTop: '0.5em' }}>
-              {this.props.totalCount} results
+              {this.renderCountMessage()}
             </div>
 
             <div className="col-md-2">
@@ -50,6 +50,13 @@ export default class PurchaseOrdersTableActions extends React.Component {
         </div>
       </div>
     );
+  }
+
+  renderCountMessage() {
+    if (this.props.currentCount < this.props.totalCount) {
+      return (<span>Showing {this.props.currentCount} of {this.props.totalCount} results</span>);
+    }
+    return (<span>Showing all of {this.props.totalCount} results</span>);
   }
 
   renderExportButton () {
