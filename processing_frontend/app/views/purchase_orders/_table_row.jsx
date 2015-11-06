@@ -17,7 +17,9 @@ export default class PurchaseOrderRow extends React.Component {
         </td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
-          {this.props.purchaseOrder.productId}
+          <a href={this.stockBugUrl()} target="_blank">
+            {this.props.purchaseOrder.productId}
+          </a>
         </td>
         <td>{this.props.purchaseOrder.productName}</td>
         <td>{this.props.purchaseOrder.productSku}</td>
@@ -47,7 +49,7 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.cancelledValue}</td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
-          <a href={this.changeBalanceQuantityUrl()}>
+          <a href={this.changeBalanceQuantityUrl()} target="_blank">
             {this.props.purchaseOrder.balanceQuantity}
           </a>
         </td>
@@ -80,5 +82,10 @@ export default class PurchaseOrderRow extends React.Component {
     return ENV['QUANTITY_EDIT_PATH']
       .replace(':pid', this.props.purchaseOrder.productId)
       .replace(':date', this.props.purchaseOrder.deliveryDate);
+  }
+
+  stockBugUrl () {
+    return ENV['STOCKBUG_PATH']
+      .replace(':pid', this.props.purchaseOrder.productId);
   }
 }

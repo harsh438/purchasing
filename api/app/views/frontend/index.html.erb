@@ -10,8 +10,8 @@
 
     <script>
       ENV = { RAILS_ENV: "<%= Rails.env %>",
-              STOCKBUG_PATH: "<%= ENV['STOCKBUG_PATH'] %>",
-              QUANTITY_EDIT_PATH: "<%= ENV['QUANTITY_EDIT_PATH'] %>" }
+              STOCKBUG_PATH: "<%= ENV['STOCKBUG_PATH'].html_safe %>",
+              QUANTITY_EDIT_PATH: "<%= ENV['QUANTITY_EDIT_PATH'].html_safe %>" }
     </script>
 
     <script src="/assets/app.js"></script>
