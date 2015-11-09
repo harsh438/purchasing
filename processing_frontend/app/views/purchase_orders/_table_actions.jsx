@@ -7,54 +7,56 @@ export default class PurchaseOrdersTableActions extends React.Component {
     }
 
     return (
-      <div className="panel panel-default">
-        <div className="panel-body">
-          <div className="row">
-            <div className="col-md-2">
-              {this.renderCountMessage()}
-            </div>
+      <div className="form-container">
+        <div className="panel panel-default">
+          <div className="panel-body">
+            <div className="row">
+              <div className="col-md-2">
+                {this.renderCountMessage()}
+              </div>
 
-            <div className="col-md-3">
-              <div className="input-group"
-                   style={{ maxWidth: '300px' }}>
-                <input type="date"
-                       name="deliveryDate"
-                       className="form-control input-sm"
-                       disabled={!this.props.hasSelected}
-                       onChange={this.handleDeliveryDateChange.bind(this)} />
+              <div className="col-md-3">
+                <div className="input-group"
+                     style={{ maxWidth: '300px' }}>
+                  <input type="date"
+                         name="deliveryDate"
+                         className="form-control input-sm"
+                         disabled={!this.props.hasSelected}
+                         onChange={this.handleDeliveryDateChange.bind(this)} />
 
-                <span className="input-group-btn">
+                  <span className="input-group-btn">
+                    <button className="btn btn-warning btn-sm"
+                            disabled={!this.props.hasSelected}
+                            onClick={this.handleDeliveryDateSubmit.bind(this)}>
+                      Change Delivery Date
+                    </button>
+                  </span>
+                </div>
+              </div>
+
+              <div className="col-md-4">
+                <div className="btn-group btn-group-sm">
+                  <button className="btn btn-danger btn-sm"
+                          disabled={!this.props.hasSelected}
+                          onClick={this.handleCancelSubmit.bind(this)}>
+                    Cancel Selected
+                  </button>
+
                   <button className="btn btn-warning btn-sm"
                           disabled={!this.props.hasSelected}
-                          onClick={this.handleDeliveryDateSubmit.bind(this)}>
-                    Change Delivery Date
+                          onClick={this.handleUncancelSubmit.bind(this)}>
+                    Uncancel Selected
                   </button>
-                </span>
+                </div>
               </div>
-            </div>
 
-            <div className="col-md-4">
-              <div className="btn-group btn-group-sm">
-                <button className="btn btn-danger btn-sm"
-                        disabled={!this.props.hasSelected}
-                        onClick={this.handleCancelSubmit.bind(this)}>
-                  Cancel Selected
-                </button>
-
-                <button className="btn btn-warning btn-sm"
-                        disabled={!this.props.hasSelected}
-                        onClick={this.handleUncancelSubmit.bind(this)}>
-                  Uncancel Selected
-                </button>
+              <div className="col-md-2">
+                {this.renderCancelPOButton()}
               </div>
-            </div>
 
-            <div className="col-md-2">
-              {this.renderCancelPOButton()}
-            </div>
-
-            <div className="col-md-1">
-              {this.renderExportButton()}
+              <div className="col-md-1">
+                {this.renderExportButton()}
+              </div>
             </div>
           </div>
         </div>

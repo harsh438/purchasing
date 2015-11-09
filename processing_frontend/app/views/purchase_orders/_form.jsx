@@ -15,7 +15,7 @@ export default class PurchaseOrdersForm extends React.Component {
 
   render () {
     return (
-      <div className="form-container">
+      <div className="form-container filters">
         <div className="panel panel-default">
           <div className="panel-heading">
             <h3 className="panel-title">Search Purchase Orders</h3>
