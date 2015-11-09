@@ -39,11 +39,11 @@ export default class PurchaseOrdersTableActions extends React.Component {
               </button>
             </div>
 
-            <div className="col-md-2" style={{ marginTop: '0.5em' }}>
+            <div className="col-md-3" style={{ marginTop: '0.5em' }}>
               {this.renderCountMessage()}
             </div>
 
-            <div className="col-md-2">
+            <div className="col-md-1">
               {this.renderExportButton()}
             </div>
           </div>
