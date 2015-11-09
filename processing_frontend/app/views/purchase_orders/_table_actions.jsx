@@ -10,6 +10,10 @@ export default class PurchaseOrdersTableActions extends React.Component {
       <div className="panel panel-default">
         <div className="panel-body">
           <div className="row">
+            <div className="col-md-2">
+              {this.renderCountMessage()}
+            </div>
+
             <div className="col-md-3">
               <div className="input-group"
                    style={{ maxWidth: '300px' }}>
@@ -45,13 +49,11 @@ export default class PurchaseOrdersTableActions extends React.Component {
               </div>
             </div>
 
-            {this.renderCancelPOButton()}
-
             <div className="col-md-2">
+              {this.renderCancelPOButton()}
             </div>
 
-            <div className="col-md-2" style={{ marginTop: '0.3em' }}>
-              {this.renderCountMessage()}
+            <div className="col-md-2">
             </div>
 
             <div className="col-md-1">
@@ -64,10 +66,21 @@ export default class PurchaseOrdersTableActions extends React.Component {
   }
 
   renderCountMessage() {
-    if (this.props.currentCount < this.props.totalCount) {
-      return (<span>Showing {this.props.currentCount.toLocaleString()} of {this.props.totalCount.toLocaleString()} results</span>);
+    const { currentCount, totalCount } = this.props;
+
+    if (currentCount < totalCount) {
+      return (
+        <div style={{ lineHeight: '2em' }}>
+          Showing {currentCount.toLocaleString()} of {totalCount.toLocaleString()} results
+        </div>
+      );
+    } else {
+      return (
+        <div style={{ lineHeight: '2em' }}>
+          Showing all of {totalCount.toLocaleString()} results
+        </div>
+      );
     }
-    return (<span>Showing all of {this.props.totalCount.toLocaleString()} results</span>);
   }
 
   renderCancelPOButton() {
@@ -76,13 +89,11 @@ export default class PurchaseOrdersTableActions extends React.Component {
     }
 
     return (
-      <div className="col-md-2">
-        <button className="btn btn-danger btn-sm"
-                style={{ width: '100%' }}
-                onClick={this.handleCancelPOSubmit.bind(this)}>
-          Cancel PO #{this.props.poNumber}
-        </button>
-      </div>
+      <button className="btn btn-danger btn-sm"
+              style={{ width: '100%' }}
+              onClick={this.handleCancelPOSubmit.bind(this)}>
+        Cancel PO #{this.props.poNumber}
+      </button>
     );
   }
 
