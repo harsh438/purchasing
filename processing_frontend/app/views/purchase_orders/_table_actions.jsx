@@ -53,9 +53,6 @@ export default class PurchaseOrdersTableActions extends React.Component {
               {this.renderCancelPOButton()}
             </div>
 
-            <div className="col-md-2">
-            </div>
-
             <div className="col-md-1">
               {this.renderExportButton()}
             </div>
