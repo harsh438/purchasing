@@ -190,8 +190,8 @@ export default class PurchaseOrdersTable extends React.Component {
     this.props.dispatch(uncancelPurchaseOrders(this.state.selected));
   }
 
-  updateQtyCost(id, qty, cost) {
-    this.props.dispatch(updatePurchaseOrders([id], { quantity: qty }));
+  updateField(id, key, value) {
+    this.props.dispatch(updatePurchaseOrders([id], { [key]: value }));
   }
 
   setDeliveryDate (value) {
