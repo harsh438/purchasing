@@ -49,7 +49,7 @@ export default class AbstractEditRow extends React.Component {
   }
 
   renderInput() {
-    return (<span></span>);
+    return (<span />);
   }
 
   handleChange (field, { target }) {
