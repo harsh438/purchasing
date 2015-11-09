@@ -1,5 +1,5 @@
 import React from 'react';
-import PurchaseOrdersSummary from './_summary';
+import PurchaseOrdersSummaryLink from './_summary';
 
 export default class PurchaseOrderTableHeader extends React.Component {
   componentDidMount () {
@@ -10,12 +10,6 @@ export default class PurchaseOrderTableHeader extends React.Component {
     return (
       <thead ref="thead" style={{ width: this.props.width }}>
         <tr>
-          <th colSpan="25">
-            <PurchaseOrdersSummary summary={this.props.summary} />
-          </th>
-        </tr>
-
-        <tr>
           <th colSpan="2">&nbsp;</th>
 
           <th colSpan="8" style={{ borderLeft: '2px solid #ddd' }}>
@@ -23,19 +17,27 @@ export default class PurchaseOrderTableHeader extends React.Component {
           </th>
 
           <th colSpan="4" style={{ borderLeft: '2px solid #ddd' }}>
-            Ordered
+            <PurchaseOrdersSummaryLink summary={this.props.summary}>
+              Ordered
+            </PurchaseOrdersSummaryLink>
           </th>
 
           <th colSpan="5" style={{ borderLeft: '2px solid #ddd' }}>
-            Delivered
+            <PurchaseOrdersSummaryLink summary={this.props.summary}>
+              Delivered
+            </PurchaseOrdersSummaryLink>
           </th>
 
           <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>
-            Cancelled
+            <PurchaseOrdersSummaryLink summary={this.props.summary}>
+              Cancelled
+            </PurchaseOrdersSummaryLink>
           </th>
 
           <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>
-            Balance
+            <PurchaseOrdersSummaryLink summary={this.props.summary}>
+              Balance
+            </PurchaseOrdersSummaryLink>
           </th>
         </tr>
 
