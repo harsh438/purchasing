@@ -46,7 +46,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th style={{ borderLeft: '2px solid #ddd' }}>PID</th>
           <th className="x-wide">Product</th>
           <th className="wideish">SKU</th>
-          <th>Unit Price</th>
+          <th title="Unit Price">Price</th>
           <th>RRP</th>
           <th className="narrowish">Size</th>
           <th title="Brand Size">Br. Size</th>
