@@ -1,5 +1,6 @@
 import Qs from 'qs';
 import { assign, omit, isEmpty, isNumber, mapKeys, snakeCase, rearg } from 'lodash';
+import 'whatwg-fetch';
 
 const defaultParams = { sort_by: 'drop_date_asc' };
 

@@ -1,3 +1,5 @@
+import 'whatwg-fetch';
+
 function loadFilters(type, action) {
   return dispatch => {
     fetch(`/api/${type}.json`, { credentials: 'same-origin' })
