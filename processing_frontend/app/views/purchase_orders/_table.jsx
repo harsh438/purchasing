@@ -36,6 +36,10 @@ export default class PurchaseOrdersTable extends React.Component {
   }
 
   render () {
+    if (this.props.purchaseOrders.length === 0) {
+      return this.renderEmpty();
+    }
+
     return (
       <div className={this.className()} style={{ paddingTop: this.paddingTop() }}>
         <PurchaseOrdersTableActions currentCount={this.props.purchaseOrders.length}
@@ -52,7 +56,6 @@ export default class PurchaseOrdersTable extends React.Component {
                                     onSelectAll={this.handleSelectAll.bind(this)} />
           <tbody>{this.renderRows()}</tbody>
         </table>
-        {this.renderEmpty()}
       </div>
     );
   }
