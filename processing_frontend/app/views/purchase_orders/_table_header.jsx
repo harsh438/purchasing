@@ -24,7 +24,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
 
           </th>
 
-          <th colSpan="6" style={{ borderLeft: '2px solid #ddd' }}>
+          <th colSpan="8" style={{ borderLeft: '2px solid #ddd' }}>
             Product
           </th>
 
@@ -43,10 +43,6 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>
             Balance
           </th>
-
-          <th colSpan="3" style={{ borderLeft: '2px solid #ddd' }}>
-            &nbsp;
-          </th>
         </tr>
 
         <tr ref="row">
@@ -61,6 +57,8 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th>Unit Price</th>
           <th>RRP</th>
           <th>Size</th>
+          <th>Brand Size</th>
+          <th>Gender</th>
 
           <th style={{ borderLeft: '2px solid #ddd' }}>Type</th>
           <th>Qty</th>
@@ -80,9 +78,6 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th style={{ borderLeft: '2px solid #ddd' }}>Qty</th>
           <th>Cost</th>
           <th>Val</th>
-
-          <th style={{ borderLeft: '2px solid #ddd' }}>Brand Size</th>
-          <th>Gender</th>
         </tr>
       </thead>
     );

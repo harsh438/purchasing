@@ -37,6 +37,8 @@ export default class PurchaseOrderRow extends React.Component {
 
         <td>{this.props.purchaseOrder.productRrp}</td>
         <td>{this.props.purchaseOrder.productSize}</td>
+        <td>{this.props.purchaseOrder.brandSize}</td>
+        <td>{this.props.purchaseOrder.gender}</td>
 
         <td style={{ borderLeft: '2px solid #ddd' }}>
           {this.props.purchaseOrder.orderType}
@@ -72,11 +74,6 @@ export default class PurchaseOrderRow extends React.Component {
         </td>
         <td>{this.props.purchaseOrder.balanceCost}</td>
         <td>{this.props.purchaseOrder.balanceValue}</td>
-
-        <td style={{ borderLeft: '2px solid #ddd' }}>
-          {this.props.purchaseOrder.brandSize}
-        </td>
-        <td>{this.props.purchaseOrder.gender}</td>
       </tr>
     );
   }
