@@ -93,11 +93,11 @@ export default class PurchaseOrdersTable extends React.Component {
 
       return (
         <PurchaseOrderRow alt={alt}
-                          table={this}
                           checked={contains(this.state.selected, purchaseOrder.orderId)}
                           key={purchaseOrder.orderId}
                           onChange={this.handleRowChange.bind(this)}
-                          purchaseOrder={purchaseOrder} />
+                          purchaseOrder={purchaseOrder}
+                          table={this} />
       );
     });
   }
