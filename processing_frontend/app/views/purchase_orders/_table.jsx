@@ -39,6 +39,7 @@ export default class PurchaseOrdersTable extends React.Component {
       <div className={this.className()} style={{ paddingTop: this.paddingTop() }}>
         <PurchaseOrdersTableActions table={this}
                                     exportable={this.props.exportable}
+                                    hasSelected={this.state.selected.length > 0}
                                     currentCount={this.props.purchaseOrders.length}
                                     totalCount={this.props.totalCount} />
 

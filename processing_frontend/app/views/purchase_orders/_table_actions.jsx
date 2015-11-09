@@ -16,10 +16,12 @@ export default class PurchaseOrdersTableActions extends React.Component {
                 <input type="date"
                        name="deliveryDate"
                        className="form-control"
+                       disabled={!this.props.hasSelected}
                        onChange={this.handleDeliveryDateChange.bind(this)} />
 
                 <span className="input-group-btn">
                   <button className="btn btn-warning"
+                          disabled={!this.props.hasSelected}
                           onClick={this.handleDeliveryDateSubmit.bind(this)}>
                     Change Delivery Date
                   </button>
@@ -30,6 +32,7 @@ export default class PurchaseOrdersTableActions extends React.Component {
             <div className="col-md-2">
               <button className="btn btn-danger"
                       style={{ width: '100%' }}
+                      disabled={!this.props.hasSelected}
                       onClick={this.handleCancelSubmit.bind(this)}>
                 Cancel Selected
               </button>
@@ -38,6 +41,7 @@ export default class PurchaseOrdersTableActions extends React.Component {
             <div className="col-md-2">
               <button className="btn btn-warning"
                       style={{ width: '100%' }}
+                      disabled={!this.props.hasSelected}
                       onClick={this.handleUncancelSubmit.bind(this)}>
                 Un-cancel Selected
               </button>
