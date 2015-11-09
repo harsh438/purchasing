@@ -76,7 +76,7 @@ export default class PurchaseOrderSummaryLink extends React.Component {
     return (
       <Popover id="purchase-order-summary-popover"
                title="Results Summary"
-               style={{ maxWidth: '550px' }}>
+               style={{ maxWidth: '600px' }}>
         <PurchaseOrdersSummary summary={this.props.summary} />
       </Popover>
     );
