@@ -7,7 +7,7 @@ class PurchaseOrdersSummary extends React.Component {
     let summary = this.props.summary;
 
     return (
-    <div className="purchase_orders_summary">
+      <div className="purchase_orders_summary">
         <table className="purchase_orders_summary__table table">
           <thead>
             <tr>
@@ -69,7 +69,7 @@ export default class PurchaseOrderSummaryLink extends React.Component {
                       trigger="click">
         <a style={{ cursor: 'pointer' }}>{this.props.children}</a>
       </OverlayTrigger>
-    )
+    );
   }
 
   renderSummary () {
