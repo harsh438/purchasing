@@ -56,7 +56,8 @@ class PurchaseOrdersIndex extends React.Component {
                              purchaseOrders={this.props.purchaseOrders}
                              summary={this.props.summary}
                              totalPages={this.props.totalPages}
-                             totalCount={this.props.totalCount} />
+                             totalCount={this.props.totalCount}
+                             query={this.props.location.query} />
 
         {this.renderLoadMoreButton()}
       </div>

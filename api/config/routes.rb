@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       post 'cancel', to: 'purchase_orders#cancel', as: :cancel_purchase_order
       post 'uncancel', to: 'purchase_orders#uncancel', as: :uncancel_purchase_order
       post 'update', to: 'purchase_orders#update', as: :purchase_order
-      post ':id/cancel/order', to: 'purchase_orders#cancel_order', as: :cancel_order_purchase_order
+      post ':po_number/cancel/order', to: 'purchase_orders#cancel_order', as: :cancel_order_purchase_order
     end
   end
 

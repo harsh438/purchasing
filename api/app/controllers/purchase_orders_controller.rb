@@ -25,8 +25,10 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def cancel_order
-    ids = PurchaseOrder.find(params[:id]).try(:cancel_order)
-    render json: { ids: ids }
+    orders = PurchaseOrder.where('LENGTH(po_number) > 0').where(po_number: params[:po_number])
+    orders.each(&:cancel)
+
+    render json: orders
   end
 
   def uncancel

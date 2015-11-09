@@ -292,12 +292,6 @@ class PurchaseOrder < ActiveRecord::Base
     self
   end
 
-  def cancel_order
-    items = PurchaseOrder.with_summary.where(po_number: po_number)
-    items.each(&:cancel)
-    items.map(&:id)
-  end
-
   private
 
   def monetize(figure)

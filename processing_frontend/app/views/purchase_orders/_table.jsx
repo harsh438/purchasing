@@ -37,10 +37,11 @@ export default class PurchaseOrdersTable extends React.Component {
   render () {
     return (
       <div className={this.className()} style={{ paddingTop: this.paddingTop() }}>
-        <PurchaseOrdersTableActions table={this}
+        <PurchaseOrdersTableActions currentCount={this.props.purchaseOrders.length}
                                     exportable={this.props.exportable}
                                     hasSelected={this.state.selected.length > 0}
-                                    currentCount={this.props.purchaseOrders.length}
+                                    poNumber={this.props.query.poNumber}
+                                    table={this}
                                     totalCount={this.props.totalCount} />
 
         <table className="table" style={{ width: this.tableWidth() }}>
@@ -50,8 +51,8 @@ export default class PurchaseOrdersTable extends React.Component {
                                     ref={(header) => this.header = header}
                                     summary={this.props.summary}
                                     totalPages={this.props.totalPages}
-                                    width={this.tableWidth()}
-                                    onSelectAll={this.handleSelectAll.bind(this)} />
+                                    onSelectAll={this.handleSelectAll.bind(this)}
+                                    width={this.tableWidth()} />
           <tbody>{this.renderRows()}</tbody>
         </table>
         {this.renderEmpty()}
@@ -184,6 +185,14 @@ export default class PurchaseOrdersTable extends React.Component {
 
   cancelSelected () {
     this.props.dispatch(cancelPurchaseOrders(this.state.selected));
+  }
+
+  cancelPO () {
+    if (!this.props.query.poNumber) {
+      return;
+    }
+
+    this.props.dispatch(cancelEntirePurchaseOrder(this.props.query.poNumber));
   }
 
   uncancelSelected () {
