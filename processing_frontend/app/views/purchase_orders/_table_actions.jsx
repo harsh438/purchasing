@@ -58,9 +58,9 @@ export default class PurchaseOrdersTableActions extends React.Component {
     }
 
     if (this.props.currentCount < this.props.totalCount) {
-      return (<span>Showing {this.props.currentCount} of {this.props.totalCount} results</span>);
+      return (<span>Showing {this.props.currentCount.toLocaleString()} of {this.props.totalCount.toLocaleString()} results</span>);
     }
-    return (<span>Showing all of {this.props.totalCount} results</span>);
+    return (<span>Showing all of {this.props.totalCount.toLocaleString()} results</span>);
   }
 
   renderExportButton () {
