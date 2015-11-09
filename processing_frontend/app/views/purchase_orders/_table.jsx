@@ -46,8 +46,6 @@ export default class PurchaseOrdersTable extends React.Component {
                                     totalCount={this.props.totalCount} />
 
         <table className="table">
-          <colgroup></colgroup>
-
           <PurchaseOrderTableHeader ref={(header) => this.header = header}
                                     summary={this.props.summary}
                                     totalPages={this.props.totalPages}
@@ -88,10 +86,6 @@ export default class PurchaseOrdersTable extends React.Component {
         </div>
       );
     }
-  }
-
-  tableWidth () {
-    return `${sum(this.cellWidths())}px`;
   }
 
   className () {
