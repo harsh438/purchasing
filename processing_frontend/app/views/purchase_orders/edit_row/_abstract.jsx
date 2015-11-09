@@ -8,7 +8,7 @@ export default class AbstractEditRow extends React.Component {
 
   render () {
     return (
-      <td>
+      <td className={this.props.className}>
         <OverlayTrigger id={`edit-${this.props.fieldKey}-${this.props.orderId}-overlay`}
                         trigger="click"
                         ref="overlayTrigger"

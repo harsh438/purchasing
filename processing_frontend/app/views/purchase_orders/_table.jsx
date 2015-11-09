@@ -45,42 +45,18 @@ export default class PurchaseOrdersTable extends React.Component {
                                     table={this}
                                     totalCount={this.props.totalCount} />
 
-        <table className="table" style={{ width: this.tableWidth() }}>
-          <colgroup>{this.renderCols()}</colgroup>
+        <table className="table">
+          <colgroup></colgroup>
 
-          <PurchaseOrderTableHeader cellWidths={this.cellWidths()}
-                                    ref={(header) => this.header = header}
+          <PurchaseOrderTableHeader ref={(header) => this.header = header}
                                     summary={this.props.summary}
                                     totalPages={this.props.totalPages}
-                                    onSelectAll={this.handleSelectAll.bind(this)}
-                                    width={this.tableWidth()} />
+                                    onSelectAll={this.handleSelectAll.bind(this)} />
           <tbody>{this.renderRows()}</tbody>
         </table>
         {this.renderEmpty()}
       </div>
     );
-  }
-
-  cellWidths () {
-    return [30, 48,
-            54, 180, 90, 49, 57, 57, 50, 50,
-            60, 35, 50, 60,
-            70, 35, 35, 50, 50,
-            35, 50, 50,
-            35, 50, 50];
-  }
-
-  renderCols () {
-    const cellWidths = this.cellWidths();
-    let cols = [];
-
-    for (let i = 0; i < cellWidths.length; i++) {
-      cols.push((
-        <col key={i} style={{ width: cellWidths[i] }} />
-      ));
-    }
-
-    return cols;
   }
 
   renderRows () {

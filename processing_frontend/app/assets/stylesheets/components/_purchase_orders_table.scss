@@ -2,7 +2,7 @@
 .purchase_orders_table--sticky {
   .table {
     font-size: .8em;
-    table-layout: fixed;
+    word-break: break-all;
   }
 
   .table > thead > tr > th,
@@ -12,6 +12,31 @@
   .table > tbody > tr > td,
   .table > tfoot > tr > td {
     padding: 5px;
+  }
+
+  .scaled th,
+  .scaled td {
+    width: 4%;
+
+    &.x-wide {
+      width: 8%;
+    }
+
+    &.wide {
+      width: 6%;
+    }
+
+    &.wideish {
+      width: 5%;
+    }
+
+    &.narrowish {
+      width: 3%;
+    }
+
+    &.narrow {
+      width: 2%;
+    }
   }
 }
 
