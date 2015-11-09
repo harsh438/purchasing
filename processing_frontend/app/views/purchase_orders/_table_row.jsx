@@ -1,6 +1,6 @@
 import React from 'react';
-import QuantityRowEdit from './_quantity_row_edit';
-import UnitPriceRowEdit from './_unit_price_row_edit';
+import EditRowQuantity from './edit_row/_quantity';
+import EditRowCost from './edit_row/_cost';
 
 export default class PurchaseOrderRow extends React.Component {
   render () {
@@ -27,13 +27,13 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.productName}</td>
         <td>{this.props.purchaseOrder.productSku}</td>
 
-        <UnitPriceRowEdit id={this.props.purchaseOrder.id}
-                          table={this.props.table}
-                          orderId={this.props.purchaseOrder.orderId}
-                          fieldKey="cost"
-                          labelValue="Unit Price"
-                          value={this.props.purchaseOrder.productCost.replace(/[^\d.-]/g, '')}
-                          displayValue={this.props.purchaseOrder.productCost} />
+        <EditRowCost displayValue={this.props.purchaseOrder.productCost}
+                     fieldKey="cost"
+                     labelValue="Unit Price"
+                     id={this.props.purchaseOrder.id}
+                     orderId={this.props.purchaseOrder.orderId}
+                     table={this.props.table}
+                     value={this.props.purchaseOrder.productCost.replace(/[^\d.-]/g, '')} />
 
         <td>{this.props.purchaseOrder.productRrp}</td>
         <td>{this.props.purchaseOrder.productSize}</td>
@@ -44,13 +44,13 @@ export default class PurchaseOrderRow extends React.Component {
           {this.props.purchaseOrder.orderType}
         </td>
 
-        <QuantityRowEdit id={this.props.purchaseOrder.id}
-                         table={this.props.table}
-                         orderId={this.props.purchaseOrder.orderId}
+        <EditRowQuantity displayValue={this.props.purchaseOrder.orderedQuantity}
                          fieldKey="quantity"
+                         id={this.props.purchaseOrder.id}
+                         orderId={this.props.purchaseOrder.orderId}
                          labelValue="Qty"
-                         value={this.props.purchaseOrder.orderedQuantity}
-                         displayValue={this.props.purchaseOrder.orderedQuantity} />
+                         table={this.props.table}
+                         value={this.props.purchaseOrder.orderedQuantity} />
 
         <td>{this.props.purchaseOrder.orderedCost}</td>
         <td>{this.props.purchaseOrder.orderedValue}</td>

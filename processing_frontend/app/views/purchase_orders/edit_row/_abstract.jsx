@@ -1,7 +1,7 @@
 import React from 'react';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 
-export default class VirtualRowEdit extends React.Component {
+export default class AbstractEditRow extends React.Component {
   componentWillMount () {
     this.setState({ value: this.props.value })
   }

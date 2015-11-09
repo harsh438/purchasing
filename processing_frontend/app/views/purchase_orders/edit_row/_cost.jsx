@@ -1,7 +1,7 @@
 import React from 'react';
-import VirtualRowEdit from './_virtual_row_edit';
+import AbstractEditRow from './_abstract';
 
-export default class UnitPriceRowEdit extends VirtualRowEdit {
+export default class EditRowCost extends AbstractEditRow {
   renderInput() {
     return (
       <div className="input-group">

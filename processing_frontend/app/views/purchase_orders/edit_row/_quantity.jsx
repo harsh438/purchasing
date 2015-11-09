@@ -1,7 +1,7 @@
 import React from 'react';
-import VirtualRowEdit from './_virtual_row_edit';
+import AbstractRowEdit from './_abstract';
 
-export default class QuantityRowEdit extends VirtualRowEdit {
+export default class EditRowCost extends AbstractRowEdit {
   renderInput() {
     return (
       <input type="number"
