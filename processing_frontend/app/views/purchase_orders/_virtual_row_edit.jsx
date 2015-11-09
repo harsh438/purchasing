@@ -9,7 +9,7 @@ export default class VirtualRowEdit extends React.Component {
   render () {
     return (
       <td>
-        <OverlayTrigger id={`edit-${this.props.orderId}`}
+        <OverlayTrigger id={`edit-${this.props.orderId}-overlay`}
                         trigger="click"
                         ref="overlayTrigger"
                         rootClose
@@ -23,7 +23,8 @@ export default class VirtualRowEdit extends React.Component {
 
   popOverlay() {
     return (
-      <Popover title={`Editing PO #${this.props.orderId}`}>
+      <Popover id={`edit-${this.props.orderId}-popover`}
+               title={`Editing PO #${this.props.orderId}`}>
         <form className="form-horizontal"
               style={{ marginBottom: '0' }}
               onSubmit={this.handleSubmit.bind(this)}>
