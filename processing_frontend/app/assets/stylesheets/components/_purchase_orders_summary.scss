@@ -3,9 +3,12 @@
 
 .purchase_orders_summary__table {
   font-size: 1.1em;
+  float: right;
+  margin-right: 100px;
+  min-width: 500px;
 
   th, td {
-    padding: 2px 5px;
+    padding: 2px 10px;
   }
 
   td {
