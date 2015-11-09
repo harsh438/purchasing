@@ -1,22 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loadBrands,
-         loadCategories,
+         loadSuppliers,
          loadGenders,
          loadOrderTypes,
-         loadSeasons,
-         loadSuppliers } from '../../actions/filters';
-
-import { loadSummary,
-         loadPurchaseOrders,
+         loadCategories,
+         loadSeasons } from '../../actions/filters';
+import { clearPurchaseOrders,
          loadMorePurchaseOrders,
-         clearPurchaseOrders } from '../../actions/purchase_orders';
-
+         loadPurchaseOrders,
+         loadSummary } from '../../actions/purchase_orders';
 import PurchaseOrdersForm from './_form';
 import PurchaseOrdersTable from './_table';
-
-import deepEqual from 'deep-equal';
-import { assign, map, intersection } from 'lodash';
+import { assign, intersection, isEqual, map } from 'lodash';
 import { isEmptyObject } from '../../utilities/inspection';
 
 class PurchaseOrdersIndex extends React.Component {
@@ -35,7 +31,7 @@ class PurchaseOrdersIndex extends React.Component {
 
     if (isEmptyObject(nextQuery)) {
       this.clearPurchaseOrders();
-    } else if (!deepEqual(this.props.location.query, nextQuery)) {
+    } else if (!isEqual(this.props.location.query, nextQuery)) {
       this.loadPurchaseOrders(nextQuery);
       this.loadSummary(nextQuery);
     }
