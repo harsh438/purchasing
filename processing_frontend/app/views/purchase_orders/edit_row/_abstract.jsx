@@ -3,7 +3,7 @@ import { Popover, OverlayTrigger } from 'react-bootstrap';
 
 export default class AbstractEditRow extends React.Component {
   componentWillMount () {
-    this.setState({ value: this.props.value })
+    this.setState({ value: this.props.value });
   }
 
   render () {
@@ -38,7 +38,9 @@ export default class AbstractEditRow extends React.Component {
                style={{ marginBottom: '0' }}>
             <div className="col-md-12">
               <button className="btn btn-success"
-                      style={{ width: '100%', display: 'block' }}>Save</button>
+                      style={{ width: '100%', display: 'block' }}>
+                Save
+              </button>
             </div>
           </div>
         </form>
@@ -56,7 +58,7 @@ export default class AbstractEditRow extends React.Component {
 
   handleSubmit (e) {
     e.preventDefault();
-    this.props.table.updateField(this.props.id, this.props.fieldKey, this.state.value)
+    this.props.table.updateField(this.props.orderId, this.props.fieldKey, this.state.value);
     this.refs.overlayTrigger.hide();
   }
 }

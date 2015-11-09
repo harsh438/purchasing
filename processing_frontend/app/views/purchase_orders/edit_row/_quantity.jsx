@@ -1,7 +1,7 @@
 import React from 'react';
 import AbstractRowEdit from './_abstract';
 
-export default class EditRowCost extends AbstractRowEdit {
+export default class EditRowQuantity extends AbstractRowEdit {
   renderInput() {
     return (
       <input type="number"
@@ -11,3 +11,6 @@ export default class EditRowCost extends AbstractRowEdit {
     );
   }
 }
+
+EditRowQuantity.defaultProps = { fieldKey: 'quantity',
+                                 labelValue: 'Qty' };

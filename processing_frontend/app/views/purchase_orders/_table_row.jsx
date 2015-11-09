@@ -28,9 +28,6 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.productSku}</td>
 
         <EditRowCost displayValue={this.props.purchaseOrder.productCost}
-                     fieldKey="cost"
-                     labelValue="Unit Price"
-                     id={this.props.purchaseOrder.id}
                      orderId={this.props.purchaseOrder.orderId}
                      table={this.props.table}
                      value={this.props.purchaseOrder.productCost.replace(/[^\d.-]/g, '')} />
@@ -45,10 +42,7 @@ export default class PurchaseOrderRow extends React.Component {
         </td>
 
         <EditRowQuantity displayValue={this.props.purchaseOrder.orderedQuantity}
-                         fieldKey="quantity"
-                         id={this.props.purchaseOrder.id}
                          orderId={this.props.purchaseOrder.orderId}
-                         labelValue="Qty"
                          table={this.props.table}
                          value={this.props.purchaseOrder.orderedQuantity} />
 

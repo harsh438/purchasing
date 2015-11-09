@@ -14,3 +14,6 @@ export default class EditRowCost extends AbstractEditRow {
     );
   }
 }
+
+EditRowCost.defaultProps =  { fieldKey: 'cost',
+                              labelValue: 'Unit Price' };
