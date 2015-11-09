@@ -5,7 +5,8 @@ import PurchaseOrderRow from './_table_row';
 
 import { cancelPurchaseOrders,
          uncancelPurchaseOrders,
-         updatePurchaseOrders } from '../../actions/purchase_orders';
+         updatePurchaseOrders,
+         cancelEntirePurchaseOrder } from '../../actions/purchase_orders';
 
 import { sum, map, intersection, pluck, contains } from 'lodash';
 
@@ -184,15 +185,18 @@ export default class PurchaseOrdersTable extends React.Component {
   }
 
   cancelSelected () {
-    this.props.dispatch(cancelPurchaseOrders(this.state.selected));
+    if (confirm(`Cancelling all selected items, are you sure?`)) {
+      this.props.dispatch(cancelPurchaseOrders(this.state.selected));
+    }
   }
 
   cancelPO () {
     if (!this.props.query.poNumber) {
       return;
     }
-
-    this.props.dispatch(cancelEntirePurchaseOrder(this.props.query.poNumber));
+    if (confirm(`Cancelling PO# ${this.props.query.poNumber}, are you sure?`)) {
+      this.props.dispatch(cancelEntirePurchaseOrder(this.props.query.poNumber));
+    }
   }
 
   uncancelSelected () {
