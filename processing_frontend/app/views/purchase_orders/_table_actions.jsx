@@ -29,24 +29,25 @@ export default class PurchaseOrdersTableActions extends React.Component {
               </div>
             </div>
 
-            <div className="col-md-2">
-              <button className="btn btn-danger btn-sm"
-                      style={{ width: '100%' }}
-                      disabled={!this.props.hasSelected}
-                      onClick={this.handleCancelSubmit.bind(this)}>
-                Cancel Selected
-              </button>
+            <div className="col-md-4">
+              <div className="btn-group btn-group-sm">
+                <button className="btn btn-danger btn-sm"
+                        disabled={!this.props.hasSelected}
+                        onClick={this.handleCancelSubmit.bind(this)}>
+                  Cancel Selected
+                </button>
+
+                <button className="btn btn-warning btn-sm"
+                        disabled={!this.props.hasSelected}
+                        onClick={this.handleUncancelSubmit.bind(this)}>
+                  Uncancel Selected
+                </button>
+              </div>
             </div>
 
             {this.renderCancelPOButton()}
 
             <div className="col-md-2">
-              <button className="btn btn-warning btn-sm"
-                      style={{ width: '100%' }}
-                      disabled={!this.props.hasSelected}
-                      onClick={this.handleUncancelSubmit.bind(this)}>
-                Un-cancel Selected
-              </button>
             </div>
 
             <div className="col-md-2" style={{ marginTop: '0.3em' }}>
