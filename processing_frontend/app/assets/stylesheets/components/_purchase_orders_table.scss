@@ -5,6 +5,10 @@
     word-break: break-all;
   }
 
+  .table > thead {
+    width: 100%;
+  }
+
   .table > thead > tr > th,
   .table > tbody > tr > th,
   .table > tfoot > tr > th,
@@ -36,6 +40,18 @@
 
     &.narrow {
       width: 2%;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .delivered {
+      display: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .cancelled {
+      display: none;
     }
   }
 }
