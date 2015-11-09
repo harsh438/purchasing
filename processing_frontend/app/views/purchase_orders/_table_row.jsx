@@ -15,6 +15,7 @@ export default class PurchaseOrderRow extends React.Component {
                  value={this.props.purchaseOrder.id}
                  style={{ margin: '7px auto 0', display: 'block' }} />
         </td>
+
         <td style={{ borderLeft: '2px solid #ddd' }}>
           {this.props.purchaseOrder.poNumber}
         </td>
@@ -26,12 +27,10 @@ export default class PurchaseOrderRow extends React.Component {
         </td>
         <td>{this.props.purchaseOrder.productName}</td>
         <td>{this.props.purchaseOrder.productSku}</td>
-
         <EditRowCost displayValue={this.props.purchaseOrder.productCost}
                      orderId={this.props.purchaseOrder.orderId}
                      table={this.props.table}
                      value={this.props.purchaseOrder.productCost.replace(/[^\d.-]/g, '')} />
-
         <td>{this.props.purchaseOrder.productRrp}</td>
         <td>{this.props.purchaseOrder.productSize}</td>
         <td>{this.props.purchaseOrder.brandSize}</td>
@@ -40,12 +39,10 @@ export default class PurchaseOrderRow extends React.Component {
         <td style={{ borderLeft: '2px solid #ddd' }}>
           {this.props.purchaseOrder.orderType}
         </td>
-
         <EditRowQuantity displayValue={this.props.purchaseOrder.orderedQuantity}
                          orderId={this.props.purchaseOrder.orderId}
                          table={this.props.table}
                          value={this.props.purchaseOrder.orderedQuantity} />
-
         <td>{this.props.purchaseOrder.orderedCost}</td>
         <td>{this.props.purchaseOrder.orderedValue}</td>
 
