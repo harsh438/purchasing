@@ -2,6 +2,10 @@ import React from 'react';
 
 export default class PurchaseOrdersTableActions extends React.Component {
   render () {
+    if (this.props.totalCount == 0) {
+      return (<div />);
+    }
+
     return (
       <div className="panel panel-default">
         <div className="panel-body">
@@ -53,10 +57,6 @@ export default class PurchaseOrdersTableActions extends React.Component {
   }
 
   renderCountMessage() {
-    if (this.props.totalCount == 0) {
-      return (<span></span>);
-    }
-
     if (this.props.currentCount < this.props.totalCount) {
       return (<span>Showing {this.props.currentCount.toLocaleString()} of {this.props.totalCount.toLocaleString()} results</span>);
     }
