@@ -7,6 +7,6 @@ import OrdersIndex from './views/orders/index';
 export default (
   <Route path="/" component={Layout}>
     <IndexRoute component={PurchaseOrdersIndex} />
-    <Route path="orders" component={OrdersIndex} />
+    <Route path="/orders" component={OrdersIndex} />
   </Route>
 );
