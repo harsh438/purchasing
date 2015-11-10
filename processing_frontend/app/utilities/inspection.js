@@ -1,6 +1,8 @@
-import { keys, omit, isEmpty, isNumber } from 'lodash';
+import { keys, omit, isEmpty, isNumber, mapKeys, rearg, camelCase } from 'lodash';
 
-function removeEmptyKeys(object) {
+export const camelizeKeys = obj => mapKeys(obj, rearg(camelCase, [1, 0]));
+
+export function removeEmptyKeys(object) {
   return omit(object, v => !isNumber(v) && isEmpty(v));
 }
 

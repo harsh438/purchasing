@@ -2,7 +2,7 @@ import React from 'react';
 import { assign } from 'lodash';
 import { connect } from 'react-redux';
 import { OrdersHeader } from './_orders_header'
-import { OrdersList } from './_orders_list'
+import { OrdersTable } from './_orders_table'
 import { loadOrders } from '../../actions/orders'
 
 class OrdersIndex extends React.Component {
@@ -12,16 +12,25 @@ class OrdersIndex extends React.Component {
 
   render() {
     return (
-      <div className="orders_index">
-        <OrdersHeader />
-        <OrdersList />
+      <div className="orders_index container-fluid"
+           style={{ marginTop: '50px' }}>
+        <div className="row">
+          <div className="col-md-12">
+            <OrdersHeader />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <OrdersTable orders={this.props.orders} />
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-function applyState({ filters, orders }) {
-  return assign({}, filters, orders);
+function applyState({ orders }) {
+  return assign({}, orders);
 }
 
 export default connect(applyState)(OrdersIndex);

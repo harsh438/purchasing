@@ -1,6 +1,5 @@
-import { assign, map, reduce, findIndex, camelCase, mapKeys, rearg } from 'lodash';
-
-const camelizeKeys = obj => mapKeys(obj, rearg(camelCase, [1, 0]));
+import { assign, map, reduce, findIndex, mapKeys, rearg } from 'lodash';
+import { camelizeKeys } from '../utilities/inspection'
 
 const initialState =  { exportable: {},
                         page: 1,
