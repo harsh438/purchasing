@@ -1,4 +1,6 @@
 class PurchaseOrderLineItemsController < ApplicationController
+  protect_from_forgery except: [:upate, :cancel, :uncancel]
+
   def index
     respond_to do |format|
       format.json { render_index_json }

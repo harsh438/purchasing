@@ -97,19 +97,19 @@ export function clearPurchaseOrders() {
 }
 
 export function cancelPurchaseOrders(id) {
-  return makeApiRequest(`/api/purchase_orders/cancel`, { id })
+  return makeApiRequest(`/api/purchase_order_line_items/cancel.json`, { id })
 }
 
 export function cancelEntirePurchaseOrder(poNumber) {
-  return makeApiRequest(`/api/purchase_orders/${poNumber}/cancel`, {})
+  return makeApiRequest(`/api/purchase_orders/${poNumber}/cancel.json`, {})
 }
 
 export function uncancelPurchaseOrders(id) {
-  return makeApiRequest(`/api/purchase_orders/uncancel`, { id })
+  return makeApiRequest(`/api/purchase_order_line_items/uncancel.json`, { id })
 }
 
 export function updatePurchaseOrders(id, params = {}) {
-  return makeApiRequest(`/api/purchase_orders/update`, { id, ...params });
+  return makeApiRequest(`/api/purchase_order_line_items.json`, { id, ...params });
 }
 
 export function purchaseOrdersLoading(loading) {
