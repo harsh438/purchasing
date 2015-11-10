@@ -1,6 +1,6 @@
 class PurchaseOrderLineItem < ActiveRecord::Base
   self.table_name = 'purchase_orders'
-  
+
   include ActionView::Helpers::NumberHelper
   include LegacyMappings
   include Searchable
@@ -41,31 +41,31 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   end
 
   def self.order_types
-    PurchaseOrder.joins(:summary)
-                 .pluck(:orderType)
-                 .uniq
-                 .map do |c|
-                   name = OrderType.string_from(c)
-                   { id: c, name: name } if name
-                 end
-                 .compact
+    PurchaseOrderLineItem.joins(:purchase_order)
+                         .pluck(:orderType)
+                         .uniq
+                         .map do |c|
+                           name = OrderType.string_from(c)
+                           { id: c, name: name } if name
+                         end
+                         .compact
   end
 
   def self.seasons
-    PurchaseOrder.pluck('distinct po_season')
-                 .map do |season|
-                   { id: season, name: season } if season.present?
-                 end
-                 .compact
+    PurchaseOrderLineItem.pluck('distinct po_season')
+                         .map do |season|
+                           { id: season, name: season } if season.present?
+                         end
+                         .compact
   end
 
   def self.genders
-    PurchaseOrder.pluck('distinct orderTool_LG')
-                 .map do |c|
-                   name = Gender.string_from(c)
-                   { id: c, name: name } if name
-                 end
-                 .compact
+    PurchaseOrderLineItem.pluck('distinct orderTool_LG')
+                         .map do |c|
+                           name = Gender.string_from(c)
+                           { id: c, name: name } if name
+                         end
+                         .compact
   end
 
   scope :with_summary, -> { where.not(summary_id: '').where.not(summary_id: 0) }
@@ -73,9 +73,9 @@ class PurchaseOrderLineItem < ActiveRecord::Base
 
   belongs_to :vendor, foreign_key: :orderTool_venID
   belongs_to :product, foreign_key: :pID
-  belongs_to :summary, foreign_key: :po_number
+  belongs_to :purchase_order, foreign_key: :po_number
 
-  has_many :suppliers, through: :vendor, class_name: 'Supplier'
+  has_many :suppliers, through: :vendor
 
   map_attributes id: :id,
                  product_id: :pID,

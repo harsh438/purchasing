@@ -1,4 +1,4 @@
-class Summary < ActiveRecord::Base
+class PurchaseOrder < ActiveRecord::Base
   self.table_name = :po_summary
 
   include LegacyMappings
@@ -6,4 +6,8 @@ class Summary < ActiveRecord::Base
 
   map_attributes id: :po_num,
                  order_type: :orderType
+
+  def po_number
+    id
+  end
 end
