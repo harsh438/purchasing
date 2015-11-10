@@ -11,7 +11,7 @@ export default class PurchaseOrdersTableActions extends React.Component {
         <div className="panel panel-default">
           <div className="panel-body">
             <div className="row">
-              <div className="col-md-2">
+              <div className="col-md-3">
                 {this.renderCountMessage()}
               </div>
 
@@ -34,7 +34,7 @@ export default class PurchaseOrdersTableActions extends React.Component {
                 </div>
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="btn-group btn-group-sm">
                   <button className="btn btn-danger btn-sm"
                           disabled={!this.props.hasSelected}
