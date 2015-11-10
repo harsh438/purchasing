@@ -13,8 +13,8 @@ feature 'Update Purchase Order Delivery Date' do
   end
 
   def when_i_update_the_delivery_dates
-    page.driver.post purchase_order_path(id: [PurchaseOrder.first, PurchaseOrder.second],
-                                         delivery_date: new_date)
+    page.driver.post purchase_order_line_items_path(id: [PurchaseOrder.first, PurchaseOrder.second],
+                                                    delivery_date: new_date)
   end
 
   def then_the_purchase_orders_should_have_a_new_delivery_date

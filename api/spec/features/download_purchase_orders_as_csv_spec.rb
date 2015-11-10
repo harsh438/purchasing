@@ -6,18 +6,7 @@ feature 'Download purchase orders as CSV' do
   let (:vendor) { create(:vendor) }
 
   before(:each) do
-    create_list(:purchase_order, 20, status: 4,
-                                     season: 'AW15',
-                                     created_at: Time.new(2013, 1, 1))
-
-    create_list(:purchase_order, 16, :arrived, season: 'SS14',
-                                               created_at: Time.new(2011, 1, 1))
-
-    create_list(:purchase_order, 15, vendor: vendor,
-                                     status: -1,
-                                     season: 'SS15',
-                                     product_name: "#{vendor.name} item",
-                                     created_at: Time.new(2014, 1, 1))
+    create_purchase_orders
   end
 
   scenario 'Trying to download purchase orders CSV without filters' do
@@ -37,7 +26,7 @@ feature 'Download purchase orders as CSV' do
   end
 
   def when_a_user_tries_to_download_csv_without_filters
-    visit '/api/purchase_orders.csv'
+    visit purchase_order_line_items_path(format: :csv)
   end
 
   def then_they_should_see_an_error
@@ -45,7 +34,7 @@ feature 'Download purchase orders as CSV' do
   end
 
   def when_a_user_downloads_csv_filtered_by_vendor
-    visit "/api/purchase_orders.csv?vendor_id=#{vendor.id}"
+    visit purchase_order_line_items_path(format: :csv, vendor_id: vendor.id)
   end
 
   def then_the_csv_file_should_contain_only_purchase_orders_for_that_vendor
@@ -67,10 +56,27 @@ feature 'Download purchase orders as CSV' do
   end
 
   def when_a_user_downloads_csv_that_matches_more_than_50_results
-    visit "/api/purchase_orders.csv?vendor_id=#{vendor.id}"
+    visit purchase_order_line_items_path(format: :csv, vendor_id: vendor.id)
   end
 
   def then_the_csv_file_should_contain_more_than_50_results
     expect(csv_result_rows.count).to be > 50
+  end
+
+  private
+
+  def create_purchase_orders
+    create_list(:purchase_order, 20, status: 4,
+                                     season: 'AW15',
+                                     created_at: Time.new(2013, 1, 1))
+
+    create_list(:purchase_order, 16, :arrived, season: 'SS14',
+                                               created_at: Time.new(2011, 1, 1))
+
+    create_list(:purchase_order, 15, vendor: vendor,
+                                     status: -1,
+                                     season: 'SS15',
+                                     product_name: "#{vendor.name} item",
+                                     created_at: Time.new(2014, 1, 1))
   end
 end

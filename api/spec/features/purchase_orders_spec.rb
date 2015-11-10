@@ -3,21 +3,7 @@ feature 'Listing purchase orders' do
   let (:vendor) { create(:vendor) }
 
   before(:each) do
-    create_list(:purchase_order, 20,
-                status: 4,
-                season: 'AW15',
-                delivery_date: Time.new(2013, 1, 1))
-
-    create_list(:purchase_order, 16, :arrived,
-                status: 5,
-                season: 'SS14',
-                delivery_date: Time.new(2011, 1, 1))
-
-    create_list(:purchase_order, 15,
-                vendor: vendor,
-                status: -1,
-                season: 'SS15',
-                delivery_date: Time.new(2014, 1, 1))
+    create_purchase_orders
   end
 
   scenario 'Default purchase order list' do
@@ -65,7 +51,7 @@ feature 'Listing purchase orders' do
   end
 
   def when_i_visit_the_purchase_orders_route
-    visit purchase_orders_path(format: :json)
+    visit purchase_order_line_items_path
   end
 
   def then_i_should_see_the_first_page_of_purchase_orders
@@ -73,7 +59,7 @@ feature 'Listing purchase orders' do
   end
 
   def when_i_filter_by_vendor
-    visit purchase_orders_path(format: :json, vendor_id: vendor)
+    visit purchase_order_line_items_path(vendor_id: vendor)
   end
 
   def then_i_should_see_the_first_page_of_orders_for_that_vendor
@@ -81,7 +67,7 @@ feature 'Listing purchase orders' do
   end
 
   def when_i_visit_the_third_page_of_results
-    visit purchase_orders_path(format: :json, page: 2)
+    visit purchase_order_line_items_path(page: 2)
   end
 
   def then_i_should_see_one_result
@@ -89,7 +75,7 @@ feature 'Listing purchase orders' do
   end
 
   def when_i_filter_by_status
-    visit purchase_orders_path(format: :json, status: [:balance])
+    visit purchase_order_line_items_path(status: [:balance])
   end
 
   def then_i_should_see_the_first_page_of_orders_with_that_status
@@ -97,7 +83,7 @@ feature 'Listing purchase orders' do
   end
 
   def when_i_filter_by_multiple_statuses
-    visit purchase_orders_path(format: :json, status: [:balance, :cancelled])
+    visit purchase_order_line_items_path(status: [:balance, :cancelled])
   end
 
   def then_i_should_see_the_first_page_of_orders_with_those_statuses
@@ -105,7 +91,7 @@ feature 'Listing purchase orders' do
   end
 
   def when_i_filter_by_season
-    visit purchase_orders_path(format: :json, season: :AW15)
+    visit purchase_order_line_items_path(season: :AW15)
   end
 
   def then_i_should_see_the_first_page_of_orders_for_that_season
@@ -113,10 +99,30 @@ feature 'Listing purchase orders' do
   end
 
   def when_i_filter_by_date_from
-    visit purchase_orders_path(format: :json, date_from: '2012-01-01')
+    visit purchase_order_line_items_path(date_from: '2012-01-01')
   end
 
   def then_i_should_see_the_first_page_of_orders_after_that_date
     expect(subject['results'].count).to eq(35)
+  end
+
+  private
+
+  def create_purchase_orders
+    create_list(:purchase_order, 20,
+                status: 4,
+                season: 'AW15',
+                delivery_date: Time.new(2013, 1, 1))
+
+    create_list(:purchase_order, 16, :arrived,
+                status: 5,
+                season: 'SS14',
+                delivery_date: Time.new(2011, 1, 1))
+
+    create_list(:purchase_order, 15,
+                vendor: vendor,
+                status: -1,
+                season: 'SS15',
+                delivery_date: Time.new(2014, 1, 1))
   end
 end

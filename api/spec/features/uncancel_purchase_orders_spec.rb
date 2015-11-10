@@ -18,7 +18,7 @@ feature 'Uncancel Purchase Orders' do
   end
 
   def when_i_uncancel_cancelled_purchase_orders
-    page.driver.post uncancel_purchase_order_path(id: [cancelled_orders.first, cancelled_orders.second])
+    page.driver.post uncancel_purchase_order_line_items_path(id: [cancelled_orders.first, cancelled_orders.second])
   end
 
   def then_the_purchase_orders_should_be_uncancelled
@@ -27,7 +27,7 @@ feature 'Uncancel Purchase Orders' do
   end
 
   def when_i_uncancel_a_non_cancelled_purchase_order
-    page.driver.post uncancel_purchase_order_path(id: [non_cancelled_order])
+    page.driver.post uncancel_purchase_order_line_items_path(id: [non_cancelled_order])
   end
 
   def then_the_purchase_order_should_not_be_modified

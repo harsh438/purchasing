@@ -26,7 +26,7 @@ feature 'Purchase Order Drop Number' do
   end
 
   def when_viewing_purchase_orders
-    visit '/api/purchase_orders.json?season=AW15'
+    visit purchase_order_line_items_path(season: 'AW15')
   end
 
   def then_drop_numbers_should_be_shown

@@ -22,7 +22,7 @@ function fetchPurchaseOrders(params, page, action) {
 
     dispatch(purchaseOrdersLoading(true));
 
-    fetch(`/api/purchase_orders.json?${queryString}`, { credentials: 'same-origin' })
+    fetch(`/api/purchase_order_line_items.json?${queryString}`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(purchaseOrders => {
         dispatch(purchaseOrdersLoading(false));
@@ -42,7 +42,7 @@ function fetchSummary(params) {
     const query = removeEmptyKeys(assign({}, defaultParams, translatedParams));
     const queryString = Qs.stringify(query, { arrayFormat: 'brackets' });
 
-    fetch(`/api/purchase_orders/summary.json?${queryString}`, { credentials: 'same-origin' })
+    fetch(`/api/purchase_orders.json?${queryString}`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(summary => dispatch({ ...summary, type:'SET_SUMMARY' }));
   }
@@ -101,7 +101,7 @@ export function cancelPurchaseOrders(id) {
 }
 
 export function cancelEntirePurchaseOrder(poNumber) {
-  return makeApiRequest(`/api/purchase_orders/${poNumber}/cancel/order`, {})
+  return makeApiRequest(`/api/purchase_orders/${poNumber}/cancel`, {})
 }
 
 export function uncancelPurchaseOrders(id) {

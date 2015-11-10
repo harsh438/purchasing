@@ -22,7 +22,7 @@ feature 'Cancelling purchase orders' do
   end
 
   def when_i_cancel_a_line_item
-    page.driver.post cancel_purchase_order_path(id: PurchaseOrder.first)
+    page.driver.post cancel_purchase_order_line_items_path(id: PurchaseOrder.first)
   end
 
   def then_the_line_item_should_be_cancelled
@@ -31,7 +31,7 @@ feature 'Cancelling purchase orders' do
   end
 
   def when_i_cancel_multiple_line_items
-    page.driver.post cancel_purchase_order_path(id: [PurchaseOrder.first, PurchaseOrder.second])
+    page.driver.post cancel_purchase_order_line_items_path(id: [PurchaseOrder.first, PurchaseOrder.second])
   end
 
   def then_the_line_items_should_be_cancelled
@@ -41,7 +41,7 @@ feature 'Cancelling purchase orders' do
   end
 
   def when_i_cancel_an_entire_purchase_order
-    page.driver.post cancel_order_purchase_order_path(po_number: PurchaseOrder.first.po_number)
+    page.driver.post cancel_purchase_order_path(id: PurchaseOrder.first.po_number)
   end
 
   def then_the_entire_purchase_order_should_be_cancelled
