@@ -6,7 +6,12 @@ export default class PurchaseOrderTableHeader extends React.Component {
     return (
       <thead ref="thead">
         <tr>
-          <th colSpan="2">&nbsp;</th>
+          <th colSpan="2">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </th>
 
           <th colSpan="8" style={{ borderLeft: '2px solid #ddd' }}>
             Product
@@ -46,7 +51,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th style={{ borderLeft: '2px solid #ddd' }}>PID</th>
           <th className="x-wide">Product</th>
           <th className="wideish">SKU</th>
-          <th title="Unit Price">Price</th>
+          <th>Cost</th>
           <th>RRP</th>
           <th className="narrowish">Size</th>
           <th title="Brand Size">Br. Size</th>
