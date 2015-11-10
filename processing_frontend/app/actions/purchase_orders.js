@@ -1,12 +1,9 @@
 import Qs from 'qs';
 import { assign, omit, isEmpty, isNumber, mapKeys, snakeCase, rearg } from 'lodash';
 import 'whatwg-fetch';
+import { removeEmptyKeys } from '../utilities/inspection'
 
 const defaultParams = { sort_by: 'drop_date_asc' };
-
-function removeEmptyKeys(object) {
-  return omit(object, v => !isNumber(v) && isEmpty(v));
-}
 
 function fetchPurchaseOrders(params, page, action) {
   return dispatch => {
