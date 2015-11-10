@@ -3,6 +3,7 @@ class Order < ActiveRecord::Base
   paginates_per 50
 
   has_many :line_items, class_name: 'OrderLineItem'
+  accepts_nested_attributes_for :line_items
 
   validates :status, inclusion: { in: %w(new finalized ordered) }
 
