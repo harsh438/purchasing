@@ -21,6 +21,13 @@ these you'll be okay.
  - Ruby (via rbenv preferably)
  - MySQL (setup as per config/database.yml or with config injected with DATABASE_URL)
 
+### Database content
+
+Download these files and import them in to your local development database:
+
+* https://drive.google.com/open?id=0B7Lov1YoCGc-WXJGc3FoTFYwTTg
+* https://drive.google.com/open?id=0B0GMiJFPpF4rdm9TY183NXZyMWs
+
 ## Developing
 
 **Booting API for the first time**
