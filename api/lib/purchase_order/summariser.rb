@@ -3,9 +3,9 @@ class PurchaseOrder::Summariser
 
   def summary(attrs)
     query = PurchaseOrder.mapped.with_valid_status.with_summary
-    query = PurchaseOrder::Filter.new.filter(query, attrs)
+    query = PurchaseOrderLineItem::Filter.new.filter(query, attrs)
     { summary: summary_values(query) }
-  rescue PurchaseOrder::Filter::NoFiltersError
+  rescue PurchaseOrderLineItem::Filter::NoFiltersError
     { summary: {} }
   end
 
