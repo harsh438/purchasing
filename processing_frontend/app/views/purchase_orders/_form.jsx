@@ -294,6 +294,10 @@ export default class PurchaseOrdersForm extends React.Component {
   }
 
   splitMultiSelectValues(value) {
+    if (!value) {
+      return []
+    }
+
     return map(value.split(','), (v) => { return v.trim() })
   }
 
