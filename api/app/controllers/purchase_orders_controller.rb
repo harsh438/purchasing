@@ -1,6 +1,4 @@
 class PurchaseOrdersController < ApplicationController
-  protect_from_forgery except: :cancel
-
   def index
     render json: PurchaseOrder::Summariser.new.summary(params)
   end

@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
   include HttpAuth
-  
-  protect_from_forgery with: :exception
+
+  skip_before_action :verify_authenticity_token
+
   layout false
 
   def default_url_options
