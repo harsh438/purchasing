@@ -247,8 +247,15 @@ class PurchaseOrderLineItem < ActiveRecord::Base
     OrderType.string_from(t)
   end
 
+  def internal_sku
+    return if option_id == 0
+
+    "#{pID}-#{Element.id_from_option(option_id)}"
+  end
+
   def as_json(*args)
     super.merge(po_number: po_number,
+                internal_sku: internal_sku,
                 product_cost: monetize(product_cost),
                 product_size: product_size,
                 product_rrp: monetize(product_rrp),

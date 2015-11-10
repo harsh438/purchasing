@@ -24,6 +24,19 @@ ActiveRecord::Schema.define(version: 20151110151047) do
   add_index "ds_language_categories", ["langID", "catID"], name: "catid and langid", using: :btree
   add_index "ds_language_categories", ["langID"], name: "langID", using: :btree
 
+  create_table "ds_language_product_options", force: :cascade do |t|
+    t.integer "langID",    limit: 4,  default: 0,  null: false
+    t.integer "pID",       limit: 4,  default: 0,  null: false
+    t.integer "oID",       limit: 4,  default: 0,  null: false
+    t.string  "pOption",   limit: 50, default: "", null: false
+    t.integer "elementID", limit: 4,               null: false
+  end
+
+  add_index "ds_language_product_options", ["langID"], name: "langID", using: :btree
+  add_index "ds_language_product_options", ["oID"], name: "Option ID", using: :btree
+  add_index "ds_language_product_options", ["pID"], name: "pID", using: :btree
+  add_index "ds_language_product_options", ["pOption"], name: "optionname", using: :btree
+
   create_table "ds_language_products", primary_key: "lpID", force: :cascade do |t|
     t.integer "pID",               limit: 4,     default: 0, null: false
     t.integer "langID",            limit: 4,     default: 0, null: false
@@ -202,6 +215,12 @@ ActiveRecord::Schema.define(version: 20151110151047) do
 
   add_index "ds_vendors", ["venActNum", "venPass"], name: "venActNum", using: :btree
   add_index "ds_vendors", ["venCompany"], name: "venCompany", using: :btree
+
+  create_table "mnp_elements", primary_key: "elementID", force: :cascade do |t|
+    t.string "elementname", limit: 64, null: false
+  end
+
+  add_index "mnp_elements", ["elementname"], name: "element name", using: :btree
 
   create_table "order_line_items", force: :cascade do |t|
     t.string   "internal_sku", limit: 255
