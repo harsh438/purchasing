@@ -1,6 +1,8 @@
 class Product < ActiveRecord::Base
-  include LegacyMappings
   self.table_name = :ds_products
+
+  include LegacyMappings
+  
   map_attributes id: :pID,
                  name: :pNum,
                  price: :pPrice
