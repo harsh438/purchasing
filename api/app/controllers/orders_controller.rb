@@ -6,4 +6,8 @@ class OrdersController < ApplicationController
   def show
     render json: Order.find(params[:id]).as_json(include: :line_items)
   end
+
+  def create
+    render json: Order.create!.as_json(include: :line_items)
+  end
 end
