@@ -2,6 +2,7 @@ import CheckboxGroup from 'react-checkbox-group';
 import RadioGroup from 'react-radio-group';
 import React from 'react';
 import { Link } from 'react-router';
+import Select from 'react-select';
 import { map } from 'lodash';
 
 export default class PurchaseOrdersForm extends React.Component {
@@ -40,14 +41,12 @@ export default class PurchaseOrdersForm extends React.Component {
                 <div className="form-group col-md-2">
                   <label htmlFor="category">Category</label>
 
-                  <select className="form-control"
-                          id="category"
+                  <Select id="category"
                           name="category"
-                          onChange={this.handleChange.bind(this, 'category')}
-                          value={this.state.category}>
-                    <option value=""> -- select category -- </option>
-                    {this.options(this.props.categories)}
-                  </select>
+                          onChange={this.handleCategoryChange.bind(this)}
+                          multi={true}
+                          value={this.joinMultiSelectValues(this.state.category)}
+                          options={this.multiSelectOptions(this.props.categories)} />
                 </div>
 
                 <div className="form-group col-md-2">
@@ -123,14 +122,12 @@ export default class PurchaseOrdersForm extends React.Component {
                 <div className="col-md-2">
                   <label htmlFor="gender">Gender</label>
 
-                  <select className="form-control"
-                          id="gender"
+                  <Select id="gender"
                           name="gender"
-                          onChange={this.handleChange.bind(this, 'gender')}
-                          value={this.state.gender}>
-                    <option value=""> -- select gender -- </option>
-                    {this.options(this.props.genders)}
-                  </select>
+                          onChange={this.handleGenderChange.bind(this)}
+                          multi={true}
+                          value={this.joinMultiSelectValues(this.state.gender)}
+                          options={this.multiSelectOptions(this.props.genders)} />
                 </div>
 
                 <div className="col-md-2">
@@ -253,19 +250,27 @@ export default class PurchaseOrdersForm extends React.Component {
 
   setStateFromQuery (query) {
     this.setState({ brand: query.brand || '',
-                    category: query.category || '',
+                    category: query.category || [],
                     poNumber: query.poNumber || '',
                     pid: query.pid || '',
                     sku: query.sku || '',
                     dateFrom: query.dateFrom || '',
                     dateUntil: query.dateUntil || '',
                     status: query.status || [],
-                    gender: query.gender || '',
+                    gender: query.gender || [],
                     orderType: query.orderType || '',
                     season: query.season || '',
                     supplier: query.supplier || '',
                     operator: query.operator || '',
                     sortBy: query.sortBy || 'drop_date_asc'});
+  }
+
+  multiSelectOptions (options) {
+    let opts = map(options, function ({ id, name }) {
+      return { value: id, label: name };
+    });
+
+    return opts;
   }
 
   options (options) {
@@ -286,6 +291,22 @@ export default class PurchaseOrdersForm extends React.Component {
 
   handleChange (field, { target }) {
     this.setState({ [field]: target.value });
+  }
+
+  splitMultiSelectValues(value) {
+    return map(value.split(','), (v) => { return v.trim() })
+  }
+
+  joinMultiSelectValues(values) {
+    return values.join(',')
+  }
+
+  handleCategoryChange(value) {
+    this.setState({ category: this.splitMultiSelectValues(value) });
+  }
+
+  handleGenderChange(value) {
+    this.setState({ gender: this.splitMultiSelectValues(value) });
   }
 
   handleSubmit (e) {
