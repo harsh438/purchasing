@@ -2,7 +2,7 @@ class PurchaseOrdersController < ApplicationController
   protect_from_forgery except: :cancel
 
   def index
-    render json: PurchaseOrder::SummaryBuilder.new.build(params)
+    render json: PurchaseOrder::Summary.new.summary(params)
   end
 
   def cancel

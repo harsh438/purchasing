@@ -1,7 +1,7 @@
-class PurchaseOrder::SummaryBuilder
+class PurchaseOrder::Summary
   include ActionView::Helpers::NumberHelper
 
-  def build(attrs)
+  def summary(attrs)
     query = PurchaseOrder.mapped.with_valid_status.with_summary
     query = PurchaseOrder::Filter.new.filter(query, attrs)
     { summary: summary_values(query) }
