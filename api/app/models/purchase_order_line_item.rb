@@ -17,7 +17,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   end
 
   def self.filter_order_type(context)
-    joins(:summary).where(po_summary: { orderType: context[:order_type] })
+    joins(:purchase_order).where(po_summary: { orderType: context[:order_type] })
   end
 
   def self.filter_date_from(context)
@@ -242,9 +242,9 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   end
 
   def order_type
-    t = try(:summary).try(:order_type)
-    return '' unless t.present?
-    OrderType.string_from(t)
+    order_type = purchase_order.try(:order_type)
+    return '' unless order_type.present?
+    OrderType.string_from(order_type)
   end
 
   def internal_sku
