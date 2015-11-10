@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110142120) do
+ActiveRecord::Schema.define(version: 20151110151047) do
 
   create_table "ds_language_categories", force: :cascade do |t|
     t.integer "langID",  limit: 4,   default: 0,  null: false
@@ -203,6 +203,19 @@ ActiveRecord::Schema.define(version: 20151110142120) do
   add_index "ds_vendors", ["venActNum", "venPass"], name: "venActNum", using: :btree
   add_index "ds_vendors", ["venCompany"], name: "venCompany", using: :btree
 
+  create_table "order_line_items", force: :cascade do |t|
+    t.string   "internal_sku", limit: 255
+    t.integer  "quantity",     limit: 4
+    t.decimal  "cost",                     precision: 8, scale: 2
+    t.decimal  "discount",                 precision: 8, scale: 4
+    t.integer  "order_id",     limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "drop_date"
+  end
+
+  add_index "order_line_items", ["order_id"], name: "index_order_line_items_on_order_id", using: :btree
+
   create_table "order_suppliers", force: :cascade do |t|
     t.string  "orderID",      limit: 12
     t.integer "supplierID",   limit: 4
@@ -385,4 +398,5 @@ ActiveRecord::Schema.define(version: 20151110142120) do
     t.integer "SupplierToBrandsID",  limit: 4
   end
 
+  add_foreign_key "order_line_items", "orders"
 end

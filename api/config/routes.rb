@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root to: 'frontend#index'
 
   scope :api, format: true, defaults: { format: :json } do
-    resources :orders, only: :index
+    resources :orders, only: [:index, :show]
 
     resources :purchase_orders, only: :index do
       member do
