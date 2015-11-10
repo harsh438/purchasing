@@ -1,4 +1,4 @@
-class PurchaseOrder::DropNumbers
+class PurchaseOrderLineItem::DropNumbers
   def calculate(results)
     total_drops = find_total_drops(results)
     return {} unless total_drops.any?

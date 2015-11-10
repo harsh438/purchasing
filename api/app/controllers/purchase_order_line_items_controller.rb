@@ -30,12 +30,12 @@ class PurchaseOrderLineItemsController < ApplicationController
 
   def render_index_json
     export_url = url_for(params.merge(format: :csv))
-    render json: PurchaseOrder::Search.new.search(params, export_url: export_url)
+    render json: PurchaseOrderLineItem::Search.new.search(params, export_url: export_url)
   end
 
   def render_index_csv
-    render csv: PurchaseOrder::CsvExporter.new.export(params)
-  rescue PurchaseOrder::Filter::NoFiltersError => e
+    render csv: PurchaseOrderLineItem::CsvExporter.new.export(params)
+  rescue PurchaseOrderLineItem::Filter::NoFiltersError => e
     render plain: 'Please select filters'
   end
 

@@ -1,4 +1,4 @@
-class PurchaseOrder::CsvExporter
+class PurchaseOrderLineItem::CsvExporter
   CSV_COLUMN_ORDER = %w(product_barcode
                         po_number
                         order_type
@@ -37,7 +37,7 @@ class PurchaseOrder::CsvExporter
 
   def export(attrs)
     query = PurchaseOrder.mapped.with_valid_status.with_summary
-    query = PurchaseOrder::Filter.new.filter(query, attrs)
+    query = PurchaseOrderLineItem::Filter.new.filter(query, attrs)
     to_csv(query)
   end
 

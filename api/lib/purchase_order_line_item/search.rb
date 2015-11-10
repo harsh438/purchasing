@@ -1,4 +1,4 @@
-class PurchaseOrder::Search
+class PurchaseOrderLineItem::Search
   def search(attrs, additional_data)
     query = PurchaseOrder.mapped.with_valid_status.with_summary
     query, has_filters = apply_filters(query, attrs)
@@ -15,8 +15,8 @@ class PurchaseOrder::Search
   private
 
   def apply_filters(query, attrs)
-    [PurchaseOrder::Filter.new.filter(query, attrs), true]
-  rescue PurchaseOrder::Filter::NoFiltersError
+    [PurchaseOrderLineItem::Filter.new.filter(query, attrs), true]
+  rescue PurchaseOrderLineItem::Filter::NoFiltersError
     [query, false]
   end
 
@@ -26,7 +26,7 @@ class PurchaseOrder::Search
 
   def build_response(results, attrs)
     { results: results,
-      drop_numbers: PurchaseOrder::DropNumbers.new.calculate(results),
+      drop_numbers: PurchaseOrderLineItem::DropNumbers.new.calculate(results),
       more_results_available: !results.last_page?,
       total_count: results.total_count,
       total_pages: results.total_pages,
