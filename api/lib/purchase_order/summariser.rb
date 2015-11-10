@@ -2,7 +2,7 @@ class PurchaseOrder::Summariser
   include ActionView::Helpers::NumberHelper
 
   def summary(attrs)
-    query = PurchaseOrder.mapped.with_valid_status.with_summary
+    query = PurchaseOrderLineItem.mapped.with_valid_status.with_summary
     query = PurchaseOrderLineItem::Filter.new.filter(query, attrs)
     { summary: summary_values(query) }
   rescue PurchaseOrderLineItem::Filter::NoFiltersError

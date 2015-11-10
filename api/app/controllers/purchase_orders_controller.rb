@@ -6,20 +6,20 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def cancel
-    orders = PurchaseOrder.where('LENGTH(po_number) > 0').where(po_number: params[:id])
+    orders = PurchaseOrderLineItem.where('LENGTH(po_number) > 0').where(po_number: params[:id])
     orders.each(&:cancel)
     render json: orders
   end
 
   def seasons
-    render json: PurchaseOrder.seasons
+    render json: PurchaseOrderLineItem.seasons
   end
 
   def genders
-    render json: PurchaseOrder.genders
+    render json: PurchaseOrderLineItem.genders
   end
 
   def order_types
-    render json: PurchaseOrder.order_types
+    render json: PurchaseOrderLineItem.order_types
   end
 end

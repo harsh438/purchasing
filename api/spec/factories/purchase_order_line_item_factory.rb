@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :purchase_order do
+  factory :purchase_order_line_item do
 
     # These are the minimum fields required for insertion.
     quantity 5

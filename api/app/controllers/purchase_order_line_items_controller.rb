@@ -9,19 +9,19 @@ class PurchaseOrderLineItemsController < ApplicationController
   end
 
   def update
-    orders = PurchaseOrder.where(id: params[:id])
+    orders = PurchaseOrderLineItem.where(id: params[:id])
     orders.each { |o| o.update!(permitted_params) }
     render json: orders
   end
 
   def cancel
-    orders = PurchaseOrder.where(id: params[:id])
+    orders = PurchaseOrderLineItem.where(id: params[:id])
     orders.each(&:cancel)
     render json: orders
   end
 
   def uncancel
-    orders = PurchaseOrder.where(id: params[:id])
+    orders = PurchaseOrderLineItem.where(id: params[:id])
     orders.each(&:uncancel)
     render json: orders
   end

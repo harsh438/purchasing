@@ -3,8 +3,7 @@ feature 'Update Purchase Order Delivery Date' do
   let(:new_date) { Time.new(1980, 1, 1) }
 
   before(:each) do
-    create_list(:purchase_order, 3,
-           delivery_date: original_date)
+    create_list(:purchase_order_line_item, 3, delivery_date: original_date)
   end
 
   scenario 'Update Delivery Dates' do
@@ -13,13 +12,13 @@ feature 'Update Purchase Order Delivery Date' do
   end
 
   def when_i_update_the_delivery_dates
-    page.driver.post purchase_order_line_items_path(id: [PurchaseOrder.first, PurchaseOrder.second],
+    page.driver.post purchase_order_line_items_path(id: PurchaseOrderLineItem.first(2),
                                                     delivery_date: new_date)
   end
 
   def then_the_purchase_orders_should_have_a_new_delivery_date
-    expect(PurchaseOrder.first.reload.delivery_date.to_time).to eq(new_date)
-    expect(PurchaseOrder.second.reload.delivery_date.to_time).to eq(new_date)
-    expect(PurchaseOrder.third.reload.delivery_date.to_time).to eq(original_date)
+    expect(PurchaseOrderLineItem.first.reload.delivery_date.to_time).to eq(new_date)
+    expect(PurchaseOrderLineItem.second.reload.delivery_date.to_time).to eq(new_date)
+    expect(PurchaseOrderLineItem.third.reload.delivery_date.to_time).to eq(original_date)
   end
 end

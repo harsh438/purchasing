@@ -1,6 +1,6 @@
 class PurchaseOrderLineItem::Search
   def search(attrs, additional_data)
-    query = PurchaseOrder.mapped.with_valid_status.with_summary
+    query = PurchaseOrderLineItem.mapped.with_valid_status.with_summary
     query, has_filters = apply_filters(query, attrs)
     paginated_query = paginate_query(query, attrs)
     response = build_response(paginated_query, attrs)

@@ -1,11 +1,12 @@
 feature 'Uncancel Purchase Orders' do
   let(:cancelled_orders) do
-    create_list(:purchase_order, 2,
+    create_list(:purchase_order_line_item,
+                2,
                 status: -1,
                 cancelled_date: Time.new(2013, 1, 1))
   end
 
-  let(:non_cancelled_order) { create(:purchase_order, status: 3) }
+  let(:non_cancelled_order) { create(:purchase_order_line_item, status: 3) }
 
   scenario 'Uncancelling cancelled Purchase Orders' do
     when_i_uncancel_cancelled_purchase_orders

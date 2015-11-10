@@ -24,15 +24,15 @@ class PurchaseOrderLineItem::DropNumbers
       end
     end
 
-    return PurchaseOrder.none unless criteria.count > 0
+    return PurchaseOrderLineItem.none unless criteria.count > 0
 
     query = (criteria.count / 2).times.map { '(pID = ? AND oID = ?)' }.join(' OR ')
 
-    PurchaseOrder.with_summary
-                 .with_valid_status
-                 .where(query, *criteria)
-                 .group(:pID, :oID)
-                 .count
+    PurchaseOrderLineItem.with_summary
+                         .with_valid_status
+                         .where(query, *criteria)
+                         .group(:pID, :oID)
+                         .count
   end
 
   def find_previous_drops(results)
@@ -46,15 +46,15 @@ class PurchaseOrderLineItem::DropNumbers
       end
     end
 
-    return PurchaseOrder.none unless criteria.count > 0
+    return PurchaseOrderLineItem.none unless criteria.count > 0
 
     query = (criteria.count / 3).times.map { '(pID = ? AND oID = ? AND drop_date < ?)' }.join(' OR ')
 
-    PurchaseOrder.with_summary
-                  .with_valid_status
-                  .where(query, *criteria)
-                  .group(:drop_date, :pID, :oID)
-                  .count
+    PurchaseOrderLineItem.with_summary
+                         .with_valid_status
+                         .where(query, *criteria)
+                         .group(:drop_date, :pID, :oID)
+                         .count
   end
 
   def find_total_drops_value(total_drops, purchase_order)

@@ -48,11 +48,13 @@ feature 'Download purchase orders as CSV' do
   end
 
   def given_there_are_more_than_50_results
-    create_list(:purchase_order, 60, vendor: vendor,
-                                     status: -1,
-                                     season: 'SS15',
-                                     product_name: "#{vendor.name} item",
-                                     created_at: Time.new(2014, 1, 1))
+    create_list(:purchase_order_line_item,
+                60,
+                vendor: vendor,
+                status: -1,
+                season: 'SS15',
+                product_name: "#{vendor.name} item",
+                created_at: Time.new(2014, 1, 1))
   end
 
   def when_a_user_downloads_csv_that_matches_more_than_50_results
@@ -66,17 +68,24 @@ feature 'Download purchase orders as CSV' do
   private
 
   def create_purchase_orders
-    create_list(:purchase_order, 20, status: 4,
-                                     season: 'AW15',
-                                     created_at: Time.new(2013, 1, 1))
+    create_list(:purchase_order_line_item,
+                20,
+                status: 4,
+                season: 'AW15',
+                created_at: Time.new(2013, 1, 1))
 
-    create_list(:purchase_order, 16, :arrived, season: 'SS14',
-                                               created_at: Time.new(2011, 1, 1))
+    create_list(:purchase_order_line_item,
+                16,
+                :arrived,
+                season: 'SS14',
+                created_at: Time.new(2011, 1, 1))
 
-    create_list(:purchase_order, 15, vendor: vendor,
-                                     status: -1,
-                                     season: 'SS15',
-                                     product_name: "#{vendor.name} item",
-                                     created_at: Time.new(2014, 1, 1))
+    create_list(:purchase_order_line_item,
+                15,
+                vendor: vendor,
+                status: -1,
+                season: 'SS15',
+                product_name: "#{vendor.name} item",
+                created_at: Time.new(2014, 1, 1))
   end
 end

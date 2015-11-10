@@ -44,7 +44,8 @@ feature 'Listing purchase orders' do
   end
 
   def given_there_are_many_pages_of_purchase_orders
-    create_list(:purchase_order, 150,
+    create_list(:purchase_order_line_item,
+                150,
                 status: 4,
                 season: 'AW15',
                 delivery_date: Time.new(2013, 1, 1))
@@ -109,17 +110,21 @@ feature 'Listing purchase orders' do
   private
 
   def create_purchase_orders
-    create_list(:purchase_order, 20,
+    create_list(:purchase_order_line_item,
+                20,
                 status: 4,
                 season: 'AW15',
                 delivery_date: Time.new(2013, 1, 1))
 
-    create_list(:purchase_order, 16, :arrived,
+    create_list(:purchase_order_line_item,
+                16,
+                :arrived,
                 status: 5,
                 season: 'SS14',
                 delivery_date: Time.new(2011, 1, 1))
 
-    create_list(:purchase_order, 15,
+    create_list(:purchase_order_line_item,
+                15,
                 vendor: vendor,
                 status: -1,
                 season: 'SS15',

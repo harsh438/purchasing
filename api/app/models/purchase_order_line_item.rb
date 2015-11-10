@@ -1,4 +1,6 @@
-class PurchaseOrder < ActiveRecord::Base
+class PurchaseOrderLineItem < ActiveRecord::Base
+  self.table_name = 'purchase_orders'
+  
   include ActionView::Helpers::NumberHelper
   include LegacyMappings
   include Searchable

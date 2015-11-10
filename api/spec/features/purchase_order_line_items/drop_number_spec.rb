@@ -8,7 +8,7 @@ feature 'Purchase Order Drop Number' do
   def given_there_have_been_previous_drops
     product = create(:product)
 
-    create_list(:purchase_order,
+    create_list(:purchase_order_line_item,
                 1,
                 :with_option,
                 status: 5,
@@ -16,7 +16,7 @@ feature 'Purchase Order Drop Number' do
                 season: 'AW15',
                 delivery_date: Time.new(2015, 11, 1))
 
-    create_list(:purchase_order,
+    create_list(:purchase_order_line_item,
                 1,
                 :with_option,
                 status: 5,

@@ -36,7 +36,7 @@ class PurchaseOrderLineItem::CsvExporter
                         comment)
 
   def export(attrs)
-    query = PurchaseOrder.mapped.with_valid_status.with_summary
+    query = PurchaseOrderLineItem.mapped.with_valid_status.with_summary
     query = PurchaseOrderLineItem::Filter.new.filter(query, attrs)
     to_csv(query)
   end
