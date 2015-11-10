@@ -12,18 +12,6 @@ class PurchaseOrder::Search
     response
   end
 
-  def summary(attrs)
-    query = PurchaseOrder.mapped.with_valid_status.with_summary
-    results, has_filters = apply_filters(query, attrs)
-    summary = {}
-
-    if has_filters
-      summary = PurchaseOrder::SummaryBuilder.new.build(results)
-    end
-
-    { summary: summary }
-  end
-
   private
 
   def apply_filters(query, attrs)

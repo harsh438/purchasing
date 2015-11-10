@@ -1,7 +1,17 @@
 class PurchaseOrder::SummaryBuilder
   include ActionView::Helpers::NumberHelper
 
-  def build(unpaged_results)
+  def build(attrs)
+    query = PurchaseOrder.mapped.with_valid_status.with_summary
+    query = PurchaseOrder::Filter.new.filter(query, attrs)
+    { summary: summary_values(query) }
+  rescue PurchaseOrder::Filter::NoFiltersError
+    { summary: {} }
+  end
+
+  private
+
+  def summary_values(unpaged_results)
     r = unpaged_results
           .joins('inner join ds_products p on purchase_orders.pID = p.pID')
 
@@ -42,8 +52,6 @@ class PurchaseOrder::SummaryBuilder
       cancelled_cost: monetize(cancelled_cost || 0),
       cancelled_value: monetize(cancelled_value || 0) }
   end
-
-  private
 
   def monetize(figure)
     number_to_currency(figure, unit: '£')
