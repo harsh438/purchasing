@@ -13,7 +13,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </th>
 
-          <th colSpan="8" style={{ borderLeft: '2px solid #ddd' }}>
+          <th colSpan="9" style={{ borderLeft: '2px solid #ddd' }}>
             Product
           </th>
 
@@ -51,13 +51,14 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th style={{ borderLeft: '2px solid #ddd' }}>PID</th>
           <th className="x-wide">Product</th>
           <th className="wideish">SKU</th>
+          <th title="Internal Surfdome SKU">SD SKU</th>
           <th>Cost</th>
           <th>RRP</th>
           <th className="narrowish">Size</th>
           <th title="Brand Size">Br. Size</th>
           <th>Gender</th>
 
-          <th className="wide" style={{ borderLeft: '2px solid #ddd' }}>Type</th>
+          <th className="wideish" style={{ borderLeft: '2px solid #ddd' }}>Type</th>
           <th className="narrowish">Qty</th>
           <th>Cost</th>
           <th>Val</th>

@@ -27,6 +27,7 @@ export default class PurchaseOrderRow extends React.Component {
         </td>
         <td className="x-wide">{this.props.purchaseOrder.productName}</td>
         <td className="wideish">{this.props.purchaseOrder.productSku}</td>
+        <td>{this.props.purchaseOrder.internalSku}</td>
 
         <EditRowCost displayValue={this.props.purchaseOrder.productCost}
                      orderId={this.props.purchaseOrder.orderId}
@@ -38,7 +39,7 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.brandSize}</td>
         <td>{this.props.purchaseOrder.gender}</td>
 
-        <td className="wide" style={{ borderLeft: '2px solid #ddd' }}>
+        <td className="wideish" style={{ borderLeft: '2px solid #ddd' }}>
           {this.props.purchaseOrder.orderType}
         </td>
         <EditRowQuantity displayValue={this.props.purchaseOrder.orderedQuantity}
