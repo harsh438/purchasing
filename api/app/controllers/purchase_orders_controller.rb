@@ -1,5 +1,5 @@
 class PurchaseOrdersController < ApplicationController
-  protect_from_forgery except: [:cancel, :cancel_order, :update]
+  protect_from_forgery except: :cancel
 
   def index
     render json: PurchaseOrder::Search.new.summary(params)
