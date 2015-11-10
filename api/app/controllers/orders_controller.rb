@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
   def index
-    render json: Order.all
+    render json: Order.latest.page(params[:page])
   end
 end

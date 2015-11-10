@@ -1,4 +1,8 @@
 class Order < ActiveRecord::Base
+  scope :latest, -> { order(created_at: :desc) }
+
+  paginates_per 50
+
   after_initialize :ensure_status
 
   validates :status, inclusion: { in: %w(new finalized ordered) }
