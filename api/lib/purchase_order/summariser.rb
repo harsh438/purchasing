@@ -1,4 +1,4 @@
-class PurchaseOrder::Summary
+class PurchaseOrder::Summariser
   include ActionView::Helpers::NumberHelper
 
   def summary(attrs)
