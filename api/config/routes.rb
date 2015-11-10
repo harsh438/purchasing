@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root to: 'frontend#index'
+  get :orders, to: 'frontend#index'
 
   scope :api, format: true, defaults: { format: :json } do
     resources :orders, only: :index

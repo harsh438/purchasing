@@ -1,4 +1,6 @@
+import { assign } from 'lodash';
 import React from 'react';
+import { connect } from 'react-redux';
 
 class OrdersIndex extends React.Component {
   render() {
