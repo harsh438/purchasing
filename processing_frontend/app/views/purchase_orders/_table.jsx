@@ -115,7 +115,7 @@ export default class PurchaseOrdersTable extends React.Component {
 
   shouldStick () {
     if (this.header) {
-      return window.pageYOffset > 444;
+      return window.pageYOffset > 475;
     }
   }
 
