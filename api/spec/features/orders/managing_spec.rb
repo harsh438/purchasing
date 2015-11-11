@@ -12,6 +12,12 @@ feature 'Manage order details' do
     then_i_should_see_the_list_item_under_the_order
   end
 
+  scenario 'Generating POs from order' do
+    given_i_have_added_list_items_to_an_order
+    when_i_want_to_generate_purchase_orders
+    then_my_order_should_be_split_into_purchase_orders_correctly
+  end
+
   def when_i_request_order_details
     visit order_path(create(:order, line_item_count: 2))
   end
@@ -40,5 +46,17 @@ feature 'Manage order details' do
                                                                 cost: '1.0',
                                                                 quantity: 1,
                                                                 discount: '0.0' }.stringify_keys))
+  end
+
+  def given_i_have_added_list_items_to_an_order
+    @order = create(:order, line_item_count: 2)
+  end
+
+  def when_i_want_to_generate_purchase_orders
+    page.driver.post(export_order_path(@order))
+  end
+
+  def then_my_order_should_be_split_into_purchase_orders_correctly
+    expect(subject['exports'].count).to be > 0
   end
 end

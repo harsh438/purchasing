@@ -16,6 +16,11 @@ class OrdersController < ApplicationController
     render json: order.as_json(include: :line_items)
   end
 
+  def export
+    Order::Exporter.new.export(order)
+    render json: order.as_json(include: [:line_items, :exports])
+  end
+
   private
 
   def order

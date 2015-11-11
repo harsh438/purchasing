@@ -6,6 +6,7 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :line_items
 
   validates :status, inclusion: { in: %w(new finalized ordered) }
+  has_many :exports, class_name: 'OrderExport'
 
   after_initialize :ensure_status
 
