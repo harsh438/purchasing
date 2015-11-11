@@ -6,7 +6,7 @@ import { loadOrder } from '../../actions/orders'
 
 class OrdersEdit extends React.Component {
   componentWillMount() {
-    if (this.props.params.id !== this.props.order.id) {
+    if (this.props.params.id != this.props.order.id) {
       this.props.dispatch(loadOrder(this.props.params.id));
     }
   }
