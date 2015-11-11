@@ -11,6 +11,15 @@ export function loadOrders() {
   };
 }
 
+export function createOrder() {
+  return dispatch => {
+    fetch(`/api/orders.json`, { credentials: 'same-origin',
+                                method: 'post' })
+      .then(response => response.json())
+      .then(order => dispatch({ order, type: 'CREATE_ORDER' }));
+  };
+}
+
 export function loadOrder(id) {
   return dispatch => {
     fetch(`/api/orders/${id}.json`, { credentials: 'same-origin' })
