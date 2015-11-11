@@ -1,9 +1,8 @@
 import React from 'react';
 import { assign } from 'lodash';
 import { connect } from 'react-redux';
-import { OrdersHeader } from './_orders_header'
-import { OrdersTable } from './_orders_table'
-import { loadOrders } from '../../actions/orders'
+import { OrdersTable } from './_table';
+import { loadOrders } from '../../actions/orders';
 
 class OrdersIndex extends React.Component {
   componentWillMount () {
@@ -15,11 +14,6 @@ class OrdersIndex extends React.Component {
       <div className="orders_index container-fluid">
         <div className="row">
           <div className="col-md-12">
-            <OrdersHeader />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
             <OrdersTable orders={this.props.orders} />
           </div>
         </div>
@@ -29,7 +23,7 @@ class OrdersIndex extends React.Component {
 }
 
 function applyState({ orders }) {
-  return assign({}, orders);
+  return orders;
 }
 
 export default connect(applyState)(OrdersIndex);

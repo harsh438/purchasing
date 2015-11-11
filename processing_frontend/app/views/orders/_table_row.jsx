@@ -1,6 +1,6 @@
 import React from 'react';
 
-export class OrderRow extends React.Component {
+export class OrdersTableRow extends React.Component {
   render() {
     return (
       <tr>
