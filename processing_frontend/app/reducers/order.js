@@ -4,9 +4,9 @@ import { camelizeKeys } from '../utilities/inspection';
 const initialState =  { order: [] };
 
 function transformOrder(order) {
-  let o = camelizeKeys(order);
-  o.lineItems = map(o.lineItems, (line) => camelizeKeys(line));
-  return o;
+  const transformedOrder = camelizeKeys(order);
+  const transformedLineItems = map(transformedOrder.lineItems, camelizeKeys);
+  return assign({}, transformedOrder, { lineItems: transformedLineItems });
 }
 
 function setOrder(state, order) {
