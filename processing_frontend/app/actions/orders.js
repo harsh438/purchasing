@@ -47,8 +47,6 @@ export function createLineItemForOrder(id, params) {
 }
 
 export function exportOrders(id) {
-  console.log(JSON.stringify({ id }))
-
   return dispatch => {
     fetch(`/api/orders/export.json`, { credentials: 'same-origin',
                                        method: 'POST',
