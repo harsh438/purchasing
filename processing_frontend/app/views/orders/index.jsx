@@ -9,6 +9,13 @@ class OrdersIndex extends React.Component {
     this.props.dispatch(loadOrders());
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.redirectToOrder) {
+      this.props.history.pushState(null, `/orders/${nextProps.order.id}/edit`);
+      this.props.dispatch({ type: 'CLEAR_REDIRECT_TO_ORDER' })
+    }
+  }
+
   render() {
     return (
       <div className="orders_index container-fluid"
@@ -44,8 +51,8 @@ class OrdersIndex extends React.Component {
   }
 }
 
-function applyState({ orders }) {
-  return orders;
+function applyState({ orders, order }) {
+  return assign({}, orders, order);
 }
 
 export default connect(applyState)(OrdersIndex);
