@@ -5,10 +5,9 @@ import { OrdersTableRow } from './_table_row';
 export class OrdersTable extends React.Component {
   render() {
     return (
-      <div className="panel panel-default"
-           style={{ marginTop: '70px' }}>
+      <div className="panel panel-default">
         <div className="panel-heading">
-          <h3 className="panel-title">Shopping lists</h3>
+          <h3 className="panel-title">Latest Orders</h3>
         </div>
 
         <div className="panel-body">
@@ -16,7 +15,7 @@ export class OrdersTable extends React.Component {
             <table className="table">
               <thead>
                 <tr>
-                  <th>List</th>
+                  <th>Order</th>
                   <th className="text-center" style={{ width: '20%' }}>Created</th>
                   <th className="text-center" style={{ width: '20%' }}>Exported</th>
                 </tr>

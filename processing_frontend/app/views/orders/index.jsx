@@ -2,7 +2,7 @@ import React from 'react';
 import { assign } from 'lodash';
 import { connect } from 'react-redux';
 import { OrdersTable } from './_table';
-import { loadOrders } from '../../actions/orders';
+import { loadOrders, createOrder } from '../../actions/orders';
 
 class OrdersIndex extends React.Component {
   componentWillMount () {
@@ -11,7 +11,23 @@ class OrdersIndex extends React.Component {
 
   render() {
     return (
-      <div className="orders_index container-fluid">
+      <div className="orders_index container-fluid"
+           style={{ marginTop: '70px' }}>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="panel panel-default">
+              <div className="panel-heading">
+                <h3 className="panel-title">Create a re-order</h3>
+              </div>
+
+              <div className="panel-body">
+                <button className="btn btn-success"
+                        onClick={this.createOrder.bind(this)}>Create order</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="row">
           <div className="col-md-12">
             <OrdersTable orders={this.props.orders} />
@@ -19,6 +35,10 @@ class OrdersIndex extends React.Component {
         </div>
       </div>
     );
+  }
+
+  createOrder () {
+    this.props.dispatch(createOrder());
   }
 }
 
