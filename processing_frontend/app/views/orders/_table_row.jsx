@@ -4,10 +4,9 @@ export class OrdersTableRow extends React.Component {
   render() {
     return (
       <tr>
-        <td>{this.props.id}</td>
-        <td>{this.props.status}</td>
-        <td>{this.props.createdAt}</td>
-        <td>{this.props.updatedAt}</td>
+        <td>Shopping list {this.props.id}</td>
+        <td className="text-center">{this.props.createdAt}</td>
+        <td className="text-center">{this.props.exportedAt || '✘'}</td>
       </tr>
     );
   }

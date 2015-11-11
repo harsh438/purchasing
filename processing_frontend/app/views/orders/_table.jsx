@@ -16,12 +16,12 @@ export class OrdersTable extends React.Component {
             <table className="table">
               <thead>
                 <tr>
-                  <th>Id</th>
-                  <th>Status</th>
-                  <th>Created</th>
-                  <th>Updated</th>
+                  <th>List</th>
+                  <th className="text-center" style={{ width: '20%' }}>Created</th>
+                  <th className="text-center" style={{ width: '20%' }}>Exported</th>
                 </tr>
               </thead>
+
               <tbody>
                 {this.renderRows()}
               </tbody>

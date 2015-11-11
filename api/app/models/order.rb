@@ -20,7 +20,16 @@ class Order < ActiveRecord::Base
 
   def as_json(options = {})
     super.tap do |order|
+      order[:created_at] = created_at.to_s
+      order[:updated_at] = updated_at.to_s
       order[:status] = status
+      order[:exported] = exported?
+
+      if exported?
+        order[:exported_at] = exports.first.created_at.to_s
+      else
+        order[:exported_at] = nil
+      end
     end
   end
 end
