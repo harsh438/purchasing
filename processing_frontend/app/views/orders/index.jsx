@@ -22,7 +22,9 @@ class OrdersIndex extends React.Component {
 
               <div className="panel-body">
                 <button className="btn btn-success"
-                        onClick={this.createOrder.bind(this)}>Create order</button>
+                        onClick={this.dispatchCreateOrder.bind(this)}>
+                  Create order
+                </button>
               </div>
             </div>
           </div>
@@ -37,7 +39,7 @@ class OrdersIndex extends React.Component {
     );
   }
 
-  createOrder () {
+  dispatchCreateOrder () {
     this.props.dispatch(createOrder());
   }
 }
