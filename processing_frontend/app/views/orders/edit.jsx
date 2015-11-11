@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { map, assign } from 'lodash';
 import { loadOrder } from '../../actions/orders'
 
@@ -16,6 +17,12 @@ class OrdersEdit extends React.Component {
            style={{ marginTop: '70px' }}>
         <div className="container-fluid">
           <div className="row">
+            <div className="panel panel-default">
+              <div className="panel-body">
+                <Link to="/orders">Temporary link back to orders</Link>
+              </div>
+            </div>
+
             <div className="col-md-12">
               <table className="table">
                 <thead>
