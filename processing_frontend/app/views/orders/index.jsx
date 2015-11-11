@@ -6,13 +6,13 @@ import { loadOrders, createOrder } from '../../actions/orders';
 
 class OrdersIndex extends React.Component {
   componentWillMount () {
+    this.state = { creatingOrder: false };
     this.props.dispatch(loadOrders());
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.redirectToOrder) {
+    if (this.state.creatingOrder && nextProps.order) {
       this.props.history.pushState(null, `/orders/${nextProps.order.id}/edit`);
-      this.props.dispatch({ type: 'CLEAR_REDIRECT_TO_ORDER' })
     }
   }
 
@@ -47,6 +47,7 @@ class OrdersIndex extends React.Component {
   }
 
   dispatchCreateOrder () {
+    this.setState({ creatingOrder: true });
     this.props.dispatch(createOrder());
   }
 }

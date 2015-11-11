@@ -19,10 +19,6 @@ export default function reduceOrder(state = initialState, action) {
       return setOrder(state, action);
     case 'CREATE_ORDER':
       return setOrder(state, action);
-    case 'REDIRECT_TO_ORDER':
-      return assign({}, state, { redirectToOrder: true });
-    case 'CLEAR_REDIRECT_TO_ORDER':
-      return omit(state, 'redirectToOrder');
     default:
       return state;
   }

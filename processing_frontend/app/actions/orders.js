@@ -22,9 +22,6 @@ export function createOrder() {
     fetch(`/api/orders.json`, { credentials: 'same-origin',
                                 method: 'post' })
       .then(response => response.json())
-      .then(function (order) {
-        dispatch({ order, type: 'CREATE_ORDER' });
-        dispatch({ type: 'REDIRECT_TO_ORDER' });
-      });
+      .then(order => dispatch({ order, type: 'CREATE_ORDER' }));
   };
 }
