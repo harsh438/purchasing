@@ -1,7 +1,7 @@
 import { assign, map } from 'lodash';
 import { camelizeKeys } from '../utilities/inspection';
 
-const initialState =  { order: [] };
+const initialState =  { order: {} };
 
 function transformOrder(order) {
   const transformedOrder = camelizeKeys(order);
