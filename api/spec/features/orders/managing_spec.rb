@@ -57,6 +57,7 @@ feature 'Manage order details' do
   end
 
   def then_my_order_should_be_split_into_purchase_orders_correctly
+    expect(subject['status']).to eq('exported')
     expect(subject['exports'].count).to be > 0
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151111105914) do
+ActiveRecord::Schema.define(version: 20151111110520) do
 
   create_table "ds_language_categories", force: :cascade do |t|
     t.integer "langID",  limit: 4,   default: 0,  null: false
@@ -254,12 +254,9 @@ ActiveRecord::Schema.define(version: 20151111105914) do
   add_index "order_suppliers", ["orderID"], name: "orderID", unique: true, using: :btree
 
   create_table "orders", force: :cascade do |t|
-    t.string   "status",     limit: 255, default: "new"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "orders", ["status"], name: "index_orders_on_status", using: :btree
 
   create_table "po_summary", primary_key: "po_num", force: :cascade do |t|
     t.string  "Brand",         limit: 64,  default: "", null: false

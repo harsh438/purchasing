@@ -5,18 +5,22 @@ class Order < ActiveRecord::Base
   has_many :line_items, class_name: 'OrderLineItem'
   accepts_nested_attributes_for :line_items
 
-  validates :status, inclusion: { in: %w(new finalized ordered) }
   has_many :exports, class_name: 'OrderExport'
 
-  after_initialize :ensure_status
+  def status
+    if exports.count > 0
+      :exported
+    else
+      :new
+    end
+  end
 
-  def new?; status == 'new'; end
-  def finalized?; status == 'finalized'; end
-  def ordered?; status == 'ordered'; end
+  def new?; status == :new; end
+  def exported?; status == :exported; end
 
-  private
-
-  def ensure_status
-    self.status ||= 'new'
+  def as_json(options = {})
+    super.tap do |order|
+      order[:status] = status
+    end
   end
 end
