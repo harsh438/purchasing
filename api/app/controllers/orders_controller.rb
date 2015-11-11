@@ -17,8 +17,9 @@ class OrdersController < ApplicationController
   end
 
   def export
-    Order::Exporter.new.export(order)
-    render json: order.as_json(include: [:line_items, :exports])
+    orders = Order.where(id: params[:id]).includes(:line_items, :exports)
+    Order::Exporter.new.export(orders)
+    render json: orders.map { |order| order.as_json(include: [:line_items, :exports]) }
   end
 
   private

@@ -53,11 +53,11 @@ feature 'Manage order details' do
   end
 
   def when_i_want_to_generate_purchase_orders
-    page.driver.post(export_order_path(@order))
+    page.driver.post(export_orders_path, id: @order.id)
   end
 
   def then_my_order_should_be_split_into_purchase_orders_correctly
-    expect(subject['status']).to eq('exported')
-    expect(subject['exports'].count).to be > 0
+    expect(subject.first['status']).to eq('exported')
+    expect(subject.first['exports'].count).to be > 0
   end
 end

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   scope :api, format: true, defaults: { format: :json } do
     resources :orders, only: [:index, :show, :create, :update] do
-      member do
+      collection do
         post :export
       end
     end

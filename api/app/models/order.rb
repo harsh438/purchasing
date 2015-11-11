@@ -8,7 +8,7 @@ class Order < ActiveRecord::Base
   has_many :exports, class_name: 'OrderExport'
 
   def status
-    if exports.count > 0
+    if exports.size > 0
       :exported
     else
       :new
