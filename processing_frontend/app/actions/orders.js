@@ -16,5 +16,3 @@ export function loadOrder(id) {
       .then(order => dispatch({ order, type: 'SET_ORDER' }));
   };
 }
-
-}
