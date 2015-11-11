@@ -230,15 +230,15 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   end
 
   def balance_quantity
-    quantity - delivered_quantity
+    quantity - delivered_quantity - cancelled_quantity
   end
 
   def balance_cost
-    ordered_cost - delivered_cost
+    ordered_cost - delivered_cost - cancelled_cost
   end
 
   def balance_value
-    ordered_value - delivered_value
+    ordered_value - delivered_value - cancelled_value
   end
 
   def order_type
