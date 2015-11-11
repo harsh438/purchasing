@@ -61,12 +61,9 @@ function action(type) {
 
 function makeApiRequest(url, params) {
   return dispatch => {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
     fetch(url, { credentials: 'same-origin',
                  method: 'POST',
-                 headers: headers,
+                 headers: { 'Content-Type': 'application/json' },
                  body: JSON.stringify(params) })
       .then(response => response.json())
       .then(purchaseOrders => {

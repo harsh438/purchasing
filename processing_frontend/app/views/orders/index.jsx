@@ -2,7 +2,7 @@ import React from 'react';
 import { assign } from 'lodash';
 import { connect } from 'react-redux';
 import { OrdersTable } from './_table';
-import { loadOrders, createOrder } from '../../actions/orders';
+import { loadOrders, createOrder, exportOrders } from '../../actions/orders';
 
 class OrdersIndex extends React.Component {
   componentWillMount () {
@@ -40,7 +40,8 @@ class OrdersIndex extends React.Component {
 
         <div className="row">
           <div className="col-md-12">
-            <OrdersTable orders={this.props.orders} />
+            <OrdersTable orders={this.props.orders}
+                         onExportOrders={this.dispatchExportOrder.bind(this)} />
           </div>
         </div>
       </div>
@@ -50,6 +51,10 @@ class OrdersIndex extends React.Component {
   dispatchCreateOrder () {
     this.setState({ creatingOrder: true });
     this.props.dispatch(createOrder());
+  }
+
+  dispatchExportOrder (orderIds) {
+    this.props.dispatch(exportOrders(orderIds));
   }
 }
 

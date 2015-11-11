@@ -21,9 +21,6 @@ export function loadOrder(id) {
 
 export function createLineItemForOrder(id, params) {
   return dispatch => {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
     params.order.lineItemsAttributes = map(params.order.lineItemsAttributes,
                                            (line) => snakeizeKeys(line));
 
@@ -33,9 +30,22 @@ export function createLineItemForOrder(id, params) {
 
     fetch(`/api/orders/${id}.json`, { credentials: 'same-origin',
                                       method: 'PATCH',
-                                      headers: headers,
+                                      headers: { 'Content-Type': 'application/json' },
                                       body: JSON.stringify(params) })
       .then(response => response.json())
       .then(order => dispatch({ order, type: 'SET_ORDER' }));
+  };
+}
+
+export function exportOrders(id) {
+  console.log(JSON.stringify({ id }))
+
+  return dispatch => {
+    fetch(`/api/orders/export.json`, { credentials: 'same-origin',
+                                       method: 'POST',
+                                       headers: { 'Content-Type': 'application/json' },
+                                       body: JSON.stringify({ id }) })
+      .then(response => response.json())
+      .then(orders => dispatch(loadOrders()));
   };
 }
