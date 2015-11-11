@@ -10,7 +10,8 @@ class OrdersEdit extends React.Component {
 
   render() {
     return (
-      <div className="order_edit">
+      <div className="order_edit"
+           style={{ marginTop: '70px' }}>
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-12">
@@ -71,7 +72,6 @@ class OrdersEdit extends React.Component {
 }
 
 function applyState({ order }) {
-  console.log(order);
   return assign({}, order);
 }
 
