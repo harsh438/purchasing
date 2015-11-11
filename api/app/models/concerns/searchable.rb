@@ -1,6 +1,5 @@
 module Searchable
   extend ActiveSupport::Concern
-  include LegacyMappings
 
   included do
     scope :mapped, -> { select(legacy_fields) }
