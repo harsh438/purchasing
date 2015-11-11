@@ -1,4 +1,4 @@
-class OrderType
+class PurchaseOrderLineItem::OrderType
   def self.string_from(char)
     case char
       when 'P'

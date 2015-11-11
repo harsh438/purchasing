@@ -1,4 +1,4 @@
-class Status
+class PurchaseOrderLineItem::Status
   def self.sym_from_int(i)
     case i
       when -1
