@@ -1,19 +1,18 @@
 import Qs from 'qs';
-import { assign, omit, isEmpty, isNumber, mapKeys, snakeCase, rearg } from 'lodash';
+import { assign } from 'lodash';
 import 'whatwg-fetch';
-import { removeEmptyKeys } from '../utilities/inspection'
+import { removeEmptyKeys, snakeizeKeys } from '../utilities/inspection'
 
 const defaultParams = { sort_by: 'drop_date_asc' };
 
 function fetchPurchaseOrders(params, page, action) {
   return dispatch => {
-    const snakeCasedParams = mapKeys(params, rearg(snakeCase, [1, 0]));
-    const translatedParams = assign({}, snakeCasedParams, { page,
-                                                            vendor_id: params.brand,
-                                                            summary_id: params.poNumber,
-                                                            category_id: params.category,
-                                                            product_id: params.pid,
-                                                            product_sku: params.sku });
+    const translatedParams = assign({}, snakeizeKeys(params), { page,
+                                                                vendor_id: params.brand,
+                                                                summary_id: params.poNumber,
+                                                                category_id: params.category,
+                                                                product_id: params.pid,
+                                                                product_sku: params.sku });
     const query = removeEmptyKeys(assign({}, defaultParams, translatedParams));
     const queryString = Qs.stringify(query, { arrayFormat: 'brackets' });
 
@@ -30,8 +29,7 @@ function fetchPurchaseOrders(params, page, action) {
 
 function fetchSummary(params) {
   return dispatch => {
-    const snakeCasedParams = mapKeys(params, rearg(snakeCase, [1, 0]));
-    const translatedParams = assign({}, snakeCasedParams, { vendor_id: params.brand,
+    const translatedParams = assign({}, snakeizeKeys(params), { vendor_id: params.brand,
                                                             summary_id: params.poNumber,
                                                             category_id: params.category,
                                                             product_id: params.pid,

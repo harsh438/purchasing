@@ -1,5 +1,7 @@
 import React from 'react';
 import 'whatwg-fetch';
+import { map } from 'lodash'
+import { snakeizeKeys } from '../utilities/inspection'
 
 export function loadOrders() {
   return dispatch => {
@@ -17,11 +19,23 @@ export function loadOrder(id) {
   };
 }
 
-export function createOrder() {
+export function createLineItemForOrder(id, params) {
   return dispatch => {
-    fetch(`/api/orders.json`, { credentials: 'same-origin',
-                                method: 'post' })
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    params.order.lineItemsAttributes = map(params.order.lineItemsAttributes,
+                                           (line) => snakeizeKeys(line));
+
+    params.order = snakeizeKeys(params.order);
+
+    let snakedParams = snakeizeKeys(params);
+
+    fetch(`/api/orders/${id}.json`, { credentials: 'same-origin',
+                                      method: 'PATCH',
+                                      headers: headers,
+                                      body: JSON.stringify(params) })
       .then(response => response.json())
-      .then(order => dispatch({ order, type: 'CREATE_ORDER' }));
+      .then(order => dispatch({ order, type: 'SET_ORDER' }));
   };
 }

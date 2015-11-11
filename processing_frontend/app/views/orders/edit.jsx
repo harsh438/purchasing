@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { map, assign } from 'lodash';
-import { loadOrder } from '../../actions/orders'
+import { loadOrder, createLineItemForOrder } from '../../actions/orders'
 
 class OrdersEdit extends React.Component {
   componentWillMount() {
@@ -44,6 +44,17 @@ class OrdersEdit extends React.Component {
               </table>
             </div>
           </div>
+
+          <div className="row">
+            <div className="col-md-3">
+              <button className="btn btn-success"
+                      style={{ marginTop: '1.74em', width: '100%' }}
+                      onClick={this.dispatchCreateLineItem.bind(this)}>
+                New Line Item
+              </button>
+            </div>
+          </div>
+
           <div className="row">
             <div className="col-md-12">
               <table className="table">
@@ -64,6 +75,15 @@ class OrdersEdit extends React.Component {
         </div>
       </div>
     );
+  }
+
+  dispatchCreateLineItem() {
+    this.props.dispatch(createLineItemForOrder(this.props.params.id,
+                                               { order: { lineItemsAttributes: [{ internalSku: '1123-123',
+                                                                                  quantity: 5,
+                                                                                  cost: '1.40',
+                                                                                  discount: 3,
+                                                                                  dropDate: '2012-01-01' }] } }))
   }
 
   renderLineItems() {
