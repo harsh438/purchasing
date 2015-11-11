@@ -7,7 +7,9 @@ export default class Application extends React.Component {
     return (
       <div className="purchase_processing_app">
         <Header />
-        {this.props.children}
+        <div style={{ marginTop: '80px' }}>
+          {this.props.children}
+        </div>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import { assign, map, reduce, findIndex, mapKeys, rearg } from 'lodash';
-import { camelizeKeys } from '../utilities/inspection'
+import { camelizeKeys } from '../utilities/inspection';
 
 const initialState =  { exportable: {},
                         page: 1,

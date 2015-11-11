@@ -12,8 +12,7 @@ class OrdersIndex extends React.Component {
 
   render() {
     return (
-      <div className="orders_index container-fluid"
-           style={{ marginTop: '50px' }}>
+      <div className="orders_index container-fluid">
         <div className="row">
           <div className="col-md-12">
             <OrdersHeader />
