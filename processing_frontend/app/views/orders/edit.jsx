@@ -136,6 +136,10 @@ class OrdersEdit extends React.Component {
   }
 
   renderLineItems() {
+    if (!this.props.order.lineItems || this.props.order.lineItems.length == 0) {
+      return (<tr><td><h4>No line items found.</h4></td></tr>);
+    }
+
     return map(this.props.order.lineItems, (line) => {
       return (
         <tr>
