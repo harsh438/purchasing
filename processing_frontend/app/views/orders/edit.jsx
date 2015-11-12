@@ -6,6 +6,12 @@ import { loadOrder, createLineItemForOrder } from '../../actions/orders'
 
 class OrdersEdit extends React.Component {
   componentWillMount() {
+    this.state = { internalSku: '',
+                   quantity: 0,
+                   cost: '0.00',
+                   discount: '0.00',
+                   dropDate: '' };
+
     if (this.props.params.id != this.props.order.id) {
       this.props.dispatch(loadOrder(this.props.params.id));
     }
@@ -25,15 +31,6 @@ class OrdersEdit extends React.Component {
         </div>
       </div>
     );
-  }
-
-  dispatchCreateLineItem() {
-    this.props.dispatch(createLineItemForOrder(this.props.params.id,
-                                               { order: { lineItemsAttributes: [{ internalSku: '1123-123',
-                                                                                  quantity: 5,
-                                                                                  cost: '1.40',
-                                                                                  discount: 3,
-                                                                                  dropDate: '2012-01-01' }] } }))
   }
 
   renderOrderLineRow() {
@@ -62,16 +59,75 @@ class OrdersEdit extends React.Component {
     return (
       <div className="row">
         <div className="col-md-12">
-          <form className="form-horizontal">
-            <button className="btn btn-success"
-                    style={{ marginTop: '1.74em', width: '100%' }}
-                    onClick={this.dispatchCreateLineItem.bind(this)}>
-              New Line Item
-            </button>
+          <form className="form-inline" onSubmit={this.handleLineItemSubmit.bind(this)}>
+            <div className="form-group">
+              <label htmlFor="internalSku">Internal Sku</label>
+              <input type="text"
+                     name="internalSku"
+                     onChange={this.handleChange.bind(this, 'internalSku')}
+                     className="form-control"
+                     value={this.state.internalSku} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="quantity">Quantity</label>
+              <input type="number"
+                     name="quantity"
+                     onChange={this.handleChange.bind(this, 'quantity')}
+                     className="form-control"
+                     value={this.state.quantity} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="cost">Cost</label>
+              <input type="number"
+                     step="0.01"
+                     name="cost"
+                     onChange={this.handleChange.bind(this, 'cost')}
+                     className="form-control"
+                     value={this.state.cost} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="discount">Discount</label>
+              <input type="number"
+                     step="0.01"
+                     name="discount"
+                     onChange={this.handleChange.bind(this, 'discount')}
+                     className="form-control"
+                     value={this.state.discount} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="dropDate">Drop Date</label>
+              <input type="date"
+                     name="dropDate"
+                     onChange={this.handleChange.bind(this, 'dropDate')}
+                     className="form-control"
+                     value={this.state.dropDate} />
+            </div>
+            <div className="form-group">
+              <button className="btn btn-success">
+                Create
+              </button>
+            </div>
           </form>
         </div>
       </div>
     );
+  }
+
+  handleLineItemSubmit (e) {
+    e.preventDefault();
+    this.props.dispatch(createLineItemForOrder(this.props.params.id, this.lineItemState()))
+  }
+
+  lineItemState() {
+    return { order: { lineItemsAttributes: [{ internalSku: this.state.internalSku,
+                                              quantity: this.state.quantity,
+                                              cost: this.state.cost,
+                                              discount: this.state.discount,
+                                              dropDate: this.state.dropDate }] } }
+  }
+
+  handleChange (field, { target }) {
+    this.setState({ [field]: target.value });
   }
 
   renderLineItems() {
