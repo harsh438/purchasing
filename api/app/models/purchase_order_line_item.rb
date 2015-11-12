@@ -77,6 +77,9 @@ class PurchaseOrderLineItem < ActiveRecord::Base
 
   has_many :suppliers, through: :vendor
 
+  after_initialize :set_legacy_fields
+  after_initialize :ensure_defaults
+
   map_attributes id: :id,
                  product_id: :pID,
                  option_id: :oID,
@@ -305,5 +308,19 @@ class PurchaseOrderLineItem < ActiveRecord::Base
 
   def monetize(figure)
     number_to_currency(figure, unit: '£')
+  end
+
+  def ensure_defaults
+    self.added ||= Time.now
+    self.arrived_date ||= 0
+    self.cancelled_date ||= 0
+    self.inv_date ||= 0
+  end
+
+  def set_legacy_fields
+    self.reporting_product_id = 0
+    self.original_product_id = 0
+    self.original_option_id = 0
+    self.line_id = 0
   end
 end

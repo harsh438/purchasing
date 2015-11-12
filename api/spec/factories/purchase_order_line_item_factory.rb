@@ -10,17 +10,11 @@ FactoryGirl.define do
     invoice_payable_date 3.days.ago
 
     # These should be blank.
-    arrived_date 100.years.ago
-    cancelled_date 100.years.ago
 
     season :AW15
     vendor_id 0
-    reporting_product_id 0
-    original_product_id 0
-    original_option_id 0
     summary_id 1
     gender ''
-    line_id 0
 
     trait :arrived do
       arrived_date 1.day.ago
