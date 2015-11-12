@@ -6,14 +6,16 @@ import { loadOrder, createLineItemForOrder } from '../../actions/orders'
 
 class OrdersEdit extends React.Component {
   componentWillMount() {
-    this.state = { internalSku: '',
-                   quantity: 0,
-                   cost: '0.00',
-                   discount: '0.00',
-                   dropDate: '' };
+    this.resetState();
 
     if (this.props.params.id != this.props.order.id) {
       this.props.dispatch(loadOrder(this.props.params.id));
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props != nextProps) {
+      this.resetState();
     }
   }
 
@@ -186,6 +188,14 @@ class OrdersEdit extends React.Component {
 
   handleChange (field, { target }) {
     this.setState({ [field]: target.value });
+  }
+
+  resetState() {
+    this.setState({ internalSku: '',
+                    quantity: 0,
+                    cost: '0.00',
+                    discount: '0.00',
+                    dropDate: '' });
   }
 }
 
