@@ -56,11 +56,15 @@ class OrdersEdit extends React.Component {
   }
 
   renderOrderLineForm() {
+    if (this.props.exported) {
+      return (<div />);
+    }
+
     return (
       <div className="row">
         <div className="col-md-12">
-          <form className="form-inline" onSubmit={this.handleLineItemSubmit.bind(this)}>
-            <div className="form-group">
+          <form className="form" onSubmit={this.handleLineItemSubmit.bind(this)}>
+            <div className="form-group col-md-2">
               <label htmlFor="internalSku">Internal Sku</label>
               <input type="text"
                      name="internalSku"
@@ -68,7 +72,7 @@ class OrdersEdit extends React.Component {
                      className="form-control"
                      value={this.state.internalSku} />
             </div>
-            <div className="form-group">
+            <div className="form-group col-md-2">
               <label htmlFor="quantity">Quantity</label>
               <input type="number"
                      name="quantity"
@@ -76,7 +80,7 @@ class OrdersEdit extends React.Component {
                      className="form-control"
                      value={this.state.quantity} />
             </div>
-            <div className="form-group">
+            <div className="form-group col-md-2">
               <label htmlFor="cost">Cost</label>
               <input type="number"
                      step="0.01"
@@ -85,7 +89,7 @@ class OrdersEdit extends React.Component {
                      className="form-control"
                      value={this.state.cost} />
             </div>
-            <div className="form-group">
+            <div className="form-group col-md-2">
               <label htmlFor="discount">Discount</label>
               <input type="number"
                      step="0.01"
@@ -94,7 +98,7 @@ class OrdersEdit extends React.Component {
                      className="form-control"
                      value={this.state.discount} />
             </div>
-            <div className="form-group">
+            <div className="form-group col-md-2">
               <label htmlFor="dropDate">Drop Date</label>
               <input type="date"
                      name="dropDate"
@@ -102,7 +106,7 @@ class OrdersEdit extends React.Component {
                      className="form-control"
                      value={this.state.dropDate} />
             </div>
-            <div className="form-group">
+            <div className="form-group col-md-2" style={{ marginTop: '1.7em' }}>
               <button className="btn btn-success">
                 Create
               </button>
@@ -111,23 +115,6 @@ class OrdersEdit extends React.Component {
         </div>
       </div>
     );
-  }
-
-  handleLineItemSubmit (e) {
-    e.preventDefault();
-    this.props.dispatch(createLineItemForOrder(this.props.params.id, this.lineItemState()))
-  }
-
-  lineItemState() {
-    return { order: { lineItemsAttributes: [{ internalSku: this.state.internalSku,
-                                              quantity: this.state.quantity,
-                                              cost: this.state.cost,
-                                              discount: this.state.discount,
-                                              dropDate: this.state.dropDate }] } }
-  }
-
-  handleChange (field, { target }) {
-    this.setState({ [field]: target.value });
   }
 
   renderLineItems() {
@@ -182,6 +169,23 @@ class OrdersEdit extends React.Component {
         </div>
       </div>
     );
+  }
+
+  handleLineItemSubmit (e) {
+    e.preventDefault();
+    this.props.dispatch(createLineItemForOrder(this.props.params.id, this.lineItemState()))
+  }
+
+  lineItemState() {
+    return { order: { lineItemsAttributes: [{ internalSku: this.state.internalSku,
+                                              quantity: this.state.quantity,
+                                              cost: this.state.cost,
+                                              discount: this.state.discount,
+                                              dropDate: this.state.dropDate }] } }
+  }
+
+  handleChange (field, { target }) {
+    this.setState({ [field]: target.value });
   }
 }
 
