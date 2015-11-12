@@ -81,6 +81,7 @@ class OrdersEdit extends React.Component {
                          name="internalSku"
                          onChange={this.handleChange.bind(this, 'internalSku')}
                          className="form-control"
+                         required="required"
                          value={this.state.internalSku} />
                 </div>
                 <div className="form-group col-md-2">
@@ -89,6 +90,7 @@ class OrdersEdit extends React.Component {
                          name="quantity"
                          onChange={this.handleChange.bind(this, 'quantity')}
                          className="form-control"
+                         required="required"
                          value={this.state.quantity} />
                 </div>
                 <div className="form-group col-md-2">
@@ -98,6 +100,7 @@ class OrdersEdit extends React.Component {
                          name="cost"
                          onChange={this.handleChange.bind(this, 'cost')}
                          className="form-control"
+                         required="required"
                          value={this.state.cost} />
                 </div>
                 <div className="form-group col-md-2">
@@ -107,6 +110,7 @@ class OrdersEdit extends React.Component {
                          name="discount"
                          onChange={this.handleChange.bind(this, 'discount')}
                          className="form-control"
+                         required="required"
                          value={this.state.discount} />
                 </div>
                 <div className="form-group col-md-2">
@@ -115,6 +119,7 @@ class OrdersEdit extends React.Component {
                          name="dropDate"
                          onChange={this.handleChange.bind(this, 'dropDate')}
                          className="form-control"
+                         required="required"
                          value={this.state.dropDate} />
                 </div>
                 <div className="form-group col-md-2" style={{ marginTop: '1.7em' }}>
