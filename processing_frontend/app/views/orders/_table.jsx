@@ -9,7 +9,6 @@ export class OrdersTable extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log('changing state');
     this.setState({ exportingOrders: false,
                     selectedOrders: [] });
   }
