@@ -6,6 +6,7 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :line_items
 
   has_many :exports, class_name: 'OrderExport'
+  has_many :purchase_orders, through: :exports
 
   def status
     if exports.size > 0
