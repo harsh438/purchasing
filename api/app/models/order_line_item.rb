@@ -11,6 +11,9 @@ class OrderLineItem < ActiveRecord::Base
                                        less_than_or_equal_to: 100 }
   validates :drop_date, presence: true
 
+  def vendor=(vendor)
+  end
+
   def as_json(options = {})
     super(options).tap do |line_item|
       line_item[:cost] = number_to_currency(line_item[:cost], unit: '£')

@@ -1,18 +1,25 @@
 class Order::Exporter
   def export(orders)
-    group_order_line_items_by_brand_and_drop_date(orders).flat_map do |orders, order_line_items|
+    group_order_line_items_by_drop_date(orders).flat_map do |orders, order_line_items|
       assign_po_to_orders(create_po(order_line_items), orders)
     end
   end
 
   private
 
-  def group_order_line_items_by_brand_and_drop_date(orders)
-    [[orders, orders.flat_map(&:line_items)]]
+  def order_line_items_by_drop_date(order_line_items)
+    by_drop_date = Hash.new { |h, k| h[k] = [] }
+
+    order_line_items.reduce(by_drop_date) do |by_drop_date, order_line_item|
+      by_drop_date[order_line_item.drop_date.to_date.to_s] << order_line_item
+      by_drop_date
+    end
   end
 
-  def export_order_line_items(order_line_items)
-    assign_po_to_orders()
+  def group_order_line_items_by_drop_date(orders)
+    order_line_items_by_drop_date(orders.flat_map(&:line_items)).reduce([]) do |grouped_order_line_items, (drop_date, order_line_items)|
+      grouped_order_line_items << [order_line_items.map(&:order).uniq, order_line_items]
+    end
   end
 
   def create_po(order_line_items)
