@@ -15,31 +15,35 @@ export class OrdersTable extends React.Component {
 
   render() {
     return (
-      <div className="panel panel-default">
-        <div className="panel-body">
-          <div className="orders_table">
-            <div className="pull-right">
-              <button className="btn btn-warning"
-                      disabled={this.isExportButtonDisabled()}
-                      onClick={this.handleExportOrders.bind(this)}>
-                Create Purchase Orders
-              </button>
+      <div>
+        <div className="panel panel-default">
+          <div className="panel-body">
+            <button className="btn btn-warning"
+                    disabled={this.isExportButtonDisabled()}
+                    onClick={this.handleExportOrders.bind(this)}>
+              Create Purchase Orders
+            </button>
+          </div>
+        </div>
+
+        <div className="panel panel-default">
+          <div className="panel-body">
+            <div className="orders_table">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th style={{ width: '5%' }}>&nbsp;</th>
+                    <th>Order</th>
+                    <th className="text-center" style={{ width: '20%' }}>Created</th>
+                    <th className="text-center" style={{ width: '20%' }}>Exported</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {this.renderRows()}
+                </tbody>
+              </table>
             </div>
-
-            <table className="table">
-              <thead>
-                <tr>
-                  <th style={{ width: '5%' }}>&nbsp;</th>
-                  <th>Order</th>
-                  <th className="text-center" style={{ width: '20%' }}>Created</th>
-                  <th className="text-center" style={{ width: '20%' }}>Exported</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {this.renderRows()}
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
