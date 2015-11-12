@@ -423,8 +423,4 @@ ActiveRecord::Schema.define(version: 20151111110520) do
     t.integer "ContactsToDetailsID", limit: 4
     t.integer "SupplierToBrandsID",  limit: 4
   end
-
-  add_foreign_key "order_exports", "orders"
-  add_foreign_key "order_exports", "purchase_orders"
-  add_foreign_key "order_line_items", "orders"
 end
