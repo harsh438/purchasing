@@ -19,7 +19,7 @@ class OrdersEdit extends React.Component {
 
           {this.renderOrderRow()}
 
-          {this.renderOrderLineCreateRow()}
+          {this.renderOrderLineForm()}
 
           {this.renderOrderLineRow()}
         </div>
@@ -58,15 +58,17 @@ class OrdersEdit extends React.Component {
     );
   }
 
-  renderOrderLineCreateRow() {
+  renderOrderLineForm() {
     return (
       <div className="row">
-        <div className="col-md-3">
-          <button className="btn btn-success"
-                  style={{ marginTop: '1.74em', width: '100%' }}
-                  onClick={this.dispatchCreateLineItem.bind(this)}>
-            New Line Item
-          </button>
+        <div className="col-md-12">
+          <form className="form-horizontal">
+            <button className="btn btn-success"
+                    style={{ marginTop: '1.74em', width: '100%' }}
+                    onClick={this.dispatchCreateLineItem.bind(this)}>
+              New Line Item
+            </button>
+          </form>
         </div>
       </div>
     );
