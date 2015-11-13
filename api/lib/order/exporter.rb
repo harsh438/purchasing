@@ -8,7 +8,11 @@ class Order::Exporter
   private
 
   def create_po(order_line_items)
-    PurchaseOrder.create!(line_items: create_po_line_items(order_line_items),
+    PurchaseOrder.create!(vendor_id: order_line_items.first.vendor_id,
+                          vendor_name: order_line_items.first.vendor_name,
+                          operator: 'REORDER_TOOL',
+                          order_type: 'R',
+                          line_items: create_po_line_items(order_line_items),
                           drop_date: order_line_items.first.drop_date)
   end
 
@@ -24,7 +28,7 @@ class Order::Exporter
                                   po_season: 'AW16',
                                   gender: 'M',
                                   status: 2,
-                                  operator: "REORDER_#{order_line_item.id}",
+                                  operator: 'REORDER_TOOL',
                                   cost: order_line_item.discounted_cost)
   end
 

@@ -6,7 +6,9 @@ class PurchaseOrder < ActiveRecord::Base
   include Searchable
 
   map_attributes id: :po_num,
-                 order_type: :orderType
+                 order_type: :orderType,
+                 vendor_id: :venID,
+                 vendor_name: :Brand
 
   has_many :line_items, class_name: 'PurchaseOrderLineItem',
                         foreign_key: :po_number
