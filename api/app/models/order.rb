@@ -19,6 +19,12 @@ class Order < ActiveRecord::Base
   def new?; status == :new; end
   def exported?; status == :exported; end
 
+  def as_json_with_line_items(options = {})
+    o = as_json(options)
+    o[:line_items] = line_items.map { |line| line.as_json }
+    o
+  end
+
   def as_json(options = {})
     super.tap do |order|
       order[:created_at] = created_at.to_s

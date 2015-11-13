@@ -16,7 +16,16 @@ class OrderLineItem < ActiveRecord::Base
 
   def as_json(options = {})
     super(options).tap do |line_item|
-      line_item[:cost] = number_to_currency(line_item[:cost], unit: '£')
+      line_item[:name] = product.try(:name)
+      line_item[:vendor_id] = product.try(:vendor_id)
     end
+  end
+
+  def pid
+    internal_sku.split('-').first.to_i
+  end
+
+  def product
+    @product ||= Product.find_by(id: pid)
   end
 end

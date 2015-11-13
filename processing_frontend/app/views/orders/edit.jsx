@@ -50,6 +50,7 @@ class OrdersEdit extends React.Component {
                     <th>Cost</th>
                     <th>Discount</th>
                     <th>Drop Date</th>
+                    <th>Product Name</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -148,6 +149,7 @@ class OrdersEdit extends React.Component {
           <td>{line.cost}</td>
           <td>{line.discount}</td>
           <td>{line.dropDate}</td>
+          <td>{line.name}</td>
         </tr>
       );
     })
