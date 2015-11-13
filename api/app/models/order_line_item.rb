@@ -16,8 +16,6 @@ class OrderLineItem < ActiveRecord::Base
     cache_product
   end
 
-  attr_accessor :vendor
-
   def cache_product
     self.product_id = build_pid
     self.product_name = product.try(:name)
@@ -31,6 +29,7 @@ class OrderLineItem < ActiveRecord::Base
       line_item[:name] = product.try(:name)
       line_item[:cost] = number_to_currency(cost, unit: '£')
       line_item[:vendor_id] = vendor_id
+      line_item[:vendor_name] = vendor_name
     end
   end
 
