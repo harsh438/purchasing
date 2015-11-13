@@ -48,7 +48,7 @@ class OrdersEdit extends React.Component {
                     <th>Internal SKU</th>
                     <th>Quantity</th>
                     <th>Cost</th>
-                    <th>Discount</th>
+                    <th>Discount %</th>
                     <th>Drop Date</th>
                     <th>Product Name</th>
                   </tr>
@@ -95,7 +95,7 @@ class OrdersEdit extends React.Component {
                          value={this.state.quantity} />
                 </div>
                 <div className="form-group col-md-2">
-                  <label htmlFor="discount">Discount</label>
+                  <label htmlFor="discount">Discount %</label>
                   <input type="number"
                          step="0.01"
                          name="discount"
@@ -136,7 +136,7 @@ class OrdersEdit extends React.Component {
         <tr>
           <td>{line.internalSku}</td>
           <td>{line.quantity}</td>
-          <td>{line.productCost}</td>
+          <td>{line.cost}</td>
           <td>{line.discount}</td>
           <td>{line.dropDate}</td>
           <td>{line.name}</td>
