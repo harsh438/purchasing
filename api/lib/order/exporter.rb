@@ -22,7 +22,8 @@ class Order::Exporter
     PurchaseOrderLineItem.create!(order_date: order_line_item.order.created_at,
                                   drop_date: order_line_item.drop_date,
                                   po_season: 'AW16',
-                                  gender: 'M')
+                                  gender: 'M',
+                                  cost: order_line_item.discounted_cost)
   end
 
   def assign_po_to_orders(purchase_order, orders)

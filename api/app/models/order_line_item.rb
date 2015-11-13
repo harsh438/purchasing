@@ -37,4 +37,8 @@ class OrderLineItem < ActiveRecord::Base
   def product
     @product ||= Product.find_by(id: pid)
   end
+
+  def discounted_cost
+    (cost * ((100 - discount) / 100)).round(2)
+  end
 end
