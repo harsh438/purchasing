@@ -102,5 +102,33 @@ describe Order::Exporter do
   end
 
   context 'when exporting multiple orders' do
+    context 'and the orders share line item brand and drop date' do
+      let(:product) { create(:product) }
+
+      let(:first_line_item) do
+        create(:order_line_item, internal_sku: "#{product.id}-100",
+                                 drop_date: 1.week.from_now)
+      end
+
+      let(:second_line_item) do
+        create(:order_line_item, internal_sku: "#{product.id}-100",
+                                 drop_date: 1.week.from_now)
+      end
+
+      let(:orders) do
+        [create(:order, line_items: [first_line_item]),
+         create(:order, line_items: [second_line_item])]
+      end
+
+      context 'then the orders exports' do
+        subject { orders.flat_map(&:exports) }
+        its(:count) { is_expected.to eq(2) }
+      end
+
+      context 'then the generated purchase orders' do
+        subject { orders.flat_map(&:exports).map(&:purchase_order).uniq.compact }
+        its(:count) { is_expected.to eq(1) }
+      end
+    end
   end
 end
