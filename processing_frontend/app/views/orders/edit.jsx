@@ -45,12 +45,13 @@ class OrdersEdit extends React.Component {
               <table className="table">
                 <thead>
                   <tr>
+                    <th>Brand Name</th>
+                    <th>Product Name</th>
                     <th>Internal SKU</th>
                     <th>Quantity</th>
                     <th>Cost</th>
                     <th>Discount %</th>
                     <th>Drop Date</th>
-                    <th>Product Name</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -134,12 +135,13 @@ class OrdersEdit extends React.Component {
     return map(this.props.order.lineItems, (line) => {
       return (
         <tr>
+          <td>{line.vendorName}</td>
+          <td>{line.productName}</td>
           <td>{line.internalSku}</td>
           <td>{line.quantity}</td>
           <td>{line.cost}</td>
           <td>{line.discount}</td>
           <td>{line.dropDate}</td>
-          <td>{line.name}</td>
         </tr>
       );
     })
