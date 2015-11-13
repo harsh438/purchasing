@@ -43,9 +43,9 @@ feature 'Manage order details' do
 
   def then_i_should_see_the_list_item_under_the_order
     expect(subject['line_items']).to include(a_hash_including({ internal_sku: '1000-10',
-                                                                cost: '1.0',
+                                                                cost: '£1.00',
                                                                 quantity: 1,
-                                                                discount: '£0.00' }.stringify_keys))
+                                                                discount: '0.0' }.stringify_keys))
   end
 
   def given_i_have_added_list_items_to_an_order

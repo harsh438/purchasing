@@ -11,38 +11,48 @@ class OrderLineItem < ActiveRecord::Base
                                        less_than_or_equal_to: 100 }
   validates :drop_date, presence: true
 
+  def internal_sku=(internal_sku)
+    super
+    cache_product
+  end
+
   attr_accessor :vendor
+
+  def cache_product
+    self.product_id = build_pid
+    self.product_name = product.try(:name)
+    self.vendor_id = product.try(:vendor_id)
+    self.option_id = ProductOption.id_from_element(build_element_id)
+    self.cost = product.try(:price)
+  end
 
   def as_json(options = {})
     super(options).tap do |line_item|
       line_item[:name] = product.try(:name)
+      line_item[:cost] = number_to_currency(cost, unit: '£')
       line_item[:vendor_id] = vendor_id
-      line_item[:discount] = number_to_currency(discount, unit: '£')
-      line_item[:product_cost] = number_to_currency(product_cost, unit: '£')
     end
-  end
-
-  def vendor_id
-    product.try(:vendor_id)
   end
 
   def vendor_name
     Vendor.find_by(id: vendor_id).try(:name)
   end
 
-  def product_cost
-    product.try(:price)
-  end
-
-  def pid
-    internal_sku.split('-').first.to_i
+  def discounted_cost
+    (cost * ((100 - discount) / 100)).round(2)
   end
 
   def product
-    @product ||= Product.find_by(id: pid)
+    @product ||= Product.find_by(id: build_pid)
   end
 
-  def discounted_cost
-    (cost * ((100 - discount) / 100)).round(2)
+  private
+
+  def build_pid
+    internal_sku.split('-').first.to_i
+  end
+
+  def build_element_id
+    internal_sku.split('-').second.to_i
   end
 end
