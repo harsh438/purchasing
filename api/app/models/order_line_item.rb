@@ -11,8 +11,7 @@ class OrderLineItem < ActiveRecord::Base
                                        less_than_or_equal_to: 100 }
   validates :drop_date, presence: true
 
-  def vendor=(vendor)
-  end
+  attr_accessor :vendor
 
   def as_json(options = {})
     super(options).tap do |line_item|

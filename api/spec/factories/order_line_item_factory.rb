@@ -5,5 +5,6 @@ FactoryGirl.define do
     quantity 1
     discount 0
     drop_date { Time.now }
+    vendor { create(:vendor) }
   end
 end

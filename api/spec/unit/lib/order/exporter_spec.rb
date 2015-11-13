@@ -59,6 +59,25 @@ describe Order::Exporter do
           its(:count) { is_expected.to eq(2) }
         end
       end
+
+      context 'and the line items are of the same drop date but not brand' do
+        let(:line_items) do
+          [create(:order_line_item, vendor: create(:vendor),
+                                    drop_date: 1.week.from_now),
+           create(:order_line_item, vendor: create(:vendor),
+                                    drop_date: 1.week.from_now)]
+        end
+
+        context 'then the orders exports' do
+          subject { orders.first.exports }
+          its(:count) { is_expected.to eq(2) }
+        end
+
+        context 'then the generated purchase orders' do
+          subject { orders.first.exports.map(&:purchase_order).compact }
+          its(:count) { is_expected.to eq(2) }
+        end
+      end
     end
   end
 
