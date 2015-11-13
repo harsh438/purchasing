@@ -39,14 +39,7 @@ class Order::Exporter
     private
 
     def order_line_items_by_vendor_and_drop_date(order_line_items)
-      by_vendor_and_drop_date = Hash.new do |h, k|
-        h[k] = Hash.new { |h, k| h[k] = [] }
-      end
-
-      order_line_items.reduce(by_vendor_and_drop_date) do |by_vendor_and_drop_date, order_line_item|
-        by_vendor_and_drop_date[order_line_item.vendor.id][order_line_item.drop_date.to_date.to_s] << order_line_item
-        by_vendor_and_drop_date
-      end
+      order_line_items.reduce(ByVendorAndDropDate.new, &:<<)
     end
 
     def group_order_line_items_by_drop_date(orders)
@@ -56,6 +49,23 @@ class Order::Exporter
         by_drop_date.reduce(grouped_order_line_items) do |grouped_order_line_items, (drop_date, order_line_items)|
           grouped_order_line_items << [order_line_items.map(&:order).uniq, order_line_items]
         end
+      end
+    end
+
+    class ByDropDate < Hash
+      def initialize
+        super { |h, k| h[k] = [] }
+      end
+    end
+
+    class ByVendorAndDropDate < Hash
+      def initialize
+        super { |h, k| h[k] = ByDropDate.new }
+      end
+
+      def <<(order_line_item)
+        self[order_line_item.vendor.id][order_line_item.drop_date.to_date.to_s] << order_line_item
+        self
       end
     end
   end
