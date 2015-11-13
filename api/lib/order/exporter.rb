@@ -1,6 +1,6 @@
 class Order::Exporter
   def export(orders)
-    GroupedOrders.new(orders).flat_map do |orders, order_line_items|
+    GroupedOrders.new(orders).flat_map do |vendor_id, drop_date, order_line_items, orders|
       assign_po_to_orders(create_po(order_line_items), orders)
     end
   end
@@ -33,23 +33,13 @@ class Order::Exporter
 
   class GroupedOrders < Array
     def initialize(orders)
-      super(group_order_line_items_by_drop_date(orders))
+      super(group_order_line_items_by_vendor_and_drop_date(orders))
     end
 
     private
 
-    def order_line_items_by_vendor_and_drop_date(order_line_items)
-      order_line_items.reduce(ByVendorAndDropDate.new, &:<<)
-    end
-
-    def group_order_line_items_by_drop_date(orders)
-      order_line_items = orders.flat_map(&:line_items)
-
-      order_line_items_by_vendor_and_drop_date(order_line_items).reduce([]) do |grouped_order_line_items, (vendor, by_drop_date)|
-        by_drop_date.reduce(grouped_order_line_items) do |grouped_order_line_items, (drop_date, order_line_items)|
-          grouped_order_line_items << [order_line_items.map(&:order).uniq, order_line_items]
-        end
-      end
+    def group_order_line_items_by_vendor_and_drop_date(orders)
+      orders.flat_map(&:line_items).reduce(ByVendorAndDropDate.new, &:<<).flatten
     end
 
     class ByVendorAndDropDate < Hash
@@ -65,6 +55,13 @@ class Order::Exporter
 
         self[vendor_id][drop_date] << order_line_item
         self
+      end
+
+      def flatten
+        map do |vendor_id, by_drop_date|
+          orders = by_drop_date.values.flatten.map(&:order).uniq
+          [vendor_id, by_drop_date.flatten, [orders]].flatten(1)
+        end
       end
     end
   end
