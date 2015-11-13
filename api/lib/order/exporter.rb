@@ -64,7 +64,7 @@ class Order::Exporter
       end
 
       def <<(order_line_item)
-        self[order_line_item.vendor.id][order_line_item.drop_date.to_date.to_s] << order_line_item
+        self[order_line_item.vendor_id][order_line_item.drop_date.to_date.to_s] << order_line_item
         self
       end
     end

@@ -16,8 +16,12 @@ class OrderLineItem < ActiveRecord::Base
   def as_json(options = {})
     super(options).tap do |line_item|
       line_item[:name] = product.try(:name)
-      line_item[:vendor_id] = product.try(:vendor_id)
+      line_item[:vendor_id] = vendor_id
     end
+  end
+
+  def vendor_id
+    product.try(:vendor_id)
   end
 
   def pid

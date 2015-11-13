@@ -26,8 +26,12 @@ describe Order::Exporter do
 
       context 'and the line items are of the same brand and drop date' do
         let(:line_items) do
-          create_list(:order_line_item, 2, vendor: create(:vendor),
-                                           drop_date: 2.weeks.from_now)
+          product = create(:product)
+
+          [create(:order_line_item, internal_sku: "#{product.id}-100",
+                                    drop_date: 1.week.from_now),
+           create(:order_line_item, internal_sku: "#{product.id}-101",
+                                    drop_date: 1.week.from_now)]
         end
 
         context 'then the orders exports' do
@@ -43,10 +47,8 @@ describe Order::Exporter do
 
       context 'and the line items are not of the same brand and drop date' do
         let(:line_items) do
-          [create(:order_line_item, vendor: create(:vendor),
-                                    drop_date: 1.week.from_now),
-           create(:order_line_item, vendor: create(:vendor),
-                                    drop_date: 2.weeks.from_now)]
+          [create(:order_line_item, drop_date: 1.week.from_now),
+           create(:order_line_item, drop_date: 2.weeks.from_now)]
         end
 
         context 'then the orders exports' do
@@ -62,10 +64,7 @@ describe Order::Exporter do
 
       context 'and the line items are of the same drop date but not brand' do
         let(:line_items) do
-          [create(:order_line_item, vendor: create(:vendor),
-                                    drop_date: 1.week.from_now),
-           create(:order_line_item, vendor: create(:vendor),
-                                    drop_date: 1.week.from_now)]
+          create_list(:order_line_item, 2, drop_date: 1.week.from_now)
         end
 
         context 'then the orders exports' do
