@@ -23,6 +23,8 @@ class Order::Exporter
                                   drop_date: order_line_item.drop_date,
                                   po_season: 'AW16',
                                   gender: 'M',
+                                  status: 2,
+                                  operator: "REORDER_#{order_line_item.id}",
                                   cost: order_line_item.discounted_cost)
   end
 
