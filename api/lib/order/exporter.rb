@@ -52,15 +52,11 @@ class Order::Exporter
       end
     end
 
-    class ByDropDate < Hash
-      def initialize
-        super { |h, k| h[k] = [] }
-      end
-    end
-
     class ByVendorAndDropDate < Hash
       def initialize
-        super { |h, k| h[k] = ByDropDate.new }
+        super do |h, k|
+          h[k] = Hash.new { |h, k| h[k] = [] }
+        end
       end
 
       def <<(order_line_item)
