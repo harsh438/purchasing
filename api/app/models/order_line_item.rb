@@ -26,6 +26,10 @@ class OrderLineItem < ActiveRecord::Base
     product.try(:vendor_id)
   end
 
+  def vendor_name
+    Vendor.find_by(id: vendor_id).try(:name)
+  end
+
   def product_cost
     product.try(:price)
   end
