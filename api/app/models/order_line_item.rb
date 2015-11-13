@@ -17,11 +17,17 @@ class OrderLineItem < ActiveRecord::Base
     super(options).tap do |line_item|
       line_item[:name] = product.try(:name)
       line_item[:vendor_id] = vendor_id
+      line_item[:discount] = number_to_currency(discount, unit: '£')
+      line_item[:product_cost] = number_to_currency(product_cost, unit: '£')
     end
   end
 
   def vendor_id
     product.try(:vendor_id)
+  end
+
+  def product_cost
+    product.try(:price)
   end
 
   def pid

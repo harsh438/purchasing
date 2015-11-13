@@ -95,16 +95,6 @@ class OrdersEdit extends React.Component {
                          value={this.state.quantity} />
                 </div>
                 <div className="form-group col-md-2">
-                  <label htmlFor="cost">Cost</label>
-                  <input type="number"
-                         step="0.01"
-                         name="cost"
-                         onChange={this.handleChange.bind(this, 'cost')}
-                         className="form-control"
-                         required="required"
-                         value={this.state.cost} />
-                </div>
-                <div className="form-group col-md-2">
                   <label htmlFor="discount">Discount</label>
                   <input type="number"
                          step="0.01"
@@ -146,7 +136,7 @@ class OrdersEdit extends React.Component {
         <tr>
           <td>{line.internalSku}</td>
           <td>{line.quantity}</td>
-          <td>{line.cost}</td>
+          <td>{line.productCost}</td>
           <td>{line.discount}</td>
           <td>{line.dropDate}</td>
           <td>{line.name}</td>
@@ -221,7 +211,7 @@ class OrdersEdit extends React.Component {
   resetState() {
     this.setState({ internalSku: '',
                     quantity: 0,
-                    cost: '0.00',
+                    productCost: '0.00',
                     discount: '0.00',
                     dropDate: '' });
   }
