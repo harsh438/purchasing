@@ -62,6 +62,27 @@ describe Order::Exporter do
         end
       end
 
+      context 'and the line items are of the same brand but not drop date' do
+        let(:line_items) do
+          product = create(:product)
+
+          [create(:order_line_item, internal_sku: "#{product.id}-100",
+                                    drop_date: 1.week.from_now),
+           create(:order_line_item, internal_sku: "#{product.id}-101",
+                                    drop_date: 2.week.from_now)]
+        end
+
+        context 'then the orders exports' do
+          subject { orders.first.exports }
+          its(:count) { is_expected.to eq(2) }
+        end
+
+        context 'then the generated purchase orders' do
+          subject { orders.first.exports.map(&:purchase_order).compact }
+          its(:count) { is_expected.to eq(2) }
+        end
+      end
+
       context 'and the line items are of the same drop date but not brand' do
         let(:line_items) do
           create_list(:order_line_item, 2, drop_date: 1.week.from_now)

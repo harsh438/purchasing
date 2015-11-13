@@ -58,9 +58,11 @@ class Order::Exporter
       end
 
       def flatten
-        map do |vendor_id, by_drop_date|
-          orders = by_drop_date.values.flatten.map(&:order).uniq
-          [vendor_id, by_drop_date.flatten, [orders]].flatten(1)
+        flat_map do |vendor_id, by_drop_date|
+          by_drop_date.map do |drop_date, order_line_items|
+            orders = order_line_items.map(&:order).uniq
+            [vendor_id, drop_date, order_line_items, orders]
+          end
         end
       end
     end
