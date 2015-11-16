@@ -54,7 +54,6 @@ class OrdersEdit extends React.Component {
                     <th>Cost</th>
                     <th>Discount %</th>
                     <th>Drop Date</th>
-                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -145,16 +144,24 @@ class OrdersEdit extends React.Component {
           <td>{line.cost}</td>
           <td>{line.discount}</td>
           <td>{line.dropDate}</td>
-          <td>
-            <form className="form" onSubmit={this.handleLineItemDelete.bind(this, line.id)}>
-              <button className="btn btn-danger">
-                Delete
-              </button>
-            </form>
-          </td>
+          <td>{this.renderDeleteForm(line)}</td>
         </tr>
       );
     })
+  }
+
+  renderDeleteForm(line) {
+    if (this.props.order.exported) {
+      return (<span />);
+    }
+
+    return (
+      <form className="form" onSubmit={this.handleLineItemDelete.bind(this, line.id)}>
+        <button className="btn btn-danger">
+          Delete
+        </button>
+      </form>
+    )
   }
 
   renderBackLink() {
