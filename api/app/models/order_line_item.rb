@@ -18,13 +18,13 @@ class OrderLineItem < ActiveRecord::Base
 
   def cache_product
     self.product_id = build_pid
-    self.product_name = product.try(:name)
     self.vendor_id = product.try(:vendor_id)
-    self.option_id = ProductOption.id_from_element(build_element_id)
+    self.option_id = ProductOption.id_from_element(build_pid, build_element_id)
     self.cost = product.try(:price)
     self.season = last_po_line.try(:season)
+    self.product_name = last_po_line.try(:product_name)
+    self.gender = Gender.char_from(last_po_line.try(:gender))
     self.reporting_pid = last_po_line.try(:reporting_pid)
-    self.gender = last_po_line.try(:gender)
   end
 
   def as_json(options = {})

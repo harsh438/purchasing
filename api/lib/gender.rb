@@ -1,4 +1,4 @@
-class PurchaseOrderLineItem::Gender
+class Gender
   def self.string_from(char)
     case char
       when 'M'

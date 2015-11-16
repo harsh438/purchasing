@@ -316,9 +316,9 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   end
 
   def set_legacy_fields
-    self.reporting_pid = 0
-    self.original_pid = 0
-    self.original_option_id = 0
-    self.line_id = 0
+    self.reporting_pid ||= 0
+    self.original_pid ||= 0
+    self.original_option_id ||= 0
+    self.line_id ||= 0
   end
 end
