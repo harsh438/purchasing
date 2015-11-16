@@ -24,7 +24,7 @@ export default class AbstractEditRow extends React.Component {
   popOverlay() {
     return (
       <Popover id={`edit-${this.props.fieldKey}-${this.props.ident}-popover`}
-               title={`Editing PO #${this.props.ident}`}>
+               title={this.props.title}>
         <form className="form-horizontal"
               style={{ marginBottom: '0' }}
               onSubmit={this.handleSubmit.bind(this)}>

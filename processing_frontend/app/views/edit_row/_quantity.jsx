@@ -12,5 +12,6 @@ export default class EditRowQuantity extends AbstractRowEdit {
   }
 }
 
-EditRowQuantity.defaultProps = { fieldKey: 'quantity',
+EditRowQuantity.defaultProps = { title: 'Editing Quantity',
+                                 fieldKey: 'quantity',
                                  labelValue: 'Qty' };
