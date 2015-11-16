@@ -68,7 +68,7 @@ class OrdersEdit extends React.Component {
   }
 
   renderOrderLineForm() {
-    if (this.props.exported) {
+    if (this.props.order.exported) {
       return (<div />);
     }
 
