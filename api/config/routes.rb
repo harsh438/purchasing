@@ -19,6 +19,7 @@ Rails.application.routes.draw do
         post :update
         post :cancel
         post :uncancel
+        post :delete
       end
     end
 
