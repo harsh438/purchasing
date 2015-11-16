@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151116110000) do
+ActiveRecord::Schema.define(version: 20151116114446) do
 
   create_table "ds_language_categories", force: :cascade do |t|
     t.integer "langID",  limit: 4,   default: 0,  null: false
@@ -233,18 +233,20 @@ ActiveRecord::Schema.define(version: 20151116110000) do
   add_index "order_exports", ["purchase_order_id"], name: "index_order_exports_on_purchase_order_id", using: :btree
 
   create_table "order_line_items", force: :cascade do |t|
-    t.string   "internal_sku", limit: 255
-    t.integer  "quantity",     limit: 4
-    t.decimal  "cost",                     precision: 8, scale: 2
-    t.decimal  "discount",                 precision: 8, scale: 4
-    t.integer  "order_id",     limit: 4
+    t.string   "internal_sku",  limit: 255
+    t.integer  "quantity",      limit: 4
+    t.decimal  "cost",                      precision: 8, scale: 2
+    t.decimal  "discount",                  precision: 8, scale: 4
+    t.integer  "order_id",      limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "drop_date"
-    t.integer  "vendor_id",    limit: 4
-    t.integer  "option_id",    limit: 4
-    t.string   "product_name", limit: 255
-    t.integer  "product_id",   limit: 4
+    t.integer  "vendor_id",     limit: 4
+    t.integer  "option_id",     limit: 4
+    t.string   "product_name",  limit: 255
+    t.integer  "product_id",    limit: 4
+    t.string   "season",        limit: 255
+    t.integer  "reporting_pid", limit: 4
   end
 
   add_index "order_line_items", ["order_id"], name: "index_order_line_items_on_order_id", using: :btree
