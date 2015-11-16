@@ -25,8 +25,8 @@ class Order::Exporter
   def create_po_line_item(order_line_item)
     PurchaseOrderLineItem.create!(order_date: order_line_item.order.created_at,
                                   drop_date: order_line_item.drop_date,
-                                  po_season: 'AW16',
-                                  gender: 'M',
+                                  season: order_line_item.season || '',
+                                  gender: order_line_item.gender || '',
                                   status: 2,
                                   operator: 'REORDER_TOOL',
                                   cost: order_line_item.discounted_cost,
@@ -34,7 +34,8 @@ class Order::Exporter
                                   product_id: order_line_item.product_id,
                                   option_id: order_line_item.option_id || 0,
                                   quantity: order_line_item.quantity,
-                                  product_name: order_line_item.product_name)
+                                  product_name: order_line_item.product_name,
+                                  reporting_pid: order_line_item.reporting_pid)
   end
 
   def assign_po_to_orders(purchase_order, orders)
