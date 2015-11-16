@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151116114446) do
+ActiveRecord::Schema.define(version: 20151116115334) do
 
   create_table "ds_language_categories", force: :cascade do |t|
     t.integer "langID",  limit: 4,   default: 0,  null: false
@@ -169,7 +169,7 @@ ActiveRecord::Schema.define(version: 20151116114446) do
   add_index "ds_products", ["giftCert"], name: "giftCert", using: :btree
   add_index "ds_products", ["invLevel"], name: "invLevel", using: :btree
   add_index "ds_products", ["invTrack", "invLevel"], name: "idx_invTrack_oInvLevel", using: :btree
-  add_index "ds_products", ["meta_keywords"], name: "metakeywords", using: :btree
+  add_index "ds_products", ["meta_keywords"], name: "metakeywords", length: {"meta_keywords"=>255}, using: :btree
   add_index "ds_products", ["pContainerType"], name: "pContainerType", using: :btree
   add_index "ds_products", ["pFirstClassMailType"], name: "bestseller", using: :btree
   add_index "ds_products", ["pFlag"], name: "pFlag", using: :btree
@@ -230,7 +230,7 @@ ActiveRecord::Schema.define(version: 20151116114446) do
   end
 
   add_index "order_exports", ["order_id"], name: "index_order_exports_on_order_id", using: :btree
-  add_index "order_exports", ["purchase_order_id"], name: "index_order_exports_on_purchase_order_id", using: :btree
+  add_index "order_exports", ["purchase_order_id"], name: "fk_rails_7532174768", using: :btree
 
   create_table "order_line_items", force: :cascade do |t|
     t.string   "internal_sku",  limit: 255
@@ -247,6 +247,7 @@ ActiveRecord::Schema.define(version: 20151116114446) do
     t.integer  "product_id",    limit: 4
     t.string   "season",        limit: 255
     t.integer  "reporting_pid", limit: 4
+    t.string   "gender",        limit: 255
   end
 
   add_index "order_line_items", ["order_id"], name: "index_order_line_items_on_order_id", using: :btree
@@ -417,7 +418,7 @@ ActiveRecord::Schema.define(version: 20151116114446) do
   end
 
   add_index "suppliers", ["SupplierID"], name: "sadsad", using: :btree
-  add_index "suppliers", ["SupplierName"], name: "qewqwqe", using: :btree
+  add_index "suppliers", ["SupplierName"], name: "qewqwqe", length: {"SupplierName"=>255}, using: :btree
 
   create_table "suppliers_to_brands", primary_key: "SupplierToBrandsID", force: :cascade do |t|
     t.integer "BrandID",    limit: 4
