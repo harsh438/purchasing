@@ -111,10 +111,8 @@ class PurchaseOrderLineItem < ActiveRecord::Base
                  brand_size: :orderTool_brandSize,
                  supplier_list_price: :orderTool_SupplierListPrice,
                  product_rrp: :orderTool_RRP,
-
-                 # Unused but necessary for insertion
-                 reporting_product_id: :reporting_pID,
-                 original_product_id: :original_pID,
+                 reporting_pid: :reporting_pID,
+                 original_pid: :original_pID,
                  original_option_id: :original_oID
 
   filters :vendor_id,
@@ -318,8 +316,8 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   end
 
   def set_legacy_fields
-    self.reporting_product_id = 0
-    self.original_product_id = 0
+    self.reporting_pid = 0
+    self.original_pid = 0
     self.original_option_id = 0
     self.line_id = 0
   end

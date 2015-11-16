@@ -22,6 +22,8 @@ class OrderLineItem < ActiveRecord::Base
     self.vendor_id = product.try(:vendor_id)
     self.option_id = ProductOption.id_from_element(build_element_id)
     self.cost = product.try(:price)
+    self.season = last_po_line.try(:season)
+    self.reporting_pid = last_po_line.try(:reporting_pid)
   end
 
   def as_json(options = {})
@@ -44,6 +46,12 @@ class OrderLineItem < ActiveRecord::Base
   end
 
   private
+
+  def last_po_line
+    @last_po_line ||= PurchaseOrderLineItem.where(product_id: product_id,
+                                                  option_id: option_id)
+                        .order(created_at: :desc).first
+  end
 
   def build_pid
     internal_sku.split('-').first.to_i
