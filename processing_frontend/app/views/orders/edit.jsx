@@ -265,7 +265,9 @@ class OrdersEdit extends React.Component {
   }
 
   handleLineItemDelete (lineItemId) {
-    this.props.dispatch(deleteLineItem(lineItemId));
+    if (confirm('Are you sure you want to delete this line item?')) {
+      this.props.dispatch(deleteLineItem(lineItemId));
+    }
   }
 
   handleChange (field, { target }) {
