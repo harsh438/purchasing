@@ -5,6 +5,7 @@ import { map, assign } from 'lodash';
 import { loadOrder, createLineItemForOrder, deleteLineItem, updateLineItem } from '../../actions/orders'
 import EditRowCost from '../edit_row/_cost'
 import EditRowDiscount from '../edit_row/_discount'
+import EditRowQuantity from '../edit_row/_quantity'
 
 class OrdersEdit extends React.Component {
   componentWillMount() {
@@ -142,8 +143,8 @@ class OrdersEdit extends React.Component {
           <td>{line.vendorName}</td>
           <td>{line.productName}</td>
           <td>{line.internalSku}</td>
-          <td>{line.quantity}</td>
 
+          {this.renderEditQuantityRow(line)}
           {this.renderEditCostRow(line)}
           {this.renderEditDiscountRow(line)}
 
@@ -164,6 +165,19 @@ class OrdersEdit extends React.Component {
                    ident={line.id}
                    table={this}
                    value={line.cost.replace(/[^\d.-]/g, '')} />
+    );
+  }
+
+  renderEditQuantityRow(line) {
+    if (this.props.order.exported) {
+      return (<td>{line.quantity}</td>);
+    }
+
+    return (
+      <EditRowQuantity displayValue={line.quantity}
+                       ident={line.id}
+                       table={this}
+                       value={line.quantity} />
     );
   }
 
