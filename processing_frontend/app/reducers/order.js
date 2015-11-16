@@ -6,7 +6,9 @@ const initialState =  { order: {} };
 function transformOrder(order) {
   const transformedOrder = camelizeKeys(order);
   const transformedLineItems = map(transformedOrder.lineItems, camelizeKeys);
-  return assign({}, transformedOrder, { lineItems: transformedLineItems });
+  const transformedPurchaseOrders = map(transformedOrder.purchaseOrders, camelizeKeys);
+  return assign({}, transformedOrder, { lineItems: transformedLineItems,
+                                        purchaseOrders: transformedPurchaseOrders });
 }
 
 function setOrder(state, action) {

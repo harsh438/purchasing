@@ -27,6 +27,8 @@ class OrdersEdit extends React.Component {
 
           {this.renderOrderRow()}
 
+          {this.renderPurchaseOrderRow()}
+
           {this.renderOrderLineForm()}
 
           {this.renderOrderLineRow()}
@@ -78,7 +80,7 @@ class OrdersEdit extends React.Component {
             <div className="panel-body">
               <form className="form" onSubmit={this.handleLineItemSubmit.bind(this)}>
                 <div className="form-group col-md-2">
-                  <label htmlFor="internalSku">Internal Sku</label>
+                  <label htmlFor="internalSku">Internal SKU</label>
                   <input type="text"
                          name="internalSku"
                          onChange={this.handleChange.bind(this, 'internalSku')}
@@ -191,6 +193,54 @@ class OrdersEdit extends React.Component {
         </div>
       </div>
     );
+  }
+
+  renderPurchaseOrderRow() {
+    if (this.props.order.status !== 'exported') {
+      return (<div />);
+    }
+
+    return (
+      <div className="row">
+        <div className="col-md-12">
+          <div className="panel panel-default">
+            <div className="panel-heading">Purchase Orders</div>
+            <div className="panel-body">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>PO #</th>
+                    <th>Vendor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.renderPurchaseOrders()}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderPurchaseOrders() {
+    if (!this.props.order.purchaseOrders || this.props.order.purchaseOrders.length == 0) {
+      return (<tr><td><h4>No purchase orders found.</h4></td></tr>);
+    }
+
+    return map(this.props.order.purchaseOrders, (po) => {
+      return (
+        <tr>
+          <td>
+            <Link to={`/?poNumber=${po.id}`}>
+              {po.id}
+            </Link>
+          </td>
+          <td>{po.vendorName}</td>
+        </tr>
+      );
+    })
   }
 
   handleLineItemSubmit (e) {
