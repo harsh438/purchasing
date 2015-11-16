@@ -144,21 +144,40 @@ class OrdersEdit extends React.Component {
           <td>{line.internalSku}</td>
           <td>{line.quantity}</td>
 
-          <EditRowCost displayValue={line.cost}
-                       ident={line.id}
-                       table={this}
-                       value={line.cost.replace(/[^\d.-]/g, '')} />
-
-          <EditRowDiscount displayValue={line.discount}
-                           ident={line.id}
-                           table={this}
-                           value={line.discount} />
+          {this.renderEditCostRow(line)}
+          {this.renderEditDiscountRow(line)}
 
           <td>{line.dropDate}</td>
           <td>{this.renderDeleteForm(line)}</td>
         </tr>
       );
     })
+  }
+
+  renderEditCostRow(line) {
+    if (this.props.order.exported) {
+      return (<td>{line.cost}</td>);
+    }
+
+    return (
+      <EditRowCost displayValue={line.cost}
+                   ident={line.id}
+                   table={this}
+                   value={line.cost.replace(/[^\d.-]/g, '')} />
+    );
+  }
+
+  renderEditDiscountRow(line) {
+    if (this.props.order.exported) {
+      return (<td>{line.discount}</td>);
+    }
+
+    return (
+      <EditRowDiscount displayValue={line.discount}
+                       ident={line.id}
+                       table={this}
+                       value={line.discount} />
+    );
   }
 
   renderDeleteForm(line) {
