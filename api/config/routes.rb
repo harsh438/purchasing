@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :order_line_items, only: [:destroy]
+    resources :order_line_items, only: [:destroy, :update]
 
     resources :purchase_orders, only: :index do
       member do

@@ -30,7 +30,7 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.internalSku}</td>
 
         <EditRowCost displayValue={this.props.purchaseOrder.productCost}
-                     orderId={this.props.purchaseOrder.orderId}
+                     ident={this.props.purchaseOrder.orderId}
                      table={this.props.table}
                      value={this.props.purchaseOrder.productCost.replace(/[^\d.-]/g, '')} />
 
@@ -43,7 +43,7 @@ export default class PurchaseOrderRow extends React.Component {
           {this.props.purchaseOrder.orderType}
         </td>
         <EditRowQuantity displayValue={this.props.purchaseOrder.orderedQuantity}
-                         orderId={this.props.purchaseOrder.orderId}
+                         ident={this.props.purchaseOrder.orderId}
                          labelValue="Qty"
                          className="narrowish"
                          table={this.props.table}

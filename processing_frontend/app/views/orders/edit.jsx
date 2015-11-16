@@ -2,7 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { map, assign } from 'lodash';
-import { loadOrder, createLineItemForOrder, deleteLineItem } from '../../actions/orders'
+import { loadOrder, createLineItemForOrder, deleteLineItem, updateLineItem } from '../../actions/orders'
+import EditRowCost from '../edit_row/_cost'
+import EditRowDiscount from '../edit_row/_discount'
 
 class OrdersEdit extends React.Component {
   componentWillMount() {
@@ -141,8 +143,17 @@ class OrdersEdit extends React.Component {
           <td>{line.productName}</td>
           <td>{line.internalSku}</td>
           <td>{line.quantity}</td>
-          <td>{line.cost}</td>
-          <td>{line.discount}</td>
+
+          <EditRowCost displayValue={line.cost}
+                       ident={line.id}
+                       table={this}
+                       value={line.cost.replace(/[^\d.-]/g, '')} />
+
+          <EditRowDiscount displayValue={line.discount}
+                           ident={line.id}
+                           table={this}
+                           value={line.discount} />
+
           <td>{line.dropDate}</td>
           <td>{this.renderDeleteForm(line)}</td>
         </tr>
@@ -269,6 +280,10 @@ class OrdersEdit extends React.Component {
                                               cost: this.state.cost,
                                               discount: this.state.discount,
                                               dropDate: this.state.dropDate }] } }
+  }
+
+  updateField(id, key, value) {
+    this.props.dispatch(updateLineItem([id], { [key]: value }));
   }
 
   handleLineItemDelete (lineItemId) {

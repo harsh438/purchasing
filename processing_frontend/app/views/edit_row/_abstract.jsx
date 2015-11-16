@@ -9,7 +9,7 @@ export default class AbstractEditRow extends React.Component {
   render () {
     return (
       <td className={this.props.className}>
-        <OverlayTrigger id={`edit-${this.props.fieldKey}-${this.props.orderId}-overlay`}
+        <OverlayTrigger id={`edit-${this.props.fieldKey}-${this.props.ident}-overlay`}
                         trigger="click"
                         ref="overlayTrigger"
                         rootClose
@@ -23,8 +23,8 @@ export default class AbstractEditRow extends React.Component {
 
   popOverlay() {
     return (
-      <Popover id={`edit-${this.props.fieldKey}-${this.props.orderId}-popover`}
-               title={`Editing PO #${this.props.orderId}`}>
+      <Popover id={`edit-${this.props.fieldKey}-${this.props.ident}-popover`}
+               title={`Editing PO #${this.props.ident}`}>
         <form className="form-horizontal"
               style={{ marginBottom: '0' }}
               onSubmit={this.handleSubmit.bind(this)}>
@@ -58,7 +58,7 @@ export default class AbstractEditRow extends React.Component {
 
   handleSubmit (e) {
     e.preventDefault();
-    this.props.table.updateField(this.props.orderId, this.props.fieldKey, this.state.value);
+    this.props.table.updateField(this.props.ident, this.props.fieldKey, this.state.value);
     this.refs.overlayTrigger.hide();
   }
 }
