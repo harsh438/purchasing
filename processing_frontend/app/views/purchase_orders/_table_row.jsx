@@ -1,6 +1,6 @@
 import React from 'react';
-import EditRowQuantity from './edit_row/_quantity';
-import EditRowCost from './edit_row/_cost';
+import EditRowQuantity from '../edit_row/_quantity';
+import EditRowCost from '../edit_row/_cost';
 
 export default class PurchaseOrderRow extends React.Component {
   render () {
