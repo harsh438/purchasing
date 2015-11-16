@@ -161,7 +161,7 @@ class OrdersEdit extends React.Component {
           Delete
         </button>
       </form>
-    )
+    );
   }
 
   renderBackLink() {
