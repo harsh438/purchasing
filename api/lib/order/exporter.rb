@@ -29,7 +29,12 @@ class Order::Exporter
                                   gender: 'M',
                                   status: 2,
                                   operator: 'REORDER_TOOL',
-                                  cost: order_line_item.discounted_cost)
+                                  cost: order_line_item.discounted_cost,
+                                  vendor_id: order_line_item.vendor_id,
+                                  product_id: order_line_item.product_id,
+                                  option_id: order_line_item.option_id || 0,
+                                  quantity: order_line_item.quantity,
+                                  product_name: order_line_item.product_name)
   end
 
   def assign_po_to_orders(purchase_order, orders)
