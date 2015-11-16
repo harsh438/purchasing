@@ -4,16 +4,16 @@ class OrdersController < ApplicationController
   end
 
   def create
-    render json: Order.create!.as_json_with_line_items
+    render json: Order.create!.as_json_with_line_items_and_purchase_orders
   end
 
   def show
-    render json: order.as_json_with_line_items
+    render json: order.as_json_with_line_items_and_purchase_orders
   end
 
   def update
     order.update!(order_attrs)
-    render json: order.as_json_with_line_items
+    render json: order.as_json_with_line_items_and_purchase_orders
   end
 
   def export

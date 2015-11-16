@@ -19,9 +19,10 @@ class Order < ActiveRecord::Base
   def new?; status == :new; end
   def exported?; status == :exported; end
 
-  def as_json_with_line_items(options = {})
+  def as_json_with_line_items_and_purchase_orders(options = {})
     o = as_json(options)
     o[:line_items] = line_items.map { |line| line.as_json }
+    o[:purchase_orders] = purchase_orders { |po| po.as_json }
     o
   end
 

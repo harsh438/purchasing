@@ -169,7 +169,7 @@ ActiveRecord::Schema.define(version: 20151113155304) do
   add_index "ds_products", ["giftCert"], name: "giftCert", using: :btree
   add_index "ds_products", ["invLevel"], name: "invLevel", using: :btree
   add_index "ds_products", ["invTrack", "invLevel"], name: "idx_invTrack_oInvLevel", using: :btree
-  add_index "ds_products", ["meta_keywords"], name: "metakeywords", length: {"meta_keywords"=>255}, using: :btree
+  add_index "ds_products", ["meta_keywords"], name: "metakeywords", using: :btree
   add_index "ds_products", ["pContainerType"], name: "pContainerType", using: :btree
   add_index "ds_products", ["pFirstClassMailType"], name: "bestseller", using: :btree
   add_index "ds_products", ["pFlag"], name: "pFlag", using: :btree
@@ -415,7 +415,7 @@ ActiveRecord::Schema.define(version: 20151113155304) do
   end
 
   add_index "suppliers", ["SupplierID"], name: "sadsad", using: :btree
-  add_index "suppliers", ["SupplierName"], name: "qewqwqe", length: {"SupplierName"=>255}, using: :btree
+  add_index "suppliers", ["SupplierName"], name: "qewqwqe", using: :btree
 
   create_table "suppliers_to_brands", primary_key: "SupplierToBrandsID", force: :cascade do |t|
     t.integer "BrandID",    limit: 4
@@ -428,4 +428,7 @@ ActiveRecord::Schema.define(version: 20151113155304) do
     t.integer "SupplierToBrandsID",  limit: 4
   end
 
+  add_foreign_key "order_exports", "orders"
+  add_foreign_key "order_exports", "purchase_orders"
+  add_foreign_key "order_line_items", "orders"
 end
