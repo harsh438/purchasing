@@ -46,6 +46,17 @@ export function createLineItemForOrder(id, params) {
   };
 }
 
+export function deleteLineItem(id) {
+  return dispatch => {
+    fetch(`/api/order_line_items/${id}.json`, { credentials: 'same-origin',
+                                                method: 'DELETE',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify(id) })
+      .then(response => response.json())
+      .then(ids => dispatch({ ids, type: 'DELETE_LINE_ITEM' }));
+  }
+}
+
 export function exportOrders(id) {
   return dispatch => {
     fetch(`/api/orders/export.json`, { credentials: 'same-origin',

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { map, assign } from 'lodash';
-import { loadOrder, createLineItemForOrder } from '../../actions/orders'
+import { loadOrder, createLineItemForOrder, deleteLineItem } from '../../actions/orders'
 
 class OrdersEdit extends React.Component {
   componentWillMount() {
@@ -54,6 +54,7 @@ class OrdersEdit extends React.Component {
                     <th>Cost</th>
                     <th>Discount %</th>
                     <th>Drop Date</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -144,6 +145,13 @@ class OrdersEdit extends React.Component {
           <td>{line.cost}</td>
           <td>{line.discount}</td>
           <td>{line.dropDate}</td>
+          <td>
+            <form className="form" onSubmit={this.handleLineItemDelete.bind(this, line.id)}>
+              <button className="btn btn-danger">
+                Delete
+              </button>
+            </form>
+          </td>
         </tr>
       );
     })
@@ -254,6 +262,10 @@ class OrdersEdit extends React.Component {
                                               cost: this.state.cost,
                                               discount: this.state.discount,
                                               dropDate: this.state.dropDate }] } }
+  }
+
+  handleLineItemDelete (lineItemId) {
+    this.props.dispatch(deleteLineItem(lineItemId));
   }
 
   handleChange (field, { target }) {

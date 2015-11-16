@@ -1,4 +1,4 @@
-import { assign, map, omit } from 'lodash';
+import { assign, map, omit, reject, includes } from 'lodash';
 import { camelizeKeys } from '../utilities/inspection';
 
 const initialState =  { order: {} };
@@ -15,12 +15,22 @@ function setOrder(state, action) {
   return assign({}, state, { order: transformOrder(action.order) });
 }
 
+function removeLineItems(state, action) {
+  let newLines = reject(state.order.lineItems, (o) => {
+    return includes(action.ids, o.id.toString());
+  });
+
+  return assign({}, state, { order: assign({}, state.order, { lineItems: newLines }) });
+}
+
 export default function reduceOrder(state = initialState, action) {
   switch (action.type) {
     case 'SET_ORDER':
       return setOrder(state, action);
     case 'CREATE_ORDER':
       return setOrder(state, action);
+    case 'DELETE_LINE_ITEM':
+      return removeLineItems(state, action);
     default:
       return state;
   }
