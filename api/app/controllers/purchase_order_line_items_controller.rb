@@ -24,11 +24,6 @@ class PurchaseOrderLineItemsController < ApplicationController
     render json: orders
   end
 
-  def delete
-    PurchaseOrderLineItem.delete(params[:id])
-    render json: params[:id]
-  end
-
   private
 
   def render_index_json
