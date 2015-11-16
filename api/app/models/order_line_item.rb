@@ -24,6 +24,7 @@ class OrderLineItem < ActiveRecord::Base
     self.cost = product.try(:price)
     self.season = last_po_line.try(:season)
     self.reporting_pid = last_po_line.try(:reporting_pid)
+    self.gender = last_po_line.try(:gender)
   end
 
   def as_json(options = {})
