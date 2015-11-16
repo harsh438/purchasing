@@ -196,7 +196,7 @@ class OrdersEdit extends React.Component {
   }
 
   renderPurchaseOrderRow() {
-    if (this.props.exported) {
+    if (!this.props.order.exported) {
       return (<div />);
     }
 
