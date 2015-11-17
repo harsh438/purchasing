@@ -12,7 +12,8 @@ feature 'Listing Orders' do
   end
 
   def then_i_should_see_paginated_list_of_orders
-    expect(subject['orders'].count).to eq(10)
+    expect(subject['orders'].count).to eq(50)
+    expect(subject['total_pages']).to eq(2)
     expect(subject['orders']).to include(a_hash_including('status' => 'new'))
   end
 end

@@ -21,6 +21,8 @@ export default class NumberedPagination extends React.Component {
         <Pagination
           first
           last
+          ellipsis
+          maxButtons={10}
           bsSize="medium"
           items={this.props.totalPages}
           activePage={parseInt(this.props.activePage)}
