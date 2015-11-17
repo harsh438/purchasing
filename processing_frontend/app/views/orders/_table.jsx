@@ -1,6 +1,7 @@
 import React from 'react';
 import { contains, map, reject } from 'lodash';
 import { OrdersTableRow } from './_table_row';
+import NumberedPagination from '../pagination/_numbered';
 
 export class OrdersTable extends React.Component {
   componentWillMount () {
@@ -45,6 +46,8 @@ export class OrdersTable extends React.Component {
               </table>
             </div>
           </div>
+
+          <NumberedPagination />
         </div>
       </div>
     );
