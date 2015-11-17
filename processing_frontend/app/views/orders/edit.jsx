@@ -326,7 +326,7 @@ class OrdersEdit extends React.Component {
     this.setState({ internalSku: '',
                     quantity: 0,
                     productCost: '0.00',
-                    discount: '0.00'
+                    discount: '0.00',
                     dropDate: dropDates()[0].value});
   }
 }
