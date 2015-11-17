@@ -12,7 +12,7 @@ export default class NumberedPagination extends React.Component {
       activePage: selectedEvent.eventKey
     });
 
-    this.props.loadPage(selectedEvent.eventKey)
+    this.props.index.loadPage(selectedEvent.eventKey)
   }
 
   render() {
@@ -22,7 +22,7 @@ export default class NumberedPagination extends React.Component {
           first
           last
           bsSize="medium"
-          items={this.props.pages}
+          items={this.props.totalPages}
           activePage={this.state.activePage}
           onSelect={this.handleSelect.bind(this)} />
         <br />

@@ -9,7 +9,7 @@ export function loadOrders(page) {
     const queryString = Qs.stringify({ page });
     fetch(`/api/orders.json?${queryString}`, { credentials: 'same-origin' })
       .then(response => response.json())
-      .then(orders => dispatch({ orders, type: 'SET_ORDERS' }));
+      .then(results => dispatch({ results, type: 'SET_ORDERS' }));
   };
 }
 

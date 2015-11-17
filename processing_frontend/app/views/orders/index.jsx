@@ -6,14 +6,19 @@ import { loadOrders, createOrder, exportOrders } from '../../actions/orders';
 
 class OrdersIndex extends React.Component {
   componentWillMount () {
+    let page = this.props.location.query.page;
     this.state = { creatingOrder: false };
-    this.props.dispatch(loadOrders(this.props.location.query.page || 1));
+    this.loadPage(page);
   }
 
   componentWillReceiveProps (nextProps) {
     if (this.state.creatingOrder && nextProps.order) {
       this.props.history.pushState(null, `/orders/${nextProps.order.id}/edit`);
     }
+  }
+
+  loadPage(page) {
+    this.props.dispatch(loadOrders(page || 1));
   }
 
   render() {
@@ -40,7 +45,10 @@ class OrdersIndex extends React.Component {
 
         <div className="row">
           <div className="col-md-12">
-            <OrdersTable orders={this.props.orders}
+            <OrdersTable index={this}
+                         orders={this.props.orders}
+                         totalPages={this.props.totalPages}
+                         activePage={this.props.activePage}
                          query={this.props.location.query}
                          onExportOrders={this.dispatchExportOrder.bind(this)} />
           </div>

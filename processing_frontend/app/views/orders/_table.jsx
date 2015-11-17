@@ -6,6 +6,7 @@ import { loadOrders } from '../../actions/orders';
 
 export class OrdersTable extends React.Component {
   componentWillMount () {
+    let page = this.props.query.page || 1;
     this.state = { exportingOrders: false,
                    selectedOrders: [] };
   }
@@ -48,8 +49,9 @@ export class OrdersTable extends React.Component {
             </div>
           </div>
 
-          <NumberedPagination loadPage={this.loadPage}
-                              pages={this.props.pages} />
+          <NumberedPagination index={this.props.index}
+                              pages={this.props.totalPages}
+                              activePage={this.props.activePage} />
         </div>
       </div>
     );
@@ -80,10 +82,6 @@ export class OrdersTable extends React.Component {
   handleExportOrders () {
     this.setState({ exportingOrders: true });
     this.props.onExportOrders(this.state.selectedOrders);
-  }
-
-  loadPage(number) {
-    this.props.dispatch(loadOrders(number));
   }
 
   isExportButtonDisabled () {

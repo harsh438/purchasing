@@ -1,6 +1,9 @@
 class OrdersController < ApplicationController
   def index
-    render json: Order.latest.includes(:exports).page(params[:page])
+    results = Order.latest.includes(:exports).page(params[:page])
+    render json: { orders: results,
+                   total_pages: results.total_pages,
+                   page: params[:page] || 1 }
   end
 
   def create
