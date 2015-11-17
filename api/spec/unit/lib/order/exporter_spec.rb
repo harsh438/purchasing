@@ -26,10 +26,12 @@ describe Order::Exporter do
 
       context 'and the line items are of the same brand and drop date' do
         let(:line_items) do
-          product = create(:product)
+          product = create(:product, vendor_id: create(:vendor).id)
+          po_line = create(:purchase_order_line_item, :with_option, product: product)
+          internal_sku = "#{product.id}-#{Element.id_from_option(product.id, po_line.option_id)}"
 
-          [create(:order_line_item, drop_date: 1.week.from_now),
-           create(:order_line_item, drop_date: 1.week.from_now)]
+          [create(:order_line_item, drop_date: 1.week.from_now, internal_sku: internal_sku),
+           create(:order_line_item, drop_date: 1.week.from_now, internal_sku: internal_sku)]
         end
 
         context 'then the orders exports' do
@@ -99,14 +101,16 @@ describe Order::Exporter do
 
   context 'when exporting multiple orders' do
     context 'and the orders share line item brand and drop date' do
-      let(:product) { create(:product) }
+      let(:product) { create(:product, vendor_id: create(:vendor).id) }
+      let(:po_line) { create(:purchase_order_line_item, :with_option, product: product) }
+      let(:internal_sku) { "#{product.id}-#{Element.id_from_option(product.id, po_line.option_id)}" }
 
       let(:first_line_item) do
-        create(:order_line_item, drop_date: 1.week.from_now)
+        create(:order_line_item, drop_date: 1.week.from_now, internal_sku: internal_sku)
       end
 
       let(:second_line_item) do
-        create(:order_line_item, drop_date: 1.week.from_now)
+        create(:order_line_item, drop_date: 1.week.from_now, internal_sku: internal_sku)
       end
 
       let(:orders) do
