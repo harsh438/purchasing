@@ -31,6 +31,7 @@ class OrderLineItem < ActiveRecord::Base
     super(options).tap do |line_item|
       line_item[:cost] = number_to_currency(cost, unit: '£')
       line_item[:vendor_name] = vendor_name
+      line_item[:drop_date] = drop_date.strftime('%a %d %b %Y')
     end
   end
 
