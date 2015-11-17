@@ -32,10 +32,10 @@ feature 'Manage order details' do
 
   def when_i_add_a_new_list_item_to_the_order
     product = create(:product)
-    option = create(:language_product_option)
-    po_line = create(:purchase_order_line_item, product: product, oID: option.id)
+    option = create(:language_product_option, pID: product.id)
+    @po_line = create(:purchase_order_line_item, product: product, oID: option.oID)
 
-    line_item_attrs = { internal_sku: '1000-10',
+    line_item_attrs = { internal_sku: @po_line.internal_sku,
                         cost: '1',
                         quantity: '1',
                         drop_date: Time.now,
@@ -46,7 +46,7 @@ feature 'Manage order details' do
   end
 
   def then_i_should_see_the_list_item_under_the_order
-    expect(subject['line_items']).to include(a_hash_including({ internal_sku: '1000-10',
+    expect(subject['line_items']).to include(a_hash_including({ internal_sku: @po_line.internal_sku,
                                                                 cost: '£1.00',
                                                                 quantity: 1,
                                                                 discount: '0.0' }.stringify_keys))
