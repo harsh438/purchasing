@@ -2,6 +2,7 @@ FactoryGirl.define do
   sequence(:pOption) { |i| "o#{i}" }
 
   factory :language_product_option do
+    pID 1
     langID 1
     elementID 1
     pOption

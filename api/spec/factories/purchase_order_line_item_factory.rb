@@ -28,7 +28,7 @@ FactoryGirl.define do
       option_id 1
 
       after(:create) do |po, evaluator|
-        create(:language_product_option, oID: po.option_id)
+        create(:language_product_option, oID: po.option_id, pID: po.product.id || 1)
       end
     end
   end

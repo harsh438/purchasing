@@ -1,7 +1,7 @@
 class ProductOption < ActiveRecord::Base
   self.table_name = :ds_language_product_options
 
-  def self.id_from_element(product_id, element_id)
+  def self.oid_from_element(product_id, element_id)
     select('ds_language_product_options.oID')
       .joins('LEFT JOIN mnp_elements ON
               mnp_elements.elementname = ds_language_product_options.pOption')
