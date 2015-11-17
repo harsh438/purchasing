@@ -23,7 +23,7 @@ export default class NumberedPagination extends React.Component {
           last
           bsSize="medium"
           items={this.props.totalPages}
-          activePage={this.state.activePage}
+          activePage={parseInt(this.props.activePage)}
           onSelect={this.handleSelect.bind(this)} />
         <br />
       </div>

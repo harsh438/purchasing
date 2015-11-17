@@ -50,7 +50,7 @@ export class OrdersTable extends React.Component {
           </div>
 
           <NumberedPagination index={this.props.index}
-                              pages={this.props.totalPages}
+                              totalPages={this.props.totalPages}
                               activePage={this.props.activePage} />
         </div>
       </div>
