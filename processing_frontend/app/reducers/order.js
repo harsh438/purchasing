@@ -16,7 +16,7 @@ function setOrder(state, action) {
     return assign({}, state, { errors: action.results });
   }
 
-  return assign({}, state, { order: transformOrder(action.results) });
+  return assign({}, state, { order: transformOrder(action.results), errors: null });
 }
 
 function removeLineItems(state, action) {
