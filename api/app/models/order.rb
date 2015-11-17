@@ -1,6 +1,6 @@
 class Order < ActiveRecord::Base
   scope :latest, -> { order(created_at: :desc) }
-  paginates_per 10
+  paginates_per 50
 
   has_many :line_items, class_name: 'OrderLineItem'
   accepts_nested_attributes_for :line_items
