@@ -82,8 +82,8 @@ export class OrdersTable extends React.Component {
     this.props.onExportOrders(this.state.selectedOrders);
   }
 
-  loadPage() {
-    this.props.dispatch(loadOrders(this.props.query.page || 1));
+  loadPage(number) {
+    this.props.dispatch(loadOrders(number));
   }
 
   isExportButtonDisabled () {
