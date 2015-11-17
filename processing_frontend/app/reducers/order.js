@@ -12,11 +12,11 @@ function transformOrder(order) {
 }
 
 function setOrder(state, action) {
-  if ('errors' in action) {
-    return assign({}, state, { errors: action.errors });
+  if ('errors' in action.results) {
+    return assign({}, state, { errors: action.results });
   }
 
-  return assign({}, state, { order: transformOrder(action.order), errors: null });
+  return assign({}, state, { order: transformOrder(action.results) });
 }
 
 function removeLineItems(state, action) {

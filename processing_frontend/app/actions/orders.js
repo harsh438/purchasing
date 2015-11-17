@@ -18,7 +18,7 @@ export function createOrder() {
     fetch(`/api/orders.json`, { credentials: 'same-origin',
                                 method: 'post' })
       .then(response => response.json())
-      .then(order => dispatch({ order, type: 'CREATE_ORDER' }));
+      .then(results => dispatch({ results, type: 'CREATE_ORDER' }));
   };
 }
 
@@ -26,7 +26,7 @@ export function loadOrder(id) {
   return dispatch => {
     fetch(`/api/orders/${id}.json`, { credentials: 'same-origin' })
       .then(response => response.json())
-      .then(order => dispatch({ order, type: 'SET_ORDER' }));
+      .then(results => dispatch({ results, type: 'SET_ORDER' }));
   };
 }
 
@@ -44,7 +44,7 @@ export function createLineItemForOrder(id, params) {
                                       headers: { 'Content-Type': 'application/json' },
                                       body: JSON.stringify(params) })
       .then(response => response.json())
-      .then(order => dispatch({ order, type: 'SET_ORDER' }));
+      .then(results => dispatch({ results, type: 'SET_ORDER' }));
   };
 }
 
@@ -55,7 +55,7 @@ export function updateLineItem(id, params = {}) {
                                                 headers: { 'Content-Type': 'application/json' },
                                                 body: JSON.stringify(params) })
       .then(response => response.json())
-      .then(order => dispatch({ order, type: 'SET_ORDER' }));
+      .then(results => dispatch({ results, type: 'SET_ORDER' }));
   }
 }
 

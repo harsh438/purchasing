@@ -1,12 +1,13 @@
-import React from 'react'
+import React from 'react';
+import { Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { map, assign } from 'lodash';
-import { loadOrder, createLineItemForOrder, deleteLineItem, updateLineItem } from '../../actions/orders'
-import EditRowCost from '../edit_row/_cost'
-import EditRowDiscount from '../edit_row/_discount'
-import EditRowQuantity from '../edit_row/_quantity'
-import { WeekSelect } from './_week_select'
+import { loadOrder, createLineItemForOrder, deleteLineItem, updateLineItem } from '../../actions/orders';
+import EditRowCost from '../edit_row/_cost';
+import EditRowDiscount from '../edit_row/_discount';
+import EditRowQuantity from '../edit_row/_quantity';
+import { WeekSelect } from './_week_select';
 
 class OrdersEdit extends React.Component {
   componentWillMount() {
@@ -18,7 +19,7 @@ class OrdersEdit extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props != nextProps) {
+    if (this.props != nextProps && !this.hasErrors(nextProps)) {
       this.resetState();
     }
   }
@@ -82,6 +83,8 @@ class OrdersEdit extends React.Component {
           <div className="panel panel-default">
             <div className="panel-heading">Create line item</div>
             <div className="panel-body">
+              {this.renderErrors()}
+
               <form className="form" onSubmit={this.handleLineItemSubmit.bind(this)}>
                 <div className="form-group col-md-2">
                   <label htmlFor="internalSku">Internal SKU</label>
@@ -122,6 +125,24 @@ class OrdersEdit extends React.Component {
           </div>
         </div>
       </div>
+    );
+  }
+
+  hasErrors(props) {
+    return ('errors' in props && props.errors != null)
+  }
+
+  renderErrors() {
+    if (!this.hasErrors(this.props)) {
+      return (<span />);
+    }
+
+    return (
+      <Alert bsStyle="danger">
+        {map(this.props.errors, (err) => {
+         return (<span><strong>{err}</strong><br /></span>);
+        })}
+      </Alert>
     );
   }
 
