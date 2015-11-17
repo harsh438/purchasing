@@ -7,7 +7,7 @@ import { loadOrders, createOrder, exportOrders } from '../../actions/orders';
 class OrdersIndex extends React.Component {
   componentWillMount () {
     this.state = { creatingOrder: false };
-    this.props.dispatch(loadOrders());
+    this.props.dispatch(loadOrders(this.props.location.query.page || 1));
   }
 
   componentWillReceiveProps (nextProps) {
@@ -41,6 +41,7 @@ class OrdersIndex extends React.Component {
         <div className="row">
           <div className="col-md-12">
             <OrdersTable orders={this.props.orders}
+                         query={this.props.location.query}
                          onExportOrders={this.dispatchExportOrder.bind(this)} />
           </div>
         </div>

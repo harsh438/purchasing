@@ -1,11 +1,13 @@
 import React from 'react';
+import Qs from 'qs';
 import 'whatwg-fetch';
 import { map } from 'lodash'
 import { snakeizeKeys } from '../utilities/inspection'
 
-export function loadOrders() {
+export function loadOrders(page) {
   return dispatch => {
-    fetch(`/api/orders.json`, { credentials: 'same-origin' })
+    const queryString = Qs.stringify({ page });
+    fetch(`/api/orders.json?${queryString}`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(orders => dispatch({ orders, type: 'SET_ORDERS' }));
   };

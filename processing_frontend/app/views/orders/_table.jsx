@@ -2,6 +2,7 @@ import React from 'react';
 import { contains, map, reject } from 'lodash';
 import { OrdersTableRow } from './_table_row';
 import NumberedPagination from '../pagination/_numbered';
+import { loadOrders } from '../../actions/orders';
 
 export class OrdersTable extends React.Component {
   componentWillMount () {
@@ -47,7 +48,8 @@ export class OrdersTable extends React.Component {
             </div>
           </div>
 
-          <NumberedPagination />
+          <NumberedPagination loadPage={this.loadPage}
+                              pages={this.props.pages} />
         </div>
       </div>
     );
@@ -78,6 +80,10 @@ export class OrdersTable extends React.Component {
   handleExportOrders () {
     this.setState({ exportingOrders: true });
     this.props.onExportOrders(this.state.selectedOrders);
+  }
+
+  loadPage() {
+    this.props.dispatch(loadOrders(this.props.query.page || 1));
   }
 
   isExportButtonDisabled () {
