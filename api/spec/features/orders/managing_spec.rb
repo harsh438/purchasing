@@ -31,6 +31,10 @@ feature 'Manage order details' do
   end
 
   def when_i_add_a_new_list_item_to_the_order
+    product = create(:product)
+    option = create(:language_product_option)
+    po_line = create(:purchase_order_line_item, product: product, oID: option.id)
+
     line_item_attrs = { internal_sku: '1000-10',
                         cost: '1',
                         quantity: '1',

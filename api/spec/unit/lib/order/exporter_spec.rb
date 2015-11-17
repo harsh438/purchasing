@@ -28,10 +28,8 @@ describe Order::Exporter do
         let(:line_items) do
           product = create(:product)
 
-          [create(:order_line_item, internal_sku: "#{product.id}-100",
-                                    drop_date: 1.week.from_now),
-           create(:order_line_item, internal_sku: "#{product.id}-101",
-                                    drop_date: 1.week.from_now)]
+          [create(:order_line_item, drop_date: 1.week.from_now),
+           create(:order_line_item, drop_date: 1.week.from_now)]
         end
 
         context 'then the orders exports' do
@@ -66,10 +64,8 @@ describe Order::Exporter do
         let(:line_items) do
           product = create(:product)
 
-          [create(:order_line_item, internal_sku: "#{product.id}-100",
-                                    drop_date: 1.week.from_now),
-           create(:order_line_item, internal_sku: "#{product.id}-101",
-                                    drop_date: 2.week.from_now)]
+          [create(:order_line_item, drop_date: 1.week.from_now),
+           create(:order_line_item, drop_date: 2.week.from_now)]
         end
 
         context 'then the orders exports' do
@@ -106,13 +102,11 @@ describe Order::Exporter do
       let(:product) { create(:product) }
 
       let(:first_line_item) do
-        create(:order_line_item, internal_sku: "#{product.id}-100",
-                                 drop_date: 1.week.from_now)
+        create(:order_line_item, drop_date: 1.week.from_now)
       end
 
       let(:second_line_item) do
-        create(:order_line_item, internal_sku: "#{product.id}-100",
-                                 drop_date: 1.week.from_now)
+        create(:order_line_item, drop_date: 1.week.from_now)
       end
 
       let(:orders) do

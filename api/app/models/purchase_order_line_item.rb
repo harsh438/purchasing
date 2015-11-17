@@ -251,7 +251,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   def internal_sku
     return if option_id == 0
 
-    "#{pID}-#{Element.id_from_option(option_id)}"
+    "#{pID}-#{Element.id_from_option(pID, option_id)}"
   end
 
   def as_json(*args)
