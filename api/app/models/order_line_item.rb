@@ -3,13 +3,17 @@ class OrderLineItem < ActiveRecord::Base
 
   belongs_to :order
 
-  validates :internal_sku, presence: true
+  validate  :valid_internal_sku
   validates :cost, presence: true
   validates :quantity, presence: true
   validates :discount, allow_blank: true,
                        numericality: { greater_than_or_equal_to: 0,
                                        less_than_or_equal_to: 100 }
   validates :drop_date, presence: true
+
+  def valid_internal_sku
+    errors.add(:internal_sku, 'has not been used previously.') unless last_po_line.present?
+  end
 
   def internal_sku=(internal_sku)
     super
