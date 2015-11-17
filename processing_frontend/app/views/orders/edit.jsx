@@ -6,6 +6,7 @@ import { loadOrder, createLineItemForOrder, deleteLineItem, updateLineItem } fro
 import EditRowCost from '../edit_row/_cost'
 import EditRowDiscount from '../edit_row/_discount'
 import EditRowQuantity from '../edit_row/_quantity'
+import { WeekSelect, dropDates } from './_week_select'
 
 class OrdersEdit extends React.Component {
   componentWillMount() {
@@ -110,15 +111,7 @@ class OrdersEdit extends React.Component {
                          required="required"
                          value={this.state.discount} />
                 </div>
-                <div className="form-group col-md-2">
-                  <label htmlFor="dropDate">Drop Date</label>
-                  <input type="date"
-                         name="dropDate"
-                         onChange={this.handleChange.bind(this, 'dropDate')}
-                         className="form-control"
-                         required="required"
-                         value={this.state.dropDate} />
-                </div>
+                <WeekSelect table={this} />
                 <div className="form-group col-md-2" style={{ marginTop: '1.7em' }}>
                   <button className="btn btn-success">
                     Create
@@ -333,8 +326,8 @@ class OrdersEdit extends React.Component {
     this.setState({ internalSku: '',
                     quantity: 0,
                     productCost: '0.00',
-                    discount: '0.00',
-                    dropDate: '' });
+                    discount: '0.00'
+                    dropDate: dropDates()[0].value});
   }
 }
 
