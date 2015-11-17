@@ -1,6 +1,8 @@
 FactoryGirl.define do
+  sequence(:elementname) { |i| "o#{i}" }
+  sequence(:elementID) { |i| i }
   factory :element do
-    elementID { Faker::Name }
-    elementname { Faker::Name }
+    elementID
+    elementname
   end
 end
