@@ -18,7 +18,7 @@ export function dropDates() {
 
 export class WeekSelect extends React.Component {
   componentWillMount() {
-    this.props.table.setState({ dropDate: dropDates()[0].value })
+    this.setState({ dropDate: dropDates()[0].value })
   }
 
   render() {
@@ -27,10 +27,10 @@ export class WeekSelect extends React.Component {
         <label htmlFor="dropDate">Drop Date</label>
         <select name="dropDate"
                 ref="dropDate"
-                onChange={this.handleChange.bind(this, 'dropDate')}
+                onChange={this.handleChange.bind(this)}
                 className="form-control"
                 required="required"
-                value={this.props.table.state.dropDate}>
+                value={this.state.dropDate}>
           {this.renderOptions()}
         </select>
       </div>
@@ -45,7 +45,7 @@ export class WeekSelect extends React.Component {
     });
   }
 
-  handleChange (field, { target }) {
-    this.props.table.setState({ dropDate: this.refs.dropDate.value })
+  handleChange() {
+    this.setState({ dropDate: this.refs.dropDate.value })
   }
 }
