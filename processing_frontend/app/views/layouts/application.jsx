@@ -6,7 +6,7 @@ export default class Application extends React.Component {
   render () {
     return (
       <div className="purchase_processing_app">
-        <Header />
+        <Header currentPath={this.props.location.pathname} />
         {this.props.children}
       </div>
     );

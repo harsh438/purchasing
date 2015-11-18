@@ -11,7 +11,9 @@ class HeaderLink extends React.Component {
   }
 
   className() {
-    // return 'active';
+    if (this.props.to === this.props.currentPath) {
+      return 'active';
+    }
   }
 }
 
@@ -32,8 +34,8 @@ export default class Header extends React.Component {
             </div>
 
             <ul className="nav navbar-nav">
-              <HeaderLink to="/" text="Purchase Orders" />
-              <HeaderLink to="/orders" text="Re-Orders" />
+              <HeaderLink to="/" text="Purchase Orders" currentPath={this.props.currentPath} />
+              <HeaderLink to="/orders" text="Re-Orders" currentPath={this.props.currentPath} />
             </ul>
           </div>
         </nav>
