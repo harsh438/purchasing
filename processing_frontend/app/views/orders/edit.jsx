@@ -8,6 +8,7 @@ import EditRowCost from '../edit_row/_cost';
 import EditRowDiscount from '../edit_row/_discount';
 import EditRowQuantity from '../edit_row/_quantity';
 import { WeekSelect } from './_week_select';
+import { getScript } from '../../utilities/get_script'
 
 class OrdersEdit extends React.Component {
   componentWillMount() {
@@ -16,6 +17,8 @@ class OrdersEdit extends React.Component {
     if (this.props.params.id != this.props.order.id) {
       this.props.dispatch(loadOrder(this.props.params.id));
     }
+
+    getScript('/assets/handsontable.full.min.js', null)
   }
 
   componentWillReceiveProps(nextProps) {
