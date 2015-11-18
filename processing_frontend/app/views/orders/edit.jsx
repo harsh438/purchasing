@@ -24,8 +24,6 @@ class OrdersEdit extends React.Component {
 
                 <div className="panel-body">
                   {this.renderAddLineItemsForm()}
-
-                  <Link to="/orders">Temporary link back to orders</Link>
                 </div>
               </div>
             </div>
