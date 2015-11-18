@@ -12,9 +12,7 @@ class OrdersEdit extends React.Component {
   componentWillMount() {
     this.resetState();
 
-    if (this.props.params.id != this.props.order.id) {
-      this.props.dispatch(loadOrder(this.props.params.id));
-    }
+    this.props.dispatch(loadOrder(this.props.params.id));
 
     getScript('/assets/handsontable.full.min.js', this.createHandsOnTable.bind(this))
   }
@@ -33,7 +31,7 @@ class OrdersEdit extends React.Component {
           {this.renderPurchaseOrderRow()}
           {this.renderOrderLineForm()}
           {this.renderOrderLineTable()}
-          
+
           <OrderLineItemTable editable={this.props.order.exported}
                               lineItems={this.props.order.lineItems || []}
                               onOrderLineItemDelete={this.handleOrderLineItemDelete.bind(this)}
