@@ -1,4 +1,5 @@
 import React from 'react';
+import LineItemTable from './_line_item_table';
 import { getScript } from '../../utilities/get_script';
 import { Alert, Nav, NavItem } from 'react-bootstrap';
 import { WeekSelect } from './_week_select';
@@ -7,7 +8,6 @@ import { map } from 'lodash';
 export default class OrderLineItemsForm extends React.Component {
   componentWillMount() {
     this.resetState();
-    getScript('/assets/handsontable.full.js', this.createHandsOnTable.bind(this));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -40,7 +40,7 @@ export default class OrderLineItemsForm extends React.Component {
 
     return(
       <form className="form" onSubmit={this.handleMultiSubmit.bind(this)}>
-        <div ref="lineItemTable"></div>
+        <LineItemTable />
 
         <div className="form-group" style={{ marginTop: '1.7em' }}>
           <button className="btn btn-success">
@@ -114,21 +114,6 @@ export default class OrderLineItemsForm extends React.Component {
         </Alert>
       );
     }
-  }
-
-  createHandsOnTable() {
-    this.handsOnTable = new window.Handsontable(this.refs.lineItemTable,
-      { data: [['', '', '', '']],
-        colHeaders: ['Internal SKU', 'Quantity', 'Discount %', 'Drop Date'],
-        columns: [
-          { data: 'internalSku' },
-          { data: 'quantity', type: 'numeric' },
-          { data: 'discount', type: 'numeric' },
-          { data: 'dtopDate', type: 'date', dateFormat: 'YYYY-MM-DD', correctFormat: true }
-        ],
-        rowHeaders: true,
-        columnSorting: true,
-        contextMenu: true });
   }
 
   multiData() {
