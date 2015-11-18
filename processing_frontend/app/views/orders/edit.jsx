@@ -86,13 +86,14 @@ class OrdersEdit extends React.Component {
               <table className="table">
                 <thead>
                   <tr>
-                    <th>Brand Name</th>
-                    <th>Product Name</th>
-                    <th>Internal SKU</th>
-                    <th>Quantity</th>
-                    <th>Cost</th>
-                    <th>Discount %</th>
-                    <th>Drop Date</th>
+                    <th style={{ width: '10%' }}>Brand Name</th>
+                    <th style={{ width: '30%' }}>Product Name</th>
+                    <th style={{ width: '10%' }}>Internal SKU</th>
+                    <th className="text-center" style={{ width: '8%' }}>Quantity</th>
+                    <th className="text-center" style={{ width: '8%' }}>Cost</th>
+                    <th className="text-center" style={{ width: '8%' }}>Discount %</th>
+                    <th className="text-center" style={{ width: '12%' }}>Drop Date</th>
+                    <th style={{ width: '10%' }}>&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -194,12 +195,10 @@ class OrdersEdit extends React.Component {
           <td>{line.vendorName}</td>
           <td>{line.productName}</td>
           <td>{line.internalSku}</td>
-
-          <td>{this.renderEditQuantityRow(line)}</td>
-          <td>{this.renderEditCostRow(line)}</td>
-          <td>{this.renderEditDiscountRow(line)}</td>
-
-          <td>{line.dropDate}</td>
+          <td className="text-center">{this.renderEditQuantityRow(line)}</td>
+          <td className="text-center">{this.renderEditCostRow(line)}</td>
+          <td className="text-center">{this.renderEditDiscountRow(line)}</td>
+          <td className="text-center">{line.dropDate}</td>
           <td>{this.renderDeleteForm(line)}</td>
         </tr>
       );
