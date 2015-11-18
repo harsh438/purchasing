@@ -12,7 +12,7 @@ class OrderLineItem < ActiveRecord::Base
   validates :drop_date, presence: true
 
   def valid_internal_sku
-    errors.add(:internal_sku, 'has not been used previously.') unless last_po_line.present?
+    errors.add(:internal_sku, 'was not recognised') unless last_po_line.present?
   end
 
   def internal_sku=(internal_sku)

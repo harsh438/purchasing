@@ -139,9 +139,13 @@ class OrdersEdit extends React.Component {
 
     return (
       <Alert bsStyle="danger">
-        {map(this.props.errors, (err) => {
-         return (<span><strong>{err}</strong><br /></span>);
-        })}
+        <ul>
+          {map(this.props.errors.errors, (err, i) => {
+            return (
+              <li key={i}><strong>{err}</strong></li>
+            );
+          })}
+        </ul>
       </Alert>
     );
   }

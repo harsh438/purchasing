@@ -15,12 +15,10 @@ class OrdersController < ApplicationController
   end
 
   def update
-    begin
-      order.update!(order_attrs)
-      render json: order.as_json_with_line_items_and_purchase_orders
-    rescue ActiveRecord::RecordInvalid => e
-      render json: { errors: [e.to_s] }
-    end
+    order.update!(order_attrs)
+    render json: order.as_json_with_line_items_and_purchase_orders
+  rescue ActiveRecord::RecordInvalid => e
+    render json: { errors: e.record.errors.full_messages }
   end
 
   def export
