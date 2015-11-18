@@ -61,7 +61,7 @@ export default class OrderLineItemsTable extends React.Component {
   }
   renderEditCostRow(line) {
     if (this.props.editable) {
-      return (<td>{line.cost}</td>);
+      return line.cost;
     }
 
     return (
@@ -74,7 +74,7 @@ export default class OrderLineItemsTable extends React.Component {
 
   renderEditQuantityRow(line) {
     if (this.props.editable) {
-      return (<td>{line.quantity}</td>);
+      return line.quantity;
     }
 
     return (
@@ -87,7 +87,7 @@ export default class OrderLineItemsTable extends React.Component {
 
   renderEditDiscountRow(line) {
     if (this.props.editable) {
-      return (<td>{line.discount}</td>);
+      return line.discount;
     }
 
     return (
