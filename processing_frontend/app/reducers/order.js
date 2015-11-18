@@ -14,14 +14,22 @@ function transformOrder(order) {
 function setOrder(state, action) {
   if ('errors' in action.results) {
     if ('fields' in action.results) {
-      let o = { errors: action.results.errors, erroredFields: action.results.fields }
+      let o = { errors: action.results.errors,
+                erroredFields: action.results.fields,
+                erroredIds: action.results.ids }
+
       return assign({}, state, o);
     }
 
-    return assign({}, state, { errors: action.results.errors, erroredFields: null });
+    return assign({}, state, { errors: action.results.errors,
+                               erroredFields: null,
+                               erroredIds: null });
   }
 
-  return assign({}, state, { order: transformOrder(action.results), errors: null, erroredFields: null });
+  return assign({}, state, { order: transformOrder(action.results),
+                             errors: null,
+                             erroredFields: null,
+                             erroredIds: null });
 }
 
 function removeLineItems(state, action) {

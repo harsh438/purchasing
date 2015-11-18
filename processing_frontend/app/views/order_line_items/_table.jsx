@@ -70,6 +70,7 @@ export default class OrderLineItemsTable extends React.Component {
                    table={this.props.table}
                    value={line.cost.replace(/[^\d.-]/g, '')}
                    errors={this.props.errors}
+                   erroredIds={this.props.erroredIds}
                    erroredFields={this.props.erroredFields} />
     );
   }
@@ -85,6 +86,7 @@ export default class OrderLineItemsTable extends React.Component {
                        table={this.props.table}
                        value={line.quantity}
                        errors={this.props.errors}
+                       erroredIds={this.props.erroredIds}
                        erroredFields={this.props.erroredFields} />
     );
   }
@@ -100,6 +102,7 @@ export default class OrderLineItemsTable extends React.Component {
                        table={this.props.table}
                        value={line.discount}
                        errors={this.props.errors}
+                       erroredIds={this.props.erroredIds}
                        erroredFields={this.props.erroredFields} />
     );
   }

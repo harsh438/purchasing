@@ -33,6 +33,9 @@ class OrdersEdit extends React.Component {
 
           <OrderLineItemsTable editable={this.props.order.exported}
                                lineItems={this.props.order.lineItems || []}
+                               errors={this.props.errors}
+                               erroredFields={this.props.erroredFields}
+                               erroredIds={this.props.erroredIds}
                                onOrderLineItemDelete={this.handleOrderLineItemDelete.bind(this)}
                                table={this} />
         </div>
@@ -63,7 +66,7 @@ class OrdersEdit extends React.Component {
             <div className="panel-heading">
               <h3 className="panel-title">Generated Purchase Orders</h3>
             </div>
-            
+
             <div className="panel-body">
               <table className="table">
                 <thead>

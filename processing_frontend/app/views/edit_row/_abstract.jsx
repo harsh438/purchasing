@@ -1,6 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { includes, map } from 'lodash';
-import { Popover, OverlayTrigger, Alert } from 'react-bootstrap';
+import { Popover, OverlayTrigger, Alert, Overlay } from 'react-bootstrap';
 
 export default class AbstractEditRow extends React.Component {
   componentWillMount() {
@@ -35,8 +36,15 @@ export default class AbstractEditRow extends React.Component {
               onSubmit={this.handleSubmit.bind(this)}>
           <div className="form-group">
             <div className="col-md-12">
-              {this.renderErrors()}
-              {this.renderInput()}
+              <div className="validationTarget" ref="validationTarget">
+                {this.renderInput()}
+              </div>
+
+              <Overlay id={`edit-${this.props.fieldKey}-${this.props.ident}-validation`}
+                       show={this.hasErrors()}
+                       target={() => ReactDOM.findDOMNode(this.refs.validationTarget)}>
+                 {this.renderErrors()}
+              </Overlay>
             </div>
           </div>
 
@@ -55,25 +63,26 @@ export default class AbstractEditRow extends React.Component {
   }
 
   renderErrors() {
-    if (!includes(this.props.erroredFields, this.props.fieldKey)) {
-      return (<span />);
-    }
-
     return (
-      <Alert bsStyle="danger">
-        <ul>
-          {map(this.props.errors, (err, i) => {
-            return (
-              <li key={i}>{err}</li>
-            );
-          })}
-        </ul>
+      <Alert bsStyle="danger"
+             id={`${this.props.fieldKey}-${this.props.ident}-alert`}
+             style={{ position: 'absolute', zIndex: '10000', marginLeft: '26px', marginTop: '8px' }}>
+        {map(this.props.errors, (err, i) => {
+          return (
+            <span key={i}>{err}</span>
+          );
+        })}
       </Alert>
     );
   }
 
   renderInput() {
     return (<span />);
+  }
+
+  hasErrors() {
+    return (includes(this.props.erroredIds, this.props.ident) &&
+            includes(this.props.erroredFields, this.props.fieldKey));
   }
 
   handleChange(field, { target }) {
