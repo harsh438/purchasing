@@ -55,7 +55,7 @@ export function updateLineItem(id, params = {}) {
     fetch(`/api/order_line_items/${id}.json`, { credentials: 'same-origin',
                                                 method: 'PATCH',
                                                 headers: { 'Content-Type': 'application/json' },
-                                                body: JSON.stringify(params) })
+                                                body: JSON.stringify(snakeizeKeys(params)) })
       .then(response => response.json())
       .then(results => dispatch({ results, type: 'SET_ORDER' }));
   }

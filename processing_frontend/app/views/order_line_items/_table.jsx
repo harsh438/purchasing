@@ -3,6 +3,7 @@ import { map, partial } from 'lodash';
 import EditRowCost from '../edit_row/_cost';
 import EditRowDiscount from '../edit_row/_discount';
 import EditRowQuantity from '../edit_row/_quantity';
+import EditRowDate from '../edit_row/_date';
 
 export default class OrderLineItemsTable extends React.Component {
   render() {
@@ -53,7 +54,7 @@ export default class OrderLineItemsTable extends React.Component {
           <td className="text-center">{this.renderEditQuantityRow(line)}</td>
           <td className="text-center">{this.renderEditCostRow(line)}</td>
           <td className="text-center">{this.renderEditDiscountRow(line)}</td>
-          <td className="text-center">{line.dropDate}</td>
+          <td className="text-center">{this.renderEditDropDateRow(line)}</td>
           <td>{this.renderDeleteButton(line)}</td>
         </tr>
       );
@@ -104,6 +105,22 @@ export default class OrderLineItemsTable extends React.Component {
                        errors={this.props.errors}
                        erroredIds={this.props.erroredIds}
                        erroredFields={this.props.erroredFields} />
+    );
+  }
+
+  renderEditDropDateRow(line) {
+    if (this.props.editable) {
+      return line.displayDropDate;
+    }
+
+    return (
+      <EditRowDate displayValue={line.displayDropDate}
+                   ident={line.id}
+                   table={this.props.table}
+                   value={line.dropDate}
+                   errors={this.props.errors}
+                   erroredIds={this.props.erroredIds}
+                   erroredFields={this.props.erroredFields} />
     );
   }
 

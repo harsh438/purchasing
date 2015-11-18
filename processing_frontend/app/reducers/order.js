@@ -1,11 +1,18 @@
-import { assign, map, omit, reject, includes } from 'lodash';
+import { assign, map, omit, reject, includes, camelCase } from 'lodash';
 import { camelizeKeys } from '../utilities/inspection';
 
 const initialState =  { order: {} };
 
+function transformLineItem(line) {
+  const camelizedLine = camelizeKeys(line);
+  const dropDate = new Date(camelizedLine.dropDate);
+  return assign({}, camelizedLine, { dropDate: dropDate.toISOString().substring(0, 10),
+                                     displayDropDate: dropDate.toDateString() });
+}
+
 function transformOrder(order) {
   const transformedOrder = camelizeKeys(order);
-  const transformedLineItems = map(transformedOrder.lineItems, camelizeKeys);
+  const transformedLineItems = map(transformedOrder.lineItems, transformLineItem);
   const transformedPurchaseOrders = map(transformedOrder.purchaseOrders, camelizeKeys);
   return assign({}, transformedOrder, { lineItems: transformedLineItems,
                                         purchaseOrders: transformedPurchaseOrders });
@@ -15,7 +22,7 @@ function setOrder(state, action) {
   if ('errors' in action.results) {
     if ('fields' in action.results) {
       let o = { errors: action.results.errors,
-                erroredFields: action.results.fields,
+                erroredFields: map(action.results.fields, camelCase),
                 erroredIds: action.results.ids }
 
       return assign({}, state, o);

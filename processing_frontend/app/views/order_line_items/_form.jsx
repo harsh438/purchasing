@@ -146,7 +146,7 @@ export default class OrderLineItemsForm extends React.Component {
   }
 
   hasErrors(props) {
-    return ('errors' in props && props.errors != null);
+    return (props.errors != null && props.erroredFields == null);
   }
 
   handleTabChange(selectedKey) {

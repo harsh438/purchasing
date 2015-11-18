@@ -49,6 +49,7 @@ class OrdersEdit extends React.Component {
     } else {
       return (
         <OrderLineItemsForm errors={this.props.errors}
+                            erroredFields={this.props.erroredFields}
                             onAddLineItems={this.handleAddLineItems.bind(this)} />
       );
     }

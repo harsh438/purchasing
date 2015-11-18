@@ -14,7 +14,7 @@ class OrderLineItemsController < ApplicationController
   private
 
   def line_item_attrs
-    params.require(:order_line_item).permit([:cost, :discount, :quantity])
+    params.require(:order_line_item).permit([:cost, :discount, :quantity, :drop_date])
   end
 
   def order_line_item
