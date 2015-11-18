@@ -1,5 +1,6 @@
 class OrderLineItem < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
+  class PurchaseOrderNotFound < RuntimeError; end
 
   belongs_to :order
 
@@ -54,9 +55,14 @@ class OrderLineItem < ActiveRecord::Base
   private
 
   def last_po_line
-    @last_po_line ||= PurchaseOrderLineItem.where(product_id: product_id,
-                                                  option_id: option_id)
-                        .order(created_at: :desc).first
+    @last_po_line ||= begin
+      PurchaseOrderLineItem.where(product_id: product_id,
+                                  option_id: option_id)
+                           .order(created_at: :desc)
+                           .first!
+    rescue ActiveRecord::RecordNotFound
+      raise PurchaseOrderNotFound
+    end
   end
 
   def build_pid

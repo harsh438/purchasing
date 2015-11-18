@@ -17,8 +17,8 @@ class OrdersController < ApplicationController
   def update
     order.update!(order_attrs)
     render json: order.as_json_with_line_items_and_purchase_orders
-  rescue ActiveRecord::RecordInvalid => e
-    render json: { errors: e.record.errors.full_messages }
+  rescue OrderLineItem::PurchaseOrderNotFound => e
+    render json: { errors: ['Internal SKU was not recognised'] }
   end
 
   def export
