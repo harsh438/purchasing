@@ -33,6 +33,7 @@ class OrdersEdit extends React.Component {
           {this.renderPurchaseOrderRow()}
           {this.renderOrderLineForm()}
           {this.renderOrderLineTable()}
+          
           <OrderLineItemTable editable={this.props.order.exported}
                               lineItems={this.props.order.lineItems || []}
                               onOrderLineItemDelete={this.handleOrderLineItemDelete.bind(this)}
