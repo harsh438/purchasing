@@ -27,8 +27,21 @@ class OrdersEdit extends React.Component {
     return (
       <div className="order_edit" style={{ marginTop: '70px' }}>
         <div className="container-fluid">
-          {this.renderBackLink()}
-          {this.renderPurchaseOrderRow()}
+          <div className="row">
+            <div className="col-md-12">
+              <div className="panel panel-default">
+                <div className="panel-heading">
+                  <h3 className="panel-title">{this.props.order.name}</h3>
+                </div>
+
+                <div className="panel-body">
+                  <Link to="/orders">Temporary link back to orders</Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {this.renderOrderExportsTable()}
           {this.renderOrderLineForm()}
           {this.renderOrderLineTable()}
 
@@ -153,21 +166,7 @@ class OrdersEdit extends React.Component {
     );
   }
 
-  renderBackLink() {
-    return (
-      <div className="row">
-        <div className="col-md-12">
-          <div className="panel panel-default">
-            <div className="panel-body">
-              <Link to="/orders">Temporary link back to orders</Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  renderPurchaseOrderRow() {
+  renderOrderExportsTable() {
     if (!this.props.order.exported) {
       return (<div />);
     }
