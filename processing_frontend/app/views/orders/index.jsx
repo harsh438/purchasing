@@ -21,47 +21,13 @@ class OrdersIndex extends React.Component {
       <div className="orders_index container-fluid"
            style={{ marginTop: '70px' }}>
         <div className="row">
-          <div className="col-md-6">
-            <div className="panel panel-default">
-              <div className="panel-heading">
-                <h3 className="panel-title">Reorder</h3>
-              </div>
-
-              <div className="panel-body">
-                <form className="form-inline"
-                      onChange={this.handleFormChange.bind(this)}
-                      onSubmit={this.handleFormSubmit.bind(this)}>
-                  <div className="form-group">
-                    <label htmlFor="order_name"
-                           style={{ display: 'block' }}>
-                      Order name (optional)
-                    </label>
-
-                    <input className="form-control"
-                           id="order_name"
-                           name="name"
-                           style={{ width: '300px' }}
-                           value={this.state.name} />
-
-                    <button className="btn btn-success"
-                            disabled={this.state.creatingOrder}
-                            style={{ marginLeft: '1em' }}>
-                      Create order
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="row">
           <div className="col-md-12">
             <OrdersTable index={this}
                          orders={this.props.orders}
                          totalPages={this.props.totalPages}
                          activePage={this.props.activePage}
                          query={this.props.location.query}
+                         onCreateOrder={this.handleCreateOrder.bind(this)}
                          onExportOrders={this.handleExportOrder.bind(this)} />
           </div>
         </div>
@@ -73,14 +39,9 @@ class OrdersIndex extends React.Component {
     this.props.dispatch(loadOrders(page || 1));
   }
 
-  handleFormChange({ target }) {
-    this.setState({ [target.name]: target.value });
-  }
-
-  handleFormSubmit(e) {
-    e.preventDefault();
+  handleCreateOrder(order) {
     this.setState({ creatingOrder: true });
-    this.props.dispatch(createOrder(this.state));
+    this.props.dispatch(createOrder(order));
   }
 
   handleExportOrder(orderIds) {

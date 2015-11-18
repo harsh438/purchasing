@@ -1,6 +1,7 @@
 import React from 'react';
 import { contains, map, reject } from 'lodash';
-import { OrdersTableRow } from './_table_row';
+import OrdersTableRow from './_table_row';
+import OrdersForm from './_form';
 import NumberedPagination from '../pagination/_numbered';
 import { loadOrders } from '../../actions/orders';
 
@@ -24,6 +25,8 @@ export class OrdersTable extends React.Component {
                   onClick={this.handleExportOrders.bind(this)}>
             Generate Purchase Orders
           </button>
+
+          <OrdersForm onCreateOrder={this.props.onCreateOrder} />
 
           <hr />
 

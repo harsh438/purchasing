@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-export class OrdersTableRow extends React.Component {
+export default class OrdersTableRow extends React.Component {
   componentWillMount() {
     this.state = { checked: false };
   }
