@@ -21,28 +21,34 @@ class OrdersIndex extends React.Component {
       <div className="orders_index container-fluid"
            style={{ marginTop: '70px' }}>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <div className="panel panel-default">
               <div className="panel-heading">
                 <h3 className="panel-title">Reorder</h3>
               </div>
 
               <div className="panel-body">
-                <form className="form"
+                <form className="form-inline"
                       onChange={this.handleFormChange.bind(this)}
                       onSubmit={this.handleFormSubmit.bind(this)}>
                   <div className="form-group">
-                    <label htmlFor="order_name">Order name (optional)</label>
+                    <label htmlFor="order_name"
+                           style={{ display: 'block' }}>
+                      Order name (optional)
+                    </label>
+
                     <input className="form-control"
                            id="order_name"
                            name="name"
+                           style={{ width: '300px' }}
                            value={this.state.name} />
-                  </div>
 
-                  <button className="btn btn-success"
-                          disabled={this.state.creatingOrder}>
-                    Create order
-                  </button>
+                    <button className="btn btn-success"
+                            disabled={this.state.creatingOrder}
+                            style={{ marginLeft: '1em' }}>
+                      Create order
+                    </button>
+                  </div>
                 </form>
               </div>
             </div>
