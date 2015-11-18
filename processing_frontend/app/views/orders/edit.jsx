@@ -1,260 +1,59 @@
 import React from 'react';
-import { Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { map, assign } from 'lodash';
-import { loadOrder, createLineItemForOrder, deleteLineItem, updateLineItem } from '../../actions/orders';
-import EditRowCost from '../edit_row/_cost';
-import EditRowDiscount from '../edit_row/_discount';
-import EditRowQuantity from '../edit_row/_quantity';
-import { WeekSelect } from './_week_select';
-import { getScript } from '../../utilities/get_script'
+import { loadOrder, createLineItemsForOrder, deleteLineItem, updateLineItem } from '../../actions/orders';
+import OrderLineItemsTable from '../order_line_items/_table';
+import OrderLineItemsForm from '../order_line_items/_form';
 
 class OrdersEdit extends React.Component {
   componentWillMount() {
-    this.resetState();
-
-    if (this.props.params.id != this.props.order.id) {
-      this.props.dispatch(loadOrder(this.props.params.id));
-    }
-
-    getScript('/assets/handsontable.full.js', this.createHandsOnTable.bind(this))
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props != nextProps && !this.hasErrors(nextProps)) {
-      this.resetState();
-    }
+    this.props.dispatch(loadOrder(this.props.params.id));
   }
 
   render() {
     return (
       <div className="order_edit" style={{ marginTop: '70px' }}>
         <div className="container-fluid">
-          {this.renderBackLink()}
-          {this.renderPurchaseOrderRow()}
-          {this.renderOrderLineForm()}
-          {this.renderOrderLineTable()}
-          {this.renderOrderLineRow()}
-        </div>
-      </div>
-    );
-  }
+          <div className="row">
+            <div className="col-md-12">
+              <div className="panel panel-default">
+                <div className="panel-heading">
+                  <h3 className="panel-title">{this.props.order.name}</h3>
+                </div>
 
-  renderOrderLineTable() {
-    return(
-      <div className="row">
-        <div className="col-md-12">
-          <div className="panel panel-default">
-            <div className="panel-heading">Add line items from CSV</div>
-            <div className="panel-body">
-              <div ref="lineItemTable"></div>
+                <div className="panel-body">
+                  {this.renderAddLineItemsForm()}
+
+                  <Link to="/orders">Temporary link back to orders</Link>
+                </div>
+              </div>
             </div>
           </div>
+
+          {this.renderOrderExportsTable()}
+
+          <OrderLineItemsTable editable={this.props.order.exported}
+                               lineItems={this.props.order.lineItems || []}
+                               onOrderLineItemDelete={this.handleOrderLineItemDelete.bind(this)}
+                               table={this} />
         </div>
       </div>
     );
   }
 
-  renderOrderLineRow() {
-    return (
-      <div className="row">
-        <div className="col-md-12">
-          <div className="panel panel-default">
-            <div className="panel-heading">Order line items</div>
-            <div className="panel-body">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Brand Name</th>
-                    <th>Product Name</th>
-                    <th>Internal SKU</th>
-                    <th>Quantity</th>
-                    <th>Cost</th>
-                    <th>Discount %</th>
-                    <th>Drop Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.renderLineItems()}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  renderOrderLineForm() {
+  renderAddLineItemsForm() {
     if (this.props.order.exported) {
       return (<div />);
-    }
-
-    return (
-      <div className="row">
-        <div className="col-md-12">
-          <div className="panel panel-default">
-            <div className="panel-heading">Create line item</div>
-            <div className="panel-body">
-              {this.renderErrors()}
-
-              <form className="form" onSubmit={this.handleLineItemSubmit.bind(this)}>
-                <div className="form-group col-md-2">
-                  <label htmlFor="internalSku">Internal SKU</label>
-                  <input type="text"
-                         name="internalSku"
-                         onChange={this.handleChange.bind(this, 'internalSku')}
-                         className="form-control"
-                         required="required"
-                         value={this.state.internalSku} />
-                </div>
-
-                <div className="form-group col-md-2">
-                  <label htmlFor="quantity">Quantity</label>
-                  <input type="number"
-                         name="quantity"
-                         onChange={this.handleChange.bind(this, 'quantity')}
-                         className="form-control"
-                         required="required"
-                         value={this.state.quantity} />
-                </div>
-
-                <div className="form-group col-md-2">
-                  <label htmlFor="discount">Discount %</label>
-                  <input type="number"
-                         step="0.01"
-                         name="discount"
-                         onChange={this.handleChange.bind(this, 'discount')}
-                         className="form-control"
-                         required="required"
-                         value={this.state.discount} />
-                </div>
-
-                <WeekSelect table={this} ref="dropDate" />
-
-                <div className="form-group col-md-2" style={{ marginTop: '1.7em' }}>
-                  <button className="btn btn-success">
-                    Create
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  renderErrors() {
-    if (!this.hasErrors(this.props)) {
-      return (<span />);
-    }
-
-    return (
-      <Alert bsStyle="danger">
-        <ul>
-          {map(this.props.errors.errors, (err, i) => {
-            return (
-              <li key={i}><strong>{err}</strong></li>
-            );
-          })}
-        </ul>
-      </Alert>
-    );
-  }
-
-  renderLineItems() {
-    if (!this.props.order.lineItems || this.props.order.lineItems.length == 0) {
-      return (<tr><td><h4>No line items found.</h4></td></tr>);
-    }
-
-    return map(this.props.order.lineItems, (line) => {
+    } else {
       return (
-        <tr key={line.idf}>
-          <td>{line.vendorName}</td>
-          <td>{line.productName}</td>
-          <td>{line.internalSku}</td>
-
-          {this.renderEditQuantityRow(line)}
-          {this.renderEditCostRow(line)}
-          {this.renderEditDiscountRow(line)}
-
-          <td>{line.dropDate}</td>
-          <td>{this.renderDeleteForm(line)}</td>
-        </tr>
+        <OrderLineItemsForm errors={this.props.errors}
+                            onAddLineItems={this.handleAddLineItems.bind(this)} />
       );
-    })
-  }
-
-  renderEditCostRow(line) {
-    if (this.props.order.exported) {
-      return (<td>{line.cost}</td>);
     }
-
-    return (
-      <EditRowCost displayValue={line.cost}
-                   ident={line.id}
-                   table={this}
-                   value={line.cost.replace(/[^\d.-]/g, '')} />
-    );
   }
 
-  renderEditQuantityRow(line) {
-    if (this.props.order.exported) {
-      return (<td>{line.quantity}</td>);
-    }
-
-    return (
-      <EditRowQuantity displayValue={line.quantity}
-                       ident={line.id}
-                       table={this}
-                       value={line.quantity} />
-    );
-  }
-
-  renderEditDiscountRow(line) {
-    if (this.props.order.exported) {
-      return (<td>{line.discount}</td>);
-    }
-
-    return (
-      <EditRowDiscount displayValue={line.discount}
-                       ident={line.id}
-                       table={this}
-                       value={line.discount} />
-    );
-  }
-
-  renderDeleteForm(line) {
-    if (this.props.order.exported) {
-      return (<span />);
-    }
-
-    return (
-      <form className="form" onSubmit={this.handleLineItemDelete.bind(this, line.id)}>
-        <button className="btn btn-danger">
-          Delete
-        </button>
-      </form>
-    );
-  }
-
-  renderBackLink() {
-    return (
-      <div className="row">
-        <div className="col-md-12">
-          <div className="panel panel-default">
-            <div className="panel-body">
-              <Link to="/orders">Temporary link back to orders</Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  renderPurchaseOrderRow() {
+  renderOrderExportsTable() {
     if (!this.props.order.exported) {
       return (<div />);
     }
@@ -302,52 +101,19 @@ class OrdersEdit extends React.Component {
     })
   }
 
-  createHandsOnTable() {
-    this.handsOnTable = new window.Handsontable(this.refs.lineItemTable, {
-      data: window.Handsontable.helper.createSpreadsheetData(4, 3),
-      colHeaders: true,
-      rowHeaders: true,
-      columnSorting: true,
-      contextMenu: false
-    });
-  }
-
-  handleLineItemSubmit(e) {
-    e.preventDefault();
-    this.props.dispatch(createLineItemForOrder(this.props.params.id, this.lineItemState()))
-  }
-
-  lineItemState() {
-    return { order: { lineItemsAttributes: [{ internalSku: this.state.internalSku,
-                                              quantity: this.state.quantity,
-                                              cost: this.state.cost,
-                                              discount: this.state.discount,
-                                              dropDate: this.refs.dropDate.state.dropDate }] } }
+  handleAddLineItems(lineItems) {
+    const data = { order: { lineItemsAttributes: lineItems } };
+    this.props.dispatch(createLineItemsForOrder(this.props.params.id, data));
   }
 
   updateField(id, key, value) {
     this.props.dispatch(updateLineItem([id], { [key]: value }));
   }
 
-  handleLineItemDelete(lineItemId) {
+  handleOrderLineItemDelete(lineItemId) {
     if (confirm('Are you sure you want to delete this line item?')) {
       this.props.dispatch(deleteLineItem(lineItemId));
     }
-  }
-
-  handleChange(field, { target }) {
-    this.setState({ [field]: target.value });
-  }
-
-  resetState() {
-    this.setState({ internalSku: '',
-                    quantity: 0,
-                    productCost: '0.00',
-                    discount: '0.00' });
-  }
-
-  hasErrors(props) {
-    return ('errors' in props && props.errors != null)
   }
 }
 
