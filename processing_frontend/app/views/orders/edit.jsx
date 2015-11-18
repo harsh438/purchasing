@@ -35,7 +35,7 @@ class OrdersEdit extends React.Component {
           {this.renderPurchaseOrderRow()}
           {this.renderOrderLineForm()}
           {this.renderOrderLineTable()}
-          {this.renderOrderLineRow()}
+          {this.renderOrderTable()}
         </div>
       </div>
     );
@@ -56,7 +56,15 @@ class OrdersEdit extends React.Component {
     );
   }
 
-  renderOrderLineRow() {
+  renderOrderTable() {
+    if (!this.props.order.lineItems || this.props.order.lineItems.length == 0) {
+      return (
+        <div style={{ width: '100%', textAlign: 'center' }}>
+          No results to show.
+        </div>
+      );
+    }
+    
     return (
       <div className="row">
         <div className="col-md-12">
@@ -168,10 +176,6 @@ class OrdersEdit extends React.Component {
   }
 
   renderLineItems() {
-    if (!this.props.order.lineItems || this.props.order.lineItems.length == 0) {
-      return (<tr><td><h4>No line items found.</h4></td></tr>);
-    }
-
     return map(this.props.order.lineItems, (line) => {
       return (
         <tr key={line.idf}>
