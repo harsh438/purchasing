@@ -1,12 +1,19 @@
 import React from 'react';
-import { Popover, OverlayTrigger } from 'react-bootstrap';
+import { includes, map } from 'lodash';
+import { Popover, OverlayTrigger, Alert } from 'react-bootstrap';
 
 export default class AbstractEditRow extends React.Component {
-  componentWillMount () {
+  componentWillMount() {
     this.setState({ value: this.props.value });
   }
 
-  render () {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors == null) {
+      this.refs.overlayTrigger.hide();
+    }
+  }
+
+  render() {
     return (
       <OverlayTrigger id={`edit-${this.props.fieldKey}-${this.props.ident}-overlay`}
                       trigger="click"
@@ -28,6 +35,7 @@ export default class AbstractEditRow extends React.Component {
               onSubmit={this.handleSubmit.bind(this)}>
           <div className="form-group">
             <div className="col-md-12">
+              {this.renderErrors()}
               {this.renderInput()}
             </div>
           </div>
@@ -46,17 +54,34 @@ export default class AbstractEditRow extends React.Component {
     );
   }
 
+  renderErrors() {
+    if (!includes(this.props.erroredFields, this.props.fieldKey)) {
+      return (<span />);
+    }
+
+    return (
+      <Alert bsStyle="danger">
+        <ul>
+          {map(this.props.errors, (err, i) => {
+            return (
+              <li key={i}>{err}</li>
+            );
+          })}
+        </ul>
+      </Alert>
+    );
+  }
+
   renderInput() {
     return (<span />);
   }
 
-  handleChange (field, { target }) {
+  handleChange(field, { target }) {
     this.setState({ value: target.value });
   }
 
-  handleSubmit (e) {
+  handleSubmit(e) {
     e.preventDefault();
     this.props.table.updateField(this.props.ident, this.props.fieldKey, this.state.value);
-    this.refs.overlayTrigger.hide();
   }
 }

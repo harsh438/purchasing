@@ -21,7 +21,6 @@ class OrdersEdit extends React.Component {
                 <div className="panel-heading">
                   <h3 className="panel-title">{this.props.order.name}</h3>
                 </div>
-
                 <div className="panel-body">
                   {this.renderAddLineItemsForm()}
 
@@ -35,6 +34,8 @@ class OrdersEdit extends React.Component {
 
           <OrderLineItemsTable editable={this.props.order.exported}
                                lineItems={this.props.order.lineItems || []}
+                               errors={this.props.errors}
+                               erroredFields={this.props.erroredFields}
                                onOrderLineItemDelete={this.handleOrderLineItemDelete.bind(this)}
                                table={this} />
         </div>
@@ -98,7 +99,7 @@ class OrdersEdit extends React.Component {
           <td>{po.vendorName}</td>
         </tr>
       );
-    })
+    });
   }
 
   handleAddLineItems(lineItems) {

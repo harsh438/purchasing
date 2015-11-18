@@ -106,7 +106,7 @@ export default class OrderLineItemsForm extends React.Component {
       return (
         <Alert bsStyle="danger">
           <ul>
-            {map(this.props.errors.errors, (err, i) => {
+            {map(this.props.errors, (err, i) => {
               return (
                 <li key={i}><strong>{err}</strong></li>
               );

@@ -68,7 +68,9 @@ export default class OrderLineItemsTable extends React.Component {
       <EditRowCost displayValue={line.cost}
                    ident={line.id}
                    table={this.props.table}
-                   value={line.cost.replace(/[^\d.-]/g, '')} />
+                   value={line.cost.replace(/[^\d.-]/g, '')}
+                   errors={this.props.errors}
+                   erroredFields={this.props.erroredFields} />
     );
   }
 
@@ -81,7 +83,9 @@ export default class OrderLineItemsTable extends React.Component {
       <EditRowQuantity displayValue={line.quantity}
                        ident={line.id}
                        table={this.props.table}
-                       value={line.quantity} />
+                       value={line.quantity}
+                       errors={this.props.errors}
+                       erroredFields={this.props.erroredFields} />
     );
   }
 
