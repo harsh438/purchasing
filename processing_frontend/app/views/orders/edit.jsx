@@ -29,11 +29,8 @@ class OrdersEdit extends React.Component {
       <div className="order_edit" style={{ marginTop: '70px' }}>
         <div className="container-fluid">
           {this.renderBackLink()}
-
           {this.renderPurchaseOrderRow()}
-
           {this.renderOrderLineForm()}
-
           {this.renderOrderLineRow()}
         </div>
       </div>
