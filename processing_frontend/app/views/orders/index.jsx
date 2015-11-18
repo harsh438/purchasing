@@ -6,19 +6,14 @@ import { loadOrders, createOrder, exportOrders } from '../../actions/orders';
 
 class OrdersIndex extends React.Component {
   componentWillMount() {
-    let page = this.props.location.query.page;
     this.state = { creatingOrder: false };
-    this.loadPage(page);
+    this.loadPage(this.props.location.query.page);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.state.creatingOrder && nextProps.order) {
       this.props.history.pushState(null, `/orders/${nextProps.order.id}/edit`);
     }
-  }
-
-  loadPage(page) {
-    this.props.dispatch(loadOrders(page || 1));
   }
 
   render() {
@@ -66,6 +61,10 @@ class OrdersIndex extends React.Component {
         </div>
       </div>
     );
+  }
+
+  loadPage(page) {
+    this.props.dispatch(loadOrders(page || 1));
   }
 
   handleFormChange({ target }) {
