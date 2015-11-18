@@ -11,7 +11,7 @@ class HeaderLink extends React.Component {
   }
 
   className() {
-    return 'active';
+    // return 'active';
   }
 }
 
@@ -33,6 +33,7 @@ export default class Header extends React.Component {
 
             <ul className="nav navbar-nav">
               <HeaderLink to="/" text="Purchase Orders" />
+              <HeaderLink to="/orders" text="Re-Orders" />
             </ul>
           </div>
         </nav>
