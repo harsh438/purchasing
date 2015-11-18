@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 
 class HeaderLink extends React.Component {
-  render () {
+  render() {
     return (
       <li className={this.className()}>
         <Link to={this.props.to}>{this.props.text}</Link>
@@ -16,7 +16,7 @@ class HeaderLink extends React.Component {
 }
 
 export default class Header extends React.Component {
-  render () {
+  render() {
     return (
       <div className="container-fluid">
         <nav className="navbar navbar-inverse navbar-fixed-top">

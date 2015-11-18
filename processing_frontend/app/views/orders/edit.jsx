@@ -286,7 +286,7 @@ class OrdersEdit extends React.Component {
     })
   }
 
-  handleLineItemSubmit (e) {
+  handleLineItemSubmit(e) {
     e.preventDefault();
     this.props.dispatch(createLineItemForOrder(this.props.params.id, this.lineItemState()))
   }
@@ -303,24 +303,24 @@ class OrdersEdit extends React.Component {
     this.props.dispatch(updateLineItem([id], { [key]: value }));
   }
 
-  handleLineItemDelete (lineItemId) {
+  handleLineItemDelete(lineItemId) {
     if (confirm('Are you sure you want to delete this line item?')) {
       this.props.dispatch(deleteLineItem(lineItemId));
     }
   }
 
-  handleChange (field, { target }) {
+  handleChange(field, { target }) {
     this.setState({ [field]: target.value });
   }
 
-  resetState () {
+  resetState() {
     this.setState({ internalSku: '',
                     quantity: 0,
                     productCost: '0.00',
                     discount: '0.00' });
   }
 
-  hasErrors (props) {
+  hasErrors(props) {
     return ('errors' in props && props.errors != null)
   }
 }

@@ -5,13 +5,13 @@ import NumberedPagination from '../pagination/_numbered';
 import { loadOrders } from '../../actions/orders';
 
 export class OrdersTable extends React.Component {
-  componentWillMount () {
+  componentWillMount() {
     let page = this.props.query.page || 1;
     this.state = { exportingOrders: false,
                    selectedOrders: [] };
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({ exportingOrders: false,
                     selectedOrders: [] });
   }
@@ -67,7 +67,7 @@ export class OrdersTable extends React.Component {
     });
   }
 
-  toggleOrderSelection (orderId) {
+  toggleOrderSelection(orderId) {
     let selectedOrders;
 
     if (contains(this.state.selectedOrders, orderId)) {
@@ -79,12 +79,12 @@ export class OrdersTable extends React.Component {
     this.setState({ selectedOrders });
   }
 
-  handleExportOrders () {
+  handleExportOrders() {
     this.setState({ exportingOrders: true });
     this.props.onExportOrders(this.state.selectedOrders);
   }
 
-  isExportButtonDisabled () {
+  isExportButtonDisabled() {
     return this.state.exportingOrders || this.state.selectedOrders.length === 0;
   }
 }

@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router';
 
 export class OrdersTableRow extends React.Component {
-  componentWillMount () {
+  componentWillMount() {
     this.state = { checked: false };
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.exported) {
       this.setState({ checked: false });
     }
@@ -33,7 +33,7 @@ export class OrdersTableRow extends React.Component {
     );
   }
 
-  handleCheckboxChange ({ target }) {
+  handleCheckboxChange({ target }) {
     this.setState({ checked: target.checked });
     this.props.onToggleCheck(target.value);
   }

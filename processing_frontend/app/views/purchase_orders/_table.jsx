@@ -11,31 +11,31 @@ import { cancelPurchaseOrders,
 import { sum, map, intersection, pluck, contains } from 'lodash';
 
 export default class PurchaseOrdersTable extends React.Component {
-  componentWillMount () {
+  componentWillMount() {
     this.state = { sticky: false, selected: [] };
     this.onScroll();
     window.addEventListener('scroll', this.onScroll.bind(this));
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     return this.props.purchaseOrders !== nextProps.purchaseOrders ||
            this.state.sticky !== nextState.sticky ||
            this.props.summary !== nextProps.summary ||
            this.state.selected !== nextState.selected;
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.props.purchaseOrders !== nextProps.purchaseOrders) {
       const newIds = map(nextProps.purchaseOrders, o => o.orderId)
       this.setState({ selected: intersection(this.state.selected, newIds) })
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll.bind(this));
   }
 
-  render () {
+  render() {
     if (this.props.purchaseOrders.length === 0) {
       return this.renderEmpty();
     }
@@ -60,7 +60,7 @@ export default class PurchaseOrdersTable extends React.Component {
     );
   }
 
-  renderRows () {
+  renderRows() {
     let currentPoNumber;
     let alt = true;
 
@@ -81,7 +81,7 @@ export default class PurchaseOrdersTable extends React.Component {
     });
   }
 
-  renderEmpty () {
+  renderEmpty() {
     if (this.props.purchaseOrders.length == 0) {
       return(
         <div style={{ width: '100%', textAlign: 'center' }}>
@@ -91,19 +91,19 @@ export default class PurchaseOrdersTable extends React.Component {
     }
   }
 
-  className () {
+  className() {
     let className = 'purchase_orders_table';
     if (this.state.sticky) className += '--sticky';
     return className;
   }
 
-  paddingTop () {
+  paddingTop() {
     if (this.header && this.shouldStick()) {
       return this.header.refs.thead.clientHeight;
     }
   }
 
-  onScroll () {
+  onScroll() {
     const shouldStick = this.shouldStick();
 
     if (!this.state.sticky && shouldStick) {
@@ -113,13 +113,13 @@ export default class PurchaseOrdersTable extends React.Component {
     }
   }
 
-  shouldStick () {
+  shouldStick() {
     if (this.header) {
       return window.pageYOffset > 475;
     }
   }
 
-  handleRowChange ({ target }) {
+  handleRowChange({ target }) {
     if (target.checked) {
       this.selectRow(parseInt(target.value, 10));
     } else {
@@ -127,7 +127,7 @@ export default class PurchaseOrdersTable extends React.Component {
     }
   }
 
-  handleSelectAll ({ target }) {
+  handleSelectAll({ target }) {
     let orderIds = [];
 
     if (target.checked) {
@@ -137,7 +137,7 @@ export default class PurchaseOrdersTable extends React.Component {
     this.setState({ selected: orderIds });
   }
 
-  selectRow (id) {
+  selectRow(id) {
     var selected = this.state.selected.slice();
     if (!contains(selected, id)) {
       selected.push(id);
@@ -145,7 +145,7 @@ export default class PurchaseOrdersTable extends React.Component {
     this.setState({ selected: selected });
   }
 
-  unSelectRow (id) {
+  unSelectRow(id) {
     var selected = this.state.selected.slice();
     var index = selected.indexOf(id);
 
@@ -157,13 +157,13 @@ export default class PurchaseOrdersTable extends React.Component {
     this.setState({ selected: selected });
   }
 
-  cancelSelected () {
+  cancelSelected() {
     if (confirm(`Cancelling all selected items, are you sure?`)) {
       this.props.dispatch(cancelPurchaseOrders(this.state.selected));
     }
   }
 
-  cancelPO () {
+  cancelPO() {
     if (!this.props.query.poNumber) {
       return;
     }
@@ -172,7 +172,7 @@ export default class PurchaseOrdersTable extends React.Component {
     }
   }
 
-  uncancelSelected () {
+  uncancelSelected() {
     this.props.dispatch(uncancelPurchaseOrders(this.state.selected));
   }
 
@@ -180,11 +180,11 @@ export default class PurchaseOrdersTable extends React.Component {
     this.props.dispatch(updatePurchaseOrders([id], { [key]: value }));
   }
 
-  setDeliveryDate (value) {
+  setDeliveryDate(value) {
     this.setState({ deliveryDate: value });
   }
 
-  changeDeliveryDateSelected () {
+  changeDeliveryDateSelected() {
     if (!this.state.deliveryDate) {
       return;
     }

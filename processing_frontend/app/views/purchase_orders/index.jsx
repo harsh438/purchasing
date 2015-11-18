@@ -16,7 +16,7 @@ import { assign, intersection, isEqual, map } from 'lodash';
 import { isEmptyObject } from '../../utilities/inspection';
 
 class PurchaseOrdersIndex extends React.Component {
-  componentWillMount () {
+  componentWillMount() {
     this.props.dispatch(loadBrands());
     this.props.dispatch(loadSuppliers());
     this.props.dispatch(loadGenders());
@@ -37,7 +37,7 @@ class PurchaseOrdersIndex extends React.Component {
     }
   }
 
-  render () {
+  render() {
     return (
       <div className="purchase_orders_index">
         <PurchaseOrdersForm brands={this.props.brands}
@@ -64,7 +64,7 @@ class PurchaseOrdersIndex extends React.Component {
     );
   }
 
-  renderLoadMoreButton () {
+  renderLoadMoreButton() {
     if (this.props.moreResultsAvailable) {
       if (this.props.loading) {
         return (
@@ -86,15 +86,15 @@ class PurchaseOrdersIndex extends React.Component {
     }
   }
 
-  loadPurchaseOrders (query) {
+  loadPurchaseOrders(query) {
     this.props.dispatch(loadPurchaseOrders(query));
   }
 
-  loadSummary (query) {
+  loadSummary(query) {
     this.props.dispatch(loadSummary(query));
   }
 
-  loadPurchaseOrdersIfQuery () {
+  loadPurchaseOrdersIfQuery() {
     let query = this.props.location.query;
 
     if (!isEmptyObject(query)) {
@@ -103,15 +103,15 @@ class PurchaseOrdersIndex extends React.Component {
     }
   }
 
-  clearPurchaseOrders () {
+  clearPurchaseOrders() {
     this.props.dispatch(clearPurchaseOrders());
   }
 
-  loadMorePurchaseOrders () {
+  loadMorePurchaseOrders() {
     this.props.dispatch(loadMorePurchaseOrders(this.props.location.query, this.nextPage()));
   }
 
-  nextPage () {
+  nextPage() {
     return parseInt(this.props.page, 10) + 1;
   }
 }

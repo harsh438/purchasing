@@ -3,7 +3,7 @@ import { isEmptyObject } from '../../utilities/inspection';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 
 class PurchaseOrdersSummary extends React.Component {
-  render () {
+  render() {
     let summary = this.props.summary;
 
     return (
@@ -46,7 +46,7 @@ class PurchaseOrdersSummary extends React.Component {
     );
   }
 
-  renderNormalFontWeight (value) {
+  renderNormalFontWeight(value) {
     if (value == null) return;
 
     return (
@@ -56,7 +56,7 @@ class PurchaseOrdersSummary extends React.Component {
 }
 
 export default class PurchaseOrderSummaryLink extends React.Component {
-  render () {
+  render() {
     if (isEmptyObject(this.props.summary)) {
       return (<div>{this.props.children}</div>);
     }
@@ -72,7 +72,7 @@ export default class PurchaseOrderSummaryLink extends React.Component {
     );
   }
 
-  renderSummary () {
+  renderSummary() {
     return (
       <Popover id="purchase-order-summary-popover"
                title="Results Summary"

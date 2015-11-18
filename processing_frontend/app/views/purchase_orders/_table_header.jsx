@@ -2,7 +2,7 @@ import React from 'react';
 import PurchaseOrdersSummaryLink from './_summary_link';
 
 export default class PurchaseOrderTableHeader extends React.Component {
-  render () {
+  render() {
     return (
       <thead ref="thead">
         <tr>

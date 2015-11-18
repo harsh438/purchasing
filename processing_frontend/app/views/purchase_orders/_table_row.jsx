@@ -3,7 +3,7 @@ import EditRowQuantity from '../edit_row/_quantity';
 import EditRowCost from '../edit_row/_cost';
 
 export default class PurchaseOrderRow extends React.Component {
-  render () {
+  render() {
     return (
       <tr className={this.classes()} ref="row">
         <td className="narrow">
@@ -74,7 +74,7 @@ export default class PurchaseOrderRow extends React.Component {
     );
   }
 
-  classes () {
+  classes() {
     let classes = 'scaled';
 
     if (this.props.alt) {
@@ -88,13 +88,13 @@ export default class PurchaseOrderRow extends React.Component {
     return classes;
   }
 
-  changeBalanceQuantityUrl () {
+  changeBalanceQuantityUrl() {
     return ENV['QUANTITY_EDIT_PATH']
       .replace(':pid', this.props.purchaseOrder.productId)
       .replace(':date', this.props.purchaseOrder.deliveryDate);
   }
 
-  stockBugUrl () {
+  stockBugUrl() {
     return ENV['STOCKBUG_PATH']
       .replace(':pid', this.props.purchaseOrder.productId);
   }

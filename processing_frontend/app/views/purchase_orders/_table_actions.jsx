@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default class PurchaseOrdersTableActions extends React.Component {
-  render () {
+  render() {
     if (this.props.totalCount == 0) {
       return (<div />);
     }
@@ -96,7 +96,7 @@ export default class PurchaseOrdersTableActions extends React.Component {
     );
   }
 
-  renderExportButton () {
+  renderExportButton() {
     if (!this.props.exportable) return;
 
     let additionalParams = {}
@@ -115,26 +115,26 @@ export default class PurchaseOrdersTableActions extends React.Component {
     );
   }
 
-  handleCancelSubmit (e) {
+  handleCancelSubmit(e) {
     e.preventDefault();
     this.props.table.cancelSelected();
   }
 
-  handleCancelPOSubmit (e) {
+  handleCancelPOSubmit(e) {
     e.preventDefault();
     this.props.table.cancelPO();
   }
 
-  handleUncancelSubmit (e) {
+  handleUncancelSubmit(e) {
     e.preventDefault();
     this.props.table.uncancelSelected();
   }
 
-  handleDeliveryDateChange ({ target }) {
+  handleDeliveryDateChange({ target }) {
     this.props.table.setDeliveryDate(target.value);
   }
 
-  handleDeliveryDateSubmit (e) {
+  handleDeliveryDateSubmit(e) {
     e.preventDefault();
     this.props.table.changeDeliveryDateSelected();
   }

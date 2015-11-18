@@ -6,15 +6,6 @@ export default class NumberedPagination extends React.Component {
     this.setState({ activePage: this.props.activePage || 1 });
   }
 
-  handleSelect(event, selectedEvent) {
-    event.preventDefault();
-    this.setState({
-      activePage: selectedEvent.eventKey
-    });
-
-    this.props.index.loadPage(selectedEvent.eventKey)
-  }
-
   render() {
     return (
       <div style={{ marginLeft: '20px' }}>
@@ -30,5 +21,14 @@ export default class NumberedPagination extends React.Component {
         <br />
       </div>
     );
+  }
+
+  handleSelect(event, selectedEvent) {
+    event.preventDefault();
+    this.setState({
+      activePage: selectedEvent.eventKey
+    });
+
+    this.props.index.loadPage(selectedEvent.eventKey)
   }
 }

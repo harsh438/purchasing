@@ -229,7 +229,7 @@ export default class PurchaseOrdersForm extends React.Component {
     );
   }
 
-  renderSubmit () {
+  renderSubmit() {
     if (this.props.loading) {
       return (
         <button className="btn btn-success"
@@ -248,7 +248,7 @@ export default class PurchaseOrdersForm extends React.Component {
     }
   }
 
-  setStateFromQuery (query) {
+  setStateFromQuery(query) {
     this.setState({ brand: query.brand || '',
                     category: query.category || [],
                     poNumber: query.poNumber || '',
@@ -281,15 +281,15 @@ export default class PurchaseOrdersForm extends React.Component {
     });
   }
 
-  handleSortChange (value) {
+  handleSortChange(value) {
     this.setState({ sortBy: value });
   }
 
-  handleStatusChange () {
+  handleStatusChange() {
     this.setState({ status: this.refs.status.getCheckedValues() });
   }
 
-  handleChange (field, { target }) {
+  handleChange(field, { target }) {
     this.setState({ [field]: target.value });
   }
 
@@ -313,7 +313,7 @@ export default class PurchaseOrdersForm extends React.Component {
     this.setState({ gender: this.splitMultiSelectValues(value) });
   }
 
-  handleSubmit (e) {
+  handleSubmit(e) {
     e.preventDefault();
     this.props.history.pushState(null, '/', this.state);
   }

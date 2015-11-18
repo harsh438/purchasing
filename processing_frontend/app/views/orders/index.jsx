@@ -5,13 +5,13 @@ import { OrdersTable } from './_table';
 import { loadOrders, createOrder, exportOrders } from '../../actions/orders';
 
 class OrdersIndex extends React.Component {
-  componentWillMount () {
+  componentWillMount() {
     let page = this.props.location.query.page;
     this.state = { creatingOrder: false };
     this.loadPage(page);
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.state.creatingOrder && nextProps.order) {
       this.props.history.pushState(null, `/orders/${nextProps.order.id}/edit`);
     }
@@ -57,12 +57,12 @@ class OrdersIndex extends React.Component {
     );
   }
 
-  dispatchCreateOrder () {
+  dispatchCreateOrder() {
     this.setState({ creatingOrder: true });
     this.props.dispatch(createOrder());
   }
 
-  dispatchExportOrder (orderIds) {
+  dispatchExportOrder(orderIds) {
     this.props.dispatch(exportOrders(orderIds));
   }
 }
