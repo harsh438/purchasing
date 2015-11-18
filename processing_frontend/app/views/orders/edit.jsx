@@ -195,9 +195,9 @@ class OrdersEdit extends React.Component {
           <td>{line.productName}</td>
           <td>{line.internalSku}</td>
 
-          {this.renderEditQuantityRow(line)}
-          {this.renderEditCostRow(line)}
-          {this.renderEditDiscountRow(line)}
+          <td>{this.renderEditQuantityRow(line)}</td>
+          <td>{this.renderEditCostRow(line)}</td>
+          <td>{this.renderEditDiscountRow(line)}</td>
 
           <td>{line.dropDate}</td>
           <td>{this.renderDeleteForm(line)}</td>

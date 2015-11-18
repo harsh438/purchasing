@@ -8,16 +8,14 @@ export default class AbstractEditRow extends React.Component {
 
   render () {
     return (
-      <td className={this.props.className}>
-        <OverlayTrigger id={`edit-${this.props.fieldKey}-${this.props.ident}-overlay`}
-                        trigger="click"
-                        ref="overlayTrigger"
-                        rootClose
-                        placement="left"
-                        overlay={this.popOverlay()}>
-          <a style={{ cursor: 'pointer' }}>{this.props.displayValue}</a>
-        </OverlayTrigger>
-      </td>
+      <OverlayTrigger id={`edit-${this.props.fieldKey}-${this.props.ident}-overlay`}
+                      trigger="click"
+                      ref="overlayTrigger"
+                      rootClose
+                      placement="left"
+                      overlay={this.popOverlay()}>
+        <a style={{ cursor: 'pointer' }}>{this.props.displayValue}</a>
+      </OverlayTrigger>
     );
   }
 

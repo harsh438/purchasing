@@ -28,11 +28,12 @@ export default class PurchaseOrderRow extends React.Component {
         <td className="x-wide">{this.props.purchaseOrder.productName}</td>
         <td className="wideish">{this.props.purchaseOrder.productSku}</td>
         <td>{this.props.purchaseOrder.internalSku}</td>
-
-        <EditRowCost displayValue={this.props.purchaseOrder.productCost}
-                     ident={this.props.purchaseOrder.orderId}
-                     table={this.props.table}
-                     value={this.props.purchaseOrder.productCost.replace(/[^\d.-]/g, '')} />
+        <td>
+          <EditRowCost displayValue={this.props.purchaseOrder.productCost}
+                       ident={this.props.purchaseOrder.orderId}
+                       table={this.props.table}
+                       value={this.props.purchaseOrder.productCost.replace(/[^\d.-]/g, '')} />
+        </td>
 
         <td>{this.props.purchaseOrder.productRrp}</td>
         <td className="narrowish">{this.props.purchaseOrder.productSize}</td>
@@ -42,12 +43,14 @@ export default class PurchaseOrderRow extends React.Component {
         <td className="wideish" style={{ borderLeft: '2px solid #ddd' }}>
           {this.props.purchaseOrder.orderType}
         </td>
-        <EditRowQuantity displayValue={this.props.purchaseOrder.orderedQuantity}
-                         ident={this.props.purchaseOrder.orderId}
-                         labelValue="Qty"
-                         className="narrowish"
-                         table={this.props.table}
-                         value={this.props.purchaseOrder.orderedQuantity} />
+
+        <td className="narrowish">
+          <EditRowQuantity displayValue={this.props.purchaseOrder.orderedQuantity}
+                           ident={this.props.purchaseOrder.orderId}
+                           labelValue="Qty"
+                           table={this.props.table}
+                           value={this.props.purchaseOrder.orderedQuantity} />
+        </td>
         <td>{this.props.purchaseOrder.orderedCost}</td>
         <td>{this.props.purchaseOrder.orderedValue}</td>
 
