@@ -24,13 +24,11 @@ export class OrdersTable extends React.Component {
             <button className="btn btn-warning"
                     disabled={this.isExportButtonDisabled()}
                     onClick={this.handleExportOrders.bind(this)}>
-              Create Purchase Orders
+              Export as Purchase Orders
             </button>
-          </div>
-        </div>
 
-        <div className="panel panel-default">
-          <div className="panel-body">
+            <hr />
+
             <div className="orders_table">
               <table className="table">
                 <thead>
