@@ -128,7 +128,7 @@ export default class OrderLineItemsForm extends React.Component {
         ],
         rowHeaders: true,
         columnSorting: true,
-        contextMenu: true })
+        contextMenu: true });
   }
 
   multiData() {
