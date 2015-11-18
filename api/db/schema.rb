@@ -432,4 +432,6 @@ ActiveRecord::Schema.define(version: 20151118113100) do
     t.integer "SupplierToBrandsID",  limit: 4
   end
 
+  add_foreign_key "order_exports", "orders"
+  add_foreign_key "order_line_items", "orders"
 end
