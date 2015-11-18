@@ -18,7 +18,7 @@ export default class OrderLineItemsForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="order_line_item_form">
         <Nav bsStyle="tabs"
              activeKey={this.state.tab}
              onSelect={this.handleTabChange.bind(this)}>
@@ -26,8 +26,10 @@ export default class OrderLineItemsForm extends React.Component {
           <NavItem eventKey={"single"} title="Add one row at a time">Single</NavItem>
         </Nav>
 
-        {this.renderMulti()}
-        {this.renderSingle()}
+        <div style={{ paddingTop: '1em' }}>
+          {this.renderMulti()}
+          {this.renderSingle()}
+        </div>
       </div>
     )
   }
@@ -37,11 +39,9 @@ export default class OrderLineItemsForm extends React.Component {
 
     return(
       <form className="form" onSubmit={this.handleMultiSubmit.bind(this)}>
-        <div className="col-md-10">
-          <div id="line-item-table"></div>
-        </div>
+        <div id="line-item-table"></div>
 
-        <div className="form-group col-md-2" style={{ marginTop: '1.7em' }}>
+        <div className="form-group" style={{ marginTop: '1.7em' }}>
           <button className="btn btn-success">
             Create
           </button>
@@ -57,43 +57,45 @@ export default class OrderLineItemsForm extends React.Component {
       <form className="form" onSubmit={this.handleSingleSubmit.bind(this)}>
         {this.renderErrors()}
 
-        <div className="form-group col-md-2">
-          <label htmlFor="internalSku">Internal SKU</label>
-          <input type="text"
-                 name="internalSku"
-                 onChange={this.handleChange.bind(this, 'internalSku')}
-                 className="form-control"
-                 required="required"
-                 value={this.state.internalSku} />
-        </div>
+        <div className="row">
+          <div className="form-group col-md-2">
+            <label htmlFor="internalSku">Internal SKU</label>
+            <input type="text"
+                   name="internalSku"
+                   onChange={this.handleChange.bind(this, 'internalSku')}
+                   className="form-control"
+                   required="required"
+                   value={this.state.internalSku} />
+          </div>
 
-        <div className="form-group col-md-2">
-          <label htmlFor="quantity">Quantity</label>
-          <input type="number"
-                 name="quantity"
-                 onChange={this.handleChange.bind(this, 'quantity')}
-                 className="form-control"
-                 required="required"
-                 value={this.state.quantity} />
-        </div>
+          <div className="form-group col-md-2">
+            <label htmlFor="quantity">Quantity</label>
+            <input type="number"
+                   name="quantity"
+                   onChange={this.handleChange.bind(this, 'quantity')}
+                   className="form-control"
+                   required="required"
+                   value={this.state.quantity} />
+          </div>
 
-        <div className="form-group col-md-2">
-          <label htmlFor="discount">Discount %</label>
-          <input type="number"
-                 step="0.01"
-                 name="discount"
-                 onChange={this.handleChange.bind(this, 'discount')}
-                 className="form-control"
-                 required="required"
-                 value={this.state.discount} />
-        </div>
+          <div className="form-group col-md-2">
+            <label htmlFor="discount">Discount %</label>
+            <input type="number"
+                   step="0.01"
+                   name="discount"
+                   onChange={this.handleChange.bind(this, 'discount')}
+                   className="form-control"
+                   required="required"
+                   value={this.state.discount} />
+          </div>
 
-        <WeekSelect table={this} ref="dropDate" />
+          <WeekSelect table={this} ref="dropDate" />
 
-        <div className="form-group col-md-2" style={{ marginTop: '1.7em' }}>
-          <button className="btn btn-success">
-            Create
-          </button>
+          <div className="form-group col-md-2" style={{ marginTop: '1.7em' }}>
+            <button className="btn btn-success">
+              Create
+            </button>
+          </div>
         </div>
       </form>
     );
