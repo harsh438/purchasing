@@ -18,39 +18,37 @@ export class OrdersTable extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="panel panel-default">
-          <div className="panel-body">
-            <button className="btn btn-warning"
-                    disabled={this.isExportButtonDisabled()}
-                    onClick={this.handleExportOrders.bind(this)}>
-              Export as Purchase Orders
-            </button>
+      <div className="panel panel-default">
+        <div className="panel-body">
+          <button className="btn btn-warning"
+                  disabled={this.isExportButtonDisabled()}
+                  onClick={this.handleExportOrders.bind(this)}>
+            Export as Purchase Orders
+          </button>
 
-            <hr />
+          <hr />
 
-            <div className="orders_table">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th style={{ width: '5%' }}>&nbsp;</th>
-                    <th>Order</th>
-                    <th className="text-center" style={{ width: '20%' }}>Created</th>
-                    <th className="text-center" style={{ width: '20%' }}>Exported</th>
-                  </tr>
-                </thead>
+          <div className="orders_table">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th style={{ width: '5%' }}>&nbsp;</th>
+                  <th>Order</th>
+                  <th className="text-center" style={{ width: '20%' }}>Created</th>
+                  <th className="text-center" style={{ width: '20%' }}>Exported</th>
+                </tr>
+              </thead>
 
-                <tbody>
-                  {this.renderRows()}
-                </tbody>
-              </table>
-            </div>
+              <tbody>
+                {this.renderRows()}
+              </tbody>
+            </table>
           </div>
-
-          <NumberedPagination index={this.props.index}
-                              totalPages={this.props.totalPages}
-                              activePage={this.props.activePage} />
         </div>
+
+        <NumberedPagination index={this.props.index}
+                            totalPages={this.props.totalPages}
+                            activePage={this.props.activePage} />
       </div>
     );
   }
