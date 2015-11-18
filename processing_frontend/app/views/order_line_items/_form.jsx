@@ -1,5 +1,5 @@
 import React from 'react';
-import LineItemTable from './_line_item_table';
+import OrderLineItemsSpreadsheet from './_spreadsheet';
 import { getScript } from '../../utilities/get_script';
 import { Alert, Nav, NavItem } from 'react-bootstrap';
 import { WeekSelect } from './_week_select';
@@ -40,7 +40,7 @@ export default class OrderLineItemsForm extends React.Component {
 
     return(
       <form className="form" onSubmit={this.handleMultiSubmit.bind(this)}>
-        <LineItemTable />
+        <OrderLineItemsSpreadsheet onChange={this.handleSpreadsheetChange.bind(this)} />
 
         <div className="form-group" style={{ marginTop: '1.7em' }}>
           <button className="btn btn-success">
@@ -116,8 +116,12 @@ export default class OrderLineItemsForm extends React.Component {
     }
   }
 
+  handleSpreadsheetChange(data) {
+    this.setState({ spreadSheetData: data });
+  }
+
   multiData() {
-    return map(this.handsOnTable.getData(), (line) => {
+    return map(this.state.spreadSheetData, (line) => {
       return { internalSku: line[0],
                quantity: parseInt(line[1], 10),
                discount: parseFloat(line[2], 10),

@@ -1,7 +1,8 @@
 import React from 'react';
 import { getScript } from '../../utilities/get_script';
+import { partial } from 'lodash';
 
-export default class LineItemTable extends React.Component {
+export default class OrderLineItemsSpreadsheet extends React.Component {
   componentWillMount() {
     getScript('/assets/handsontable.full.js', this.createHandsOnTable.bind(this));
   }
@@ -15,7 +16,7 @@ export default class LineItemTable extends React.Component {
   createHandsOnTable() {
     if (!this.refs.lineItemTable) return;
 
-    this.handsOnTable = new window.Handsontable(this.refs.lineItemTable,
+    new window.Handsontable(this.refs.lineItemTable,
       { data: [['', '', '', '']],
         colHeaders: ['Internal SKU', 'Quantity', 'Discount %', 'Drop Date'],
         columns: [
@@ -26,6 +27,11 @@ export default class LineItemTable extends React.Component {
         ],
         rowHeaders: true,
         columnSorting: true,
-        contextMenu: true });
+        contextMenu: true,
+        afterChange: partial(this.handleChange, this.props.onChange) });
+  }
+
+  handleChange (onChange, changes, source) {
+    onChange(this.getData());
   }
 }
