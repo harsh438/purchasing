@@ -6,7 +6,6 @@ import { loadOrders } from '../../actions/orders';
 
 export class OrdersTable extends React.Component {
   componentWillMount() {
-    let page = this.props.query.page || 1;
     this.state = { exportingOrders: false,
                    selectedOrders: [] };
   }
