@@ -76,7 +76,7 @@ class OrdersEdit extends React.Component {
         </div>
       );
     }
-    
+
     return (
       <div className="row">
         <div className="col-md-12">
@@ -326,6 +326,12 @@ class OrdersEdit extends React.Component {
     this.handsOnTable = new window.Handsontable(document.getElementById('line-item-table'),
       { data: [['', '', '', '']],
         colHeaders: ['Internal SKU', 'Quantity', 'Discount %', 'Drop Date'],
+        columns: [
+          { data: 'internalSku' },
+          { data: 'quantity', type: 'numeric' },
+          { data: 'discount', type: 'numeric' },
+          { data: 'dtopDate', type: 'date', dateFormat: 'YYYY-MM-DD', correctFormat: true }
+        ],
         rowHeaders: true,
         columnSorting: true,
         contextMenu: true })
