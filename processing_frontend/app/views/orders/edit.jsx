@@ -18,7 +18,7 @@ class OrdersEdit extends React.Component {
       this.props.dispatch(loadOrder(this.props.params.id));
     }
 
-    getScript('/assets/handsontable.full.min.js', this.createHandsOnTable())
+    getScript('/assets/handsontable.full.min.js', this.createHandsOnTable.bind(this))
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,8 +33,8 @@ class OrdersEdit extends React.Component {
         <div className="container-fluid">
           {this.renderBackLink()}
           {this.renderPurchaseOrderRow()}
-          {this.renderOrderLineTable()}
           {this.renderOrderLineForm()}
+          {this.renderOrderLineTable()}
           {this.renderOrderLineRow()}
         </div>
       </div>
@@ -303,8 +303,13 @@ class OrdersEdit extends React.Component {
   }
 
   createHandsOnTable() {
-    this.handsOnTable = new window.HandsOnTable(document.getElementByID('line-item-table'),
-      { data: [['Column A', 'Column B', 'Column C'], ['1', '2', '3']] })
+
+    this.handsOnTable = new window.Handsontable(document.getElementById('line-item-table'),
+      { data: [['', '', '', '']],
+        colHeaders: ['Internal SKU', 'Quantity', 'Discount %', 'Drop Date'],
+        rowHeaders: true,
+        columnSorting: true,
+        contextMenu: true })
   }
 
   handleLineItemSubmit(e) {
