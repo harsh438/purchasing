@@ -4,7 +4,7 @@ import { Alert, Nav, NavItem } from 'react-bootstrap';
 import { WeekSelect } from './_week_select';
 import { map } from 'lodash';
 
-export default class OrderLineItemsEdit extends React.Component {
+export default class OrderLineItemsForm extends React.Component {
   componentWillMount() {
     this.resetState();
     getScript('/assets/handsontable.full.min.js', this.createHandsOnTable.bind(this));

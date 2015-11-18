@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { map, assign } from 'lodash';
 import { loadOrder, createLineItemsForOrder, deleteLineItem, updateLineItem } from '../../actions/orders';
 import OrderLineItemsTable from '../order_line_items/_table';
-import OrderLineItemsEdit from '../order_line_items/_edit';
+import OrderLineItemsForm from '../order_line_items/_form';
 
 class OrdersEdit extends React.Component {
   componentWillMount() {
@@ -47,7 +47,7 @@ class OrdersEdit extends React.Component {
       return (<div />);
     } else {
       return (
-        <OrderLineItemsEdit errors={this.props.errors}
+        <OrderLineItemsForm errors={this.props.errors}
                             onAddLineItems={this.handleAddLineItems.bind(this)} />
       );
     }
