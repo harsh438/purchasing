@@ -7,12 +7,16 @@ function getMonday(d) {
   return new Date(d.setDate(diff));
 }
 
+function weekCommencingString(date) {
+  return `w/c ${date.getDate()}/${date.getMonth()+1} ${date.getFullYear()}`;
+}
+
 export function dropDates() {
   return map(range(52), (n) => {
     let date = new Date()
     date.setDate(date.getDate() + (n * 7))
     date = getMonday(date);
-    return { value: date.toISOString().slice(0,10), label: date.toDateString() }
+    return { value: date.toISOString().slice(0,10), label: weekCommencingString(date) }
   });
 }
 
