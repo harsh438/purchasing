@@ -23,10 +23,10 @@ these you'll be okay.
 
 ### Database content
 
-Download these files and import them in to your local development database:
+Download these SQL files and import them in to your local development database:
 
- - https://drive.google.com/open?id=0B7Lov1YoCGc-WXJGc3FoTFYwTTg
- - https://drive.google.com/open?id=0B0GMiJFPpF4rdm9TY183NXZyMWs
+ - [Redacted dataset](https://drive.google.com/open?id=0B7Lov1YoCGc-WXJGc3FoTFYwTTg)
+ - [Additional tables](https://drive.google.com/open?id=0B0GMiJFPpF4rdm9TY183NXZyMWs)
 
 ## Developing
 
