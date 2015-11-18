@@ -3,7 +3,7 @@ import { Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { map, assign } from 'lodash';
-import { loadOrder, createLineItemForOrder, deleteLineItem, updateLineItem } from '../../actions/orders';
+import { loadOrder, createLineItemsForOrder, deleteLineItem, updateLineItem } from '../../actions/orders';
 import EditRowCost from '../edit_row/_cost';
 import EditRowDiscount from '../edit_row/_discount';
 import EditRowQuantity from '../edit_row/_quantity';
@@ -48,7 +48,19 @@ class OrdersEdit extends React.Component {
           <div className="panel panel-default">
             <div className="panel-heading">Add line items from CSV</div>
             <div className="panel-body">
-              <div id="line-item-table"></div>
+              <div className="row">
+                <form className="form" onSubmit={this.handleHandsOnTableSubmit.bind(this)}>
+                  <div className="col-md-10">
+                    <div id="line-item-table"></div>
+                  </div>
+
+                  <div className="form-group col-md-2" style={{ marginTop: '1.7em' }}>
+                    <button className="btn btn-success">
+                      Create
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -321,7 +333,23 @@ class OrdersEdit extends React.Component {
 
   handleLineItemSubmit(e) {
     e.preventDefault();
-    this.props.dispatch(createLineItemForOrder(this.props.params.id, this.lineItemState()))
+    this.props.dispatch(createLineItemsForOrder(this.props.params.id, this.lineItemState()))
+  }
+
+  handleHandsOnTableSubmit(e) {
+    e.preventDefault();
+    this.props.dispatch(createLineItemsForOrder(this.props.params.id, this.handsOnTableState()))
+  }
+
+  handsOnTableState() {
+    let lineItems = map(this.handsOnTable.getData(), (line) => {
+      return { internalSku: line[0],
+               quantity: parseInt(line[1]),
+               discount: parseFloat(line[2]),
+               dropDate: line[3] }
+    });
+
+    return { order: { lineItemsAttributes: lineItems }}
   }
 
   lineItemState() {

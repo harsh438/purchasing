@@ -32,7 +32,7 @@ export function loadOrder(id) {
   };
 }
 
-export function createLineItemForOrder(id, params) {
+export function createLineItemsForOrder(id, params) {
   return dispatch => {
     params.order.lineItemsAttributes = map(params.order.lineItemsAttributes,
                                            (line) => snakeizeKeys(line));
