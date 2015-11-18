@@ -46,9 +46,9 @@ export class OrdersTable extends React.Component {
           </div>
         </div>
 
-        <NumberedPagination index={this.props.index}
-                            totalPages={this.props.totalPages}
-                            activePage={this.props.activePage} />
+        <NumberedPagination activePage={this.props.activePage}
+                            index={this.props.index}
+                            totalPages={this.props.totalPages} />
       </div>
     );
   }
