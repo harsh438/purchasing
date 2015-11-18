@@ -98,7 +98,9 @@ export default class OrderLineItemsTable extends React.Component {
       <EditRowDiscount displayValue={line.discount}
                        ident={line.id}
                        table={this.props.table}
-                       value={line.discount} />
+                       value={line.discount}
+                       errors={this.props.errors}
+                       erroredFields={this.props.erroredFields} />
     );
   }
 
