@@ -40,7 +40,7 @@ export class WeekSelect extends React.Component {
   renderOptions() {
     return map(dropDates(), (date) => {
       return (
-        <option value={date.value}>{date.label}</option>
+        <option key={date.value} value={date.value}>{date.label}</option>
       );
     });
   }

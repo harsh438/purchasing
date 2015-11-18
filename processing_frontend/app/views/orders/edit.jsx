@@ -95,6 +95,7 @@ class OrdersEdit extends React.Component {
                          required="required"
                          value={this.state.internalSku} />
                 </div>
+
                 <div className="form-group col-md-2">
                   <label htmlFor="quantity">Quantity</label>
                   <input type="number"
@@ -104,6 +105,7 @@ class OrdersEdit extends React.Component {
                          required="required"
                          value={this.state.quantity} />
                 </div>
+
                 <div className="form-group col-md-2">
                   <label htmlFor="discount">Discount %</label>
                   <input type="number"
@@ -114,7 +116,9 @@ class OrdersEdit extends React.Component {
                          required="required"
                          value={this.state.discount} />
                 </div>
+
                 <WeekSelect table={this} ref="dropDate" />
+
                 <div className="form-group col-md-2" style={{ marginTop: '1.7em' }}>
                   <button className="btn btn-success">
                     Create
@@ -126,10 +130,6 @@ class OrdersEdit extends React.Component {
         </div>
       </div>
     );
-  }
-
-  hasErrors(props) {
-    return ('errors' in props && props.errors != null)
   }
 
   renderErrors() {
@@ -157,7 +157,7 @@ class OrdersEdit extends React.Component {
 
     return map(this.props.order.lineItems, (line) => {
       return (
-        <tr>
+        <tr key={line.idf}>
           <td>{line.vendorName}</td>
           <td>{line.productName}</td>
           <td>{line.internalSku}</td>
@@ -308,7 +308,7 @@ class OrdersEdit extends React.Component {
 
     return map(this.props.order.purchaseOrders, (po) => {
       return (
-        <tr>
+        <tr key={po.id}>
           <td>
             <Link to={`/?poNumber=${po.id}`}>
               {po.id}
@@ -347,11 +347,15 @@ class OrdersEdit extends React.Component {
     this.setState({ [field]: target.value });
   }
 
-  resetState() {
+  resetState () {
     this.setState({ internalSku: '',
                     quantity: 0,
                     productCost: '0.00',
                     discount: '0.00' });
+  }
+
+  hasErrors (props) {
+    return ('errors' in props && props.errors != null)
   }
 }
 
