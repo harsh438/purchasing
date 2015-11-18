@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { map, assign } from 'lodash';
 import { loadOrder, createLineItemsForOrder, deleteLineItem, updateLineItem } from '../../actions/orders';
-import EditRowCost from '../edit_row/_cost';
-import EditRowDiscount from '../edit_row/_discount';
-import EditRowQuantity from '../edit_row/_quantity';
+import OrderLineItemTable from '../order_line_items/_table';
 import { WeekSelect } from './_week_select';
 import { getScript } from '../../utilities/get_script'
 
@@ -35,7 +33,10 @@ class OrdersEdit extends React.Component {
           {this.renderPurchaseOrderRow()}
           {this.renderOrderLineForm()}
           {this.renderOrderLineTable()}
-          {this.renderOrderTable()}
+          <OrderLineItemTable editable={this.props.order.exported}
+                              lineItems={this.props.order.lineItems || []}
+                              onOrderLineItemDelete={this.handleOrderLineItemDelete.bind(this)}
+                              table={this} />
         </div>
       </div>
     );
@@ -61,45 +62,6 @@ class OrdersEdit extends React.Component {
                   </div>
                 </form>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  renderOrderTable() {
-    if (!this.props.order.lineItems || this.props.order.lineItems.length == 0) {
-      return (
-        <div style={{ width: '100%', textAlign: 'center' }}>
-          No results to show.
-        </div>
-      );
-    }
-
-    return (
-      <div className="row">
-        <div className="col-md-12">
-          <div className="panel panel-default">
-            <div className="panel-heading">Order line items</div>
-            <div className="panel-body">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th style={{ width: '10%' }}>Brand Name</th>
-                    <th style={{ width: '30%' }}>Product Name</th>
-                    <th style={{ width: '10%' }}>Internal SKU</th>
-                    <th className="text-center" style={{ width: '8%' }}>Quantity</th>
-                    <th className="text-center" style={{ width: '8%' }}>Cost</th>
-                    <th className="text-center" style={{ width: '8%' }}>Discount %</th>
-                    <th className="text-center" style={{ width: '12%' }}>Drop Date</th>
-                    <th style={{ width: '10%' }}>&nbsp;</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.renderLineItems()}
-                </tbody>
-              </table>
             </div>
           </div>
         </div>
@@ -188,76 +150,6 @@ class OrdersEdit extends React.Component {
     );
   }
 
-  renderLineItems() {
-    return map(this.props.order.lineItems, (line) => {
-      return (
-        <tr key={line.idf}>
-          <td>{line.vendorName}</td>
-          <td>{line.productName}</td>
-          <td>{line.internalSku}</td>
-          <td className="text-center">{this.renderEditQuantityRow(line)}</td>
-          <td className="text-center">{this.renderEditCostRow(line)}</td>
-          <td className="text-center">{this.renderEditDiscountRow(line)}</td>
-          <td className="text-center">{line.dropDate}</td>
-          <td>{this.renderDeleteForm(line)}</td>
-        </tr>
-      );
-    })
-  }
-
-  renderEditCostRow(line) {
-    if (this.props.order.exported) {
-      return (<td>{line.cost}</td>);
-    }
-
-    return (
-      <EditRowCost displayValue={line.cost}
-                   ident={line.id}
-                   table={this}
-                   value={line.cost.replace(/[^\d.-]/g, '')} />
-    );
-  }
-
-  renderEditQuantityRow(line) {
-    if (this.props.order.exported) {
-      return (<td>{line.quantity}</td>);
-    }
-
-    return (
-      <EditRowQuantity displayValue={line.quantity}
-                       ident={line.id}
-                       table={this}
-                       value={line.quantity} />
-    );
-  }
-
-  renderEditDiscountRow(line) {
-    if (this.props.order.exported) {
-      return (<td>{line.discount}</td>);
-    }
-
-    return (
-      <EditRowDiscount displayValue={line.discount}
-                       ident={line.id}
-                       table={this}
-                       value={line.discount} />
-    );
-  }
-
-  renderDeleteForm(line) {
-    if (this.props.order.exported) {
-      return (<span />);
-    }
-
-    return (
-      <form className="form" onSubmit={this.handleLineItemDelete.bind(this, line.id)}>
-        <button className="btn btn-danger">
-          Delete
-        </button>
-      </form>
-    );
-  }
-
   renderBackLink() {
     return (
       <div className="row">
@@ -321,7 +213,6 @@ class OrdersEdit extends React.Component {
   }
 
   createHandsOnTable() {
-
     this.handsOnTable = new window.Handsontable(document.getElementById('line-item-table'),
       { data: [['', '', '', '']],
         colHeaders: ['Internal SKU', 'Quantity', 'Discount %', 'Drop Date'],
@@ -369,7 +260,7 @@ class OrdersEdit extends React.Component {
     this.props.dispatch(updateLineItem([id], { [key]: value }));
   }
 
-  handleLineItemDelete(lineItemId) {
+  handleOrderLineItemDelete(lineItemId) {
     if (confirm('Are you sure you want to delete this line item?')) {
       this.props.dispatch(deleteLineItem(lineItemId));
     }
