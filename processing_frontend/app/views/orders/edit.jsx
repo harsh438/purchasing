@@ -8,6 +8,7 @@ import EditRowCost from '../edit_row/_cost';
 import EditRowDiscount from '../edit_row/_discount';
 import EditRowQuantity from '../edit_row/_quantity';
 import { WeekSelect } from './_week_select';
+import HandsOnTable from '../../assets/javascripts/handsontable.full';
 
 class OrdersEdit extends React.Component {
   componentWillMount() {

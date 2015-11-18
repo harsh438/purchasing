@@ -1,7 +1,7 @@
 import Qs from 'qs';
 import { assign } from 'lodash';
 import 'whatwg-fetch';
-import { removeEmptyKeys, snakeizeKeys } from '../utilities/inspection'
+import { removeEmptyKeys, snakeizeKeys } from '../utilities/inspection';
 
 const defaultParams = { sort_by: 'drop_date_asc' };
 
