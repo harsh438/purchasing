@@ -6,7 +6,7 @@ import Select from 'react-select';
 import { map } from 'lodash';
 
 export default class PurchaseOrdersForm extends React.Component {
-  componentWillMount () {
+  componentWillMount() {
     this.setStateFromQuery(this.props.query);
   }
 
@@ -14,7 +14,7 @@ export default class PurchaseOrdersForm extends React.Component {
     this.setStateFromQuery(query);
   }
 
-  render () {
+  render() {
     return (
       <div className="form-container filters">
         <div className="panel panel-default">
