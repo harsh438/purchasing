@@ -18,7 +18,7 @@ class OrdersEdit extends React.Component {
       this.props.dispatch(loadOrder(this.props.params.id));
     }
 
-    getScript('/assets/handsontable.full.min.js', null)
+    getScript('/assets/handsontable.full.min.js', this.createHandsOnTable())
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,8 +33,24 @@ class OrdersEdit extends React.Component {
         <div className="container-fluid">
           {this.renderBackLink()}
           {this.renderPurchaseOrderRow()}
+          {this.renderOrderLineTable()}
           {this.renderOrderLineForm()}
           {this.renderOrderLineRow()}
+        </div>
+      </div>
+    );
+  }
+
+  renderOrderLineTable() {
+    return(
+      <div className="row">
+        <div className="col-md-12">
+          <div className="panel panel-default">
+            <div className="panel-heading">Add line items from CSV</div>
+            <div className="panel-body">
+              <div id="line-item-table"></div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -284,6 +300,11 @@ class OrdersEdit extends React.Component {
         </tr>
       );
     })
+  }
+
+  createHandsOnTable() {
+    this.handsOnTable = new window.HandsOnTable(document.getElementByID('line-item-table'),
+      { data: [['Column A', 'Column B', 'Column C'], ['1', '2', '3']] })
   }
 
   handleLineItemSubmit(e) {
