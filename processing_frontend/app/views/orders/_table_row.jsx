@@ -24,7 +24,7 @@ export class OrdersTableRow extends React.Component {
         </td>
         <td>
           <Link to={`/orders/${this.props.id}/edit`}>
-            Shopping list {this.props.id}
+            {this.props.name}
           </Link>
         </td>
         <td className="text-center">{this.props.createdAt}</td>

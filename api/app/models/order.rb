@@ -8,6 +8,8 @@ class Order < ActiveRecord::Base
   has_many :exports, class_name: 'OrderExport'
   has_many :purchase_orders, through: :exports
 
+  after_initialize :ensure_name
+
   def status
     if exports.size > 0
       :exported
@@ -39,5 +41,11 @@ class Order < ActiveRecord::Base
         order[:exported_at] = nil
       end
     end
+  end
+
+  private
+
+  def ensure_name
+    self.name ||= "Export ##{id || self.class.maximum(:id).next}"
   end
 end
