@@ -18,7 +18,6 @@ export default class OrderLineItemsTable extends React.Component {
       <div className="row">
         <div className="col-md-12">
           <div className="panel panel-default">
-            <div className="panel-heading">Order line items</div>
             <div className="panel-body">
               <table className="table">
                 <thead>
