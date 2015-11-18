@@ -32,9 +32,10 @@ export class OrdersTable extends React.Component {
               <thead>
                 <tr>
                   <th style={{ width: '5%' }}>&nbsp;</th>
-                  <th>Order</th>
-                  <th className="text-center" style={{ width: '20%' }}>Created</th>
-                  <th className="text-center" style={{ width: '20%' }}>Exported</th>
+                  <th>Order name</th>
+                  <th className="text-center" style={{ width: '15%' }}># of Products</th>
+                  <th className="text-center" style={{ width: '15%' }}>Created</th>
+                  <th className="text-center" style={{ width: '15%' }}>Exported</th>
                 </tr>
               </thead>
 

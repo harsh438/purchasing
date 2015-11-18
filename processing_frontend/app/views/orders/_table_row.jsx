@@ -18,7 +18,7 @@ export class OrdersTableRow extends React.Component {
         <td>
           <input type="checkbox"
                  checked={this.state.checked}
-                 disabled={this.props.exported}
+                 disabled={this.isDisabled()}
                  onChange={this.handleCheckboxChange.bind(this)}
                  value={this.props.id} />
         </td>
@@ -27,10 +27,15 @@ export class OrdersTableRow extends React.Component {
             {this.props.name}
           </Link>
         </td>
+        <td className="text-center">{this.props.lineItems.length}</td>
         <td className="text-center">{this.props.createdAt}</td>
         <td className="text-center">{this.props.exportedAt || '✘'}</td>
       </tr>
     );
+  }
+
+  isDisabled() {
+    return this.props.lineItems.length === 0 || this.props.exported;
   }
 
   handleCheckboxChange({ target }) {
