@@ -46,6 +46,6 @@ class Order < ActiveRecord::Base
   private
 
   def ensure_name
-    self.name ||= "Export ##{id || self.class.maximum(:id).next}"
+    self.name ||= "Export ##{id || (self.class.maximum(:id) || 0).next}"
   end
 end
