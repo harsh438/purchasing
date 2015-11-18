@@ -73,6 +73,7 @@ class OrdersEdit extends React.Component {
                   <tr>
                     <th>PO #</th>
                     <th>Vendor</th>
+                    <th>Download</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -100,6 +101,13 @@ class OrdersEdit extends React.Component {
             </Link>
           </td>
           <td>{po.vendorName}</td>
+          <td>
+            <a href={`/api/purchase_order_line_items.csv?po_number=${po.id}&summary_id=${po.id}`}
+               className="btn btn-default btn-sm"
+               target="_blank">
+              export as .csv
+            </a>
+          </td>
         </tr>
       );
     })
