@@ -6,9 +6,8 @@ import { loadOrders, createOrder, exportOrders } from '../../actions/orders';
 
 class OrdersIndex extends React.Component {
   componentWillMount() {
-    let page = this.props.location.query.page;
     this.state = { creatingOrder: false };
-    this.loadPage(page);
+    this.loadPage(this.props.location.query.page);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -17,27 +16,34 @@ class OrdersIndex extends React.Component {
     }
   }
 
-  loadPage(page) {
-    this.props.dispatch(loadOrders(page || 1));
-  }
-
   render() {
     return (
       <div className="orders_index container-fluid"
            style={{ marginTop: '70px' }}>
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-4">
             <div className="panel panel-default">
               <div className="panel-heading">
-                <h3 className="panel-title">Create a re-order</h3>
+                <h3 className="panel-title">Reorder</h3>
               </div>
 
               <div className="panel-body">
-                <button className="btn btn-success"
-                        onClick={this.dispatchCreateOrder.bind(this)}
-                        disabled={this.state.creatingOrder}>
-                  Create order
-                </button>
+                <form className="form"
+                      onChange={this.handleFormChange.bind(this)}
+                      onSubmit={this.handleFormSubmit.bind(this)}>
+                  <div className="form-group">
+                    <label htmlFor="order_name">Order name (optional)</label>
+                    <input className="form-control"
+                           id="order_name"
+                           name="name"
+                           value={this.state.name} />
+                  </div>
+
+                  <button className="btn btn-success"
+                          disabled={this.state.creatingOrder}>
+                    Create order
+                  </button>
+                </form>
               </div>
             </div>
           </div>
@@ -50,19 +56,28 @@ class OrdersIndex extends React.Component {
                          totalPages={this.props.totalPages}
                          activePage={this.props.activePage}
                          query={this.props.location.query}
-                         onExportOrders={this.dispatchExportOrder.bind(this)} />
+                         onExportOrders={this.handleExportOrder.bind(this)} />
           </div>
         </div>
       </div>
     );
   }
 
-  dispatchCreateOrder() {
-    this.setState({ creatingOrder: true });
-    this.props.dispatch(createOrder());
+  loadPage(page) {
+    this.props.dispatch(loadOrders(page || 1));
   }
 
-  dispatchExportOrder(orderIds) {
+  handleFormChange({ target }) {
+    this.setState({ [target.name]: target.value });
+  }
+
+  handleFormSubmit(e) {
+    e.preventDefault();
+    this.setState({ creatingOrder: true });
+    this.props.dispatch(createOrder(this.state));
+  }
+
+  handleExportOrder(orderIds) {
     this.props.dispatch(exportOrders(orderIds));
   }
 }

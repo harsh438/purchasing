@@ -13,10 +13,12 @@ export function loadOrders(page) {
   };
 }
 
-export function createOrder() {
+export function createOrder(params = {}) {
   return dispatch => {
     fetch(`/api/orders.json`, { credentials: 'same-origin',
-                                method: 'post' })
+                                method: 'post',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ order: params }) })
       .then(response => response.json())
       .then(results => dispatch({ results, type: 'CREATE_ORDER' }));
   };
@@ -30,7 +32,7 @@ export function loadOrder(id) {
   };
 }
 
-export function createLineItemForOrder(id, params) {
+export function createLineItemsForOrder(id, params) {
   return dispatch => {
     params.order.lineItemsAttributes = map(params.order.lineItemsAttributes,
                                            (line) => snakeizeKeys(line));
