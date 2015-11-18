@@ -23,7 +23,7 @@ class Order < ActiveRecord::Base
 
   def as_json_with_line_items_and_purchase_orders(options = {})
     as_json(options).tap do |order|
-      order[:line_items] = line_items.map { |line| line.as_json }
+      order[:line_items] = line_items.order(created_at: :desc).map { |line| line.as_json }
       order[:purchase_orders] = purchase_orders { |po| po.as_json }
     end
   end
