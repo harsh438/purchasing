@@ -19,6 +19,13 @@ export default class OrderLineItemsForm extends React.Component {
   render() {
     return (
       <div>
+        <Nav bsStyle="tabs"
+             activeKey={this.state.tab}
+             onSelect={this.handleTabChange.bind(this)}>
+          <NavItem eventKey={"multi"} title="Copy and paste from Excel">Multi</NavItem>
+          <NavItem eventKey={"single"} title="Add one row at a time">Single</NavItem>
+        </Nav>
+
         {this.renderMulti()}
         {this.renderSingle()}
       </div>
@@ -26,107 +33,86 @@ export default class OrderLineItemsForm extends React.Component {
   }
 
   renderMulti() {
-    return(
-      <div className="row">
-        <div className="col-md-12">
-          <div className="panel panel-default">
-            <div className="panel-heading">Add line items from CSV</div>
-            <div className="panel-body">
-              <div className="row">
-                <form className="form" onSubmit={this.handleMultiSubmit.bind(this)}>
-                  <div className="col-md-10">
-                    <div id="line-item-table"></div>
-                  </div>
+    if (this.state.tab !== 'multi') return;
 
-                  <div className="form-group col-md-2" style={{ marginTop: '1.7em' }}>
-                    <button className="btn btn-success">
-                      Create
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+    return(
+      <form className="form" onSubmit={this.handleMultiSubmit.bind(this)}>
+        <div className="col-md-10">
+          <div id="line-item-table"></div>
         </div>
-      </div>
+
+        <div className="form-group col-md-2" style={{ marginTop: '1.7em' }}>
+          <button className="btn btn-success">
+            Create
+          </button>
+        </div>
+      </form>
     );
   }
 
   renderSingle() {
+    if (this.state.tab !== 'single') return;
+
     return (
-      <div className="row">
-        <div className="col-md-12">
-          <div className="panel panel-default">
-            <div className="panel-heading">
-              <h3 className="panel-title">Add Product to Order</h3>
-            </div>
+      <form className="form" onSubmit={this.handleSingleSubmit.bind(this)}>
+        {this.renderErrors()}
 
-            <div className="panel-body">
-              {this.renderErrors()}
-
-              <form className="form" onSubmit={this.handleSingleSubmit.bind(this)}>
-                <div className="form-group col-md-2">
-                  <label htmlFor="internalSku">Internal SKU</label>
-                  <input type="text"
-                         name="internalSku"
-                         onChange={this.handleChange.bind(this, 'internalSku')}
-                         className="form-control"
-                         required="required"
-                         value={this.state.internalSku} />
-                </div>
-
-                <div className="form-group col-md-2">
-                  <label htmlFor="quantity">Quantity</label>
-                  <input type="number"
-                         name="quantity"
-                         onChange={this.handleChange.bind(this, 'quantity')}
-                         className="form-control"
-                         required="required"
-                         value={this.state.quantity} />
-                </div>
-
-                <div className="form-group col-md-2">
-                  <label htmlFor="discount">Discount %</label>
-                  <input type="number"
-                         step="0.01"
-                         name="discount"
-                         onChange={this.handleChange.bind(this, 'discount')}
-                         className="form-control"
-                         required="required"
-                         value={this.state.discount} />
-                </div>
-
-                <WeekSelect table={this} ref="dropDate" />
-
-                <div className="form-group col-md-2" style={{ marginTop: '1.7em' }}>
-                  <button className="btn btn-success">
-                    Create
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+        <div className="form-group col-md-2">
+          <label htmlFor="internalSku">Internal SKU</label>
+          <input type="text"
+                 name="internalSku"
+                 onChange={this.handleChange.bind(this, 'internalSku')}
+                 className="form-control"
+                 required="required"
+                 value={this.state.internalSku} />
         </div>
-      </div>
+
+        <div className="form-group col-md-2">
+          <label htmlFor="quantity">Quantity</label>
+          <input type="number"
+                 name="quantity"
+                 onChange={this.handleChange.bind(this, 'quantity')}
+                 className="form-control"
+                 required="required"
+                 value={this.state.quantity} />
+        </div>
+
+        <div className="form-group col-md-2">
+          <label htmlFor="discount">Discount %</label>
+          <input type="number"
+                 step="0.01"
+                 name="discount"
+                 onChange={this.handleChange.bind(this, 'discount')}
+                 className="form-control"
+                 required="required"
+                 value={this.state.discount} />
+        </div>
+
+        <WeekSelect table={this} ref="dropDate" />
+
+        <div className="form-group col-md-2" style={{ marginTop: '1.7em' }}>
+          <button className="btn btn-success">
+            Create
+          </button>
+        </div>
+      </form>
     );
   }
 
   renderErrors() {
-    if (!this.hasErrors(this.props)) {
-      return (<span />);
+    if (this.hasErrors(this.props)) {
+      return (
+        <Alert bsStyle="danger">
+          <ul>
+            {map(this.props.errors.errors, (err, i) => {
+              return (
+                <li key={i}><strong>{err}</strong></li>
+              );
+            })}
+          </ul>
+        </Alert>
+      );
     }
-
-    return (
-      <Alert bsStyle="danger">
-        <ul>
-          {map(this.props.errors.errors, (err, i) => {
-            return (
-              <li key={i}><strong>{err}</strong></li>
-            );
-          })}
-        </ul>
-      </Alert>
-    );
   }
 
   createHandsOnTable() {
@@ -165,11 +151,16 @@ export default class OrderLineItemsForm extends React.Component {
     this.setState({ internalSku: '',
                     quantity: 0,
                     productCost: '0.00',
-                    discount: '0.00' });
+                    discount: '0.00',
+                    tab: 'multi' });
   }
 
   hasErrors(props) {
     return ('errors' in props && props.errors != null);
+  }
+
+  handleTabChange(selectedKey) {
+    this.setState({ tab: selectedKey });
   }
 
   handleMultiSubmit(e) {
