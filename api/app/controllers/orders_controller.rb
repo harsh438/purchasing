@@ -7,7 +7,8 @@ class OrdersController < ApplicationController
   end
 
   def create
-    render json: Order.create!.as_json_with_line_items_and_purchase_orders
+    order = Order.create!(order_attrs)
+    render json: order.as_json_with_line_items_and_purchase_orders
   end
 
   def show
@@ -15,7 +16,7 @@ class OrdersController < ApplicationController
   end
 
   def update
-    order.update!(order_attrs)
+    order.update!(order_line_item_attrs)
     render json: order.as_json_with_line_items_and_purchase_orders
   rescue OrderLineItem::PurchaseOrderNotFound => e
     render json: { errors: ['Internal SKU was not recognised'] }
@@ -36,6 +37,10 @@ class OrdersController < ApplicationController
   end
 
   def order_attrs
+    params.require(:order).permit(:name)
+  end
+
+  def order_line_item_attrs
     params.require(:order).permit(line_items_attributes: [:internal_sku,
                                                           :cost,
                                                           :quantity,
