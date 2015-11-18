@@ -42,6 +42,10 @@ class OrdersEdit extends React.Component {
   }
 
   renderOrderLineTable() {
+    if (this.props.order.exported) {
+      return (<div />);
+    }
+
     return(
       <div className="row">
         <div className="col-md-12">
