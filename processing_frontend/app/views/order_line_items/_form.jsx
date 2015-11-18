@@ -27,6 +27,7 @@ export default class OrderLineItemsForm extends React.Component {
         </Nav>
 
         <div style={{ paddingTop: '1em' }}>
+          {this.renderErrors()}
           {this.renderMulti()}
           {this.renderSingle()}
         </div>
@@ -55,8 +56,6 @@ export default class OrderLineItemsForm extends React.Component {
 
     return (
       <form className="form" onSubmit={this.handleSingleSubmit.bind(this)}>
-        {this.renderErrors()}
-
         <div className="row">
           <div className="form-group col-md-2">
             <label htmlFor="internalSku">Internal SKU</label>
