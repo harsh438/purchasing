@@ -30,8 +30,6 @@ class OrdersEdit extends React.Component {
         <div className="container-fluid">
           {this.renderBackLink()}
 
-          {this.renderOrderRow()}
-
           {this.renderPurchaseOrderRow()}
 
           {this.renderOrderLineForm()}
@@ -233,38 +231,6 @@ class OrdersEdit extends React.Component {
           <div className="panel panel-default">
             <div className="panel-body">
               <Link to="/orders">Temporary link back to orders</Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  renderOrderRow() {
-    return (
-      <div className="row">
-        <div className="col-md-12">
-          <div className="panel panel-default">
-            <div className="panel-heading">Order detail</div>
-            <div className="panel-body">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Id</th>
-                    <th>Status</th>
-                    <th>Created</th>
-                    <th>Updated</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{this.props.order.id}</td>
-                    <td>{this.props.order.status}</td>
-                    <td>{this.props.order.createdAt}</td>
-                    <td>{this.props.order.updatedAt}</td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
         </div>
