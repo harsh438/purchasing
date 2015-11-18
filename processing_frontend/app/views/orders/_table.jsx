@@ -23,7 +23,7 @@ export class OrdersTable extends React.Component {
           <button className="btn btn-warning"
                   disabled={this.isExportButtonDisabled()}
                   onClick={this.handleExportOrders.bind(this)}>
-            Export as Purchase Orders
+            Generate Purchase Orders
           </button>
 
           <hr />
