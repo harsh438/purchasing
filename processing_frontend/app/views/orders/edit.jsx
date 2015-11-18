@@ -42,7 +42,7 @@ class OrdersEdit extends React.Component {
 
   renderAddLineItemsForm() {
     if (this.props.order.exported) {
-      return (<div />);
+      return (<span className="label label-success">Exported</span>);
     } else {
       return (
         <OrderLineItemsForm errors={this.props.errors}
@@ -60,7 +60,10 @@ class OrdersEdit extends React.Component {
       <div className="row">
         <div className="col-md-12">
           <div className="panel panel-default">
-            <div className="panel-heading">Purchase Orders</div>
+            <div className="panel-heading">
+              <h3 className="panel-title">Generated Purchase Orders</h3>
+            </div>
+            
             <div className="panel-body">
               <table className="table">
                 <thead>
