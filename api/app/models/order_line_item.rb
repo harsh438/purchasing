@@ -13,6 +13,8 @@ class OrderLineItem < ActiveRecord::Base
                                        less_than_or_equal_to: 100 }
   validates :drop_date, presence: true
 
+  after_initialize :ensure_discount_is_at_least_zero
+
   def internal_sku=(internal_sku)
     super
     cache_product
@@ -68,5 +70,9 @@ class OrderLineItem < ActiveRecord::Base
 
   def build_element_id
     internal_sku.split('-').second.to_i
+  end
+
+  def ensure_discount_is_at_least_zero
+    self.discount ||= 0
   end
 end
