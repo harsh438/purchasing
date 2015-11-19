@@ -1,5 +1,6 @@
 import React from 'react';
 import { getScript } from '../../utilities/get_script';
+import { filter } from 'lodash';
 
 export default class OrderLineItemsSpreadsheet extends React.Component {
   componentWillMount() {
@@ -24,7 +25,7 @@ export default class OrderLineItemsSpreadsheet extends React.Component {
                { data: 'internalSku' },
                { data: 'quantity', type: 'numeric' },
                { data: 'discount', type: 'numeric', format: '0.0' },
-               { data: 'dtopDate', type: 'date', dateFormat: 'YYYY-MM-DD', correctFormat: true }
+               { data: 'dropDate', type: 'date', dateFormat: 'YYYY-MM-DD', correctFormat: true }
              ],
              rowHeaders: true,
              columnSorting: true,
@@ -32,7 +33,9 @@ export default class OrderLineItemsSpreadsheet extends React.Component {
   }
 
   data() {
-    return this.handsontable.getData();
+    return filter(this.handsontable.getData(), function (row) {
+      return row.internalSku && row.quantity >= 1 && row.dropDate;
+    });
   }
 
   clear() {
