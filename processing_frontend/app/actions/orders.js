@@ -81,3 +81,14 @@ export function exportOrders(id) {
       .then(orders => dispatch(loadOrders()));
   };
 }
+
+export function exportOrder(id) {
+  return dispatch => {
+    fetch(`/api/orders/export.json`, { credentials: 'same-origin',
+                                       method: 'POST',
+                                       headers: { 'Content-Type': 'application/json' },
+                                       body: JSON.stringify({ id }) })
+      .then(response => response.json())
+      .then(orders => dispatch(loadOrder(id)));
+  };
+}

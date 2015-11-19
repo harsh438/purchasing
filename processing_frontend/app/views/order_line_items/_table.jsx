@@ -6,6 +6,10 @@ import EditRowQuantity from '../edit_row/_quantity';
 import EditRowDate from '../edit_row/_date';
 
 export default class OrderLineItemsTable extends React.Component {
+  componentWillMount() {
+    this.state = { exportingOrder: false };
+  }
+
   render() {
     if (this.props.lineItems.length === 0) {
       return (
@@ -20,6 +24,14 @@ export default class OrderLineItemsTable extends React.Component {
         <div className="col-md-12">
           <div className="panel panel-default">
             <div className="panel-body">
+              <button className="btn btn-warning"
+                      disabled={this.isExportButtonDisabled()}
+                      onClick={this.handleExportOrder.bind(this)}>
+                Generate Purchase Orders
+              </button>
+
+              <hr />
+
               <table className="table">
                 <thead>
                   <tr>
@@ -61,9 +73,7 @@ export default class OrderLineItemsTable extends React.Component {
     })
   }
   renderEditCostRow(line) {
-    if (this.props.editable) {
-      return line.cost;
-    }
+    if (!this.props.editable) return line.cost;
 
     return (
       <EditRowCost displayValue={line.cost}
@@ -77,9 +87,7 @@ export default class OrderLineItemsTable extends React.Component {
   }
 
   renderEditQuantityRow(line) {
-    if (this.props.editable) {
-      return line.quantity;
-    }
+    if (!this.props.editable) return line.quantity;
 
     return (
       <EditRowQuantity displayValue={line.quantity}
@@ -93,9 +101,7 @@ export default class OrderLineItemsTable extends React.Component {
   }
 
   renderEditDiscountRow(line) {
-    if (this.props.editable) {
-      return line.discount;
-    }
+    if (!this.props.editable) return line.discount;
 
     return (
       <EditRowDiscount displayValue={line.discount}
@@ -109,9 +115,7 @@ export default class OrderLineItemsTable extends React.Component {
   }
 
   renderEditDropDateRow(line) {
-    if (this.props.editable) {
-      return line.displayDropDate;
-    }
+    if (!this.props.editable) return line.displayDropDate;
 
     return (
       <EditRowDate displayValue={line.displayDropDate}
@@ -125,9 +129,7 @@ export default class OrderLineItemsTable extends React.Component {
   }
 
   renderDeleteButton(line) {
-    if (this.props.editable) {
-      return (<span />);
-    }
+    if (!this.props.editable) return (<span />);
 
     return (
       <button className="btn btn-danger"
@@ -135,5 +137,14 @@ export default class OrderLineItemsTable extends React.Component {
         Delete
       </button>
     );
+  }
+
+  isExportButtonDisabled() {
+    return !this.props.editable || this.state.exportingOrder || this.props.lineItems.length === 0;
+  }
+
+  handleExportOrder() {
+    this.setState({ exportingOrder: true });
+    this.props.onOrderExport();
   }
 }

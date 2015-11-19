@@ -2,7 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { map, assign } from 'lodash';
-import { loadOrder, createLineItemsForOrder, deleteLineItem, updateLineItem } from '../../actions/orders';
+import { loadOrder,
+         createLineItemsForOrder,
+         deleteLineItem,
+         updateLineItem,
+         exportOrder } from '../../actions/orders';
 import OrderLineItemsTable from '../order_line_items/_table';
 import OrderLineItemsForm from '../order_line_items/_form';
 
@@ -31,12 +35,13 @@ class OrdersEdit extends React.Component {
 
           {this.renderOrderExportsTable()}
 
-          <OrderLineItemsTable editable={this.props.order.exported}
+          <OrderLineItemsTable editable={!this.props.order.exported}
                                lineItems={this.props.order.lineItems || []}
                                errors={this.props.errors}
                                erroredFields={this.props.erroredFields}
                                erroredIds={this.props.erroredIds}
                                onOrderLineItemDelete={this.handleOrderLineItemDelete.bind(this)}
+                               onOrderExport={this.handleOrderExport.bind(this)}
                                table={this} />
         </div>
       </div>
@@ -50,7 +55,7 @@ class OrdersEdit extends React.Component {
       return (
         <OrderLineItemsForm errors={this.props.errors}
                             erroredFields={this.props.erroredFields}
-                            onAddLineItems={this.handleAddLineItems.bind(this)} />
+                            onAddLineItems={this.handleOrderLineItemsAdd.bind(this)} />
       );
     }
   }
@@ -114,19 +119,23 @@ class OrdersEdit extends React.Component {
     })
   }
 
-  handleAddLineItems(lineItems) {
+  handleOrderLineItemsAdd(lineItems) {
     const data = { order: { lineItemsAttributes: lineItems } };
     this.props.dispatch(createLineItemsForOrder(this.props.params.id, data));
-  }
-
-  updateField(id, key, value) {
-    this.props.dispatch(updateLineItem([id], { [key]: value }));
   }
 
   handleOrderLineItemDelete(lineItemId) {
     if (confirm('Are you sure you want to delete this line item?')) {
       this.props.dispatch(deleteLineItem(lineItemId));
     }
+  }
+
+  handleOrderExport() {
+    this.props.dispatch(exportOrder([this.props.params.id]));
+  }
+
+  updateField(id, key, value) {
+    this.props.dispatch(updateLineItem([id], { [key]: value }));
   }
 }
 
