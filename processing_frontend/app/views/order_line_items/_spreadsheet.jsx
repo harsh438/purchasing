@@ -1,6 +1,5 @@
 import React from 'react';
 import { getScript } from '../../utilities/get_script';
-import { partial } from 'lodash';
 
 export default class OrderLineItemsSpreadsheet extends React.Component {
   componentWillMount() {
