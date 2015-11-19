@@ -39,7 +39,7 @@ export default class OrderLineItemsForm extends React.Component {
 
     return(
       <form className="form" onSubmit={this.handleMultiSubmit.bind(this)}>
-        <OrderLineItemsSpreadsheet onChange={this.handleSpreadsheetChange.bind(this)} />
+        <OrderLineItemsSpreadsheet ref="spreadsheet" />
 
         <div className="form-group" style={{ marginTop: '1.7em' }}>
           <button className="btn btn-success">
@@ -115,12 +115,8 @@ export default class OrderLineItemsForm extends React.Component {
     }
   }
 
-  handleSpreadsheetChange(data) {
-    this.setState({ spreadSheetData: data });
-  }
-
   multiData() {
-    return map(this.state.spreadSheetData, (line) => {
+    return map(this.refs.spreadsheet.data(), (line) => {
       return { internalSku: line[0],
                quantity: parseInt(line[1], 10),
                discount: parseFloat(line[2], 10),
@@ -155,6 +151,7 @@ export default class OrderLineItemsForm extends React.Component {
   handleMultiSubmit(e) {
     e.preventDefault();
     this.props.onAddLineItems(this.multiData());
+    this.refs.spreadsheet.clear();
   }
 
   handleSingleSubmit(e) {

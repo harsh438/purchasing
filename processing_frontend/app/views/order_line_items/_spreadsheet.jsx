@@ -9,29 +9,34 @@ export default class OrderLineItemsSpreadsheet extends React.Component {
 
   render() {
     return (
-      <div ref="lineItemTable"></div>
+      <div ref="spreadsheet"></div>
     );
   }
 
   createHandsOnTable() {
-    if (!this.refs.lineItemTable) return;
-
-    new window.Handsontable(this.refs.lineItemTable,
-      { data: [['', '', '', '']],
-        colHeaders: ['Internal SKU', 'Quantity', 'Discount %', 'Drop Date'],
-        columns: [
-          { data: 'internalSku' },
-          { data: 'quantity', type: 'numeric' },
-          { data: 'discount', type: 'numeric' },
-          { data: 'dtopDate', type: 'date', dateFormat: 'YYYY-MM-DD', correctFormat: true }
-        ],
-        rowHeaders: true,
-        columnSorting: true,
-        contextMenu: true,
-        afterChange: partial(this.handleChange, this.props.onChange) });
+    if (!this.refs.spreadsheet) return;
+    this.handsontable = new window.Handsontable(this.refs.spreadsheet, this.config());
   }
 
-  handleChange (onChange, changes, source) {
-    onChange(this.getData());
+  config() {
+    return { data: [['', '', '', '']],
+             colHeaders: ['Internal SKU', 'Quantity', 'Discount %', 'Drop Date'],
+             columns: [
+               { data: 'internalSku' },
+               { data: 'quantity', type: 'numeric' },
+               { data: 'discount', type: 'numeric' },
+               { data: 'dtopDate', type: 'date', dateFormat: 'YYYY-MM-DD', correctFormat: true }
+             ],
+             rowHeaders: true,
+             columnSorting: true,
+             contextMenu: true };
+  }
+
+  data() {
+    return this.handsontable.getData();
+  }
+
+  clear() {
+    return this.handsontable.clear();
   }
 }
