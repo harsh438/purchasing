@@ -13,7 +13,7 @@ class PurchaseOrderLineItem::Filter
     case attrs[:sort_by]
     when 'drop_date_asc'
       { delivery_date: :asc,
-        pid: :asc,
+        product_id: :asc,
         id: :asc }
     when 'product_id_desc'
       { product_id: :desc }
@@ -21,7 +21,7 @@ class PurchaseOrderLineItem::Filter
       { product_sku: :desc }
     else
       { delivery_date: :asc,
-        pid: :asc,
+        product_id: :asc,
         id: :asc }
     end
   end
