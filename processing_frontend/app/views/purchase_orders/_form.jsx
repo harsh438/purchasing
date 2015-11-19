@@ -3,18 +3,21 @@ import RadioGroup from 'react-radio-group';
 import React from 'react';
 import { Link } from 'react-router';
 import Select from 'react-select';
-import { map } from 'lodash';
+import { assign, map, omit } from 'lodash';
+import { isEmptyObject } from '../../utilities/inspection';
 
 export default class PurchaseOrdersForm extends React.Component {
   componentWillMount() {
     this.setStateFromQuery(this.props.query);
   }
 
-  componentWillReceiveProps({ loaded, query }) {
+  componentWillReceiveProps({ query }) {
     this.setStateFromQuery(query);
   }
 
   render() {
+    const filters = this.state.filters;
+
     return (
       <div className="form-container filters">
         <div className="panel panel-default">
@@ -31,8 +34,8 @@ export default class PurchaseOrdersForm extends React.Component {
                   <select className="form-control"
                           id="brand"
                           name="brand"
-                          onChange={this.handleChange.bind(this, 'brand')}
-                          value={this.state.brand}>
+                          onChange={this.handleFilterChange.bind(this, 'brand')}
+                          value={this.getFilter('brand')}>
                     <option value=""> -- select brand -- </option>
                     {this.options(this.props.brands)}
                   </select>
@@ -45,7 +48,7 @@ export default class PurchaseOrdersForm extends React.Component {
                           name="category"
                           onChange={this.handleCategoryChange.bind(this)}
                           multi={true}
-                          value={this.joinMultiSelectValues(this.state.category)}
+                          value={this.getFilter('category')}
                           options={this.multiSelectOptions(this.props.categories)} />
                 </div>
 
@@ -55,8 +58,8 @@ export default class PurchaseOrdersForm extends React.Component {
                   <select className="form-control"
                           id="season"
                           name="season"
-                          onChange={this.handleChange.bind(this, 'season')}
-                          value={this.state.season}>
+                          onChange={this.handleFilterChange.bind(this, 'season')}
+                          value={this.getFilter('season')}>
                     <option value=""> -- select season -- </option>
                     {this.options(this.props.seasons)}
                   </select>
@@ -68,9 +71,9 @@ export default class PurchaseOrdersForm extends React.Component {
                   <input className="form-control"
                          name="poNumber"
                          id="poNumber"
-                         onChange={this.handleChange.bind(this, 'poNumber')}
+                         onChange={this.handleFilterChange.bind(this, 'poNumber')}
                          type="search"
-                         value={this.state.poNumber} />
+                         value={this.getFilter('poNumber')} />
                 </div>
 
                 <div className="form-group col-md-2">
@@ -79,9 +82,9 @@ export default class PurchaseOrdersForm extends React.Component {
                   <input className="form-control"
                          name="pid"
                          id="pid"
-                         onChange={this.handleChange.bind(this, 'pid')}
+                         onChange={this.handleFilterChange.bind(this, 'pid')}
                          type="search"
-                         value={this.state.pid} />
+                         value={this.getFilter('pid')} />
                 </div>
 
                 <div className="form-group col-md-2">
@@ -90,9 +93,9 @@ export default class PurchaseOrdersForm extends React.Component {
                   <input className="form-control"
                          name="sku"
                          id="sku"
-                         onChange={this.handleChange.bind(this, 'sku')}
+                         onChange={this.handleFilterChange.bind(this, 'sku')}
                          type="search"
-                         value={this.state.sku} />
+                         value={this.getFilter('sku')} />
                 </div>
               </div>
 
@@ -103,9 +106,9 @@ export default class PurchaseOrdersForm extends React.Component {
                   <input className="form-control"
                          name="dateFrom"
                          id="dateFrom"
-                         onChange={this.handleChange.bind(this, 'dateFrom')}
+                         onChange={this.handleFilterChange.bind(this, 'dateFrom')}
                          type="date"
-                         value={this.state.dateFrom} />
+                         value={this.getFilter('dateFrom')} />
                 </div>
 
                 <div className="col-md-2 form-group">
@@ -114,9 +117,9 @@ export default class PurchaseOrdersForm extends React.Component {
                   <input className="form-control"
                          name="dateUntil"
                          id="dateUntil"
-                         onChange={this.handleChange.bind(this, 'dateUntil')}
+                         onChange={this.handleFilterChange.bind(this, 'dateUntil')}
                          type="date"
-                         value={this.state.dateUntil} />
+                         value={this.getFilter('dateUntil')} />
                 </div>
 
                 <div className="col-md-2">
@@ -126,7 +129,7 @@ export default class PurchaseOrdersForm extends React.Component {
                           name="gender"
                           onChange={this.handleGenderChange.bind(this)}
                           multi={true}
-                          value={this.joinMultiSelectValues(this.state.gender)}
+                          value={this.getFilter('gender')}
                           options={this.multiSelectOptions(this.props.genders)} />
                 </div>
 
@@ -136,8 +139,8 @@ export default class PurchaseOrdersForm extends React.Component {
                   <select className="form-control"
                           id="orderType"
                           name="orderType"
-                          onChange={this.handleChange.bind(this, 'orderType')}
-                          value={this.state.orderType}>
+                          onChange={this.handleFilterChange.bind(this, 'orderType')}
+                          value={this.getFilter('orderType')}>
                     <option value=""> -- select order type -- </option>
                     {this.options(this.props.orderTypes)}
                   </select>
@@ -149,8 +152,8 @@ export default class PurchaseOrdersForm extends React.Component {
                   <select className="form-control"
                           id="supplier"
                           name="supplier"
-                          onChange={this.handleChange.bind(this, 'supplier')}
-                          value={this.state.supplier}>
+                          onChange={this.handleFilterChange.bind(this, 'supplier')}
+                          value={this.getFilter('supplier')}>
                     <option value=""> -- select supplier -- </option>
                     {this.options(this.props.suppliers)}
                   </select>
@@ -162,9 +165,9 @@ export default class PurchaseOrdersForm extends React.Component {
                   <input className="form-control"
                          name="operator"
                          id="operator"
-                         onChange={this.handleChange.bind(this, 'operator')}
+                         onChange={this.handleFilterChange.bind(this, 'operator')}
                          type="search"
-                         value={this.state.operator}
+                         value={this.getFilter('operator')}
                          placeholder="OT_" />
                 </div>
               </div>
@@ -196,7 +199,7 @@ export default class PurchaseOrdersForm extends React.Component {
                 <div className="col-md-4" style={{ paddingTop: '2.2em' }}>
                   <CheckboxGroup name="status"
                                  ref="status"
-                                 value={this.state.status}
+                                 value={this.getFilter('status')}
                                  onChange={this.handleStatusChange.bind(this)}>
                     <div className="form-group">
                       <label className="status-label">
@@ -214,12 +217,7 @@ export default class PurchaseOrdersForm extends React.Component {
 
                 <div className="col-md-4 text-right">
                   {this.renderSubmit()}
-
-                  <div style={{ marginTop: '1em' }}>
-                    <Link to="/">
-                      clear all filters
-                    </Link>
-                  </div>
+                  {this.renderClearFiltersLink()}
                 </div>
               </div>
             </form>
@@ -230,39 +228,42 @@ export default class PurchaseOrdersForm extends React.Component {
   }
 
   renderSubmit() {
+    return (
+      <button className="btn btn-success"
+              disabled={this.isSubmitDisabled()}
+              style={{ marginTop: '1.74em', width: '100%' }}>
+        {this.submitText()}
+      </button>
+    );
+  }
+
+  renderClearFiltersLink() {
+    if (isEmptyObject(this.state.filters)) return;
+
+    return (
+      <div style={{ marginTop: '1em' }}>
+        <Link to="/">
+          clear all filters
+        </Link>
+      </div>
+    );
+  }
+
+  isSubmitDisabled() {
+    return this.props.loading || isEmptyObject(this.state.filters);
+  }
+
+  submitText() {
     if (this.props.loading) {
-      return (
-        <button className="btn btn-success"
-                disabled="disabled"
-                style={{ marginTop: '1.74em', width: '100%' }}>
-          Searching...
-        </button>
-      );
+      return 'Searching...';
     } else {
-      return (
-        <button className="btn btn-success"
-                style={{ marginTop: '1.74em', width: '100%' }}>
-          Search
-        </button>
-      );
+      return 'Search';
     }
   }
 
   setStateFromQuery(query) {
-    this.setState({ brand: query.brand || '',
-                    category: query.category || [],
-                    poNumber: query.poNumber || '',
-                    pid: query.pid || '',
-                    sku: query.sku || '',
-                    dateFrom: query.dateFrom || '',
-                    dateUntil: query.dateUntil || '',
-                    status: query.status || [],
-                    gender: query.gender || [],
-                    orderType: query.orderType || '',
-                    season: query.season || '',
-                    supplier: query.supplier || '',
-                    operator: query.operator || '',
-                    sortBy: query.sortBy || 'drop_date_asc'});
+    this.setState({ filters: omit(query, 'sortBy'),
+                    sortBy: query.sortBy || 'drop_date_asc' });
   }
 
   multiSelectOptions (options) {
@@ -283,12 +284,24 @@ export default class PurchaseOrdersForm extends React.Component {
     this.setState({ sortBy: value });
   }
 
-  handleStatusChange() {
-    this.setState({ status: this.refs.status.getCheckedValues() });
+  getFilter(field) {
+    switch (field) {
+      case 'category': return this.joinMultiSelectValues(this.state.filters.category);
+      case 'gender': return this.joinMultiSelectValues(this.state.filters.gender);
+      default: return this.state.filters[field] || '';
+    }
   }
 
-  handleChange(field, { target }) {
-    this.setState({ [field]: target.value });
+  setFilter(field, value) {
+    this.setState(state => ({ filters: assign({}, state.filters, { [field]: value }) }));
+  }
+
+  handleStatusChange() {
+    this.setFilter('status', this.refs.status.getCheckedValues());
+  }
+
+  handleFilterChange(field, { target }) {
+    this.setFilter(field, target.value);
   }
 
   splitMultiSelectValues(value) {
@@ -297,19 +310,20 @@ export default class PurchaseOrdersForm extends React.Component {
   }
 
   joinMultiSelectValues(values) {
-    return values.join(',');
+    if (values) return values.join(',');
   }
 
   handleCategoryChange(value) {
-    this.setState({ category: this.splitMultiSelectValues(value) });
+    this.setFilter('category', this.splitMultiSelectValues(value));
   }
 
   handleGenderChange(value) {
-    this.setState({ gender: this.splitMultiSelectValues(value) });
+    this.setFilter('gender', this.splitMultiSelectValues(value));
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.history.pushState(null, '/', this.state);
+    this.props.history.pushState(null, '/', { sortBy: this.state.sortBy,
+                                              ...this.state.filters });
   }
 }
