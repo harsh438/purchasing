@@ -12,8 +12,7 @@ class PurchaseOrder::Summariser
   private
 
   def summary_values(unpaged_results)
-    r = unpaged_results
-          .joins('inner join ds_products p on purchase_orders.pID = p.pID')
+    r = unpaged_results.joins('inner join ds_products p on purchase_orders.pID = p.pID')
 
     ordered_quantity, ordered_cost, ordered_value =
       r.pluck('sum(qty) as ordered_quantity,
