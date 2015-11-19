@@ -23,7 +23,7 @@ export default class OrderLineItemsSpreadsheet extends React.Component {
              columns: [
                { data: 'internalSku' },
                { data: 'quantity', type: 'numeric' },
-               { data: 'discount', type: 'numeric' },
+               { data: 'discount', type: 'numeric', format: '0.0' },
                { data: 'dtopDate', type: 'date', dateFormat: 'YYYY-MM-DD', correctFormat: true }
              ],
              rowHeaders: true,
