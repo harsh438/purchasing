@@ -21,8 +21,8 @@ export default class OrderLineItemsForm extends React.Component {
         <Nav bsStyle="tabs"
              activeKey={this.state.tab}
              onSelect={this.handleTabChange.bind(this)}>
-          <NavItem eventKey={"multi"} title="Copy and paste from Excel">Multi</NavItem>
-          <NavItem eventKey={"single"} title="Add one row at a time">Single</NavItem>
+          <NavItem eventKey="multi" title="Copy and paste from Excel">Multi</NavItem>
+          <NavItem eventKey="single" title="Add one row at a time">Single</NavItem>
         </Nav>
 
         <div style={{ paddingTop: '1em' }}>
