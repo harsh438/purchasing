@@ -33,8 +33,8 @@ export default class OrderLineItemsSpreadsheet extends React.Component {
   }
 
   data() {
-    return filter(this.handsontable.getData(), function (row) {
-      return row.internalSku && row.quantity >= 1 && row.dropDate;
+    return filter(this.handsontable.getData(), function ([internalSku, qty, _, dropDate]) {
+      return internalSku && qty >= 1 && dropDate;
     });
   }
 
