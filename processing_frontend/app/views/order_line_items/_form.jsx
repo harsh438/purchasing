@@ -1,6 +1,5 @@
 import React from 'react';
 import OrderLineItemsSpreadsheet from './_spreadsheet';
-import { getScript } from '../../utilities/get_script';
 import { Alert, Nav, NavItem } from 'react-bootstrap';
 import { WeekSelect } from './_week_select';
 import { map } from 'lodash';
