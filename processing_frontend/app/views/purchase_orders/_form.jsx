@@ -266,11 +266,9 @@ export default class PurchaseOrdersForm extends React.Component {
   }
 
   multiSelectOptions (options) {
-    let opts = map(options, function ({ id, name }) {
+    return map(options, function ({ id, name }) {
       return { value: id, label: name };
     });
-
-    return opts;
   }
 
   options (options) {
@@ -294,15 +292,12 @@ export default class PurchaseOrdersForm extends React.Component {
   }
 
   splitMultiSelectValues(value) {
-    if (!value) {
-      return []
-    }
-
-    return map(value.split(','), (v) => { return v.trim() })
+    if (!value) return [];
+    return map(value.split(','), (v) => { return v.trim() });
   }
 
   joinMultiSelectValues(values) {
-    return values.join(',')
+    return values.join(',');
   }
 
   handleCategoryChange(value) {
