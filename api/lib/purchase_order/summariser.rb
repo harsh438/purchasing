@@ -38,21 +38,21 @@ class PurchaseOrder::Summariser
                sum((qty - (qtyDone + qtyAdded)) * p.pPrice)')
        .flatten
 
-    { ordered_quantity: number_with_delimiter((ordered_quantity || 0) + (cancelled_quantity || 0)),
-      ordered_cost: monetize((ordered_cost || 0) + (cancelled_cost || 0)),
-      ordered_value: monetize((ordered_value || 0) + (cancelled_value || 0)),
-      delivered_quantity: number_with_delimiter(delivered_quantity),
+    { ordered_quantity: number_with_delimiter(ordered_quantity || 0),
+      ordered_cost: monetize(ordered_cost),
+      ordered_value: monetize(ordered_value),
+      delivered_quantity: number_with_delimiter(delivered_quantity || 0),
       delivered_cost: monetize(delivered_cost),
       delivered_value: monetize(delivered_value),
-      balance_quantity: number_with_delimiter(balance_quantity),
-      balance_cost: monetize(balance_cost),
-      balance_value: monetize(balance_value),
+      balance_quantity: number_with_delimiter((balance_quantity || 0) - (cancelled_quantity || 0)),
+      balance_cost: monetize((balance_cost || 0) - (cancelled_cost || 0)),
+      balance_value: monetize((balance_value || 0) - (cancelled_value || 0)),
       cancelled_quantity: number_with_delimiter(cancelled_quantity || 0),
-      cancelled_cost: monetize(cancelled_cost || 0),
-      cancelled_value: monetize(cancelled_value || 0) }
+      cancelled_cost: monetize(cancelled_cost),
+      cancelled_value: monetize(cancelled_value) }
   end
 
   def monetize(figure)
-    number_to_currency(figure, unit: '£')
+    number_to_currency(figure || 0, unit: '£')
   end
 end
