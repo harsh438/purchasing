@@ -30,6 +30,9 @@ class PurchaseOrderLineItem::CsvExporter
                         cancelled_quantity
                         cancelled_cost
                         cancelled_value
+                        balance_quantity
+                        balance_cost
+                        balance_value
                         operator
                         weeks_on_sale
                         closing_date
