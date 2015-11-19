@@ -20,17 +20,6 @@ class OrderLineItem < ActiveRecord::Base
     cache_product
   end
 
-  def cache_product
-    self.product_id = build_pid
-    self.vendor_id = product.try(:vendor_id)
-    self.option_id = ProductOption.oid_from_element(build_pid, build_element_id)
-    self.cost = product.try(:price)
-    self.season = last_po_line.try(:season)
-    self.product_name = last_po_line.try(:product_name)
-    self.gender = Gender.char_from(last_po_line.try(:gender))
-    self.reporting_pid = last_po_line.try(:reporting_pid)
-  end
-
   def as_json(options = {})
     super(options).tap do |line_item|
       line_item[:cost] = number_to_currency(cost, unit: '£')
@@ -70,6 +59,17 @@ class OrderLineItem < ActiveRecord::Base
 
   def build_element_id
     internal_sku.split('-').second.to_i
+  end
+
+  def cache_product
+    self.product_id = build_pid
+    self.vendor_id = product.try(:vendor_id)
+    self.option_id = ProductOption.oid_from_element(build_pid, build_element_id)
+    self.cost = product.try(:price)
+    self.season = last_po_line.try(:season)
+    self.product_name = last_po_line.try(:product_name)
+    self.gender = Gender.char_from(last_po_line.try(:gender))
+    self.reporting_pid = last_po_line.try(:reporting_pid)
   end
 
   def ensure_discount_is_at_least_zero
