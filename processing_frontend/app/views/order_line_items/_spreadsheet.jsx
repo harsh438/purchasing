@@ -36,6 +36,7 @@ export default class OrderLineItemsSpreadsheet extends React.Component {
   }
 
   clear() {
-    return this.handsontable.clear();
+    this.handsontable.destroy();
+    this.createHandsOnTable();
   }
 }
