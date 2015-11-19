@@ -12,13 +12,17 @@ class PurchaseOrderLineItem::Filter
   def order(attrs)
     case attrs[:sort_by]
     when 'drop_date_asc'
-      { delivery_date: :asc }
+      { delivery_date: :asc,
+        pid: :asc,
+        id: :asc }
     when 'product_id_desc'
       { product_id: :desc }
     when 'product_sku_desc'
       { product_sku: :desc }
     else
-      { delivery_date: :asc }
+      { delivery_date: :asc,
+        pid: :asc,
+        id: :asc }
     end
   end
 end
