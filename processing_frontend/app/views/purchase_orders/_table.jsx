@@ -61,12 +61,12 @@ export default class PurchaseOrdersTable extends React.Component {
   }
 
   renderRows() {
-    let currentPoNumber;
+    let currentProductId;
     let alt = true;
 
     return map(this.props.purchaseOrders, (purchaseOrder) => {
-      if (currentPoNumber !== purchaseOrder.poNumber) {
-        currentPoNumber = purchaseOrder.poNumber;
+      if (currentProductId !== purchaseOrder.productId) {
+        currentProductId = purchaseOrder.productId;
         alt = !alt;
       }
 
