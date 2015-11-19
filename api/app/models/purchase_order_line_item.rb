@@ -254,12 +254,14 @@ class PurchaseOrderLineItem < ActiveRecord::Base
     "#{pID}-#{Element.id_from_option(pID, option_id)}"
   end
 
-  def as_json(*args)
+  def as_json(options = {})
+    options[:unit] ||= '£'
+
     super.merge(po_number: po_number,
                 internal_sku: internal_sku,
-                product_cost: monetize(product_cost),
+                product_cost: number_to_currency(product_cost, options),
                 product_size: product_size,
-                product_rrp: monetize(product_rrp),
+                product_rrp: number_to_currency(product_rrp, options),
                 category: category,
                 brand: brand,
                 supplier_style_code: supplier_style_code,
@@ -270,18 +272,18 @@ class PurchaseOrderLineItem < ActiveRecord::Base
                 order_type: order_type,
                 order_first_received: order_first_received,
                 ordered_quantity: ordered_quantity,
-                ordered_cost: monetize(ordered_cost),
-                ordered_value: monetize(ordered_value),
+                ordered_cost: number_to_currency(ordered_cost, options),
+                ordered_value: number_to_currency(ordered_value, options),
                 delivery_date: delivery_date.to_s,
                 delivered_quantity: delivered_quantity,
-                delivered_cost: monetize(delivered_cost),
-                delivered_value: monetize(delivered_value),
+                delivered_cost: number_to_currency(delivered_cost, options),
+                delivered_value: number_to_currency(delivered_value, options),
                 cancelled_quantity: cancelled_quantity,
-                cancelled_cost: monetize(cancelled_cost),
-                cancelled_value: monetize(cancelled_value),
+                cancelled_cost: number_to_currency(cancelled_cost, options),
+                cancelled_value: number_to_currency(cancelled_value, options),
                 balance_quantity: balance_quantity,
-                balance_cost: monetize(balance_cost),
-                balance_value: monetize(balance_value),
+                balance_cost: number_to_currency(balance_cost, options),
+                balance_value: number_to_currency(balance_value, options),
                 weeks_on_sale: weeks_on_sale,
                 closing_date: closing_date)
   end
@@ -303,10 +305,6 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   end
 
   private
-
-  def monetize(figure)
-    number_to_currency(figure, unit: '£')
-  end
 
   def ensure_defaults
     self.added ||= Time.now

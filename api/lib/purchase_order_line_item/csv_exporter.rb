@@ -48,8 +48,13 @@ class PurchaseOrderLineItem::CsvExporter
       csv << CSV_COLUMN_ORDER.map(&:humanize)
 
       query.each do |purchase_order|
-        csv << purchase_order.as_json({}).values_at(*CSV_COLUMN_ORDER.map(&:to_sym))
+        csv << row_data(purchase_order)
       end
     end
+  end
+
+  def row_data(purchase_order)
+    data = purchase_order.as_json(unit: '')
+    data.values_at(*CSV_COLUMN_ORDER.map(&:to_sym))
   end
 end
