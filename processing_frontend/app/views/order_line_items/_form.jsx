@@ -6,11 +6,12 @@ import { map } from 'lodash';
 
 export default class OrderLineItemsForm extends React.Component {
   componentWillMount() {
+    this.state = { tab: 'multi' };
     this.resetState();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props != nextProps && !this.hasErrors(nextProps)) {
+    if (!this.hasErrors(nextProps)) {
       this.resetState();
     }
   }
@@ -136,8 +137,7 @@ export default class OrderLineItemsForm extends React.Component {
     this.setState({ internalSku: '',
                     quantity: 0,
                     productCost: '0.00',
-                    discount: '0.00',
-                    tab: 'multi' });
+                    discount: '0.00' });
   }
 
   hasErrors(props) {
