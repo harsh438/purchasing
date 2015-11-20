@@ -18,7 +18,6 @@ class PurchaseOrderLineItem::CsvExporter
                         product_cost
                         status
                         order_id
-                        order_date
                         ordered_quantity
                         ordered_cost
                         ordered_value
@@ -27,6 +26,7 @@ class PurchaseOrderLineItem::CsvExporter
                         delivered_quantity
                         delivered_cost
                         delivered_value
+                        arrived_date
                         cancelled_quantity
                         cancelled_cost
                         cancelled_value
