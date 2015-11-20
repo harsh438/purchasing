@@ -45,6 +45,7 @@ export default class PurchaseOrderRow extends React.Component {
           {this.props.purchaseOrder.orderType}
         </td>
 
+        <td>{this.props.purchaseOrder.deliveryDate}</td>
         <td className="narrowish">
           <EditRowQuantity displayValue={this.props.purchaseOrder.orderedQuantity}
                            ident={this.props.purchaseOrder.orderId}
@@ -66,8 +67,8 @@ export default class PurchaseOrderRow extends React.Component {
         <td className="narrowish" style={{ borderLeft: '2px solid #ddd' }}>
           {this.props.purchaseOrder.cancelledQuantity}
         </td>
-        <td>{this.props.purchaseOrder.cancelledCost}</td>
-        <td>{this.props.purchaseOrder.cancelledValue}</td>
+        <td className="narrowish">{this.props.purchaseOrder.cancelledCost}</td>
+        <td className="narrowish">{this.props.purchaseOrder.cancelledValue}</td>
 
         <td className="narrowish" style={{ borderLeft: '2px solid #ddd' }}>
           {this.props.purchaseOrder.balanceQuantity}
