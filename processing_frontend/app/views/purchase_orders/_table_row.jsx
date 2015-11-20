@@ -21,7 +21,7 @@ export default class PurchaseOrderRow extends React.Component {
           {this.props.purchaseOrder.poNumber}
         </td>
 
-        <td style={{ borderLeft: '2px solid #ddd' }}>
+        <td className="narrowish" style={{ borderLeft: '2px solid #ddd' }}>
           <a href={this.stockBugUrl()} target="_blank">
             {this.props.purchaseOrder.productId}
           </a>

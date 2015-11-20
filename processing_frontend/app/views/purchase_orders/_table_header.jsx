@@ -48,7 +48,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
                      onClick={this.props.onSelectAll} /></th>
           <th style={{ borderLeft: '2px solid #ddd' }}>PO #</th>
 
-          <th style={{ borderLeft: '2px solid #ddd' }}>PID</th>
+          <th className="narrowish" style={{ borderLeft: '2px solid #ddd' }}>PID</th>
           <th className="x-wide">Product</th>
           <th className="wideish">SKU</th>
           <th title="Internal Surfdome SKU">SD SKU</th>
