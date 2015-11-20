@@ -56,7 +56,7 @@ export default class PurchaseOrderRow extends React.Component {
         <td>{this.props.purchaseOrder.orderedValue}</td>
 
         <td className="wideish" style={{ borderLeft: '2px solid #ddd' }}>
-          {this.props.purchaseOrder.deliveryDate}
+          {this.renderArrivedDate()}
         </td>
         <td>{this.props.purchaseOrder.dropNumber}</td>
         <td className="narrowish">{this.props.purchaseOrder.deliveredQuantity}</td>
@@ -93,6 +93,16 @@ export default class PurchaseOrderRow extends React.Component {
         <a style={{ cursor: 'pointer' }}>View</a>
       </OverlayTrigger>
     );
+  }
+
+  renderArrivedDate() {
+    let date = this.props.purchaseOrder.arrivedDate
+
+    if (date == '0') {
+      return ``
+    }
+
+    return this.props.purchaseOrder.arrivedDate
   }
 
   popOverlay() {
