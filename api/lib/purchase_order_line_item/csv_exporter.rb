@@ -26,7 +26,6 @@ class PurchaseOrderLineItem::CsvExporter
                         delivered_quantity
                         delivered_cost
                         delivered_value
-                        arrived_date
                         cancelled_quantity
                         cancelled_cost
                         cancelled_value
