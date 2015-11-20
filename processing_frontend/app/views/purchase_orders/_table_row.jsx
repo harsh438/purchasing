@@ -1,6 +1,7 @@
 import React from 'react';
 import EditRowQuantity from '../edit_row/_quantity';
 import EditRowCost from '../edit_row/_cost';
+import { Popover, OverlayTrigger } from 'react-bootstrap';
 
 export default class PurchaseOrderRow extends React.Component {
   render() {
@@ -36,8 +37,8 @@ export default class PurchaseOrderRow extends React.Component {
         </td>
 
         <td>{this.props.purchaseOrder.productRrp}</td>
-        <td className="narrowish">{this.props.purchaseOrder.productSize}</td>
-        <td>{this.props.purchaseOrder.brandSize}</td>
+        <td className="narrowish">{this.props.purchaseOrder.productSize} {this.renderBrandSizeString(this.props.purchaseOrder.brandSize)}</td>
+        <td>{this.renderCommentPopover(this.props.purchaseOrder.comment)}</td>
         <td>{this.props.purchaseOrder.gender}</td>
 
         <td className="wideish" style={{ borderLeft: '2px solid #ddd' }}>
@@ -75,6 +76,35 @@ export default class PurchaseOrderRow extends React.Component {
         <td className="wideish">{this.props.purchaseOrder.balanceValue}</td>
       </tr>
     );
+  }
+
+  renderCommentPopover() {
+    return (
+      <OverlayTrigger id={`comment-${this.props.purchaseOrder.id}`}
+                      trigger="click"
+                      ref="overlayTrigger"
+                      rootClose
+                      placement="left"
+                      overlay={this.popOverlay()}>
+        <a style={{ cursor: 'pointer' }}>View</a>
+      </OverlayTrigger>
+    );
+  }
+
+  popOverlay() {
+    return (
+      <Popover id={`comment-${this.props.purchaseOrder.id}-note`}>
+        {this.props.purchaseOrder.comment}
+      </Popover>
+    );
+  }
+
+  renderBrandSizeString(size) {
+    if (size == null || size.length == 0) {
+      return ``;
+    }
+
+    return `(${size})`;
   }
 
   classes() {

@@ -55,7 +55,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th>Cost</th>
           <th>RRP</th>
           <th className="narrowish">Size</th>
-          <th title="Brand Size">Br. Size</th>
+          <th>Note</th>
           <th>Gender</th>
 
           <th className="wideish" style={{ borderLeft: '2px solid #ddd' }}>Type</th>
