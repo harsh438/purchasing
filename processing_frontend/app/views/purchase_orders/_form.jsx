@@ -21,10 +21,6 @@ export default class PurchaseOrdersForm extends React.Component {
     return (
       <div className="form-container filters">
         <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">Search Purchase Orders</h3>
-          </div>
-
           <div className="panel-body">
             <form className="form"
                   onChange={this.handleFormChange.bind(this)}
