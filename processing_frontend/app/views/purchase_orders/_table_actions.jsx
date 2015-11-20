@@ -53,12 +53,6 @@ export default class PurchaseOrdersTableActions extends React.Component {
                     Uncancel Selected
                   </button>
 
-                  <button className="btn btn-warning btn-sm"
-                          disabled={!this.props.hasSelected}
-                          onClick={this.handleCommentOpen.bind(this)}>
-                    Add Comment
-                  </button>
-
                   <Modal show={this.state.showCommentModal} onHide={this.closeCommentModal.bind(this)}>
                     <Modal.Header closeButton>
                       <Modal.Title>Add Comment</Modal.Title>
@@ -76,6 +70,12 @@ export default class PurchaseOrdersTableActions extends React.Component {
                       </button>
                     </Modal.Body>
                   </Modal>
+
+                  <button className="btn btn-warning btn-sm"
+                          disabled={!this.props.hasSelected}
+                          onClick={this.handleCommentOpen.bind(this)}>
+                    Add Comment
+                  </button>
                 </div>
               </div>
 
