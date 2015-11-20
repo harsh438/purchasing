@@ -38,6 +38,6 @@ class PurchaseOrderLineItemsController < ApplicationController
   end
 
   def permitted_params
-    params.permit(:delivery_date, :quantity, :cost)
+    params.permit(:delivery_date, :quantity, :cost, :comment)
   end
 end

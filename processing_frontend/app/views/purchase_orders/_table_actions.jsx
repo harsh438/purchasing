@@ -1,6 +1,11 @@
 import React from 'react';
+import { Modal, Input } from 'react-bootstrap';
 
 export default class PurchaseOrdersTableActions extends React.Component {
+  componentWillMount() {
+    this.setState({ showCommentModal: false })
+  }
+
   render() {
     if (this.props.totalCount == 0) {
       return (<div />);
@@ -11,7 +16,7 @@ export default class PurchaseOrdersTableActions extends React.Component {
         <div className="panel panel-default">
           <div className="panel-body">
             <div className="row">
-              <div className="col-md-3">
+              <div className="col-md-2">
                 {this.renderCountMessage()}
               </div>
 
@@ -34,7 +39,7 @@ export default class PurchaseOrdersTableActions extends React.Component {
                 </div>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-md-4">
                 <div className="btn-group btn-group-sm">
                   <button className="btn btn-danger btn-sm"
                           disabled={!this.props.hasSelected}
@@ -47,6 +52,30 @@ export default class PurchaseOrdersTableActions extends React.Component {
                           onClick={this.handleUncancelSubmit.bind(this)}>
                     Uncancel Selected
                   </button>
+
+                  <button className="btn btn-warning btn-sm"
+                          disabled={!this.props.hasSelected}
+                          onClick={this.handleCommentOpen.bind(this)}>
+                    Add Comment
+                  </button>
+
+                  <Modal show={this.state.showCommentModal} onHide={this.closeCommentModal.bind(this)}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Add Comment</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                      <Input type="textarea"
+                             label="Comment"
+                             name="comment"
+                             ref="commentArea" />
+                      <hr />
+                      <button className="btn btn-success"
+                              onClick={this.handleCommentSubmit.bind(this)}>
+                        Submit
+                      </button>
+                    </Modal.Body>
+                  </Modal>
                 </div>
               </div>
 
@@ -128,6 +157,21 @@ export default class PurchaseOrdersTableActions extends React.Component {
   handleUncancelSubmit(e) {
     e.preventDefault();
     this.props.table.uncancelSelected();
+  }
+
+  handleCommentOpen(e) {
+    e.preventDefault();
+    this.setState({ showCommentModal: true });
+  }
+
+  closeCommentModal() {
+    this.setState({ showCommentModal: false });
+  }
+
+  handleCommentSubmit(e) {
+    e.preventDefault();
+    this.props.table.changeCommentSelected(this.refs.commentArea.refs.input.value);
+    this.closeCommentModal();
   }
 
   handleDeliveryDateChange({ target }) {

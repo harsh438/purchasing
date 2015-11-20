@@ -191,4 +191,11 @@ export default class PurchaseOrdersTable extends React.Component {
 
     this.props.dispatch(updatePurchaseOrders(this.state.selected, { delivery_date: this.state.deliveryDate }));
   }
+
+  changeCommentSelected(comment) {
+    if (comment == null || comment.length == 0) {
+      return;
+    }
+    this.props.dispatch(updatePurchaseOrders(this.state.selected, { comment: comment }));
+  }
 }

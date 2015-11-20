@@ -79,6 +79,10 @@ export default class PurchaseOrderRow extends React.Component {
   }
 
   renderCommentPopover() {
+    if (this.props.purchaseOrder.comment == null || this.props.purchaseOrder.comment.length == 0) {
+      return (<span />);
+    }
+
     return (
       <OverlayTrigger id={`comment-${this.props.purchaseOrder.id}`}
                       trigger="click"
