@@ -7,9 +7,7 @@ export default class PurchaseOrdersTableActions extends React.Component {
   }
 
   render() {
-    if (this.props.totalCount == 0) {
-      return (<div />);
-    }
+    if (this.props.totalCount == 0) return (<div />);
 
     return (
       <div className="form-container">
@@ -112,9 +110,7 @@ export default class PurchaseOrdersTableActions extends React.Component {
   }
 
   renderCancelPOButton() {
-    if (!this.props.poNumber) {
-      return;
-    }
+    if (!this.props.poNumber) return;
 
     return (
       <button className="btn btn-danger btn-sm"
@@ -128,10 +124,11 @@ export default class PurchaseOrdersTableActions extends React.Component {
   renderExportButton() {
     if (!this.props.exportable) return;
 
-    let additionalParams = {}
+    let additionalParams = {};
+
     if (this.props.exportable.massive) {
       additionalParams = { disabled: 'disabled',
-                           title: 'Result set too big to export' }
+                           title: 'Result set too big to export' };
     }
 
     return (
