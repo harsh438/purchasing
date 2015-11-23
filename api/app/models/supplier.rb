@@ -4,6 +4,9 @@ class Supplier < ActiveRecord::Base
 
   has_many :supplier_vendors, foreign_key: :SupplierID, class_name: 'SupplierVendor'
   has_many :vendors, through: :supplier_vendors
+  has_one :details, class_name: 'SupplierDetail'
+
+  after_initialize :ensure_details
 
   map_attributes id: :SupplierID,
                  name: :SupplierName
@@ -16,5 +19,11 @@ class Supplier < ActiveRecord::Base
 
   def self.alphabetical
     order(name: :asc)
+  end
+
+  private
+
+  def ensure_details
+    self.details || self.build_details
   end
 end
