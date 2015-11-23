@@ -34,7 +34,7 @@ export default class SuppliersForm extends React.Component {
 			                 value={this.state.name} />
 
 			        </div>
-			        <div className="panel panel-default">
+			        <div className="panel panel-default pull-left col-xs-6">
     						<div className="panel-heading">
     							<h3 className="panel-title">Returns Address</h3>
     						</div>
@@ -59,7 +59,7 @@ export default class SuppliersForm extends React.Component {
 
 									</div>
 						      <div className="form-group">
-						          <label forHtml="return_address_name">Line 1</label>
+						          <label forHtml="return_address_1">Line 1</label>
 						          <input className="form-control"
 						                 id="returns_address_1"
 						                 name="returns_address_1"
@@ -68,7 +68,7 @@ export default class SuppliersForm extends React.Component {
 
 									</div>
 						      <div className="form-group">
-						          <label forHtml="return_address_name">Line 2</label>
+						          <label forHtml="returns_address_2">Line 2</label>
 						          <input className="form-control"
 						                 id="returns_address_2"
 						                 name="returns_address_2"
@@ -77,18 +77,70 @@ export default class SuppliersForm extends React.Component {
 
 									</div>
 						      <div className="form-group">
-						          <label forHtml="return_address_name">Line 3</label>
+						          <label forHtml="returns_address_3">Line 3</label>
 						          <input className="form-control"
 						                 id="returns_address_3"
 						                 name="returns_address_3"
 						                 placeholder="Line 3"
 						                 value={this.state.returnsAddress3} />
 
-									</div>																																			
+									</div>
+						      <div className="form-group">
+						          <label forHtml="return_address_name">Postal Code</label>
+						          <input className="form-control"
+						                 id="returns_postal_code"
+						                 name="returns_address_3"
+						                 placeholder="Postal Code"
+						                 value={this.state.returnsPostalCode} />
+
+									</div>
+						      <div className="form-group">
+						          <label forHtml="returns_process">Return Process</label>
+						          <input className="form-control"
+						                 id="returns_process"
+						                 name="returns_process"
+						                 placeholder="Return Process"
+						                 value={this.state.returnsProcess} />
+
+									</div>																																																					
 								</div>
 							</div>
+			        <div className="panel panel-default">
+			        	<div className="panel-heading">
+			        		<h3 className="panel-title">Other Information</h3>
+			        	</div>
+			        	<div className="panel panel-body pull-left col-xs-6">
+							      <div className="form-group">
+							          <label forHtml="invoicer_name">Invoicer Name</label>
+							          <input className="form-control"
+							                 id="invoicer_name"
+							                 name="invoicer_name"
+							                 placeholder="Invoicer Name"
+							                 value={this.state.invoicerName} />
+
+										</div>
+							      <div className="form-group">
+							          <label forHtml="invoicer_name">Account Number</label>
+							          <input className="form-control"
+							                 id="account_number"
+							                 name="account_number"
+							                 placeholder="Account Number"
+							                 value={this.state.accountNumber} />
+
+										</div>
+							      <div className="form-group">
+							          <label forHtml="country_of_origin">Country Of Origin</label>
+							          <input className="form-control"
+							                 id="country_of_origin"
+							                 name="country_of_origin"
+							                 placeholder="Country Of Origin"
+							                 value={this.state.countryOfOrigin} />
+
+										</div>																				
+								</div>
+							</div>						
 			        <div className="form-group">
-			            <button className="btn btn-success"
+			            <button className="btn btn-success col-xs-offset-3 col-xs-6"
 			                    disabled={this.state.submitting}>
 			              {this.props.submitText}
 			            </button>
