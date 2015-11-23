@@ -6,6 +6,13 @@ feature 'Suppliers CRUD' do
     expect(subject).to include(supplier_attrs)
   end
 
+  scenario 'Getting a Supplier' do
+    @supplier = create(:supplier)
+    visit supplier_path(@supplier)
+    expect(subject).to include("id" => @supplier.id,
+                               "name" => @supplier.name)
+  end
+
   private
 
   let(:supplier_attrs) do
