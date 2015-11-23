@@ -50,6 +50,7 @@ feature 'Download purchase orders as CSV' do
   def given_there_are_more_than_50_results
     create_list(:purchase_order_line_item,
                 60,
+                :with_summary,
                 vendor: vendor,
                 status: -1,
                 season: 'SS15',
@@ -70,18 +71,21 @@ feature 'Download purchase orders as CSV' do
   def create_purchase_orders
     create_list(:purchase_order_line_item,
                 20,
+                :with_summary,
                 status: 4,
                 season: 'AW15',
                 created_at: Time.new(2013, 1, 1))
 
     create_list(:purchase_order_line_item,
                 16,
+                :with_summary,
                 :arrived,
                 season: 'SS14',
                 created_at: Time.new(2011, 1, 1))
 
     create_list(:purchase_order_line_item,
                 15,
+                :with_summary,
                 vendor: vendor,
                 status: -1,
                 season: 'SS15',

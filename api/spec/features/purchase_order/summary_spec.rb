@@ -25,8 +25,8 @@ feature 'Purchase Order Summary' do
   end
 
   def given_i_have_an_order_which_had_balance_items_that_are_now_cancelled
-    @cancelled_item = create(:purchase_order_line_item, :with_product, quantity: 10, quantity_done: 5).cancel
-    @delivered_item = create(:purchase_order_line_item, :with_product, quantity: 10, quantity_done: 10, status: 5)
+    @cancelled_item = create(:purchase_order_line_item, quantity: 10, quantity_done: 5).cancel
+    @delivered_item = create(:purchase_order_line_item, quantity: 10, quantity_done: 10, status: 5)
     @purchase_order = create(:purchase_order, line_items: [@cancelled_item, @delivered_item],
                                               drop_date: 2.days.ago)
   end

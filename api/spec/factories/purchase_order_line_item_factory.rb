@@ -13,15 +13,14 @@ FactoryGirl.define do
 
     season :AW15
     vendor_id 0
-    summary_id 1
     gender ''
 
     trait :arrived do
       arrived_date 1.day.ago
     end
 
-    trait :with_product do
-      product
+    trait :with_summary do
+      summary_id { create(:purchase_order).id }
     end
 
     trait :with_option do
