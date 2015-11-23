@@ -59,12 +59,12 @@ export default class PurchaseOrderTableHeader extends React.Component {
           <th>Gender</th>
 
           <th className="wideish" style={{ borderLeft: '2px solid #ddd' }}>Type</th>
-          <th>Date</th>
+          <th>Due</th>
           <th className="narrowish">Qty</th>
           <th>Cost</th>
           <th>Val</th>
 
-          <th className="wideish" style={{ borderLeft: '2px solid #ddd' }}>Date</th>
+          <th className="wideish" style={{ borderLeft: '2px solid #ddd' }}>Arrived</th>
           <th>Drop #</th>
           <th className="narrowish">Qty</th>
           <th>Cost</th>
