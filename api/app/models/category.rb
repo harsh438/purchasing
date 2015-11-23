@@ -1,6 +1,6 @@
 class Category < ActiveRecord::Base
   self.table_name = :ds_language_categories
-  
+
   include LegacyMappings
   include Searchable
 
