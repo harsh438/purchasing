@@ -14,7 +14,9 @@ var config = {
              dest: '../api/public/assets/stylesheets/',
              watch: 'app/assets/stylesheets/**/*.scss' },
   images:  { src: ['app/assets/images/*'],
-             dest: '../api/public/assets/images' }
+             dest: '../api/public/assets/images' },
+  fonts:   { src: ['app/assets/fonts/*'],
+             dest: '../api/public/assets/fonts' }
 };
 
 gulp.task('default', Object.keys(config));
@@ -24,6 +26,7 @@ gulp.task('watch', ['default'], function () {
   watchBundle(config.scripts.src);
   gulp.watch(config.styles.watch, ['styles']).on('change', livereload.changed);
   gulp.watch(config.images.src, ['images']).on('change', livereload.changed);
+  gulp.watch(config.fonts.src, ['fonts']).on('change', livereload.changed);
 });
 
 gulp.task('scripts', function () {
@@ -42,6 +45,11 @@ gulp.task('styles', function () {
 gulp.task('images', function () {
   gulp.src(config.images.src)
     .pipe(gulp.dest(config.images.dest));
+});
+
+gulp.task('fonts', function () {
+  gulp.src(config.fonts.src)
+    .pipe(gulp.dest(config.fonts.dest));
 });
 
 function bundler () {
