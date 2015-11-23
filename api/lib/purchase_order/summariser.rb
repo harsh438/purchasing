@@ -12,31 +12,18 @@ class PurchaseOrder::Summariser
   private
 
   def summary_values(unpaged_results)
-    r = unpaged_results.joins('inner join ds_products p on purchase_orders.pID = p.pID')
+    ordered_quantity, ordered_cost, ordered_value = ordered_totals(unpaged_results)
 
-    ordered_quantity, ordered_cost, ordered_value =
-      r.pluck('sum(qty) as ordered_quantity,
-               sum(qty * cost) as ordered_cost,
-               sum(qty * p.pPrice) as ordered_value')
-       .flatten
+    delivered_quantity, delivered_cost,
+    balance_quantity, balance_cost = delivered_balance_totals(unpaged_results)
 
-    delivered_quantity, delivered_cost, delivered_value,
-    balance_quantity, balance_cost, balance_value =
-      r.pluck('sum((qtyDone + qtyAdded)) as delivered_quantity,
-               sum((qtyDone + qtyAdded) * cost) as delivered_cost,
-               sum((qtyDone + qtyAdded) * p.pPrice) as delivered_value,
+    cancelled_quantity, cancelled_cost = cancelled_totals(unpaged_results)
 
-               sum(qty - (qtyDone + qtyAdded)) as balance_quantity,
-               (sum(qty * cost) - sum((qtyDone + qtyAdded) * cost)) as balance_cost,
-               (sum(qty * p.pPrice) - sum((qtyDone + qtyAdded) * p.pPrice)) as balance_value')
-       .flatten
+    joined_results = unpaged_results.joins('inner join ds_products p on purchase_orders.pID = p.pID')
 
-    cancelled_quantity, cancelled_cost, cancelled_value =
-      r.where(status: -1)
-       .pluck('sum((qty - (qtyDone + qtyAdded))) as cancelled_quantity,
-               sum((qty - (qtyDone + qtyAdded)) * cost),
-               sum((qty - (qtyDone + qtyAdded)) * p.pPrice)')
-       .flatten
+    ordered_value = ordered_value(joined_results)
+    delivered_value, balance_value = delivered_balance_values(joined_results)
+    cancelled_value = cancelled_value(joined_results)
 
     { ordered_quantity: number_with_delimiter(ordered_quantity || 0),
       ordered_cost: monetize(ordered_cost),
@@ -50,6 +37,46 @@ class PurchaseOrder::Summariser
       cancelled_quantity: number_with_delimiter(cancelled_quantity || 0),
       cancelled_cost: monetize(cancelled_cost),
       cancelled_value: monetize(cancelled_value) }
+  end
+
+  def ordered_totals(unpaged_results)
+    unpaged_results.pluck('sum(qty) as ordered_quantity,
+                           sum(qty * cost) as ordered_cost')
+                   .flatten
+  end
+
+  def delivered_balance_totals(unpaged_results)
+    unpaged_results.pluck('sum((qtyDone + qtyAdded)) as delivered_quantity,
+                           sum((qtyDone + qtyAdded) * cost) as delivered_cost,
+                           sum(qty - (qtyDone + qtyAdded)) as balance_quantity,
+                           (sum(qty * cost) - sum((qtyDone + qtyAdded) * cost)) as balance_cost')
+                    .flatten
+  end
+
+  def cancelled_totals(unpaged_results)
+    unpaged_results.where(status: -1)
+                   .pluck('sum((qty - (qtyDone + qtyAdded))) as cancelled_quantity,
+                           sum((qty - (qtyDone + qtyAdded)) * cost)')
+                   .flatten
+  end
+
+  def ordered_value(joined_results)
+    joined_results.pluck('sum(qty * p.pPrice) as ordered_value')
+                  .flatten
+                  .first
+  end
+
+  def delivered_balance_values(joined_results)
+    joined_results.pluck('sum((qtyDone + qtyAdded) * p.pPrice) as delivered_value,
+                         (sum(qty * p.pPrice) - sum((qtyDone + qtyAdded) * p.pPrice)) as balance_value')
+                  .flatten
+  end
+
+  def cancelled_value(joined_results)
+    joined_results.where(status: -1)
+                  .pluck('sum((qty - (qtyDone + qtyAdded)) * p.pPrice)')
+                  .flatten
+                  .first
   end
 
   def monetize(figure)

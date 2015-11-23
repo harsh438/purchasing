@@ -7,6 +7,10 @@ class SuppliersController < ApplicationController
     render json: Supplier.create!(supplier_attrs.merge(details_attributes: supplier_details_attrs))
   end
 
+  def show
+    render json: Supplier.find(params[:id])
+  end
+
   private
 
   def supplier_attrs
