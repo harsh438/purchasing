@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     resources :categories, only: :index
     resources :products, only: [:index, :show]
     resources :skus, only: [:index, :create, :show]
-    resources :suppliers, only: :index
+    resources :suppliers, only: [:index, :create]
     resources :vendors, only: :index
 
     get :seasons, to: 'purchase_orders#seasons'
