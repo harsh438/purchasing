@@ -19,7 +19,9 @@
 /public/system/assets
 /report
 /coverage
-/public/assets/app.*
+/public/assets/fonts
 /public/assets/images
+/public/assets/javascripts
+/public/assets/stylesheets
 
 /.elasticbeanstalk

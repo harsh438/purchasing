@@ -9,9 +9,9 @@ var livereload = require('gulp-livereload');
 
 var config = {
   scripts: { src: 'index.js',
-             dest: '../api/public/assets' },
+             dest: '../api/public/assets/javascripts/' },
   styles:  { src: ['app/assets/stylesheets/app.scss'],
-             dest: '../api/public/assets',
+             dest: '../api/public/assets/stylesheets/',
              watch: 'app/assets/stylesheets/**/*.scss' },
   images:  { src: ['app/assets/images/*'],
              dest: '../api/public/assets/images' }
