@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123121440) do
+ActiveRecord::Schema.define(version: 20151123145342) do
 
   create_table "ds_language_categories", force: :cascade do |t|
     t.integer "langID",  limit: 4,   default: 0,  null: false
@@ -407,14 +407,23 @@ ActiveRecord::Schema.define(version: 20151123121440) do
   add_index "sd_product_details", ["volumeLine"], name: "volumeline", using: :btree
 
   create_table "skus", force: :cascade do |t|
-    t.string   "sku",              limit: 255
-    t.string   "manufacturer_sku", limit: 255
-    t.string   "season",           limit: 255
-    t.integer  "product_id",       limit: 4
-    t.integer  "option_id",        limit: 4
-    t.integer  "element_id",       limit: 4
+    t.string   "sku",                limit: 255
+    t.string   "manufacturer_sku",   limit: 255
+    t.string   "season",             limit: 255
+    t.integer  "product_id",         limit: 4
+    t.integer  "option_id",          limit: 4
+    t.integer  "element_id",         limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "manufacturer_color", limit: 255
+    t.string   "manufacturer_size",  limit: 255
+    t.string   "color",              limit: 255
+    t.string   "size",               limit: 255
+    t.string   "color_family",       limit: 255
+    t.string   "size_scale",         limit: 255
+    t.decimal  "cost_price",                     precision: 8, scale: 2
+    t.decimal  "list_price",                     precision: 8, scale: 2
+    t.decimal  "price",                          precision: 8, scale: 2
   end
 
   add_index "skus", ["sku"], name: "index_skus_on_sku", using: :btree
