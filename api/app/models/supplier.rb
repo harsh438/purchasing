@@ -10,6 +10,11 @@ class Supplier < ActiveRecord::Base
 
   map_attributes id: :SupplierID,
                  name: :SupplierName
+                 returns_address_1: :cAddress1
+                 returns_address_2: :cAddress2
+                 returns_address_3: :cAddress3
+                 returns_postal_code: :cPostCode,
+                 returns_process: :cReturnsProcedures
 
   def self.relevant
     joins('inner join suppliers_to_brands sb on suppliers.SupplierID = sb.SupplierID')
