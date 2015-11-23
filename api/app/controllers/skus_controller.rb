@@ -4,7 +4,7 @@ class SkusController < ApplicationController
   end
 
   def create
-    sku = Sku.generate_from!(sku_attrs)
+    sku = Sku::Generator.sku_from!(sku_attrs)
     render json: sku.as_json
   end
 
@@ -15,9 +15,16 @@ class SkusController < ApplicationController
   private
 
   def sku_attrs
-    params.permit([:product_id,
-                   :element_id,
-                   :manufacturer_sku,
-                   :season])
+    params.permit([:manufacturer_sku,
+                   :manufacturer_color,
+                   :manufacturer_size,
+                   :season,
+                   :color,
+                   :size,
+                   :color_family,
+                   :size_scale,
+                   :cost_price,
+                   :list_price,
+                   :price])
   end
 end
