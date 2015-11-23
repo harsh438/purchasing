@@ -3,6 +3,8 @@ import reduceFilters from './reducers/filters';
 import reducePurchaseOrders from './reducers/purchase_orders';
 import reduceOrders from './reducers/orders';
 import reduceOrder from './reducers/order';
+import reduceSupplier from './reducers/supplier';
+
 import thunk from 'redux-thunk';
 
 const middleware = [thunk];
@@ -10,7 +12,8 @@ const middleware = [thunk];
 const reducer = combineReducers({ filters: reduceFilters,
                                   orders: reduceOrders,
                                   order: reduceOrder,
-                                  purchaseOrders: reducePurchaseOrders });
+                                  purchaseOrders: reducePurchaseOrders,
+                                  supplier: reduceSupplier });
 
 const store = applyMiddleware(...middleware)(createStore)(reducer);
 

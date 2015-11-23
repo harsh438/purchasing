@@ -35,6 +35,7 @@ export default class OrdersForm extends React.Component {
 
   handleFormSubmit(e) {
     e.preventDefault();
+    this.setState({ creatingOrder: true });    
     this.props.onCreateOrder(this.state);
   }
 }

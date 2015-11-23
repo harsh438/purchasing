@@ -5,6 +5,8 @@ import PurchaseOrdersIndex from './views/purchase_orders/index';
 import OrdersIndex from './views/orders/index';
 import OrdersEdit from './views/orders/edit';
 import SuppliersIndex from './views/suppliers/index';
+import SuppliersEdit from './views/suppliers/edit';
+
 
 export default (
   <Route path="/" component={Layout}>
@@ -12,5 +14,6 @@ export default (
     <Route path="/orders" component={OrdersIndex} />
     <Route path="/orders/:id/edit" component={OrdersEdit} />
     <Route path="/suppliers" component={SuppliersIndex} />
+    <Route path="/suppliers/:id/edit" component={SuppliersEdit} />
   </Route>
 );
