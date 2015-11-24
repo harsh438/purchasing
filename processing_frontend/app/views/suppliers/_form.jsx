@@ -13,7 +13,6 @@ export default class SuppliersForm extends React.Component {
 	}
 
   render() {
-  	console.log('renderForm', this.props)
     return (
       <div className="col-md-4">
         <div className="panel panel-default">

@@ -14,7 +14,7 @@ function transformSuppliers(orders) {
 function setSuppliers(state, results) {
   results = camelizeKeys(results)
   results.orders = transformSuppliers(results.suppliers);
-  return assign({}, state, { suppliers: results.suppliers,
+  return assign({}, { suppliers: results.suppliers,
                              totalPages: results.totalPages,
                              activePage: results.page });
 }
@@ -22,7 +22,7 @@ function setSuppliers(state, results) {
 
 function setSupplier(state, action) {
 	console.log('setSupplier', state, action, transformSupplier(action.results));
-  return assign({}, state, { supplier: transformSupplier(action.results) });
+  return assign({}, { supplier: transformSupplier(action.results) });
 }
 
 
