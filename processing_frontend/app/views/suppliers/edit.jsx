@@ -10,6 +10,7 @@ class SuppliersEdit extends React.Component {
 	}
 
 	render() {
+      console.log('renderEdit',this.props);
     	return (
         <div className="suppliers_edit" style={{ marginTop: '70px' }}>
     		  <SuppliersForm submitText="Edit"

@@ -3,18 +3,18 @@ import { assign } from 'lodash';
 
 export default class SuppliersForm extends React.Component {
   componentWillMount() {
-  		console.log('??????>>', this.props.supplier);
     this.state = assign({ submitting: false }, this.props.supplier);
   }
 
   componentWillReceiveProps(nextProps) {
+  	console.log('componentWillReceiveProps', nextProps);
   	if (nextProps.supplier) {
-  		console.log('??????>>', nextProps.supplier);
 	  	this.setState(nextProps.supplier);
 	  }
   }
 
   render() {
+  	console.log('renderForm', this.props)
     return (
     	<div className="col-md-4">
 	    	<div className="panel panel-default">

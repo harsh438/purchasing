@@ -2,11 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { assign } from 'lodash';
 import SuppliersForm from './_form';
-import { createSupplier } from '../../actions/suppliers';
+import { SuppliersTable } from './_table';
+import { createSupplier, loadSuppliers } from '../../actions/suppliers';
+
 
 export default class SuppliersIndex extends React.Component {
   componentWillMount() {
-    this.state = { creatingSupplier: false };    
+    this.state = { creatingSupplier: false };   
+    this.loadPage(this.props.location.query.page); 
   }
 
   componentWillReceiveProps(nextProps) {
@@ -19,14 +22,27 @@ export default class SuppliersIndex extends React.Component {
     return (
       <div className="suppliers_index" style={{ marginTop: '70px' }}>
         <SuppliersForm onSubmitSupplier={this.handleCreateSupplier.bind(this)} submitText="Create"/>
+        <SuppliersTable index={this}
+                        suppliers={this.props.suppliers}
+                        totalPages={this.props.totalPages}
+                        activePage={this.props.activePage}
+                        onEditSupplierButton={this.handleOnEditSupplier.bind(this)} />
       </div>
     );
+  }
+
+  loadPage(page) {
+    this.props.dispatch(loadSuppliers(page || 1));
+  }
+
+  handleOnEditSupplier(id) {
+      this.props.history.pushState(null, `/suppliers/${id}/edit`);    
   }
 
   handleCreateSupplier(supplier) {
     this.setState({ creatingSupplier: true });    
     this.props.dispatch(createSupplier(supplier));
-  }  
+  }
 }
 
 function applyState({ suppliers, supplier }) {
