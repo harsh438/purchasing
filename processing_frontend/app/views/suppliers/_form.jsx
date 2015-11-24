@@ -3,13 +3,11 @@ import { assign } from 'lodash';
 
 export default class SuppliersForm extends React.Component {
   componentWillMount() {
-    console.log('??????>>', this.props.supplier);
     this.state = assign({ submitting: false }, this.props.supplier);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.supplier) {
-      console.log('??????>>', nextProps.supplier);
       this.setState(nextProps.supplier);
     }
   }
