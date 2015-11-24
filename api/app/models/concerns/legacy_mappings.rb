@@ -2,7 +2,7 @@ module LegacyMappings
   extend ActiveSupport::Concern
 
   def as_json(options)
-    map(self.class.mapped_attributes, serializable_hash)
+    map(super, self.class.mapped_attributes, serializable_hash)
   end
 
   module ClassMethods
@@ -26,8 +26,8 @@ module LegacyMappings
 
   private
 
-  def map(mappings, fields)
-    mappings.reduce({}) do |out, (mapped, unmapped)|
+  def map(out, mappings, fields)
+    mappings.reduce(out) do |out, (mapped, unmapped)|
       o = { mapped.to_s => fields[unmapped.to_s] }
       out.merge(o || {})
     end

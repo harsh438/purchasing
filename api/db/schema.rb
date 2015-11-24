@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151124120331) do
+ActiveRecord::Schema.define(version: 20151124161610) do
 
   create_table "ds_language_categories", force: :cascade do |t|
     t.integer "langID",  limit: 4,   default: 0,  null: false
@@ -427,6 +427,19 @@ ActiveRecord::Schema.define(version: 20151124120331) do
   end
 
   add_index "skus", ["sku"], name: "index_skus_on_sku", using: :btree
+
+  create_table "supplier_contacts", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.string   "title",       limit: 255
+    t.string   "mobile",      limit: 255
+    t.string   "landline",    limit: 255
+    t.string   "email",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "supplier_id", limit: 4
+  end
+
+  add_index "supplier_contacts", ["supplier_id"], name: "index_supplier_contacts_on_supplier_id", using: :btree
 
   create_table "supplier_details", force: :cascade do |t|
     t.integer  "supplier_id",          limit: 4

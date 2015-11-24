@@ -7,7 +7,13 @@ class SuppliersController < ApplicationController
   end
 
   def create
-    render json: Supplier.create!(supplier_attrs.merge(details_attributes: supplier_details_attrs))
+    render json: Supplier.create!(full_supplier_attrs)
+  end
+
+  def update
+    supplier = Supplier.find(params[:id])
+    supplier.update!(full_supplier_attrs)
+    render json: supplier.as_json(include: :contacts)
   end
 
   def show
@@ -33,5 +39,18 @@ class SuppliersController < ApplicationController
                                      :country_of_origin,
                                      :needed_for_intrastat,
                                      :discontinued)
+  end
+
+  def supplier_contacts_attrs
+    params.require(:supplier).permit(contacts_attributes: [:name,
+                                                           :title,
+                                                           :email,
+                                                           :mobile,
+                                                           :landline])
+  end
+
+  def full_supplier_attrs
+    supplier_attrs.merge(details_attributes: supplier_details_attrs)
+                  .merge(supplier_contacts_attrs)
   end
 end
