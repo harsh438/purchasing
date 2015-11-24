@@ -23,6 +23,12 @@ class PurchaseOrder::Summariser
     delivered_balance_values = delivered_balance_values(joined_results)
     cancelled_value = cancelled_value(joined_results)
 
+    format_results(ordered_totals, delivered_balance_totals, cancelled_totals,
+                   ordered_value, delivered_balance_values, cancelled_value)
+  end
+
+  def format_results(ordered_totals, delivered_balance_totals, cancelled_totals,
+                     ordered_value, delivered_balance_values, cancelled_value)
     { ordered_quantity: number_with_delimiter(ordered_totals[:ordered_quantity] || 0),
       ordered_cost: monetize(ordered_totals[:ordered_cost]),
       ordered_value: monetize(ordered_value),
