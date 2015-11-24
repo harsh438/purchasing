@@ -82,10 +82,10 @@ export default class SuppliersForm extends React.Component {
 
 										</div>
 							      <div className="form-group">
-							          <label forHtml="return_address_name">Postal Code</label>
+							          <label forHtml="return_address_name">Returns Postal Code</label>
 							          <input className="form-control"
 							                 id="returns_postal_code"
-							                 name="returns_address_3"
+							                 name="returns_postal_code"
 							                 placeholder="Postal Code"
 							                 value={this.state.returnsPostalCode} />
 

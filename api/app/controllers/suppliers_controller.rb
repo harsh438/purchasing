@@ -18,6 +18,8 @@ class SuppliersController < ApplicationController
                                      :returns_address_name,
                                      :returns_address_number,
                                      :returns_address_1,
+                                     :returns_address_2,
+                                     :returns_address_3,
                                      :returns_postal_code,
                                      :returns_process)
   end
