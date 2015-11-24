@@ -19,7 +19,7 @@ export default class SuppliersForm extends React.Component {
     	<div className="col-md-4">
 	    	<div className="panel panel-default">
 	    			<div className="panel-heading">
-	    				<h3 className="panel-title">Suppliers</h3>
+	    				<h3 className="panel-title">Suppliers {this.props.submitText}</h3>
 	    			</div>
 	    			<div className="panel-body">
 				      <form className="form"
