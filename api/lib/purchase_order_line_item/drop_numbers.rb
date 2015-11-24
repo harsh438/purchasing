@@ -15,14 +15,7 @@ class PurchaseOrderLineItem::DropNumbers
   private
 
   def find_total_drops(results)
-    criteria = results.reduce([]) do |criteria, purchase_order|
-      if purchase_order.product_id > 0 and purchase_order.option_id > 0
-        criteria << purchase_order.product_id
-        criteria << purchase_order.option_id
-      else
-        criteria
-      end
-    end
+    criteria = criteria(results)
 
     return PurchaseOrderLineItem.none unless criteria.count > 0
 
@@ -36,15 +29,7 @@ class PurchaseOrderLineItem::DropNumbers
   end
 
   def find_previous_drops(results)
-    criteria = results.reduce([]) do |criteria, purchase_order|
-      if purchase_order.product_id > 0 and purchase_order.option_id > 0
-        criteria << purchase_order.product_id
-        criteria << purchase_order.option_id
-        criteria << purchase_order.drop_date
-      else
-        criteria
-      end
-    end
+    criteria = criteria(results)
 
     return PurchaseOrderLineItem.none unless criteria.count > 0
 
@@ -55,6 +40,18 @@ class PurchaseOrderLineItem::DropNumbers
                          .where(query, *criteria)
                          .group(:drop_date, :pID, :oID)
                          .count
+  end
+
+  def criteria(results)
+    results.reduce([]) do |criteria, purchase_order|
+      if purchase_order.product_id > 0 and purchase_order.option_id > 0
+        criteria << purchase_order.product_id
+        criteria << purchase_order.option_id
+        criteria << purchase_order.drop_date
+      else
+        criteria
+      end
+    end
   end
 
   def find_total_drops_value(total_drops, purchase_order)
