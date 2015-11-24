@@ -4,7 +4,7 @@ class SkusController < ApplicationController
   end
 
   def create
-    sku = Sku::Generator.sku_from!(sku_attrs)
+    sku = Sku::Generator.new.sku_from!(sku_attrs)
     render json: sku.as_json
   end
 

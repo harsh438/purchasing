@@ -1,6 +1,6 @@
 class SuppliersController < ApplicationController
   def index
-    suppliers = Supplier.latest.page(params[:page])
+    suppliers = Supplier::Search.new.search(params)
     render json: { suppliers: suppliers,
                    total_pages: suppliers.total_pages,
                    page: params[:page] }
@@ -31,6 +31,7 @@ class SuppliersController < ApplicationController
     params.require(:supplier).permit(:invoicer_name,
                                      :account_number,
                                      :country_of_origin,
-                                     :needed_for_intrastat)
+                                     :needed_for_intrastat,
+                                     :discontinued)
   end
 end

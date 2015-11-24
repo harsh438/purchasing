@@ -7,6 +7,7 @@ class Supplier < ActiveRecord::Base
   has_one :details, class_name: 'SupplierDetail'
   accepts_nested_attributes_for :details
 
+  after_initialize :ensure_primary_key
   after_initialize :ensure_details
 
   map_attributes id: :SupplierID,
@@ -31,15 +32,23 @@ class Supplier < ActiveRecord::Base
     order(name: :asc)
   end
 
+  def self.with_details
+    includes(:details)
+  end
+
   def self.latest
-    includes(:details).order(id: :desc)
+    order(id: :desc)
   end
 
   def as_json(options = {})
-    super.merge(details.as_json)
+    details.as_json.merge(super)
   end
 
   private
+
+  def ensure_primary_key
+    self.id ||= (self.class.maximum(:id) || 0) + 1
+  end
 
   def ensure_details
     self.details || self.build_details

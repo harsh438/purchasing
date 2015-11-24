@@ -27,8 +27,8 @@ module LegacyMappings
   private
 
   def map(mappings, fields)
-   mappings.reduce({}) do |out, (mapped, unmapped)|
-      o = { mapped => fields[unmapped.to_s] }
+    mappings.reduce({}) do |out, (mapped, unmapped)|
+      o = { mapped.to_s => fields[unmapped.to_s] }
       out.merge(o || {})
     end
   end
