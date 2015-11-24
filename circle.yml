@@ -11,11 +11,10 @@ dependencies:
         pwd: ../processing_frontend/
     - npm run build:
         pwd: ../processing_frontend/
-    - ls -la
-    - ls -la:
-        pwd: public/
-    - ls -la:
-        pwd: public/assets/
+
+test:
+  override:
+    - bundle exec rake build
 
 deployment:
   dev:
