@@ -31,8 +31,12 @@ class Supplier < ActiveRecord::Base
     order(name: :asc)
   end
 
+  def self.with_details
+    includes(:details)
+  end
+
   def self.latest
-    includes(:details).order(id: :desc)
+    order(id: :desc)
   end
 
   def as_json(options = {})

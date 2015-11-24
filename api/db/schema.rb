@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123145342) do
+ActiveRecord::Schema.define(version: 20151124120331) do
 
   create_table "ds_language_categories", force: :cascade do |t|
     t.integer "langID",  limit: 4,   default: 0,  null: false
@@ -436,8 +436,10 @@ ActiveRecord::Schema.define(version: 20151123145342) do
     t.boolean  "needed_for_intrastat"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "discontinued",                     default: false
   end
 
+  add_index "supplier_details", ["discontinued"], name: "index_supplier_details_on_discontinued", using: :btree
   add_index "supplier_details", ["supplier_id"], name: "index_supplier_details_on_supplier_id", using: :btree
 
   create_table "suppliers", primary_key: "SupplierID", force: :cascade do |t|
