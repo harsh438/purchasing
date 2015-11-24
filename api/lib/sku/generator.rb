@@ -23,8 +23,7 @@ class Sku::Generator
   end
 
   def sku_attrs(product, option)
-    attrs.merge!({ product_id: product.id,
-                   option_id: option.id })
+    attrs.merge!({ product_id: product.id })
   end
 
   def product_attrs
