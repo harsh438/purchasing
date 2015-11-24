@@ -116,11 +116,11 @@ export default class SuppliersForm extends React.Component {
               <div className="form-group">
                 <div className="checkbox">
                   <label>
-                    <input className="checkbox"
+                    <input type="checkbox"
                            name="discontinued"
-                           type="checkbox"
+                           className="checkbox"
                            checked={this.state.discontinued}
-                           value="1" />
+                           onChange={this.handleCheckboxChange.bind(this)} />
 
                     Discontinued
                   </label>
@@ -140,7 +140,13 @@ export default class SuppliersForm extends React.Component {
   }
 
   handleFormChange({ target }) {
+    console.log('handleFormChange', target.name);
     this.setState({ [target.name]: target.value });
+  }
+
+  handleCheckboxChange(e) {
+    e.stopPropagation();
+    this.setState({ [e.target.name]: e.target.checked });
   }
 
   handleFormSubmit(e) {
