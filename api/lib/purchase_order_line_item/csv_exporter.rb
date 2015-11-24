@@ -57,6 +57,6 @@ class PurchaseOrderLineItem::CsvExporter
 
   def row_data(purchase_order)
     data = purchase_order.as_json(unit: '')
-    data.values_at(*CSV_COLUMN_ORDER.map(&:to_sym))
+    data.values_at(*CSV_COLUMN_ORDER)
   end
 end
