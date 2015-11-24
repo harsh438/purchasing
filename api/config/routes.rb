@@ -24,14 +24,12 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :categories, only: :index
-    resources :products, only: [:index, :show]
+    scope :filters do
+      get ':action' => 'filters#:action'
+    end
+
+    resources :products, only: :show
     resources :skus, only: [:index, :create, :show]
     resources :suppliers, only: [:index, :create, :show]
-    resources :vendors, only: :index
-
-    get :seasons, to: 'purchase_orders#seasons'
-    get :genders, to: 'purchase_orders#genders'
-    get :order_types, to: 'purchase_orders#order_types'
   end
 end

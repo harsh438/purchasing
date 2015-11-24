@@ -2,7 +2,7 @@ import 'whatwg-fetch';
 
 function loadFilters(type, action) {
   return dispatch => {
-    fetch(`/api/${type}.json`, { credentials: 'same-origin' })
+    fetch(`/api/filters/${type}.json`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(filters => dispatch(action(filters)));
   }

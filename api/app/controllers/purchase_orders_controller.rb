@@ -8,16 +8,4 @@ class PurchaseOrdersController < ApplicationController
     orders.each(&:cancel)
     render json: orders
   end
-
-  def seasons
-    render json: PurchaseOrderLineItem.seasons
-  end
-
-  def genders
-    render json: PurchaseOrderLineItem.genders
-  end
-
-  def order_types
-    render json: PurchaseOrderLineItem.order_types
-  end
 end

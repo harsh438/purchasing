@@ -1,8 +1,4 @@
 class SuppliersController < ApplicationController
-  def index
-    render json: Supplier.mapped.relevant.alphabetical
-  end
-
   def create
     render json: Supplier.create!(supplier_attrs.merge(details_attributes: supplier_details_attrs))
   end
