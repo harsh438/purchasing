@@ -25,8 +25,8 @@ feature 'Suppliers CRUD' do
   end
 
   def then_i_should_be_provided_with_supplier_id_and_name
-    expect(subject).to include("id" => @supplier.id,
-                               "name" => @supplier.name)
+    expect(subject).to include('id' => @supplier.id,
+                               'name' => @supplier.name)
   end
 
   private
