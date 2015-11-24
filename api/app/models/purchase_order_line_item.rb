@@ -126,10 +126,6 @@ class PurchaseOrderLineItem < ActiveRecord::Base
 
   paginates_per 200
 
-  def orderTool_LG
-    Gender.string_from(super)
-  end
-
   def brand
     vendor.try(:name)
   end
