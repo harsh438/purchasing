@@ -1,6 +1,6 @@
 class SuppliersController < ApplicationController
   def index
-    suppliers = Supplier.latest.page(params[:page])
+    suppliers = Supplier::Search.new.search(params)
     render json: { suppliers: suppliers,
                    total_pages: suppliers.total_pages,
                    page: params[:page] }
