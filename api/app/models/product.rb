@@ -6,7 +6,8 @@ class Product < ActiveRecord::Base
   map_attributes id: :pID,
                  name: :pNum,
                  price: :pPrice,
-                 vendor_id: :venID
+                 vendor_id: :venID,
+                 on_sale: :pSale
 
   belongs_to :product_detail, foreign_key: :pID
 
