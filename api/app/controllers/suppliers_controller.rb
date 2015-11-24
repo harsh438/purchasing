@@ -1,4 +1,11 @@
 class SuppliersController < ApplicationController
+  def index
+    suppliers = Supplier.latest.page(params[:page])
+    render json: { suppliers: suppliers,
+                   total_pages: suppliers.total_pages,
+                   page: params[:page] }
+  end
+
   def create
     render json: Supplier.create!(supplier_attrs.merge(details_attributes: supplier_details_attrs))
   end

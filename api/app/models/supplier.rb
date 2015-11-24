@@ -19,6 +19,8 @@ class Supplier < ActiveRecord::Base
                  returns_postal_code: :cPostCode,
                  returns_process: :cReturnProcedures
 
+  paginates_per 50
+
   def self.relevant
     joins('inner join suppliers_to_brands sb on suppliers.SupplierID = sb.SupplierID')
       .where('sb.BrandID in (select distinct orderTool_venId from purchase_orders)')
@@ -27,6 +29,10 @@ class Supplier < ActiveRecord::Base
 
   def self.alphabetical
     order(name: :asc)
+  end
+
+  def self.latest
+    includes(:details).order(id: :desc)
   end
 
   def as_json(options = {})
