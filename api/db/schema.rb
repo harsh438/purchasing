@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151124161610) do
+ActiveRecord::Schema.define(version: 20151124174744) do
 
   create_table "ds_language_categories", force: :cascade do |t|
     t.integer "langID",  limit: 4,   default: 0,  null: false
@@ -230,7 +230,7 @@ ActiveRecord::Schema.define(version: 20151124161610) do
   end
 
   add_index "order_exports", ["order_id"], name: "index_order_exports_on_order_id", using: :btree
-  add_index "order_exports", ["purchase_order_id"], name: "index_order_exports_on_purchase_order_id", using: :btree
+  add_index "order_exports", ["purchase_order_id"], name: "fk_rails_7532174768", using: :btree
 
   create_table "order_line_items", force: :cascade do |t|
     t.string   "internal_sku",  limit: 255
@@ -454,6 +454,20 @@ ActiveRecord::Schema.define(version: 20151124161610) do
 
   add_index "supplier_details", ["discontinued"], name: "index_supplier_details_on_discontinued", using: :btree
   add_index "supplier_details", ["supplier_id"], name: "index_supplier_details_on_supplier_id", using: :btree
+
+  create_table "supplier_terms", force: :cascade do |t|
+    t.integer  "supplier_id",               limit: 4
+    t.string   "season",                    limit: 255
+    t.text     "terms",                     limit: 65535
+    t.string   "confirmation_file_name",    limit: 255
+    t.string   "confirmation_content_type", limit: 255
+    t.integer  "confirmation_file_size",    limit: 4
+    t.datetime "confirmation_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "supplier_terms", ["supplier_id"], name: "index_supplier_terms_on_supplier_id", using: :btree
 
   create_table "suppliers", primary_key: "SupplierID", force: :cascade do |t|
     t.string "SupplierName",      limit: 500
