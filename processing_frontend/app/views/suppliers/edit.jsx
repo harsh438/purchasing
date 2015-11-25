@@ -29,7 +29,6 @@ class SuppliersEdit extends React.Component {
 }
 
 function applyState({ supplier }) {
-  console.log(supplier.supplier);
   return supplier;
 }
 

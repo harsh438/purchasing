@@ -10,8 +10,6 @@ class SuppliersNew extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps', nextProps.supplier);
-
     if (this.state.creatingSupplier && nextProps.supplier) {
       this.props.history.pushState(null, `/suppliers/${nextProps.supplier.id}/edit`);
     }
