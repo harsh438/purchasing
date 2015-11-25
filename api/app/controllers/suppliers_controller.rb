@@ -17,7 +17,7 @@ class SuppliersController < ApplicationController
   end
 
   def show
-    render json: Supplier.find(params[:id])
+    render json: Supplier.find(params[:id]).as_json(include: :contacts)
   end
 
   private
