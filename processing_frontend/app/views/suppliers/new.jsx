@@ -17,17 +17,17 @@ class SuppliersNew extends React.Component {
   }
 
   render() {
-      return (
-        <div className="suppliers_new container-fluid"
-             style={{ marginTop: '70px' }}>
-          <div className="row">
-            <div className="col-md-4 col-md-offset-4">
-              <SuppliersForm submitText="Add Supplier"
-                             onSubmitSupplier={this.handleCreateSupplier.bind(this)} />
-            </div>
+    return (
+      <div className="suppliers_new container-fluid"
+           style={{ marginTop: '70px' }}>
+        <div className="row">
+          <div className="col-md-4 col-md-offset-4">
+            <SuppliersForm submitText="Add Supplier"
+                           onSubmitSupplier={this.handleCreateSupplier.bind(this)} />
           </div>
         </div>
-      );
+      </div>
+    );
   }
 
   handleCreateSupplier(supplier) {

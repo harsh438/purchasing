@@ -16,24 +16,22 @@ class SuppliersIndex extends React.Component {
            style={{ marginTop: '70px' }}>
         <div className="row">
           <div className="col-md-12">
-            <div className="panel panel-default">
-              <div className="panel-body">
+          	<div className="panel panel-default">
+        			<div className="panel-body">
                 <Link to="/suppliers/new"
                       className="btn btn-success">
-                  Add Supplier
+                  Add New Supplier
                 </Link>
+
+                <hr />
+                
+                <SuppliersTable index={this}
+                                suppliers={this.props.suppliers}
+                                totalPages={this.props.totalPages}
+                                activePage={this.props.activePage}
+                                onEditSupplierButton={this.handleClickEditSupplier.bind(this)} />
               </div>
             </div>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-12">
-            <SuppliersTable index={this}
-                            suppliers={this.props.suppliers}
-                            totalPages={this.props.totalPages}
-                            activePage={this.props.activePage}
-                            onEditSupplierButton={this.handleClickEditSupplier.bind(this)} />
           </div>
         </div>
       </div>
