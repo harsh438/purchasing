@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { assign, map, omit } from 'lodash';
+import { assign, get, map, omit } from 'lodash';
 
 export default class SuppliersFilters extends React.Component {
   componentWillMount() {
@@ -17,8 +17,6 @@ export default class SuppliersFilters extends React.Component {
 	}
 
   render() {
-    const { filters } = this.state;
-
     return (
       <form className="form clearfix"
             onChange={this.handleFormChange.bind(this)}
@@ -29,7 +27,7 @@ export default class SuppliersFilters extends React.Component {
             <input className="form-control"
                    id="supplier_name"
                    name="name"
-                   value={filters.name} />
+                   value={this.getFilter('name')} />
           </div>
 
           <div className="form-group col-md-2">
@@ -38,7 +36,7 @@ export default class SuppliersFilters extends React.Component {
             <select className="form-control"
                     id="supplier_name"
                     name="vendorId"
-                    value={filters.vendorId}>
+                    value={this.getFilter('vendorId')}>
               <option value=""> -- select brand -- </option>
               {this.selectOptions(this.props.brands)}
             </select>
@@ -52,7 +50,7 @@ export default class SuppliersFilters extends React.Component {
                        name="discontinued"
                        value="1"
                        className="checkbox"
-                       checked={filters.discontinued}
+                       checked={this.getFilter('discontinued')}
                        onChange={this.handleCheckboxChange.bind(this)} />
 
                 Discontinued
@@ -97,6 +95,10 @@ export default class SuppliersFilters extends React.Component {
   setFilter(field, value) {
     const filters = assign({}, this.state.filters, { [field]: value });
     this.setState({ filters });
+  }
+
+  getFilter(field) {
+    return get(this.state.filters, field, '');
   }
 
   handleFormChange({ target }) {
