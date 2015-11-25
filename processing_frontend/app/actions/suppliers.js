@@ -5,11 +5,11 @@ import { snakeizeKeys } from '../utilities/inspection';
 export function createSupplier(supplier = {}) {
   return dispatch => {
     fetch('/api/suppliers.json', { credentials: 'same-origin',
-                                method: 'post',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ supplier: snakeizeKeys(supplier) }) })
+                                   method: 'post',
+                                   headers: { 'Content-Type': 'application/json' },
+                                   body: JSON.stringify({ supplier: snakeizeKeys(supplier) }) })
       .then(response => response.json())
-      .then(results => dispatch({ results, type: 'CREATE_SUPPLIER' }));
+      .then(supplier => dispatch({ supplier, type: 'CREATE_SUPPLIER' }));
   };
 }
 
@@ -17,14 +17,13 @@ export function loadSupplier(id) {
   return dispatch => {
     fetch(`/api/suppliers/${id}.json`, { credentials: 'same-origin' })
       .then(response => response.json())
-      .then(results => dispatch({ results, type: 'SET_SUPPLIER' }));
+      .then(supplier => dispatch({ supplier, type: 'SET_SUPPLIER' }));
   };
 }
 
-export function loadSuppliers(pageId) {
-  pageId = pageId || 1;
+export function loadSuppliers(page = 1) {
   return dispatch => {
-    fetch(`/api/suppliers.json?page=${pageId}`, { credentials: 'same-origin' })
+    fetch(`/api/suppliers.json?page=${page}`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(results => dispatch({ results, type: 'LOAD_SUPPLIERS' }));
   };

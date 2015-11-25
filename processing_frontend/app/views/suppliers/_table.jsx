@@ -25,15 +25,13 @@ export class SuppliersTable extends React.Component {
   }
 
   renderRows() {
-  	var id = 0;
-    return map(this.props.suppliers, (supplier) => {
-      id++;
+    return map(this.props.suppliers, (supplier, i) => {
       return (
-        <tr key={ id }>
+        <tr key={i}>
         	<td>{ supplier.name }</td>
         	<td className="text-right">
 						<a className="btn btn-default"
-							 onClick={() => this.props.onEditSupplierButton(supplier.supplier_id)}>
+							 onClick={this.props.onEditSupplierButton.bind(this, supplier.id)}>
 							Edit
 						</a>
 					</td>
