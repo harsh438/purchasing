@@ -12,7 +12,23 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20151125130112) do
+  create_table "ds_categories", primary_key: "catID", force: :cascade do |t|
+     t.integer "parentID",         limit: 4,     default: 0,      null: false
+     t.integer "catSort",          limit: 4,     default: 0,      null: false
+     t.string  "catPhoto",         limit: 200,   default: "",     null: false
+     t.integer "catPhotoWidth",    limit: 4,     default: 0,      null: false
+     t.integer "catPhotoHeight",   limit: 4,     default: 0,      null: false
+     t.string  "catHide",          limit: 1,     default: "",     null: false
+     t.text    "meta_description", limit: 65535
+     t.text    "meta_keywords",    limit: 65535
+     t.string  "meta_title",       limit: 200
+     t.string  "catViewType",      limit: 15,    default: "grid", null: false
+     t.integer "catGridColumns",   limit: 4,     default: 3,      null: false
+   end
 
+   add_index "ds_categories", ["catHide"], name: "catHide", using: :btree
+   add_index "ds_categories", ["catSort"], name: "catSort", using: :btree
+   add_index "ds_categories", ["parentID"], name: "parentID", using: :btree
   create_table "ds_language_categories", force: :cascade do |t|
     t.integer "langID",  limit: 4,   default: 0,  null: false
     t.integer "catID",   limit: 4,   default: 0,  null: false
