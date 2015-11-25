@@ -13,6 +13,10 @@ class Supplier::Search
       query = query.where('SupplierName LIKE ?', "%#{filters[:name]}%")
     end
 
+    if filters[:vendor_id]
+      query = query.joins(:supplier_vendors).where(suppliers_to_brands: { 'BrandID' => filters[:vendor_id] })
+    end
+
     if filters[:discontinued]
       query = query.where(supplier_details: { discontinued: filters[:discontinued] })
     end

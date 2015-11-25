@@ -5,11 +5,13 @@ import { assign, isEqual } from 'lodash';
 import SuppliersTable from './_table';
 import SuppliersFilters from './_filters';
 import NumberedPagination from '../pagination/_numbered';
+import { loadBrands } from '../../actions/filters';
 import { loadSuppliers } from '../../actions/suppliers';
 
 class SuppliersIndex extends React.Component {
   componentWillMount() {
     this.loadPage();
+    this.props.dispatch(loadBrands());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,6 +31,7 @@ class SuppliersIndex extends React.Component {
           	<div className="panel panel-default">
         			<div className="panel-body">
                 <SuppliersFilters filters={this.props.location.query.filters}
+                                  brands={this.props.brands}
                                   onFilterSuppliers={this.handleFilterSuppliers.bind(this)} />
               </div>
             </div>
@@ -74,8 +77,8 @@ class SuppliersIndex extends React.Component {
   }
 }
 
-function applyState({ suppliers, supplier }) {
-  return assign({}, supplier, suppliers);
+function applyState({ filters, suppliers, supplier }) {
+  return assign({}, filters, supplier, suppliers);
 }
 
 export default connect(applyState)(SuppliersIndex);

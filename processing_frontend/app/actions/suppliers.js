@@ -1,5 +1,6 @@
 import React from 'react';
 import Qs from 'qs';
+import { assign } from 'lodash';
 import { snakeizeKeys } from '../utilities/inspection';
 
 export function createSupplier(supplier = {}) {
@@ -22,7 +23,7 @@ export function loadSupplier(id) {
 }
 
 export function loadSuppliers(query) {
-  const queryString = Qs.stringify(query);
+  const queryString = Qs.stringify(assign({}, query, { filters: snakeizeKeys(query.filters) }));
 
   return dispatch => {
     fetch(`/api/suppliers.json?${queryString}`, { credentials: 'same-origin' })
