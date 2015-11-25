@@ -12,22 +12,18 @@ function transformSuppliers(orders) {
 }
 
 function setSuppliers(state, results) {
-  results = camelizeKeys(results)
-  results.orders = transformSuppliers(results.suppliers);
-  return assign({}, { suppliers: results.suppliers,
+  return assign({}, state, { suppliers: transformSuppliers(results.suppliers),
                              totalPages: results.totalPages,
                              activePage: results.page });
 }
 
 
-function setSupplier(state, action) {
-  return assign({}, { supplier: transformSupplier(action.results) });
+function setSupplier(state, supplier) {
+  return assign({}, state, { supplier: transformSupplier(supplier) });
 }
 
 export function reduceSuppliers(state = initialState, action) {
   switch (action.type) {
-    case 'CREATE_SUPPLIER':
-      return setSupplier(state, action);
     case 'LOAD_SUPPLIERS':
       return setSuppliers(state, action.results);
     default:
@@ -37,8 +33,10 @@ export function reduceSuppliers(state = initialState, action) {
 
 export function reduceSupplier(state = initialState, action) {
   switch (action.type) {
+    case 'CREATE_SUPPLIER':
+      return setSupplier(state, action.results);
     case 'SET_SUPPLIER':
-      return setSupplier(state, action);
+      return setSupplier(state, action.results);
     default:
       return state;
   }

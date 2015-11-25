@@ -10,7 +10,8 @@ class SuppliersNew extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps', nextProps.supplier)
+    console.log('componentWillReceiveProps', nextProps.supplier);
+
     if (this.state.creatingSupplier && nextProps.supplier) {
       this.props.history.pushState(null, `/suppliers/${nextProps.supplier.id}/edit`);
     }
@@ -37,7 +38,7 @@ class SuppliersNew extends React.Component {
 }
 
 function applyState({ supplier }) {
-  return assign({}, supplier);
+  return supplier;
 }
 
 export default connect(applyState)(SuppliersNew);
