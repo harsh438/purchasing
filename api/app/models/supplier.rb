@@ -23,7 +23,6 @@ class Supplier < ActiveRecord::Base
   accepts_nested_attributes_for :contacts
 
   after_initialize :ensure_primary_key
-  after_initialize :ensure_details
 
   map_attributes id: :SupplierID,
                  name: :SupplierName,
@@ -41,13 +40,13 @@ class Supplier < ActiveRecord::Base
     details.as_json.merge(super)
   end
 
+  def details
+    super || build_details
+  end
+
   private
 
   def ensure_primary_key
     self.id ||= (self.class.maximum(:id) || 0) + 1
-  end
-
-  def ensure_details
-    self.details || self.build_details
   end
 end
