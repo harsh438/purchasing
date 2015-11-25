@@ -131,7 +131,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   end
 
   def category
-    Category.english.find_by(category_id: category_id).try(:name)
+    LanguageProductCategory.english.find_by(category_id: category_id).try(:name)
   end
 
   def closing_date
