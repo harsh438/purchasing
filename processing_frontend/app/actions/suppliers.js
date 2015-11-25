@@ -21,10 +21,9 @@ export function loadSupplier(id) {
   };
 }
 
-export function loadSuppliers(pageId) {
-  pageId = pageId || 1;
+export function loadSuppliers(page = 1) {
   return dispatch => {
-    fetch(`/api/suppliers.json?page=${pageId}`, { credentials: 'same-origin' })
+    fetch(`/api/suppliers.json?page=${page}`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(results => dispatch({ results, type: 'LOAD_SUPPLIERS' }));
   };
