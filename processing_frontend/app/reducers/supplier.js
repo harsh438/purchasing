@@ -34,9 +34,9 @@ export function reduceSuppliers(state = initialState, action) {
 export function reduceSupplier(state = initialState, action) {
   switch (action.type) {
     case 'CREATE_SUPPLIER':
-      return setSupplier(state, action.results);
+      return setSupplier(state, action.supplier);
     case 'SET_SUPPLIER':
-      return setSupplier(state, action.results);
+      return setSupplier(state, action.supplier);
     default:
       return state;
   }
