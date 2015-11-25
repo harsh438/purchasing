@@ -38,10 +38,8 @@ export function reduceSuppliers(state = initialState, action) {
 export function reduceSupplier(state = initialState, action) {
   switch (action.type) {
     case 'SET_SUPPLIER':
-      return setSupplier(state, action);    	
+      return setSupplier(state, action);
     default:
       return state;
   }
 }
-
-

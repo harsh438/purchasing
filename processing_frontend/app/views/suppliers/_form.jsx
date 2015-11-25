@@ -127,7 +127,7 @@ export default class SuppliersForm extends React.Component {
               </div>
             </div>
             <div className="form-group">
-              <button className="btn btn-success col-xs-offset-3 col-xs-6"
+              <button className="btn btn-success pull-right"
                       disabled={this.state.submitting}>
                 {this.props.submitText}
               </button>

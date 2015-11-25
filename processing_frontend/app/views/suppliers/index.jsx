@@ -1,32 +1,41 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { assign } from 'lodash';
-import SuppliersForm from './_form';
 import { SuppliersTable } from './_table';
-import { createSupplier, loadSuppliers } from '../../actions/suppliers';
+import { loadSuppliers } from '../../actions/suppliers';
 
-
-export default class SuppliersIndex extends React.Component {
+class SuppliersIndex extends React.Component {
   componentWillMount() {
-    this.state = { creatingSupplier: false };   
-    this.loadPage(this.props.location.query.page); 
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.state.creatingSupplier && nextProps.supplier) {
-      this.props.history.pushState(null, `/suppliers/${nextProps.supplier.id}/edit`);
-    }
+    this.loadPage(this.props.location.query.page);
   }
 
   render() {
     return (
-      <div className="suppliers_index" style={{ marginTop: '70px' }}>
-        <SuppliersForm onSubmitSupplier={this.handleCreateSupplier.bind(this)} submitText="Create" supplierId="" />
-        <SuppliersTable index={this}
-                        suppliers={this.props.suppliers}
-                        totalPages={this.props.totalPages}
-                        activePage={this.props.activePage}
-                        onEditSupplierButton={this.handleOnEditSupplier.bind(this)} />
+      <div className="suppliers_index  container-fluid"
+           style={{ marginTop: '70px' }}>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="panel panel-default">
+              <div className="panel-body">
+                <Link to="/suppliers/new"
+                      className="btn btn-success">
+                  Add Supplier
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-12">
+            <SuppliersTable index={this}
+                            suppliers={this.props.suppliers}
+                            totalPages={this.props.totalPages}
+                            activePage={this.props.activePage}
+                            onEditSupplierButton={this.handleClickEditSupplier.bind(this)} />
+          </div>
+        </div>
       </div>
     );
   }
@@ -35,13 +44,8 @@ export default class SuppliersIndex extends React.Component {
     this.props.dispatch(loadSuppliers(page || 1));
   }
 
-  handleOnEditSupplier(id) {
-      this.props.history.pushState(null, `/suppliers/${id}/edit`);    
-  }
-
-  handleCreateSupplier(supplier) {
-    this.setState({ creatingSupplier: true });    
-    this.props.dispatch(createSupplier(supplier));
+  handleClickEditSupplier(id) {
+    this.props.history.pushState(null, `/suppliers/${id}/edit`);
   }
 }
 

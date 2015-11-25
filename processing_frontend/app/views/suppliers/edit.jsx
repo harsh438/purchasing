@@ -7,11 +7,11 @@ import { loadSupplier, loadSuppliers } from '../../actions/suppliers';
 import { editSupplier } from '../../actions/suppliers';
 
 class SuppliersEdit extends React.Component {
-	componentWillMount () {
-		this.props.dispatch(loadSupplier(this.props.params.id));
+  componentWillMount () {
+    this.props.dispatch(loadSupplier(this.props.params.id));
     this.loadPage(this.props.location.query.page);
-    this.setState({ supplierId: this.props.params.id });    
-	}
+    this.setState({ supplierId: this.props.params.id });
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.params.id !== this.state.supplierId) {
@@ -20,28 +20,29 @@ class SuppliersEdit extends React.Component {
     }
   }
 
-	render() {
-    	return (
+  render() {
+      return (
         <div className="suppliers_edit" style={{ marginTop: '70px' }}>
-    		  <SuppliersForm submitText="Edit"
-  									     supplier={this.props.supplier}
+          <SuppliersForm submitText="Edit"
+                         supplier={this.props.supplier}
                          onSubmitSupplier={this.handleOnEditSupplier.bind(this)} />
+
           <SuppliersTable index={this}
-                        suppliers={this.props.suppliers}
-                        totalPages={this.props.totalPages}
-                        activePage={this.props.activePage}
-                        onEditSupplierButton={this.handleEditSupplierListButton.bind(this)} />
+                          suppliers={this.props.suppliers}
+                          totalPages={this.props.totalPages}
+                          activePage={this.props.activePage}
+                          onEditSupplierButton={this.handleClickEditSupplier.bind(this)} />
         </div>
-    	);
+      );
   }
 
   loadPage(page) {
     this.props.dispatch(loadSuppliers(page || 1));
   }
 
-  handleEditSupplierListButton(id) {
-      this.props.history.pushState(null, `/suppliers/${id}/edit`);  
-  }  
+  handleClickEditSupplier(id) {
+      this.props.history.pushState(null, `/suppliers/${id}/edit`);
+  }
 
   handleOnEditSupplier(supplier) {
     this.props.dispatch(editSupplier(supplier));
@@ -53,4 +54,3 @@ function applyState({ suppliers, supplier }) {
 }
 
 export default connect(applyState)(SuppliersEdit);
- 
