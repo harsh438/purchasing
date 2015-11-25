@@ -44,3 +44,9 @@ export function editSupplier(supplier) {
       .then(results => dispatch({ results, type: 'SET_ORDER' }));
     }
 }
+
+export function addSupplierContact(supplier, contact) {
+  supplier.contacts = supplier.contacts || [];
+  supplier.contacts.push(contact);
+  return editSupplier.call(this, supplier);
+}

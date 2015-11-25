@@ -1,6 +1,7 @@
 import React from 'react';
 import { map } from 'lodash';
 import { assign } from 'lodash';
+import { addSupplierContact } from '../../actions/suppliers';
 
 export class SupplierAddContact extends React.Component {
   componentWillMount() {
@@ -22,14 +23,14 @@ export class SupplierAddContact extends React.Component {
   }
 
   handleAddContact(contact) {
-    //console.log(this.state.supplier,contact);
-    //this.props.dispatch(addSupplierContact(supplier));
+    console.log('addContract', contact);
+    addSupplierContact(this.props.supplier, contact);
   }
 }
 
 export class SupplierContact extends React.Component {
   componentWillMount() {
-    this.state = { contact: this.props.contact || {} };
+    this.state = this.props.contact || {};
   }
 
   render () {
@@ -40,28 +41,28 @@ export class SupplierContact extends React.Component {
           <tbody>
             <tr>
               <th>Name</th>
-              <td><input className="form-control" value={ this.state.contact.name } /></td>
+              <td><input name="name" className="form-control" value={ this.state.name } /></td>
             </tr>
             <tr>
               <th>Title</th>
-              <td><input className="form-control" value={ this.state.contact.title } /></td>
+              <td><input name="title" className="form-control" value={ this.state.title } /></td>
             </tr>
             <tr>
               <th>Mobile</th>
-              <td><input className="form-control" value={ this.state.contact.mobile } /></td>
+              <td><input name="mobile" className="form-control" value={ this.state.mobile } /></td>
             </tr>
             <tr>
               <th>Landline</th>
-              <td><input className="form-control" value={ this.state.contact.landline } /></td>
+              <td><input name="landline" className="form-control" value={ this.state.landline } /></td>
             </tr>
             <tr>
               <th>Email</th>
-              <td><input className="form-control" value={ this.state.contact.email } /></td>
+              <td><input name="email" className="form-control" value={ this.state.email } /></td>
             </tr>
             <tr>
               <td></td>
-              <td><input type="button" className="btn btn-primary" value={ this.props.submitText }
-                         onClick={ () => this.props.onSubmitContact(this.state.contact) }/></td>
+              <td><input type="button" className="btn btn-success" value={ this.props.submitText }
+                         onClick={ () => this.props.onSubmitContact(this.state) }/></td>
             </tr>
           </tbody>
         </table>
@@ -70,8 +71,8 @@ export class SupplierContact extends React.Component {
     </div>);
   }
 
-  handleFormChange () {
-
+  handleFormChange ({ target }) {
+    this.setState({ [target.name]: target.value });
   }
 }
 

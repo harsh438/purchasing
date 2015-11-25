@@ -13,12 +13,12 @@ class SuppliersEdit extends React.Component {
   render() {
     return (
       <div className="suppliers_edit" style={{ marginTop: '70px' }}>
-        <div className="col-xs-3 pull-left">
-          <SuppliersForm submitText="Edit"
+        <div className="col-xs-5 pull-left">
+          <SuppliersForm submitText="Save"
                          supplier={this.props.supplier}
                          onSubmitSupplier={this.handleOnEditSupplier.bind(this)} />
         </div>
-        <div className="col-xs-9">
+        <div className="col-xs-5">
           <SupplierAddContact supplier={this.props.supplier} />
           <SupplierContacts supplier={this.props.supplier} />
         </div>
