@@ -46,7 +46,8 @@ export function editSupplier(supplier) {
 }
 
 export function addSupplierContact(supplier, contact) {
-  supplier.contacts = supplier.contacts || [];
-  supplier.contacts.push(contact);
+  supplier.contacts_attributes = supplier.contacts || [];
+  supplier.contacts_attributes.push(contact);
+  suppliers.contacts_attributes = contacts;
   return editSupplier.call(this, supplier);
 }

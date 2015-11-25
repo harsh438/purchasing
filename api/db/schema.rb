@@ -12,23 +12,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20151125130112) do
-  create_table "ds_categories", primary_key: "catID", force: :cascade do |t|
-    t.integer "parentID",         limit: 4,     default: 0,      null: false
-    t.integer "catSort",          limit: 4,     default: 0,      null: false
-    t.string  "catPhoto",         limit: 200,   default: "",     null: false
-    t.integer "catPhotoWidth",    limit: 4,     default: 0,      null: false
-    t.integer "catPhotoHeight",   limit: 4,     default: 0,      null: false
-    t.string  "catHide",          limit: 1,     default: "",     null: false
-    t.text    "meta_description", limit: 65535
-    t.text    "meta_keywords",    limit: 65535
-    t.string  "meta_title",       limit: 200
-    t.string  "catViewType",      limit: 15,    default: "grid", null: false
-    t.integer "catGridColumns",   limit: 4,     default: 3,      null: false
-  end
-
-  add_index "ds_categories", ["catHide"], name: "catHide", using: :btree
-  add_index "ds_categories", ["catSort"], name: "catSort", using: :btree
-  add_index "ds_categories", ["parentID"], name: "parentID", using: :btree
 
   create_table "ds_language_categories", force: :cascade do |t|
     t.integer "langID",  limit: 4,   default: 0,  null: false
@@ -186,7 +169,7 @@ ActiveRecord::Schema.define(version: 20151125130112) do
   add_index "ds_products", ["giftCert"], name: "giftCert", using: :btree
   add_index "ds_products", ["invLevel"], name: "invLevel", using: :btree
   add_index "ds_products", ["invTrack", "invLevel"], name: "idx_invTrack_oInvLevel", using: :btree
-  add_index "ds_products", ["meta_keywords"], name: "metakeywords", length: {"meta_keywords"=>255}, using: :btree
+  add_index "ds_products", ["meta_keywords"], name: "metakeywords", using: :btree
   add_index "ds_products", ["pContainerType"], name: "pContainerType", using: :btree
   add_index "ds_products", ["pFirstClassMailType"], name: "bestseller", using: :btree
   add_index "ds_products", ["pFlag"], name: "pFlag", using: :btree
@@ -500,7 +483,7 @@ ActiveRecord::Schema.define(version: 20151125130112) do
   end
 
   add_index "suppliers", ["SupplierID"], name: "sadsad", using: :btree
-  add_index "suppliers", ["SupplierName"], name: "qewqwqe", length: {"SupplierName"=>255}, using: :btree
+  add_index "suppliers", ["SupplierName"], name: "qewqwqe", using: :btree
 
   create_table "suppliers_to_brands", primary_key: "SupplierToBrandsID", force: :cascade do |t|
     t.integer "BrandID",    limit: 4

@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { map, assign } from 'lodash';
 import SuppliersForm from './_form';
-import { loadSupplier, editSupplier } from '../../actions/suppliers';
-import { SupplierAddContact, SupplierContacts } from './contacts';
+import { SupplierAddContact } from './_contact';
+import { loadSupplier, editSupplier, addSupplierContact } from '../../actions/suppliers';
+import { SupplierContacts } from './contacts';
 
 class SuppliersEdit extends React.Component {
   componentWillMount () {
@@ -19,11 +20,15 @@ class SuppliersEdit extends React.Component {
                          onSubmitSupplier={this.handleOnEditSupplier.bind(this)} />
         </div>
         <div className="col-xs-5">
-          <SupplierAddContact supplier={this.props.supplier} />
+          <SupplierAddContact supplier={this.props.supplier} onAddContact={this.handleOnAddContact.bind(this)}/>
           <SupplierContacts supplier={this.props.supplier} />
         </div>
       </div>
     );
+  }
+
+  handleOnAddContact(contact) {
+    this.props.dispatch(addSupplierContact(this.props.supplier, contact));
   }
 
   handleClickEditSupplier(id) {
