@@ -14,8 +14,7 @@ const reducer = combineReducers({ filters: reduceFilters,
                                   order: reduceOrder,
                                   purchaseOrders: reducePurchaseOrders,
                                   suppliers: reduceSuppliers,
-                                  supplier: reduceSupplier
-                              });
+                                  supplier: reduceSupplier });
 
 const store = applyMiddleware(...middleware)(createStore)(reducer);
 
