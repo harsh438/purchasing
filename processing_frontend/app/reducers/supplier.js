@@ -13,7 +13,7 @@ function transformSuppliers(orders) {
 
 function setSuppliers(state, results) {
   return assign({}, state, { suppliers: transformSuppliers(results.suppliers),
-                             totalPages: results.totalPages,
+                             totalPages: results.total_pages,
                              activePage: results.page });
 }
 

@@ -18,7 +18,7 @@ class SuppliersIndex extends React.Component {
     const nextQuery = nextProps.location.query;
 
     if (!isEqual(this.props.location.query, nextQuery)) {
-      this.loadPage(nextQuery);
+      this.loadPage(nextQuery.page, nextQuery.filters);
     }
   }
 
@@ -52,8 +52,8 @@ class SuppliersIndex extends React.Component {
                 <SuppliersTable suppliers={this.props.suppliers}
                                 onEditSupplierButton={this.handleClickEditSupplier.bind(this)} />
 
-        				<NumberedPagination activePage={this.props.activePage}
-                                    index={this.props.index}
+                              <NumberedPagination activePage={this.props.activePage || 1}
+                                    index={this}
                                     totalPages={this.props.totalPages} />
               </div>
             </div>
@@ -63,8 +63,7 @@ class SuppliersIndex extends React.Component {
     );
   }
 
-  loadPage(query = this.props.location.query) {
-    const { filters, page } = query;
+  loadPage(page = this.props.location.query.page, filters = this.props.location.query.filters) {
     this.props.dispatch(loadSuppliers({ filters, page }));
   }
 
@@ -77,7 +76,7 @@ class SuppliersIndex extends React.Component {
   }
 }
 
-function applyState({ filters, suppliers, supplier }) {
+function applyState({ filters, supplier, suppliers }) {
   return assign({}, filters, supplier, suppliers);
 }
 
