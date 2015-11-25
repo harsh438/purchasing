@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { assign } from 'lodash';
-import { SuppliersTable } from './_table';
+import SuppliersTable from './_table';
+import NumberedPagination from '../pagination/_numbered';
 import { loadSuppliers } from '../../actions/suppliers';
 
 class SuppliersIndex extends React.Component {
@@ -24,12 +25,13 @@ class SuppliersIndex extends React.Component {
                 </Link>
 
                 <hr />
-                
-                <SuppliersTable index={this}
-                                suppliers={this.props.suppliers}
-                                totalPages={this.props.totalPages}
-                                activePage={this.props.activePage}
+
+                <SuppliersTable suppliers={this.props.suppliers}
                                 onEditSupplierButton={this.handleClickEditSupplier.bind(this)} />
+
+        				<NumberedPagination activePage={this.props.activePage}
+                                    index={this.props.index}
+                                    totalPages={this.props.totalPages} />
               </div>
             </div>
           </div>
