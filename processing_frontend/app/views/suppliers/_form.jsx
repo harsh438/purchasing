@@ -28,7 +28,6 @@ export default class SuppliersForm extends React.Component {
               <input className="form-control"
                      id="supplier_name"
                      name="name"
-                     placeholder="Name"
                      required
                      value={this.state.name} />
             </div>
@@ -37,7 +36,6 @@ export default class SuppliersForm extends React.Component {
               <input className="form-control"
                      id="returns_address_name"
                      name="returns_address_name"
-                     placeholder="Return Address Name"
                      required
                      value={this.state.returnsAddressName} />
             </div>
@@ -46,7 +44,6 @@ export default class SuppliersForm extends React.Component {
               <input className="form-control"
                      id="returns_address_number"
                      name="returns_address_number"
-                     placeholder="Return Address Number"
                      value={this.state.returnsAddressNumber} />
             </div>
             <div className="form-group">
@@ -54,7 +51,6 @@ export default class SuppliersForm extends React.Component {
               <input className="form-control"
                      id="returns_address_1"
                      name="returns_address_1"
-                     placeholder="Line 1"
                      value={this.state.returnsAddress1} />
             </div>
             <div className="form-group">
@@ -62,7 +58,6 @@ export default class SuppliersForm extends React.Component {
               <input className="form-control"
                      id="returns_address_2"
                      name="returns_address_2"
-                     placeholder="Line 2"
                      value={this.state.returnsAddress2} />
             </div>
             <div className="form-group">
@@ -70,7 +65,6 @@ export default class SuppliersForm extends React.Component {
               <input className="form-control"
                      id="returns_address_3"
                      name="returns_address_3"
-                     placeholder="Line 3"
                      value={this.state.returnsAddress3} />
             </div>
             <div className="form-group">
@@ -78,7 +72,6 @@ export default class SuppliersForm extends React.Component {
               <input className="form-control"
                      id="returns_postal_code"
                      name="returns_postal_code"
-                     placeholder="Postal Code"
                      value={this.state.returnsPostalCode} />
             </div>
             <div className="form-group">
@@ -86,7 +79,6 @@ export default class SuppliersForm extends React.Component {
               <input className="form-control"
                      id="returns_process"
                      name="returns_process"
-                     placeholder="Return Process"
                      value={this.state.returnsProcess} />
             </div>
             <div className="form-group">
@@ -94,7 +86,6 @@ export default class SuppliersForm extends React.Component {
               <input className="form-control"
                      id="invoicer_name"
                      name="invoicer_name"
-                     placeholder="Invoicer Name"
                      value={this.state.invoicerName} />
             </div>
             <div className="form-group">
@@ -102,7 +93,6 @@ export default class SuppliersForm extends React.Component {
               <input className="form-control"
                      id="account_number"
                      name="account_number"
-                     placeholder="Account Number"
                      value={this.state.accountNumber} />
             </div>
             <div className="form-group">
@@ -110,7 +100,6 @@ export default class SuppliersForm extends React.Component {
               <input className="form-control"
                      id="country_of_origin"
                      name="country_of_origin"
-                     placeholder="Country Of Origin"
                      value={this.state.countryOfOrigin} />
             </div>
             <div className="form-group">
