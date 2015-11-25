@@ -64,7 +64,7 @@ class OrderLineItem < ActiveRecord::Base
   def cache_product
     self.product_id = build_pid
     self.vendor_id = product.try(:vendor_id)
-    self.option_id = ProductOption.oid_from_element(build_pid, build_element_id)
+    self.option_id = LanguageProductOption.oid_from_element(build_pid, build_element_id)
     self.cost = product.try(:price)
     self.season = last_po_line.try(:season)
     self.product_name = last_po_line.try(:product_name)
