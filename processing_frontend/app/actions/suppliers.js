@@ -1,6 +1,6 @@
 import React from 'react';
+import Qs from 'qs';
 import { snakeizeKeys } from '../utilities/inspection';
-
 
 export function createSupplier(supplier = {}) {
   return dispatch => {
@@ -21,9 +21,11 @@ export function loadSupplier(id) {
   };
 }
 
-export function loadSuppliers(page = 1) {
+export function loadSuppliers(query) {
+  const queryString = Qs.stringify(query);
+
   return dispatch => {
-    fetch(`/api/suppliers.json?page=${page}`, { credentials: 'same-origin' })
+    fetch(`/api/suppliers.json?${queryString}`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(results => dispatch({ results, type: 'LOAD_SUPPLIERS' }));
   };

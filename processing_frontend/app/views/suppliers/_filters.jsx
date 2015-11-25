@@ -1,21 +1,23 @@
 import React from 'react';
-import { assign } from 'lodash';
-import { camelizeKeys } from '../../utilities/inspection';
+import { assign, omit } from 'lodash';
 
-export default class SuppliersForm extends React.Component {
+export default class SuppliersFilters extends React.Component {
   componentWillMount() {
-    this.state = assign({ submitting: false }, this.props.supplier);
+    this.state = { filters: (this.props.filters || {}),
+                   submitting: false };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ submitting: false });
-
-  	if (nextProps.supplier) {
-	  	this.setState(nextProps.supplier);
-	  }
+    if (this.props.filters !== nextProps.filters) {
+      this.setState({ filters: (nextProps.filters || {}) });
+    } else {
+      this.setState({ submitting: false });
+    }
 	}
 
   render() {
+    const { filters } = this.state;
+
     return (
       <form className="form clearfix"
             onChange={this.handleFormChange.bind(this)}
@@ -26,9 +28,7 @@ export default class SuppliersForm extends React.Component {
             <input className="form-control"
                    id="supplier_name"
                    name="name"
-                   placeholder="Name"
-                   required
-                   value={this.state.name} />
+                   value={filters.name} />
           </div>
 
           <div className="form-group col-md-2"
@@ -37,8 +37,9 @@ export default class SuppliersForm extends React.Component {
               <label>
                 <input type="checkbox"
                        name="discontinued"
+                       value="1"
                        className="checkbox"
-                       checked={this.state.discontinued}
+                       checked={filters.discontinued}
                        onChange={this.handleCheckboxChange.bind(this)} />
 
                 Discontinued
@@ -48,9 +49,9 @@ export default class SuppliersForm extends React.Component {
 
           <div className="form-group col-md-2"
                style={{ marginTop: '1.74em' }}>
-            <button className="btn btn-success col-xs-offset-3 col-xs-6"
+            <button className="btn btn-success"
                     disabled={this.state.submitting}>
-              Search
+              {this.submitText()}
             </button>
           </div>
         </div>
@@ -58,18 +59,36 @@ export default class SuppliersForm extends React.Component {
     );
   }
 
+  submitText() {
+    if (this.state.submitting) {
+      return 'Searching...';
+    } else {
+      return 'Search';
+    }
+  }
+
+  setFilter(field, value) {
+    const filters = assign({}, this.state.filters, { [field]: value });
+    this.setState({ filters });
+  }
+
   handleFormChange({ target }) {
-    this.setState(camelizeKeys({ [target.name]: target.value }));
+    this.setFilter(target.name, target.value);
   }
 
   handleCheckboxChange(e) {
     e.stopPropagation();
-    this.setState(camelizeKeys({ [e.target.name]: e.target.checked }));
+
+    if (e.target.checked) {
+      this.handleFormChange(e);
+    } else {
+      this.setState({ filters: omit(this.state.filters, e.target.name) });
+    }
   }
 
   handleFormSubmit(e) {
     e.preventDefault();
     this.setState({ submitting: true });
-    this.props.onFilterSuppliers(this.state);
+    this.props.onFilterSuppliers(this.state.filters);
   }
 }

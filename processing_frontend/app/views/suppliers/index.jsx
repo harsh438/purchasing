@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { assign } from 'lodash';
+import { assign, isEqual } from 'lodash';
 import SuppliersTable from './_table';
 import SuppliersFilters from './_filters';
 import NumberedPagination from '../pagination/_numbered';
@@ -9,7 +9,15 @@ import { loadSuppliers } from '../../actions/suppliers';
 
 class SuppliersIndex extends React.Component {
   componentWillMount() {
-    this.loadPage(this.props.location.query.page);
+    this.loadPage();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const nextQuery = nextProps.location.query;
+
+    if (!isEqual(this.props.location.query, nextQuery)) {
+      this.loadPage(nextQuery);
+    }
   }
 
   render() {
@@ -20,7 +28,8 @@ class SuppliersIndex extends React.Component {
           <div className="col-md-12">
           	<div className="panel panel-default">
         			<div className="panel-body">
-                <SuppliersFilters onFilterSuppliers={this.handleFilterSuppliers.bind(this)} />
+                <SuppliersFilters filters={this.props.location.query.filters}
+                                  onFilterSuppliers={this.handleFilterSuppliers.bind(this)} />
               </div>
             </div>
           </div>
@@ -31,11 +40,11 @@ class SuppliersIndex extends React.Component {
           	<div className="panel panel-default">
         			<div className="panel-body">
                 <Link to="/suppliers/new"
-                      className="btn btn-success pull-right">
+                      className="btn btn-success">
                   Add New Supplier
                 </Link>
 
-                <hr />
+                <hr style={{ clear: 'both' }} />
 
                 <SuppliersTable suppliers={this.props.suppliers}
                                 onEditSupplierButton={this.handleClickEditSupplier.bind(this)} />
@@ -51,15 +60,17 @@ class SuppliersIndex extends React.Component {
     );
   }
 
-  loadPage(page) {
-    this.props.dispatch(loadSuppliers(page || 1));
+  loadPage(query = this.props.location.query) {
+    const { filters, page } = query;
+    this.props.dispatch(loadSuppliers({ filters, page }));
   }
 
   handleClickEditSupplier(id) {
     this.props.history.pushState(null, `/suppliers/${id}/edit`);
   }
 
-  handleFilterSuppliers() {
+  handleFilterSuppliers(filters) {
+    this.props.history.pushState(null, '/suppliers', { filters });
   }
 }
 
