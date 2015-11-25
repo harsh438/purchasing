@@ -21,10 +21,8 @@ function setSuppliers(state, results) {
 
 
 function setSupplier(state, action) {
-	console.log('setSupplier', state, action, transformSupplier(action.results));
   return assign({}, { supplier: transformSupplier(action.results) });
 }
-
 
 export function reduceSuppliers(state = initialState, action) {
   switch (action.type) {

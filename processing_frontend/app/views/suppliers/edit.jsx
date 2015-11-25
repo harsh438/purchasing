@@ -4,6 +4,7 @@ import { map, assign } from 'lodash';
 import SuppliersForm from './_form';
 import { SuppliersTable } from './_table';
 import { loadSupplier, loadSuppliers } from '../../actions/suppliers';
+import { editSupplier } from '../../actions/suppliers';
 
 class SuppliersEdit extends React.Component {
 	componentWillMount () {
@@ -23,12 +24,13 @@ class SuppliersEdit extends React.Component {
     	return (
         <div className="suppliers_edit" style={{ marginTop: '70px' }}>
     		  <SuppliersForm submitText="Edit"
-  									     supplier={this.props.supplier} />
+  									     supplier={this.props.supplier}
+                         onSubmitSupplier={this.handleOnEditSupplier.bind(this)} />
           <SuppliersTable index={this}
                         suppliers={this.props.suppliers}
                         totalPages={this.props.totalPages}
                         activePage={this.props.activePage}
-                        onEditSupplierButton={this.handleOnEditSupplier.bind(this)} />
+                        onEditSupplierButton={this.handleEditSupplierListButton.bind(this)} />
         </div>
     	);
   }
@@ -37,9 +39,13 @@ class SuppliersEdit extends React.Component {
     this.props.dispatch(loadSuppliers(page || 1));
   }
 
-  handleOnEditSupplier(id) {
-      this.props.history.pushState(null, `/suppliers/${id}/edit`);    
+  handleEditSupplierListButton(id) {
+      this.props.history.pushState(null, `/suppliers/${id}/edit`);  
   }  
+
+  handleOnEditSupplier(supplier) {
+    this.props.dispatch(editSupplier(supplier));
+  }
 }
 
 function applyState({ suppliers, supplier }) {
