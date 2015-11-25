@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { assign, omit } from 'lodash';
+import { assign, map, omit } from 'lodash';
 
 export default class SuppliersFilters extends React.Component {
   componentWillMount() {
@@ -30,6 +30,18 @@ export default class SuppliersFilters extends React.Component {
                    id="supplier_name"
                    name="name"
                    value={filters.name} />
+          </div>
+
+          <div className="form-group col-md-2">
+            <label htmlFor="supplier_name">Brand</label>
+
+            <select className="form-control"
+                    id="supplier_name"
+                    name="vendorId"
+                    value={filters.vendorId}>
+              <option value=""> -- select brand -- </option>
+              {this.selectOptions(this.props.brands)}
+            </select>
           </div>
 
           <div className="form-group col-md-2"
@@ -72,6 +84,14 @@ export default class SuppliersFilters extends React.Component {
     } else {
       return 'Search';
     }
+  }
+
+  selectOptions(options) {
+    return map(options, function ({ id, name }) {
+      return (
+        <option key={id} value={id}>{name}</option>
+      );
+    });
   }
 
   setFilter(field, value) {

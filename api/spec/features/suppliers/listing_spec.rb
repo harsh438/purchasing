@@ -11,6 +11,11 @@ feature 'Suppliers CRUD' do
     then_only_suppliers_whose_name_matches_should_be_listed
   end
 
+  scenario 'Filtering Suppliers by brand' do
+    when_i_filter_suppliers_by_brand
+    then_only_suppliers_of_that_brand_should_be_listed
+  end
+
   scenario 'Listing Suppliers that are discontinued' do
     when_i_request_discontinued_suppliers
     then_only_suppliers_that_are_discontinued_should_be_listed
@@ -36,6 +41,17 @@ feature 'Suppliers CRUD' do
 
   def then_only_suppliers_whose_name_matches_should_be_listed
     expect(subject['suppliers'].count).to eq(4)
+  end
+
+  def when_i_filter_suppliers_by_brand
+    create_list(:supplier, 5)
+    vendor = create(:vendor)
+    create_list(:supplier, 2, vendors: [vendor])
+    visit suppliers_path(filters: { vendor_id: vendor.id })
+  end
+
+  def then_only_suppliers_of_that_brand_should_be_listed
+    expect(subject['suppliers'].count).to eq(2)
   end
 
   def when_i_request_discontinued_suppliers
