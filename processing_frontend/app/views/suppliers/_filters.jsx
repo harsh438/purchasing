@@ -92,15 +92,6 @@ export default class SuppliersFilters extends React.Component {
     });
   }
 
-  setFilter(field, value) {
-    const filters = assign({}, this.state.filters, { [field]: value });
-    this.setState({ filters });
-  }
-
-  getFilter(field) {
-    return get(this.state.filters, field, '');
-  }
-
   handleFormChange({ target }) {
     this.setFilter(target.name, target.value);
   }
@@ -119,5 +110,14 @@ export default class SuppliersFilters extends React.Component {
     e.preventDefault();
     this.setState({ submitting: true });
     this.props.onFilterSuppliers(this.state.filters);
+  }
+
+  setFilter(field, value) {
+    const filters = assign({}, this.state.filters, { [field]: value });
+    this.setState({ filters });
+  }
+
+  getFilter(field) {
+    return get(this.state.filters, field, '');
   }
 }
