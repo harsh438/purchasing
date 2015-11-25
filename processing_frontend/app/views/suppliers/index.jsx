@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { assign } from 'lodash';
 import SuppliersTable from './_table';
+import SuppliersFilters from './_filters';
 import NumberedPagination from '../pagination/_numbered';
 import { loadSuppliers } from '../../actions/suppliers';
 
@@ -19,8 +20,18 @@ class SuppliersIndex extends React.Component {
           <div className="col-md-12">
           	<div className="panel panel-default">
         			<div className="panel-body">
+                <SuppliersFilters onFilterSuppliers={this.handleFilterSuppliers.bind(this)} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-12">
+          	<div className="panel panel-default">
+        			<div className="panel-body">
                 <Link to="/suppliers/new"
-                      className="btn btn-success">
+                      className="btn btn-success pull-right">
                   Add New Supplier
                 </Link>
 
@@ -46,6 +57,9 @@ class SuppliersIndex extends React.Component {
 
   handleClickEditSupplier(id) {
     this.props.history.pushState(null, `/suppliers/${id}/edit`);
+  }
+
+  handleFilterSuppliers() {
   }
 }
 
