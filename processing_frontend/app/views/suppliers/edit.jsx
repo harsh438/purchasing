@@ -8,12 +8,15 @@ import { loadSupplier, loadSuppliers } from '../../actions/suppliers';
 class SuppliersEdit extends React.Component {
 	componentWillMount () {
 		this.props.dispatch(loadSupplier(this.props.params.id));
-    this.loadPage(this.props.location.query.page); 
+    this.loadPage(this.props.location.query.page);
     this.setState({ supplierId: this.props.params.id });    
 	}
 
   componentWillReceiveProps(nextProps) {
-    this.props.dispatch(loadSupplier(this.props.params.id));
+    if (nextProps.params.id !== this.state.supplierId) {
+      this.setState({ supplierId: this.props.params.id });
+      this.props.dispatch(loadSupplier(this.props.params.id));
+    }
   }
 
 	render() {
@@ -40,7 +43,6 @@ class SuppliersEdit extends React.Component {
 }
 
 function applyState({ suppliers, supplier }) {
-  console.log('applystateEdit', suppliers, supplier);
   return assign({}, supplier, suppliers);
 }
 

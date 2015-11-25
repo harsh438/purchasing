@@ -21,7 +21,7 @@ export default class SuppliersIndex extends React.Component {
   render() {
     return (
       <div className="suppliers_index" style={{ marginTop: '70px' }}>
-        <SuppliersForm onSubmitSupplier={this.handleCreateSupplier.bind(this)} submitText="Create"/>
+        <SuppliersForm onSubmitSupplier={this.handleCreateSupplier.bind(this)} submitText="Create" supplierId="" />
         <SuppliersTable index={this}
                         suppliers={this.props.suppliers}
                         totalPages={this.props.totalPages}
