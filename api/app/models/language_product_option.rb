@@ -9,8 +9,8 @@ class LanguageProductOption < ActiveRecord::Base
                  name: :pOption,
                  element_id: :elementID
 
-  belongs_to :option
-  belongs_to :element
+  belongs_to :option, foreign_key: :oID
+  belongs_to :element, foreign_key: :elementID
 
   def self.oid_from_element(product_id, element_id)
     select_from_element('ds_language_product_options.oID', product_id, element_id).try(:oID)

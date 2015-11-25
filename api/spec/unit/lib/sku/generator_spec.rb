@@ -21,7 +21,8 @@ describe Sku::Generator do
       expect(sku.size.present?).to eq(true)
       expect(sku.color.present?).to eq(true)
       expect(sku.product.present?).to eq(true)
-      expect(sku.product_option.present?).to eq(true)
+      expect(sku.language_product_option.present?).to eq(true)
+      expect(sku.language_product_category.present?).to eq(true)
       expect(sku.element.present?).to eq(true)
     end
   end
@@ -37,11 +38,11 @@ describe Sku::Generator do
     end
 
     it 'should create an option, element, and link them to the product with a language product option' do
-      expect(subject.option).to be_a(LanguageProductOption)
+      expect(subject.language_product_option).to be_a(LanguageProductOption)
       expect(subject.element).to be_a(Element)
       expect(subject.language_product_option.option).to be_a(Option)
       expect(subject.language_product_option.element).to be_a(Element)
-      expect(subject.element).to be(subject.option.element)
+      expect(subject.element.id).to eq(subject.language_product_option.element.id)
     end
 
     it 'should create a category and a language product category' do

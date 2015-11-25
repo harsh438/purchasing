@@ -11,6 +11,8 @@ class LanguageProductCategory < ActiveRecord::Base
 
   scope :english, -> { where(language_id: 1) }
 
+  belongs_to :category, foreign_key: :catID
+
   def self.relevant
     english.where('catId in (select distinct(orderTool_RC) from purchase_orders)')
            .where('langId = 1')
