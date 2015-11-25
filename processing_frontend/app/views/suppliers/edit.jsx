@@ -19,7 +19,7 @@ class SuppliersEdit extends React.Component {
                          onSubmitSupplier={this.handleOnEditSupplier.bind(this)} />
         </div>
         <div className="col-xs-9">
-          <SupplierAddContact />
+          <SupplierAddContact supplier={this.props.supplier} />
           <SupplierContacts supplier={this.props.supplier} />
         </div>
       </div>
