@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { assign, omit } from 'lodash';
 
 export default class SuppliersFilters extends React.Component {
@@ -50,9 +51,15 @@ export default class SuppliersFilters extends React.Component {
           <div className="form-group col-md-2"
                style={{ marginTop: '1.74em' }}>
             <button className="btn btn-success"
+                    style={{ width: '100%' }}
                     disabled={this.state.submitting}>
               {this.submitText()}
             </button>
+          </div>
+
+          <div className="form-group col-md-2"
+               style={{ marginTop: '2.2em' }}>
+            <Link to="/suppliers">clear filters</Link>
           </div>
         </div>
       </form>
