@@ -3,7 +3,8 @@ class Sku < ActiveRecord::Base
 
   belongs_to :product
   belongs_to :element
-  belongs_to :product_option, foreign_key: :option_id
+  belongs_to :language_product_category, foreign_key: :category_id
+  belongs_to :language_product_option, foreign_key: :option_id
 
   validates_presence_of :manufacturer_sku
 end

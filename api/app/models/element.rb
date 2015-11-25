@@ -1,6 +1,11 @@
 class Element < ActiveRecord::Base
   self.table_name = :mnp_elements
 
+  include LegacyMappings
+
+  map_attributes id: :elementID,
+                 name: :elementname
+
   def self.id_from_option(product_id, option_id)
     select('mnp_elements.elementid')
       .joins('LEFT JOIN ds_language_product_options ON

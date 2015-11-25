@@ -21,18 +21,33 @@ describe Sku::Generator do
       expect(sku.size.present?).to eq(true)
       expect(sku.color.present?).to eq(true)
       expect(sku.product.present?).to eq(true)
-      expect(sku.product_option.present?).to eq(true)
+      expect(sku.language_product_option.present?).to eq(true)
+      expect(sku.language_product_category.present?).to eq(true)
       expect(sku.element.present?).to eq(true)
     end
   end
 
   context 'generate a sku based on the information passed in the attributes' do
-    it 'should create a product and an option' do
-      sku = subject.sku_from!(new_sku_attrs)
+    subject { described_class.new.sku_from!(new_sku_attrs) }
 
-      expect(sku).to_not be_nil
-      expect(sku.product).to be_a(Product)
-      expect(sku.product.price).to eq(new_sku_attrs[:price])
+    it { is_expected.to_not be_nil }
+
+    it 'should create a product' do
+      expect(subject.product).to be_a(Product)
+      expect(subject.product.price).to eq(new_sku_attrs[:price])
+    end
+
+    it 'should create an option, element, and link them to the product with a language product option' do
+      expect(subject.language_product_option).to be_a(LanguageProductOption)
+      expect(subject.element).to be_a(Element)
+      expect(subject.language_product_option.option).to be_a(Option)
+      expect(subject.language_product_option.element).to be_a(Element)
+      expect(subject.element.id).to eq(subject.language_product_option.element.id)
+    end
+
+    it 'should create a category and a language product category' do
+      expect(subject.language_product_category).to be_a(LanguageProductCategory)
+      expect(subject.language_product_category.category).to be_a(Category)
     end
   end
 end

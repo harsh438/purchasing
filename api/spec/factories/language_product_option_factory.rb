@@ -10,6 +10,8 @@ FactoryGirl.define do
     pOption
 
     after(:create) do |language_product_option, evaluator|
+
+
       element = create(:element, elementname: language_product_option.pOption)
       language_product_option.update_attributes(elementID: element.elementID)
     end
