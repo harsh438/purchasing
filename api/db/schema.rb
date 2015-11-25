@@ -230,7 +230,7 @@ ActiveRecord::Schema.define(version: 20151124174744) do
   end
 
   add_index "order_exports", ["order_id"], name: "index_order_exports_on_order_id", using: :btree
-  add_index "order_exports", ["purchase_order_id"], name: "fk_rails_7532174768", using: :btree
+  add_index "order_exports", ["purchase_order_id"], name: "index_order_exports_on_purchase_order_id", using: :btree
 
   create_table "order_line_items", force: :cascade do |t|
     t.string   "internal_sku",  limit: 255

@@ -1,5 +1,6 @@
 import React from 'react';
 import { assign, omit } from 'lodash';
+import { camelizeKeys } from '../../utilities/inspection';
 
 export default class SuppliersForm extends React.Component {
   componentWillMount() {
@@ -140,7 +141,7 @@ export default class SuppliersForm extends React.Component {
   }
 
   handleFormChange({ target }) {
-    this.setState({ [target.name]: target.value });
+    this.setState(camelizeKeys({ [target.name]: target.value }));
   }
 
   handleCheckboxChange(e) {

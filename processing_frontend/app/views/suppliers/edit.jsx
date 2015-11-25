@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { map, assign } from 'lodash';
 import SuppliersForm from './_form';
 import { loadSupplier, editSupplier } from '../../actions/suppliers';
-import { SupplierContacts } from './contacts';
+import { SupplierAddContact, SupplierContacts } from './contacts';
 
 class SuppliersEdit extends React.Component {
   componentWillMount () {
@@ -19,6 +19,7 @@ class SuppliersEdit extends React.Component {
                          onSubmitSupplier={this.handleOnEditSupplier.bind(this)} />
         </div>
         <div className="col-xs-9">
+          <SupplierAddContact />
           <SupplierContacts supplier={this.props.supplier} />
         </div>
       </div>
