@@ -20,6 +20,6 @@ class FiltersController < ApplicationController
   end
 
   def categories
-    render json: Category.relevant
+    render json: LanguageProductCategory.relevant
   end
 end
