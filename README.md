@@ -39,7 +39,7 @@ bundle exec rake db:setup
 bundle exec rails
 ```
 
-**Reset your db**
+**Reset your DB**
 
 ```sh
 bundle exec rake db:reset
