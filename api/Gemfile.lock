@@ -60,6 +60,10 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.7)
+      climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.0)
     columnize (0.9.0)
     crack (0.4.2)
@@ -94,6 +98,7 @@ GEM
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
     mime-types (2.6.2)
+    mimemagic (0.3.0)
     mini_portile (0.6.2)
     minitest (5.8.2)
     multi_json (1.11.2)
@@ -101,6 +106,12 @@ GEM
     mysql2 (0.3.16)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    paperclip (4.3.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      cocaine (~> 0.5.5)
+      mime-types
+      mimemagic (= 0.3.0)
     parallel (1.6.1)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -237,6 +248,7 @@ DEPENDENCIES
   ffaker (= 1.32.1)
   kaminari
   mysql2
+  paperclip (~> 4.3)
   pry-byebug
   pry-rails
   quiet_assets
