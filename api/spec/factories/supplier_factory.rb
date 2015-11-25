@@ -7,6 +7,16 @@ FactoryGirl.define do
     returns_postal_code { Faker::AddressUK.postcode }
     returns_process 'Just return it'
 
+    transient do
+      contact_count 0
+    end
+
+    after :create do |supplier, evaluator|
+      if evaluator.contact_count > 0
+        create_list(:supplier_contact, evaluator.contact_count, supplier: supplier)
+      end
+    end
+
     trait :with_details do
       invoicer_name { Faker::Name.name }
       account_number '011'
