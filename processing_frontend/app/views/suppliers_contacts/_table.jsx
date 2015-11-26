@@ -1,7 +1,7 @@
 import React from 'react';
 import { map } from 'lodash';
 import { assign } from 'lodash';
-import { SupplierAddContact, SupplierContact } from './_contact';
+import { SupplierAddContact, SupplierContact } from './_form';
 import { addSupplierContact } from '../../actions/suppliers';
 
 export class SupplierContacts extends React.Component {
