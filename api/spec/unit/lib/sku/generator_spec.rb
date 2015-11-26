@@ -22,7 +22,7 @@ describe Sku::Generator do
       expect(sku.color.present?).to eq(true)
       expect(sku.product.present?).to eq(true)
       expect(sku.language_product_option.present?).to eq(true)
-      expect(sku.language_product_category.present?).to eq(true)
+      expect(sku.language_category.present?).to eq(true)
       expect(sku.element.present?).to eq(true)
     end
   end
@@ -45,9 +45,9 @@ describe Sku::Generator do
       expect(subject.element.id).to eq(subject.language_product_option.element.id)
     end
 
-    it 'should create a category and a language product category' do
-      expect(subject.language_product_category).to be_a(LanguageProductCategory)
-      expect(subject.language_product_category.category).to be_a(Category)
+    it 'should create a category and a language category' do
+      expect(subject.language_category).to be_a(LanguageCategory)
+      expect(subject.language_category.category).to be_a(Category)
     end
   end
 end
