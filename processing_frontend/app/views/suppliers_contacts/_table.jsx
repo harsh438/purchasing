@@ -1,10 +1,10 @@
 import React from 'react';
 import { map } from 'lodash';
 import { assign } from 'lodash';
-import { SupplierAddContact, SupplierContact } from './_form';
+import SupplierContact from './_form';
 import { addSupplierContact } from '../../actions/suppliers';
 
-export class SupplierContacts extends React.Component {
+export default class SupplierContacts extends React.Component {
   render() {
     return (
       <div className="panel panel-default">
@@ -25,6 +25,7 @@ export class SupplierContacts extends React.Component {
     if (contacts.length === 0) {
       return <b>No Contacts for this supplier</b>
     }
+    console.log(contacts);
     return map(contacts, (contact, i) => {
       return (
         <li style={{ 'listStyleType': 'none' }} key={contact.id}>

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { map, assign } from 'lodash';
 import SuppliersForm from './_form';
 import { loadSupplier, editSupplier, addSupplierContact } from '../../actions/suppliers';
-import { SupplierAddContact } from '../suppliers_contacts/_form';
-import { SupplierContacts } from '../suppliers_contacts/_table';
+import SupplierAddContact from '../suppliers_contacts/_add';
+import SupplierContacts from '../suppliers_contacts/_table';
 
 class SuppliersEdit extends React.Component {
   componentWillMount () {
