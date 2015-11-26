@@ -1,6 +1,6 @@
 import React from 'react';
 import Qs from 'qs';
-import { assign } from 'lodash';
+import { assign, clone } from 'lodash';
 import { snakeizeKeys } from '../utilities/inspection';
 
 export function createSupplier(supplier = {}) {
@@ -41,13 +41,12 @@ export function editSupplier(supplier) {
                                                 headers: { 'Content-Type': 'application/json' },
                                                 body: JSON.stringify({ supplier: snakeizeKeys(supplier) }) })
       .then(response => response.json())
-      .then(results => dispatch({ supplier, type: 'SET_SUPPLIER' }));
+      .then(results=> dispatch({ supplier: results, type: 'SET_SUPPLIER' }));
     }
 }
 
 export function addSupplierContact(supplier, contact) {
-  let s = assign({}, supplier);
-  s.contacts_attributes = s.contacts || [];
-  s.contacts_attributes.unshift(contact);
-  return editSupplier(s);
+  supplier.contacts_attributes = JSON.parse(JSON.stringify(supplier.contacts || []));
+  supplier.contacts_attributes.unshift(contact);
+  return editSupplier(supplier);
 }

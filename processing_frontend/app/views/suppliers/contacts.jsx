@@ -21,7 +21,7 @@ export class SupplierContacts extends React.Component {
   }
 
   renderContacts() {
-    var contacts = (this.props.supplier || {}).contacts || [];
+    var contacts = ((this.props.supplier || {}).contacts || []).reverse();
     if (contacts.length === 0) {
       return <b>No Contacts for this supplier</b>
     }
