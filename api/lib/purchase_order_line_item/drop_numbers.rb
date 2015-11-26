@@ -15,7 +15,7 @@ class PurchaseOrderLineItem::DropNumbers
   private
 
   def find_total_drops(results)
-    criteria = criteria(results)
+    criteria = critera_for_total_drops(results)
 
     return PurchaseOrderLineItem.none unless criteria.count > 0
 
@@ -28,8 +28,19 @@ class PurchaseOrderLineItem::DropNumbers
                          .count
   end
 
+  def critera_for_total_drops(results)
+    results.reduce([]) do |criteria, purchase_order|
+      if purchase_order.product_id > 0 and purchase_order.option_id > 0
+        criteria << purchase_order.product_id
+        criteria << purchase_order.option_id
+      else
+        criteria
+      end
+    end
+  end
+
   def find_previous_drops(results)
-    criteria = criteria(results)
+    criteria = criteria_for_previous_drops(results)
 
     return PurchaseOrderLineItem.none unless criteria.count > 0
 
@@ -42,7 +53,7 @@ class PurchaseOrderLineItem::DropNumbers
                          .count
   end
 
-  def criteria(results)
+  def criteria_for_previous_drops(results)
     results.reduce([]) do |criteria, purchase_order|
       if purchase_order.product_id > 0 and purchase_order.option_id > 0
         criteria << purchase_order.product_id
