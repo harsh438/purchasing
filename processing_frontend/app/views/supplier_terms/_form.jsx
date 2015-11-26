@@ -9,10 +9,10 @@ export default class SuppliersForm extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({ submitting: false });
 
-  	if (nextProps.terms) {
-	  	this.setState(nextProps.terms);
-	  }
-	}
+    if (nextProps.terms) {
+      this.setState(nextProps.terms);
+    }
+  }
 
   render() {
     return (
