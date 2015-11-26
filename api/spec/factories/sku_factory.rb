@@ -16,7 +16,7 @@ FactoryGirl.define do
 
     product_id { create(:product).id }
     option_id { create(:language_product_option, product_id: product_id).id }
-    category_id { create(:language_product_category, category_id: create(:category).id).id }
+    category_id { create(:language_category, category_id: create(:category).id).id }
     element_id { LanguageProductOption.find(option_id).elementID }
   end
 end

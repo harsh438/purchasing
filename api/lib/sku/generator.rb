@@ -19,20 +19,20 @@ class Sku::Generator
     element = Element.create(element_attrs)
 
     language_product_option = LanguageProductOption.create(product_option_attrs(product, option, element))
-    language_product_category = LanguageProductCategory.create(product_category_attrs(category))
+    language_category = LanguageCategory.create(product_category_attrs(category))
 
-    Sku.create(sku_attrs(product, element, language_product_option, language_product_category))
+    Sku.create(sku_attrs(product, element, language_product_option, language_category))
   end
 
   def attrs
     @attrs
   end
 
-  def sku_attrs(product, element, language_product_option, language_product_category)
+  def sku_attrs(product, element, language_product_option, language_category)
     attrs.merge!({ product_id: product.id,
                    element_id: element.id,
                    option_id: language_product_option.id,
-                   category_id: language_product_category.id })
+                   category_id: language_category.id })
   end
 
   def element_attrs

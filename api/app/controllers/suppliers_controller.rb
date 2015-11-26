@@ -13,11 +13,11 @@ class SuppliersController < ApplicationController
   def update
     supplier = Supplier.find(params[:id])
     supplier.update!(full_supplier_attrs)
-    render json: supplier.as_json(include: :contacts)
+    render json: supplier.as_json(include: [:contacts, :terms])
   end
 
   def show
-    render json: Supplier.find(params[:id]).as_json(include: :contacts)
+    render json: Supplier.find(params[:id]).as_json(include: [:contacts, :terms])
   end
 
   private
@@ -30,7 +30,8 @@ class SuppliersController < ApplicationController
                                      :returns_address_2,
                                      :returns_address_3,
                                      :returns_postal_code,
-                                     :returns_process)
+                                     :returns_process,
+                                     terms: [:season, :confirmation] + SupplierTerms.stored_attributes[:terms])
   end
 
   def supplier_details_attrs

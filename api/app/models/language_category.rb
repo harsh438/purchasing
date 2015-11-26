@@ -1,4 +1,4 @@
-class LanguageProductCategory < ActiveRecord::Base
+class LanguageCategory < ActiveRecord::Base
   self.table_name = :ds_language_categories
 
   include LegacyMappings

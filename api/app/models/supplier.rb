@@ -22,6 +22,8 @@ class Supplier < ActiveRecord::Base
   has_many :contacts, class_name: 'SupplierContact'
   accepts_nested_attributes_for :contacts
 
+  has_many :terms, class_name: 'SupplierTerms'
+
   after_initialize :ensure_primary_key
 
   map_attributes id: :SupplierID,
@@ -37,11 +39,19 @@ class Supplier < ActiveRecord::Base
   paginates_per 50
 
   def as_json(options = {})
-    details.as_json.merge(super)
+    details.as_json.merge(super).tap do |supplier|
+      (supplier['terms'] || []).map! do |terms|
+        terms.merge(terms.delete('terms'))
+      end
+    end
   end
 
   def details
     super || build_details
+  end
+
+  def terms=(terms_attrs)
+    terms.build(terms_attrs)
   end
 
   private
