@@ -17,11 +17,19 @@ class Sku::Generator
     option = Option.create(option_attrs(product))
     category = Category.create(category_attrs)
     element = Element.create(element_attrs)
+    supplier = Supplier.create(supplier_attrs)
+
 
     language_product_option = LanguageProductOption.create(product_option_attrs(product, option, element))
+
     language_category = LanguageCategory.create(product_category_attrs(category))
 
-    Sku.create(sku_attrs(product, element, language_product_option, language_category))
+    product_supplier = ProductSupplier.create(product_supplier_attrs(product, supplier))
+
+    Sku.create(sku_attrs(product,
+                         element,
+                         language_product_option,
+                         language_category))
   end
 
   def attrs
@@ -57,8 +65,18 @@ class Sku::Generator
       on_sale: attrs[:on_sale] || '' }
   end
 
+  def supplier_attrs
+    { name: attrs[:supplier_name] || '' }
+  end
+
+  def product_supplier_attrs(product, supplier)
+    { product_id: product.id,
+      supplier_id: supplier.id }
+  end
+
+
   def category_attrs
-    { parentID: 0 }
+    { parent_id: 0 }
   end
 
   def option_attrs(product)
