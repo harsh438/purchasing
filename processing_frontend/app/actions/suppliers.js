@@ -41,13 +41,13 @@ export function editSupplier(supplier) {
                                                 headers: { 'Content-Type': 'application/json' },
                                                 body: JSON.stringify({ supplier: snakeizeKeys(supplier) }) })
       .then(response => response.json())
-      .then(results => dispatch({ results, type: 'SET_ORDER' }));
+      .then(results => dispatch({ supplier, type: 'SET_SUPPLIER' }));
     }
 }
 
 export function addSupplierContact(supplier, contact) {
-  supplier.contacts_attributes = supplier.contacts || [];
-  supplier.contacts_attributes.push(contact);
-  suppliers.contacts_attributes = contacts;
-  return editSupplier.call(this, supplier);
+  let s = assign({}, supplier);
+  s.contacts_attributes = s.contacts || [];
+  s.contacts_attributes.unshift(contact);
+  return editSupplier(s);
 }

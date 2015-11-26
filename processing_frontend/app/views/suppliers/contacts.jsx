@@ -27,7 +27,7 @@ export class SupplierContacts extends React.Component {
     }
     return map(contacts, (contact, i) => {
       return (
-        <li style={{ 'listStyleType': 'none' }} key={i}>
+        <li style={{ 'listStyleType': 'none' }} key={contact.id}>
           <SupplierContact submitText="Edit Contact" contact={contact} />
         </li>);
     })

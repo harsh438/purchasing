@@ -26,6 +26,10 @@ export class SupplierContact extends React.Component {
     this.state = this.props.contact || {};
   }
 
+  componentWillReceiveProps(nextProps) {
+  }
+
+
   render () {
     return (<div className="panel panel-default">
       <div className="panel-body">

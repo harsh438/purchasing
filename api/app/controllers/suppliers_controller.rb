@@ -42,7 +42,8 @@ class SuppliersController < ApplicationController
   end
 
   def supplier_contacts_attrs
-    params.require(:supplier).permit(contacts_attributes: [:name,
+    params.require(:supplier).permit(contacts_attributes: [:id,
+                                                           :name,
                                                            :title,
                                                            :email,
                                                            :mobile,

@@ -27,6 +27,7 @@ class SuppliersEdit extends React.Component {
     );
   }
 
+
   handleOnAddContact(contact) {
     this.props.dispatch(addSupplierContact(this.props.supplier, contact));
   }
