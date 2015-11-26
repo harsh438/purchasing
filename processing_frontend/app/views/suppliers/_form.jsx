@@ -8,7 +8,8 @@ export default class SuppliersForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({submitting: false});
+    this.setState({ submitting: false });
+    
   	if (nextProps.supplier) {
 	  	this.setState(nextProps.supplier);
 	  }
@@ -156,7 +157,7 @@ export default class SuppliersForm extends React.Component {
 
   handleFormSubmit(e) {
     e.preventDefault();
-    //this.setState({ submitting: true });
+    this.setState({ submitting: true });
     this.props.onSubmitSupplier(this.state);
   }
 }
