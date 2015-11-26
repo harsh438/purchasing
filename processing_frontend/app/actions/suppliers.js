@@ -47,6 +47,17 @@ export function editSupplier(supplier) {
 
 export function addSupplierContact(supplier, contact) {
   supplier.contacts_attributes = JSON.parse(JSON.stringify(supplier.contacts || []));
-  supplier.contacts_attributes.unshift(contact);
+  let found = false;
+  if (contact.id) {
+    supplier.contacts_attributes.forEach( (c,i) => {
+      if (c.id === contact.id) {
+        found = true
+        supplier.contacts_attributes[i] = contact;
+      }
+    });
+  }
+  if (!found) {
+    supplier.contacts_attributes.unshift(contact);
+  }
   return editSupplier(supplier);
 }

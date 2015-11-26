@@ -21,7 +21,7 @@ class SuppliersEdit extends React.Component {
         </div>
         <div className="col-xs-6">
           <SupplierAddContact supplier={this.props.supplier} onAddContact={this.handleOnAddContact.bind(this)}/>
-          <SupplierContacts supplier={this.props.supplier} />
+          <SupplierContacts supplier={this.props.supplier} onEditContact={this.handleOnAddContact.bind(this)} />
         </div>
       </div>
     );
