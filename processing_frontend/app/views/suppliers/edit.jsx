@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { map, assign } from 'lodash';
 import SuppliersForm from './_form';
-import { loadSupplier, editSupplier, addSupplierContact } from '../../actions/suppliers';
+import { loadSupplier, editSupplier, addSupplierContact, editSupplierContact } from '../../actions/suppliers';
 import SupplierAddContact from '../suppliers_contacts/_add';
 import SupplierContacts from '../suppliers_contacts/_table';
 import { loadSeasons } from '../../actions/filters';
@@ -36,7 +36,7 @@ class SuppliersEdit extends React.Component {
           </div>
               { this.renderAddContact() }
           <SupplierContacts supplier={this.props.supplier}
-                            onEditContact={this.handleOnAddContact.bind(this)} />
+                            onEditContact={this.handleOnEditContact.bind(this)} />
         </div>
       </div>
     );
@@ -92,6 +92,10 @@ class SuppliersEdit extends React.Component {
 
   handleOnAddContact(contact) {
     this.props.dispatch(addSupplierContact(this.props.supplier, contact));
+  }
+
+  handleOnEditContact(contact) {
+    this.props.dispatch(editSupplierContact(this.props.supplier, contact));
   }
 
   handleClickEditSupplier(id) {

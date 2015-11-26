@@ -25,7 +25,6 @@ export default class SupplierContacts extends React.Component {
     if (contacts.length === 0) {
       return <b>No Contacts for this supplier</b>
     }
-    console.log(contacts);
     return map(contacts, (contact, i) => {
       return (
         <li style={{ 'listStyleType': 'none' }} key={contact.id}>
