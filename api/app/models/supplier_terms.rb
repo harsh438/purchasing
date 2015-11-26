@@ -24,7 +24,7 @@ class SupplierTerms < ActiveRecord::Base
                               mark_down_contribution_details
                               cancellation_allowance
                               stock_swap_allowance
-                              builk_order_details
+                              bulk_order_details
                               samples
                               product_imagery
                               agreed_with

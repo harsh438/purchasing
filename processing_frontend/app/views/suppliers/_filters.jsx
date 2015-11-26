@@ -31,10 +31,9 @@ export default class SuppliersFilters extends React.Component {
           </div>
 
           <div className="form-group col-md-2">
-            <label htmlFor="supplier_name">Brand</label>
-
+            <label htmlFor="vendor_id">Brand</label>
             <select className="form-control"
-                    id="supplier_name"
+                    id="vendor_id"
                     name="vendorId"
                     value={this.getFilter('vendorId')}>
               <option value=""> -- select brand -- </option>

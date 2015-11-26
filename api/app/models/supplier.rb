@@ -40,8 +40,12 @@ class Supplier < ActiveRecord::Base
 
   def as_json(options = {})
     details.as_json.merge(super).tap do |supplier|
-      (supplier['terms'] || []).map! do |terms|
-        terms.merge(terms.delete('terms'))
+      if supplier['terms'].present?
+        supplier['terms'].map! do |terms|
+          terms.merge(terms.delete('terms'))
+        end
+
+        supplier['default_terms'] = supplier['terms'].first
       end
     end
   end
