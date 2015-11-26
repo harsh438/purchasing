@@ -59,11 +59,16 @@ class SuppliersEdit extends React.Component {
     } else {
       return (
         <div>
-          <p><em>This supplier does not have any terms</em></p>
-          <button className="btn btn-success"
-                   onClick={() => this.setState({ editingTerms: true })}>
-            Add Terms
-          </button>
+          <p>
+            <em>This supplier does not have any terms</em>
+          </p>
+
+          <p>
+            <button className="btn btn-success"
+                     onClick={() => this.setState({ editingTerms: true })}>
+              Add Terms
+            </button>
+          </p>
         </div>
       );
     }
