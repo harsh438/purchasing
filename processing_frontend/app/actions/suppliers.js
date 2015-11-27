@@ -46,7 +46,7 @@ export function editSupplier(supplier) {
 }
 
 export function editSupplierContact(supplier, contact) {
-  return editSupplier({ id: supplier.id, contacts_attributes: [supplier] });
+  return editSupplier({ id: supplier.id, contacts_attributes: [contact] });
 }
 
 export function addSupplierContact(supplier, contact) {
