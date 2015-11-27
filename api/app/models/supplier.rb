@@ -39,15 +39,14 @@ class Supplier < ActiveRecord::Base
   paginates_per 50
 
   def as_json(options = {})
-    details.as_json.merge(super).tap do |supplier|
-      if supplier['terms'].present?
-        supplier['terms'].map! do |terms|
-          terms.merge(terms.delete('terms'))
-        end
-
-        supplier['default_terms'] = supplier['terms'].last
-      end
+    details.as_json.merge(super(options)).tap do |supplier|
+      supplier['terms'] = terms.last(10).map(&:as_json)
+      supplier['default_terms'] = default_terms.as_json
     end
+  end
+
+  def default_terms
+    terms.find_by(default: true)
   end
 
   def details
@@ -55,7 +54,8 @@ class Supplier < ActiveRecord::Base
   end
 
   def terms=(terms_attrs)
-    terms.build(terms_attrs)
+    terms.update_all(default: false)
+    terms.build(terms_attrs.merge(default: true))
   end
 
   private

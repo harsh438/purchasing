@@ -30,4 +30,10 @@ class SupplierTerms < ActiveRecord::Base
                               agreed_with
                               by
                               comments)
+
+  def as_json(options = {})
+    super.tap do |terms|
+      terms.merge!(terms.delete('terms'))
+    end
+  end
 end

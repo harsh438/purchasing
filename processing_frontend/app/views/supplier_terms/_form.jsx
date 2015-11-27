@@ -3,7 +3,7 @@ import { assign, get, map, omit, startCase } from 'lodash';
 
 export default class SuppliersForm extends React.Component {
   componentWillMount() {
-    this.state = { submitting: false, terms: this.props.terms };
+    this.state = { submitting: false, terms: (this.props.terms || {}) };
   }
 
   componentWillReceiveProps(nextProps) {
