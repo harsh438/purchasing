@@ -29,9 +29,9 @@ export default class SuppliersTable extends React.Component {
       return (
         <tr key={i}>
         	<td>
-          <Link to={`/suppliers/${supplier.id}/edit`}>
-            {supplier.name}
-          </Link>
+            <Link to={`/suppliers/${supplier.id}/edit`}>
+              {supplier.name}
+            </Link>
           </td>
           <td className="text-center">
             { supplier.createdAt }

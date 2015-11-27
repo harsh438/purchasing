@@ -49,28 +49,23 @@ export default class SupplierContact extends React.Component {
             <tr>
               <th>Name</th>
               <td>{ this.renderElement('name') }</td>
-            </tr>
-            <tr>
-              <th>Title</th>
-              <td>{ this.renderTitleElement() }</td>
-            </tr>
-            <tr>
               <th>Mobile</th>
               <td>{ this.renderElement('mobile') }</td>
             </tr>
             <tr>
+              <th>Title</th>
+              <td>{ this.renderTitleElement() }</td>
               <th>Landline</th>
               <td>{ this.renderElement('landline') }</td>
             </tr>
             <tr>
               <th>Email</th>
               <td>{ this.renderElement('email') }</td>
-            </tr>
-            <tr>
-              <td></td>
               <td><input type="button" className="btn btn-success" value={ this.props.submitText }
                          onClick={ this.onSubmitButton.bind(this) }
                          disabled={this.state.onSubmitCalled} /></td>
+              <td></td>
+
             </tr>
           </tbody>
         </table>
