@@ -22,7 +22,8 @@ class SuppliersEdit extends React.Component {
     return (
       <div className="suppliers_edit" style={{ marginTop: '70px' }}>
         <div className="col-xs-6">
-          <SuppliersForm submitText="Save"
+          <SuppliersForm title="Edit Supplier"
+                         submitText="Save"
                          supplier={this.props.supplier}
                          onSubmitSupplier={this.handleOnEditSupplier.bind(this)} />
         </div>
