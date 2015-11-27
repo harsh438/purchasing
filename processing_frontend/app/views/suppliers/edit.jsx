@@ -8,14 +8,13 @@ import { loadSupplier,
          saveTerms } from '../../actions/suppliers';
 import { loadSeasons } from '../../actions/filters';
 import SuppliersForm from './_form';
-import SupplierAddContact from '../suppliers_contacts/_add';
 import SupplierContacts from '../suppliers_contacts/_table';
 import SupplierTerms from '../supplier_terms/_terms';
 import SupplierTermsForm from '../supplier_terms/_form';
 
 class SuppliersEdit extends React.Component {
   componentWillMount () {
-    this.state = { editingTerms: false, addingContact: false};
+    this.state = { editingTerms: false};
     this.props.dispatch(loadSupplier(this.props.params.id));
     this.props.dispatch(loadSeasons());
   }
@@ -38,31 +37,12 @@ class SuppliersEdit extends React.Component {
               {this.renderTerms()}
             </div>
           </div>
-              { this.renderAddContact() }
           <SupplierContacts supplier={this.props.supplier}
-                            onEditContact={this.handleOnEditContact.bind(this)} />
+                            onEditContact={this.handleOnEditContact.bind(this)}
+                            onAddContact={this.handleOnAddContact.bind(this)}/>
         </div>
       </div>
     );
-  }
-
-  enableAddContact() {
-    this.setState({addingContact: true});
-  }
-
-  renderAddContact() {
-    if (this.state.addingContact) {
-      return (<SupplierAddContact supplier={this.props.supplier}
-                              onAddContact={this.handleOnAddContact.bind(this)} />)
-    } else {
-      return (
-            <div className="panel panel-default">
-              <div className="panel-body">
-                <button className="btn btn-success" onClick={this.enableAddContact.bind(this)}>Add new contact</button>
-              </div>
-            </div>
-      );
-    }
   }
 
   renderTerms() {

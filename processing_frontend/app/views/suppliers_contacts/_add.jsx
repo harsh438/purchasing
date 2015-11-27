@@ -8,16 +8,9 @@ export default class SupplierAddContact extends React.Component {
   }
 
   render() {
-    return (<div className="panel panel-default">
-              <div className="panel-heading">
-                <h3 className="panel-title">Add Contact</h3>
-              </div>
-              <div className="panel-body">
-                <SupplierContact submitText="Add Contact"
+    return (<SupplierContact submitText="Add Contact"
                                  contact={this.state.contact}
                                  onSubmitContact={this.props.onAddContact} />
-              </div>
-            </div>
     );
   }
 }
