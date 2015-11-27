@@ -28,8 +28,12 @@ module LegacyMappings
 
   def map(out, mappings, fields)
     mappings.reduce(out) do |out, (mapped, unmapped)|
-      o = { mapped.to_s => fields[unmapped.to_s] }
-      out.merge(o || {})
+      if fields.has_key?(unmapped.to_s)
+        out.delete(unmapped.to_s)
+        out.merge(mapped.to_s => fields[unmapped.to_s])
+      else
+        out
+      end
     end
   end
 end
