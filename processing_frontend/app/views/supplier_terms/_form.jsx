@@ -19,37 +19,52 @@ export default class SuppliersForm extends React.Component {
       <form className="form"
             onChange={this.handleFormChange.bind(this)}
             onSubmit={this.handleFormSubmit.bind(this)}>
-        <div className="form-group">
-          <label htmlFor="season">Season</label>
-          <select className="form-control"
-                  id="season"
-                  name="season"
-                  required
-                  value={this.getField('season')}>
-            <option value=""> -- select season -- </option>
-            {this.selectOptions(this.props.seasons)}
-          </select>
-        </div>
+        <table className="table">
+          <tbody>
+            <tr>
+              <td>
+                <label htmlFor="season">Season</label>
+              </td>
+              <td>
+                <select className="form-control"
+                        id="season"
+                        name="season"
+                        required
+                        value={this.getField('season')}>
+                  <option value=""> -- select season -- </option>
+                  {this.selectOptions(this.props.seasons)}
+                </select>
+              </td>
+            </tr>
 
-        {this.renderTextFields()}
+            {this.renderTextFields()}
 
-        <div className="form-group">
-          <label forHtml="comments">Comments</label>
-          <textarea className="form-control"
-                    id="comments"
-                    name="comments"
-                    value={this.getField('comments')} />
-        </div>
+            <tr>
+              <td>
+                <label htmlFor="comments">Comments</label>
+              </td>
+              <td>
+                <textarea className="form-control"
+                          id="comments"
+                          name="comments"
+                          value={this.getField('comments')} />
+              </td>
+            </tr>
 
-        {this.renderCheckboxField('samples')}
-        {this.renderCheckboxField('productImagery')}
+            {this.renderCheckboxField('samples')}
+            {this.renderCheckboxField('productImagery')}
 
-        <div className="form-group">
-          <button className="btn btn-success col-xs-offset-3 col-xs-6"
-                  disabled={this.state.submitting}>
-            {this.submitText()}
-          </button>
-        </div>
+            <tr>
+              <td></td>
+              <td>
+                <button className="btn btn-success col-xs-offset-3 col-xs-6"
+                        disabled={this.state.submitting}>
+                  {this.submitText()}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </form>
     );
   }
@@ -77,33 +92,39 @@ export default class SuppliersForm extends React.Component {
 
   renderTextField([field, hint], i) {
     return (
-      <div className="form-group" key={i}>
-        <label forHtml={field}>{startCase(field)}</label>
-        <input className="form-control"
-               id={field}
-               name={field}
-               placeholder={hint}
-               value={this.getField(field)} />
-      </div>
+      <tr key={i}>
+        <td>
+          <label htmlFor={field}>{startCase(field)}</label>
+        </td>
+        <td>
+          <input className="form-control"
+                 id={field}
+                 name={field}
+                 placeholder={hint}
+                 value={this.getField(field)} />
+        </td>
+      </tr>
     );
   }
 
   renderCheckboxField(field) {
     return (
-      <div className="form-group">
-        <div className="checkbox">
-          <label>
-            <input type="checkbox"
-                   name={field}
-                   value="1"
-                   className="checkbox"
-                   checked={this.getField(field)}
-                   onChange={this.handleCheckboxChange.bind(this)} />
+      <tr>
+        <td colSpan="2">
+          <div className="checkbox">
+            <label>
+              <input type="checkbox"
+                     name={field}
+                     value="1"
+                     className="checkbox"
+                     checked={this.getField(field)}
+                     onChange={this.handleCheckboxChange.bind(this)} />
 
-            {startCase(field)}
-          </label>
-        </div>
-      </div>
+              {startCase(field)}
+            </label>
+          </div>
+        </td>
+      </tr>
     );
   }
 
