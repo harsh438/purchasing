@@ -59,10 +59,6 @@ describe Sku::Generator do
       expect(subject.language_category.category).to be_a(Category)
     end
 
-    it 'should create a supplier' do
-      expect(subject.supplier).to be_a(ProductSupplier)
-    end
-
     it 'should create a language product' do
       expect(subject.language_product).to be_a(LanguageProduct)
     end
