@@ -1,6 +1,6 @@
 class Supplier::Search
   def search(params)
-    suppliers = Supplier.latest.with_details.with_contacts
+    suppliers = Supplier.latest.includes(:details, :contacts, :terms)
     suppliers = apply_filters(suppliers, params[:filters] || {})
     suppliers = suppliers.page(params[:page])
     suppliers
