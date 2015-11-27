@@ -22,7 +22,17 @@ export default class SupplierContact extends React.Component {
             </tr>
             <tr>
               <th>Title</th>
-              <td><input name="title" className="form-control" value={ this.state.contact.title } /></td>
+              <td>
+                <select name="title" className="form-control" value={ this.state.contact.title }>
+                  <option value="Sales Rep">Sales Rep</option>
+                  <option value="Country Manager">Country Manager</option>
+                  <option value="Regional Sales Director">Regional Sales Director</option>
+                  <option value="Global Sales Director">Global Sales Director</option>
+                  <option value="Regional CS Rep">Regional CS Rep</option>
+                  <option value="Regional Accounting Rep">Regional Accounting Rep</option>
+                </select>
+
+              </td>
             </tr>
             <tr>
               <th>Mobile</th>
