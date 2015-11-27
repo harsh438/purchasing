@@ -7,6 +7,7 @@ gem 'rails', '4.2.4'
 gem 'rake'
 gem 'sentry-raven'
 gem 'paperclip', '~> 4.3'
+gem 'aws-sdk'
 
 group :test do
   gem 'brakeman'                  # Always latest
