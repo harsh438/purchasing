@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { map, assign } from 'lodash';
 import { loadSupplier,
          editSupplier,
-         addSupplierContact,
-         editSupplierContact,
+         saveSupplierContact,
          saveTerms } from '../../actions/suppliers';
 import { loadSeasons } from '../../actions/filters';
 import SuppliersForm from './_form';
@@ -38,8 +37,8 @@ class SuppliersEdit extends React.Component {
             </div>
           </div>
           <SupplierContacts supplier={this.props.supplier}
-                            onEditContact={this.handleOnEditContact.bind(this)}
-                            onAddContact={this.handleOnAddContact.bind(this)}/>
+                            onEditContact={this.handleOnSaveContact.bind(this)}
+                            onAddContact={this.handleOnSaveContact.bind(this)}/>
         </div>
       </div>
     );
@@ -83,12 +82,8 @@ class SuppliersEdit extends React.Component {
     }
   }
 
-  handleOnAddContact(contact) {
-    this.props.dispatch(addSupplierContact(this.props.supplier, contact));
-  }
-
-  handleOnEditContact(contact) {
-    this.props.dispatch(editSupplierContact(this.props.supplier, contact));
+  handleOnSaveContact(contact) {
+    this.props.dispatch(saveSupplierContact(this.props.supplier, contact));
   }
 
   handleClickEditSupplier(id) {
