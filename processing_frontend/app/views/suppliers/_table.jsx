@@ -10,6 +10,7 @@ export default class SuppliersTable extends React.Component {
 					<tr>
 						<th>Name</th>
             <th className="text-center">Created</th>
+            <th className="text-center">Updated</th>
             <th className="text-center">Discontinued</th>
 						<th className="text-center">Action</th>
 					</tr>
@@ -34,6 +35,9 @@ export default class SuppliersTable extends React.Component {
           </td>
           <td className="text-center">
             { supplier.createdAt }
+          </td>
+          <td className="text-center">
+            { supplier.updatedAt }
           </td>
           <td className="text-center">{ supplier.discontinued ? '✘' : '' }</td>
         	<td className="text-center">
