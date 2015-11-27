@@ -12,23 +12,30 @@ class Sku::Generator
 
   private
 
+  def product
+    @product ||= Product.create(product_attrs)
+  end
+
+  def option
+    @option ||= Option.create(option_attrs)
+  end
+
+  def category
+    @category ||= Category.create(category_attrs)
+  end
+
+  def element
+    @element ||= Element.create(element_attrs)
+  end
+
   def generate_new_sku
-    product = Product.create(product_attrs)
-    option = Option.create(option_attrs(product))
-    category = Category.create(category_attrs)
-    element = Element.create(element_attrs)
+    language_product_option = LanguageProductOption.create(product_option_attrs)
 
-    language_product_option = LanguageProductOption.create(product_option_attrs(product,
-                                                                                option,
-                                                                                element))
+    language_product = LanguageProduct.create(language_product_attrs)
 
-    language_product = LanguageProduct.create(language_product_attrs(product))
+    language_category = LanguageCategory.create(language_category_attrs)
 
-    language_category = LanguageCategory.create(language_category_attrs(category))
-
-    Sku.create(sku_attrs(product,
-                         element,
-                         language_product_option,
+    Sku.create(sku_attrs(language_product_option,
                          language_category,
                          language_product))
   end
@@ -37,7 +44,7 @@ class Sku::Generator
     @attrs
   end
 
-  def sku_attrs(product, element, language_product_option, language_category, language_product)
+  def sku_attrs(language_product_option, language_category, language_product)
     attrs.merge!({ product_id: product.id,
                    language_product_id: language_product.id,
                    element_id: element.id,
@@ -49,19 +56,19 @@ class Sku::Generator
     { name: '' }
   end
 
-  def product_option_attrs(product, option, element)
+  def product_option_attrs
     { language_id: 1,
       product_id: product.id,
       option_id: option.id,
       element_id: element.id }
   end
 
-  def language_category_attrs(category)
+  def language_category_attrs
     { language_id: 1,
       category_id: category.id }
   end
 
-  def language_product_attrs(product)
+  def language_product_attrs
     { name: attrs[:name] || '',
       product_id: product.id,
       language_id: 1,
@@ -80,7 +87,7 @@ class Sku::Generator
     { parent_id: 0 }
   end
 
-  def option_attrs(product)
+  def option_attrs
     { product_id: product.id,
       name: attrs[:manufacturer_sku] }
   end
