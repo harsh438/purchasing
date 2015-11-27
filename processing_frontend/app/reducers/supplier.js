@@ -4,11 +4,13 @@ import { camelizeKeys } from '../utilities/inspection';
 const initialState =  { supplier: {}, suppliers: [] };
 
 function transformSupplier(supplier) {
+  supplier.defaultTerms = camelizeKeys(supplier.default_terms);
+  supplier.terms = map(supplier.terms, camelizeKeys);
   return camelizeKeys(supplier);
 }
 
-function transformSuppliers(orders) {
-  return map(orders, (o) => camelizeKeys(o));
+function transformSuppliers(suppliers) {
+  return map(suppliers, transformSupplier);
 }
 
 function setSuppliers(state, results) {

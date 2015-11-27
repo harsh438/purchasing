@@ -3,14 +3,14 @@ import { assign, get, map, omit, startCase } from 'lodash';
 
 export default class SuppliersForm extends React.Component {
   componentWillMount() {
-    this.state = assign({ submitting: false }, this.props.terms);
+    this.state = { submitting: false, terms: this.props.terms };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ submitting: false });
 
     if (nextProps.terms) {
-      this.setState(nextProps.terms);
+      this.setState({ terms: nextProps.terms });
     }
   }
 
@@ -24,6 +24,7 @@ export default class SuppliersForm extends React.Component {
           <select className="form-control"
                   id="season"
                   name="season"
+                  required
                   value={this.getField('season')}>
             <option value=""> -- select season -- </option>
             {this.selectOptions(this.props.seasons)}
@@ -118,9 +119,9 @@ export default class SuppliersForm extends React.Component {
     switch (field) {
       case 'samples':
       case 'productImagery':
-        return this.state[field] === '1';
+        return this.state.terms[field] === '1';
       default:
-        return get(this.state, field, '');
+        return get(this.state.terms, field, '');
     }
   }
 
@@ -133,7 +134,8 @@ export default class SuppliersForm extends React.Component {
   }
 
   handleFormChange({ target }) {
-    this.setState({ [target.name]: target.value });
+    const terms = assign({}, this.state.terms, { [target.name]: target.value });
+    this.setState({ terms });
   }
 
   handleCheckboxChange(e) {
@@ -149,6 +151,6 @@ export default class SuppliersForm extends React.Component {
   handleFormSubmit(e) {
     e.preventDefault();
     this.setState({ submitting: true });
-    this.props.onFormSubmit(this.state);
+    this.props.onFormSubmit(this.state.terms);
   }
 }
