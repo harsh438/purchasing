@@ -10,7 +10,9 @@ export default class SupplierAddContact extends React.Component {
   render() {
     return (<SupplierContact submitText="Add Contact"
                                  contact={this.state.contact}
-                                 onSubmitContact={this.props.onAddContact} />
+                                 onSubmitContact={this.props.onAddContact}
+                                 editableByDefault={true}
+                                 />
     );
   }
 }
