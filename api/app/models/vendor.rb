@@ -11,6 +11,6 @@ class Vendor < ActiveRecord::Base
                  name: :venCompany
 
   def self.relevant
-     where('venID in (select distinct orderTool_venId from purchase_orders)')
+    where('venID in (select distinct orderTool_venId from purchase_orders)')
   end
 end
