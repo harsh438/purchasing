@@ -49,8 +49,7 @@ class SuppliersIndex extends React.Component {
 
                 <hr style={{ clear: 'both' }} />
 
-                <SuppliersTable suppliers={this.props.suppliers}
-                                onEditSupplierButton={this.handleClickEditSupplier.bind(this)} />
+                <SuppliersTable suppliers={this.props.suppliers}/>
 
                               <NumberedPagination activePage={this.props.activePage || 1}
                                     index={this}
@@ -65,10 +64,6 @@ class SuppliersIndex extends React.Component {
 
   loadPage(page = this.props.location.query.page, filters = this.props.location.query.filters) {
     this.props.dispatch(loadSuppliers({ filters, page }));
-  }
-
-  handleClickEditSupplier(id) {
-    this.props.history.pushState(null, `/suppliers/${id}/edit`);
   }
 
   handleFilterSuppliers(filters) {
