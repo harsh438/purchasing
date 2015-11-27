@@ -17,27 +17,29 @@ class Sku::Generator
     option = Option.create(option_attrs(product))
     category = Category.create(category_attrs)
     element = Element.create(element_attrs)
-    supplier = Supplier.create(supplier_attrs)
 
+    language_product_option = LanguageProductOption.create(product_option_attrs(product,
+                                                                                option,
+                                                                                element))
 
-    language_product_option = LanguageProductOption.create(product_option_attrs(product, option, element))
+    language_product = LanguageProduct.create(language_product_attrs(product))
 
-    language_category = LanguageCategory.create(product_category_attrs(category))
-
-    product_supplier = ProductSupplier.create(product_supplier_attrs(product, supplier))
+    language_category = LanguageCategory.create(language_category_attrs(category))
 
     Sku.create(sku_attrs(product,
                          element,
                          language_product_option,
-                         language_category))
+                         language_category,
+                         language_product))
   end
 
   def attrs
     @attrs
   end
 
-  def sku_attrs(product, element, language_product_option, language_category)
+  def sku_attrs(product, element, language_product_option, language_category, language_product)
     attrs.merge!({ product_id: product.id,
+                   language_product_id: language_product.id,
                    element_id: element.id,
                    option_id: language_product_option.id,
                    category_id: language_category.id })
@@ -54,9 +56,18 @@ class Sku::Generator
       element_id: element.id }
   end
 
-  def product_category_attrs(category)
+  def language_category_attrs(category)
     { language_id: 1,
       category_id: category.id }
+  end
+
+  def language_product_attrs(product)
+    { name: attrs[:name] || '',
+      product_id: product.id,
+      language_id: 1,
+      teaser: '',
+      description: '',
+      email_display: '' }
   end
 
   def product_attrs
@@ -64,16 +75,6 @@ class Sku::Generator
       price: attrs[:price],
       on_sale: attrs[:on_sale] || '' }
   end
-
-  def supplier_attrs
-    { name: attrs[:supplier_name] || '' }
-  end
-
-  def product_supplier_attrs(product, supplier)
-    { product_id: product.id,
-      supplier_id: supplier.id }
-  end
-
 
   def category_attrs
     { parent_id: 0 }
