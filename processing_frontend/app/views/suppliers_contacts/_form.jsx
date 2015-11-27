@@ -2,10 +2,11 @@ import React from 'react';
 
 export default class SupplierContact extends React.Component {
   componentWillMount() {
-    this.state = this.props.contact || {};
+    this.state = {contact: this.props.contact, onSubmitCalled: false};
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({onSubmitCalled: false});
   }
 
 
@@ -17,28 +18,29 @@ export default class SupplierContact extends React.Component {
           <tbody>
             <tr>
               <th>Name</th>
-              <td><input name="name" className="form-control" value={ this.state.name } /></td>
+              <td><input name="name" className="form-control" value={ this.state.contact.name } /></td>
             </tr>
             <tr>
               <th>Title</th>
-              <td><input name="title" className="form-control" value={ this.state.title } /></td>
+              <td><input name="title" className="form-control" value={ this.state.contact.title } /></td>
             </tr>
             <tr>
               <th>Mobile</th>
-              <td><input name="mobile" className="form-control" value={ this.state.mobile } /></td>
+              <td><input name="mobile" className="form-control" value={ this.state.contact.mobile } /></td>
             </tr>
             <tr>
               <th>Landline</th>
-              <td><input name="landline" className="form-control" value={ this.state.landline } /></td>
+              <td><input name="landline" className="form-control" value={ this.state.contact.landline } /></td>
             </tr>
             <tr>
               <th>Email</th>
-              <td><input name="email" className="form-control" value={ this.state.email } /></td>
+              <td><input name="email" className="form-control" value={ this.state.contact.email } /></td>
             </tr>
             <tr>
               <td></td>
               <td><input type="button" className="btn btn-success" value={ this.props.submitText }
-                         onClick={ () => this.props.onSubmitContact(this.state) }/></td>
+                         onClick={ this.onSubmitButton.bind(this) }
+                         disabled={this.state.onSubmitCalled} /></td>
             </tr>
           </tbody>
         </table>
@@ -47,7 +49,13 @@ export default class SupplierContact extends React.Component {
     </div>);
   }
 
+  onSubmitButton() {
+    this.setState({onSubmitCalled: true});
+    this.props.onSubmitContact(this.state.contact);
+  }
+
   handleFormChange ({ target }) {
-    this.setState({ [target.name]: target.value });
+    this.state.contact[target.name] = target.value;
+    this.setState({contact: this.state.contact});
   }
 }
