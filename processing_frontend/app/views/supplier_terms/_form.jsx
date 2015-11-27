@@ -34,7 +34,7 @@ export default class SuppliersForm extends React.Component {
         {this.renderTextFields()}
 
         <div className="form-group">
-          <label forHtml="comments">Comments</label>
+          <label htmlFor="comments">Comments</label>
           <textarea className="form-control"
                     id="comments"
                     name="comments"
@@ -78,7 +78,7 @@ export default class SuppliersForm extends React.Component {
   renderTextField([field, hint], i) {
     return (
       <div className="form-group" key={i}>
-        <label forHtml={field}>{startCase(field)}</label>
+        <label htmlFor={field}>{startCase(field)}</label>
         <input className="form-control"
                id={field}
                name={field}

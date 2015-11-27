@@ -23,7 +23,7 @@ export default class SuppliersFilters extends React.Component {
             onSubmit={this.handleFormSubmit.bind(this)}>
         <div className="row no_gutter">
           <div className="form-group col-md-2">
-            <label forHtml="supplier_name">Supplier Name</label>
+            <label htmlFor="supplier_name">Supplier Name</label>
             <input className="form-control"
                    id="supplier_name"
                    name="name"

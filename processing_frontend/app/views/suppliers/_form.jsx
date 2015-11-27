@@ -28,7 +28,7 @@ export default class SuppliersForm extends React.Component {
               <table className="table">
                 <tbody>
                   <tr>
-                    <td><label forHtml="supplier_name">Name</label></td>
+                    <td><label htmlFor="supplier_name">Name</label></td>
                     <td><input className="form-control"
                            id="supplier_name"
                            name="name"
@@ -37,7 +37,7 @@ export default class SuppliersForm extends React.Component {
                            value={this.state.name} /></td>
                   </tr>
                   <tr>
-                      <td><label forHtml="return_address_name">Address Name</label></td>
+                      <td><label htmlFor="return_address_name">Address Name</label></td>
                       <td><input className="form-control"
                              id="returns_address_name"
                              name="returns_address_name"
@@ -46,7 +46,7 @@ export default class SuppliersForm extends React.Component {
                              value={this.state.returnsAddressName} /></td>
                   </tr>
                   <tr>
-                      <td><label forHtml="return_address_name">Address Number</label></td>
+                      <td><label htmlFor="return_address_name">Address Number</label></td>
                       <td><input className="form-control"
                              id="returns_address_number"
                              name="returns_address_number"
@@ -54,7 +54,7 @@ export default class SuppliersForm extends React.Component {
                              value={this.state.returnsAddressNumber} /></td>
                   </tr>
                   <tr>
-                      <td><label forHtml="return_address_1">Returns Address Line 1</label></td>
+                      <td><label htmlFor="return_address_1">Returns Address Line 1</label></td>
                       <td><input className="form-control"
                              id="returns_address_1"
                              name="returns_address_1"
@@ -62,7 +62,7 @@ export default class SuppliersForm extends React.Component {
                              value={this.state.returnsAddress1} /></td>
                   </tr>
                   <tr>
-                      <td><label forHtml="returns_address_2">Returns Address Line 2</label></td>
+                      <td><label htmlFor="returns_address_2">Returns Address Line 2</label></td>
                       <td><input className="form-control"
                              id="returns_address_2"
                              name="returns_address_2"
@@ -70,7 +70,7 @@ export default class SuppliersForm extends React.Component {
                              value={this.state.returnsAddress2} /></td>
                   </tr>
                   <tr>
-                      <td><label forHtml="returns_address_3">Returns Address Line 3</label></td>
+                      <td><label htmlFor="returns_address_3">Returns Address Line 3</label></td>
                       <td><input className="form-control"
                              id="returns_address_3"
                              name="returns_address_3"
@@ -78,7 +78,7 @@ export default class SuppliersForm extends React.Component {
                              value={this.state.returnsAddress3} /></td>
                   </tr>
                   <tr>
-                      <td><label forHtml="return_address_name">Returns Postal Code</label></td>
+                      <td><label htmlFor="return_address_name">Returns Postal Code</label></td>
                       <td><input className="form-control"
                              id="returns_postal_code"
                              name="returns_postal_code"
@@ -86,7 +86,7 @@ export default class SuppliersForm extends React.Component {
                              value={this.state.returnsPostalCode} /></td>
                   </tr>
                   <tr>
-                      <td><label forHtml="returns_process">Return Process</label></td>
+                      <td><label htmlFor="returns_process">Return Process</label></td>
                       <td><input className="form-control"
                              id="returns_process"
                              name="returns_process"
@@ -94,7 +94,7 @@ export default class SuppliersForm extends React.Component {
                              value={this.state.returnsProcess} /></td>
                   </tr>
                   <tr>
-                      <td><label forHtml="invoicer_name">Invoicer Name</label></td>
+                      <td><label htmlFor="invoicer_name">Invoicer Name</label></td>
                       <td><input className="form-control"
                              id="invoicer_name"
                              name="invoicer_name"
@@ -102,7 +102,7 @@ export default class SuppliersForm extends React.Component {
                              value={this.state.invoicerName} /></td>
                   </tr>
                   <tr>
-                      <td><label forHtml="account_number">Account Number</label></td>
+                      <td><label htmlFor="account_number">Account Number</label></td>
                       <td><input className="form-control"
                              id="account_number"
                              name="account_number"
@@ -110,7 +110,7 @@ export default class SuppliersForm extends React.Component {
                              value={this.state.accountNumber} /></td>
                   </tr>
                   <tr>
-                      <td><label forHtml="country_of_origin">Country Of Origin</label></td>
+                      <td><label htmlFor="country_of_origin">Country Of Origin</label></td>
                       <td><input className="form-control"
                              id="country_of_origin"
                              name="country_of_origin"
