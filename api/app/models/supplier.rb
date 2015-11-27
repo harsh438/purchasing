@@ -45,7 +45,7 @@ class Supplier < ActiveRecord::Base
           terms.merge(terms.delete('terms'))
         end
 
-        supplier['default_terms'] = supplier['terms'].first
+        supplier['default_terms'] = supplier['terms'].last
       end
     end
   end

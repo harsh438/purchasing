@@ -11,24 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151125130112) do
-  create_table "ds_categories", primary_key: "catID", force: :cascade do |t|
-     t.integer "parentID",         limit: 4,     default: 0,      null: false
-     t.integer "catSort",          limit: 4,     default: 0,      null: false
-     t.string  "catPhoto",         limit: 200,   default: "",     null: false
-     t.integer "catPhotoWidth",    limit: 4,     default: 0,      null: false
-     t.integer "catPhotoHeight",   limit: 4,     default: 0,      null: false
-     t.string  "catHide",          limit: 1,     default: "",     null: false
-     t.text    "meta_description", limit: 65535
-     t.text    "meta_keywords",    limit: 65535
-     t.string  "meta_title",       limit: 200
-     t.string  "catViewType",      limit: 15,    default: "grid", null: false
-     t.integer "catGridColumns",   limit: 4,     default: 3,      null: false
-   end
+ActiveRecord::Schema.define(version: 20151127110659) do
 
-   add_index "ds_categories", ["catHide"], name: "catHide", using: :btree
-   add_index "ds_categories", ["catSort"], name: "catSort", using: :btree
-   add_index "ds_categories", ["parentID"], name: "parentID", using: :btree
+  create_table "ds_categories", primary_key: "catID", force: :cascade do |t|
+    t.integer "parentID",         limit: 4,     default: 0,      null: false
+    t.integer "catSort",          limit: 4,     default: 0,      null: false
+    t.string  "catPhoto",         limit: 200,   default: "",     null: false
+    t.integer "catPhotoWidth",    limit: 4,     default: 0,      null: false
+    t.integer "catPhotoHeight",   limit: 4,     default: 0,      null: false
+    t.string  "catHide",          limit: 1,     default: "",     null: false
+    t.text    "meta_description", limit: 65535
+    t.text    "meta_keywords",    limit: 65535
+    t.string  "meta_title",       limit: 200
+    t.string  "catViewType",      limit: 15,    default: "grid", null: false
+    t.integer "catGridColumns",   limit: 4,     default: 3,      null: false
+  end
+
+  add_index "ds_categories", ["catHide"], name: "catHide", using: :btree
+  add_index "ds_categories", ["catSort"], name: "catSort", using: :btree
+  add_index "ds_categories", ["parentID"], name: "parentID", using: :btree
+
   create_table "ds_language_categories", force: :cascade do |t|
     t.integer "langID",  limit: 4,   default: 0,  null: false
     t.integer "catID",   limit: 4,   default: 0,  null: false
@@ -185,7 +187,7 @@ ActiveRecord::Schema.define(version: 20151125130112) do
   add_index "ds_products", ["giftCert"], name: "giftCert", using: :btree
   add_index "ds_products", ["invLevel"], name: "invLevel", using: :btree
   add_index "ds_products", ["invTrack", "invLevel"], name: "idx_invTrack_oInvLevel", using: :btree
-  add_index "ds_products", ["meta_keywords"], name: "metakeywords", using: :btree
+  add_index "ds_products", ["meta_keywords"], name: "metakeywords", length: {"meta_keywords"=>255}, using: :btree
   add_index "ds_products", ["pContainerType"], name: "pContainerType", using: :btree
   add_index "ds_products", ["pFirstClassMailType"], name: "bestseller", using: :btree
   add_index "ds_products", ["pFlag"], name: "pFlag", using: :btree
@@ -423,24 +425,25 @@ ActiveRecord::Schema.define(version: 20151125130112) do
   add_index "sd_product_details", ["volumeLine"], name: "volumeline", using: :btree
 
   create_table "skus", force: :cascade do |t|
-    t.string   "sku",                limit: 255
-    t.string   "manufacturer_sku",   limit: 255
-    t.string   "season",             limit: 255
-    t.integer  "product_id",         limit: 4
-    t.integer  "option_id",          limit: 4
-    t.integer  "element_id",         limit: 4
+    t.string   "sku",                 limit: 255
+    t.string   "manufacturer_sku",    limit: 255
+    t.string   "season",              limit: 255
+    t.integer  "product_id",          limit: 4
+    t.integer  "option_id",           limit: 4
+    t.integer  "element_id",          limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "manufacturer_color", limit: 255
-    t.string   "manufacturer_size",  limit: 255
-    t.string   "color",              limit: 255
-    t.string   "size",               limit: 255
-    t.string   "color_family",       limit: 255
-    t.string   "size_scale",         limit: 255
-    t.decimal  "cost_price",                     precision: 8, scale: 2
-    t.decimal  "list_price",                     precision: 8, scale: 2
-    t.decimal  "price",                          precision: 8, scale: 2
-    t.integer  "category_id",        limit: 4
+    t.string   "manufacturer_color",  limit: 255
+    t.string   "manufacturer_size",   limit: 255
+    t.string   "color",               limit: 255
+    t.string   "size",                limit: 255
+    t.string   "color_family",        limit: 255
+    t.string   "size_scale",          limit: 255
+    t.decimal  "cost_price",                      precision: 8, scale: 2
+    t.decimal  "list_price",                      precision: 8, scale: 2
+    t.decimal  "price",                           precision: 8, scale: 2
+    t.integer  "category_id",         limit: 4
+    t.integer  "language_product_id", limit: 4
   end
 
   add_index "skus", ["sku"], name: "index_skus_on_sku", using: :btree
@@ -499,7 +502,7 @@ ActiveRecord::Schema.define(version: 20151125130112) do
   end
 
   add_index "suppliers", ["SupplierID"], name: "sadsad", using: :btree
-  add_index "suppliers", ["SupplierName"], name: "qewqwqe", using: :btree
+  add_index "suppliers", ["SupplierName"], name: "qewqwqe", length: {"SupplierName"=>255}, using: :btree
 
   create_table "suppliers_to_brands", primary_key: "SupplierToBrandsID", force: :cascade do |t|
     t.integer "BrandID",    limit: 4

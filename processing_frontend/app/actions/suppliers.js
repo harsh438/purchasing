@@ -33,16 +33,16 @@ export function loadSuppliers(query) {
 }
 
 export function editSupplier(supplier) {
-    let id = supplier.id || supplier.supplier_id;
-    if (!id) { return }
-    return dispatch => {
-      fetch(`/api/suppliers/${id}.json`, { credentials: 'same-origin',
-                                                method: 'PATCH',
-                                                headers: { 'Content-Type': 'application/json' },
-                                                body: JSON.stringify({ supplier: snakeizeKeys(supplier) }) })
-      .then(response => response.json())
-      .then(results=> dispatch({ supplier: results, type: 'SET_SUPPLIER' }));
-    }
+  let id = supplier.id || supplier.supplier_id;
+  if (!id) { return }
+  return dispatch => {
+    fetch(`/api/suppliers/${id}.json`, { credentials: 'same-origin',
+                                         method: 'PATCH',
+                                         headers: { 'Content-Type': 'application/json' },
+                                         body: JSON.stringify({ supplier: snakeizeKeys(supplier) }) })
+    .then(response => response.json())
+    .then(results=> dispatch({ supplier: results, type: 'SET_SUPPLIER' }));
+  };
 }
 
 export function editSupplierContact(supplier, contact) {
@@ -59,4 +59,8 @@ export function addSupplierContact(supplier, contact) {
   supplier.contacts_attributes = JSON.parse(JSON.stringify(supplier.contacts || []));
   supplier.contacts_attributes.unshift(contact);
   return editSupplier(supplier);
+}
+
+export function saveTerms(id, terms) {
+  return editSupplier({ id, terms: snakeizeKeys(terms) });
 }

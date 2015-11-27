@@ -1,11 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { map, assign } from 'lodash';
+import { loadSupplier,
+         editSupplier,
+         addSupplierContact,
+         editSupplierContact,
+         saveTerms } from '../../actions/suppliers';
+import { loadSeasons } from '../../actions/filters';
 import SuppliersForm from './_form';
-import { loadSupplier, editSupplier, addSupplierContact, editSupplierContact } from '../../actions/suppliers';
 import SupplierAddContact from '../suppliers_contacts/_add';
 import SupplierContacts from '../suppliers_contacts/_table';
-import { loadSeasons } from '../../actions/filters';
 import SupplierTerms from '../supplier_terms/_terms';
 import SupplierTermsForm from '../supplier_terms/_form';
 
@@ -66,11 +70,20 @@ class SuppliersEdit extends React.Component {
       return (
         <SupplierTermsForm terms={this.props.supplier.defaultTerms}
                            seasons={this.props.seasons}
-                           onFormSubmit={() => null} />
+                           onFormSubmit={this.handleSaveTerms.bind(this)} />
       );
     } else if (this.props.supplier.defaultTerms) {
       return (
-        <SupplierTerms terms={this.props.supplier.defaultTerms} />
+        <div>
+          <SupplierTerms terms={this.props.supplier.defaultTerms} />
+
+          <p>
+            <button className="btn btn-success"
+                     onClick={() => this.setState({ editingTerms: true })}>
+              Edit Terms
+            </button>
+          </p>
+        </div>
       );
     } else {
       return (
@@ -81,7 +94,7 @@ class SuppliersEdit extends React.Component {
 
           <p>
             <button className="btn btn-success"
-                     onClick={() => this.setState({ editingTerms: true })}>
+                    onClick={() => this.setState({ editingTerms: true })}>
               Add Terms
             </button>
           </p>
@@ -104,6 +117,11 @@ class SuppliersEdit extends React.Component {
 
   handleOnEditSupplier(supplier) {
     this.props.dispatch(editSupplier(supplier));
+  }
+
+  handleSaveTerms(terms) {
+    this.setState({ editingTerms: false });
+    this.props.dispatch(saveTerms(this.props.supplier.id, terms));
   }
 }
 
