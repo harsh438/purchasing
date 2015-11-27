@@ -46,19 +46,11 @@ export function editSupplier(supplier) {
 }
 
 export function editSupplierContact(supplier, contact) {
-  supplier.contacts_attributes = [...supplier.contacts || []]
-  supplier.contacts_attributes.forEach( (c,i) => {
-    if (c.id === contact.id) {
-      supplier.contacts_attributes[i] = contact;
-    }
-  });
-  return editSupplier(supplier);
+  return editSupplier({ id: supplier.id, contacts_attributes: [supplier] });
 }
 
 export function addSupplierContact(supplier, contact) {
-  supplier.contacts_attributes = JSON.parse(JSON.stringify(supplier.contacts || []));
-  supplier.contacts_attributes.unshift(contact);
-  return editSupplier(supplier);
+  return editSupplier({ id: supplier.id, contacts_attributes: [contact] });
 }
 
 export function saveTerms(id, terms) {
