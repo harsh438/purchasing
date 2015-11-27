@@ -23,7 +23,7 @@ export default class SupplierContacts extends React.Component {
   renderContacts() {
     var contacts = ((this.props.supplier || {}).contacts || []).reverse();
     if (contacts.length === 0) {
-      return <b>No Contacts for this supplier</b>
+      return <i>No contacts for this supplier</i>
     }
     return map(contacts, (contact, i) => {
       return (

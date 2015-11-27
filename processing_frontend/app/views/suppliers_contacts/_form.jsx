@@ -11,8 +11,7 @@ export default class SupplierContact extends React.Component {
 
 
   render () {
-    return (<div className="panel panel-default">
-      <div className="panel-body">
+    return (
       <form onChange={this.handleFormChange.bind(this)}>
         <table className="table">
           <tbody>
@@ -54,9 +53,7 @@ export default class SupplierContact extends React.Component {
             </tr>
           </tbody>
         </table>
-      </form>
-    </div>
-    </div>);
+      </form>);
   }
 
   onSubmitButton() {
