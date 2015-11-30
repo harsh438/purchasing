@@ -23,15 +23,12 @@ class SuppliersController < ApplicationController
   private
 
   def supplier_attrs
-    params.require(:supplier).permit(:id, :name,
-                                     :returns_address_name,
-                                     :returns_address_number,
-                                     :returns_address_1,
-                                     :returns_address_2,
-                                     :returns_address_3,
-                                     :returns_postal_code,
-                                     :returns_process,
-                                     terms: [:season, :confirmation, :confirmation_file_name] + SupplierTerms.stored_attributes[:terms])
+    params.require(:supplier).permit(:id, :name, :returns_address_name,
+                                     :returns_address_number, :returns_address_1,
+                                     :returns_address_2, :returns_address_3,
+                                     :returns_postal_code, :returns_process,
+                                     terms: [:season, :confirmation, :confirmation_file_name] +
+                                       SupplierTerms.stored_attributes[:terms])
   end
 
   def supplier_details_attrs
