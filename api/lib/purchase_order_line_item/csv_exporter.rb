@@ -56,7 +56,7 @@ class PurchaseOrderLineItem::CsvExporter
   end
 
   def row_data(purchase_order)
-    data = purchase_order.as_json(unit: '')
+    data = purchase_order.as_json(unit: '').with_indifferent_access
     data.values_at(*CSV_COLUMN_ORDER)
   end
 end
