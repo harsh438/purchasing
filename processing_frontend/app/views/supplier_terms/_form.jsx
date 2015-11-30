@@ -22,7 +22,7 @@ export default class SuppliersForm extends React.Component {
     reader.onload = function(upload) {
       let terms = self.state.terms;
       terms.confirmation = upload.target.result;
-      terms.confirmationFileName = 'lolz';
+      terms.confirmationFileName = file.name;
       self.setState({ terms: terms });
     }
 
@@ -71,7 +71,7 @@ export default class SuppliersForm extends React.Component {
 
             <tr>
               <td>
-               <input name="confirmation" type="file" accept="image/*" onChange={this.handleFile.bind(this)} />
+               <input name="confirmation" type="file"  onChange={this.handleFile.bind(this)} />
               </td>
             </tr>
             <tr>
