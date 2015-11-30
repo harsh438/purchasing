@@ -1,3 +1,5 @@
+require 'pp'
+
 class SupplierTerms < ActiveRecord::Base
   belongs_to :supplier
 
@@ -34,6 +36,12 @@ class SupplierTerms < ActiveRecord::Base
   def as_json(options = {})
     super.tap do |terms|
       terms.merge!(terms.delete('terms'))
+    end
+  end
+
+  def as_json_with_url(term = {})
+    as_json.tap do |term|
+      term['confirmation_url'] = confirmation.url
     end
   end
 end

@@ -14,6 +14,21 @@ export default class SuppliersForm extends React.Component {
     }
   }
 
+  handleFile (e) {
+    var self = this;
+    var reader = new FileReader();
+    var file = e.target.files[0];
+
+    reader.onload = function(upload) {
+      let terms = self.state.terms;
+      terms.confirmation = upload.target.result;
+      terms.confirmationFileName = 'lolz';
+      self.setState({ terms: terms });
+    }
+
+    reader.readAsDataURL(file);
+  }
+
   render() {
     return (
       <form className="form"
@@ -55,6 +70,11 @@ export default class SuppliersForm extends React.Component {
             {this.renderCheckboxField('productImagery')}
 
             <tr>
+              <td>
+               <input name="confirmation" type="file" accept="image/*" onChange={this.handleFile.bind(this)} />
+              </td>
+            </tr>
+            <tr>
               <td></td>
               <td>
                 <button className="btn btn-success col-xs-offset-3 col-xs-6"
@@ -63,6 +83,7 @@ export default class SuppliersForm extends React.Component {
                 </button>
               </td>
             </tr>
+
           </tbody>
         </table>
       </form>
@@ -115,7 +136,6 @@ export default class SuppliersForm extends React.Component {
             <label>
               <input type="checkbox"
                      name={field}
-                     value="1"
                      className="checkbox"
                      checked={this.getField(field)}
                      onChange={this.handleCheckboxChange.bind(this)} />
@@ -162,11 +182,8 @@ export default class SuppliersForm extends React.Component {
   handleCheckboxChange(e) {
     e.stopPropagation();
 
-    if (e.target.checked) {
-      this.handleFormChange(e);
-    } else {
-      this.setState({ [e.target.name]: '0' });
-    }
+    this.state.terms[e.target.name] = '' + (0+e.target.checked);
+    this.setState({ terms: this.state.terms });
   }
 
   handleFormSubmit(e) {

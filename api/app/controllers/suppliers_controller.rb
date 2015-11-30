@@ -1,3 +1,5 @@
+require 'pp'
+
 class SuppliersController < ApplicationController
   def index
     suppliers = Supplier::Search.new.search(params)
@@ -23,7 +25,7 @@ class SuppliersController < ApplicationController
   private
 
   def supplier_attrs
-    params.require(:supplier).permit(:name,
+    params.require(:supplier).permit(:id, :name,
                                      :returns_address_name,
                                      :returns_address_number,
                                      :returns_address_1,
@@ -31,7 +33,7 @@ class SuppliersController < ApplicationController
                                      :returns_address_3,
                                      :returns_postal_code,
                                      :returns_process,
-                                     terms: [:season, :confirmation] + SupplierTerms.stored_attributes[:terms])
+                                     terms: [:id, :season, :confirmation] + SupplierTerms.stored_attributes[:terms])
   end
 
   def supplier_details_attrs

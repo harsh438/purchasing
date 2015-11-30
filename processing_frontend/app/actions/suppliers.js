@@ -50,5 +50,7 @@ export function saveSupplierContact(supplier, contact) {
 }
 
 export function saveTerms(id, terms) {
-  return editSupplier({ id, terms: snakeizeKeys(terms) });
+  let term = snakeizeKeys(terms);
+  delete term.id;
+  return editSupplier({ id, terms:  term});
 }

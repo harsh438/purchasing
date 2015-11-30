@@ -22,7 +22,9 @@ export default class SupplierTerms extends React.Component {
                    'samples',
                    'productImagery',
                    'by',
-                   'comments'];
+                   'comments',
+                   'confirmationFile'
+                   ];
   }
 
   render() {
@@ -56,7 +58,13 @@ export default class SupplierTerms extends React.Component {
     switch (field) {
       case 'samples':
       case 'productImagery':
-        return this.props.terms[field] ? '✔' : '✘';
+        return this.props.terms[field] === '0' ? '✘' : '✔';
+      case 'confirmationFile':
+        if (this.props.terms['confirmationUrl']) {
+          return <a href={this.props.terms['confirmationUrl']} className="btn btn-default">
+            <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>&nbsp;Download '{this.props.terms['confirmationFileName']}'
+          </a>;
+        }
       default:
         return this.props.terms[field];
     }
