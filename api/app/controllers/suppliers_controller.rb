@@ -33,7 +33,7 @@ class SuppliersController < ApplicationController
                                      :returns_address_3,
                                      :returns_postal_code,
                                      :returns_process,
-                                     terms: [:id, :season, :confirmation] + SupplierTerms.stored_attributes[:terms])
+                                     terms: [:season, :confirmation] + SupplierTerms.stored_attributes[:terms])
   end
 
   def supplier_details_attrs
