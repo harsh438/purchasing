@@ -1,5 +1,6 @@
 require File.join(File.dirname(__FILE__), 'support/rails')
 require 'json'
+require 'webmock/rspec'
 
 Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
 
