@@ -46,7 +46,11 @@ class Supplier < ActiveRecord::Base
     as_json.tap do |supplier|
       supplier['contacts'] = contacts.map(&:as_json)
       supplier['terms'] = terms.last(10).map(&:as_json_with_url)
-      supplier['default_terms'] = default_terms.as_json_with_url
+      if default_terms
+        supplier['default_terms'] = default_terms.as_json_with_url
+      else
+        supplier['default_terms'] = nil
+      end
     end
   end
 
