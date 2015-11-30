@@ -71,6 +71,9 @@ export default class SuppliersForm extends React.Component {
 
             <tr>
               <td>
+                <label htmlFor="confirmation">Confirmation file</label>
+              </td>
+              <td>
                <input name="confirmation" type="file"  onChange={this.handleFile.bind(this)} />
               </td>
             </tr>
