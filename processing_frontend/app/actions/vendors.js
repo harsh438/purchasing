@@ -42,7 +42,7 @@ export function editVendor(vendor) {
                                                     }) })
 
     .then(response => response.json())
-    .then(results => dispatch({ vendor: results, type: 'SET_VENDOR' }));
+    .then(vendor => dispatch({ vendor, type: 'SET_VENDOR' }));
   };
 }
 
