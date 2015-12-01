@@ -1,21 +1,41 @@
 import React from 'react';
 import DropZone from 'react-dropzone';
-import { assign, get, map, omit, startCase } from 'lodash';
+import { assign, get, map, omit, startCase, pick } from 'lodash';
 
 export default class SuppliersForm extends React.Component {
   componentWillMount() {
-    this.state = { submitting: false, terms: (this.props.terms || {}) };
-    delete this.state.terms.confirmationFileName;
+    this.state = { submitting: false};
+    this.setTerms(this.props.terms);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ submitting: false });
     // the file has to be re-uploaded every time anyway
-    delete nextProps.terms.confirmationFileName;
-    console.log(nextProps, terms);
-    if (nextProps.terms) {
-      this.setState({ terms: nextProps.terms });
-    }
+    this.setTerms(nextProps.terms);
+  }
+
+  getTextFieldList() {
+    return [['creditLimit', ''],
+                ['preOrderDiscount', ''],
+                ['creditTermsPreOrder', ''],
+                ['reOrderDiscount', ''],
+                ['creditTermsReOrder', ''],
+                ['faultyReturnsDiscount', ''],
+                ['settlementDiscount', ''],
+                ['marketingContribution', ''],
+                ['rebateStructure', ''],
+                ['riskOrderDetails', ''],
+                ['markDownContributionDetails', ''],
+                ['cancellationAllowance', ''],
+                ['stockSwapAllowance', ''],
+                ['bulkOrderDetails', ''],
+                ['agreedWith', 'Supplier staff name'],
+                ['by', 'Buyers name']];
+  }
+
+  setTerms(terms = {}) {
+    this.state.terms = pick(terms,  ['season'].concat(map(this.getTextFieldList(), '0')));
+    this.setState({ terms: this.state.terms });
   }
 
   handleFile(files) {
@@ -114,22 +134,7 @@ export default class SuppliersForm extends React.Component {
   }
 
   renderTextFields() {
-    return map([['creditLimit', ''],
-                ['preOrderDiscount', ''],
-                ['creditTermsPreOrder', ''],
-                ['reOrderDiscount', ''],
-                ['creditTermsReOrder', ''],
-                ['faultyReturnsDiscount', ''],
-                ['settlementDiscount', ''],
-                ['marketingContribution', ''],
-                ['rebateStructure', ''],
-                ['riskOrderDetails', ''],
-                ['markDownContributionDetails', ''],
-                ['cancellationAllowance', ''],
-                ['stockSwapAllowance', ''],
-                ['bulkOrderDetails', ''],
-                ['agreedWith', 'Supplier staff name'],
-                ['by', 'Buyers name']],
+    return map(this.getTextFieldList(),
                this.renderTextField,
                this);
   }
