@@ -17,7 +17,7 @@ class VendorsController < ApplicationController
   end
 
   def show
-    render json: Vendor.find(params[:id])
+    render json: Vendor.find(params[:id]).to_json
   end
 
   private
