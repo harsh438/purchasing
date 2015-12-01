@@ -1,7 +1,7 @@
 class VendorsController < ApplicationController
   def index
     vendors = Vendor::Search.new.search(params)
-    render json: { brands: vendors.map { |v| { id: vendor.id, name: vendor.name } },
+    render json: { vendors: vendors.map { |v| { id: vendor.id, name: vendor.name } },
                    total_pages: vendors.total_pages,
                    page: params[:page] }
   end
@@ -13,6 +13,6 @@ class VendorsController < ApplicationController
   private
 
   def vendor_attrs
-    params.require(:brand).permit(:id, :name)
+    params.require(:vendor).permit(:id, :name)
   end
 end
