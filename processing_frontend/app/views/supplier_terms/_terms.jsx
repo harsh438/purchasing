@@ -55,18 +55,19 @@ export default class SupplierTerms extends React.Component {
   }
 
   getField(field) {
+    let terms = this.props.terms || {};
     switch (field) {
       case 'samples':
       case 'productImagery':
-        return this.props.terms[field] === '0' ? '✘' : '✔';
+        return terms[field] === '0' ? '✘' : '✔';
       case 'confirmationFile':
-        if (this.props.terms['confirmationFileName']) {
-          return <a href={this.props.terms['confirmationUrl']} className="btn btn-default" target="_blank">
-            <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>&nbsp;Download '{this.props.terms['confirmationFileName']}'
+        if (terms['confirmationFileName']) {
+          return <a href={terms['confirmationUrl']} className="btn btn-default" target="_blank">
+            <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>&nbsp;Download '{terms['confirmationFileName']}'
           </a>;
         }
       default:
-        return this.props.terms[field];
+        return terms[field];
     }
   }
 }

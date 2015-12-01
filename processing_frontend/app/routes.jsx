@@ -8,7 +8,10 @@ import SuppliersIndex from './views/suppliers/index';
 import SuppliersNew from './views/suppliers/new';
 import SuppliersEdit from './views/suppliers/edit';
 import SupplierTermsHistory from './views/supplier_terms/history';
+import SupplierTermsShow from './views/supplier_terms/show';
 import VendorsNew from './views/vendors/new';
+
+
 export default (
   <Route path="/" component={Layout}>
     <IndexRoute component={PurchaseOrdersIndex} />
@@ -19,6 +22,6 @@ export default (
     <Route path="/vendors/new" component={VendorsNew} />
     <Route path="/suppliers/:id/edit" component={SuppliersEdit} />
     <Route path="/suppliers/:id/terms" component={SupplierTermsHistory} />
-    <Route path="/suppliers/term/:id" component={SupplierTermsHistory} />
+    <Route path="/suppliers/term/:id" component={SupplierTermsShow} />
   </Route>
 );

@@ -14,7 +14,6 @@ class SupplierTermsHistory extends React.Component {
 
 
   render() {
-    console.log(this.props.supplier);
     return (
       <div className="suppliers_terms_history" style={{ marginTop: '70px' }}>
           <div className="panel panel-default">
@@ -36,7 +35,6 @@ class SupplierTermsHistory extends React.Component {
   }
 
   renderTerms() {
-    console.log(this.props.supplier.terms);
     return (
       <table className="table">
         <tbody>
@@ -52,19 +50,20 @@ class SupplierTermsHistory extends React.Component {
   }
 
   renderTerm(term) {
-    console.log('fff', term)
     return (<tr key={term.id}>
       <td>
         {term.createdAt}
       </td>
       <td>
-        {term.by}
+        {term.by || <i>Unknown</i>}
       </td>
       <td>
         {this.renderConfirmationFile(term)}
       </td>
       <td>
-        View Terms
+        <Link to={`/suppliers/term/${term.id}`}>
+          View Terms
+        </Link>
       </td>
     </tr>);
   }
@@ -83,7 +82,6 @@ class SupplierTermsHistory extends React.Component {
 
 
 function applyState({ supplier }) {
-  console.log(supplier);
   return assign({}, supplier);
 }
 
