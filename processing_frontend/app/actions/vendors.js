@@ -28,7 +28,21 @@ export function loadVendor(id) {
   return dispatch => {
     fetch(`/api/vendors/${id}.json`, { credentials: 'same-origin' })
       .then(response => response.json())
-      .then(supplier => dispatch({ supplier, type: 'SET_VENDOR' }));
+      .then(vendor => dispatch({ vendor, type: 'SET_VENDOR' }));
+  };
+}
+
+export function editVendor(vendor) {
+  return dispatch => {
+    fetch(`/api/vendors/${vendor.id}.json`, { credentials: 'same-origin',
+                                              method: 'PATCH',
+                                              headers: { 'Content-Type': 'application/json' },
+                                              body: JSON.stringify({
+                                                      vendor: snakeizeKeys(vendor)
+                                                    }) })
+
+    .then(response => response.json())
+    .then(results => dispatch({ vendor: results, type: 'SET_VENDOR' }));
   };
 }
 
