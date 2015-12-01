@@ -23,3 +23,12 @@ export function loadVendors(query) {
       .then(results => dispatch({ results, type: 'SET_VENDORS' }));
   };
 }
+
+export function loadVendor(id) {
+  return dispatch => {
+    fetch(`/api/vendors/${id}.json`, { credentials: 'same-origin' })
+      .then(response => response.json())
+      .then(supplier => dispatch({ supplier, type: 'SET_VENDOR' }));
+  };
+}
+
