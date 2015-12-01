@@ -7,7 +7,7 @@ import OrdersEdit from './views/orders/edit';
 import SuppliersIndex from './views/suppliers/index';
 import SuppliersNew from './views/suppliers/new';
 import SuppliersEdit from './views/suppliers/edit';
-
+import VendorsNew from './views/vendors/new';
 
 export default (
   <Route path="/" component={Layout}>
@@ -16,6 +16,7 @@ export default (
     <Route path="/orders/:id/edit" component={OrdersEdit} />
     <Route path="/suppliers" component={SuppliersIndex} />
     <Route path="/suppliers/new" component={SuppliersNew} />
+    <Route path="/vendors/new" component={VendorsNew} />
     <Route path="/suppliers/:id/edit" component={SuppliersEdit} />
   </Route>
 );
