@@ -42,7 +42,7 @@ class VendorsIndex extends React.Component {
           <div className="col-md-12">
           	<div className="panel panel-default">
         			<div className="panel-body">
-                <Link to="/suppliers/new"
+                <Link to="/vendors/new"
                       className="btn btn-success">
                   Add New Brand
                 </Link>
