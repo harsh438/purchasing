@@ -3,10 +3,11 @@ import { loadSupplier } from '../../actions/suppliers';
 import { connect } from 'react-redux';
 import { assign } from 'lodash';
 import { map } from 'lodash';
+import { Link } from 'react-router';
 
 class SupplierTermsHistory extends React.Component {
   componentWillMount () {
-    this.state = {};
+    this.state = {id: this.props.params.id};
     this.props.dispatch(loadSupplier(this.props.params.id));
   }
 
@@ -15,12 +16,18 @@ class SupplierTermsHistory extends React.Component {
   render() {
     console.log(this.props.supplier);
     return (
-      <div className="suppliers_edit" style={{ marginTop: '70px' }}>
+      <div className="suppliers_terms_history" style={{ marginTop: '70px' }}>
           <div className="panel panel-default">
             <div className="panel-heading">
-              <h3 className="panel-title">Terms History</h3>
+              <h3 className="panel-title">
+                Terms History
+              </h3>
+            <Link className="btn btn-default" to={`/suppliers/${this.state.id}/edit`}>
+              <span className="glyphicon glyphicon-arrow-left"></span>&nbsp;Go back to supplier page
+            </Link>
             </div>
             <div className="panel-body">
+            <h4>History Terms for { this.props.supplier.name }</h4>
               { this.renderTerms() }
             </div>
           </div>
