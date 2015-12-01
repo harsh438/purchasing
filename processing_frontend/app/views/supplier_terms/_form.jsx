@@ -16,21 +16,21 @@ export default class SuppliersForm extends React.Component {
 
   getTextFieldList() {
     return [['creditLimit', ''],
-                ['preOrderDiscount', ''],
-                ['creditTermsPreOrder', ''],
-                ['reOrderDiscount', ''],
-                ['creditTermsReOrder', ''],
-                ['faultyReturnsDiscount', ''],
-                ['settlementDiscount', ''],
-                ['marketingContribution', ''],
-                ['rebateStructure', ''],
-                ['riskOrderDetails', ''],
-                ['markDownContributionDetails', ''],
-                ['cancellationAllowance', ''],
-                ['stockSwapAllowance', ''],
-                ['bulkOrderDetails', ''],
-                ['agreedWith', 'Supplier staff name'],
-                ['by', 'Buyers name']];
+            ['preOrderDiscount', ''],
+            ['creditTermsPreOrder', ''],
+            ['reOrderDiscount', ''],
+            ['creditTermsReOrder', ''],
+            ['faultyReturnsDiscount', ''],
+            ['settlementDiscount', ''],
+            ['marketingContribution', ''],
+            ['rebateStructure', ''],
+            ['riskOrderDetails', ''],
+            ['markDownContributionDetails', ''],
+            ['cancellationAllowance', ''],
+            ['stockSwapAllowance', ''],
+            ['bulkOrderDetails', ''],
+            ['agreedWith', 'Supplier staff name'],
+            ['by', 'Buyers name']];
   }
 
   setTerms(terms = {}) {
@@ -97,28 +97,24 @@ export default class SuppliersForm extends React.Component {
 
             <tr>
               <td colSpan="2">
-               <div>
-                 <DropZone multiple={false} onDrop={this.handleFile.bind(this)}
-                           style={ {color: 'grey', padding: '30px', border: '2px dashed black'} }
-                           accept=".jpg,.jpeg,.png,.pdf">
-                  <div>Confirmation file for the terms. Try dropping some files here, or click to select files to upload.</div>
-                  {this.renderFileUploadText()}
-                 </DropZone>
-               </div>
+                <div>
+                  <DropZone multiple={false}
+                            onDrop={this.handleFile.bind(this)}
+                            style={{ color: '#999', padding: '30px', border: '2px dashed #999' }}
+                            accept=".jpg,.jpeg,.png,.pdf">
+                    <div>Confirmation file for the terms. Try dropping some files here, or click to select files to upload.</div>
+                    {this.renderFileUploadText()}
+                  </DropZone>
+                </div>
               </td>
             </tr>
-            <tr>
-              <td></td>
-              <td>
-                <button className="btn btn-success col-xs-offset-3 col-xs-6"
-                        disabled={this.state.submitting}>
-                  {this.submitText()}
-                </button>
-              </td>
-            </tr>
-
           </tbody>
         </table>
+
+        <button className="btn btn-success"
+                disabled={this.state.submitting}>
+          {this.submitText()}
+        </button>
       </form>
     );
   }

@@ -7,7 +7,13 @@ class VendorsController < ApplicationController
   end
 
   def create
-    render json: Vendor.create!(vendor_attrs)
+    render json: Vendor.create!(create_vendor_attrs)
+  end
+
+  def update
+    vendor = Vendor.find(params[:id])
+    vendor.update!(update_vendor_attrs)
+    render json: vendor
   end
 
   def show
@@ -16,7 +22,11 @@ class VendorsController < ApplicationController
 
   private
 
-  def vendor_attrs
+  def update_vendor_attrs
+    params.permit(:name)
+  end
+
+  def create_vendor_attrs
     params.require(:vendor).permit(:id, :name)
   end
 end
