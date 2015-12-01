@@ -10,6 +10,10 @@ class PurchaseOrderLineItem < ActiveRecord::Base
       .where(suppliers_to_brands: { SupplierID: context[:supplier] })
   end
 
+  def self.filter_product_sku(context)
+    where('orderTool_SKU LIKE ?', "%#{context[:product_sku]}%")
+  end
+
   def self.filter_status(context)
     values = [context[:status]].flatten
     values = Status.ints_from_filter_syms(values.map(&:to_sym))
@@ -125,7 +129,6 @@ class PurchaseOrderLineItem < ActiveRecord::Base
           :gender,
           :summary_id,
           :season,
-          :product_sku,
           :category_id,
           :product_id,
           :operator

@@ -46,7 +46,12 @@ feature 'Listing purchase orders' do
   scenario 'Filtering by balance status' do
     given_there_is_a_purchase_order_with_a_balance_status_but_no_outstanding_items
     when_i_filter_by_balance_status
-    then_i_should_not_see_items_with_a_zero_balance
+    then_i_should_not_see_orders_with_a_zero_balance
+  end
+
+  scenario 'Partial SKU search', focus: true do
+    when_i_filter_by_partial_sku
+    then_i_should_see_orders_with_a_similar_sku
   end
 
   def given_there_are_many_pages_of_purchase_orders
@@ -125,9 +130,20 @@ feature 'Listing purchase orders' do
     visit purchase_order_line_items_path(status: [:balance])
   end
 
-  def then_i_should_not_see_items_with_a_zero_balance
+  def then_i_should_not_see_orders_with_a_zero_balance
     po = subject['results'].select { |h| h['id'] == @po_with_strange_state.id }
     expect(po.count).to be(0)
+  end
+
+  def when_i_filter_by_partial_sku
+    partial_sku = PurchaseOrderLineItem.first.product_sku.first(5)
+    visit purchase_order_line_items_path(product_sku: partial_sku)
+  end
+
+  def then_i_should_see_orders_with_a_similar_sku
+    first_product = PurchaseOrderLineItem.first
+    product_in_results = subject['results'].select { |h| h['id'] == first_product.id }
+    expect(product_in_results).to_not be_nil
   end
 
   private
