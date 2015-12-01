@@ -10,6 +10,7 @@ import SuppliersEdit from './views/suppliers/edit';
 import SupplierTermsHistory from './views/supplier_terms/history';
 import VendorsIndex from './views/vendors/index';
 import VendorsNew from './views/vendors/new';
+import VendorsEdit from './views/vendors/edit';
 
 export default (
   <Route path="/" component={Layout}>
@@ -20,6 +21,8 @@ export default (
 
     <Route path="/suppliers" component={SuppliersIndex} />
     <Route path="/suppliers/new" component={SuppliersNew} />
+    <Route path="/vendors/new" component={VendorsNew} />
+    <Route path="/vendors/:id/edit" component={VendorsEdit} />
     <Route path="/suppliers/:id/edit" component={SuppliersEdit} />
     <Route path="/suppliers/:id/terms" component={SupplierTermsHistory} />
     <Route path="/suppliers/term/:id" component={SupplierTermsHistory} />
