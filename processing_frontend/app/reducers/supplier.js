@@ -1,7 +1,11 @@
 import { assign, map } from 'lodash';
 import { camelizeKeys } from '../utilities/inspection';
 
-const initialState =  { supplier: {}, suppliers: [] };
+const initialSupplierState = { supplier: {} };
+const initialSuppliersState = { supplier: {},
+                                suppliers: [],
+                                totalPages: null,
+                                activePage: null };
 
 function transformSupplier(supplier) {
   supplier.defaultTerms = camelizeKeys(supplier.default_terms);
@@ -9,22 +13,17 @@ function transformSupplier(supplier) {
   return camelizeKeys(supplier);
 }
 
-function transformSuppliers(suppliers) {
-  return map(suppliers, transformSupplier);
-}
-
 function setSuppliers(state, results) {
-  return assign({}, state, { suppliers: transformSuppliers(results.suppliers),
+  return assign({}, state, { suppliers: map(results.suppliers, transformSupplier),
                              totalPages: results.total_pages,
                              activePage: results.page });
 }
-
 
 function setSupplier(state, supplier) {
   return assign({}, state, { supplier: transformSupplier(supplier) });
 }
 
-export function reduceSuppliers(state = initialState, action) {
+export function reduceSuppliers(state = initialSuppliersState, action) {
   switch (action.type) {
     case 'LOAD_SUPPLIERS':
       return setSuppliers(state, action.results);
@@ -33,7 +32,7 @@ export function reduceSuppliers(state = initialState, action) {
   }
 }
 
-export function reduceSupplier(state = initialState, action) {
+export function reduceSupplier(state = initialSupplierState, action) {
   switch (action.type) {
     case 'CREATE_SUPPLIER':
       return setSupplier(state, action.supplier);
