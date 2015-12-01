@@ -7,7 +7,7 @@ import OrdersEdit from './views/orders/edit';
 import SuppliersIndex from './views/suppliers/index';
 import SuppliersNew from './views/suppliers/new';
 import SuppliersEdit from './views/suppliers/edit';
-
+import SupplierTermsHistory from './views/supplier_terms/history';
 
 export default (
   <Route path="/" component={Layout}>
@@ -17,5 +17,7 @@ export default (
     <Route path="/suppliers" component={SuppliersIndex} />
     <Route path="/suppliers/new" component={SuppliersNew} />
     <Route path="/suppliers/:id/edit" component={SuppliersEdit} />
+    <Route path="/suppliers/:id/terms" component={SupplierTermsHistory} />
+    <Route path="/suppliers/term/:id" component={SupplierTermsHistory} />
   </Route>
 );

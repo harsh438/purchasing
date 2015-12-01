@@ -41,7 +41,9 @@ class SupplierTerms < ActiveRecord::Base
 
   def as_json_with_url(term = {})
     as_json.tap do |term|
-      term['confirmation_url'] = confirmation.url
+      if confirmation.exists?
+        term['confirmation_url'] = confirmation.url
+      end
     end
   end
 end

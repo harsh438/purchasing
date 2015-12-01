@@ -10,6 +10,7 @@ import SuppliersForm from './_form';
 import SupplierContacts from '../suppliers_contacts/_table';
 import SupplierTerms from '../supplier_terms/_terms';
 import SupplierTermsForm from '../supplier_terms/_form';
+import { Link } from 'react-router';
 
 class SuppliersEdit extends React.Component {
   componentWillMount () {
@@ -62,6 +63,9 @@ class SuppliersEdit extends React.Component {
                      onClick={() => this.setState({ editingTerms: true })}>
               Edit Terms
             </button>
+            <Link className="btn btn-success pull-right" to={`/suppliers/${this.props.supplier.id}/terms`}>
+              View Terms History
+            </Link>
           </p>
         </div>
       );
