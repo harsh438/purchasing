@@ -49,7 +49,7 @@ feature 'Listing purchase orders' do
     then_i_should_not_see_orders_with_a_zero_balance
   end
 
-  scenario 'Partial SKU search', focus: true do
+  scenario 'Partial SKU search' do
     when_i_filter_by_partial_sku
     then_i_should_see_orders_with_a_similar_sku
   end
