@@ -22,6 +22,8 @@ export function reduceVendor(state = initialVendorState, action) {
   switch (action.type) {
     case 'CREATE_VENDOR':
       return setVendor(state, action.vendor);
+    case 'SET_VENDOR':
+      return setVendor(state, action.vendor);
     default:
       return state;
   }
