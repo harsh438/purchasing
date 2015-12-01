@@ -1,5 +1,3 @@
-require 'pp'
-
 class SupplierTerms < ActiveRecord::Base
   belongs_to :supplier
 
