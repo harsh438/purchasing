@@ -22,7 +22,7 @@ feature 'Vendors CRUD' do
 
   def when_i_update_a_vendor
     @vendor = create(:vendor)
-    page.driver.post "/api/vendors/#{@vendor.id}.json", { name: 'New Name!',
+    page.driver.post "/api/vendors/#{@vendor.id}.json", { vendor: { name: 'New Name!' },
                                                           _method: 'patch' }
   end
 
