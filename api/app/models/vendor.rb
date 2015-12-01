@@ -10,6 +10,8 @@ class Vendor < ActiveRecord::Base
   map_attributes id: :venID,
                  name: :venCompany
 
+  scope :latest, -> { order(id: :desc) }
+
   def self.relevant
     where('venID in (select distinct orderTool_venId from purchase_orders)')
   end
