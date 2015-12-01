@@ -50,6 +50,5 @@ export function saveSupplierContact(supplier, contact) {
 }
 
 export function saveTerms(id, terms) {
-  let terms = omit(snakeizeKeys(terms), 'id');
-  return editSupplier({ id, terms });
+  return editSupplier({ id, terms: omit(snakeizeKeys(terms), 'id') });
 }
