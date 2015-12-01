@@ -23,7 +23,7 @@ class VendorsController < ApplicationController
   private
 
   def update_vendor_attrs
-    params.permit(:name)
+    params.require(:vendor).permit(:name)
   end
 
   def create_vendor_attrs
