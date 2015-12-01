@@ -68,7 +68,7 @@ export default class VendorsFilters extends React.Component {
 
           <div className="form-group col-md-2"
                style={{ marginTop: '2.2em' }}>
-            <Link to="/suppliers">clear filters</Link>
+            <Link to="/vendors">clear filters</Link>
           </div>
         </div>
       </form>
