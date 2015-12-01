@@ -13,7 +13,13 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   def self.filter_status(context)
     values = [context[:status]].flatten
     values = Status.ints_from_filter_syms(values.map(&:to_sym))
-    where(status: values)
+
+    if context[:status].include?('balance')
+      filtered_values = values - [4]
+      where('(status IN (?)) OR (status=4 AND (qty + qtyAdded - qtyDone) = 0)', filtered_values)
+    else
+      where(status: values)
+    end
   end
 
   def self.filter_order_type(context)
