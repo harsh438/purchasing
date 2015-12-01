@@ -134,15 +134,13 @@ export default class SuppliersForm extends React.Component {
                   </td>
                   <td></td>
                 </tr>
-                <tr>
-                  <td></td>
-                  <td><button className="btn btn-success col-xs-6"
-                              disabled={this.state.submitting}>
-                        {this.props.submitText}
-                      </button></td>
-                </tr>
               </tbody>
             </table>
+
+            <button className="btn btn-success"
+                    disabled={this.state.submitting}>
+              {this.props.submitText}
+            </button>
           </form>
         </div>
       </div>
