@@ -16,21 +16,21 @@ export default class SuppliersForm extends React.Component {
 
   getTextFieldList() {
     return [['creditLimit', ''],
-                ['preOrderDiscount', ''],
-                ['creditTermsPreOrder', ''],
-                ['reOrderDiscount', ''],
-                ['creditTermsReOrder', ''],
-                ['faultyReturnsDiscount', ''],
-                ['settlementDiscount', ''],
-                ['marketingContribution', ''],
-                ['rebateStructure', ''],
-                ['riskOrderDetails', ''],
-                ['markDownContributionDetails', ''],
-                ['cancellationAllowance', ''],
-                ['stockSwapAllowance', ''],
-                ['bulkOrderDetails', ''],
-                ['agreedWith', 'Supplier staff name'],
-                ['by', 'Buyers name']];
+            ['preOrderDiscount', ''],
+            ['creditTermsPreOrder', ''],
+            ['reOrderDiscount', ''],
+            ['creditTermsReOrder', ''],
+            ['faultyReturnsDiscount', ''],
+            ['settlementDiscount', ''],
+            ['marketingContribution', ''],
+            ['rebateStructure', ''],
+            ['riskOrderDetails', ''],
+            ['markDownContributionDetails', ''],
+            ['cancellationAllowance', ''],
+            ['stockSwapAllowance', ''],
+            ['bulkOrderDetails', ''],
+            ['agreedWith', 'Supplier staff name'],
+            ['by', 'Buyers name']];
   }
 
   setTerms(terms = {}) {
