@@ -13,6 +13,10 @@ class Vendor::Search
       query = query.where('venCompany LIKE ?', "%#{filters[:name]}%")
     end
 
+    if filters[:supplier_id]
+      query = query.joins(:supplier_vendors).where(suppliers_to_brands: { SupplierID: filters[:supplier_id] })
+    end
+
     query
   end
 end

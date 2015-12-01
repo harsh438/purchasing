@@ -2,7 +2,7 @@ import React from 'react';
 import { map } from 'lodash';
 import { Link } from 'react-router';
 
-export default class SuppliersTable extends React.Component {
+export default class VendorsTable extends React.Component {
 	render() {
   	return (
 			<table className="table">
@@ -23,23 +23,23 @@ export default class SuppliersTable extends React.Component {
   }
 
   renderRows() {
-    return map(this.props.suppliers, (supplier, i) => {
+    return map(this.props.vendors, (vendor, i) => {
       return (
         <tr key={i}>
         	<td>
-            <Link to={`/suppliers/${supplier.id}/edit`}>
-              {supplier.name}
+            <Link to={`/vendors/${vendor.id}/edit`}>
+              {vendor.name}
             </Link>
           </td>
           <td className="text-center">
-            { supplier.createdAt }
+            { vendor.createdAt }
           </td>
           <td className="text-center">
-            { supplier.updatedAt }
+            { vendor.updatedAt }
           </td>
-          <td className="text-center">{ supplier.discontinued ? '✘' : '' }</td>
+          <td className="text-center">{ vendor.discontinued ? '✘' : '' }</td>
         	<td className="text-center">
-            <Link className="btn btn-default" to={`/suppliers/${supplier.id}/edit`}>
+            <Link className="btn btn-default" to={`/vendors/${vendor.id}/edit`}>
               Edit
             </Link>
 					</td>

@@ -13,3 +13,13 @@ export function createVendor(vendor = {}) {
       .then(vendor => dispatch({ vendor, type: 'CREATE_VENDOR' }));
   };
 }
+
+export function loadVendors(query) {
+  const queryString = Qs.stringify(assign({}, query, { filters: snakeizeKeys(query.filters) }));
+
+  return dispatch => {
+    fetch(`/api/vendors.json?${queryString}`, { credentials: 'same-origin' })
+      .then(response => response.json())
+      .then(results => dispatch({ results, type: 'SET_VENDORS' }));
+  };
+}
