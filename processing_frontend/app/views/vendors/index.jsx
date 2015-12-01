@@ -2,16 +2,16 @@ import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { assign, isEqual } from 'lodash';
-import SuppliersTable from './_table';
-import SuppliersFilters from './_filters';
+import VendorsFilters from './_filters';
+import VendorsTable from './_table';
 import NumberedPagination from '../pagination/_numbered';
-import { loadBrands } from '../../actions/filters';
-import { loadSuppliers } from '../../actions/suppliers';
+import { loadSuppliers } from '../../actions/filters';
+import { loadVendors } from '../../actions/vendors';
 
-class SuppliersIndex extends React.Component {
+class VendorsIndex extends React.Component {
   componentWillMount() {
     this.loadPage();
-    this.props.dispatch(loadBrands());
+    this.props.dispatch(loadSuppliers());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -30,9 +30,9 @@ class SuppliersIndex extends React.Component {
           <div className="col-md-12">
           	<div className="panel panel-default">
         			<div className="panel-body">
-                <SuppliersFilters filters={this.props.location.query.filters}
-                                  brands={this.props.brands}
-                                  onFilterSuppliers={this.handleFilterSuppliers.bind(this)} />
+                <VendorsFilters filters={this.props.location.query.filters}
+                                suppliers={this.props.suppliers}
+                                onFilterVendors={this.handleFilterVendors.bind(this)} />
               </div>
             </div>
           </div>
@@ -42,18 +42,18 @@ class SuppliersIndex extends React.Component {
           <div className="col-md-12">
           	<div className="panel panel-default">
         			<div className="panel-body">
-                <Link to="/suppliers/new"
+                <Link to="/vendors/new"
                       className="btn btn-success">
-                  Add New Supplier
+                  Add New Brand
                 </Link>
 
                 <hr style={{ clear: 'both' }} />
 
-                <SuppliersTable suppliers={this.props.suppliers}/>
+                <VendorsTable vendors={this.props.vendors}/>
 
                 <NumberedPagination activePage={this.props.activePage || 1}
-                      index={this}
-                      totalPages={this.props.totalPages} />
+                                    index={this}
+                                    totalPages={this.props.totalPages} />
               </div>
             </div>
           </div>
@@ -63,16 +63,16 @@ class SuppliersIndex extends React.Component {
   }
 
   loadPage(page = this.props.location.query.page, filters = this.props.location.query.filters) {
-    this.props.dispatch(loadSuppliers({ filters, page }));
+    this.props.dispatch(loadVendors({ filters, page }));
   }
 
-  handleFilterSuppliers(filters) {
-    this.props.history.pushState(null, '/suppliers', { filters });
+  handleFilterVendors(filters) {
+    this.props.history.pushState(null, '/vendors', { filters });
   }
 }
 
-function applyState({ filters, supplier, suppliers }) {
-  return assign({}, filters, supplier, suppliers);
+function applyState({ filters, vendors }) {
+  return assign({}, filters, vendors);
 }
 
-export default connect(applyState)(SuppliersIndex);
+export default connect(applyState)(VendorsIndex);

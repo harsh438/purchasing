@@ -11,7 +11,7 @@ class SupplierTermsShow extends React.Component {
   }
 
   render() {
-    console.log('render', this);
+    console.log('render', this.props.terms);
     return (
       <div className="suppliers_terms_show" style={{ marginTop: '70px' }}>
         <div className="panel panel-default">

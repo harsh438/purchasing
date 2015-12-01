@@ -10,14 +10,14 @@ class VendorsNew extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.creatingVendor && nextProps.supplier) {
-      this.props.history.pushState(null, `/suppliers/${nextProps.supplier.id}/edit`);
+    if (this.state.creatingVendor && nextProps.vendor) {
+      this.props.history.pushState(null, `/vendors/${nextProps.vendor.id}/edit`);
     }
   }
 
   render() {
     return (
-      <div className="suppliers_new container-fluid"
+      <div className="vendors_new container-fluid"
            style={{ marginTop: '70px' }}>
         <div className="row">
           <div className="col-md-4 col-md-offset-4">
@@ -30,14 +30,14 @@ class VendorsNew extends React.Component {
     );
   }
 
-  handleCreateVendor(supplier) {
+  handleCreateVendor(vendor) {
     this.setState({ creatingVendor: true });
-    this.props.dispatch(createVendor(supplier));
+    this.props.dispatch(createVendor(vendor));
   }
 }
 
-function applyState({ supplier }) {
-  return supplier;
+function applyState({ vendor }) {
+  return vendor;
 }
 
 export default connect(applyState)(VendorsNew);
