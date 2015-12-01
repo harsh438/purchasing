@@ -61,7 +61,7 @@ export default class SupplierTerms extends React.Component {
         return this.props.terms[field] === '0' ? '✘' : '✔';
       case 'confirmationFile':
         if (this.props.terms['confirmationFileName']) {
-          return <a href={this.props.terms['confirmationUrl']} className="btn btn-default">
+          return <a href={this.props.terms['confirmationUrl']} className="btn btn-default" target="_blank">
             <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>&nbsp;Download '{this.props.terms['confirmationFileName']}'
           </a>;
         }

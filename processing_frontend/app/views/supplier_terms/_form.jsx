@@ -1,23 +1,27 @@
 import React from 'react';
+import DropZone from 'react-dropzone';
 import { assign, get, map, omit, startCase } from 'lodash';
 
 export default class SuppliersForm extends React.Component {
   componentWillMount() {
     this.state = { submitting: false, terms: (this.props.terms || {}) };
+    delete this.state.terms.confirmationFileName;
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ submitting: false });
-
+    // the file has to be re-uploaded every time anyway
+    delete nextProps.terms.confirmationFileName;
+    console.log(nextProps, terms);
     if (nextProps.terms) {
       this.setState({ terms: nextProps.terms });
     }
   }
 
-  handleFile (e) {
+  handleFile(files) {
     var self = this;
     var reader = new FileReader();
-    var file = e.target.files[0];
+    var file = files[0];
 
     reader.onload = function(upload) {
       let terms = self.state.terms;
@@ -28,6 +32,8 @@ export default class SuppliersForm extends React.Component {
 
     reader.readAsDataURL(file);
   }
+
+
 
   render() {
     return (
@@ -70,11 +76,15 @@ export default class SuppliersForm extends React.Component {
             {this.renderCheckboxField('productImagery')}
 
             <tr>
-              <td>
-                <label htmlFor="confirmation">Confirmation file</label>
-              </td>
-              <td>
-               <input name="confirmation" type="file"  onChange={this.handleFile.bind(this)} />
+              <td colSpan="2">
+               <div>
+                 <DropZone multiple={false} onDrop={this.handleFile.bind(this)}
+                           style={ {color: 'grey', padding: '30px', border: '2px dashed black'} }
+                           accept=".jpg,.jpeg,.png,.pdf">
+                  <div>Confirmation file for the terms. Try dropping some files here, or click to select files to upload.</div>
+                  {this.renderFileUploadText()}
+                 </DropZone>
+               </div>
               </td>
             </tr>
             <tr>
@@ -91,6 +101,16 @@ export default class SuppliersForm extends React.Component {
         </table>
       </form>
     );
+  }
+
+  renderFileUploadText() {
+    if (this.state.terms.confirmationFileName) {
+      return (<div style={ {margin: '5px 10px 0 10px'} }>
+            <span className="glyphicon glyphicon-open-file"></span>
+            <span style={{'color':'grey'}}> File to upload: {this.state.terms.confirmationFileName}</span>
+          </div>
+      );
+    }
   }
 
   renderTextFields() {
