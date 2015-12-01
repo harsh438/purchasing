@@ -1,6 +1,6 @@
 class Vendor::Search
   def search(params)
-    vendors = Vendor.relevant.latest
+    vendors = Vendor.latest
     vendors = apply_filters(vendors, params[:filters] || {})
     vendors = vendors.page(params[:page])
     vendors

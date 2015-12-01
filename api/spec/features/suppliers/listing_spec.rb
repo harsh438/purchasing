@@ -1,4 +1,4 @@
-feature 'Suppliers CRUD' do
+feature 'Suppliers Listing' do
   subject { JSON.parse(page.body) }
 
   scenario 'Listing of Suppliers pagination' do
