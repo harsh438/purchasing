@@ -43,6 +43,12 @@ feature 'Listing purchase orders' do
     then_i_should_see_the_first_page_of_orders_after_that_date
   end
 
+  scenario 'Filtering by balance status' do
+    given_there_is_a_purchase_order_with_a_balance_status_but_no_outstanding_items
+    when_i_filter_by_balance_status
+    then_i_should_not_see_items_with_a_zero_balance
+  end
+
   def given_there_are_many_pages_of_purchase_orders
     create_list(:purchase_order_line_item,
                 150,
@@ -108,6 +114,22 @@ feature 'Listing purchase orders' do
     expect(subject['results'].count).to eq(35)
   end
 
+  def given_there_is_a_purchase_order_with_a_balance_status_but_no_outstanding_items
+    @po_with_strange_state = create(:purchase_order_line_item,
+                                    :with_summary,
+                                    status: 4,
+                                    quantity: 5)
+  end
+
+  def when_i_filter_by_balance_status
+    visit purchase_order_line_items_path(status: [:balance])
+  end
+
+  def then_i_should_not_see_items_with_a_zero_balance
+    po = subject['results'].select { |h| h['id'] == @po_with_strange_state.id }
+    expect(po.count).to be(0)
+  end
+
   private
 
   def create_purchase_orders
@@ -115,6 +137,8 @@ feature 'Listing purchase orders' do
                 20,
                 :with_summary,
                 status: 4,
+                qty: 5,
+                quantity_done: 5,
                 season: 'AW15',
                 delivery_date: Time.new(2013, 1, 1))
 
