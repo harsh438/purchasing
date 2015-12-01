@@ -131,7 +131,8 @@ export default class SuppliersForm extends React.Component {
                         Discontinued
                       </label>
                     </div>
-                    </td><td></td>
+                  </td>
+                  <td></td>
                 </tr>
                 <tr>
                   <td></td>
