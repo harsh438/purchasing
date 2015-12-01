@@ -1,6 +1,6 @@
 import React from 'react';
 import Qs from 'qs';
-import { assign, clone } from 'lodash';
+import { assign, clone, omit } from 'lodash';
 import { snakeizeKeys } from '../utilities/inspection';
 
 export function createSupplier(supplier = {}) {
@@ -50,7 +50,5 @@ export function saveSupplierContact(supplier, contact) {
 }
 
 export function saveTerms(id, terms) {
-  let term = snakeizeKeys(terms);
-  delete term.id;
-  return editSupplier({ id, terms:  term});
+  return editSupplier({ id, terms: omit(snakeizeKeys(terms), 'id') });
 }

@@ -7,7 +7,11 @@ class VendorsController < ApplicationController
   end
 
   def create
-    render json: Supplier.create!(vendor_attrs)
+    render json: Vendor.create!(vendor_attrs)
+  end
+
+  def show
+    render json: Vendor.find(params[:id])
   end
 
   private
