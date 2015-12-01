@@ -51,9 +51,9 @@ class SuppliersIndex extends React.Component {
 
                 <SuppliersTable suppliers={this.props.suppliers}/>
 
-                              <NumberedPagination activePage={this.props.activePage || 1}
-                                    index={this}
-                                    totalPages={this.props.totalPages} />
+                <NumberedPagination activePage={this.props.activePage || 1}
+                      index={this}
+                      totalPages={this.props.totalPages} />
               </div>
             </div>
           </div>
