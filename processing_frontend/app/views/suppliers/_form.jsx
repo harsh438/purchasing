@@ -157,7 +157,7 @@ export default class SuppliersForm extends React.Component {
     if (e.target.checked) {
       this.handleFormChange(e);
     } else {
-      this.setState({ [e.target.name]: '0' });
+      this.setState({ [e.target.name]: false });
     }
   }
 
