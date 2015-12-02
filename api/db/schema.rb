@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151202110924) do
+ActiveRecord::Schema.define(version: 20151202112758) do
 
   create_table "ds_categories", primary_key: "catID", force: :cascade do |t|
     t.integer "parentID",         limit: 4,     default: 0,      null: false
@@ -444,6 +444,8 @@ ActiveRecord::Schema.define(version: 20151202110924) do
     t.decimal  "price",                           precision: 8, scale: 2
     t.integer  "category_id",         limit: 4
     t.integer  "language_product_id", limit: 4
+    t.string   "product_name",        limit: 255
+    t.string   "gender",              limit: 255
   end
 
   add_index "skus", ["sku"], name: "index_skus_on_sku", using: :btree

@@ -2,16 +2,16 @@
   $endpoint = 'http://localhost:5000/api/skus.json';
   $ch = curl_init();
 
-  $opts = array('manufacturer_sku' => 'MANU-FACTURER-SKU-12',
+  $opts = array('manufacturer_sku' => 'MANU-FACTURER-SKU-14',
+                'product_name' => 'A nice little shirt',
+                'lead_gender' => 'M',
                 'manufacturer_color' => 'blueish',
                 'manufacturer_size' => 'smallish',
                 'season' => 'witch',
                 'color' => 'blue',
                 'size' => 'small',
                 'color_family' => 'blues',
-                'size_scale' => 'thumb',
                 'cost_price' => 10.00,
-                'list_price' => 15.00,
                 'price' => 5.00);
 
   curl_setopt($ch, CURLOPT_URL, $endpoint);
