@@ -14,20 +14,16 @@ export default class SupplierContacts extends React.Component {
     this.setState({addingContact: false});
   }
 
+
+
   render() {
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <h3 className="panel-title"> { this.renderTitle() }</h3>
-        </div>
-        <div className="panel-body">
-          <ul style={{ padding: '0px' }}>
-            { this.renderAddContact() }
-            { this.renderContacts() }
-          </ul>
-        </div>
-      </div>
-    )
+      <div>
+        { this.renderAddContact() }
+        <ul style={{ padding: '0px' }}>
+          { this.renderContacts() }
+        </ul>
+      </div>)
   }
 
   renderContacts() {
@@ -51,13 +47,21 @@ export default class SupplierContacts extends React.Component {
       return (<SupplierAddContact supplier={this.props.supplier}
                               onAddContact={this.props.onAddContact} />)
     } else {
-      return (<div style={{ 'marginBottom': '10px'}}><button className="btn btn-success" onClick={this.enableAddContact.bind(this)}>Add new contact</button></div>);
+      return (
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title"> { this.renderTitle() }</h3>
+          </div>
+          <div className="panel-body">
+            <div style={{ 'marginBottom': '10px'}}><button className="btn btn-success" onClick={this.enableAddContact.bind(this)}>Add new contact</button></div>
+          </div>
+      </div>);
     }
   }
 
   renderTitle() {
     if (this.state.addingContact) {
-      return 'Adding Contact';
+      return 'Add Contact';
     } else {
       return 'Contacts';
     }

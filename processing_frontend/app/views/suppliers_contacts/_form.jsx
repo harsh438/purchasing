@@ -14,11 +14,7 @@ export default class SupplierContact extends React.Component {
 
   renderElement(elementName) {
     if (this.state.editable) {
-      return (
-
-        <input name={elementName} className="form-control" value={ this.state.contact[elementName] } />
-
-        );
+      return (<input name={elementName} className="form-control" value={ this.state.contact[elementName] } />);
     } else {
       return (<span>{ this.state.contact[elementName] } </span>)
     }
@@ -41,35 +37,55 @@ export default class SupplierContact extends React.Component {
     }
   }
 
+  renderPanelTitle() {
+    if (this.state.editable) {
+      return this.props.submitText;
+    } else {
+      return (this.state.contact.name || (<i>No Name</i>));
+    }
+  }
+
+  renderNameElement() {
+    if (this.state.editable) {
+      return (<tr>
+        <th>Name</th>
+        <td colSpan="3">{ this.renderElement('name') }</td>
+      </tr>)
+    }
+  }
+
   render () {
     return (
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title"> { this.renderPanelTitle() }</h3>
+          </div>
+          <div className="panel-body">
       <form onChange={this.handleFormChange.bind(this)}>
         <table className="table" style={ {'tableLayout':'fixed'} }>
           <tbody>
+            {this.renderNameElement() }
             <tr>
-              <th>Name</th>
-              <td>{ this.renderElement('name') }</td>
+              <th>Title</th>
+              <td>{ this.renderTitleElement() }</td>
               <th>Mobile</th>
               <td>{ this.renderElement('mobile') }</td>
             </tr>
             <tr>
-              <th>Title</th>
-              <td>{ this.renderTitleElement() }</td>
+              <th>Email</th>
+              <td>{ this.renderElement('email') }</td>
               <th>Landline</th>
               <td>{ this.renderElement('landline') }</td>
             </tr>
-            <tr>
-              <th>Email</th>
-              <td>{ this.renderElement('email') }</td>
-              <td><input type="button" className="btn btn-success" value={ this.props.submitText }
-                         onClick={ this.onSubmitButton.bind(this) }
-                         disabled={this.state.onSubmitCalled} /></td>
-              <td></td>
-
-            </tr>
           </tbody>
         </table>
-      </form>);
+          <input type="button" className="btn btn-success" value={ this.props.submitText }
+                         onClick={ this.onSubmitButton.bind(this) }
+                         disabled={this.state.onSubmitCalled} />
+      </form>
+    </div>
+    </div>
+    );
   }
 
   onSubmitButton() {
