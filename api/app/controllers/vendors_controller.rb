@@ -1,7 +1,7 @@
 class VendorsController < ApplicationController
   def index
     vendors = Vendor::Search.new.search(params)
-    render json: { vendors: vendors.map { |vendor| { id: vendor.id, name: vendor.name } },
+    render json: { vendors: vendors.includes(:details).as_json,
                    total_pages: vendors.total_pages,
                    page: params[:page] }
   end

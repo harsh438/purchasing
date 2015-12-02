@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151202115621) do
+ActiveRecord::Schema.define(version: 20151202105914) do
 
   create_table "ds_categories", primary_key: "catID", force: :cascade do |t|
     t.integer "parentID",         limit: 4,     default: 0,      null: false
@@ -517,6 +517,15 @@ ActiveRecord::Schema.define(version: 20151202115621) do
     t.integer "ContactsToDetailsID", limit: 4
     t.integer "SupplierToBrandsID",  limit: 4
   end
+
+  create_table "vendor_details", force: :cascade do |t|
+    t.boolean  "discontinued"
+    t.integer  "vendor_id",    limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "vendor_details", ["vendor_id"], name: "index_vendor_details_on_vendor_id", using: :btree
 
   add_foreign_key "order_exports", "orders"
   add_foreign_key "order_line_items", "orders"
