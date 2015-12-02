@@ -3,7 +3,7 @@ describe Sku::Generator do
 
   let(:new_sku_attrs) { { manufacturer_sku: 'MANU-FACTURER-SKU-12',
                           product_name: 'The big name',
-                          gender: 'M',
+                          lead_gender: 'M',
                           vendor_id: create(:vendor).id,
                           manufacturer_color: 'blueish',
                           manufacturer_size: 'smallish',
