@@ -32,4 +32,10 @@ class Vendor < ActiveRecord::Base
       vendor['updated_at'] = vendor['updated_at'].to_s
     end
   end
+
+  def as_json_with_details_and_suppliers
+    as_json.tap do |vendor|
+      vendor['suppliers'] = suppliers.map(&:as_json)
+    end
+  end
 end
