@@ -2,7 +2,8 @@
   $endpoint = 'http://localhost:5000/api/skus.json';
   $ch = curl_init();
 
-  $opts = array('manufacturer_sku' => 'MANU-FACTURER-SKU-12',
+  $opts = array('manufacturer_sku' => 'MANU-FACTURER-SKU-14',
+                'product_name' => 'A nice little shirt',
                 'manufacturer_color' => 'blueish',
                 'manufacturer_size' => 'smallish',
                 'season' => 'witch',
