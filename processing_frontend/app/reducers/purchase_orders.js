@@ -56,26 +56,25 @@ function clearPurchaseOrders(state, action) {
 }
 
 function setSummary(state, action) {
-
   return assign({}, state, { summary: transformSummary(action.summary) });
 }
 
 export default function reducePurchaseOrders(state = initialState, action) {
   switch (action.type) {
-    case 'SET_SUMMARY':
-      return setSummary(state, action);
-    case 'SET_PURCHASE_ORDERS':
-      const purchaseOrders = map(action.results, transformPurchaseOrder(action));
-      return setPurchaseOrders(state, action, purchaseOrders);
-    case 'APPEND_PURCHASE_ORDERS':
-      return appendPurchaseOrders(state, action);
-    case 'UPDATE_PURCHASE_ORDERS':
-      return updatePurchaseOrders(state, action);
-    case 'CLEAR_PURCHASE_ORDERS':
-      return clearPurchaseOrders(state, action);
-    case 'IS_LOADING_PURCHASE_ORDERS':
-      return assign({}, state, { loading: action.loading });
-    default:
-      return state;
+  case 'SET_SUMMARY':
+    return setSummary(state, action);
+  case 'SET_PURCHASE_ORDERS':
+    const purchaseOrders = map(action.results, transformPurchaseOrder(action));
+    return setPurchaseOrders(state, action, purchaseOrders);
+  case 'APPEND_PURCHASE_ORDERS':
+    return appendPurchaseOrders(state, action);
+  case 'UPDATE_PURCHASE_ORDERS':
+    return updatePurchaseOrders(state, action);
+  case 'CLEAR_PURCHASE_ORDERS':
+    return clearPurchaseOrders(state, action);
+  case 'IS_LOADING_PURCHASE_ORDERS':
+    return assign({}, state, { loading: action.loading });
+  default:
+    return state;
   }
 }

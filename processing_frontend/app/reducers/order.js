@@ -23,7 +23,7 @@ function setOrder(state, action) {
     if ('fields' in action.results) {
       let o = { errors: action.results.errors,
                 erroredFields: map(action.results.fields, camelCase),
-                erroredIds: action.results.ids }
+                erroredIds: action.results.ids };
 
       return assign({}, state, o);
     }
@@ -49,13 +49,13 @@ function removeLineItems(state, action) {
 
 export default function reduceOrder(state = initialState, action) {
   switch (action.type) {
-    case 'SET_ORDER':
-      return setOrder(state, action);
-    case 'CREATE_ORDER':
-      return setOrder(state, action);
-    case 'DELETE_LINE_ITEM':
-      return removeLineItems(state, action);
-    default:
-      return state;
+  case 'SET_ORDER':
+    return setOrder(state, action);
+  case 'CREATE_ORDER':
+    return setOrder(state, action);
+  case 'DELETE_LINE_ITEM':
+    return removeLineItems(state, action);
+  default:
+    return state;
   }
 }
