@@ -27,6 +27,9 @@ class Vendor < ActiveRecord::Base
   end
 
   def as_json(options = {})
-    details.as_json.merge(super)
+    details.as_json.merge(super).tap do |vendor|
+      vendor['created_at'] = vendor['created_at'].to_s
+      vendor['updated_at'] = vendor['updated_at'].to_s
+    end
   end
 end

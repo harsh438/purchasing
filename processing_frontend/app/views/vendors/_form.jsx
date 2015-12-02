@@ -36,6 +36,24 @@ export default class VendorsForm extends React.Component {
                              required
                              value={this.state.name} /></td>
                 </tr>
+
+                <tr>
+                  <td>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox"
+                               name="discontinued"
+                               value="1"
+                               className="checkbox"
+                               checked={this.state.discontinued}
+                               onChange={this.handleCheckboxChange.bind(this)} />
+
+                        Discontinued
+                      </label>
+                    </div>
+                  </td>
+                  <td></td>
+                </tr>
               </tbody>
             </table>
 

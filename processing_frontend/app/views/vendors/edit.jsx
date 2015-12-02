@@ -15,11 +15,11 @@ class VendorsEdit extends React.Component {
   render() {
     return (
       <div className="vendors_edit" style={{ marginTop: '70px' }}>
-        <div className="col-xs-6">
+        <div className="col-md-6 col-md-offset-3">
           <VendorsForm title="Edit Vendor"
-                        submitText="Save"
-                        vendor={this.props.vendor}
-                        onSubmitVendor={this.handleOnEditVendor.bind(this)} />
+                       submitText="Save"
+                       vendor={this.props.vendor}
+                       onSubmitVendor={this.handleOnEditVendor.bind(this)} />
         </div>
       </div>
     );

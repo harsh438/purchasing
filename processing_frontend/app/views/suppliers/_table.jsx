@@ -37,7 +37,7 @@ export default class SuppliersTable extends React.Component {
           <td className="text-center">
             { supplier.updatedAt }
           </td>
-          <td className="text-center">{ supplier.discontinued ? '✘' : '' }</td>
+          <td className="text-center">{ supplier.discontinued ? '✔' : '✘' }</td>
         	<td className="text-center">
             <Link className="btn btn-default" to={`/suppliers/${supplier.id}/edit`}>
               Edit
