@@ -13,7 +13,6 @@ export default class VendorsTable extends React.Component {
             <th className="text-center">Created</th>
             <th className="text-center">Updated</th>
             <th className="text-center">Discontinued</th>
-						<th className="text-center">Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -42,11 +41,6 @@ export default class VendorsTable extends React.Component {
             {vendor.updatedAt}
           </td>
           <td className="text-center">{vendor.discontinued ? '✔' : '✘'}</td>
-        	<td className="text-center">
-            <Link className="btn btn-default" to={`/vendors/${vendor.id}/edit`}>
-              Edit
-            </Link>
-					</td>
         </tr>
       );
     });
