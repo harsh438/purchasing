@@ -23,10 +23,14 @@ class VendorsController < ApplicationController
   private
 
   def update_vendor_attrs
-    params.require(:vendor).permit(:name)
+    params.require(:vendor).permit(:name).merge(details_attributes: detail_attrs)
   end
 
   def create_vendor_attrs
-    params.require(:vendor).permit(:id, :name)
+    params.require(:vendor).permit(:id, :name).merge(details_attributes: detail_attrs)
+  end
+
+  def detail_attrs
+    params.require(:vendor).permit(:discontinued)
   end
 end

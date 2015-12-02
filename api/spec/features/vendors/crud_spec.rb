@@ -21,13 +21,13 @@ feature 'Vendors CRUD' do
   end
 
   def when_i_update_a_vendor
-    @vendor = create(:vendor)
-    page.driver.post "/api/vendors/#{@vendor.id}.json", { vendor: { name: 'New Name!' },
-                                                          _method: 'patch' }
+    page.driver.post(vendor_path(create(:vendor), format: :json),
+                     vendor: update_vendor_attrs,
+                     _method: 'patch')
   end
 
   def then_the_vendor_should_be_updated
-    expect(@vendor.reload.name).to eq('New Name!')
+    expect(subject).to include('name' => update_vendor_attrs['name'])
   end
 
   def then_i_should_be_provided_with_vendor_attributes
@@ -47,6 +47,10 @@ feature 'Vendors CRUD' do
   private
 
   let(:vendor_attrs) do
-    { 'name' => 'Surfin USA' }
+    attributes_for(:vendor, :with_details).stringify_keys
+  end
+
+  let(:update_vendor_attrs) do
+    vendor_attrs.merge('name' => 'New Name!')
   end
 end
