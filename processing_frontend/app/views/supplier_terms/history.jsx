@@ -22,7 +22,7 @@ class SupplierTermsHistory extends React.Component {
                 <h3 className="panel-title pull-left">
                   Terms History
                 </h3>
-              <Link className="btn btn-default pull-right" to={`/suppliers/${this.state.id}/edit`}>
+              <Link className="pull-right" to={`/suppliers/${this.state.id}/edit`}>
                 <span className="glyphicon glyphicon-arrow-left"></span>&nbsp;Go back to supplier page
               </Link>
               </div>

@@ -38,7 +38,7 @@ class SupplierTermsShow extends React.Component {
   renderBackLink() {
     if (this.props.terms) {
       return (
-        <Link className="btn btn-default pull-right" to={`/suppliers/${this.props.terms.supplierId}/terms`}>
+        <Link className="pull-right" to={`/suppliers/${this.props.terms.supplierId}/terms`}>
           <span className="glyphicon glyphicon-arrow-left"></span>&nbsp;Go back to terms history
         </Link>
       );
