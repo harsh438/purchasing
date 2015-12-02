@@ -37,7 +37,7 @@ export default class VendorsTable extends React.Component {
           <td className="text-center">
             {vendor.updatedAt}
           </td>
-          <td className="text-center">{vendor.discontinued ? '✘' : ''}</td>
+          <td className="text-center">{vendor.discontinued ? '✔' : '✘'}</td>
         	<td className="text-center">
             <Link className="btn btn-default" to={`/vendors/${vendor.id}/edit`}>
               Edit
