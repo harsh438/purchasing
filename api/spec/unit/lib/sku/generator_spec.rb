@@ -2,6 +2,9 @@ describe Sku::Generator do
   before { create(:sku) }
 
   let(:new_sku_attrs) { { manufacturer_sku: 'MANU-FACTURER-SKU-12',
+                          product_name: 'The big name',
+                          lead_gender: 'M',
+                          vendor_id: create(:vendor).id,
                           manufacturer_color: 'blueish',
                           manufacturer_size: 'smallish',
                           season: 'witch',
@@ -32,6 +35,14 @@ describe Sku::Generator do
 
     it { is_expected.to_not be_nil }
 
+    it 'should have the correct gender' do
+      expect(subject.gender).to eq('M')
+    end
+
+    it 'should have a vendor' do
+      expect(subject.vendor).to be_a(Vendor)
+    end
+
     it 'should create a product' do
       expect(subject.product).to be_a(Product)
       expect(subject.product.price).to eq(new_sku_attrs[:price])
@@ -61,6 +72,7 @@ describe Sku::Generator do
 
     it 'should create a language product' do
       expect(subject.language_product).to be_a(LanguageProduct)
+      expect(subject.language_product.name).to eq('The big name')
     end
   end
 end
