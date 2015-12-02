@@ -16,7 +16,7 @@ export default class SuppliersTable extends React.Component {
           </tr>
         </thead>
         <tbody>
-          { this.renderRows() }
+          {this.renderRows()}
         </tbody>
       </table>
     );
