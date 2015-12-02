@@ -9,9 +9,7 @@
                 'color' => 'blue',
                 'size' => 'small',
                 'color_family' => 'blues',
-                'size_scale' => 'thumb',
                 'cost_price' => 10.00,
-                'list_price' => 15.00,
                 'price' => 5.00);
 
   curl_setopt($ch, CURLOPT_URL, $endpoint);
