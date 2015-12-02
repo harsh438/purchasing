@@ -32,7 +32,7 @@ export default class SuppliersTable extends React.Component {
             </Link>
           </td>
           <td>
-            {this.brandNames(supplier.brands)}
+            {this.vendorNames(supplier.vendors)}
           </td>
           <td className="text-center">
             {supplier.createdAt}
@@ -46,7 +46,7 @@ export default class SuppliersTable extends React.Component {
     });
   }
 
-  brandNames(brands) {
-    return map(brands, brand => brand.name).join(', ');
+  vendorNames(vendors) {
+    return map(vendors, vendor => vendor.name).join(', ');
   }
 }
