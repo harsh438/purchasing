@@ -5,7 +5,7 @@ function loadFilters(type, action) {
     fetch(`/api/filters/${type}.json`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(filters => dispatch(action(filters)));
-  }
+  };
 }
 
 export function loadBrands() {

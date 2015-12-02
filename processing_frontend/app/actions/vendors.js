@@ -37,12 +37,9 @@ export function editVendor(vendor) {
     fetch(`/api/vendors/${vendor.id}.json`, { credentials: 'same-origin',
                                               method: 'PATCH',
                                               headers: { 'Content-Type': 'application/json' },
-                                              body: JSON.stringify({
-                                                      vendor: snakeizeKeys(vendor)
-                                                    }) })
+                                              body: JSON.stringify({ vendor: snakeizeKeys(vendor) }) })
 
     .then(response => response.json())
     .then(vendor => dispatch({ vendor, type: 'SET_VENDOR' }));
   };
 }
-
