@@ -1,7 +1,6 @@
 import React from 'react';
 import DropZone from 'react-dropzone';
 import { assign, get, map, omit, startCase, pick } from 'lodash';
-import { Link } from 'react-router';
 
 export default class SuppliersForm extends React.Component {
   componentWillMount() {
@@ -102,7 +101,7 @@ export default class SuppliersForm extends React.Component {
                   <DropZone multiple={false}
                             onDrop={this.handleFile.bind(this)}
                             style={{ color: '#999', padding: '30px', border: '2px dashed #999' }}
-                            accept=".jpg,.jpeg,.png,.pdf">
+                            accept=".jpg,.jpeg,.png,.pdf,.eml">
                     <div>Confirmation file for the terms. Try dropping some files here, or click to select files to upload.</div>
                     {this.renderFileUploadText()}
                   </DropZone>
