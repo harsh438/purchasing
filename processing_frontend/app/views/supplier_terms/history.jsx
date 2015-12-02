@@ -16,18 +16,20 @@ class SupplierTermsHistory extends React.Component {
   render() {
     return (
       <div className="suppliers_terms_history" style={{ marginTop: '70px' }}>
-          <div className="panel panel-default">
-            <div className="panel-heading">
-              <h3 className="panel-title">
-                Terms History
-              </h3>
-            <Link className="btn btn-default" to={`/suppliers/${this.state.id}/edit`}>
-              <span className="glyphicon glyphicon-arrow-left"></span>&nbsp;Go back to supplier page
-            </Link>
-            </div>
-            <div className="panel-body">
-            <h4>History Terms for { this.props.supplier.name }</h4>
-              { this.renderTerms() }
+        <div className="col-md-12">
+            <div className="panel panel-default">
+              <div className="panel-heading" style={{ overflow: 'hidden'}}>
+                <h3 className="panel-title pull-left">
+                  Terms History
+                </h3>
+              <Link className="btn btn-default pull-right" to={`/suppliers/${this.state.id}/edit`}>
+                <span className="glyphicon glyphicon-arrow-left"></span>&nbsp;Go back to supplier page
+              </Link>
+              </div>
+              <div className="panel-body">
+              <h4>History Terms for { this.props.supplier.name }</h4>
+                { this.renderTerms() }
+              </div>
             </div>
           </div>
       </div>
@@ -61,7 +63,7 @@ class SupplierTermsHistory extends React.Component {
         {this.renderConfirmationFile(term)}
       </td>
       <td>
-        <Link to={`/suppliers/term/${term.id}`}>
+        <Link to={`/suppliers/term/${term.id}`} className="btn btn-default">
           View Terms
         </Link>
       </td>

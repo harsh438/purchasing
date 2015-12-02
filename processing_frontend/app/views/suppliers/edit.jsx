@@ -63,7 +63,7 @@ class SuppliersEdit extends React.Component {
                      onClick={() => this.setState({ editingTerms: true })}>
               Edit Terms
             </button>
-            <Link className="btn btn-success pull-right" to={`/suppliers/${this.props.supplier.id}/terms`}>
+            <Link className="btn btn-default pull-right" to={`/suppliers/${this.props.supplier.id}/terms`}>
               View Terms History
             </Link>
           </p>
