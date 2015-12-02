@@ -63,7 +63,7 @@ class SupplierTermsHistory extends React.Component {
         {this.renderConfirmationFile(term)}
       </td>
       <td>
-        <Link to={`/suppliers/term/${term.id}`} className="btn btn-default">
+        <Link to={`/suppliers/term/${term.id}`} >
           View Terms
         </Link>
       </td>
