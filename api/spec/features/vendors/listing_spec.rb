@@ -16,6 +16,11 @@ feature 'Vendors Listing' do
     then_only_vendors_of_that_supplier_should_be_listed
   end
 
+  scenario 'Listing Suppliers that are discontinued' do
+    when_i_request_discontinued_suppliers
+    then_only_suppliers_that_are_discontinued_should_be_listed
+  end
+
   def when_i_request_list_of_vendors
     create_list(:vendor, 52)
     visit vendors_path
@@ -24,7 +29,7 @@ feature 'Vendors Listing' do
   def then_i_should_see_paginated_list_of_vendors
     expect(subject['vendors'].count).to eq(50)
     expect(subject['total_pages']).to eq(2)
-    expect(subject['vendors']).to include(a_hash_including('id', 'name'))
+    expect(subject['vendors']).to include(a_hash_including('id', 'name', 'discontinued'))
   end
 
   def when_i_filter_vendors_by_name
@@ -47,5 +52,15 @@ feature 'Vendors Listing' do
 
   def then_only_vendors_of_that_supplier_should_be_listed
     expect(subject['vendors'].count).to eq(2)
+  end
+
+  def when_i_request_discontinued_suppliers
+    vendors = create_list(:vendor, 2)
+    vendors.first.details.update!(discontinued: true)
+    visit vendors_path(filters: { discontinued: '1' })
+  end
+
+  def then_only_suppliers_that_are_discontinued_should_be_listed
+    expect(subject['vendors'].count).to eq(1)
   end
 end

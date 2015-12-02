@@ -1,7 +1,7 @@
 class VendorsController < ApplicationController
   def index
     vendors = Vendor::Search.new.search(params)
-    render json: { vendors: vendors.map { |vendor| { id: vendor.id, name: vendor.name } },
+    render json: { vendors: vendors.includes(:details).as_json,
                    total_pages: vendors.total_pages,
                    page: params[:page] }
   end
@@ -23,10 +23,14 @@ class VendorsController < ApplicationController
   private
 
   def update_vendor_attrs
-    params.require(:vendor).permit(:name)
+    params.require(:vendor).permit(:name).merge(details_attributes: detail_attrs)
   end
 
   def create_vendor_attrs
-    params.require(:vendor).permit(:id, :name)
+    params.require(:vendor).permit(:id, :name).merge(details_attributes: detail_attrs)
+  end
+
+  def detail_attrs
+    params.require(:vendor).permit(:discontinued)
   end
 end
