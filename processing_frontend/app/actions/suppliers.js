@@ -34,7 +34,9 @@ export function loadSuppliers(query) {
 
 export function editSupplier(supplier) {
   let id = supplier.id || supplier.supplier_id;
-  if (!id) { return }
+  
+  if (!id) return;
+
   return dispatch => {
     fetch(`/api/suppliers/${id}.json`, { credentials: 'same-origin',
                                          method: 'PATCH',

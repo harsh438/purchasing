@@ -3,33 +3,36 @@ import { map } from 'lodash';
 import { Link } from 'react-router';
 
 export default class SuppliersTable extends React.Component {
-	render() {
-  	return (
-			<table className="table">
-				<thead>
-					<tr>
-						<th>Name</th>
-            <th className="text-center">Created</th>
-            <th className="text-center">Updated</th>
-            <th className="text-center">Discontinued</th>
-						<th className="text-center">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					{ this.renderRows() }
-				</tbody>
-			</table>
-  	);
+  render() {
+    return (
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Brands</th>
+            <th className="text-center" style={{ width: '15%' }}>Created</th>
+            <th className="text-center" style={{ width: '15%' }}>Updated</th>
+            <th className="text-center" style={{ width: '15%' }}>Discontinued</th>
+          </tr>
+        </thead>
+        <tbody>
+          { this.renderRows() }
+        </tbody>
+      </table>
+    );
   }
 
   renderRows() {
     return map(this.props.suppliers, (supplier, i) => {
       return (
         <tr key={i}>
-        	<td>
+          <td>
             <Link to={`/suppliers/${supplier.id}/edit`}>
               {supplier.name}
             </Link>
+          </td>
+          <td>
+            {this.brandNames(supplier.brands)}
           </td>
           <td className="text-center">
             {supplier.createdAt}
@@ -38,13 +41,12 @@ export default class SuppliersTable extends React.Component {
             {supplier.updatedAt}
           </td>
           <td className="text-center">{supplier.discontinued ? '✔' : '✘'}</td>
-        	<td className="text-center">
-            <Link className="btn btn-default" to={`/suppliers/${supplier.id}/edit`}>
-              Edit
-            </Link>
-					</td>
         </tr>
       );
     });
+  }
+
+  brandNames(brands) {
+    return map(brands, brand => brand.name).join(', ');
   }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import Qs from 'qs';
 import 'whatwg-fetch';
-import { map } from 'lodash'
-import { snakeizeKeys } from '../utilities/inspection'
+import { map } from 'lodash';
+import { snakeizeKeys } from '../utilities/inspection';
 
 export function loadOrders(page) {
   return dispatch => {
@@ -58,7 +58,7 @@ export function updateLineItem(id, params = {}) {
                                                 body: JSON.stringify(snakeizeKeys(params)) })
       .then(response => response.json())
       .then(results => dispatch({ results, type: 'SET_ORDER' }));
-  }
+  };
 }
 
 export function deleteLineItem(id) {
@@ -68,7 +68,7 @@ export function deleteLineItem(id) {
                                                 headers: { 'Content-Type': 'application/json' } })
       .then(response => response.json())
       .then(ids => dispatch({ ids, type: 'DELETE_LINE_ITEM' }));
-  }
+  };
 }
 
 export function exportOrders(id) {

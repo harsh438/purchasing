@@ -19,8 +19,7 @@ const reducer = combineReducers({ filters: reduceFilters,
                                   supplier: reduceSupplier,
                                   vendors: reduceVendors,
                                   vendor: reduceVendor,
-                                  terms: reduceSupplierTerms
-                                });
+                                  terms: reduceSupplierTerms });
 
 const store = applyMiddleware(...middleware)(createStore)(reducer);
 

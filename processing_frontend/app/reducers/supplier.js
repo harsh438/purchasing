@@ -25,20 +25,20 @@ function setSupplier(state, supplier) {
 
 export function reduceSuppliers(state = initialSuppliersState, action) {
   switch (action.type) {
-    case 'LOAD_SUPPLIERS':
-      return setSuppliers(state, action.results);
-    default:
-      return state;
+  case 'LOAD_SUPPLIERS':
+    return setSuppliers(state, action.results);
+  default:
+    return state;
   }
 }
 
 export function reduceSupplier(state = initialSupplierState, action) {
   switch (action.type) {
-    case 'CREATE_SUPPLIER':
-      return setSupplier(state, action.supplier);
-    case 'SET_SUPPLIER':
-      return setSupplier(state, action.supplier);
-    default:
-      return state;
+  case 'CREATE_SUPPLIER':
+    return setSupplier(state, action.supplier);
+  case 'SET_SUPPLIER':
+    return setSupplier(state, action.supplier);
+  default:
+    return state;
   }
 }

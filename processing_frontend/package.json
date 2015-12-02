@@ -4,7 +4,7 @@
   "description": "Purchase order processing frontend",
   "entry": "index.js",
   "scripts": {
-    "build": "gulp scripts styles images",
+    "build": "eslint app/ && gulp scripts styles images",
     "watch": "gulp watch"
   },
   "repository": {
@@ -19,7 +19,7 @@
     "babel-eslint": "^4.1.3",
     "babelify": "^6.4.0",
     "browserify": "^12.0.0",
-    "eslint": "^1.7.3",
+    "eslint": "^1.10.3",
     "eslint-plugin-react": "^3.6.3",
     "gulp": "^3.9.0",
     "gulp-livereload": "^3.8.1",

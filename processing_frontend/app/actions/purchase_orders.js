@@ -24,7 +24,7 @@ function fetchPurchaseOrders(params, page, action) {
         dispatch(purchaseOrdersLoading(false));
         dispatch(action(purchaseOrders));
       });
-  }
+  };
 }
 
 function fetchSummary(params) {
@@ -40,7 +40,7 @@ function fetchSummary(params) {
     fetch(`/api/purchase_orders.json?${queryString}`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(summary => dispatch({ ...summary, type:'SET_SUMMARY' }));
-  }
+  };
 }
 
 function action(type) {
@@ -56,7 +56,7 @@ function action(type) {
              totalCount: purchaseOrders.total_count,
              summary: purchaseOrders.summary,
              moreResultsAvailable: purchaseOrders.more_results_available };
-  }
+  };
 }
 
 function makeApiRequest(url, params) {
@@ -89,15 +89,15 @@ export function clearPurchaseOrders() {
 }
 
 export function cancelPurchaseOrders(id) {
-  return makeApiRequest(`/api/purchase_order_line_items/cancel.json`, { id })
+  return makeApiRequest(`/api/purchase_order_line_items/cancel.json`, { id });
 }
 
 export function cancelEntirePurchaseOrder(poNumber) {
-  return makeApiRequest(`/api/purchase_orders/${poNumber}/cancel.json`, {})
+  return makeApiRequest(`/api/purchase_orders/${poNumber}/cancel.json`, {});
 }
 
 export function uncancelPurchaseOrders(id) {
-  return makeApiRequest(`/api/purchase_order_line_items/uncancel.json`, { id })
+  return makeApiRequest(`/api/purchase_order_line_items/uncancel.json`, { id });
 }
 
 export function updatePurchaseOrders(id, params = {}) {
@@ -105,5 +105,5 @@ export function updatePurchaseOrders(id, params = {}) {
 }
 
 export function purchaseOrdersLoading(loading) {
-  return { loading, type: 'IS_LOADING_PURCHASE_ORDERS' }
+  return { loading, type: 'IS_LOADING_PURCHASE_ORDERS' };
 }
