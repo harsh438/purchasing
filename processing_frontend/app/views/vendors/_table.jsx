@@ -32,12 +32,12 @@ export default class VendorsTable extends React.Component {
             </Link>
           </td>
           <td className="text-center">
-            { vendor.createdAt }
+            {vendor.createdAt}
           </td>
           <td className="text-center">
-            { vendor.updatedAt }
+            {vendor.updatedAt}
           </td>
-          <td className="text-center">{ vendor.discontinued ? '✘' : '' }</td>
+          <td className="text-center">{vendor.discontinued ? '✘' : ''}</td>
         	<td className="text-center">
             <Link className="btn btn-default" to={`/vendors/${vendor.id}/edit`}>
               Edit
