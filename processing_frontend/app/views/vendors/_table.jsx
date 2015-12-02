@@ -9,6 +9,7 @@ export default class VendorsTable extends React.Component {
 				<thead>
 					<tr>
 						<th>Name</th>
+            <th>Suppliers</th>
             <th className="text-center">Created</th>
             <th className="text-center">Updated</th>
             <th className="text-center">Discontinued</th>
@@ -16,7 +17,7 @@ export default class VendorsTable extends React.Component {
 					</tr>
 				</thead>
 				<tbody>
-					{ this.renderRows() }
+					{this.renderRows()}
 				</tbody>
 			</table>
   	);
@@ -30,6 +31,9 @@ export default class VendorsTable extends React.Component {
             <Link to={`/vendors/${vendor.id}/edit`}>
               {vendor.name}
             </Link>
+          </td>
+          <td>
+            {this.supplierNames(vendor.suppliers)}
           </td>
           <td className="text-center">
             {vendor.createdAt}
@@ -47,4 +51,8 @@ export default class VendorsTable extends React.Component {
       );
     });
   }
+
+	supplierNames(suppliers) {
+		return map(suppliers, supplier => supplier.name).join(', ');
+	}
 }
