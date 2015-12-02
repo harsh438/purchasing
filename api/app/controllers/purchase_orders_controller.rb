@@ -4,7 +4,8 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def cancel
-    orders = PurchaseOrderLineItem.where('LENGTH(po_number) > 0').where(po_number: params[:id])
+    orders = PurchaseOrderLineItem.where('LENGTH(po_number) > 0')
+                                  .where(po_number: params[:id])
     orders.each(&:cancel)
     render json: orders
   end
