@@ -17,6 +17,7 @@ class SkusController < ApplicationController
   def sku_attrs
     params.permit([:manufacturer_sku,
                    :lead_gender,
+                   :vendor_id,
                    :product_name,
                    :manufacturer_color,
                    :manufacturer_size,
