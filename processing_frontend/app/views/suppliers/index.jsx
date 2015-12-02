@@ -18,7 +18,7 @@ class SuppliersIndex extends React.Component {
     const nextQuery = nextProps.location.query;
 
     if (!isEqual(this.props.location.query, nextQuery)) {
-      this.loadPage(nextQuery.page, nextQuery.filters);
+      this.loadPage(nextQuery.page, (nextQuery.filters || {}));
     }
   }
 
