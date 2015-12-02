@@ -4,6 +4,7 @@
 
   $opts = array('manufacturer_sku' => 'MANU-FACTURER-SKU-14',
                 'product_name' => 'A nice little shirt',
+                'lead_gender' => 'A',
                 'manufacturer_color' => 'blueish',
                 'manufacturer_size' => 'smallish',
                 'season' => 'witch',
