@@ -42,7 +42,7 @@ class SupplierTerms < ActiveRecord::Base
   def as_json_with_url(term = {})
     as_json.tap do |term|
       if confirmation.exists?
-        term['confirmation_url'] = confirmation.url
+        term['confirmation_url'] = confirmation.expiring_url(300)
       end
     end
   end
