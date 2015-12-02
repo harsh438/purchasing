@@ -20,7 +20,7 @@ class VendorsNew extends React.Component {
       <div className="vendors_new container-fluid"
            style={{ marginTop: '70px' }}>
         <div className="row">
-          <div className="col-md-4 col-md-offset-4">
+          <div className="col-md-6 col-md-offset-3">
             <VendorsForm title="Create Vendor"
                            submitText="Add Vendor"
                            onSubmitVendor={this.handleCreateVendor.bind(this)} />
