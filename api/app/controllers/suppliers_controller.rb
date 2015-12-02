@@ -15,7 +15,7 @@ class SuppliersController < ApplicationController
   def update
     supplier = Supplier.find(params[:id])
     supplier.update!(full_supplier_attrs)
-    render json: supplier.as_json_with_contacts_and_terms
+    render json: supplier.as_json_with_vendors_contacts_and_terms
   end
 
   def show
