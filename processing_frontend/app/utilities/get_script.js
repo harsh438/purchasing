@@ -1,7 +1,7 @@
 export function getScript(url, success) {
-  var head = document.getElementsByTagName("head")[0]
-  var done = false;
-  var script = document.createElement("script");
+  const head = document.getElementsByTagName("head")[0];
+  const done = false;
+  const script = document.createElement("script");
   script.src = url;
   // Attach handlers for all browsers
   script.onload = script.onreadystatechange = function(){
