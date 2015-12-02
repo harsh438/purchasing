@@ -11,6 +11,13 @@ class SupplierTermsShow extends React.Component {
     this.props.dispatch(loadTerms(this.props.params.id));
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.state.id !== nextProps.params.id) {
+      this.setState({id: nextProps.params.id})
+      this.props.dispatch(loadTerms(nextProps.params.id));
+    }
+  }
+
   render() {
     return (
       <div className="col-md-4 col-md-offset-4">

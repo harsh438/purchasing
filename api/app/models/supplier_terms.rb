@@ -35,7 +35,7 @@ class SupplierTerms < ActiveRecord::Base
                               comments)
 
   def on_save
-    if self.supplier_id and !(self.parent_id)
+    if self.supplier_id and !(self.parent_id) and !(self.id)
       self.parent_id = self.supplier.terms.maximum(:id)
     end
   end

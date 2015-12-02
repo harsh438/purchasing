@@ -1,6 +1,7 @@
 import React from 'react';
 import DropZone from 'react-dropzone';
 import { assign, get, map, omit, startCase, pick } from 'lodash';
+import { Link } from 'react-router';
 
 export default class SuppliersForm extends React.Component {
   componentWillMount() {

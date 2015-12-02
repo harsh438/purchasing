@@ -1,5 +1,6 @@
 import React from 'react';
 import { map, startCase } from 'lodash';
+import { Link } from 'react-router';
 
 export default class SupplierTerms extends React.Component {
   componentWillMount() {
@@ -32,9 +33,20 @@ export default class SupplierTerms extends React.Component {
       <table className="table">
         <tbody>
           {this.renderRows()}
+          {this.renderParentTerm()}
         </tbody>
       </table>
     );
+  }
+
+  renderParentTerm() {
+    if (this.props.terms && this.props.terms['parentId']) {
+      return (<tr><td colSpan="2">
+          <Link className="btn btn-default col-xs-12" to={`/suppliers/term/${this.props.terms['parentId']}`}>
+            <span className="glyphicon glyphicon-arrow-left"></span>&nbsp;Go to parent term
+          </Link>
+        </td></tr>);
+    }
   }
 
   renderRows() {
