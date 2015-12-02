@@ -3,7 +3,7 @@ require 'pp'
 class SuppliersController < ApplicationController
   def index
     suppliers = Supplier::Search.new.search(params)
-    render json: { suppliers: suppliers.map(&:as_json_with_contacts_and_terms),
+    render json: { suppliers: suppliers.map(&:as_json_with_vendors_contacts_and_terms),
                    total_pages: suppliers.total_pages,
                    page: params[:page] }
   end
@@ -22,7 +22,7 @@ class SuppliersController < ApplicationController
   end
 
   def show
-    render json: Supplier.find(params[:id]).as_json_with_contacts_and_terms
+    render json: Supplier.find(params[:id]).as_json_with_vendors_contacts_and_terms
   end
 
   private
