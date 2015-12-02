@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151127113108) do
+ActiveRecord::Schema.define(version: 20151202105932) do
 
   create_table "ds_categories", primary_key: "catID", force: :cascade do |t|
     t.integer "parentID",         limit: 4,     default: 0,      null: false
@@ -187,7 +187,7 @@ ActiveRecord::Schema.define(version: 20151127113108) do
   add_index "ds_products", ["giftCert"], name: "giftCert", using: :btree
   add_index "ds_products", ["invLevel"], name: "invLevel", using: :btree
   add_index "ds_products", ["invTrack", "invLevel"], name: "idx_invTrack_oInvLevel", using: :btree
-  add_index "ds_products", ["meta_keywords"], name: "metakeywords", using: :btree
+  add_index "ds_products", ["meta_keywords"], name: "metakeywords", length: {"meta_keywords"=>255}, using: :btree
   add_index "ds_products", ["pContainerType"], name: "pContainerType", using: :btree
   add_index "ds_products", ["pFirstClassMailType"], name: "bestseller", using: :btree
   add_index "ds_products", ["pFlag"], name: "pFlag", using: :btree
@@ -444,6 +444,7 @@ ActiveRecord::Schema.define(version: 20151127113108) do
     t.decimal  "price",                           precision: 8, scale: 2
     t.integer  "category_id",         limit: 4
     t.integer  "language_product_id", limit: 4
+    t.string   "product_name",        limit: 255
   end
 
   add_index "skus", ["sku"], name: "index_skus_on_sku", using: :btree
@@ -503,7 +504,7 @@ ActiveRecord::Schema.define(version: 20151127113108) do
   end
 
   add_index "suppliers", ["SupplierID"], name: "sadsad", using: :btree
-  add_index "suppliers", ["SupplierName"], name: "qewqwqe", using: :btree
+  add_index "suppliers", ["SupplierName"], name: "qewqwqe", length: {"SupplierName"=>255}, using: :btree
 
   create_table "suppliers_to_brands", primary_key: "SupplierToBrandsID", force: :cascade do |t|
     t.integer "BrandID",    limit: 4
