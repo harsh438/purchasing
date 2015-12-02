@@ -14,9 +14,6 @@ class SuppliersController < ApplicationController
 
   def update
     supplier = Supplier.find(params[:id])
-    if defined? full_supplier_attrs and defined? full_supplier_attrs['terms']
-      last = supplier.terms.last
-    end
     supplier.update!(full_supplier_attrs)
     render json: supplier.as_json_with_contacts_and_terms
   end
