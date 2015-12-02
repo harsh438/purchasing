@@ -3,30 +3,30 @@ import { map } from 'lodash';
 import { Link } from 'react-router';
 
 export default class VendorsTable extends React.Component {
-	render() {
-  	return (
-			<table className="table">
-				<thead>
-					<tr>
-						<th>Name</th>
+  render() {
+    return (
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Name</th>
             <th>Suppliers</th>
-            <th className="text-center">Created</th>
-            <th className="text-center">Updated</th>
-            <th className="text-center">Discontinued</th>
-					</tr>
-				</thead>
-				<tbody>
-					{this.renderRows()}
-				</tbody>
-			</table>
-  	);
+            <th className="text-center" style={{ width: '15%' }}>Created</th>
+            <th className="text-center" style={{ width: '15%' }}>Updated</th>
+            <th className="text-center" style={{ width: '15%' }}>Discontinued</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.renderRows()}
+        </tbody>
+      </table>
+    );
   }
 
   renderRows() {
     return map(this.props.vendors, (vendor, i) => {
       return (
         <tr key={i}>
-        	<td>
+          <td>
             <Link to={`/vendors/${vendor.id}/edit`}>
               {vendor.name}
             </Link>
@@ -46,7 +46,7 @@ export default class VendorsTable extends React.Component {
     });
   }
 
-	supplierNames(suppliers) {
-		return map(suppliers, supplier => supplier.name).join(', ');
-	}
+  supplierNames(suppliers) {
+    return map(suppliers, supplier => supplier.name).join(', ');
+  }
 }
