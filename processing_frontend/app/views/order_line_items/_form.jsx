@@ -32,7 +32,7 @@ export default class OrderLineItemsForm extends React.Component {
           {this.renderSingle()}
         </div>
       </div>
-    )
+    );
   }
 
   renderMulti() {
@@ -144,8 +144,8 @@ export default class OrderLineItemsForm extends React.Component {
     return (props.errors != null && props.erroredFields == null);
   }
 
-  handleTabChange(selectedKey) {
-    this.setState({ tab: selectedKey });
+  handleTabChange(tab) {
+    this.setState({ tab });
   }
 
   handleMultiSubmit(e) {
