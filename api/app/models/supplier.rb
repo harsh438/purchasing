@@ -69,7 +69,7 @@ class Supplier < ActiveRecord::Base
   def terms=(terms_attrs)
     return if terms_attrs.is_a?(Array)
     terms.update_all(default: false)
-    terms.build(terms_attrs.merge(default: true))
+    terms.build(terms_attrs.merge(default: true, parent_id: terms.last.try(:id)))
   end
 
   private

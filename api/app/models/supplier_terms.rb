@@ -2,7 +2,6 @@ require 'pp'
 
 class SupplierTerms < ActiveRecord::Base
   belongs_to :supplier
-  before_save :on_save
 
   validates :season, presence: true
 
@@ -33,12 +32,6 @@ class SupplierTerms < ActiveRecord::Base
                               agreed_with
                               by
                               comments)
-
-  def on_save
-    if self.supplier_id and !(self.parent_id) and !(self.id)
-      self.parent_id = self.supplier.terms.maximum(:id)
-    end
-  end
 
   def as_json(options = {})
     super.tap do |terms|
