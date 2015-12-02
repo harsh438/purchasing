@@ -61,10 +61,10 @@ class SuppliersEdit extends React.Component {
           <p>
             <button className="btn btn-success"
                      onClick={() => this.setState({ editingTerms: true })}>
-              Edit Terms
+              Edit terms
             </button>
             <Link className="btn btn-default pull-right" to={`/suppliers/${this.props.supplier.id}/terms`}>
-              View Terms History
+              View terms history
             </Link>
           </p>
         </div>
@@ -79,7 +79,7 @@ class SuppliersEdit extends React.Component {
           <p>
             <button className="btn btn-success"
                     onClick={() => this.setState({ editingTerms: true })}>
-              Add Terms
+              Add terms
             </button>
           </p>
         </div>
