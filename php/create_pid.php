@@ -6,7 +6,6 @@
                 'product_name' => 'A nice little shirt',
                 'lead_gender' => 'M',
                 'vendor_id' => 1,
-                'supplier_id' => 1,
                 'manufacturer_color' => 'blueish',
                 'manufacturer_size' => 'smallish',
                 'season' => 'witch',
