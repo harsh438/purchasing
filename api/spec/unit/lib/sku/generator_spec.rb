@@ -70,6 +70,10 @@ describe Sku::Generator do
       expect(subject.language_category).to be_a(LanguageCategory)
     end
 
+    it 'should have a barcode' do
+      expect(subject.barcode).to eq('5052094029950')
+    end
+
     it 'should create a category' do
       expect(subject.language_category.category).to be_a(Category)
     end
