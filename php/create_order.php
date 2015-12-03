@@ -13,7 +13,6 @@
   curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($opts));
   $output = curl_exec($ch);
 
-
   var_dump($output);
 
   curl_close($ch);
