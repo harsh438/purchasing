@@ -8,14 +8,11 @@ import { loadSupplier,
 import { loadSeasons } from '../../actions/filters';
 import SuppliersForm from './_form';
 import SupplierContactsTable from '../suppliers_contacts/_table';
-import SupplierTerms from '../supplier_terms/_terms';
-import SupplierTermsForm from '../supplier_terms/_form';
-import { Link } from 'react-router';
+import SupplierTermsDefault from '../supplier_terms/_default';
 
 class SuppliersEdit extends React.Component {
   componentWillMount () {
-    this.state = { editingSupplier: false,
-                   editingTerms: false };
+    this.state = { editingSupplier: false };
     this.props.dispatch(loadSupplier(this.props.params.id));
     this.props.dispatch(loadSeasons());
   }
@@ -35,14 +32,9 @@ class SuppliersEdit extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <div className="panel panel-default">
-            <div className="panel-heading">
-              <h3 className="panel-title">Default Terms</h3>
-            </div>
-            <div className="panel-body">
-              {this.renderTerms()}
-            </div>
-          </div>
+          <SupplierTermsDefault supplier={this.props.supplier}
+                                seasons={this.props.seasons}
+                                onTermsSave={this.handleSaveTerms.bind(this)} />
 
           <SupplierContactsTable supplier={this.props.supplier}
                                  onEditContact={this.handleOnSaveContact.bind(this)}
@@ -62,7 +54,7 @@ class SuppliersEdit extends React.Component {
       );
     } else {
       return (
-        <p>
+        <div>
           <table className="table">
             <tbody>
               <tr>
@@ -101,7 +93,7 @@ class SuppliersEdit extends React.Component {
                    onClick={() => this.setState({ editingSupplier: true })}>
             Edit supplier
           </button>
-        </p>
+        </div>
       );
     }
   }
@@ -115,48 +107,6 @@ class SuppliersEdit extends React.Component {
                                                           'returnsPostalCode']));
 
     return flatten(map(addressParts, part => [part, (<br />)]));
-  }
-
-  renderTerms() {
-    if (this.state.editingTerms) {
-      return (
-        <SupplierTermsForm terms={this.props.supplier.defaultTerms}
-                           seasons={this.props.seasons}
-                           onFormSubmit={this.handleSaveTerms.bind(this)} />
-      );
-    } else if (this.props.supplier.defaultTerms) {
-      return (
-        <div>
-          <SupplierTerms terms={this.props.supplier.defaultTerms} />
-
-          <p>
-            <button className="btn btn-success"
-                     onClick={() => this.setState({ editingTerms: true })}>
-              Edit terms
-            </button>
-
-            <Link className="btn btn-default pull-right" to={`/suppliers/${this.props.supplier.id}/terms`}>
-              View terms history
-            </Link>
-          </p>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <p>
-            <em>This supplier does not have any terms</em>
-          </p>
-
-          <p>
-            <button className="btn btn-success"
-                    onClick={() => this.setState({ editingTerms: true })}>
-              Add terms
-            </button>
-          </p>
-        </div>
-      );
-    }
   }
 
   handleOnSaveContact(contact) {
@@ -173,7 +123,6 @@ class SuppliersEdit extends React.Component {
   }
 
   handleSaveTerms(terms) {
-    this.setState({ editingTerms: false });
     this.props.dispatch(saveTerms(this.props.supplier.id, terms));
   }
 }
