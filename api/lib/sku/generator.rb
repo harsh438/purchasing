@@ -29,15 +29,22 @@ class Sku::Generator
   end
 
   def generate_new_sku
-    language_product_option = LanguageProductOption.create(product_option_attrs)
+    sku_attrs(LanguageProductOption.create(product_option_attrs),
+              LanguageProduct.create(language_product_attrs),
+              LanguageCategory.create(language_category_attrs))
 
-    language_product = LanguageProduct.create(language_product_attrs)
+    Sku.create(merge_pvx_with(sku_attrs))
+  end
 
-    language_category = LanguageCategory.create(language_category_attrs)
+  def merge_pvx_with(sku_attrs)
+    return sku_attrs unless pvx_fields
+  end
 
-    Sku.create(sku_attrs(language_product_option,
-                         language_category,
-                         language_product))
+  def pvx_fields
+    response = Sku::Api.new.find(man_sku: attrs[:manufacturer_sku],
+                                 size: attrs[:manufacturer_size])
+
+    response.fields
   end
 
   def attrs
