@@ -37,7 +37,7 @@ class OrdersController < ApplicationController
   end
 
   def order_attrs
-    params.require(:order).permit(:name)
+    params.require(:order).permit(:name, :type)
   end
 
   def order_line_item_attrs
