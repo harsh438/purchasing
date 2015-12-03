@@ -37,7 +37,7 @@ export default class VendorsFilters extends React.Component {
                     name="supplierId"
                     value={this.getFilter('supplierId')}>
               <option value=""> -- select supplier -- </option>
-              {this.selectOptions(this.props.suppliers)}
+              {this.renderSelectOptions(this.props.suppliers)}
             </select>
           </div>
 
@@ -83,7 +83,7 @@ export default class VendorsFilters extends React.Component {
     }
   }
 
-  selectOptions(options) {
+  renderSelectOptions(options) {
     return map(options, function ({ id, name }) {
       return (
         <option key={id} value={id}>{name}</option>
