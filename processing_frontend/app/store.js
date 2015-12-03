@@ -20,7 +20,7 @@ const reducer = combineReducers({ filters: reduceFilters,
                                   vendors: reduceVendors,
                                   vendor: reduceVendor,
                                   supplierTerms: reduceSupplierTerms,
-                                  terms: reduceTerms
+                                  terms: reduceTerms,
                                 });
 
 const store = applyMiddleware(...middleware)(createStore)(reducer);
