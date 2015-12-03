@@ -1,10 +1,10 @@
 class FiltersController < ApplicationController
   def vendors
-    render json: Vendor.mapped.relevant
+    render json: Vendor.mapped.relevant.includes(:details)
   end
 
   def suppliers
-    render json: Supplier.mapped.relevant.alphabetical.with_details
+    render json: Supplier.mapped.relevant.alphabetical.includes(:details)
   end
 
   def seasons
