@@ -14,7 +14,7 @@ export default class VendorsFilters extends React.Component {
     } else {
       this.setState({ submitting: false });
     }
-	}
+  }
 
   render() {
     return (

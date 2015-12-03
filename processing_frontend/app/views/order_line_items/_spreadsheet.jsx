@@ -21,12 +21,10 @@ export default class OrderLineItemsSpreadsheet extends React.Component {
   config() {
     return { data: [['', '', '', '']],
              colHeaders: ['Internal SKU', 'Quantity', 'Discount %', 'Drop Date'],
-             columns: [
-               { data: 'internalSku' },
-               { data: 'quantity', type: 'numeric' },
-               { data: 'discount', type: 'numeric', format: '0.0' },
-               { data: 'dropDate', type: 'date', dateFormat: 'YYYY-MM-DD', correctFormat: true }
-             ],
+             columns: [{ data: 'internalSku' },
+                       { data: 'quantity', type: 'numeric' },
+                       { data: 'discount', type: 'numeric', format: '0.0' },
+                       { data: 'dropDate', type: 'date', dateFormat: 'YYYY-MM-DD', correctFormat: true }],
              rowHeaders: true,
              columnSorting: true,
              contextMenu: true };

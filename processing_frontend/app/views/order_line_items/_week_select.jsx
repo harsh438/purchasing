@@ -3,7 +3,8 @@ import { map, range } from 'lodash';
 
 function getMonday(d) {
   d = new Date(d);
-  let day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6:1);
+  let day = d.getDay();
+  let diff = d.getDate() - day + (day === 0 ? -6:1);
   return new Date(d.setDate(diff));
 }
 
@@ -13,16 +14,16 @@ function weekCommencingString(date) {
 
 export function dropDates() {
   return map(range(52), (n) => {
-    let date = new Date()
-    date.setDate(date.getDate() + (n * 7))
+    let date = new Date();
+    date.setDate(date.getDate() + (n * 7));
     date = getMonday(date);
-    return { value: date.toISOString().slice(0,10), label: weekCommencingString(date) }
+    return { value: date.toISOString().slice(0,10), label: weekCommencingString(date) };
   });
 }
 
 export class WeekSelect extends React.Component {
   componentWillMount() {
-    this.setState({ dropDate: dropDates()[0].value })
+    this.setState({ dropDate: dropDates()[0].value });
   }
 
   render() {
@@ -50,6 +51,6 @@ export class WeekSelect extends React.Component {
   }
 
   handleChange() {
-    this.setState({ dropDate: this.refs.dropDate.value })
+    this.setState({ dropDate: this.refs.dropDate.value });
   }
 }

@@ -70,7 +70,7 @@ export default class OrderLineItemsTable extends React.Component {
           <td>{this.renderDeleteButton(line)}</td>
         </tr>
       );
-    })
+    });
   }
   renderEditCostRow(line) {
     if (!this.props.editable) return line.cost;

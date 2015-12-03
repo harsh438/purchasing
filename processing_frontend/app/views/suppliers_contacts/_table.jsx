@@ -42,7 +42,7 @@ export default class SupplierContacts extends React.Component {
           <SupplierContact submitText="Edit Contact" contact={contact} onSubmitContact={this.props.onEditContact} />
         </li>
       );
-    })
+    });
   }
 
   renderAddContact() {

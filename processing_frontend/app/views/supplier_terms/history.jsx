@@ -8,7 +8,7 @@ import SuppliersTable from './_table';
 
 class SupplierTermsHistory extends React.Component {
   componentWillMount () {
-    this.state = {id: this.props.params.id};
+    this.state = { id: this.props.params.id };
     this.props.dispatch(loadSupplier(this.props.params.id));
   }
 
@@ -26,13 +26,13 @@ class SupplierTermsHistory extends React.Component {
               </Link>
               </div>
               <div className="panel-body">
-              <h4>History Terms for { this.props.supplier.name }</h4>
+              <h4>History Terms for {this.props.supplier.name}</h4>
                 <SuppliersTable terms={this.props.supplier.terms} />
               </div>
             </div>
           </div>
       </div>
-    )
+    );
   }
 }
 

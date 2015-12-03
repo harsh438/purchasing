@@ -7,13 +7,13 @@ import { Link } from 'react-router';
 
 class SupplierTermsShow extends React.Component {
   componentWillMount () {
-    this.state = {id: this.props.params.id};
+    this.state = { id: this.props.params.id };
     this.props.dispatch(loadSupplierTerms(this.props.params.id));
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.state.id !== nextProps.params.id) {
-      this.setState({id: nextProps.params.id})
+      this.setState({ id: nextProps.params.id });
       this.props.dispatch(loadSupplierTerms(nextProps.params.id));
     }
   }
@@ -25,14 +25,15 @@ class SupplierTermsShow extends React.Component {
           <div className="panel panel-default">
               <div className="panel-heading" style={{ overflow: 'hidden'}}>
                 <h3 className="panel-title pull-left">Term</h3>
-                { this.renderBackLink() }
+                {this.renderBackLink()}
               </div>
               <div className="panel-body">
                 <SupplierTerms terms={this.props.supplierTerms} />
               </div>
           </div>
         </div>
-      </div>);
+      </div>
+    );
   }
 
   renderBackLink() {
@@ -44,7 +45,6 @@ class SupplierTermsShow extends React.Component {
       );
     }
   }
-
 }
 
 

@@ -18,8 +18,6 @@ export default class VendorsSupplierTable extends React.Component {
   }
 
   renderTable() {
-    console.log(this.props)
-
     if (this.props.suppliers.length === 0) {
       return (<em>No suppliers associated</em>);
     }

@@ -14,7 +14,7 @@ export default class SuppliersFilters extends React.Component {
     } else {
       this.setState({ submitting: false });
     }
-	}
+  }
 
   render() {
     return (

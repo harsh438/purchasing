@@ -4,7 +4,7 @@
   "description": "Purchase order processing frontend",
   "entry": "index.js",
   "scripts": {
-    "build": "eslint app/ && gulp scripts styles images fonts",
+    "build": "eslint app/ --ext .jsx --ext .js && gulp scripts styles images fonts",
     "watch": "gulp watch"
   },
   "repository": {
