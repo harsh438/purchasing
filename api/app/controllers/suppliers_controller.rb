@@ -1,5 +1,3 @@
-require 'pp'
-
 class SuppliersController < ApplicationController
   def index
     suppliers = Supplier::Search.new.search(params)

@@ -41,6 +41,7 @@ export default class Header extends React.Component {
               <HeaderLink to="/orders" text="Reorders" { ...this.props } />
               <HeaderLink to="/suppliers" text="Suppliers" { ...this.props } />
               <HeaderLink to="/vendors" text="Brands" { ...this.props } />
+              <HeaderLink to="/terms" text="Terms" { ...this.props } />
             </ul>
           </div>
         </nav>

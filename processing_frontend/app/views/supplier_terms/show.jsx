@@ -1,5 +1,5 @@
 import React from 'react';
-import { loadTerms } from '../../actions/supplier_terms';
+import { loadSupplierTerms } from '../../actions/supplier_terms';
 import { connect } from 'react-redux';
 import { assign } from 'lodash';
 import SupplierTerms from './_terms';
@@ -8,13 +8,13 @@ import { Link } from 'react-router';
 class SupplierTermsShow extends React.Component {
   componentWillMount () {
     this.state = {id: this.props.params.id};
-    this.props.dispatch(loadTerms(this.props.params.id));
+    this.props.dispatch(loadSupplierTerms(this.props.params.id));
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.state.id !== nextProps.params.id) {
       this.setState({id: nextProps.params.id})
-      this.props.dispatch(loadTerms(nextProps.params.id));
+      this.props.dispatch(loadSupplierTerms(nextProps.params.id));
     }
   }
 
@@ -28,7 +28,7 @@ class SupplierTermsShow extends React.Component {
                 { this.renderBackLink() }
               </div>
               <div className="panel-body">
-                <SupplierTerms terms={this.props.terms} />
+                <SupplierTerms terms={this.props.supplierTerms} />
               </div>
           </div>
         </div>
@@ -36,9 +36,9 @@ class SupplierTermsShow extends React.Component {
   }
 
   renderBackLink() {
-    if (this.props.terms) {
+    if (this.props.supplierTerms) {
       return (
-        <Link className="pull-right" to={`/suppliers/${this.props.terms.supplierId}/terms`}>
+        <Link className="pull-right" to={`/suppliers/${this.props.supplierTerms.supplierId}/terms`}>
           <span className="glyphicon glyphicon-arrow-left"></span>&nbsp;Go back to terms history
         </Link>
       );
@@ -48,8 +48,8 @@ class SupplierTermsShow extends React.Component {
 }
 
 
-function applyState({ terms }) {
-  return assign({}, terms);
+function applyState({ supplierTerms }) {
+  return assign({}, supplierTerms);
 }
 
 export default connect(applyState)(SupplierTermsShow);

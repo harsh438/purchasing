@@ -4,14 +4,13 @@ import { connect } from 'react-redux';
 import { assign } from 'lodash';
 import { map } from 'lodash';
 import { Link } from 'react-router';
+import SuppliersTable from './_table';
 
 class SupplierTermsHistory extends React.Component {
   componentWillMount () {
     this.state = {id: this.props.params.id};
     this.props.dispatch(loadSupplier(this.props.params.id));
   }
-
-
 
   render() {
     return (
@@ -28,56 +27,12 @@ class SupplierTermsHistory extends React.Component {
               </div>
               <div className="panel-body">
               <h4>History Terms for { this.props.supplier.name }</h4>
-                { this.renderTerms() }
+                <SuppliersTable terms={this.props.supplier.terms} />
               </div>
             </div>
           </div>
       </div>
     )
-  }
-
-  renderTerms() {
-    return (
-      <table className="table">
-        <tbody>
-          <tr>
-            <th>Created at</th>
-            <th>By</th>
-            <th>Confirmation file</th>
-            <th>View terms</th>
-          </tr>
-          { map(this.props.supplier.terms, this.renderTerm.bind(this)) }
-        </tbody>
-      </table>);
-  }
-
-  renderTerm(term) {
-    return (<tr key={term.id}>
-      <td>
-        {term.createdAt}
-      </td>
-      <td>
-        {term.by || <i>Unknown</i>}
-      </td>
-      <td>
-        {this.renderConfirmationFile(term)}
-      </td>
-      <td>
-        <Link to={`/suppliers/term/${term.id}`} >
-          View Terms
-        </Link>
-      </td>
-    </tr>);
-  }
-
-  renderConfirmationFile(term) {
-    if (term['confirmationFileName']) {
-      return (<a href={term['confirmationUrl']} className="btn btn-default" target="_blank">
-          <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>&nbsp; Download '{term['confirmationFileName']}'
-      </a>);
-    } else {
-      return <i>No confirmation file</i>
-    }
   }
 }
 

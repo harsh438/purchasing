@@ -1,11 +1,13 @@
-require 'pp'
-
 class SupplierTerms < ActiveRecord::Base
+  include Searchable
+
   belongs_to :supplier
 
   validates :season, presence: true
+  paginates_per 20
 
   has_attached_file :confirmation
+  scope :latest, -> { order(id: :desc) }
   validates_attachment_content_type :confirmation, content_type: %w(image/jpeg
                                                                     image/pjpeg
                                                                     image/png
