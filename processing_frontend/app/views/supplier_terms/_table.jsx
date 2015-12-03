@@ -1,14 +1,25 @@
 import React from 'react';
-import { map } from 'lodash';
+import { map, find, matchesProperty } from 'lodash';
 import { Link } from 'react-router';
 
 export default class SuppliersTable extends React.Component {
+  componentWillMount() {
+    this.state = {};
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({hasSupplierName: !!find(nextProps.terms||[], (obj) => {
+      return !!obj['supplierName'];
+    })});
+  }
+
   render() {
     return (
       <table className="table">
         <tbody>
           <tr>
             <th>Created at</th>
+            { this.renderSupplierNameTitle() }
             <th>By</th>
             <th>Confirmation file</th>
             <th>View terms</th>
@@ -18,11 +29,18 @@ export default class SuppliersTable extends React.Component {
       </table>);
   }
 
+  renderSupplierNameTitle() {
+    if (this.state.hasSupplierName) {
+      return (<th>Supplier Name</th>)
+    }
+  }
+
   renderTerm(term) {
     return (<tr key={term.id}>
       <td>
         {term.createdAt}
       </td>
+        {this.renderSupplierNameRow(term)}
       <td>
         {term.by || <i>Unknown</i>}
       </td>
@@ -35,6 +53,12 @@ export default class SuppliersTable extends React.Component {
         </Link>
       </td>
     </tr>);
+  }
+
+  renderSupplierNameRow(term = {}) {
+    if (this.state.hasSupplierName) {
+      return (<td>{term.supplierName}</td>);
+    }
   }
 
   renderConfirmationFile(term) {

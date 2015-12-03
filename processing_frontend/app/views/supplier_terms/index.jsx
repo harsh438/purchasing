@@ -8,7 +8,6 @@ import SuppliersTable from './_table';
 class SuppliersTermsIndex extends React.Component {
   componentWillMount() {
     this.loadPage();
-    this.props.dispatch(loadTerms());
   }
 
   componentWillReceiveProps(nextProps) {
