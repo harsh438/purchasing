@@ -1,8 +1,8 @@
 import { assign, map } from 'lodash';
 import { camelizeKeys } from '../utilities/inspection';
 
-const initialSupplierState = { supplier: {} };
-const initialSuppliersState = { supplier: {},
+const initialSupplierState = { supplier: { contacts: [] } };
+const initialSuppliersState = { supplier: { contacts: [] },
                                 suppliers: [],
                                 totalPages: null,
                                 activePage: null };

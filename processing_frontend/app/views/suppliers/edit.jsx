@@ -7,7 +7,7 @@ import { loadSupplier,
          saveTerms } from '../../actions/suppliers';
 import { loadSeasons } from '../../actions/filters';
 import SuppliersForm from './_form';
-import SupplierContacts from '../suppliers_contacts/_table';
+import SupplierContactsTable from '../suppliers_contacts/_table';
 import SupplierTerms from '../supplier_terms/_terms';
 import SupplierTermsForm from '../supplier_terms/_form';
 import { Link } from 'react-router';
@@ -43,9 +43,10 @@ class SuppliersEdit extends React.Component {
               {this.renderTerms()}
             </div>
           </div>
-          <SupplierContacts supplier={this.props.supplier}
-                            onEditContact={this.handleOnSaveContact.bind(this)}
-                            onAddContact={this.handleOnSaveContact.bind(this)}/>
+
+          <SupplierContactsTable supplier={this.props.supplier}
+                                 onEditContact={this.handleOnSaveContact.bind(this)}
+                                 onAddContact={this.handleOnSaveContact.bind(this)}/>
         </div>
       </div>
     );
@@ -88,6 +89,7 @@ class SuppliersEdit extends React.Component {
                      onClick={() => this.setState({ editingTerms: true })}>
               Edit terms
             </button>
+
             <Link className="btn btn-default pull-right" to={`/suppliers/${this.props.supplier.id}/terms`}>
               View terms history
             </Link>
