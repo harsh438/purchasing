@@ -29,15 +29,11 @@ class Sku::Generator
   end
 
   def generate_new_sku
-    sku_attrs(LanguageProductOption.create(product_option_attrs),
-              LanguageProduct.create(language_product_attrs),
-              LanguageCategory.create(language_category_attrs))
+    new_sku_attrs = sku_attrs(LanguageProductOption.create(product_option_attrs),
+                              LanguageProduct.create(language_product_attrs),
+                              LanguageCategory.create(language_category_attrs))
 
-    Sku.create(merge_pvx_with(sku_attrs))
-  end
-
-  def merge_pvx_with(sku_attrs)
-    return sku_attrs unless pvx_fields
+    Sku.create(new_sku_attrs.merge!(pvx_fields))
   end
 
   def pvx_fields
@@ -51,7 +47,7 @@ class Sku::Generator
     @attrs
   end
 
-  def sku_attrs(language_product_option, language_category, language_product)
+  def sku_attrs(language_product_option, language_product, language_category)
     attrs.except(:lead_gender)
          .merge!({ product_id: product.id,
                    language_product_id: language_product.id,
