@@ -80,7 +80,7 @@ export default class PurchaseOrderRow extends React.Component {
   }
 
   renderCommentPopover() {
-    if (this.props.purchaseOrder.comment == null || this.props.purchaseOrder.comment.length == 0) {
+    if (!this.props.purchaseOrder.comment || this.props.purchaseOrder.comment.length === 0) {
       return (<span />);
     }
 
@@ -97,13 +97,9 @@ export default class PurchaseOrderRow extends React.Component {
   }
 
   renderArrivedDate() {
-    let date = this.props.purchaseOrder.arrivedDate
-
-    if (date == '0') {
-      return ``
-    }
-
-    return this.props.purchaseOrder.arrivedDate
+    let date = this.props.purchaseOrder.arrivedDate;
+    if (parseInt(date, 10) === 0) return;
+    return this.props.purchaseOrder.arrivedDate;
   }
 
   popOverlay() {
@@ -115,10 +111,7 @@ export default class PurchaseOrderRow extends React.Component {
   }
 
   renderBrandSizeString(size) {
-    if (size == null || size.length == 0) {
-      return ``;
-    }
-
+    if (!size || size.length === 0) return;
     return `(${size})`;
   }
 
@@ -129,7 +122,7 @@ export default class PurchaseOrderRow extends React.Component {
       classes += ' active';
     }
 
-    if (this.props.purchaseOrder.status == 'cancelled') {
+    if (this.props.purchaseOrder.status === 'cancelled') {
       classes += ' danger';
     }
 

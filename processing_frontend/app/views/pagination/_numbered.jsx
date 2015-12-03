@@ -1,5 +1,5 @@
-import React from 'react'
-import { Pagination } from 'react-bootstrap'
+import React from 'react';
+import { Pagination } from 'react-bootstrap';
 
 export default class NumberedPagination extends React.Component {
   componentWillMount() {
@@ -25,6 +25,6 @@ export default class NumberedPagination extends React.Component {
   handleSelect(e, selectedEvent) {
     e.preventDefault();
     this.setState({ activePage: selectedEvent.eventKey });
-    this.props.index.loadPage(selectedEvent.eventKey)
+    this.props.index.loadPage(selectedEvent.eventKey);
   }
 }

@@ -24,8 +24,7 @@ export default class SupplierTerms extends React.Component {
                    'productImagery',
                    'by',
                    'comments',
-                   'confirmationFile'
-                   ];
+                   'confirmationFile'];
   }
 
   render() {
@@ -41,11 +40,15 @@ export default class SupplierTerms extends React.Component {
 
   renderParentTerm() {
     if (this.props.terms && this.props.terms['parentId']) {
-      return (<tr><td colSpan="2">
-          <Link className="btn btn-default col-xs-12" to={`/suppliers/term/${this.props.terms['parentId']}`}>
-            <span className="glyphicon glyphicon-arrow-left"></span>&nbsp;Go to parent term
-          </Link>
-        </td></tr>);
+      return (
+        <tr>
+          <td colSpan="2">
+            <Link className="btn btn-default col-xs-12" to={`/suppliers/term/${this.props.terms['parentId']}`}>
+              <span className="glyphicon glyphicon-arrow-left"></span>&nbsp;Go to parent term
+            </Link>
+          </td>
+        </tr>
+      );
     }
   }
 
@@ -69,17 +72,17 @@ export default class SupplierTerms extends React.Component {
   getField(field) {
     let terms = this.props.terms || {};
     switch (field) {
-      case 'samples':
-      case 'productImagery':
-        return terms[field] === '0' ? '✘' : '✔';
-      case 'confirmationFile':
-        if (terms['confirmationFileName']) {
-          return <a href={terms['confirmationUrl']} className="btn btn-default" target="_blank">
-            <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>&nbsp;Download '{terms['confirmationFileName']}'
-          </a>;
-        }
-      default:
-        return terms[field];
+    case 'samples':
+    case 'productImagery':
+      return terms[field] === '0' ? '✘' : '✔';
+    case 'confirmationFile':
+      if (terms['confirmationFileName']) {
+        return <a href={terms['confirmationUrl']} className="btn btn-default" target="_blank">
+          <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>&nbsp;Download '{terms['confirmationFileName']}'
+        </a>;
+      }
+    default:
+      return terms[field];
     }
   }
 }

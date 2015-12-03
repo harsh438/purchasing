@@ -3,11 +3,15 @@ import { Modal, Input } from 'react-bootstrap';
 
 export default class PurchaseOrdersTableActions extends React.Component {
   componentWillMount() {
-    this.setState({ showCommentModal: false })
+    this.setState({ showCommentModal: false });
   }
 
   render() {
-    if (this.props.totalCount == 0) return (<div />);
+    if (this.props.totalCount === 0) {
+      return (
+        <div />
+      );
+    }
 
     return (
       <div className="form-container">

@@ -94,7 +94,7 @@ class OrdersEdit extends React.Component {
   }
 
   renderPurchaseOrders() {
-    if (!this.props.order.purchaseOrders || this.props.order.purchaseOrders.length == 0) {
+    if (!this.props.order.purchaseOrders || this.props.order.purchaseOrders.length === 0) {
       return (<tr><td><h4>No purchase orders found.</h4></td></tr>);
     }
 
@@ -116,7 +116,7 @@ class OrdersEdit extends React.Component {
           </td>
         </tr>
       );
-    })
+    });
   }
 
   handleOrderLineItemsAdd(lineItems) {

@@ -34,26 +34,24 @@ export default class SuppliersForm extends React.Component {
   }
 
   setTerms(terms = {}) {
-    this.state.terms = pick(terms,  ['season'].concat(map(this.getTextFieldList(), '0')));
-    this.setState({ terms: this.state.terms });
+    const appendedTerms = pick(terms, ['season', ...map(this.getTextFieldList(), '0')]);
+    this.setState({ terms: appendedTerms });
   }
 
   handleFile(files) {
-    var self = this;
-    var reader = new FileReader();
-    var file = files[0];
+    const self = this;
+    const reader = new FileReader();
+    const file = files[0];
 
-    reader.onload = function(upload) {
+    reader.onload = function (upload) {
       let terms = self.state.terms;
       terms.confirmation = upload.target.result;
       terms.confirmationFileName = file.name;
       self.setState({ terms: terms });
-    }
+    };
 
     reader.readAsDataURL(file);
   }
-
-
 
   render() {
     return (
@@ -121,18 +119,17 @@ export default class SuppliersForm extends React.Component {
 
   renderFileUploadText() {
     if (this.state.terms.confirmationFileName) {
-      return (<div style={ {margin: '5px 10px 0 10px'} }>
-            <span className="glyphicon glyphicon-open-file"></span>
-            <span style={{'color':'grey'}}> File to upload: {this.state.terms.confirmationFileName}</span>
-          </div>
+      return (
+        <div style={{ margin: '5px 10px 0 10px' }}>
+          <span className="glyphicon glyphicon-open-file"></span>
+          <span style={{ color: 'grey' }}>File to upload: {this.state.terms.confirmationFileName}</span>
+        </div>
       );
     }
   }
 
   renderTextFields() {
-    return map(this.getTextFieldList(),
-               this.renderTextField,
-               this);
+    return map(this.getTextFieldList(), this.renderTextField, this);
   }
 
   renderTextField([field, hint], i) {
@@ -182,11 +179,11 @@ export default class SuppliersForm extends React.Component {
 
   getField(field) {
     switch (field) {
-      case 'samples':
-      case 'productImagery':
-        return this.state.terms[field] === '1';
-      default:
-        return get(this.state.terms, field, '');
+    case 'samples':
+    case 'productImagery':
+      return this.state.terms[field] === '1';
+    default:
+      return get(this.state.terms, field, '');
     }
   }
 
@@ -205,9 +202,8 @@ export default class SuppliersForm extends React.Component {
 
   handleCheckboxChange(e) {
     e.stopPropagation();
-
-    this.state.terms[e.target.name] = '' + (0+e.target.checked);
-    this.setState({ terms: this.state.terms });
+    const terms = assign({}, this.state.terms, { [e.target.name]: '' + (0 + e.target.checked) });
+    this.setState({ terms });
   }
 
   handleFormSubmit(e) {

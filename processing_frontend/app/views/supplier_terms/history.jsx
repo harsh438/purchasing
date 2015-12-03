@@ -17,7 +17,7 @@ class SupplierTermsHistory extends React.Component {
       <div className="suppliers_terms_history" style={{ marginTop: '70px' }}>
         <div className="col-md-12">
             <div className="panel panel-default">
-              <div className="panel-heading" style={{ overflow: 'hidden'}}>
+              <div className="panel-heading" style={{ overflow: 'hidden' }}>
                 <h3 className="panel-title pull-left">
                   Terms history
                 </h3>

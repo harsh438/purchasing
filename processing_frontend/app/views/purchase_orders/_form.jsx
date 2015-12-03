@@ -44,7 +44,7 @@ export default class PurchaseOrdersForm extends React.Component {
                   <Select id="category"
                           name="category"
                           onChange={this.handleMultiSelectChange.bind(this, 'category')}
-                          multi={true}
+                          multi
                           value={this.getFilter('category')}
                           options={this.multiSelectOptions(this.props.categories)} />
                 </div>
@@ -119,7 +119,7 @@ export default class PurchaseOrdersForm extends React.Component {
                   <Select id="gender"
                           name="gender"
                           onChange={this.handleMultiSelectChange.bind(this, 'gender')}
-                          multi={true}
+                          multi
                           value={this.getFilter('gender')}
                           options={this.multiSelectOptions(this.props.genders)} />
                 </div>
@@ -264,12 +264,12 @@ export default class PurchaseOrdersForm extends React.Component {
 
   handleFormChange({ target }) {
     switch (target.name) {
-      case 'sortBy':
-        return this.setState({ sortBy: target.value });
-      case 'status':
-        return this.setFilter('status', this.refs.status.getCheckedValues());
-      default:
-        return this.setFilter(target.name, target.value);
+    case 'sortBy':
+      return this.setState({ sortBy: target.value });
+    case 'status':
+      return this.setFilter('status', this.refs.status.getCheckedValues());
+    default:
+      return this.setFilter(target.name, target.value);
     }
   }
 
@@ -286,11 +286,11 @@ export default class PurchaseOrdersForm extends React.Component {
 
   getFilter(field) {
     switch (field) {
-      case 'category':
-      case 'gender':
-        return get(this.state.filters, field, []).join(',');
-      default:
-        return get(this.state.filters, field, '');
+    case 'category':
+    case 'gender':
+      return get(this.state.filters, field, []).join(',');
+    default:
+      return get(this.state.filters, field, '');
     }
   }
 

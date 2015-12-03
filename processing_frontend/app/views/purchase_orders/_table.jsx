@@ -26,8 +26,8 @@ export default class PurchaseOrdersTable extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.purchaseOrders !== nextProps.purchaseOrders) {
-      const newIds = map(nextProps.purchaseOrders, o => o.orderId)
-      this.setState({ selected: intersection(this.state.selected, newIds) })
+      const newIds = map(nextProps.purchaseOrders, o => o.orderId);
+      this.setState({ selected: intersection(this.state.selected, newIds) });
     }
   }
 
@@ -82,7 +82,7 @@ export default class PurchaseOrdersTable extends React.Component {
   }
 
   renderEmpty() {
-    if (this.props.purchaseOrders.length == 0) {
+    if (this.props.purchaseOrders.length === 0) {
       return(
         <div style={{ width: '100%', textAlign: 'center' }}>
           No results to show.
@@ -138,18 +138,16 @@ export default class PurchaseOrdersTable extends React.Component {
   }
 
   selectRow(id) {
-    var selected = this.state.selected.slice();
     if (!contains(selected, id)) {
-      selected.push(id);
+      this.setState({ selected: [...this.state.selected, selected] });
     }
-    this.setState({ selected: selected });
   }
 
   unSelectRow(id) {
-    var selected = this.state.selected.slice();
-    var index = selected.indexOf(id);
+    let selected = this.state.selected.slice();
+    let index = selected.indexOf(id);
 
-    while (index != -1) {
+    while (index !== -1) {
       selected.splice(index, 1);
       index = selected.indexOf(id);
     }
@@ -164,9 +162,8 @@ export default class PurchaseOrdersTable extends React.Component {
   }
 
   cancelPO() {
-    if (!this.props.query.poNumber) {
-      return;
-    }
+    if (!this.props.query.poNumber) return;
+
     if (confirm(`Cancelling PO# ${this.props.query.poNumber}, are you sure?`)) {
       this.props.dispatch(cancelEntirePurchaseOrder(this.props.query.poNumber));
     }
@@ -185,17 +182,13 @@ export default class PurchaseOrdersTable extends React.Component {
   }
 
   changeDeliveryDateSelected() {
-    if (!this.state.deliveryDate) {
-      return;
-    }
+    if (!this.state.deliveryDate) return;
 
     this.props.dispatch(updatePurchaseOrders(this.state.selected, { delivery_date: this.state.deliveryDate }));
   }
 
   changeCommentSelected(comment) {
-    if (comment == null || comment.length == 0) {
-      return;
-    }
-    this.props.dispatch(updatePurchaseOrders(this.state.selected, { comment: comment }));
+    if (!comment || comment.length === 0) return;
+    this.props.dispatch(updatePurchaseOrders(this.state.selected, { comment }));
   }
 }
