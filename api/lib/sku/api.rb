@@ -8,9 +8,10 @@ class Sku::Api
   end
 
   def find(fields, custom_url = nil)
-    Excon.post(custom_url || config['url'],
-                          body: fields.merge!(key: config['key'],
-                                              token: config['token']).to_json,
-                          headers: headers)
+    @response = Excon.post(custom_url || config['url'],
+                           body: fields.merge!(key: config['key'],
+                                               token: config['token']).to_json,
+                           headers: headers)
+    Sku::ApiResponse.new(@response)
   end
 end

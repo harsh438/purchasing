@@ -1,10 +1,6 @@
 describe Sku::Api do
   let (:url) { Sku::Api.new.config['url'] }
 
-  before(:each) do
-
-  end
-
   context 'Retrieving sku information from the API' do
     let(:response) do
       VCR.use_cassette 'good_sku' do
@@ -19,11 +15,11 @@ describe Sku::Api do
     end
 
     it 'should find a sku in the sku API and return previously unknown information on it' do
-      expect(JSON.parse(response.body)['barcode']).to include('5052094029950')
+      expect(response.fields[:barcode]).to eq('5052094029950')
     end
 
     it 'should return a 204 for nonexistent skus' do
-      expect(nonexistent_response.headers['status']).to include('204')
+      expect(nonexistent_response.status).to eq(204)
     end
   end
 end
