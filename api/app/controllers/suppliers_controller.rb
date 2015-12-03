@@ -1,23 +1,23 @@
 class SuppliersController < ApplicationController
   def index
     suppliers = Supplier::Search.new.search(params)
-    render json: { suppliers: suppliers.map(&:as_json_with_details_vendors_contacts_and_terms),
+    render json: { suppliers: suppliers.map(&:as_json_with_details_buyers_vendors_contacts_and_terms),
                    total_pages: suppliers.total_pages,
                    page: params[:page] }
   end
 
   def create
-    render json: Supplier.create!(full_supplier_attrs).as_json_with_details_vendors_contacts_and_terms
+    render json: Supplier.create!(full_supplier_attrs).as_json_with_details_buyers_vendors_contacts_and_terms
   end
 
   def update
     supplier = Supplier.find(params[:id])
     supplier.update!(full_supplier_attrs)
-    render json: supplier.as_json_with_details_vendors_contacts_and_terms
+    render json: supplier.as_json_with_details_buyers_vendors_contacts_and_terms
   end
 
   def show
-    render json: Supplier.find(params[:id]).as_json_with_details_vendors_contacts_and_terms
+    render json: Supplier.find(params[:id]).as_json_with_details_buyers_vendors_contacts_and_terms
   end
 
   private

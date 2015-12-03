@@ -22,6 +22,9 @@ class Supplier < ActiveRecord::Base
   has_many :contacts, class_name: 'SupplierContact'
   accepts_nested_attributes_for :contacts
 
+  has_many :buyers, class_name: 'SupplierBuyer'
+  accepts_nested_attributes_for :buyers
+
   has_many :terms, class_name: 'SupplierTerms'
 
   after_initialize :ensure_primary_key
@@ -45,8 +48,9 @@ class Supplier < ActiveRecord::Base
     end
   end
 
-  def as_json_with_details_vendors_contacts_and_terms
+  def as_json_with_details_buyers_vendors_contacts_and_terms
     details.as_json.merge(as_json).tap do |supplier|
+      supplier['buyers'] = buyers.map(&:as_json)
       supplier['vendors'] = vendors.map(&:as_json)
       supplier['contacts'] = contacts.map(&:as_json)
       supplier['terms'] = terms.last(10).reverse.map(&:as_json_with_url)
