@@ -32,7 +32,7 @@ export default class SuppliersForm extends React.Component {
                          value={this.state.name} /></td>
             </tr>
             <tr>
-                <td><label htmlFor="return_address_name">Address Name</label></td>
+                <td><label htmlFor="return_address_name">Returns Address Name</label></td>
                 <td><input className="form-control"
                        id="returns_address_name"
                        name="returns_address_name"
@@ -41,7 +41,7 @@ export default class SuppliersForm extends React.Component {
                        value={this.state.returnsAddressName} /></td>
             </tr>
             <tr>
-                <td><label htmlFor="return_address_name">Address Number</label></td>
+                <td><label htmlFor="returns_address_number">Returns Address Number</label></td>
                 <td><input className="form-control"
                            id="returns_address_number"
                            name="returns_address_number"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { map, assign } from 'lodash';
+import { at, assign, compact, flatten, map } from 'lodash';
 import { loadSupplier,
          editSupplier,
          saveSupplierContact,
@@ -63,6 +63,40 @@ class SuppliersEdit extends React.Component {
     } else {
       return (
         <p>
+          <table className="table">
+            <tbody>
+              <tr>
+                <th>Returns Address</th>
+                <td>{this.renderReturnsAddress()}</td>
+              </tr>
+
+              <tr>
+                <th>Returns Process</th>
+                <td>{this.props.supplier.returnsProcess}</td>
+              </tr>
+
+              <tr>
+                <th>Invoicer name</th>
+                <td>{this.props.supplier.invoicerName}</td>
+              </tr>
+
+              <tr>
+                <th>Account Number</th>
+                <td>{this.props.supplier.accountNumber}</td>
+              </tr>
+
+              <tr>
+                <th>Country of Origin</th>
+                <td>{this.props.supplier.countryOfOrigin}</td>
+              </tr>
+
+              <tr>
+                <th>Discontinued?</th>
+                <td>{this.props.supplier.discontinued ? '✔' : '✘'}</td>
+              </tr>
+            </tbody>
+          </table>
+
           <button className="btn btn-success"
                    onClick={() => this.setState({ editingSupplier: true })}>
             Edit supplier
@@ -70,6 +104,17 @@ class SuppliersEdit extends React.Component {
         </p>
       );
     }
+  }
+
+  renderReturnsAddress() {
+    const addressParts = compact(at(this.props.supplier, ['returnsAddressName',
+                                                          'returnsAddressNumber',
+                                                          'returnsAddress1',
+                                                          'returnsAddress2',
+                                                          'returnsAddress3',
+                                                          'returnsPostalCode']));
+
+    return flatten(map(addressParts, part => [part, (<br />)]));
   }
 
   renderTerms() {
