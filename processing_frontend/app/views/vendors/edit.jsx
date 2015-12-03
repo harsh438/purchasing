@@ -19,7 +19,7 @@ class VendorsEdit extends React.Component {
           <VendorsForm title="Edit Vendor"
                        submitText="Save"
                        vendor={this.props.vendor}
-                       onSubmitVendor={this.handleOnEditVendor.bind(this)} />
+                       onSubmitVendor={this.handleEditVendor.bind(this)} />
         </div>
       </div>
     );
@@ -29,7 +29,7 @@ class VendorsEdit extends React.Component {
     this.props.history.pushState(null, `/vendors/${id}/edit`);
   }
 
-  handleOnEditVendor(vendor) {
+  handleEditVendor(vendor) {
     this.props.dispatch(editVendor(vendor));
   }
 }
