@@ -1,5 +1,5 @@
 <?php
-$opts = array( 'manufacturer_sku' => 261040,
+  $opts = array( 'manufacturer_sku' => 261040,
                  'manufacturer_color' => 'Pale Blue',
                  'manufacturer_size' => 'LRG',
                  'season' => 'ss15',
