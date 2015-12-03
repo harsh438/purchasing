@@ -39,14 +39,14 @@ class Supplier < ActiveRecord::Base
   paginates_per 50
 
   def as_json(options = {})
-    details.as_json.merge(super).tap do |supplier|
+    super.tap do |supplier|
       supplier['created_at'] = supplier['created_at'].to_s
       supplier['updated_at'] = supplier['updated_at'].to_s
     end
   end
 
   def as_json_with_vendors_contacts_and_terms
-    as_json.tap do |supplier|
+    details.as_json.merge(as_json).tap do |supplier|
       supplier['vendors'] = vendors.map(&:as_json)
       supplier['contacts'] = contacts.map(&:as_json)
       supplier['terms'] = terms.last(10).reverse.map(&:as_json_with_url)

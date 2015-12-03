@@ -4,7 +4,7 @@ class FiltersController < ApplicationController
   end
 
   def suppliers
-    render json: Supplier.mapped.relevant.alphabetical.with_details
+    render json: Supplier.mapped.relevant.alphabetical
   end
 
   def seasons
