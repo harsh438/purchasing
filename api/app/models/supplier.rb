@@ -45,7 +45,7 @@ class Supplier < ActiveRecord::Base
     end
   end
 
-  def as_json_with_vendors_contacts_and_terms
+  def as_json_with_details_vendors_contacts_and_terms
     details.as_json.merge(as_json).tap do |supplier|
       supplier['vendors'] = vendors.map(&:as_json)
       supplier['contacts'] = contacts.map(&:as_json)

@@ -7,17 +7,17 @@ class SuppliersController < ApplicationController
   end
 
   def create
-    render json: Supplier.create!(full_supplier_attrs)
+    render json: Supplier.create!(full_supplier_attrs).as_json_with_details_vendors_contacts_and_terms
   end
 
   def update
     supplier = Supplier.find(params[:id])
     supplier.update!(full_supplier_attrs)
-    render json: supplier.as_json_with_vendors_contacts_and_terms
+    render json: supplier.as_json_with_details_vendors_contacts_and_terms
   end
 
   def show
-    render json: Supplier.find(params[:id]).as_json_with_vendors_contacts_and_terms
+    render json: Supplier.find(params[:id]).as_json_with_details_vendors_contacts_and_terms
   end
 
   private
