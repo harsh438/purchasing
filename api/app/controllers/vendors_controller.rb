@@ -7,7 +7,7 @@ class VendorsController < ApplicationController
   end
 
   def create
-    render json: Vendor.create!(create_vendor_attrs)
+    render json: Vendor.create!(create_vendor_attrs).as_json_with_details_and_suppliers
   end
 
   def update
