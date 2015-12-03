@@ -23,7 +23,7 @@ export default class SupplierTermsDefault extends React.Component {
 
   renderPanelBody() {
     if (this.state.editingTerms) {
-      return this.renderTermsForm()
+      return this.renderTermsForm();
     } else if (this.props.supplier.defaultTerms) {
       return this.renderTermsView();
     } else {
