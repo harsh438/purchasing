@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151203121421) do
+ActiveRecord::Schema.define(version: 20151203145150) do
 
   create_table "ds_categories", primary_key: "catID", force: :cascade do |t|
     t.integer "parentID",         limit: 4,     default: 0,      null: false
@@ -282,6 +282,7 @@ ActiveRecord::Schema.define(version: 20151203121421) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name",       limit: 255
+    t.string   "type",       limit: 255, default: "reorder"
   end
 
   create_table "po_summary", primary_key: "po_num", force: :cascade do |t|
