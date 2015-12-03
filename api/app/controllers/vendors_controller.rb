@@ -13,11 +13,11 @@ class VendorsController < ApplicationController
   def update
     vendor = Vendor.find(params[:id])
     vendor.update!(update_vendor_attrs)
-    render json: vendor
+    render json: vendor.as_json_with_details_and_suppliers
   end
 
   def show
-    render json: Vendor.find(params[:id]).to_json
+    render json: Vendor.find(params[:id]).as_json_with_details_and_suppliers
   end
 
   private
