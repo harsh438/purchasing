@@ -14,7 +14,8 @@ import { Link } from 'react-router';
 
 class SuppliersEdit extends React.Component {
   componentWillMount () {
-    this.state = { editingTerms: false};
+    this.state = { editingSupplier: false,
+                   editingTerms: false };
     this.props.dispatch(loadSupplier(this.props.params.id));
     this.props.dispatch(loadSeasons());
   }
@@ -22,14 +23,18 @@ class SuppliersEdit extends React.Component {
   render() {
     return (
       <div className="suppliers_edit" style={{ marginTop: '70px' }}>
-        <div className="col-xs-6">
-          <SuppliersForm title="Edit Supplier"
-                         submitText="Save"
-                         supplier={this.props.supplier}
-                         onSubmitSupplier={this.handleOnEditSupplier.bind(this)} />
+        <div className="col-md-6">
+          <div className="panel panel-default">
+            <div className="panel-heading">
+              <h3 className="panel-title">{this.props.supplier.name}</h3>
+            </div>
+            <div className="panel-body">
+              {this.renderSupplier()}
+            </div>
+          </div>
         </div>
 
-        <div className="col-xs-6">
+        <div className="col-md-6">
           <div className="panel panel-default">
             <div className="panel-heading">
               <h3 className="panel-title">Default Terms</h3>
@@ -44,6 +49,26 @@ class SuppliersEdit extends React.Component {
         </div>
       </div>
     );
+  }
+
+  renderSupplier() {
+    if (this.state.editingSupplier) {
+      return (
+        <SuppliersForm title="Edit Supplier"
+                       submitText="Save"
+                       supplier={this.props.supplier}
+                       onSubmitSupplier={this.handleOnEditSupplier.bind(this)} />
+      );
+    } else {
+      return (
+        <p>
+          <button className="btn btn-success"
+                   onClick={() => this.setState({ editingSupplier: true })}>
+            Edit supplier
+          </button>
+        </p>
+      );
+    }
   }
 
   renderTerms() {
@@ -96,6 +121,7 @@ class SuppliersEdit extends React.Component {
   }
 
   handleOnEditSupplier(supplier) {
+    this.setState({ editingSupplier: false });
     this.props.dispatch(editSupplier(supplier));
   }
 

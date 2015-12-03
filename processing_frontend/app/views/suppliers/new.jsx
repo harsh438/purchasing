@@ -21,9 +21,16 @@ class SuppliersNew extends React.Component {
            style={{ marginTop: '70px' }}>
         <div className="row">
           <div className="col-md-6 col-md-offset-3">
-            <SuppliersForm title="Create Supplier"
-                           submitText="Add Supplier"
-                           onSubmitSupplier={this.handleCreateSupplier.bind(this)} />
+            <div className="panel panel-default">
+              <div className="panel-heading">
+                <h3 className="panel-title">Add supplier</h3>
+              </div>
+              <div className="panel-body">
+                <SuppliersForm title="Create Supplier"
+                               submitText="Add Supplier"
+                               onSubmitSupplier={this.handleCreateSupplier.bind(this)} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
