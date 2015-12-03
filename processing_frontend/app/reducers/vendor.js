@@ -1,7 +1,7 @@
 import { assign, map } from 'lodash';
 import { camelizeKeys } from '../utilities/inspection';
 
-const initialVendorState =  { vendor: {} };
+const initialVendorState =  { vendor: { suppliers: [] } };
 const initialVendorsState = { vendors: [], activePage: null, totalPages: null };
 
 function transformVendor(vendor) {
