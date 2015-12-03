@@ -1,12 +1,12 @@
 describe Sku::Generator do
   before { create(:sku) }
 
-  let(:new_sku_attrs) { { manufacturer_sku: 'MANU-FACTURER-SKU-12',
+  let(:new_sku_attrs) { { manufacturer_sku: 'SV507-A59',
                           product_name: 'The big name',
                           lead_gender: 'M',
                           vendor_id: create(:vendor).id,
                           manufacturer_color: 'blueish',
-                          manufacturer_size: 'smallish',
+                          manufacturer_size: '14',
                           season: 'witch',
                           color: 'blue',
                           size: 'small',
@@ -31,7 +31,11 @@ describe Sku::Generator do
   end
 
   context 'generate a sku based on the information passed in the attributes' do
-    subject { described_class.new.sku_from!(new_sku_attrs) }
+    subject do
+      VCR.use_cassette 'existent_sku' do
+        described_class.new.sku_from!(new_sku_attrs)
+      end
+    end
 
     it { is_expected.to_not be_nil }
 

@@ -1,10 +1,6 @@
 describe Sku::Api do
   let (:url) { Sku::Api.new.config['url'] }
 
-  before(:each) do
-
-  end
-
   context 'Retrieving sku information from the API' do
     let(:response) do
       VCR.use_cassette 'good_sku' do
