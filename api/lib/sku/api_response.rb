@@ -4,12 +4,12 @@ class Sku::ApiResponse
   end
 
   def status
-    @response['headers']['Status'].split(' ').first.to_i
+    @response.headers['Status'].split(' ').first.to_i
   end
 
   def fields
     return {} if status != 200
-    map_to_response(@response['body'])
+    map_to_response(JSON.parse(@response.data[:body]))
   end
 
   private
