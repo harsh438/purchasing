@@ -4,7 +4,7 @@ class SupplierTerms < ActiveRecord::Base
   belongs_to :supplier
 
   validates :season, presence: true
-  paginates_per 20
+  paginates_per 50
 
   has_attached_file :confirmation
   scope :latest, -> { order(id: :desc) }
@@ -43,6 +43,7 @@ class SupplierTerms < ActiveRecord::Base
 
   def as_json_with_url(term = {})
     as_json.tap do |term|
+      term['by'] = by
       if confirmation.exists?
         term['confirmation_url'] = confirmation.expiring_url(300)
       end
@@ -51,7 +52,8 @@ class SupplierTerms < ActiveRecord::Base
 
   def as_json_with_url_and_supplier_name(term = {})
     as_json.tap do |term|
-      term['supplier_name'] = supplier.name
+      term['supplier_name'] = supplier.try(:name)
+      term['by'] = by
       if confirmation.exists?
         term['confirmation_url'] = confirmation.expiring_url(300)
       end

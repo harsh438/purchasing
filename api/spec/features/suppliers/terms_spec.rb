@@ -1,6 +1,12 @@
 feature 'Suppliers Terms' do
   subject { JSON.parse(page.body) }
 
+
+  scenario 'Listing of SuppliersTerms pagination' do
+    when_i_request_list_of_supplier_terms
+    then_i_should_see_paginated_list_of_supplier_terms
+  end
+
   scenario 'Adding terms to Supplier' do
     when_i_add_a_set_of_terms_to_a_supplier
     then_those_terms_should_be_listed_under_the_supplier
@@ -10,6 +16,18 @@ feature 'Suppliers Terms' do
     when_updating_supplier_terms
     then_new_terms_should_be_created
   end
+
+  def when_i_request_list_of_supplier_terms
+    create_list(:supplier_terms, 52)
+    visit supplier_terms_path
+  end
+
+  def then_i_should_see_paginated_list_of_supplier_terms
+    expect(subject['terms'].count).to eq(50)
+    expect(subject['total_pages']).to eq(2)
+    expect(subject['terms']).to include(a_hash_including('id', 'supplier_name', 'by', 'parent_id'))
+  end
+
 
   def when_i_add_a_set_of_terms_to_a_supplier
     page.driver.post(supplier_path(create(:supplier)),
