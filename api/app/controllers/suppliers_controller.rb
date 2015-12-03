@@ -23,18 +23,15 @@ class SuppliersController < ApplicationController
   private
 
   def supplier_attrs
-    params.require(:supplier).permit(:id, :name,
+    params.require(:supplier).permit(:id,
+                                     :name,
                                      :returns_address_name,
                                      :returns_address_number,
                                      :returns_address_1,
                                      :returns_address_2,
                                      :returns_address_3,
                                      :returns_postal_code,
-                                     :returns_process,
-                                     terms: [:season,
-                                             :confirmation,
-                                             :confirmation_file_name
-                                            ] + SupplierTerms.stored_attributes[:terms])
+                                     :returns_process)
   end
 
   def supplier_details_attrs
@@ -54,8 +51,24 @@ class SuppliersController < ApplicationController
                                                            :landline])
   end
 
+  def supplier_terms_attrs
+    params.require(:supplier).permit(terms: [:season,
+                                             :confirmation,
+                                             :confirmation_file_name] + SupplierTerms.stored_attributes[:terms])
+  end
+
+  def supplier_buyers_attrs
+    params.require(:supplier).permit(buyers_attributes: [:id,
+                                                         :department,
+                                                         :buyer_name,
+                                                         :assistant_name,
+                                                         :business_unit])
+  end
+
   def full_supplier_attrs
     supplier_attrs.merge(details_attributes: supplier_details_attrs)
                   .merge(supplier_contacts_attrs)
+                  .merge(supplier_terms_attrs)
+                  .merge(supplier_buyers_attrs)
   end
 end
