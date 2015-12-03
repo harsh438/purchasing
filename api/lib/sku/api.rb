@@ -1,10 +1,16 @@
 class Sku::Api
-  def url
-    'http://www.example.com/api'
+  def config
+    @config ||= YAML.load_file(Rails.root.join('config/pvx.yml'))[Rails.env]
+  end
+
+  def headers
+    { 'Content-Type' => 'application/json' }
   end
 
   def find(fields, custom_url = nil)
-    connection = Excon.new(custom_url || url)
-    connection.get(query: fields)
+    Excon.post(custom_url || config['url'],
+                          body: fields.merge!(key: config['key'],
+                                              token: config['token']).to_json,
+                          headers: headers)
   end
 end

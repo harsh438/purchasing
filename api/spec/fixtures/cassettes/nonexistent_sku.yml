@@ -1,0 +1,36 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://endpoints.surfdome.cc/peoplevox_endpoint/api/sku_lookup
+    body:
+      encoding: UTF-8
+      string: '{"man_sku":"12345","size":"Small","key":"P5Ft0ZgmJuqWB","token":"twRduwypFJoZVYkbMe5KYuqPqG7lDxmSVxUWNP3i"}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Date:
+      - Wed, 02 Dec 2015 17:38:17 GMT
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=5
+      Status:
+      - 204 No Content
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      Server:
+      - ''
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Wed, 02 Dec 2015 17:23:03 GMT
+recorded_with: VCR 2.9.2
