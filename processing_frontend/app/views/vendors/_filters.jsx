@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { assign, get, map, omit } from 'lodash';
+import { renderSelectOptions } from '../../utilities/dom';
 
 export default class VendorsFilters extends React.Component {
   componentWillMount() {
@@ -37,7 +38,29 @@ export default class VendorsFilters extends React.Component {
                     name="supplierId"
                     value={this.getFilter('supplierId')}>
               <option value=""> -- select supplier -- </option>
-              {this.renderSelectOptions(this.props.suppliers)}
+              {renderSelectOptions(this.props.suppliers)}
+            </select>
+          </div>
+
+          <div className="form-group col-md-2">
+            <label htmlFor="buyerId">Buyer</label>
+            <select className="form-control"
+                    id="buyerName"
+                    name="buyerName"
+                    value={this.getFilter('buyerName')}>
+              <option value=""> -- select buyer -- </option>
+              {renderSelectOptions(this.props.buyers)}
+            </select>
+          </div>
+
+          <div className="form-group col-md-2">
+            <label htmlFor="assistantName">Buyer Assistant</label>
+            <select className="form-control"
+                    id="assistantName"
+                    name="assistantName"
+                    value={this.getFilter('assistantName')}>
+              <option value=""> -- select assistant -- </option>
+              {renderSelectOptions(this.props.buyerAssistants)}
             </select>
           </div>
 
@@ -81,14 +104,6 @@ export default class VendorsFilters extends React.Component {
     } else {
       return 'Search';
     }
-  }
-
-  renderSelectOptions(options) {
-    return map(options, function ({ id, name }) {
-      return (
-        <option key={id} value={id}>{name}</option>
-      );
-    });
   }
 
   handleFormChange({ target }) {

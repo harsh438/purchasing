@@ -16,6 +16,16 @@ feature 'Vendors Listing' do
     then_only_vendors_of_that_supplier_should_be_listed
   end
 
+  scenario 'Filtering Vendors by buyer' do
+    when_i_filter_vendors_by_buyer
+    then_only_vendors_of_that_buyer_should_be_listed
+  end
+
+  scenario 'Filtering Vendors by assistant' do
+    when_i_filter_vendors_by_assistant
+    then_only_vendors_of_that_assistant_should_be_listed
+  end
+
   scenario 'Listing Suppliers that are discontinued' do
     when_i_request_discontinued_suppliers
     then_only_suppliers_that_are_discontinued_should_be_listed
@@ -52,6 +62,28 @@ feature 'Vendors Listing' do
 
   def then_only_vendors_of_that_supplier_should_be_listed
     expect(subject['vendors'].count).to eq(2)
+  end
+
+  def when_i_filter_vendors_by_buyer
+    create_list(:vendor, 5)
+    supplier = create(:supplier, buyers: [create(:supplier_buyer, buyer_name: 'Frank')])
+    create_list(:vendor, 2, suppliers: [supplier])
+    visit vendors_path(filters: { buyer_name: 'Frank' })
+  end
+
+  def then_only_vendors_of_that_buyer_should_be_listed
+    expect(subject['vendors'].count).to eq(2)
+  end
+
+  def when_i_filter_vendors_by_assistant
+    create_list(:vendor, 5)
+    supplier = create(:supplier, buyers: [create(:supplier_buyer, assistant_name: 'Frankie')])
+    create_list(:vendor, 4, suppliers: [supplier])
+    visit vendors_path(filters: { assistant_name: 'Frankie' })
+  end
+
+  def then_only_vendors_of_that_assistant_should_be_listed
+    expect(subject['vendors'].count).to eq(4)
   end
 
   def when_i_request_discontinued_suppliers
