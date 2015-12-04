@@ -16,6 +16,16 @@ feature 'Suppliers Listing' do
     then_only_suppliers_of_that_brand_should_be_listed
   end
 
+  scenario 'Filtering Suppliers by buyer' do
+    when_i_filter_suppliers_by_buyer
+    then_only_suppliers_of_that_buyer_should_be_listed
+  end
+
+  scenario 'Filtering Suppliers by assistant' do
+    when_i_filter_suppliers_by_assistant
+    then_only_suppliers_of_that_assistant_should_be_listed
+  end
+
   scenario 'Listing Suppliers that are discontinued' do
     when_i_request_discontinued_suppliers
     then_only_suppliers_that_are_discontinued_should_be_listed
@@ -56,6 +66,29 @@ feature 'Suppliers Listing' do
   end
 
   def then_only_suppliers_of_that_brand_should_be_listed
+    expect(subject['suppliers'].count).to eq(2)
+  end
+
+  def when_i_filter_suppliers_by_buyer
+    create_list(:supplier, 4)
+    create(:supplier, buyers: [create(:supplier_buyer, buyer_name: 'Betty')])
+    create(:supplier, buyers: [create(:supplier_buyer, buyer_name: 'Betty')])
+    create(:supplier, buyers: [create(:supplier_buyer, buyer_name: 'Betty')])
+    visit suppliers_path(filters: { buyer_name: 'Betty' })
+  end
+
+  def then_only_suppliers_of_that_buyer_should_be_listed
+    expect(subject['suppliers'].count).to eq(3)
+  end
+
+  def when_i_filter_suppliers_by_assistant
+    create_list(:supplier, 4)
+    create(:supplier, buyers: [create(:supplier_buyer, assistant_name: 'Bob')])
+    create(:supplier, buyers: [create(:supplier_buyer, assistant_name: 'Bob')])
+    visit suppliers_path(filters: { assistant_name: 'Bob' })
+  end
+
+  def then_only_suppliers_of_that_assistant_should_be_listed
     expect(subject['suppliers'].count).to eq(2)
   end
 
