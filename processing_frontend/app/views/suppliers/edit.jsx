@@ -110,7 +110,7 @@ class SuppliersEdit extends React.Component {
   }
 
   handleContactSave(contact) {
-    this.props.dispatch(saveSupplierContact(this.props.supplier, contact));
+    this.props.dispatch(saveSupplierContact(this.props.supplier.id, contact));
   }
 
   handleSupplierEdit(supplier) {
