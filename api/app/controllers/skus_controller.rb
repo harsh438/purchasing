@@ -37,6 +37,7 @@ class SkusController < ApplicationController
                    :size_scale,
                    :cost_price,
                    :list_price,
-                   :price])
+                   :price,
+                   barcodes_attributes: [:barcode]])
   end
 end
