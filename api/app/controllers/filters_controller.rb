@@ -22,4 +22,12 @@ class FiltersController < ApplicationController
   def categories
     render json: LanguageCategory.relevant
   end
+
+  def buyers
+    render json: SupplierBuyer.buyers
+  end
+
+  def buyer_assistants
+    render json: SupplierBuyer.buyer_assistants
+  end
 end
