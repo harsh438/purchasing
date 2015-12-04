@@ -16,6 +16,10 @@ class SupplierTerms::Search
       query = query.joins(supplier: :vendors).where(suppliers_to_brands: { 'BrandID' => filters[:vendor_ids].split(',') })
     end
 
+    if filters[:seasons].blank?.!
+      query = query.where(:season => filters[:seasons].split(','))
+    end
+
     if filters[:discontinued]
       query = query.where(supplier_details: { discontinued: filters[:discontinued] })
     end

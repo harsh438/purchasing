@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { assign, isEqual, map } from 'lodash';
 import { loadTerms } from '../../actions/supplier_terms';
-import { loadSuppliers, loadBrands } from '../../actions/filters';
+import { loadSuppliers, loadBrands, loadSeasons } from '../../actions/filters';
 import NumberedPagination from '../pagination/_numbered';
 import SuppliersTable from './_table';
 import SupplierTermsFilters from './_filters';
@@ -12,6 +12,7 @@ class SuppliersTermsIndex extends React.Component {
     this.loadPage();
     this.props.dispatch(loadSuppliers());
     this.props.dispatch(loadBrands());
+    this.props.dispatch(loadSeasons());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,6 +35,7 @@ class SuppliersTermsIndex extends React.Component {
               <SupplierTermsFilters
                   suppliers={this.props.suppliers}
                   brands={this.props.brands}
+                  seasons={this.props.seasons}
                   filters={this.props.location.query.filters}
                   onFilter={this.handleFilters.bind(this)}/>
             </div>
