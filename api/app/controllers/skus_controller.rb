@@ -4,15 +4,24 @@ class SkusController < ApplicationController
   end
 
   def create
-    sku = Sku::Generator.new.sku_from!(sku_attrs)
-    render json: sku.as_json
+    new_sku = Sku::Generator.new.sku_from!(sku_attrs)
+    render json: new_sku.as_json
   end
 
   def show
-    render json: Sku.find(params[:id]).try(:as_json)
+    render json: sku.try(:as_json)
+  end
+
+  def update
+    sku.update!(sku_attrs)
+    render json: sku.try(:as_json)
   end
 
   private
+
+  def sku
+    @sku ||= Sku.find(params[:id])
+  end
 
   def sku_attrs
     params.permit([:manufacturer_sku,

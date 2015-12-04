@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     end
 
     resources :products, only: :show
-    resources :skus, only: [:index, :create, :show]
+    resources :skus, only: [:index, :create, :show, :update]
     resources :suppliers, only: [:index, :create, :update, :show]
     resources :supplier_terms, only: [:index, :show]
     resources :vendors, only: [:index, :create, :show, :update]
