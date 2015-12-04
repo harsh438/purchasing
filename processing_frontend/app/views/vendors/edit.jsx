@@ -16,7 +16,6 @@ class VendorsEdit extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="vendors_edit" style={{ marginTop: '70px' }}>
         <div className="col-md-6">

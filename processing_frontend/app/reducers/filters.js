@@ -1,4 +1,4 @@
-import { assign } from 'lodash';
+import { assign, pluck } from 'lodash';
 
 const initialState = { brands: [],
                        categories: [],
@@ -27,6 +27,10 @@ export default function reduceFilters(state = initialState, action) {
     return assign({}, state, { seasons: removeEmpty(action.seasons) });
   case 'SET_FILTER_SUPPLIERS':
     return assign({}, state, { suppliers: removeEmpty(action.suppliers) });
+  case 'SET_FILTER_BUYERS':
+    return assign({}, state, { buyers: pluck(removeEmpty(action.buyers), 'name') });
+  case 'SET_FILTER_BUYER_ASSISTANTS':
+    return assign({}, state, { buyerAssistants: pluck(removeEmpty(action.buyerAssistants), 'name') });
   default:
     return state;
   }

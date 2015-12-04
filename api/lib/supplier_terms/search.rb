@@ -22,10 +22,14 @@ class SupplierTerms::Search
       query = query.where(:season => filters[:seasons].split(','))
     end
 
+    apply_default_filter(query, filters)
+  end
+
+  private
+  def apply_default_filter(query, filters)
     if filters[:default].blank? or filters[:default] == '1' or filters[:default] == 'true'
       query = query.where(:default => true)
     end
-
     query
   end
 end

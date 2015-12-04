@@ -5,13 +5,17 @@ import { assign, isEqual } from 'lodash';
 import VendorsFilters from './_filters';
 import VendorsTable from './_table';
 import NumberedPagination from '../pagination/_numbered';
-import { loadSuppliers } from '../../actions/filters';
+import { loadSuppliers,
+         loadBuyers,
+         loadBuyerAssistants } from '../../actions/filters';
 import { loadVendors } from '../../actions/vendors';
 
 class VendorsIndex extends React.Component {
   componentWillMount() {
     this.loadPage();
     this.props.dispatch(loadSuppliers());
+    this.props.dispatch(loadBuyers());
+    this.props.dispatch(loadBuyerAssistants());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -32,6 +36,8 @@ class VendorsIndex extends React.Component {
         			<div className="panel-body">
                 <VendorsFilters filters={this.props.location.query.filters}
                                 suppliers={this.props.suppliers}
+                                buyers={this.props.buyers}
+                                buyerAssistants={this.props.buyerAssistants}
                                 onFilterVendors={this.handleFilterVendors.bind(this)} />
               </div>
             </div>

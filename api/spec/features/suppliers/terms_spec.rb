@@ -20,7 +20,7 @@ feature 'Suppliers Terms' do
   end
 
   def when_i_request_list_of_supplier_terms
-    create_list(:supplier_terms, 52)
+    create_list(:supplier_terms, 52, default: true)
     visit supplier_terms_path
   end
 
