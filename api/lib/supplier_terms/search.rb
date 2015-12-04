@@ -19,11 +19,6 @@ class SupplierTerms::Search
     if filters[:seasons].blank?.!
       query = query.where(:season => filters[:seasons].split(','))
     end
-
-    if filters[:discontinued]
-      query = query.where(supplier_details: { discontinued: filters[:discontinued] })
-    end
-
     query
   end
 end
