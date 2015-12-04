@@ -8,7 +8,7 @@ import { loadSupplier,
          saveSupplierTerms } from '../../actions/suppliers';
 import { loadSeasons } from '../../actions/filters';
 import SuppliersForm from './_form';
-import SupplierContactsTable from '../suppliers_contacts/_table';
+import SupplierContactsTable from '../supplier_contacts/_table';
 import SupplierBuyersTable from '../supplier_buyers/_table';
 import SupplierTermsDefault from '../supplier_terms/_default';
 
