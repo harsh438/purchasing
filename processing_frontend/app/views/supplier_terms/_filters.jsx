@@ -14,9 +14,13 @@ export default class SupplierTermsFilters extends React.Component {
     } else {
       this.setState({ submitting: false });
     }
-    this.setState({ suppliers: map(nextProps.suppliers, (obj) => {
-      return { label: obj.name, value: obj.id };
-    })});
+    let state = {};
+    ['suppliers', 'brands'].forEach((key) => {
+      state[key] = map(nextProps.suppliers, (obj) => {
+        return { label: obj.name, value: obj.id };
+      });
+    });
+    this.setState(state);
   }
 
   render() {
@@ -32,6 +36,15 @@ export default class SupplierTermsFilters extends React.Component {
                     onChange={this.handleMultiSelectChange.bind(this, 'suppliers')}
                     value={this.getFilter('suppliers')}
                     options={this.state.suppliers} />
+          </div>
+          <div className="form-group col-md-2">
+            <label htmlFor="vendor_ids">Brands</label>
+            <Select id="suppliers"
+                    name="vendor_ids"
+                    multi
+                    onChange={this.handleMultiSelectChange.bind(this, 'vendor_ids')}
+                    value={this.getFilter('vendor_ids')}
+                    options={this.state.brands} />
           </div>
 
           <div className="form-group col-md-2"

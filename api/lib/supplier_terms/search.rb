@@ -1,5 +1,3 @@
-require 'pp'
-
 class SupplierTerms::Search
   def search(params)
     suppliers = SupplierTerms.latest.includes(:supplier)
@@ -14,8 +12,8 @@ class SupplierTerms::Search
       query = query.where(:supplier_id => filters[:suppliers].split(','))
     end
 
-    if filters[:vendor_id]
-      query = query.joins(:supplier_vendors).where(suppliers_to_brands: { 'BrandID' => filters[:vendor_id] })
+    if filters[:vendor_ids].blank?.!
+      query = query.joins(supplier: :vendors).where(suppliers_to_brands: { 'BrandID' => filters[:vendor_ids].split(',') })
     end
 
     if filters[:discontinued]
