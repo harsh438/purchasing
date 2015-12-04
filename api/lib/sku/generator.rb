@@ -60,7 +60,7 @@ class Sku::Generator
   end
 
   def element_attrs
-    { name: '' }
+    { name: attrs[:size] }
   end
 
   def product_option_attrs
