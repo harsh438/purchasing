@@ -14,45 +14,6 @@ export default class SuppliersForm extends React.Component {
     this.setTerms(nextProps.terms);
   }
 
-  getTextFieldList() {
-    return [['creditLimit', ''],
-            ['preOrderDiscount', ''],
-            ['creditTermsPreOrder', ''],
-            ['reOrderDiscount', ''],
-            ['creditTermsReOrder', ''],
-            ['faultyReturnsDiscount', ''],
-            ['settlementDiscount', ''],
-            ['marketingContribution', ''],
-            ['rebateStructure', ''],
-            ['riskOrderDetails', ''],
-            ['markDownContributionDetails', ''],
-            ['cancellationAllowance', ''],
-            ['stockSwapAllowance', ''],
-            ['bulkOrderDetails', ''],
-            ['agreedWith', 'Supplier staff name'],
-            ['by', 'Buyers name']];
-  }
-
-  setTerms(terms = {}) {
-    const appendedTerms = pick(terms, ['season', ...map(this.getTextFieldList(), '0')]);
-    this.setState({ terms: appendedTerms });
-  }
-
-  handleFile(files) {
-    const self = this;
-    const reader = new FileReader();
-    const file = files[0];
-
-    reader.onload = function (upload) {
-      let terms = self.state.terms;
-      terms.confirmation = upload.target.result;
-      terms.confirmationFileName = file.name;
-      self.setState({ terms: terms });
-    };
-
-    reader.readAsDataURL(file);
-  }
-
   render() {
     return (
       <form className="form"
@@ -158,6 +119,7 @@ export default class SuppliersForm extends React.Component {
               <input type="checkbox"
                      name={field}
                      className="checkbox"
+                     value="1"
                      checked={this.getField(field)}
                      onChange={this.handleCheckboxChange.bind(this)} />
 
@@ -181,7 +143,7 @@ export default class SuppliersForm extends React.Component {
     switch (field) {
     case 'samples':
     case 'productImagery':
-      return this.state.terms[field] === '1';
+      return this.state.terms[field];
     default:
       return get(this.state.terms, field, '');
     }
@@ -202,13 +164,60 @@ export default class SuppliersForm extends React.Component {
 
   handleCheckboxChange(e) {
     e.stopPropagation();
-    const terms = assign({}, this.state.terms, { [e.target.name]: '' + (0 + e.target.checked) });
-    this.setState({ terms });
+
+    if (e.target.checked) {
+      this.handleFormChange(e);
+    } else {
+      const terms = assign({}, this.state.terms, { [e.target.name]: false });
+      this.setState({ terms });
+    }
   }
 
   handleFormSubmit(e) {
     e.preventDefault();
     this.setState({ submitting: true });
     this.props.onFormSubmit(this.state.terms);
+  }
+
+  getTextFieldList() {
+    return [['creditLimit', ''],
+            ['preOrderDiscount', ''],
+            ['creditTermsPreOrder', ''],
+            ['reOrderDiscount', ''],
+            ['creditTermsReOrder', ''],
+            ['faultyReturnsDiscount', ''],
+            ['settlementDiscount', ''],
+            ['marketingContribution', ''],
+            ['rebateStructure', ''],
+            ['riskOrderDetails', ''],
+            ['markDownContributionDetails', ''],
+            ['cancellationAllowance', ''],
+            ['stockSwapAllowance', ''],
+            ['bulkOrderDetails', ''],
+            ['agreedWith', 'Supplier staff name'],
+            ['by', 'Buyers name']];
+  }
+
+  setTerms(terms = {}) {
+    const appendedTerms = pick(terms, ['season',
+                                       ...map(this.getTextFieldList(), '0'),
+                                       'samples',
+                                       'productImagery']);
+    this.setState({ terms: appendedTerms });
+  }
+
+  handleFile(files) {
+    const self = this;
+    const reader = new FileReader();
+    const file = files[0];
+
+    reader.onload = function (upload) {
+      let terms = self.state.terms;
+      terms.confirmation = upload.target.result;
+      terms.confirmationFileName = file.name;
+      self.setState({ terms: terms });
+    };
+
+    reader.readAsDataURL(file);
   }
 }

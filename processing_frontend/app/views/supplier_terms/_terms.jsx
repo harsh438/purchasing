@@ -31,29 +31,10 @@ export default class SupplierTerms extends React.Component {
     return (
       <table className="table">
         <tbody>
-          {this.renderRows()}
-          {this.renderParentTerm()}
+          {map(this.fields, this.renderRow, this)}
         </tbody>
       </table>
     );
-  }
-
-  renderParentTerm() {
-    if (this.props.terms && this.props.terms['parentId']) {
-      return (
-        <tr>
-          <td colSpan="2">
-            <Link className="btn btn-default col-xs-12" to={`/suppliers/term/${this.props.terms['parentId']}`}>
-              <span className="glyphicon glyphicon-arrow-left"></span>&nbsp;Go to parent term
-            </Link>
-          </td>
-        </tr>
-      );
-    }
-  }
-
-  renderRows() {
-    return map(this.fields, this.renderRow, this);
   }
 
   renderRow(field, i) {
@@ -71,15 +52,21 @@ export default class SupplierTerms extends React.Component {
 
   getField(field) {
     let terms = this.props.terms || {};
+
     switch (field) {
     case 'samples':
     case 'productImagery':
-      return terms[field] === '0' ? '✘' : '✔';
+      return terms[field] ? '✔' : '✘';
     case 'confirmationFile':
-      if (terms['confirmationFileName']) {
-        return <a href={terms['confirmationUrl']} className="btn btn-default" target="_blank">
-          <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>&nbsp;Download '{terms['confirmationFileName']}'
-        </a>;
+      if (terms.confirmationFileName) {
+        return (
+          <a href={terms.confirmationUrl}
+             className="btn btn-default"
+             target="_blank">
+            <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+            &nbsp;Download {terms.confirmationFileName}
+          </a>
+        );
       }
     default:
       return terms[field];

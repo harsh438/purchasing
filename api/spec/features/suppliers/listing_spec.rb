@@ -29,7 +29,12 @@ feature 'Suppliers Listing' do
   def then_i_should_see_paginated_list_of_suppliers
     expect(subject['suppliers'].count).to eq(50)
     expect(subject['total_pages']).to eq(2)
-    expect(subject['suppliers']).to include(a_hash_including('id', 'name', 'contacts'))
+    expect(subject['suppliers']).to include(a_hash_including('id',
+                                                             'name',
+                                                             'vendors',
+                                                             'buyers',
+                                                             'contacts',
+                                                             'terms'))
   end
 
   def when_i_filter_suppliers_by_name
