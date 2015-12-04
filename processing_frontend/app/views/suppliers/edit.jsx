@@ -4,7 +4,7 @@ import { at, assign, compact, flatten, map } from 'lodash';
 import { loadSupplier,
          editSupplier,
          saveSupplierContact,
-         saveTerms } from '../../actions/suppliers';
+         saveSupplierTerms } from '../../actions/suppliers';
 import { loadSeasons } from '../../actions/filters';
 import SuppliersForm from './_form';
 import SupplierContactsTable from '../suppliers_contacts/_table';
@@ -119,7 +119,7 @@ class SuppliersEdit extends React.Component {
   }
 
   handleTermsSave(terms) {
-    this.props.dispatch(saveTerms(this.props.supplier.id, terms));
+    this.props.dispatch(saveSupplierTerms(this.props.supplier.id, terms));
   }
 }
 

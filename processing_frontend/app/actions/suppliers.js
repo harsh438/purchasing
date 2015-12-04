@@ -51,6 +51,6 @@ export function saveSupplierContact(supplier, contact) {
   return editSupplier({ id: supplier.id, contacts_attributes: [contact] });
 }
 
-export function saveTerms(id, terms) {
+export function saveSupplierTerms(id, terms) {
   return editSupplier({ id, terms: omit(snakeizeKeys(terms), 'id') });
 }
