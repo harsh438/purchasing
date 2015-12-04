@@ -48,7 +48,11 @@ export function editSupplier(supplier) {
 }
 
 export function saveSupplierContact(id, contact) {
-  return editSupplier({ id, contacts_attributes: [contact] });
+  return editSupplier({ id, contacts_attributes: [snakeizeKeys(contact)] });
+}
+
+export function saveSupplierBuyer(id, buyer) {
+  return editSupplier({ id, buyers_attributes: [snakeizeKeys(buyer)] });
 }
 
 export function saveSupplierTerms(id, terms) {

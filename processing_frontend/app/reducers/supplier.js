@@ -1,8 +1,13 @@
 import { assign, map } from 'lodash';
 import { camelizeKeys } from '../utilities/inspection';
 
-const initialSupplierState = { supplier: { contacts: [] } };
-const initialSuppliersState = { supplier: { contacts: [] },
+const initialSupplierState = { supplier: { contacts: [],
+                                           buyers: [],
+                                           vendors: [] } };
+
+const initialSuppliersState = { supplier: { contacts: [],
+                                            buyers: [],
+                                            vendors: [] },
                                 suppliers: [],
                                 totalPages: null,
                                 activePage: null };
@@ -10,6 +15,8 @@ const initialSuppliersState = { supplier: { contacts: [] },
 function transformSupplier(supplier) {
   supplier.defaultTerms = camelizeKeys(supplier.default_terms);
   supplier.terms = map(supplier.terms, camelizeKeys);
+  supplier.contacts = map(supplier.contacts, camelizeKeys);
+  supplier.buyers = map(supplier.buyers, camelizeKeys);
   return camelizeKeys(supplier);
 }
 

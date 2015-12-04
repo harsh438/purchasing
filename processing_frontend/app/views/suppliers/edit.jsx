@@ -4,10 +4,12 @@ import { at, assign, compact, flatten, map } from 'lodash';
 import { loadSupplier,
          editSupplier,
          saveSupplierContact,
+         saveSupplierBuyer,
          saveSupplierTerms } from '../../actions/suppliers';
 import { loadSeasons } from '../../actions/filters';
 import SuppliersForm from './_form';
 import SupplierContactsTable from '../suppliers_contacts/_table';
+import SupplierBuyersTable from '../supplier_buyers/_table';
 import SupplierTermsDefault from '../supplier_terms/_default';
 
 class SuppliersEdit extends React.Component {
@@ -29,6 +31,10 @@ class SuppliersEdit extends React.Component {
               {this.renderSupplier()}
             </div>
           </div>
+
+          <SupplierBuyersTable supplier={this.props.supplier}
+                               onBuyerAdd={this.handleBuyerSave.bind(this)}
+                               onBuyerEdit={this.handleBuyerSave.bind(this)} />
         </div>
 
         <div className="col-md-6">
@@ -43,6 +49,8 @@ class SuppliersEdit extends React.Component {
       </div>
     );
   }
+
+
 
   renderSupplier() {
     if (this.state.editingSupplier) {
@@ -109,17 +117,21 @@ class SuppliersEdit extends React.Component {
     return flatten(map(addressParts, part => [part, (<br />)]));
   }
 
-  handleContactSave(contact) {
-    this.props.dispatch(saveSupplierContact(this.props.supplier.id, contact));
-  }
-
   handleSupplierEdit(supplier) {
     this.setState({ editingSupplier: false });
     this.props.dispatch(editSupplier(supplier));
   }
 
+  handleContactSave(contact) {
+    this.props.dispatch(saveSupplierContact(this.props.supplier.id, contact));
+  }
+
   handleTermsSave(terms) {
     this.props.dispatch(saveSupplierTerms(this.props.supplier.id, terms));
+  }
+
+  handleBuyerSave(buyer) {
+    this.props.dispatch(saveSupplierBuyer(this.props.supplier.id, buyer));
   }
 }
 
