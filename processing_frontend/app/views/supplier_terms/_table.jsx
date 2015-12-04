@@ -20,9 +20,9 @@ export default class SuppliersTable extends React.Component {
           <tr>
             <th>Created at</th>
             {this.renderSupplierNameTitle()}
+            <th>Season</th>
             <th>By</th>
             <th>Confirmation file</th>
-            <th>View terms</th>
           </tr>
           {map(this.props.terms, this.renderTerm.bind(this))}
         </tbody>
@@ -42,19 +42,19 @@ export default class SuppliersTable extends React.Component {
     return (
       <tr key={term.id}>
         <td>
-          {term.createdAt}
+          <Link to={`/suppliers/term/${term.id}`} >
+            {term.createdAt}
+          </Link>
         </td>
           {this.renderSupplierNameRow(term)}
+        <td>
+          {term.season}
+        </td>
         <td>
           {term.by || <i>Unknown</i>}
         </td>
         <td>
           {this.renderConfirmationFile(term)}
-        </td>
-        <td>
-          <Link to={`/suppliers/term/${term.id}`} >
-            View Terms
-          </Link>
         </td>
       </tr>
     );
