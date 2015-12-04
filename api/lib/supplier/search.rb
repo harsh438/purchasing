@@ -17,7 +17,7 @@ class Supplier::Search
       query = query.joins(:supplier_vendors).where(suppliers_to_brands: { 'BrandID' => filters[:vendor_id] })
     end
 
-    if filters[:discontinued]
+    if filters[:default_only].?
       query = query.where(supplier_details: { discontinued: filters[:discontinued] })
     end
 

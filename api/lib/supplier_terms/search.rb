@@ -1,3 +1,5 @@
+require 'pp'
+
 class SupplierTerms::Search
   def search(params)
     suppliers = SupplierTerms.latest.includes(:supplier)
@@ -19,6 +21,11 @@ class SupplierTerms::Search
     if filters[:seasons].blank?.!
       query = query.where(:season => filters[:seasons].split(','))
     end
+
+    if filters[:default].blank? or filters[:default] == '1' or filters[:default] == 'true'
+      query = query.where(:default => true)
+    end
+
     query
   end
 end

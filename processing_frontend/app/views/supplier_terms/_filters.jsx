@@ -56,6 +56,16 @@ export default class SupplierTermsFilters extends React.Component {
                     value={this.getFilter('seasons')}
                     options={this.state.seasons} />
           </div>
+          <div className="form-group col-md-2">
+            <label htmlFor="seasons">Only Default Terms</label>
+            <input className="form-control"
+                   type="checkbox"
+                   name="default"
+                   checked={!!+(this.getFilter('default'))}
+                   onChange={this.handleCheckboxChange.bind(this)}
+                   />
+          </div>
+
           <div className="form-group col-md-2"
                style={{ marginTop: '1.74em' }}>
             <button className="btn btn-success"
@@ -73,6 +83,17 @@ export default class SupplierTermsFilters extends React.Component {
 
   handleFormChange({ target }) {
     this.setFilter(target.name, target.value);
+  }
+
+  handleCheckboxChange(e) {
+    e.stopPropagation();
+
+    if (e.target.checked) {
+      this.setFilter(e.target.name, 1);
+    } else {
+      this.state.filters[e.target.name] = 0;
+      this.setState({ filters: this.state.filters });
+    }
   }
 
   handleFormSubmit(e) {

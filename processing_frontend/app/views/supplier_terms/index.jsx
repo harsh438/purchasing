@@ -9,6 +9,7 @@ import SupplierTermsFilters from './_filters';
 
 class SuppliersTermsIndex extends React.Component {
   componentWillMount() {
+    this.state = {};
     this.loadPage();
     this.props.dispatch(loadSuppliers());
     this.props.dispatch(loadBrands());
@@ -21,6 +22,11 @@ class SuppliersTermsIndex extends React.Component {
     if (!isEqual(this.props.location.query, nextQuery)) {
       this.loadPage(nextQuery.page, (nextQuery.filters || {}));
     }
+    let filters = this.props.location.query.filters || {};
+    if (typeof filters['default'] === 'undefined') {
+      filters['default'] = true;
+    }
+    this.setState({filters: filters});
   }
 
   loadPage(page = this.props.location.query.page, filters = this.props.location.query.filters) {
@@ -36,7 +42,7 @@ class SuppliersTermsIndex extends React.Component {
                   suppliers={this.props.suppliers}
                   brands={this.props.brands}
                   seasons={this.props.seasons}
-                  filters={this.props.location.query.filters}
+                  filters={this.state.filters}
                   onFilter={this.handleFilters.bind(this)}/>
             </div>
           </div>
