@@ -50,11 +50,14 @@ export default class SupplierTermsDefault extends React.Component {
             Edit terms
           </button>
 
-          {this.renderPreviousVersionLink()}
 
-          <Link className="btn btn-default pull-right" to={`/suppliers/${this.props.supplier.id}/terms`}>
+          <Link className="btn btn-default pull-right"
+                to={`/suppliers/${this.props.supplier.id}/terms`}
+                style={{ marginLeft: '10px' }}>
             View terms history
           </Link>
+
+          {this.renderPreviousVersionLink()}
         </p>
       </div>
     );
