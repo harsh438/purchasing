@@ -31,3 +31,11 @@ export function loadSeasons() {
 export function loadSuppliers() {
   return loadFilters('suppliers', suppliers => ({ suppliers, type: 'SET_FILTER_SUPPLIERS' }));
 }
+
+export function loadBuyers() {
+  return loadFilters('buyers', buyers => ({ buyers, type: 'SET_FILTER_BUYERS' }));
+}
+
+export function loadBuyerAssistants() {
+  return loadFilters('buyer_assistants', buyerAssistants => ({ buyerAssistants, type: 'SET_FILTER_BUYER_ASSISTANTS' }));
+}
