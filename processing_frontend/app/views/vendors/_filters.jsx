@@ -64,11 +64,11 @@ export default class VendorsFilters extends React.Component {
                     disabled={this.state.submitting}>
               {this.submitText()}
             </button>
-          </div>
 
-          <div className="form-group col-md-2"
-               style={{ marginTop: '2.2em' }}>
-            <Link to="/vendors">clear filters</Link>
+            <div className="text-right"
+                 style={{ marginTop: '1em' }}>
+              <Link to="/vendors">clear filters</Link>
+            </div>
           </div>
         </div>
       </form>
