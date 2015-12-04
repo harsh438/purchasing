@@ -47,10 +47,14 @@ export function editSupplier(supplier) {
   };
 }
 
-export function saveSupplierContact(supplier, contact) {
-  return editSupplier({ id: supplier.id, contacts_attributes: [contact] });
+export function saveSupplierContact(id, contact) {
+  return editSupplier({ id, contacts_attributes: [snakeizeKeys(contact)] });
 }
 
-export function saveTerms(id, terms) {
+export function saveSupplierBuyer(id, buyer) {
+  return editSupplier({ id, buyers_attributes: [snakeizeKeys(buyer)] });
+}
+
+export function saveSupplierTerms(id, terms) {
   return editSupplier({ id, terms: omit(snakeizeKeys(terms), 'id') });
 }

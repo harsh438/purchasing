@@ -108,6 +108,6 @@ export default class SupplierContactForm extends React.Component {
   handleFormSubmit(e) {
     e.preventDefault();
     this.setState({ submitting: true });
-    this.props.onSubmitContact(this.state.contact);
+    this.props.onFormSubmit(this.state.contact);
   }
 }

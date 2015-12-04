@@ -4,10 +4,12 @@ import { at, assign, compact, flatten, map } from 'lodash';
 import { loadSupplier,
          editSupplier,
          saveSupplierContact,
-         saveTerms } from '../../actions/suppliers';
+         saveSupplierBuyer,
+         saveSupplierTerms } from '../../actions/suppliers';
 import { loadSeasons } from '../../actions/filters';
 import SuppliersForm from './_form';
-import SupplierContactsTable from '../suppliers_contacts/_table';
+import SupplierContactsTable from '../supplier_contacts/_table';
+import SupplierBuyersTable from '../supplier_buyers/_table';
 import SupplierTermsDefault from '../supplier_terms/_default';
 
 class SuppliersEdit extends React.Component {
@@ -29,20 +31,26 @@ class SuppliersEdit extends React.Component {
               {this.renderSupplier()}
             </div>
           </div>
+
+          <SupplierBuyersTable supplier={this.props.supplier}
+                               onBuyerAdd={this.handleBuyerSave.bind(this)}
+                               onBuyerEdit={this.handleBuyerSave.bind(this)} />
         </div>
 
         <div className="col-md-6">
           <SupplierTermsDefault supplier={this.props.supplier}
                                 seasons={this.props.seasons}
-                                onTermsSave={this.handleSaveTerms.bind(this)} />
+                                onTermsSave={this.handleTermsSave.bind(this)} />
 
           <SupplierContactsTable supplier={this.props.supplier}
-                                 onEditContact={this.handleOnSaveContact.bind(this)}
-                                 onAddContact={this.handleOnSaveContact.bind(this)}/>
+                                 onContactAdd={this.handleContactSave.bind(this)}
+                                 onContactEdit={this.handleContactSave.bind(this)} />
         </div>
       </div>
     );
   }
+
+
 
   renderSupplier() {
     if (this.state.editingSupplier) {
@@ -50,7 +58,7 @@ class SuppliersEdit extends React.Component {
         <SuppliersForm title="Edit Supplier"
                        submitText="Save"
                        supplier={this.props.supplier}
-                       onSubmitSupplier={this.handleOnEditSupplier.bind(this)} />
+                       onSubmitSupplier={this.handleSupplierEdit.bind(this)} />
       );
     } else {
       return (
@@ -109,21 +117,21 @@ class SuppliersEdit extends React.Component {
     return flatten(map(addressParts, part => [part, (<br />)]));
   }
 
-  handleOnSaveContact(contact) {
-    this.props.dispatch(saveSupplierContact(this.props.supplier, contact));
-  }
-
-  handleClickEditSupplier(id) {
-    this.props.history.pushState(null, `/suppliers/${id}/edit`);
-  }
-
-  handleOnEditSupplier(supplier) {
+  handleSupplierEdit(supplier) {
     this.setState({ editingSupplier: false });
     this.props.dispatch(editSupplier(supplier));
   }
 
-  handleSaveTerms(terms) {
-    this.props.dispatch(saveTerms(this.props.supplier.id, terms));
+  handleContactSave(contact) {
+    this.props.dispatch(saveSupplierContact(this.props.supplier.id, contact));
+  }
+
+  handleTermsSave(terms) {
+    this.props.dispatch(saveSupplierTerms(this.props.supplier.id, terms));
+  }
+
+  handleBuyerSave(buyer) {
+    this.props.dispatch(saveSupplierBuyer(this.props.supplier.id, buyer));
   }
 }
 
