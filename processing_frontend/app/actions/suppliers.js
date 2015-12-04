@@ -22,14 +22,6 @@ export function loadSupplier(id) {
   };
 }
 
-export function loadSupplierNames() {
-  return dispatch => {
-    fetch(`/api/suppliers.json?name_only=1`, { credentials: 'same-origin' })
-      .then(response => response.json())
-      .then(results => dispatch({ results, type: 'LOAD_SUPPLIERS' }));
-  };
-}
-
 export function loadSuppliers(query) {
   const queryString = Qs.stringify(assign({}, query, { filters: snakeizeKeys(query.filters) }));
 
