@@ -41,6 +41,8 @@ class Sku::Generator
                                  size: attrs[:manufacturer_size])
 
     response.fields
+      .except(:barcode)
+      .merge!({ barcodes_attributes: [{ barcode: response.fields[:barcode] }] })
   end
 
   def attrs

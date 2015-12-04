@@ -71,7 +71,7 @@ describe Sku::Generator do
     end
 
     it 'should have a barcode' do
-      expect(subject.barcode).to eq('5052094029950')
+      expect(subject.barcodes.first.barcode).to eq('5052094029950')
     end
 
     it 'should create a category' do
