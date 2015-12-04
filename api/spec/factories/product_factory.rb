@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :product do
     pSale 0
 
+    name '123456-123'
     vendor_id { create(:vendor).id }
 
     after(:create) do |product, evaluator|
