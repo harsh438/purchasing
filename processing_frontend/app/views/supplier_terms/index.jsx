@@ -2,12 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { assign, isEqual, map } from 'lodash';
 import { loadTerms } from '../../actions/supplier_terms';
+import { loadSupplierNames } from '../../actions/suppliers';
 import NumberedPagination from '../pagination/_numbered';
 import SuppliersTable from './_table';
+import SupplierTermsFilters from './_filters';
 
 class SuppliersTermsIndex extends React.Component {
   componentWillMount() {
     this.loadPage();
+    this.props.dispatch(loadSupplierNames());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -26,9 +29,15 @@ class SuppliersTermsIndex extends React.Component {
     return (<div style={{ 'marginTop': '70px'}}>
       <div className="col-xs-12">
           <div className="panel panel-default">
-              <div className="panel-heading" style={{ overflow: 'hidden'}}>
-                <h3 className="panel-title pull-left">Terms</h3>
-              </div>
+            <div className="panel-body">
+              <SupplierTermsFilters
+                  suppliers={this.props.suppliers}
+                  filters={this.props.location.query.filters}
+                  onFilter={this.handleFilters.bind(this)}/>
+            </div>
+          </div>
+
+          <div className="panel panel-default">
               <div className="panel-body">
                 <SuppliersTable terms={this.props.terms} />
               </div>
@@ -39,11 +48,15 @@ class SuppliersTermsIndex extends React.Component {
       </div>
     </div>);
   }
+
+  handleFilters(filters) {
+    this.props.history.pushState(null, '/terms', { filters });
+  }
 }
 
 
-function applyState({ filters, terms }) {
-  return assign({}, filters, terms);
+function applyState({ filters, terms, suppliers}) {
+  return assign({}, filters, terms, suppliers);
 }
 
 export default connect(applyState)(SuppliersTermsIndex);

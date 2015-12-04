@@ -1,3 +1,5 @@
+require 'pp'
+
 feature 'Suppliers Terms' do
   subject { JSON.parse(page.body) }
 

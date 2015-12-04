@@ -1,9 +1,15 @@
+require 'pp'
+
 class SuppliersController < ApplicationController
   def index
     suppliers = Supplier::Search.new.search(params)
-    render json: { suppliers: suppliers.map(&:as_json_with_details_vendors_contacts_and_terms),
-                   total_pages: suppliers.total_pages,
-                   page: params[:page] }
+    if params[:name_only]
+      return render json: { suppliers: Supplier.select(:name, :id).all }
+    else
+      return render json: { suppliers: suppliers.map(&:as_json_with_details_vendors_contacts_and_terms),
+                     total_pages: suppliers.total_pages,
+                     page: params[:page] }
+    end
   end
 
   def create

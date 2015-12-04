@@ -23,6 +23,15 @@ function setSupplier(state, supplier) {
   return assign({}, state, { supplier: transformSupplier(supplier) });
 }
 
+export function reduceSupplierNames(state = initialSuppliersState, action) {
+  switch (action.type) {
+  case 'LOAD_SUPPLIER_NAMES':
+    return setSuppliers(state, action.results);
+  default:
+    return state;
+  }
+}
+
 export function reduceSuppliers(state = initialSuppliersState, action) {
   switch (action.type) {
   case 'LOAD_SUPPLIERS':
