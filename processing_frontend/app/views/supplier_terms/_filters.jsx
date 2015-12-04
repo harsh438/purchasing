@@ -20,7 +20,7 @@ export default class SupplierTermsFilters extends React.Component {
   }
 
   render() {
-     return (<form className="form clearfix"
+    return (<form className="form clearfix"
               onChange={this.handleFormChange.bind(this)}
               onSubmit={this.handleFormSubmit.bind(this)}
               >
