@@ -30,10 +30,10 @@ export default class SupplierContacts extends React.Component {
             <h3 className="panel-title">Add Contact</h3>
           </div>
           <div className="panel-body">
-            <SupplierContactForm submitText="Add contact"
-                                 submittingText="Adding contact..."
-                                 contact={{}}
-                                 onSubmitContact={this.props.onAddContact} />
+            <SupplierContactForm contact={{}}
+                                 onFormSubmit={this.props.onContactAdd}
+                                 submitText="Add contact"
+                                 submittingText="Adding contact..." />
           </div>
         </div>
       );
@@ -79,10 +79,10 @@ export default class SupplierContacts extends React.Component {
   renderContact(contact) {
     if (this.state.editingContact === contact.id) {
       return (
-        <SupplierContactForm submitText="Save contact"
-                             submittingText="Saving contact..."
-                             contact={contact}
-                             onSubmitContact={this.props.onEditContact} />
+        <SupplierContactForm contact={contact}
+                             onFormSubmit={this.props.onContactEdit}
+                             submitText="Save contact"
+                             submittingText="Saving contact..." />
       );
     }
 
