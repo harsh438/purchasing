@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151204105848) do
+ActiveRecord::Schema.define(version: 20151204110107) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer "sku_id",  limit: 4
@@ -453,7 +453,6 @@ ActiveRecord::Schema.define(version: 20151204105848) do
     t.string   "product_name",        limit: 255
     t.string   "gender",              limit: 255
     t.integer  "vendor_id",           limit: 4
-    t.string   "barcode",             limit: 255
   end
 
   add_index "skus", ["sku"], name: "index_skus_on_sku", using: :btree
