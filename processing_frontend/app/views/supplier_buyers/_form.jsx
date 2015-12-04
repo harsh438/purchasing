@@ -1,10 +1,10 @@
 import React from 'react';
-import { assign } from 'lodash';
+import { assign, isPlainObject, map } from 'lodash';
 
 export default class SupplierBuyerForm extends React.Component {
   componentWillMount() {
     console.log(this.props.buyer);
-    
+
     this.state = { buyer: this.props.buyer,
                    submitting: false };
   }
@@ -46,20 +46,26 @@ export default class SupplierBuyerForm extends React.Component {
                 <label htmlFor="buyerDepartment">Department</label>
               </th>
               <td>
-                <input id="buyerDepartment"
-                       name="department"
-                       value={this.state.buyer.department}
-                       className="form-control" />
+                <select className="form-control"
+                        id="buyerDepartment"
+                        name="department"
+                        value={this.state.buyer.department}>
+                  <option value=""> -- select department -- </option>
+                  {this.renderSelectOptions(this.departments())}
+                </select>
               </td>
 
               <th>
                 <label htmlFor="buyerBusinessUnit">Business Unit</label>
               </th>
               <td>
-                <input id="buyerBusinessUnit"
-                       name="businessUnit"
-                       value={this.state.buyer.businessUnit}
-                       className="form-control" />
+                <select className="form-control"
+                        id="buyerBusinessUnit"
+                        name="businessUnit"
+                        value={this.state.buyer.businessUnit}>
+                  <option value=""> -- select business unit -- </option>
+                  {this.renderSelectOptions(this.businessUnits())}
+                </select>
               </td>
             </tr>
           </tbody>
@@ -71,6 +77,24 @@ export default class SupplierBuyerForm extends React.Component {
         </button>
       </form>
     );
+  }
+
+  renderSelectOptions(options) {
+    return map(options, function (option) {
+      let id, name;
+      
+      if (isPlainObject(option)) {
+        id = option.id;
+        name = option.name;
+      } else {
+        id = option;
+        name = option;
+      }
+
+      return (
+        <option key={id} value={id}>{name}</option>
+      );
+    });
   }
 
   submitText() {
@@ -90,5 +114,22 @@ export default class SupplierBuyerForm extends React.Component {
     e.preventDefault();
     this.setState({ submitting: true });
     this.props.onFormSubmit(this.state.buyer);
+  }
+
+  departments() {
+    return ['Mens',
+            'Womens',
+            'Footwear',
+            'Accessories',
+            'Swim',
+            'Outdoor',
+            'Fitness',
+            'Kids',
+            'Hardware',
+            'Own brand'];
+  }
+
+  businessUnits() {
+    return ['Apparel', 'Hardware'];
   }
 }
