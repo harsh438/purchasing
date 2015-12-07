@@ -1,7 +1,7 @@
 import React from 'react';
-import { assign, get, map, omit, snakeCase } from 'lodash';
+import { Link } from 'react-router';
 import Select from 'react-select';
-import Qs from 'qs';
+import { assign, get, map, omit, snakeCase } from 'lodash';
 
 export default class SupplierTermsFilters extends React.Component {
   componentWillMount() {
@@ -27,82 +27,79 @@ export default class SupplierTermsFilters extends React.Component {
   }
 
   render() {
-    return (<div><form className="form clearfix col-xs-12"
-              onChange={this.handleFormChange.bind(this)}
-              onSubmit={this.handleFormSubmit.bind(this)}
-              >
-          <div className="form-group col-md-2">
-            <label htmlFor="suppliers">Supplier</label>
-            <Select id="suppliers"
-                    name="suppliers"
-                    multi
-                    onChange={this.handleMultiSelectChange.bind(this, 'suppliers')}
-                    value={this.getFilter('suppliers')}
-                    options={this.state.suppliers} />
-          </div>
-          <div className="form-group col-md-2">
-            <label htmlFor="vendor_ids">Brands</label>
-            <Select id="suppliers"
-                    name="vendor_ids"
-                    multi
-                    onChange={this.handleMultiSelectChange.bind(this, 'vendor_ids')}
-                    value={this.getFilter('vendor_ids')}
-                    options={this.state.brands} />
-          </div>
-
-          <div className="form-group col-md-2">
-            <label htmlFor="seasons">Seasons</label>
-            <Select id="suppliers"
-                    name="seasons"
-                    multi
-                    onChange={this.handleMultiSelectChange.bind(this, 'seasons')}
-                    value={this.getFilter('seasons')}
-                    options={this.state.seasons} />
-          </div>
-          <div className="form-group col-md-2">
-            <label htmlFor="seasons">Terms</label>
-            <Select id="terms"
-                    name="terms"
-                    multi
-                    onChange={this.handleMultiSelectChange.bind(this, 'terms')}
-                    value={this.getFilter('terms')}
-                    options={this.state.supplierTermsList} />
-          </div>
-
-          <div className="form-group col-md-2">
-            <label htmlFor="seasons">Only Default Terms</label>
-            <input className="form-control"
-                   type="checkbox"
-                   name="default"
-                   checked={!!+(this.getFilter('default'))}
-                   onChange={this.handleCheckboxChange.bind(this)}
-                   />
-          </div>
-
-          <div className="form-group col-md-2"
-               style={{ marginTop: '1.74em' }}>
-            <button className="btn btn-success"
-                    style={{ width: '100%' }}
-                    disabled={this.state.submitting}>
-                Search
-            </button>
-          </div>
-     </form>
-        <div className="text-right" style={{ marginTop: '1em' }}>
-          <a onClick={this.clearTerms.bind(this)}>Clear Terms</a>
+    return (
+      <form className="form clearfix"
+            onChange={this.handleFormChange.bind(this)}
+            onSubmit={this.handleFormSubmit.bind(this)}>
+        <div className="form-group col-md-2">
+          <label htmlFor="suppliers">Supplier</label>
+          <Select id="suppliers"
+                  name="suppliers"
+                  multi
+                  onChange={this.handleMultiSelectChange.bind(this, 'suppliers')}
+                  value={this.getFilter('suppliers')}
+                  options={this.state.suppliers} />
         </div>
-          <div>
-          <a href={`/api/supplier_terms.csv?${Qs.stringify({filters:this.state.filters})}`}>
-            <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>&nbsp;
-            Download selection as CSV
-            </a>
+
+        <div className="form-group col-md-2">
+          <label htmlFor="vendor_ids">Brands</label>
+          <Select id="suppliers"
+                  name="vendor_ids"
+                  multi
+                  onChange={this.handleMultiSelectChange.bind(this, 'vendor_ids')}
+                  value={this.getFilter('vendor_ids')}
+                  options={this.state.brands} />
         </div>
-      </div>
+
+        <div className="form-group col-md-2">
+          <label htmlFor="seasons">Seasons</label>
+          <Select id="suppliers"
+                  name="seasons"
+                  multi
+                  onChange={this.handleMultiSelectChange.bind(this, 'seasons')}
+                  value={this.getFilter('seasons')}
+                  options={this.state.seasons} />
+        </div>
+
+        <div className="form-group col-md-2">
+          <label htmlFor="terms">Terms</label>
+          <Select id="terms"
+                  name="terms"
+                  multi
+                  onChange={this.handleMultiSelectChange.bind(this, 'terms')}
+                  value={this.getFilter('terms')}
+                  options={this.state.supplierTermsList} />
+        </div>
+
+        <div className="form-group col-md-2"
+             style={{ paddingTop: '1.6em' }}>
+          <div className="checkbox">
+            <label>
+              <input className="checkbox"
+                     type="checkbox"
+                     name="default"
+                     checked={this.getFilter('default')}
+                     onChange={this.handleCheckboxChange.bind(this)} />
+                   Default terms only
+            </label>
+          </div>
+        </div>
+
+        <div className="form-group col-md-2"
+             style={{ marginTop: '1.74em' }}>
+          <button className="btn btn-success"
+                  style={{ width: '100%' }}
+                  disabled={this.state.submitting}>
+              Search
+          </button>
+
+          <div className="text-right"
+               style={{ marginTop: '1em' }}>
+            <Link to="/terms">clear filters</Link>
+          </div>
+        </div>
+      </form>
     );
-  }
-
-  clearTerms() {
-    this.setState({filters: {'default': '1'}});
   }
 
   handleMultiSelectChange(field, value) {

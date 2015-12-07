@@ -1,5 +1,3 @@
-require 'csv'
-
 class SuppliersController < ApplicationController
   def index
     suppliers = Supplier::Search.new.search(params)
