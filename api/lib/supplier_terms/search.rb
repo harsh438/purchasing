@@ -1,5 +1,3 @@
-require 'pp'
-
 class SupplierTerms::Search
   def search(params)
     suppliers = SupplierTerms.latest.includes(:supplier)
@@ -9,6 +7,7 @@ class SupplierTerms::Search
   end
 
   private
+
   def apply_filters(query, filters)
     if filters[:suppliers].blank?.!
       query = query.where(:supplier_id => filters[:suppliers].split(','))
@@ -25,7 +24,6 @@ class SupplierTerms::Search
     apply_default_filter(query, filters)
   end
 
-  private
   def apply_default_filter(query, filters)
     if filters[:default].blank? or filters[:default] == '1' or filters[:default] == 'true'
       query = query.where(:default => true)

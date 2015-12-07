@@ -1,5 +1,3 @@
-require 'pp'
-
 class SupplierTerms::CsvExporter
   CSV_ATTRIBUTES =  SupplierTerms.column_names.reject { |a| a == 'terms' }
   CSV_COLUMNS = CSV_ATTRIBUTES + SupplierTerms.termslist
