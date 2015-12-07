@@ -25,7 +25,7 @@ these you'll be okay.
 
 Download this SQL file and import it into your local development database:
 
- - [Redacted dataset](https://drive.google.com/open?id=0BzNvNNGUQGxLM0dzSzFiZGJVQ0k)
+ - [Redacted dataset](https://drive.google.com/open?id=0BzNvNNGUQGxLcFFUWDlSUjVqWHc)
 
 ## Developing
 
