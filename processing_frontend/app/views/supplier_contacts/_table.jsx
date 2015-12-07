@@ -91,18 +91,18 @@ export default class SupplierContacts extends React.Component {
         <table className="table" style={{ tableLayout: 'fixed' }}>
           <tbody>
             <tr>
-              <th>Title</th>
+              <th style={{ width: '15%' }}>Title</th>
               <td>{contact.title}</td>
 
-              <th>Mobile</th>
+              <th style={{ width: '15%' }}>Mobile</th>
               <td>{contact.mobile}</td>
             </tr>
 
             <tr>
-              <th>Email</th>
+              <th style={{ width: '15%' }}>Email</th>
               <td>{contact.email}</td>
 
-              <th>Landline</th>
+              <th style={{ width: '15%' }}>Landline</th>
               <td>{contact.landline}</td>
             </tr>
           </tbody>

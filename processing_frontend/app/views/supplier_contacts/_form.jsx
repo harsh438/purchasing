@@ -16,6 +16,11 @@ export default class SupplierContactForm extends React.Component {
       <form onChange={this.handleFormChange.bind(this)}
             onSubmit={this.handleFormSubmit.bind(this)}>
         <table className="table" style={{ tableLayout: 'fixed' }}>
+          <col style={{ width: '15%' }} />
+          <col />
+          <col style={{ width: '15%' }} />
+          <col />
+
           <tbody>
             <tr>
               <th>

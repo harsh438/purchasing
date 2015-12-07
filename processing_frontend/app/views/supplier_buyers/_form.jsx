@@ -19,7 +19,7 @@ export default class SupplierBuyerForm extends React.Component {
         <table className="table" style={{ tableLayout: 'fixed' }}>
           <tbody>
             <tr>
-              <th>
+              <th style={{ width: '22%' }}>
                 <label htmlFor="buyerName">Buyer name</label>
               </th>
               <td>
@@ -29,7 +29,7 @@ export default class SupplierBuyerForm extends React.Component {
                        className="form-control" />
               </td>
 
-              <th>
+              <th style={{ width: '22%' }}>
                 <label htmlFor="assistantName">Assistant name</label>
               </th>
               <td>
@@ -41,7 +41,7 @@ export default class SupplierBuyerForm extends React.Component {
             </tr>
 
             <tr>
-              <th>
+              <th style={{ width: '22%' }}>
                 <label htmlFor="buyerDepartment">Department</label>
               </th>
               <td>
@@ -54,7 +54,7 @@ export default class SupplierBuyerForm extends React.Component {
                 </select>
               </td>
 
-              <th>
+              <th style={{ width: '22%' }}>
                 <label htmlFor="buyerBusinessUnit">Business Unit</label>
               </th>
               <td>

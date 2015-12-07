@@ -87,18 +87,18 @@ export default class SupplierBuyersTable extends React.Component {
         <table className="table" style={{ tableLayout: 'fixed' }}>
           <tbody>
             <tr>
-              <th>Buyer name</th>
+              <th style={{ width: '22%' }}>Buyer name</th>
               <td>{buyer.buyerName}</td>
 
-              <th>Assistant name</th>
+              <th style={{ width: '22%' }}>Assistant name</th>
               <td>{buyer.assistantName}</td>
             </tr>
 
             <tr>
-              <th>Department</th>
+              <th style={{ width: '22%' }}>Department</th>
               <td>{buyer.department}</td>
 
-              <th>Business unit</th>
+              <th style={{ width: '22%' }}>Business unit</th>
               <td>{buyer.businessUnit}</td>
             </tr>
           </tbody>
