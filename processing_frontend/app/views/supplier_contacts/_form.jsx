@@ -41,6 +41,7 @@ export default class SupplierContactForm extends React.Component {
               </th>
               <td>
                 <select name="title"
+                        id="contactTitle"
                         className="form-control"
                         required
                         value={this.state.contact.title}>
@@ -55,13 +56,19 @@ export default class SupplierContactForm extends React.Component {
               </td>
 
               <th>
-                <label htmlFor="contactMobile">Mobile</label>
+                <label htmlFor="contactCategory">Category</label>
               </th>
               <td>
-                <input id="contactMobile"
-                       name="mobile"
-                       value={this.state.contact.mobile}
-                       className="form-control" />
+                <select name="category"
+                        id="contactCategory"
+                        className="form-control"
+                        required
+                        value={this.state.contact.category}>
+                  <option value=""> -- choose category -- </option>
+                  <option value="Apparel">Apparel</option>
+                  <option value="Footwear">Footwear</option>
+                  <option value="Hardware">Hardware</option>
+                </select>
               </td>
             </tr>
 
@@ -77,12 +84,24 @@ export default class SupplierContactForm extends React.Component {
               </td>
 
               <th>
-                <label htmlFor="contactMobile">Landline</label>
+                <label htmlFor="contactLandline">Landline</label>
               </th>
               <td>
                 <input id="contactLandline"
                        name="landline"
                        value={this.state.contact.landline}
+                       className="form-control" />
+              </td>
+            </tr>
+
+            <tr>
+              <th>
+                <label htmlFor="contactMobile">Mobile</label>
+              </th>
+              <td>
+                <input id="contactMobile"
+                       name="mobile"
+                       value={this.state.contact.mobile}
                        className="form-control" />
               </td>
             </tr>

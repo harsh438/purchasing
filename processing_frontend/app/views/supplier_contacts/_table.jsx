@@ -94,8 +94,8 @@ export default class SupplierContacts extends React.Component {
               <th style={{ width: '15%' }}>Title</th>
               <td>{contact.title}</td>
 
-              <th style={{ width: '15%' }}>Mobile</th>
-              <td>{contact.mobile}</td>
+              <th style={{ width: '15%' }}>Category</th>
+              <td>{contact.category}</td>
             </tr>
 
             <tr>
@@ -104,6 +104,14 @@ export default class SupplierContacts extends React.Component {
 
               <th style={{ width: '15%' }}>Landline</th>
               <td>{contact.landline}</td>
+            </tr>
+
+            <tr>
+              <th style={{ width: '15%' }}>Mobile</th>
+              <td>{contact.mobile}</td>
+
+              <th style={{ width: '15%' }}></th>
+              <td></td>
             </tr>
           </tbody>
         </table>

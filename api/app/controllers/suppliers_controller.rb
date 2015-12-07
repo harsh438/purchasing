@@ -46,6 +46,7 @@ class SuppliersController < ApplicationController
     params.require(:supplier).permit(contacts_attributes: [:id,
                                                            :name,
                                                            :title,
+                                                           :category,
                                                            :email,
                                                            :mobile,
                                                            :landline])
