@@ -117,6 +117,17 @@ export default class SuppliersForm extends React.Component {
                 <div className="checkbox">
                   <label>
                     <input type="checkbox"
+                           name="neededForIntrastat"
+                           value="1"
+                           className="checkbox"
+                           checked={this.state.neededForIntrastat}
+                           onChange={this.handleCheckboxChange.bind(this)} />
+                    Needed for Intrastat
+                  </label>
+                </div>
+                <div className="checkbox">
+                  <label>
+                    <input type="checkbox"
                            name="discontinued"
                            value="1"
                            className="checkbox"

@@ -91,6 +91,11 @@ class SuppliersEdit extends React.Component {
               </tr>
 
               <tr>
+                <th>Needed for Intrastat?</th>
+                <td>{this.props.supplier.neededForIntrastat ? '✔' : '✘'}</td>
+              </tr>
+
+              <tr>
                 <th>Discontinued?</th>
                 <td>{this.props.supplier.discontinued ? '✔' : '✘'}</td>
               </tr>
