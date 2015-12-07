@@ -53,7 +53,8 @@ class Sku::Generator
 
   def sku_attrs(language_product_option, language_product, language_category)
     attrs.except(:lead_gender)
-         .merge!({ product_id: product.id,
+         .merge!({ sku: "#{product.id}-#{element.id}",
+                   product_id: product.id,
                    language_product_id: language_product.id,
                    element_id: element.id,
                    option_id: language_product_option.id,
