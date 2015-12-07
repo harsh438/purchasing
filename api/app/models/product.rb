@@ -10,6 +10,7 @@ class Product < ActiveRecord::Base
                  on_sale: :pSale
 
   has_one :language_product, foreign_key: :pID
+  has_many :language_product_options, foreign_key: :pID
   belongs_to :product_detail, foreign_key: :pID
 
   def as_json(*args)
