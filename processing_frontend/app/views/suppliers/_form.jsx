@@ -37,7 +37,6 @@ export default class SuppliersForm extends React.Component {
                        id="returns_address_name"
                        name="returns_address_name"
                        placeholder="Return Address Name"
-                       required
                        value={this.state.returnsAddressName} /></td>
             </tr>
             <tr>
