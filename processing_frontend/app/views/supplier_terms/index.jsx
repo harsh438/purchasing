@@ -9,7 +9,7 @@ import SupplierTermsFilters from './_filters';
 
 class SuppliersTermsIndex extends React.Component {
   componentWillMount() {
-    this.state = {filters: {}};
+    this.state = { filters: {} };
     this.loadPage();
     this.props.dispatch(loadSuppliers());
     this.props.dispatch(loadVendors());
@@ -35,30 +35,32 @@ class SuppliersTermsIndex extends React.Component {
   }
 
   render() {
-    return (<div style={{ 'marginTop': '70px'}}>
-      <div className="col-xs-12">
-          <div className="panel panel-default">
-            <div className="panel-body">
-              <SupplierTermsFilters
-                  supplierTermsList={this.props.supplierTermsList}
-                  suppliers={this.props.suppliers}
-                  brands={this.props.brands}
-                  seasons={this.props.seasons}
-                  filters={this.state.filters}
-                  onFilter={this.handleFilters.bind(this)}/>
-            </div>
+    return (
+      <div className="container-fluid" style={{ 'marginTop': '70px' }}>
+        <div className="panel panel-default">
+          <div className="panel-body">
+            <SupplierTermsFilters
+                supplierTermsList={this.props.supplierTermsList}
+                suppliers={this.props.suppliers}
+                brands={this.props.brands}
+                seasons={this.props.seasons}
+                filters={this.state.filters}
+                onFilter={this.handleFilters.bind(this)}/>
+          </div>
+        </div>
+
+        <div className="panel panel-default">
+          <div className="panel-body">
+            <SuppliersTable terms={this.props.terms}
+                            termsAttributes={this.state.filters['terms']} />
           </div>
 
-          <div className="panel panel-default">
-              <div className="panel-body">
-                <SuppliersTable terms={this.props.terms} termsAttributes={this.state.filters['terms']} />
-              </div>
-                <NumberedPagination activePage={this.props.activePage || 1}
-                      index={this}
-                      totalPages={this.props.totalPages} />
-          </div>
+          <NumberedPagination activePage={this.props.activePage || 1}
+                              index={this}
+                              totalPages={this.props.totalPages} />
+        </div>
       </div>
-    </div>);
+    );
   }
 
   handleFilters(filters) {
@@ -67,7 +69,7 @@ class SuppliersTermsIndex extends React.Component {
 }
 
 
-function applyState({ filters, terms, supplierTermsList}) {
+function applyState({ filters, terms, supplierTermsList }) {
   return assign({}, filters, terms, supplierTermsList);
 }
 
