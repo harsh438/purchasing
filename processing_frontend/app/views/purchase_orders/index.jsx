@@ -17,8 +17,8 @@ import { isEmptyObject } from '../../utilities/inspection';
 
 class PurchaseOrdersIndex extends React.Component {
   componentWillMount() {
-    this.props.dispatch(loadBrands());
-    this.props.dispatch(loadSuppliers());
+    this.props.dispatch(loadBrands({ relevant: true }));
+    this.props.dispatch(loadSuppliers({ relevant: true }));
     this.props.dispatch(loadGenders());
     this.props.dispatch(loadOrderTypes());
     this.props.dispatch(loadCategories());

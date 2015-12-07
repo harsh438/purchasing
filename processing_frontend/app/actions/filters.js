@@ -1,41 +1,49 @@
 import 'whatwg-fetch';
+import Qs from 'qs';
+import { isEmptyObject } from '../utilities/inspection';
 
-function loadFilters(type, action) {
+function loadFilters(type, query, action) {
+  let url =`/api/filters/${type}.json`;
+
+  if (!isEmptyObject(query)) {
+    url += `?${Qs.stringify(query)}`;
+  }
+
   return dispatch => {
-    fetch(`/api/filters/${type}.json`, { credentials: 'same-origin' })
+    fetch(url, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(filters => dispatch(action(filters)));
   };
 }
 
-export function loadBrands() {
-  return loadFilters('vendors', brands => ({ brands, type: 'SET_FILTER_BRANDS' }));
+export function loadBrands(query) {
+  return loadFilters('vendors', query, brands => ({ brands, type: 'SET_FILTER_BRANDS' }));
 }
 
 export function loadCategories() {
-  return loadFilters('categories', categories => ({ categories, type: 'SET_FILTER_CATEGORIES' }));
+  return loadFilters('categories', {}, categories => ({ categories, type: 'SET_FILTER_CATEGORIES' }));
 }
 
 export function loadGenders() {
-  return loadFilters('genders', genders => ({ genders, type: 'SET_FILTER_GENDERS' }));
+  return loadFilters('genders', {}, genders => ({ genders, type: 'SET_FILTER_GENDERS' }));
 }
 
 export function loadOrderTypes() {
-  return loadFilters('order_types', orderTypes => ({ orderTypes, type: 'SET_FILTER_ORDER_TYPES' }));
+  return loadFilters('order_types', {}, orderTypes => ({ orderTypes, type: 'SET_FILTER_ORDER_TYPES' }));
 }
 
 export function loadSeasons() {
-  return loadFilters('seasons', seasons => ({ seasons, type: 'SET_FILTER_SEASONS' }));
+  return loadFilters('seasons', {}, seasons => ({ seasons, type: 'SET_FILTER_SEASONS' }));
 }
 
-export function loadSuppliers() {
-  return loadFilters('suppliers', suppliers => ({ suppliers, type: 'SET_FILTER_SUPPLIERS' }));
+export function loadSuppliers(query) {
+  return loadFilters('suppliers', query, suppliers => ({ suppliers, type: 'SET_FILTER_SUPPLIERS' }));
 }
 
 export function loadBuyers() {
-  return loadFilters('buyers', buyers => ({ buyers, type: 'SET_FILTER_BUYERS' }));
+  return loadFilters('buyers', {}, buyers => ({ buyers, type: 'SET_FILTER_BUYERS' }));
 }
 
 export function loadBuyerAssistants() {
-  return loadFilters('buyer_assistants', buyerAssistants => ({ buyerAssistants, type: 'SET_FILTER_BUYER_ASSISTANTS' }));
+  return loadFilters('buyer_assistants', {}, buyerAssistants => ({ buyerAssistants, type: 'SET_FILTER_BUYER_ASSISTANTS' }));
 }
