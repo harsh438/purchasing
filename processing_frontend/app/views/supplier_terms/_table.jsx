@@ -9,13 +9,14 @@ export default class SuppliersTable extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({hasSupplierName: !!find(nextProps.terms||[], (obj) => {
+    this.setState({ hasSupplierName: !!find(nextProps.terms||[], (obj) => {
       return !!obj['supplierName'];
-    })});
+    }) });
+
     if (typeof nextProps.termsAttributes === 'string') {
-      this.setState({termsAttributes: nextProps.termsAttributes.split(',')});
+      this.setState({ termsAttributes: nextProps.termsAttributes.split(',') });
     } else {
-      this.setState({termsAttributes: nextProps.termsAttributes});
+      this.setState({ termsAttributes: nextProps.termsAttributes });
     }
   }
 
@@ -53,7 +54,9 @@ export default class SuppliersTable extends React.Component {
 
   renderTermsAttributeRow(term) {
     if (this.state.termsAttributes) {
-      return (<td><SupplierTerms fieldList={this.state.termsAttributes} terms={term} /></td>);
+      return (
+        <td><SupplierTerms fieldList={this.state.termsAttributes} terms={term} /></td>
+      );
     }
   }
 
@@ -62,7 +65,7 @@ export default class SuppliersTable extends React.Component {
       <tr key={term.id}>
         {this.renderSupplierNameRow(term)}
         <td>
-          <Link to={`/suppliers/term/${term.id}`} >
+          <Link to={`/suppliers/term/${term.id}`}>
             {term.createdAt}
           </Link>
         </td>
@@ -75,7 +78,7 @@ export default class SuppliersTable extends React.Component {
         <td>
           {this.renderConfirmationFile(term)}
         </td>
-          {this.renderTermsAttributeRow(term)}
+        {this.renderTermsAttributeRow(term)}
       </tr>
     );
   }
@@ -89,11 +92,12 @@ export default class SuppliersTable extends React.Component {
   }
 
   renderConfirmationFile(term) {
-    if (term['confirmationFileName']) {
+    if (term.confirmationFileName) {
       return (
-        <a href={term['confirmationUrl']}
+        <a href={term.confirmationUrl}
            target="_blank">
-          <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>&nbsp; Download '{term['confirmationFileName']}'
+          <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+          &nbsp; Download {term.confirmationFileName}
         </a>
       );
     } else {
