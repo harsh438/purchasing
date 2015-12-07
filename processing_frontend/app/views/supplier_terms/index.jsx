@@ -39,13 +39,12 @@ class SuppliersTermsIndex extends React.Component {
       <div className="container-fluid" style={{ 'marginTop': '70px' }}>
         <div className="panel panel-default">
           <div className="panel-body">
-            <SupplierTermsFilters
-                supplierTermsList={this.props.supplierTermsList}
-                suppliers={this.props.suppliers}
-                brands={this.props.brands}
-                seasons={this.props.seasons}
-                filters={this.state.filters}
-                onFilter={this.handleFilters.bind(this)}/>
+            <SupplierTermsFilters supplierTermsList={this.props.supplierTermsList}
+                                  suppliers={this.props.suppliers}
+                                  brands={this.props.brands}
+                                  seasons={this.props.seasons}
+                                  filters={this.state.filters}
+                                  onFilter={this.handleFilters.bind(this)}/>
           </div>
         </div>
 
