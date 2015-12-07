@@ -1,5 +1,5 @@
 <?php
-  $opts = array( 'manufacturer_sku' => 261040,
+  $opts = array( 'manufacturer_sku' => 'dsads',
                  'manufacturer_color' => 'Pale Blue',
                  'manufacturer_size' => 'LRG',
                  'season' => 'ss15',
@@ -11,7 +11,7 @@
                  'product_name' => 'Clarks Originals Boots - Clarks Originals Baby Warm  - Pale Blue',
                  'vendor_id' => 919);
 
-  $endpoint = 'https://purchasing.surfdome.cc/api/skus.json';
+  $endpoint = 'http://localhost:5000/api/skus.json';
 
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, $endpoint);
