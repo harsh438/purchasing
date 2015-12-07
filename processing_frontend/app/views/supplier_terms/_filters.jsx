@@ -1,7 +1,7 @@
 import React from 'react';
-import { assign, get, map, omit, snakeCase } from 'lodash';
+import { Link } from 'react-router';
 import Select from 'react-select';
-import Link from 'react-router';
+import { assign, get, map, omit, snakeCase } from 'lodash';
 
 export default class SupplierTermsFilters extends React.Component {
   componentWillMount() {
