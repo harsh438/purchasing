@@ -23,11 +23,9 @@ these you'll be okay.
 
 ### Database content
 
-Download these SQL files and import them in to your local development database:
+Download this SQL file and import it into your local development database:
 
- - [Redacted dataset](https://drive.google.com/open?id=0B7Lov1YoCGc-WXJGc3FoTFYwTTg)
- - [Additional tables](https://drive.google.com/open?id=0B0GMiJFPpF4rdm9TY183NXZyMWs)
- - [ds_categories](https://drive.google.com/open?id=0B7Lov1YoCGc-LW5rekZBc056WEU)
+ - [Redacted dataset](https://drive.google.com/open?id=0BzNvNNGUQGxLM0dzSzFiZGJVQ0k)
 
 ## Developing
 
