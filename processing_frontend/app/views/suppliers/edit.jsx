@@ -32,9 +32,9 @@ class SuppliersEdit extends React.Component {
             </div>
           </div>
 
-          <SupplierBuyersTable supplier={this.props.supplier}
-                               onBuyerAdd={this.handleBuyerSave.bind(this)}
-                               onBuyerEdit={this.handleBuyerSave.bind(this)} />
+          <SupplierContactsTable supplier={this.props.supplier}
+                                 onContactAdd={this.handleContactSave.bind(this)}
+                                 onContactEdit={this.handleContactSave.bind(this)} />
         </div>
 
         <div className="col-md-6">
@@ -42,9 +42,9 @@ class SuppliersEdit extends React.Component {
                                 seasons={this.props.seasons}
                                 onTermsSave={this.handleTermsSave.bind(this)} />
 
-          <SupplierContactsTable supplier={this.props.supplier}
-                                 onContactAdd={this.handleContactSave.bind(this)}
-                                 onContactEdit={this.handleContactSave.bind(this)} />
+          <SupplierBuyersTable supplier={this.props.supplier}
+                               onBuyerAdd={this.handleBuyerSave.bind(this)}
+                               onBuyerEdit={this.handleBuyerSave.bind(this)} />
         </div>
       </div>
     );
