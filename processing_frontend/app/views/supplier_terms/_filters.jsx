@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router';
 import Select from 'react-select';
 import { assign, get, map, omit, snakeCase } from 'lodash';
-import Qs from 'qs';
 
 export default class SupplierTermsFilters extends React.Component {
   componentWillMount() {
@@ -98,10 +97,6 @@ export default class SupplierTermsFilters extends React.Component {
                style={{ marginTop: '1em' }}>
             <Link to="/terms">clear filters</Link>
           </div>
-          <a href={`/api/supplier_terms.csv?${Qs.stringify({ filters:this.state.filters })}`}>
-            <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>&nbsp;
-            Download selection as CSV
-          </a>
         </div>
       </form>
     );

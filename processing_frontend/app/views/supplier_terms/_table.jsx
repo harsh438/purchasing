@@ -23,7 +23,7 @@ export default class SuppliersTable extends React.Component {
   render() {
     return (
       <table className="table">
-        <tbody>
+        <thead>
           <tr>
             {this.renderSupplierNameTitle()}
             <th>Created at</th>
@@ -32,7 +32,9 @@ export default class SuppliersTable extends React.Component {
             <th>Confirmation file</th>
             {this.renderTermsAttributeTitle()}
           </tr>
-          {map(this.props.terms, this.renderTerm.bind(this))}
+        </thead>
+        <tbody>
+          {map(this.props.terms, this.renderTerm, this)}
         </tbody>
       </table>
     );
