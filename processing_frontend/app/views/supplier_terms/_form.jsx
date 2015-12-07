@@ -194,6 +194,7 @@ export default class SuppliersForm extends React.Component {
             ['cancellationAllowance', ''],
             ['stockSwapAllowance', ''],
             ['bulkOrderDetails', ''],
+            ['saleOrReturnDetails', ''],
             ['agreedWith', 'Supplier staff name'],
             ['by', 'Buyers name']];
   }

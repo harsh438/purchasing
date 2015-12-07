@@ -19,6 +19,7 @@ export default class SupplierTerms extends React.Component {
                    'cancellationAllowance',
                    'stockSwapAllowance',
                    'bulkOrderDetails',
+                   'saleOrReturnDetails',
                    'agreedWith',
                    'samples',
                    'productImagery',

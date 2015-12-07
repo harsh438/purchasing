@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151204131713) do
+ActiveRecord::Schema.define(version: 20151207115327) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer "sku_id",  limit: 4
@@ -506,6 +506,7 @@ ActiveRecord::Schema.define(version: 20151204131713) do
     t.datetime "updated_at"
     t.boolean  "default"
     t.integer  "parent_id",                 limit: 4
+    t.string   "sale_or_return_details",    limit: 255
   end
 
   add_index "supplier_terms", ["supplier_id"], name: "index_supplier_terms_on_supplier_id", using: :btree
