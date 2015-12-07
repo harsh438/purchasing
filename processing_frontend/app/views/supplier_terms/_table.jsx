@@ -72,7 +72,6 @@ export default class SuppliersTable extends React.Component {
     if (term['confirmationFileName']) {
       return (
         <a href={term['confirmationUrl']}
-           className="btn btn-default"
            target="_blank">
           <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>&nbsp; Download '{term['confirmationFileName']}'
         </a>

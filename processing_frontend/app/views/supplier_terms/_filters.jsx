@@ -9,10 +9,9 @@ export default class SupplierTermsFilters extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({ submitting: false });
     if (this.props.filters !== nextProps.filters) {
       this.setState({ filters: (nextProps.filters || {}) });
-    } else {
-      this.setState({ submitting: false });
     }
     let state = {};
     ['suppliers', 'brands', 'seasons'].forEach((key) => {
