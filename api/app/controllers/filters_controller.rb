@@ -31,6 +31,10 @@ class FiltersController < ApplicationController
     render json: LanguageCategory.relevant
   end
 
+  def staff_members
+    render json: StaffMember.names
+  end
+
   def buyers
     render json: SupplierBuyer.buyers
   end
