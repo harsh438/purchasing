@@ -24,8 +24,8 @@ export default class SuppliersTable extends React.Component {
       <table className="table">
         <tbody>
           <tr>
-            <th>Created at</th>
             {this.renderSupplierNameTitle()}
+            <th>Created at</th>
             <th>Season</th>
             <th>By</th>
             <th>Confirmation file</th>
@@ -57,16 +57,15 @@ export default class SuppliersTable extends React.Component {
     }
   }
 
-
   renderTerm(term) {
     return (
       <tr key={term.id}>
+        {this.renderSupplierNameRow(term)}
         <td>
           <Link to={`/suppliers/term/${term.id}`} >
             {term.createdAt}
           </Link>
         </td>
-          {this.renderSupplierNameRow(term)}
         <td>
           {term.season}
         </td>
