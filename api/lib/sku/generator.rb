@@ -32,13 +32,15 @@ class Sku::Generator
     new_sku_attrs = sku_attrs(LanguageProductOption.create(product_option_attrs),
                               LanguageProduct.create(language_product_attrs),
                               LanguageCategory.create(language_category_attrs))
-
-    Sku.create(new_sku_attrs.merge!(pvx_fields))
+    fields = new_sku_attrs.merge!(pvx_fields)
+    Sku.create(fields)
   end
 
   def pvx_fields
     response = Sku::Api.new.find(man_sku: attrs[:manufacturer_sku],
                                  size: attrs[:manufacturer_size])
+
+    return {} if response.fields.keys.size == 0
 
     response.fields
       .except(:barcode)
