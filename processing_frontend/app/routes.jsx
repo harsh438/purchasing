@@ -17,18 +17,20 @@ import VendorsNew from './views/vendors/new';
 export default (
   <Route path="/" component={Layout}>
     <IndexRoute component={PurchaseOrdersIndex} />
+    
     <Route path="/orders" component={OrdersIndex} />
     <Route path="/orders/:id/edit" component={OrdersEdit} />
+
     <Route path="/suppliers" component={SuppliersIndex} />
     <Route path="/suppliers/new" component={SuppliersNew} />
-    <Route path="/vendors/new" component={VendorsNew} />
-    <Route path="/vendors/:id/edit" component={VendorsEdit} />
     <Route path="/suppliers/:id/edit" component={SuppliersEdit} />
     <Route path="/suppliers/:id/terms" component={SupplierTermsHistory} />
     <Route path="/suppliers/term/:id" component={SupplierTermsShow} />
+
     <Route path="/terms" component={SuppliersTermsIndex} />
 
     <Route path="/vendors" component={VendorsIndex} />
     <Route path="/vendors/new" component={VendorsNew} />
+    <Route path="/vendors/:id/edit" component={VendorsEdit} />
   </Route>
 );
