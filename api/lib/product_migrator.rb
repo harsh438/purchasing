@@ -21,6 +21,10 @@ class ProductMigrator
   def sku_attrs(language_option)
     { sku: "#{product.id}-#{language_option.element_id}",
       manufacturer_sku: product.name,
+      manufacturer_color: '',
+      manufacturer_size: '',
+      size: '',
+      color: '',
       product_name: product.language_product.name,
       product_id: product.id,
       language_product_id: product.language_product.id,
