@@ -4,7 +4,7 @@ import { assign, get, map, omit, startCase, pick } from 'lodash';
 
 export default class SuppliersForm extends React.Component {
   componentWillMount() {
-    this.state = { submitting: false};
+    this.state = { submitting: false };
     this.setTerms(this.props.terms);
   }
 

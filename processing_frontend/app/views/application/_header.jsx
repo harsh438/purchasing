@@ -32,7 +32,7 @@ export default class Header extends React.Component {
                     style={{ paddingTop: '.6em' }}>
                 <img src="/assets/images/surfdome-logo-white-500px.png"
                      alt="Surfdome"
-                     style={{ height: '30px'}} />
+                     style={{ height: '30px' }} />
               </Link>
             </div>
 

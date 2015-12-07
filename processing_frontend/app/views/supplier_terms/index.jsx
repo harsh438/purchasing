@@ -27,7 +27,7 @@ class SuppliersTermsIndex extends React.Component {
     if (typeof filters['default'] === 'undefined') {
       filters['default'] = true;
     }
-    this.setState({filters: filters});
+    this.setState({ filters });
   }
 
   loadPage(page = this.props.location.query.page, filters = this.props.location.query.filters) {

@@ -23,7 +23,7 @@ class SupplierTermsShow extends React.Component {
       <div className="col-md-4 col-md-offset-4">
         <div className="suppliers_terms_show" style={{ marginTop: '70px' }}>
           <div className="panel panel-default">
-              <div className="panel-heading" style={{ overflow: 'hidden'}}>
+              <div className="panel-heading" style={{ overflow: 'hidden' }}>
                 <h3 className="panel-title pull-left">Term</h3>
                 {this.renderBackLink()}
               </div>

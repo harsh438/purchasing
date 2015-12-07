@@ -44,7 +44,7 @@ export default class SupplierContacts extends React.Component {
             <h3 className="panel-title">Contacts</h3>
           </div>
           <div className="panel-body">
-            <div style={{ marginBottom: '10px'}}>
+            <div style={{ marginBottom: '10px' }}>
               {this.renderContactsText()}
 
               <button className="btn btn-success"

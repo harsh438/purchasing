@@ -44,7 +44,7 @@ export default class SupplierBuyersTable extends React.Component {
             <h3 className="panel-title">Buyers</h3>
           </div>
           <div className="panel-body">
-            <div style={{ marginBottom: '10px'}}>
+            <div style={{ marginBottom: '10px' }}>
               {this.renderBuyersText()}
 
               <button className="btn btn-success"

@@ -17,6 +17,7 @@
     "no-extend-native": 0,
     "no-var": 2,
     "new-cap": 0,
+    "object-curly-spacing": [2, "always"],
     "quotes": 0,
     "semi": [2, "always"],
     "semi-spacing": 0,

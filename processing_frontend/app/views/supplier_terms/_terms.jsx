@@ -30,7 +30,7 @@ export default class SupplierTerms extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({fields: nextProps.fieldList || this.fields});
+    this.setState({ fields: nextProps.fieldList || this.fields });
   }
 
   render() {

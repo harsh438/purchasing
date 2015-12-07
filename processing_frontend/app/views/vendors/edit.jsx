@@ -9,7 +9,7 @@ import VendorsSupplierTable from './_supplier_table';
 
 class VendorsEdit extends React.Component {
   componentWillMount () {
-    this.state = { editingTerms: false};
+    this.state = { editingTerms: false };
     this.props.dispatch(loadVendor(this.props.params.id));
     this.props.dispatch(loadSeasons());
     this.props.dispatch(loadSuppliers());

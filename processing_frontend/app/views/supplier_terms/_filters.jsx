@@ -21,7 +21,7 @@ export default class SupplierTermsFilters extends React.Component {
       });
     });
     state.supplierTermsList = map(this.props.supplierTermsList || [], (obj) => {
-      return {label: obj, value: obj };
+      return { label: obj, value: obj };
     });
     this.setState(state);
   }
