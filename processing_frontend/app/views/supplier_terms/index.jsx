@@ -14,6 +14,7 @@ class SuppliersTermsIndex extends React.Component {
     this.props.dispatch(loadSuppliers());
     this.props.dispatch(loadVendors());
     this.props.dispatch(loadSeasons());
+    this.props.dispatch(loadSupplierTermsList());
   }
 
   componentWillReceiveProps(nextProps) {
