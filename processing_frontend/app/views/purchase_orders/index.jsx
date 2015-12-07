@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadBrands,
+import { loadVendors,
          loadSuppliers,
          loadGenders,
          loadOrderTypes,
@@ -17,7 +17,7 @@ import { isEmptyObject } from '../../utilities/inspection';
 
 class PurchaseOrdersIndex extends React.Component {
   componentWillMount() {
-    this.props.dispatch(loadBrands({ relevant: true }));
+    this.props.dispatch(loadVendors({ relevant: true }));
     this.props.dispatch(loadSuppliers({ relevant: true }));
     this.props.dispatch(loadGenders());
     this.props.dispatch(loadOrderTypes());

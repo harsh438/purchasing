@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { assign, isEqual, map } from 'lodash';
 import { loadTerms } from '../../actions/supplier_terms';
-import { loadSuppliers, loadBrands, loadSeasons } from '../../actions/filters';
+import { loadSuppliers, loadVendors, loadSeasons } from '../../actions/filters';
 import NumberedPagination from '../pagination/_numbered';
 import SuppliersTable from './_table';
 import SupplierTermsFilters from './_filters';
@@ -12,7 +12,7 @@ class SuppliersTermsIndex extends React.Component {
     this.state = {};
     this.loadPage();
     this.props.dispatch(loadSuppliers());
-    this.props.dispatch(loadBrands());
+    this.props.dispatch(loadVendors());
     this.props.dispatch(loadSeasons());
   }
 
