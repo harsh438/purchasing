@@ -37,6 +37,7 @@ class SupplierTerms < ActiveRecord::Base
 
   def as_json(options = {})
     super.tap do |terms|
+      terms['created_at'] = terms['created_at'].to_s
       terms.merge!(terms.delete('terms'))
     end
   end

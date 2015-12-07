@@ -23,7 +23,7 @@ export default class SupplierTermsFilters extends React.Component {
   }
 
   render() {
-    return (<form className="form clearfix"
+    return (<div><form className="form clearfix col-xs-12"
               onChange={this.handleFormChange.bind(this)}
               onSubmit={this.handleFormSubmit.bind(this)}
               >
@@ -73,7 +73,15 @@ export default class SupplierTermsFilters extends React.Component {
                 Search
             </button>
           </div>
-     </form>);
+     </form>
+      <div>
+        <a onClick={this.clearTerms.bind(this)}>Clear Terms</a>
+      </div></div>
+    );
+  }
+
+  clearTerms() {
+    this.setState({filters: {'default': '1'}});
   }
 
   handleMultiSelectChange(field, value) {
