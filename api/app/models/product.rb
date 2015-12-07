@@ -5,7 +5,9 @@ class Product < ActiveRecord::Base
 
   map_attributes id: :pID,
                  name: :pNum,
+                 cost: :pCost,
                  price: :pPrice,
+                 size: :pSize,
                  vendor_id: :venID,
                  on_sale: :pSale
 
