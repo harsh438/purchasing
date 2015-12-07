@@ -192,7 +192,7 @@ ActiveRecord::Schema.define(version: 20151207122747) do
   add_index "ds_products", ["giftCert"], name: "giftCert", using: :btree
   add_index "ds_products", ["invLevel"], name: "invLevel", using: :btree
   add_index "ds_products", ["invTrack", "invLevel"], name: "idx_invTrack_oInvLevel", using: :btree
-  add_index "ds_products", ["meta_keywords"], name: "metakeywords", using: :btree
+  add_index "ds_products", ["meta_keywords"], name: "metakeywords", length: {"meta_keywords"=>255}, using: :btree
   add_index "ds_products", ["pContainerType"], name: "pContainerType", using: :btree
   add_index "ds_products", ["pFirstClassMailType"], name: "bestseller", using: :btree
   add_index "ds_products", ["pFlag"], name: "pFlag", using: :btree
@@ -238,6 +238,15 @@ ActiveRecord::Schema.define(version: 20151207122747) do
 
   add_index "ds_vendors", ["venActNum", "venPass"], name: "venActNum", using: :btree
   add_index "ds_vendors", ["venCompany"], name: "venCompany", using: :btree
+
+  create_table "manage", force: :cascade do |t|
+    t.string   "Initials",     limit: 4,     null: false
+    t.string   "Name",         limit: 64,    null: false
+    t.binary   "password",     limit: 65535, null: false
+    t.datetime "lastLoggedIn",               null: false
+    t.integer  "Seconds",      limit: 4,     null: false
+    t.string   "bgcolor",      limit: 7,     null: false
+  end
 
   create_table "mnp_elements", primary_key: "elementID", force: :cascade do |t|
     t.string "elementname", limit: 64, null: false
@@ -525,7 +534,7 @@ ActiveRecord::Schema.define(version: 20151207122747) do
   end
 
   add_index "suppliers", ["SupplierID"], name: "sadsad", using: :btree
-  add_index "suppliers", ["SupplierName"], name: "qewqwqe", using: :btree
+  add_index "suppliers", ["SupplierName"], name: "qewqwqe", length: {"SupplierName"=>255}, using: :btree
 
   create_table "suppliers_to_brands", primary_key: "SupplierToBrandsID", force: :cascade do |t|
     t.integer "BrandID",    limit: 4
