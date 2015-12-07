@@ -47,3 +47,7 @@ export function loadBuyers() {
 export function loadBuyerAssistants() {
   return loadFilters('buyer_assistants', {}, buyerAssistants => ({ buyerAssistants, type: 'SET_FILTER_BUYER_ASSISTANTS' }));
 }
+
+export function loadSupplierTermsList() {
+  return loadFilters('supplier_terms_list', {}, supplierTermsList => ({ supplierTermsList, type: 'SET_SUPPLIER_TERMS_LIST' }));
+}

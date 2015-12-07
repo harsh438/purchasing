@@ -1,6 +1,7 @@
 import React from 'react';
 import { map, find, matchesProperty } from 'lodash';
 import { Link } from 'react-router';
+import SupplierTerms from './_terms';
 
 export default class SuppliersTable extends React.Component {
   componentWillMount() {
@@ -11,6 +12,11 @@ export default class SuppliersTable extends React.Component {
     this.setState({hasSupplierName: !!find(nextProps.terms||[], (obj) => {
       return !!obj['supplierName'];
     })});
+    if (typeof nextProps.termsAttributes === 'string') {
+      this.setState({termsAttributes: nextProps.termsAttributes.split(',')});
+    } else {
+      this.setState({termsAttributes: nextProps.termsAttributes});
+    }
   }
 
   render() {
@@ -23,6 +29,7 @@ export default class SuppliersTable extends React.Component {
             <th>Season</th>
             <th>By</th>
             <th>Confirmation file</th>
+            {this.renderTermsAttributeTitle()}
           </tr>
           {map(this.props.terms, this.renderTerm.bind(this))}
         </tbody>
@@ -37,6 +44,19 @@ export default class SuppliersTable extends React.Component {
       );
     }
   }
+
+  renderTermsAttributeTitle() {
+    if (this.state.termsAttributes) {
+      return (<th>Terms</th>);
+    }
+  }
+
+  renderTermsAttributeRow(term) {
+    if (this.state.termsAttributes) {
+      return (<td><SupplierTerms fieldList={this.state.termsAttributes} terms={term} /></td>);
+    }
+  }
+
 
   renderTerm(term) {
     return (
@@ -56,6 +76,7 @@ export default class SuppliersTable extends React.Component {
         <td>
           {this.renderConfirmationFile(term)}
         </td>
+          {this.renderTermsAttributeRow(term)}
       </tr>
     );
   }

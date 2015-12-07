@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { assign, isEqual, map } from 'lodash';
 import { loadTerms } from '../../actions/supplier_terms';
-import { loadSuppliers, loadVendors, loadSeasons } from '../../actions/filters';
+import { loadSuppliers, loadVendors, loadSeasons, loadSupplierTermsList } from '../../actions/filters';
 import NumberedPagination from '../pagination/_numbered';
 import SuppliersTable from './_table';
 import SupplierTermsFilters from './_filters';
 
 class SuppliersTermsIndex extends React.Component {
   componentWillMount() {
-    this.state = {};
+    this.state = {filters: {}};
     this.loadPage();
     this.props.dispatch(loadSuppliers());
     this.props.dispatch(loadVendors());
@@ -39,6 +39,7 @@ class SuppliersTermsIndex extends React.Component {
           <div className="panel panel-default">
             <div className="panel-body">
               <SupplierTermsFilters
+                  supplierTermsList={this.props.supplierTermsList}
                   suppliers={this.props.suppliers}
                   brands={this.props.brands}
                   seasons={this.props.seasons}
@@ -49,7 +50,7 @@ class SuppliersTermsIndex extends React.Component {
 
           <div className="panel panel-default">
               <div className="panel-body">
-                <SuppliersTable terms={this.props.terms} />
+                <SuppliersTable terms={this.props.terms} termsAttributes={this.state.filters['terms']} />
               </div>
                 <NumberedPagination activePage={this.props.activePage || 1}
                       index={this}
@@ -65,8 +66,8 @@ class SuppliersTermsIndex extends React.Component {
 }
 
 
-function applyState({ filters, terms}) {
-  return assign({}, filters, terms);
+function applyState({ filters, terms, supplierTermsList}) {
+  return assign({}, filters, terms, supplierTermsList);
 }
 
 export default connect(applyState)(SuppliersTermsIndex);

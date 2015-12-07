@@ -38,4 +38,8 @@ class FiltersController < ApplicationController
   def buyer_assistants
     render json: SupplierBuyer.buyer_assistants
   end
+
+  def supplier_terms_list
+    render json: SupplierTerms.termslist
+  end
 end

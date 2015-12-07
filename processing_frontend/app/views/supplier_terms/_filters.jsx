@@ -1,5 +1,5 @@
 import React from 'react';
-import { assign, get, map, omit } from 'lodash';
+import { assign, get, map, omit, snakeCase } from 'lodash';
 import Select from 'react-select';
 
 export default class SupplierTermsFilters extends React.Component {
@@ -18,6 +18,9 @@ export default class SupplierTermsFilters extends React.Component {
       state[key] = map(nextProps[key], (obj) => {
         return { label: obj.name, value: obj.id };
       });
+    });
+    state.supplierTermsList = map(this.props.supplierTermsList || [], (obj) => {
+      return {label: obj, value: obj };
     });
     this.setState(state);
   }
@@ -56,6 +59,16 @@ export default class SupplierTermsFilters extends React.Component {
                     options={this.state.seasons} />
           </div>
           <div className="form-group col-md-2">
+            <label htmlFor="seasons">Terms</label>
+            <Select id="terms"
+                    name="terms"
+                    multi
+                    onChange={this.handleMultiSelectChange.bind(this, 'terms')}
+                    value={this.getFilter('terms')}
+                    options={this.state.supplierTermsList} />
+          </div>
+
+          <div className="form-group col-md-2">
             <label htmlFor="seasons">Only Default Terms</label>
             <input className="form-control"
                    type="checkbox"
@@ -89,7 +102,11 @@ export default class SupplierTermsFilters extends React.Component {
   }
 
   handleFormChange({ target }) {
-    this.setFilter(target.name, target.value);
+    if (target.value === '') {
+      this.setState({ filters: omit(this.state.filters, target.name) });
+    } else {
+      this.setFilter(target.name, target.value);
+    }
   }
 
   handleCheckboxChange(e) {

@@ -4,7 +4,8 @@ import { Link } from 'react-router';
 
 export default class SupplierTerms extends React.Component {
   componentWillMount() {
-    this.fields = ['season',
+    this.state = {};
+    this.fields = this.props.fieldList || ['season',
                    'creditLimit',
                    'preOrderDiscount',
                    'creditTermsPreOrder',
@@ -28,11 +29,15 @@ export default class SupplierTerms extends React.Component {
                    'confirmationFile'];
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({fields: nextProps.fieldList || this.fields});
+  }
+
   render() {
     return (
       <table className="table">
         <tbody>
-          {map(this.fields, this.renderRow, this)}
+          {map(this.state.fields, this.renderRow, this)}
         </tbody>
       </table>
     );
