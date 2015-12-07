@@ -16,7 +16,7 @@ function loadFilters(type, query, action) {
   };
 }
 
-export function loadBrands(query) {
+export function loadVendors(query) {
   return loadFilters('vendors', query, brands => ({ brands, type: 'SET_FILTER_BRANDS' }));
 }
 
