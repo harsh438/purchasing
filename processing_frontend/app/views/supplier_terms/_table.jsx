@@ -86,7 +86,9 @@ export default class SuppliersTable extends React.Component {
   renderSupplierNameRow(term = {}) {
     if (this.state.hasSupplierName) {
       return (
-        <td>{term.supplierName}</td>
+        <td>
+          <Link to={`/suppliers/term/${term.id}`}>{term.supplierName}</Link>
+        </td>
       );
     }
   }
