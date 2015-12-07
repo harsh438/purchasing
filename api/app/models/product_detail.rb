@@ -4,6 +4,7 @@ class ProductDetail < ActiveRecord::Base
   include LegacyMappings
 
   map_attributes id: :pID,
+                 color: :colour,
                  gender: :leadGender,
                  closing_date: :closingDate,
                  planned_weeks_on_sale: :plannedWeeksOnSale,
