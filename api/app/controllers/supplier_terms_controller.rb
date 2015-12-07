@@ -1,14 +1,10 @@
-require 'pp'
-
 class SupplierTermsController < ApplicationController
-  respond_to :html, :json
-
   def index
     supplierTerms = SupplierTerms::Search.new.search(params)
     respond_to do |format|
       format.json { render json: { terms: supplierTerms.map(&:as_json_with_url_and_supplier_name),
-                  total_pages: supplierTerms.total_pages,
-                  page: params[:page] } }
+                                   total_pages: supplierTerms.total_pages,
+                                   page: params[:page] } }
       format.csv { render csv: SupplierTerms::CsvExporter.new.export(params) }
     end
     #return render text: "hello"
