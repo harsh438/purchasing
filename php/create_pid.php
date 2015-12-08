@@ -1,5 +1,5 @@
 <?php
-  $opts = array('sku' => array( 'manufacturer_sku' => 'DA-DET-WHT',
+  $opts = array( 'manufacturer_sku' => 'DA-DET-WHT',
                  'manufacturer_color' => 'Pale Blue',
                  'manufacturer_size' => '12',
                  'season' => 'ss15',
@@ -9,7 +9,7 @@
                  'price' => 18.00,
                  'lead_gender' => 'm',
                  'product_name' => 'Clarks Originals Boots - Clarks Originals Baby Warm  - Pale Blue',
-                 'vendor_id' => 919) );
+                 'vendor_id' => 919);
 
   $endpoint = 'http://localhost:5000/api/skus.json';
 
