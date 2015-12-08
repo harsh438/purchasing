@@ -19,14 +19,15 @@ class SupplierTermsHistory extends React.Component {
             <div className="panel panel-default">
               <div className="panel-heading" style={{ overflow: 'hidden' }}>
                 <h3 className="panel-title pull-left">
-                  Terms history
+                  Terms history for {this.props.supplier.name}
                 </h3>
-              <Link className="pull-right" to={`/suppliers/${this.state.id}/edit`}>
-                <span className="glyphicon glyphicon-arrow-left"></span>&nbsp;Go back to supplier page
-              </Link>
+
+                <Link className="pull-right" to={`/suppliers/${this.state.id}/edit`}>
+                  <span className="glyphicon glyphicon-arrow-left"></span>
+                  &nbsp; Go back to supplier page
+                </Link>
               </div>
               <div className="panel-body">
-              <h4>History Terms for {this.props.supplier.name}</h4>
                 <SuppliersTable terms={this.props.supplier.terms} />
               </div>
             </div>
