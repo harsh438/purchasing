@@ -289,7 +289,7 @@ export default class PurchaseOrdersForm extends React.Component {
   }
 
   setFilter(field, value) {
-    const filters = assign({}, state.filters, { [field]: value });
+    const filters = assign({}, this.state.filters, { [field]: value });
     this.setState({ filters });
   }
 }
