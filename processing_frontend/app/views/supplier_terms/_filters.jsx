@@ -70,6 +70,7 @@ export default class SupplierTermsFilters extends React.Component {
               <input className="checkbox"
                      type="checkbox"
                      name="default"
+                     value="1"
                      checked={this.getFilter('default')}
                      onChange={this.handleCheckboxChange.bind(this)} />
               Default terms only
@@ -94,26 +95,22 @@ export default class SupplierTermsFilters extends React.Component {
     );
   }
 
-  handleMultiSelectChange(field, value) {
-    this.handleFormChange({ target: { name: field, value } });
+  handleFormChange({ target }) {
+    this.setFilter(target.name, target.value);
   }
 
-  handleFormChange({ target }) {
-    if (target.value === '') {
-      this.setState({ filters: omit(this.state.filters, target.name) });
-    } else {
-      this.setFilter(target.name, target.value);
-    }
+  handleMultiSelectChange(name, value) {
+    this.handleFormChange({ target: { name, value } });
   }
 
   handleCheckboxChange(e) {
     e.stopPropagation();
 
     if (e.target.checked) {
-      this.setFilter(e.target.name, 1);
+      this.handleFormChange(e);
     } else {
-      this.state.filters[e.target.name] = 0;
-      this.setState({ filters: this.state.filters });
+      const filters = assign({}, this.state.filters, { [e.target.name]: '0' });
+      this.setState({ filters });
     }
   }
 
@@ -129,6 +126,11 @@ export default class SupplierTermsFilters extends React.Component {
   }
 
   getFilter(field) {
-    return get(this.state.filters, field, '');
+    switch (field) {
+    case 'default':
+      return get(this.state.filters, field, '1') === '1';
+    default:
+      return get(this.state.filters, field, '');
+    }
   }
 }
