@@ -1,6 +1,6 @@
 class Gender
   def self.string_from(char)
-    case char
+    case char.capitalize
       when 'M'
         'Men'
       when 'W'
