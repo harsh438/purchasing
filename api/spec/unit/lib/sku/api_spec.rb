@@ -15,7 +15,7 @@ describe Sku::Api do
     end
 
     it 'should find a sku in the sku API and return previously unknown information on it' do
-      expect(response.fields[:barcodes_attributes][0]['barcode']).to eq('5052094029950')
+      expect(response.fields[:barcodes_attributes][0][:barcode]).to eq('5052094029950')
     end
 
     it 'should return a 204 for nonexistent skus' do
