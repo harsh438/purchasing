@@ -72,7 +72,7 @@ class OrderLineItem < ActiveRecord::Base
     self.cost = sku.cost_price
     self.season = sku.season
     self.product_name = sku.product_name
-    self.gender = Gender.char_from(sku.try(:gender))
+    self.gender = sku.gender
     self.reporting_pid = sku.product_id
   end
 
