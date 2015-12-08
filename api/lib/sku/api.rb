@@ -12,6 +12,7 @@ class Sku::Api
                            body: fields.merge!(key: config['key'],
                                                token: config['token']).to_json,
                            headers: headers)
+
     Sku::ApiResponse.new(@response)
   end
 end
