@@ -21,5 +21,7 @@ class SupplierTermsController < ApplicationController
 
   def render_index_csv
     render csv: SupplierTerms::CsvExporter.new.export(params)
+  rescue SupplierTerms::CsvExporter::NoTermsSelectedError => e
+    render plain: 'Please select terms'
   end
 end

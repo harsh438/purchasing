@@ -3,6 +3,11 @@ feature 'Download supplier terms as CSV' do
   let(:csv_header_row) { csv.first }
   let(:csv_result_rows) { csv.drop(1) }
 
+  scenario 'Trying to download purchase orders CSV without filters' do
+    when_a_user_tries_to_download_csv_without_terms_selected
+    then_they_should_see_an_error
+  end
+
   scenario 'Downloading CSV filtered by vendor' do
     when_a_user_downloads_csv_filtered_by_vendor
     then_the_csv_file_should_contain_only_purchase_orders_for_that_vendor
@@ -20,7 +25,9 @@ feature 'Download supplier terms as CSV' do
     vendor = create(:vendor)
     create_list(:supplier_terms, 2, supplier: create(:supplier, vendors: [vendor]))
     create_list(:supplier_terms, 2, supplier: create(:supplier, vendors: [vendor]))
-    visit supplier_terms_path(format: :csv, filters: { vendor_id: vendor.id, default: '0' })
+    visit supplier_terms_path(format: :csv, filters: { vendor_id: vendor.id,
+                                                       default: '0',
+                                                       terms: ['pre_order_discount'] })
   end
 
   def then_the_csv_file_should_contain_only_purchase_orders_for_that_vendor
