@@ -32,8 +32,8 @@ class Sku::Generator
     new_sku_attrs = sku_attrs(LanguageProductOption.create(product_option_attrs),
                               LanguageProduct.create(language_product_attrs),
                               LanguageCategory.create(language_category_attrs))
-    fields = new_sku_attrs.merge!(pvx_fields)
-    Sku.create!(fields.to_h)
+
+    Sku.create!(new_sku_attrs.merge!(pvx_fields).to_h)
   end
 
   def pvx_fields
