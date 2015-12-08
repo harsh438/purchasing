@@ -101,7 +101,7 @@ export default class SuppliersTable extends React.Component {
         <a href={term.confirmationUrl}
            target="_blank">
           <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
-          &nbsp; Download {term.confirmationFileName}
+          &nbsp; {term.confirmationFileName}
         </a>
       );
     } else {
