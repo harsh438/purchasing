@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { assign, get, map, omit } from 'lodash';
+import { renderSelectOptions } from '../../utilities/dom';
 
 export default class SuppliersFilters extends React.Component {
   componentWillMount() {
@@ -31,13 +32,35 @@ export default class SuppliersFilters extends React.Component {
           </div>
 
           <div className="form-group col-md-2">
-            <label htmlFor="vendor_id">Brand</label>
+            <label htmlFor="vendorId">Brand</label>
             <select className="form-control"
-                    id="vendor_id"
+                    id="vendorId"
                     name="vendorId"
                     value={this.getFilter('vendorId')}>
               <option value=""> -- select brand -- </option>
               {this.selectOptions(this.props.brands)}
+            </select>
+          </div>
+
+          <div className="form-group col-md-2">
+            <label htmlFor="buyerId">Buyer</label>
+            <select className="form-control"
+                    id="buyerName"
+                    name="buyerName"
+                    value={this.getFilter('buyerName')}>
+              <option value=""> -- select buyer -- </option>
+              {renderSelectOptions(this.props.buyers)}
+            </select>
+          </div>
+
+          <div className="form-group col-md-2">
+            <label htmlFor="assistantName">Buyer Assistant</label>
+            <select className="form-control"
+                    id="assistantName"
+                    name="assistantName"
+                    value={this.getFilter('assistantName')}>
+              <option value=""> -- select assistant -- </option>
+              {renderSelectOptions(this.props.buyerAssistants)}
             </select>
           </div>
 
