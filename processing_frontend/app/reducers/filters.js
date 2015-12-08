@@ -1,4 +1,4 @@
-import { assign, pluck, camelCase, map } from 'lodash';
+import { assign, pluck, startCase, map } from 'lodash';
 
 const initialState = { brands: [],
                        categories: [],
@@ -10,6 +10,12 @@ const initialState = { brands: [],
 function removeEmpty(filters) {
   return filters.filter(function (filter) {
     return filter.id && filter.name;
+  });
+}
+
+function transformSupplierTermsList(supplierTermsList) {
+  return map(supplierTermsList, function (term) {
+    return { id: term, name: startCase(term) };
   });
 }
 
@@ -32,7 +38,7 @@ export default function reduceFilters(state = initialState, action) {
   case 'SET_FILTER_BUYER_ASSISTANTS':
     return assign({}, state, { buyerAssistants: pluck(removeEmpty(action.buyerAssistants), 'name') });
   case 'SET_SUPPLIER_TERMS_LIST':
-    return assign({}, state, { supplierTermsList: map(action.supplierTermsList, camelCase) });
+    return assign({}, state, { supplierTermsList: transformSupplierTermsList(action.supplierTermsList) });
   default:
     return state;
   }

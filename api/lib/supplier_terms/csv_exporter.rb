@@ -28,7 +28,14 @@ class SupplierTerms::CsvExporter
   private
 
   def csv_columns(terms_selected)
-    valid_terms_selected = SupplierTerms.stored_attributes[:terms].map(&:to_s) & terms_selected
+    allowed_terms = SupplierTerms.stored_attributes[:terms].map(&:to_s)
+
+    if terms_selected.respond_to?(:values)
+      valid_terms_selected = allowed_terms & terms_selected.values
+    else
+      valid_terms_selected = allowed_terms & terms_selected.to_a
+    end
+    
     CSV_COLUMNS + valid_terms_selected
   end
 
