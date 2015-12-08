@@ -5,4 +5,6 @@ class Category < ActiveRecord::Base
 
   map_attributes id: :catID,
                  parent_id: :parentID
+
+  has_one :language_category, foreign_key: :catID
 end
