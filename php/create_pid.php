@@ -1,7 +1,7 @@
 <?php
-  $opts = array( 'manufacturer_sku' => 'dsads',
+  $opts = array('sku' => array( 'manufacturer_sku' => 'DA-DET-WHT',
                  'manufacturer_color' => 'Pale Blue',
-                 'manufacturer_size' => 'LRG',
+                 'manufacturer_size' => '12',
                  'season' => 'ss15',
                  'color' => 'Blue',
                  'size' => '06-9 mths',
@@ -9,7 +9,7 @@
                  'price' => 18.00,
                  'lead_gender' => 'm',
                  'product_name' => 'Clarks Originals Boots - Clarks Originals Baby Warm  - Pale Blue',
-                 'vendor_id' => 919);
+                 'vendor_id' => 919) );
 
   $endpoint = 'http://localhost:5000/api/skus.json';
 
@@ -20,7 +20,6 @@
                 curl_setopt($ch, CURLOPT_POST, 1);
                 curl_setopt($ch, CURLOPT_VERBOSE, true);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($opts));
-                $output = curl_exec($ch);
 
   $output = curl_exec($ch);
 
