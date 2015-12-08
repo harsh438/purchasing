@@ -7,7 +7,7 @@ class ProductMigrator
 
   def migrate_single(product)
     @product = product
-    product.language_product_options.each do |language_option|
+    product.language_product_options.where(language_id: 1).each do |language_option|
       Sku.create!(sku_attrs(language_option))
     end
   end
