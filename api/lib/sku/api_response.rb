@@ -15,7 +15,6 @@ class Sku::ApiResponse
   private
 
   def map_to_response(fields)
-    { sku: fields['sku'],
-      barcodes_attributes: [{ barcode: fields['barcode'] }] }
+    { barcodes_attributes: [{ barcode: fields['barcode'] }] }
   end
 end
