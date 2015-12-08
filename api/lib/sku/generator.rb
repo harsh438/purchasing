@@ -1,7 +1,8 @@
 class Sku::Generator
   def sku_from!(attrs)
     @attrs = attrs
-    sku = Sku.find_by(manufacturer_sku: attrs[:manufacturer_sku])
+    sku = Sku.find_by(manufacturer_sku: attrs[:manufacturer_sku],
+                      manufacturer_size: attrs[:manufacturer_size])
 
     if sku.nil?
       sku = generate_new_sku
