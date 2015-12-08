@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Select from 'react-select';
 import { assign, get, map, omit, snakeCase } from 'lodash';
+import { renderMultiSelectOptions } from '../../utilities/dom';
 
 export default class SupplierTermsFilters extends React.Component {
   componentWillMount() {
@@ -11,19 +12,10 @@ export default class SupplierTermsFilters extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({ submitting: false });
+
     if (this.props.filters !== nextProps.filters) {
       this.setState({ filters: (nextProps.filters || {}) });
     }
-    let state = {};
-    ['suppliers', 'brands', 'seasons'].forEach((key) => {
-      state[key] = map(nextProps[key], (obj) => {
-        return { label: obj.name, value: obj.id };
-      });
-    });
-    state.supplierTermsList = map(this.props.supplierTermsList || [], (obj) => {
-      return { label: obj, value: obj };
-    });
-    this.setState(state);
   }
 
   render() {
@@ -38,7 +30,7 @@ export default class SupplierTermsFilters extends React.Component {
                   multi
                   onChange={this.handleMultiSelectChange.bind(this, 'suppliers')}
                   value={this.getFilter('suppliers')}
-                  options={this.state.suppliers} />
+                  options={renderMultiSelectOptions(this.props.suppliers)} />
         </div>
 
         <div className="form-group col-md-2">
@@ -48,7 +40,7 @@ export default class SupplierTermsFilters extends React.Component {
                   multi
                   onChange={this.handleMultiSelectChange.bind(this, 'vendor_ids')}
                   value={this.getFilter('vendor_ids')}
-                  options={this.state.brands} />
+                  options={renderMultiSelectOptions(this.props.brands)} />
         </div>
 
         <div className="form-group col-md-2">
@@ -58,7 +50,7 @@ export default class SupplierTermsFilters extends React.Component {
                   multi
                   onChange={this.handleMultiSelectChange.bind(this, 'seasons')}
                   value={this.getFilter('seasons')}
-                  options={this.state.seasons} />
+                  options={renderMultiSelectOptions(this.props.seasons)} />
         </div>
 
         <div className="form-group col-md-2">
@@ -68,7 +60,7 @@ export default class SupplierTermsFilters extends React.Component {
                   multi
                   onChange={this.handleMultiSelectChange.bind(this, 'terms')}
                   value={this.getFilter('terms')}
-                  options={this.state.supplierTermsList} />
+                  options={renderMultiSelectOptions(this.props.supplierTermsList)} />
         </div>
 
         <div className="form-group col-md-2"
