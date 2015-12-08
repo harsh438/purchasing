@@ -20,7 +20,7 @@ class SupplierTermsShow extends React.Component {
 
   render() {
     return (
-      <div className="col-md-4 col-md-offset-4">
+      <div className="col-md-6 col-md-offset-3">
         <div className="suppliers_terms_show" style={{ marginTop: '70px' }}>
           <div className="panel panel-default">
               <div className="panel-heading" style={{ overflow: 'hidden' }}>
