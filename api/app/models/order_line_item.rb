@@ -1,6 +1,7 @@
 class OrderLineItem < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   class PurchaseOrderNotFound < RuntimeError; end
+  class SkuNotFound < RuntimeError; end
 
   belongs_to :order
 
@@ -61,7 +62,23 @@ class OrderLineItem < ActiveRecord::Base
     internal_sku.split('-').second.to_i
   end
 
+  def cache_from_sku
+    sku = Sku.find_by(sku: internal_sku)
+    raise SkuNotFound unless sku.present?
+
+    self.product_id = sku.product_id
+    self.vendor_id = sku.vendor_id
+    self.option_id = sku.option_id
+    self.cost = sku.cost_price
+    self.season = sku.season
+    self.product_name = sku.product_name
+    self.gender = Gender.char_from(sku.try(:gender))
+    self.reporting_pid = sku.product_id
+  end
+
   def cache_product
+    cache_from_sku
+  rescue SkuNotFound
     self.product_id = build_pid
     self.vendor_id = product.try(:vendor_id)
     self.option_id = LanguageProductOption.oid_from_element(build_pid, build_element_id)
