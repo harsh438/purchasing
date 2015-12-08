@@ -21,9 +21,9 @@ class VendorsNew extends React.Component {
            style={{ marginTop: '70px' }}>
         <div className="row">
           <div className="col-md-6 col-md-offset-3">
-            <VendorsForm title="Create Vendor"
-                           submitText="Add Vendor"
-                           onSubmitVendor={this.handleCreateVendor.bind(this)} />
+            <VendorsForm title="Create Brand"
+                         submitText="Add Brand"
+                         onSubmitVendor={this.handleCreateVendor.bind(this)} />
           </div>
         </div>
       </div>
