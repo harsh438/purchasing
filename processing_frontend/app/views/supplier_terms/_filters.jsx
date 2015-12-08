@@ -80,7 +80,7 @@ export default class SupplierTermsFilters extends React.Component {
                      name="default"
                      checked={this.getFilter('default')}
                      onChange={this.handleCheckboxChange.bind(this)} />
-                   Default terms only
+              Default terms only
             </label>
           </div>
         </div>
