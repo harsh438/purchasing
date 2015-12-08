@@ -35,7 +35,7 @@ class SupplierTerms::CsvExporter
     else
       valid_terms_selected = allowed_terms & terms_selected.to_a
     end
-    
+
     CSV_COLUMNS + valid_terms_selected
   end
 
