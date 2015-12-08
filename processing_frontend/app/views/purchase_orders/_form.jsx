@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import Select from 'react-select';
 import { assign, get, map, omit, trim } from 'lodash';
 import { isEmptyObject } from '../../utilities/inspection';
+import { renderSelectOptions } from '../../utilities/dom';
 
 export default class PurchaseOrdersForm extends React.Component {
   componentWillMount() {
@@ -34,7 +35,7 @@ export default class PurchaseOrdersForm extends React.Component {
                           name="brand"
                           value={this.getFilter('brand')}>
                     <option value=""> -- select brand -- </option>
-                    {this.selectOptions(this.props.brands)}
+                    {renderSelectOptions(this.props.brands)}
                   </select>
                 </div>
 
@@ -57,7 +58,7 @@ export default class PurchaseOrdersForm extends React.Component {
                           name="season"
                           value={this.getFilter('season')}>
                     <option value=""> -- select season -- </option>
-                    {this.selectOptions(this.props.seasons)}
+                    {renderSelectOptions(this.props.seasons)}
                   </select>
                 </div>
 
@@ -132,7 +133,7 @@ export default class PurchaseOrdersForm extends React.Component {
                           name="orderType"
                           value={this.getFilter('orderType')}>
                     <option value=""> -- select order type -- </option>
-                    {this.selectOptions(this.props.orderTypes)}
+                    {renderSelectOptions(this.props.orderTypes)}
                   </select>
                 </div>
 
@@ -144,7 +145,7 @@ export default class PurchaseOrdersForm extends React.Component {
                           name="supplier"
                           value={this.getFilter('supplier')}>
                     <option value=""> -- select supplier -- </option>
-                    {this.selectOptions(this.props.suppliers)}
+                    {renderSelectOptions(this.props.suppliers)}
                   </select>
                 </div>
 
@@ -246,14 +247,6 @@ export default class PurchaseOrdersForm extends React.Component {
   multiSelectOptions(options) {
     return map(options, function ({ id, name }) {
       return { value: id, label: name };
-    });
-  }
-
-  selectOptions(options) {
-    return map(options, function ({ id, name }) {
-      return (
-        <option key={id} value={id}>{name}</option>
-      );
     });
   }
 
