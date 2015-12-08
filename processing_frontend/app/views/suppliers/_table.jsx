@@ -10,8 +10,6 @@ export default class SuppliersTable extends React.Component {
           <tr>
             <th>Name</th>
             <th>Brands</th>
-            <th className="text-center" style={{ width: '15%' }}>Created</th>
-            <th className="text-center" style={{ width: '15%' }}>Updated</th>
             <th className="text-center" style={{ width: '15%' }}>Discontinued</th>
           </tr>
         </thead>
@@ -33,12 +31,6 @@ export default class SuppliersTable extends React.Component {
           </td>
           <td>
             {this.vendorNames(supplier.vendors)}
-          </td>
-          <td className="text-center">
-            {supplier.createdAt}
-          </td>
-          <td className="text-center">
-            {supplier.updatedAt}
           </td>
           <td className="text-center">{supplier.discontinued ? '✔' : '✘'}</td>
         </tr>
