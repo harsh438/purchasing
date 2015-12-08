@@ -1,8 +1,5 @@
-require 'pp'
-
 feature 'Suppliers Terms' do
   subject { JSON.parse(page.body) }
-
 
   scenario 'Listing of SuppliersTerms pagination' do
     when_i_request_list_of_supplier_terms
@@ -29,7 +26,6 @@ feature 'Suppliers Terms' do
     expect(subject['total_pages']).to eq(2)
     expect(subject['terms']).to include(a_hash_including('id', 'supplier_name', 'by', 'parent_id'))
   end
-
 
   def when_i_add_a_set_of_terms_to_a_supplier
     page.driver.post(supplier_path(create(:supplier)),

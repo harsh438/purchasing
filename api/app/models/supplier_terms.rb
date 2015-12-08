@@ -1,13 +1,13 @@
 class SupplierTerms < ActiveRecord::Base
   include Searchable
 
+  scope :latest, -> { order(id: :desc) }
+
   belongs_to :supplier
 
   validates :season, presence: true
-  paginates_per 50
 
   has_attached_file :confirmation
-  scope :latest, -> { order(id: :desc) }
   validates_attachment_content_type :confirmation, content_type: %w(image/jpeg
                                                                     image/pjpeg
                                                                     image/png
@@ -15,31 +15,28 @@ class SupplierTerms < ActiveRecord::Base
                                                                     application/pdf
                                                                     application/x-pdf)
 
-  public
-  def self.termslist()
-    return %i(credit_limit
-             pre_order_discount
-             credit_terms_pre_order
-             re_order_discount
-             credit_terms_re_order
-             faulty_returns_discount
-             settlement_discount
-             marketing_contribution
-             rebate_structure
-             risk_order_details
-             mark_down_contribution_details
-             cancellation_allowance
-             stock_swap_allowance
-             bulk_order_details
-             sale_or_return_details
-             samples
-             product_imagery
-             agreed_with
-             by
-             comments)
-  end
+  paginates_per 50
 
-  store :terms, accessors: self.termslist
+  store :terms, accessors: %i(credit_limit
+                              pre_order_discount
+                              credit_terms_pre_order
+                              re_order_discount
+                              credit_terms_re_order
+                              faulty_returns_discount
+                              settlement_discount
+                              marketing_contribution
+                              rebate_structure
+                              risk_order_details
+                              mark_down_contribution_details
+                              cancellation_allowance
+                              stock_swap_allowance
+                              bulk_order_details
+                              sale_or_return_details
+                              samples
+                              product_imagery
+                              agreed_with
+                              by
+                              comments)
 
   def as_json(options = {})
     super.tap do |terms|
