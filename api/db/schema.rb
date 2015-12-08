@@ -100,6 +100,16 @@ ActiveRecord::Schema.define(version: 20151207122747) do
   add_index "ds_options", ["pID"], name: "pID", using: :btree
   add_index "ds_options", ["parentID"], name: "parentID", using: :btree
 
+  create_table "ds_product_categories", id: false, force: :cascade do |t|
+    t.integer "pID",       limit: 4, default: 0, null: false
+    t.integer "catID",     limit: 4, default: 0, null: false
+    t.integer "sortOrder", limit: 4, default: 0, null: false
+  end
+
+  add_index "ds_product_categories", ["catID"], name: "cat index", using: :btree
+  add_index "ds_product_categories", ["pID", "catID"], name: "pIDcatID", using: :btree
+  add_index "ds_product_categories", ["pID"], name: "product ID", using: :btree
+
   create_table "ds_products", primary_key: "pID", force: :cascade do |t|
     t.integer "venID",                  limit: 4,     default: 0,   null: false
     t.string  "pNum",                   limit: 40,    default: "",  null: false
