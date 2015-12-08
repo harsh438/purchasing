@@ -9,7 +9,12 @@
                  'price' => 18.00,
                  'lead_gender' => 'm',
                  'product_name' => 'Clarks Originals Boots - Clarks Originals Baby Warm  - Pale Blue',
-                 'vendor_id' => 919);
+                 'vendor_id' => 919,
+                 // New fields
+                 'category_id' => 12,
+                 'category_name' => 'Whatever',
+                 'vendor_id' => 232,
+                 'inv_track' => 'P');
 
   $endpoint = 'http://localhost:5000/api/skus.json';
 
