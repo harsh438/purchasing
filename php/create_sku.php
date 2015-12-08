@@ -7,7 +7,7 @@
                  'size' => '06-9 mths',
                  'cost_price' => 12.06,
                  'price' => 18.00,
-                 'lead_gender' => 'm',
+                 'lead_gender' => 'M',
                  'product_name' => 'Clarks Originals Boots - Clarks Originals Baby Warm  - Pale Blue',
                  'vendor_id' => 919,
                  // New fields
