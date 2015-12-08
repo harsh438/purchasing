@@ -44,6 +44,6 @@ class FiltersController < ApplicationController
   end
 
   def supplier_terms_list
-    render json: SupplierTerms.termslist
+    render json: SupplierTerms.stored_attributes[:terms]
   end
 end

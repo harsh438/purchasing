@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Select from 'react-select';
-import { assign, get, map, omit, snakeCase } from 'lodash';
+import { assign, get, map, omit, snakeCase, trim } from 'lodash';
 import { renderMultiSelectOptions } from '../../utilities/dom';
 
 export default class SupplierTermsFilters extends React.Component {
@@ -24,32 +24,32 @@ export default class SupplierTermsFilters extends React.Component {
             onChange={this.handleFormChange.bind(this)}
             onSubmit={this.handleFormSubmit.bind(this)}>
         <div className="form-group col-md-2">
-          <label htmlFor="suppliers">Supplier</label>
-          <Select id="suppliers"
-                  name="suppliers"
+          <label htmlFor="supplierId">Supplier</label>
+          <Select id="supplierId"
+                  name="supplierId"
                   multi
-                  onChange={this.handleMultiSelectChange.bind(this, 'suppliers')}
-                  value={this.getFilter('suppliers')}
+                  onChange={this.handleMultiSelectChange.bind(this, 'supplierId')}
+                  value={this.getFilter('supplierId')}
                   options={renderMultiSelectOptions(this.props.suppliers)} />
         </div>
 
         <div className="form-group col-md-2">
-          <label htmlFor="vendor_ids">Brands</label>
+          <label htmlFor="vendorId">Brands</label>
           <Select id="suppliers"
-                  name="vendor_ids"
+                  name="vendorId"
                   multi
-                  onChange={this.handleMultiSelectChange.bind(this, 'vendor_ids')}
-                  value={this.getFilter('vendor_ids')}
+                  onChange={this.handleMultiSelectChange.bind(this, 'vendorId')}
+                  value={this.getFilter('vendorId')}
                   options={renderMultiSelectOptions(this.props.brands)} />
         </div>
 
         <div className="form-group col-md-2">
-          <label htmlFor="seasons">Seasons</label>
-          <Select id="suppliers"
-                  name="seasons"
+          <label htmlFor="season">Seasons</label>
+          <Select id="season"
+                  name="season"
                   multi
-                  onChange={this.handleMultiSelectChange.bind(this, 'seasons')}
-                  value={this.getFilter('seasons')}
+                  onChange={this.handleMultiSelectChange.bind(this, 'season')}
+                  value={this.getFilter('season')}
                   options={renderMultiSelectOptions(this.props.seasons)} />
         </div>
 
@@ -99,8 +99,9 @@ export default class SupplierTermsFilters extends React.Component {
     this.setFilter(target.name, target.value);
   }
 
-  handleMultiSelectChange(name, value) {
-    this.handleFormChange({ target: { name, value } });
+  handleMultiSelectChange(field, value) {
+    const values = value ? value.split(',') : [];
+    this.setFilter(field, map(values, trim));
   }
 
   handleCheckboxChange(e) {

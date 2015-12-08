@@ -1,7 +1,7 @@
 import React from 'react';
 import { isPlainObject, map } from 'lodash';
 
-export function renderSelectOptions(options) {
+function optionHashes(options) {
   return map(options, function (option) {
     let id, name;
 
@@ -13,6 +13,12 @@ export function renderSelectOptions(options) {
       name = option;
     }
 
+    return { id, name };
+  });
+}
+
+export function renderSelectOptions(options) {
+  return map(optionHashes(options), function ({ id, name }) {
     return (
       <option key={id} value={id}>{name}</option>
     );
@@ -20,7 +26,7 @@ export function renderSelectOptions(options) {
 }
 
 export function renderMultiSelectOptions(options) {
-  return map(options, function ({ id, name }) {
+  return map(optionHashes(options), function ({ id, name }) {
     return { value: id, label: name };
   });
 }

@@ -9,25 +9,26 @@ class SupplierTerms::Search
   private
 
   def apply_filters(query, filters)
-    if filters[:suppliers].blank?.!
-      query = query.where(:supplier_id => filters[:suppliers].split(','))
+    if filters[:supplier_id].present?
+      query = query.where(supplier_id: filters[:supplier_id])
     end
 
-    if filters[:vendor_ids].blank?.!
-      query = query.joins(supplier: :vendors).where(suppliers_to_brands: { 'BrandID' => filters[:vendor_ids].split(',') })
+    if filters[:vendor_id].present?
+      query = query.joins(supplier: :vendors).where(suppliers_to_brands: { 'BrandID' => filters[:vendor_id] })
     end
 
-    if filters[:seasons].blank?.!
-      query = query.where(:season => filters[:seasons].split(','))
+    if filters[:season].present?
+      query = query.where(season: filters[:season])
     end
 
     apply_default_filter(query, filters)
   end
 
   def apply_default_filter(query, filters)
-    if filters[:default].blank? or filters[:default] == '1' or filters[:default] == 'true'
-      query = query.where(:default => true)
+    if filters[:default] == '0'
+      query
+    else
+      query.where(default: true)
     end
-    query
   end
 end

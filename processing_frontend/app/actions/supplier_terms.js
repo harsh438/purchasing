@@ -10,8 +10,9 @@ export function loadSupplierTerms(id) {
   };
 }
 
-export function loadTerms(query = {}) {
-  const queryString = Qs.stringify(assign({}, query, { filters: snakeizeKeys(query.filters) }));
+export function loadTerms(params = {}) {
+  const query = assign({}, params, { filters: snakeizeKeys(params.filters) });
+  const queryString = Qs.stringify(query, { arrayFormat: 'brackets' });
 
   return dispatch => {
     fetch(`/api/supplier_terms.json?${queryString}`, { credentials: 'same-origin' })
