@@ -67,10 +67,9 @@ export default class SupplierTerms extends React.Component {
       if (terms.confirmationFileName) {
         return (
           <a href={terms.confirmationUrl}
-             className="btn btn-default"
              target="_blank">
             <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
-            &nbsp;Download {terms.confirmationFileName}
+            &nbsp; {terms.confirmationFileName}
           </a>
         );
       }
