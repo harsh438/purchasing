@@ -22,17 +22,27 @@ class Sku::Generator
   end
 
   def category
-    @category ||= Category.create(category_attrs)
+    @category ||= Category.find_or_create_by!(attrs[:category_id])
   end
 
   def element
     @element ||= Element.create(element_attrs)
   end
 
+  def find_or_create_language_category
+    category.language_category ||= LanguageCategory.create(language_category_attrs)
+
+    unless product.categories.include? category
+      product.categories << category
+    end
+
+    category.language_category
+  end
+
   def generate_new_sku
     new_sku_attrs = sku_attrs(LanguageProductOption.create(product_option_attrs),
                               LanguageProduct.create(language_product_attrs),
-                              LanguageCategory.create(language_category_attrs))
+                              find_or_create_language_category)
 
     Sku.create!(new_sku_attrs.merge!(pvx_fields).to_h)
   end
@@ -74,6 +84,7 @@ class Sku::Generator
 
   def language_category_attrs
     { language_id: 1,
+      name: attrs[:category_name],
       category_id: category.id }
   end
 
