@@ -33,7 +33,7 @@ class Sku::Generator
                               LanguageProduct.create(language_product_attrs),
                               LanguageCategory.create(language_category_attrs))
     fields = new_sku_attrs.merge!(pvx_fields)
-    Sku.create(fields)
+    Sku.create!(fields.to_h)
   end
 
   def pvx_fields
@@ -43,8 +43,6 @@ class Sku::Generator
     return {} if response.fields.keys.size == 0
 
     response.fields
-      .except(:barcode)
-      .merge!({ barcodes_attributes: [{ barcode: response.fields[:barcode] }] })
   end
 
   def attrs
@@ -53,13 +51,13 @@ class Sku::Generator
 
   def sku_attrs(language_product_option, language_product, language_category)
     attrs.except(:lead_gender)
-         .merge!({ sku: "#{product.id}-#{element.id}",
-                   product_id: product.id,
-                   language_product_id: language_product.id,
-                   element_id: element.id,
-                   option_id: language_product_option.id,
-                   category_id: language_category.id,
-                   gender: attrs[:lead_gender] })
+      .merge!({ sku: "#{product.id}-#{element.id}",
+                product_id: product.id,
+                language_product_id: language_product.id,
+                element_id: element.id,
+                option_id: language_product_option.id,
+                category_id: language_category.id,
+                gender: attrs[:lead_gender] })
   end
 
   def element_attrs
