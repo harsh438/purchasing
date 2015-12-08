@@ -3,7 +3,7 @@
                 'barcodes_attributes' => array(array('barcode' => '12345'),
                                                array('barcode' => '54321')));
 
-  $endpoint = 'http://localhost:5000/api/skus/1.json';
+  $endpoint = 'http://localhost:5000/api/skus/83.json';
 
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $endpoint);

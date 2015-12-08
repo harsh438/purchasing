@@ -19,12 +19,14 @@
   $output = json_decode(curl_exec($ch));
   $order_id = $output->id;
 
-  $line_items = array(array('internal_sku' => '12345-123',
+  $line_items = array(array('internal_sku' => '239632-2359',
                             'cost' => 12.34,
+                            'quantity' => 3,
                             'discount' => 5.0,
                             'drop_date' => '2015-12-25'),
-                      array('internal_sku' => '123456-1234',
+                      array('internal_sku' => '239632-2359',
                             'cost' => 121.34,
+                            'quantity' => 7,
                             'discount' => 15.0,
                             'drop_date' => '2015-12-24'));
 
