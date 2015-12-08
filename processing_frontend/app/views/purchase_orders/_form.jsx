@@ -5,7 +5,8 @@ import { Link } from 'react-router';
 import Select from 'react-select';
 import { assign, get, map, omit, trim } from 'lodash';
 import { isEmptyObject } from '../../utilities/inspection';
-import { renderSelectOptions } from '../../utilities/dom';
+import { renderSelectOptions,
+         renderMultiSelectOptions } from '../../utilities/dom';
 
 export default class PurchaseOrdersForm extends React.Component {
   componentWillMount() {
@@ -47,7 +48,7 @@ export default class PurchaseOrdersForm extends React.Component {
                           onChange={this.handleMultiSelectChange.bind(this, 'category')}
                           multi
                           value={this.getFilter('category')}
-                          options={this.multiSelectOptions(this.props.categories)} />
+                          options={renderMultiSelectOptions(this.props.categories)} />
                 </div>
 
                 <div className="form-group col-md-2">
@@ -122,7 +123,7 @@ export default class PurchaseOrdersForm extends React.Component {
                           onChange={this.handleMultiSelectChange.bind(this, 'gender')}
                           multi
                           value={this.getFilter('gender')}
-                          options={this.multiSelectOptions(this.props.genders)} />
+                          options={renderMultiSelectOptions(this.props.genders)} />
                 </div>
 
                 <div className="col-md-2">

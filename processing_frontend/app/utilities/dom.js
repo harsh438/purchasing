@@ -18,3 +18,9 @@ export function renderSelectOptions(options) {
     );
   });
 }
+
+export function renderMultiSelectOptions(options) {
+  return map(options, function ({ id, name }) {
+    return { value: id, label: name };
+  });
+}
