@@ -1,14 +1,25 @@
 class SupplierTerms::CsvExporter
-  CSV_ATTRIBUTES =  SupplierTerms.column_names.reject { |a| a == 'terms' }
-  CSV_COLUMNS = CSV_ATTRIBUTES + SupplierTerms.termslist
+  CSV_COLUMNS = %w(supplier_name
+                   created_at
+                   confirmed?
+                   default?) + SupplierTerms.stored_attributes[:terms].map(&:to_s)
 
   def export(params)
-    supplierTerms = SupplierTerms::Search.new.search(params)
+    supplier_terms = SupplierTerms.latest.includes(:supplier)
+    supplier_terms = SupplierTerms::Filter.new.apply(supplier_terms, params[:filters] || {})
+
     CSV.generate do |csv|
-      csv << CSV_COLUMNS.map(&:to_s).map(&:humanize)
-      supplierTerms.each do |term|
-        csv << term.attributes.values_at(*CSV_ATTRIBUTES) + term.terms.values_at(*SupplierTerms.termslist)
+      csv << CSV_COLUMNS.map(&:humanize)
+
+      supplier_terms.each do |terms|
+        csv << column_values(terms)
       end
     end
+  end
+
+  private
+
+  def column_values(terms)
+    CSV_COLUMNS.map { |method| terms.send(method) }
   end
 end

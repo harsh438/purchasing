@@ -38,6 +38,14 @@ class SupplierTerms < ActiveRecord::Base
                               by
                               comments)
 
+  def supplier_name
+    supplier.name
+  end
+
+  def confirmed?
+    confirmation.present?
+  end
+
   def as_json(options = {})
     super.tap do |terms|
       terms['created_at'] = terms['created_at'].to_s
