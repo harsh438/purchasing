@@ -12,6 +12,8 @@ class Element < ActiveRecord::Base
               mnp_elements.elementname = ds_language_product_options.pOption')
       .where('ds_language_product_options.pID = ?', product_id)
       .where('ds_language_product_options.oID = ?', option_id)
-      .where('ds_language_product_options.langID = 1').first.try(:elementid)
+      .where('ds_language_product_options.langID = 1')
+      .first
+      .try(:elementid)
   end
 end
