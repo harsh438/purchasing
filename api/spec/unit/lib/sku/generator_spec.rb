@@ -53,8 +53,13 @@ describe Sku::Generator do
       expect(subject.product.price).to eq(new_sku_attrs[:price])
     end
 
-    it 'should create an option' do
+    it 'should create a language product option' do
       expect(subject.language_product_option).to be_a(LanguageProductOption)
+    end
+
+    it 'should create an option' do
+      expect(subject.language_product_option.option).to be_a(Option)
+      expect(subject.language_product_option.name).to eq(new_sku_attrs[:size])
     end
 
     it 'should create an element' do
@@ -63,7 +68,6 @@ describe Sku::Generator do
 
     it 'should create the relationships between the product and its option and element' do
       expect(subject.language_product_option.element).to be_a(Element)
-      expect(subject.language_product_option.option).to be_a(Option)
       expect(subject.element.id).to eq(subject.language_product_option.element.id)
     end
 
