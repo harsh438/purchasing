@@ -8,9 +8,9 @@ machine:
 dependencies:
   post:
     - npm install:
-        pwd: ../processing_frontend/
+        pwd: ../frontend/
     - npm run build:
-        pwd: ../processing_frontend/
+        pwd: ../frontend/
 
 test:
   override:
