@@ -526,34 +526,34 @@ ActiveRecord::Schema.define(version: 20151207122747) do
   create_table "po_terms", force: :cascade do |t|
     t.integer "BrandID",                        limit: 4
     t.integer "SupplierID",                     limit: 4
-    t.string  "suppliers_response",             limit: 2000
-    t.string  "general_comments",               limit: 2000
+    t.text  "suppliers_response",             limit: 2000
+    t.text  "general_comments",               limit: 2000
     t.integer "packing_list_send",              limit: 4
-    t.string  "packing_list_send_comments",     limit: 2000
+    t.text  "packing_list_send_comments",     limit: 2000
     t.integer "packing_list_attached",          limit: 4
-    t.string  "packing_list_attached_comments", limit: 2000
+    t.text  "packing_list_attached_comments", limit: 2000
     t.integer "packing_list_size",              limit: 4
-    t.string  "packing_list_size_comments",     limit: 2000
+    t.text  "packing_list_size_comments",     limit: 2000
     t.integer "po_packing",                     limit: 4
-    t.string  "po_packing_comments",            limit: 2000
+    t.text  "po_packing_comments",            limit: 2000
     t.integer "shrink_wrapped",                 limit: 4
-    t.string  "shrink_wrapped_comments",        limit: 2000
+    t.text  "shrink_wrapped_comments",        limit: 2000
     t.integer "po_grn",                         limit: 4
-    t.string  "po_grn_comments",                limit: 2000
+    t.text  "po_grn_comments",                limit: 2000
     t.integer "carton_marks",                   limit: 4
-    t.string  "carton_marks_comments",          limit: 2000
+    t.text  "carton_marks_comments",          limit: 2000
     t.integer "booked_in",                      limit: 4
-    t.string  "booked_in_comments",             limit: 2000
+    t.text  "booked_in_comments",             limit: 2000
     t.integer "barcode_sku",                    limit: 4
-    t.string  "barcode_sku_comments",           limit: 2000
+    t.text  "barcode_sku_comments",           limit: 2000
     t.integer "barcodes_match",                 limit: 4
-    t.string  "barcodes_match_comments",        limit: 2000
+    t.text  "barcodes_match_comments",        limit: 2000
     t.integer "protective_packaging",           limit: 4
-    t.string  "protective_packaging_comments",  limit: 2000
+    t.text  "protective_packaging_comments",  limit: 2000
     t.integer "advise_time",                    limit: 4
-    t.string  "advise_time_comments",           limit: 2000
+    t.text  "advise_time_comments",           limit: 2000
     t.integer "solid_packed",                   limit: 4
-    t.string  "solid_packed_comments",          limit: 2000
+    t.text  "solid_packed_comments",          limit: 2000
     t.string  "Attachments",                    limit: 1000
   end
 
