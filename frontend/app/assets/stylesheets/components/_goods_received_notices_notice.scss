@@ -1,4 +1,12 @@
+.grn_notice--delivered {
+  text-decoration: line-through;
+}
+
 .grn_notice__badge {
   background: #5bc0de;
   font-size: .9em;
+
+  .grn_notice--late & {
+    background: #d9534f;
+  }
 }
