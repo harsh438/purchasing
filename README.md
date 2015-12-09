@@ -65,7 +65,7 @@ npm rebuild node-sass
 
 Finally you can install the local node packages:
 ```sh
-cd processing_frontend/
+cd frontend/
 npm install
 ```
 
@@ -81,7 +81,7 @@ bundle exec rackup -o 0.0.0.0 -p 3000
 And in another to watch for JS/SCSS/Image changes run:
 
 ```sh
-cd processing_frontend/
+cd frontend/
 npm run watch
 ```
 
