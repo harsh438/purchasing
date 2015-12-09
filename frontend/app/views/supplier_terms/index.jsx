@@ -55,7 +55,7 @@ class SuppliersTermsIndex extends React.Component {
             <hr />
 
             <SuppliersTable terms={this.props.terms}
-                            termsSelected={this.props.location.query.filters.terms}
+                            termsSelected={this.termsSelected()}
                             hasSupplierName />
 
             <NumberedPagination activePage={this.props.activePage || 1}
@@ -74,6 +74,16 @@ class SuppliersTermsIndex extends React.Component {
   exportUrl() {
     const queryString = Qs.stringify({ filters: this.props.location.query.filters });
     return `/api/supplier_terms.csv?${queryString}`;
+  }
+
+  termsSelected() {
+    const filters = this.props.location.query.filters;
+
+    if (filters) {
+      return filters.terms;
+    } else {
+      return [];
+    }
   }
 }
 
