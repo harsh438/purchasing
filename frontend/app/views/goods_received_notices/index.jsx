@@ -1,10 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { assign } from 'lodash';
+import { assign, map } from 'lodash';
 import GoodsReceivedNoticesWeek from './_week';
 import GoodsReceivedNoticesDayHeading from './_day_heading';
+import { loadGoodsReceivedNotices } from '../../actions/goods_received_notices';
 
 class GoodsReceivedNoticesIndex extends React.Component {
+  componentWillMount() {
+    this.props.dispatch(loadGoodsReceivedNotices());
+  }
+
   render() {
     return (
       <div className="suppliers_index  container-fluid"
@@ -28,8 +33,15 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   renderWeeks() {
-    return [(<GoodsReceivedNoticesWeek key="1" id="1" />),
-            (<GoodsReceivedNoticesWeek key="2" id="2" />)];
+    return map(this.props.goodsReceivedNoticesByWeek, this.renderWeek, this);
+  }
+
+  renderWeek(goodsReceivedNoticesByDay, weekNum) {
+    return (
+      <GoodsReceivedNoticesWeek key={weekNum}
+                                weekNum={weekNum}
+                                goodsReceivedNoticesByDay={goodsReceivedNoticesByDay} />
+    );
   }
 }
 

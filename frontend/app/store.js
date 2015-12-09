@@ -6,6 +6,7 @@ import reduceOrder from './reducers/order';
 import { reduceSuppliers, reduceSupplier }  from './reducers/supplier';
 import { reduceSupplierTerms, reduceTerms }  from './reducers/supplier_terms';
 import { reduceVendor, reduceVendors }  from './reducers/vendor';
+import reduceGoodsReceivedNotices  from './reducers/goods_received_notices';
 
 import thunk from 'redux-thunk';
 
@@ -20,7 +21,8 @@ const reducer = combineReducers({ filters: reduceFilters,
                                   vendors: reduceVendors,
                                   vendor: reduceVendor,
                                   supplierTerms: reduceSupplierTerms,
-                                  terms: reduceTerms });
+                                  terms: reduceTerms,
+                                  goodsReceivedNotices: reduceGoodsReceivedNotices });
 
 const store = applyMiddleware(...middleware)(createStore)(reducer);
 

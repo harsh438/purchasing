@@ -34,6 +34,7 @@
     "bootstrap": "^3.3.5",
     "history": "1.13.1",
     "lodash": "^3.10.1",
+    "moment": "^2.10.6",
     "qs": "^5.2.0",
     "react": "^0.14.0",
     "react-bootstrap": "^0.27.3",
