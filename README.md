@@ -90,4 +90,4 @@ cd api/
 bundle exec rspec
 ```
 
-[redacted-data]: https://drive.google.com/open?id=0B7Lov1YoCGc-SkxYT3VfMHlxYk0
+[redacted-data]: https://drive.google.com/open?id=0BzNvNNGUQGxLUkJRTGRCaGJYMzQ
