@@ -16,7 +16,7 @@ describe ProductMigrator do
       end
 
       it 'should correctly link the element_id' do
-        expect(Sku.first.element_id).to eq(@first_product.language_product_options.first.element_id)
+        expect(Sku.first.element_id).to eq(@first_product.language_product_options.first.element.id)
       end
 
       it 'should create the correct number of sku records' do
