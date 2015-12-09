@@ -17,6 +17,12 @@ export default class GoodsReceivedNoticesDay extends React.Component {
 
           {this.renderNotices()}
         </div>
+
+        <div className="text-center">
+          <a href="#add" className="grn_day__add_btn btn btn-default">
+            <span className="glyphicon glyphicon-plus"></span>
+          </a>
+        </div>
       </div>
     );
   }
