@@ -28,7 +28,7 @@ class ProductMigrator
 
   def language_option_attrs(language_option)
     { option_id: language_option.option_id,
-      element_id: language_option.element_id }
+      element_id: language_option.element.id }
   end
 
   def language_product_attrs(language_product)
