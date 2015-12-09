@@ -20,7 +20,10 @@ class PurchaseOrderLineItem < ActiveRecord::Base
 
     if context[:status].include?('balance')
       filtered_values = values - [4]
-      where('(status IN (?)) OR (status=4 AND (qty + qtyAdded - qtyDone) = 0)', filtered_values)
+      where('(purchase_orders.status IN (?)) OR
+             (purchase_orders.status=4 AND (purchase_orders.qty +
+                                            purchase_orders.qtyAdded -
+                                            purchase_orders.qtyDone) = 0)', filtered_values)
     else
       where(status: values)
     end
