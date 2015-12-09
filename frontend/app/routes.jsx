@@ -13,11 +13,12 @@ import SuppliersTermsIndex from './views/supplier_terms/index';
 import VendorsIndex from './views/vendors/index';
 import VendorsEdit from './views/vendors/edit';
 import VendorsNew from './views/vendors/new';
+import GoodsReceivedNoticesIndex from './views/goods_received_notices/index';
 
 export default (
   <Route path="/" component={Layout}>
     <IndexRoute component={PurchaseOrdersIndex} />
-    
+
     <Route path="/orders" component={OrdersIndex} />
     <Route path="/orders/:id/edit" component={OrdersEdit} />
 
@@ -32,5 +33,7 @@ export default (
     <Route path="/vendors" component={VendorsIndex} />
     <Route path="/vendors/new" component={VendorsNew} />
     <Route path="/vendors/:id/edit" component={VendorsEdit} />
+
+    <Route path="/goods-received-notices" component={GoodsReceivedNoticesIndex} />
   </Route>
 );
