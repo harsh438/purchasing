@@ -77,6 +77,7 @@ class Sku::Generator
 
   def product_option_attrs
     { language_id: 1,
+      name: attrs[:size],
       product_id: product.id,
       option_id: option.id,
       element_id: element.id }
