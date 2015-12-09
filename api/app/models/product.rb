@@ -4,7 +4,7 @@ class Product < ActiveRecord::Base
   include LegacyMappings
 
   map_attributes id: :pID,
-                 name: :pNum,
+                 manufacturer_sku: :pNum,
                  cost: :pCost,
                  price: :pPrice,
                  size: :pSize,
@@ -18,6 +18,6 @@ class Product < ActiveRecord::Base
   belongs_to :product_detail, foreign_key: :pID
 
   def as_json(*args)
-    super.merge(id: id, name: name, price: price)
+    super.merge(id: id, manufacturer_sku: manufacturer_sku, price: price)
   end
 end
