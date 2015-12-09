@@ -21,12 +21,6 @@ these you'll be okay.
  - Ruby (via rbenv preferably)
  - MySQL (setup as per config/database.yml or with config injected with DATABASE_URL)
 
-### Database content
-
-Download this SQL file and import it into your local development database:
-
- - [Redacted dataset](https://drive.google.com/open?id=0B7Lov1YoCGc-SkxYT3VfMHlxYk0)
-
 ## Developing
 
 **Booting API for the first time**
@@ -38,11 +32,15 @@ bundle exec rake db:setup
 bundle exec rails
 ```
 
+Now import the [redacted dataset][redacted-data] to your local DB.
+
 **Reset your DB**
 
 ```sh
 bundle exec rake db:reset
 ```
+
+Now import the [redacted dataset][redacted-data] to your local DB.
 
 **Booting frontend for the first time**
 
@@ -91,3 +89,5 @@ npm run watch
 cd api/
 bundle exec rspec
 ```
+
+[redacted-data]: https://drive.google.com/open?id=0B7Lov1YoCGc-SkxYT3VfMHlxYk0
