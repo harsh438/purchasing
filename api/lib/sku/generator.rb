@@ -90,7 +90,7 @@ class Sku::Generator
   end
 
   def language_product_attrs
-    { name: attrs[:product_name] || '',
+    { name: attrs[:product_name],
       product_id: product.id,
       language_id: 1,
       teaser: '',
