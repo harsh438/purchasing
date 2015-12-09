@@ -8,7 +8,8 @@ class ProductMigrator
   def migrate_single(product)
     @product = product
     product.language_product_options.where(language_id: 1).each do |language_option|
-      Sku.create!(sku_attrs(language_option))
+      @language_option = language_option
+      Sku.create!(sku_attrs)
     end
   end
 
@@ -18,20 +19,32 @@ class ProductMigrator
     @product
   end
 
-  def sku_attrs(language_option)
-    { sku: "#{product.id}-#{language_option.element_id}" }
+  def language_option
+    @language_option
+  end
+
+  def language_product
+    @product.language_product
+  end
+
+  def element
+    Element.find_by(name: language_option.name)
+  end
+
+  def sku_attrs
+    { sku: "#{product.id}-#{element.id}" }
       .merge!(product_attrs)
       .merge!(product_detail_attrs)
-      .merge!(language_product_attrs(product.language_product))
-      .merge!(language_option_attrs(language_option))
+      .merge!(language_product_attrs)
+      .merge!(language_option_attrs)
   end
 
-  def language_option_attrs(language_option)
+  def language_option_attrs
     { option_id: language_option.option_id,
-      element_id: Element.find_by(name: language_option.name).id }
+      element_id: element.id }
   end
 
-  def language_product_attrs(language_product)
+  def language_product_attrs
     { product_name: language_product.name,
       language_product_id: language_product.id }
   end
@@ -41,7 +54,7 @@ class ProductMigrator
       manufacturer_sku: product.manufacturer_sku,
       manufacturer_size: product.size,
       inv_track: product.inv_track,
-      size: product.size,
+      size: language_option.name,
       cost_price: product.cost,
       price: product.price,
       vendor_id: product.vendor_id }
