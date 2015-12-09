@@ -33,14 +33,12 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   renderWeeks() {
-    return map(this.props.goodsReceivedNoticesByWeek, this.renderWeek, this);
+    return map(this.props.noticesByWeek, this.renderWeek, this);
   }
 
-  renderWeek(goodsReceivedNoticesByDay, weekNum) {
+  renderWeek(noticesByDates, weekNum) {
     return (
-      <GoodsReceivedNoticesWeek key={weekNum}
-                                weekNum={weekNum}
-                                goodsReceivedNoticesByDay={goodsReceivedNoticesByDay} />
+      <GoodsReceivedNoticesWeek key={weekNum} {...noticesByDates} />
     );
   }
 }

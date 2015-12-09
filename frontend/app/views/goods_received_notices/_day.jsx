@@ -4,8 +4,6 @@ import { map } from 'lodash';
 
 export default class GoodsReceivedNoticesDay extends React.Component {
   render() {
-    console.log(this.props.notices);
-
     return (
       <div className="grn_day">
         <div className="list-group">
@@ -27,9 +25,9 @@ export default class GoodsReceivedNoticesDay extends React.Component {
     return map(this.props.notices, this.renderNotice, this);
   }
 
-  renderNotice(notice) {
+  renderNotice(notice, i) {
     return (
-      <GoodsReceivedNoticesNotice {...notice} />
+      <GoodsReceivedNoticesNotice key={i} {...notice} />
     );
   }
 }

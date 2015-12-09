@@ -20,16 +20,12 @@ export default class GoodsReceivedNoticesWeek extends React.Component {
   }
 
   renderDates() {
-    return map(this.props.goodsReceivedNoticesByDay, this.renderDate, this);
+    return map(this.props.noticesByDate, this.renderDate, this);
   }
 
-  renderDate({ deliveryDate, notices }, date) {
-    console.log(deliveryDate, notices);
-
+  renderDate(noticesForDate, date) {
     return (
-      <GoodsReceivedNoticesDay key={date}
-                               deliveryDate={deliveryDate}
-                               notices={notices} />
+      <GoodsReceivedNoticesDay key={date} {...noticesForDate} />
     );
   }
 }
