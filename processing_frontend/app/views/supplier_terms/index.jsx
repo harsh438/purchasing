@@ -10,7 +10,6 @@ import Qs from 'qs';
 
 class SuppliersTermsIndex extends React.Component {
   componentWillMount() {
-    this.state = { filters: {} };
     this.loadPage();
     this.props.dispatch(loadSuppliers());
     this.props.dispatch(loadVendors());
@@ -56,7 +55,8 @@ class SuppliersTermsIndex extends React.Component {
             <hr />
 
             <SuppliersTable terms={this.props.terms}
-                            termsAttributes={this.state.filters['terms']} />
+                            termsSelected={this.props.location.query.filters.terms}
+                            hasSupplierName />
 
             <NumberedPagination activePage={this.props.activePage || 1}
                                 index={this}

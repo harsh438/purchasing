@@ -1,25 +1,9 @@
 import React from 'react';
-import { map, find, matchesProperty } from 'lodash';
+import { map, find, matchesProperty, camelCase } from 'lodash';
 import { Link } from 'react-router';
 import SupplierTerms from './_terms';
 
 export default class SuppliersTable extends React.Component {
-  componentWillMount() {
-    this.state = {};
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ hasSupplierName: !!find(nextProps.terms||[], (obj) => {
-      return !!obj['supplierName'];
-    }) });
-
-    if (typeof nextProps.termsAttributes === 'string') {
-      this.setState({ termsAttributes: nextProps.termsAttributes.split(',') });
-    } else {
-      this.setState({ termsAttributes: nextProps.termsAttributes });
-    }
-  }
-
   render() {
     return (
       <table className="table">
@@ -30,7 +14,7 @@ export default class SuppliersTable extends React.Component {
             <th>Season</th>
             <th>By</th>
             <th>Confirmation file</th>
-            {this.renderTermsAttributeTitle()}
+            {this.renderTermsSelectedTitle()}
           </tr>
         </thead>
         <tbody>
@@ -41,23 +25,23 @@ export default class SuppliersTable extends React.Component {
   }
 
   renderSupplierNameTitle() {
-    if (this.state.hasSupplierName) {
+    if (this.props.hasSupplierName) {
       return (
         <th>Supplier Name</th>
       );
     }
   }
 
-  renderTermsAttributeTitle() {
-    if (this.state.termsAttributes) {
+  renderTermsSelectedTitle() {
+    if (this.props.termsSelected) {
       return (<th>Terms</th>);
     }
   }
 
-  renderTermsAttributeRow(term) {
-    if (this.state.termsAttributes) {
+  renderTermsSelectedRow(term) {
+    if (this.props.termsSelected) {
       return (
-        <td><SupplierTerms fieldList={this.state.termsAttributes} terms={term} /></td>
+        <td><SupplierTerms fieldList={map(this.props.termsSelected, camelCase)} terms={term} /></td>
       );
     }
   }
@@ -80,13 +64,13 @@ export default class SuppliersTable extends React.Component {
         <td>
           {this.renderConfirmationFile(term)}
         </td>
-        {this.renderTermsAttributeRow(term)}
+        {this.renderTermsSelectedRow(term)}
       </tr>
     );
   }
 
   renderSupplierNameRow(term = {}) {
-    if (this.state.hasSupplierName) {
+    if (this.props.hasSupplierName) {
       return (
         <td>
           <Link to={`/suppliers/term/${term.id}`}>{term.supplierName}</Link>

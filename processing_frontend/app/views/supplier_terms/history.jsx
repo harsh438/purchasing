@@ -8,7 +8,6 @@ import SuppliersTable from './_table';
 
 class SupplierTermsHistory extends React.Component {
   componentWillMount () {
-    this.state = { id: this.props.params.id };
     this.props.dispatch(loadSupplier(this.props.params.id));
   }
 
@@ -22,7 +21,7 @@ class SupplierTermsHistory extends React.Component {
                   Terms history for {this.props.supplier.name}
                 </h3>
 
-                <Link className="pull-right" to={`/suppliers/${this.state.id}/edit`}>
+                <Link className="pull-right" to={`/suppliers/${this.props.params.id}/edit`}>
                   <span className="glyphicon glyphicon-arrow-left"></span>
                   &nbsp; Go back to supplier page
                 </Link>
