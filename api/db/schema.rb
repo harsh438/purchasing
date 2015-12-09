@@ -18,6 +18,62 @@ ActiveRecord::Schema.define(version: 20151207122747) do
     t.string  "barcode", limit: 255
   end
 
+  create_table "bookingin_events", primary_key: "ID", force: :cascade do |t|
+    t.integer  "grn",                 limit: 4
+    t.integer  "BrandID",             limit: 4,                                         null: false
+    t.integer  "po",                  limit: 4
+    t.date     "BookedInDate"
+    t.date     "DeliveryDate"
+    t.integer  "UserID",              limit: 4
+    t.string   "Attachments",         limit: 1000
+    t.integer  "CartonsExpected",     limit: 4
+    t.decimal  "PaletsExpected",                   precision: 11, scale: 2
+    t.integer  "TotalUnits",          limit: 4
+    t.date     "DateReceived"
+    t.integer  "SignedBy",            limit: 4
+    t.integer  "CartonsReceived",     limit: 4
+    t.integer  "NoOfPages",           limit: 4
+    t.string   "CheckersID",          limit: 500
+    t.datetime "DatetimeCheckStart"
+    t.decimal  "HoursTookChecking",                precision: 11, scale: 2
+    t.datetime "StartedInput"
+    t.integer  "InputerID",           limit: 4
+    t.decimal  "HourserTookInputing",              precision: 11, scale: 2
+    t.integer  "IsReceived",          limit: 4,                             default: 0, null: false
+    t.integer  "Status",              limit: 4
+    t.integer  "CategoryID",          limit: 4
+  end
+
+  add_index "bookingin_events", ["BookedInDate"], name: "BookedInDate", using: :btree
+  add_index "bookingin_events", ["BrandID"], name: "BrandID", using: :btree
+  add_index "bookingin_events", ["DeliveryDate"], name: "deliverydate", using: :btree
+  add_index "bookingin_events", ["Status"], name: "status", using: :btree
+  add_index "bookingin_events", ["UserID"], name: "UserID", using: :btree
+  add_index "bookingin_events", ["grn"], name: "grn", using: :btree
+  add_index "bookingin_events", ["po"], name: "po_i", using: :btree
+
+  create_table "bookingin_settings", force: :cascade do |t|
+    t.decimal "max_number_of_pallets_day",              precision: 11, scale: 2
+    t.string  "booking_in_admins",         limit: 1000
+    t.string  "buyers_admins",             limit: 1000
+    t.string  "operations_admins",         limit: 1000
+  end
+
+  create_table "brands_with_barcodes", force: :cascade do |t|
+    t.integer "BrandID", limit: 4
+  end
+
+  create_table "checking_groups", primary_key: "ID", force: :cascade do |t|
+    t.integer  "grn",          limit: 4,   null: false
+    t.string   "GroupName",    limit: 4,   null: false
+    t.integer  "NoOfCartons",  limit: 4,   null: false
+    t.string   "po_list",      limit: 500, null: false
+    t.string   "checker_list", limit: 500, null: false
+    t.integer  "NoOfPages",    limit: 4,   null: false
+    t.datetime "TimeStarted",              null: false
+    t.datetime "TimeFinished",             null: false
+  end
+
   create_table "ds_categories", primary_key: "catID", force: :cascade do |t|
     t.integer "parentID",         limit: 4,     default: 0,      null: false
     t.integer "catSort",          limit: 4,     default: 0,      null: false
@@ -249,6 +305,76 @@ ActiveRecord::Schema.define(version: 20151207122747) do
   add_index "ds_vendors", ["venActNum", "venPass"], name: "venActNum", using: :btree
   add_index "ds_vendors", ["venCompany"], name: "venCompany", using: :btree
 
+  create_table "goods_received_number", primary_key: "grn", force: :cascade do |t|
+    t.string  "Attachments",      limit: 1000
+    t.integer "CartonsExpected",  limit: 4
+    t.decimal "PaletsExpected",                precision: 11, scale: 2
+    t.integer "TotalUnits",       limit: 4
+    t.integer "UserID",           limit: 4
+    t.date    "BookedInDate"
+    t.date    "DeliveryDate",                                                       null: false
+    t.integer "notBooked",        limit: 4,                             default: 0
+    t.integer "isReceived",       limit: 4,                                         null: false
+    t.integer "isChecking",       limit: 4,                                         null: false
+    t.integer "isChecked",        limit: 4,                                         null: false
+    t.integer "isProcessing",     limit: 4,                                         null: false
+    t.integer "isProcessed",      limit: 4,                                         null: false
+    t.date    "DateReceived",                                                       null: false
+    t.integer "NoOfPages",        limit: 4,                                         null: false
+    t.string  "OrderID",          limit: 10,                                        null: false
+    t.integer "UnitsReceived",    limit: 4
+    t.integer "CartonsReceived",  limit: 4,                                         null: false
+    t.integer "isMarked",         limit: 4,                             default: 0, null: false
+    t.date    "LastMovedDate"
+    t.date    "LastDeliveryDate"
+    t.string  "Comments",         limit: 500
+    t.string  "pod",              limit: 200
+  end
+
+  add_index "goods_received_number", ["DateReceived"], name: "DAteRecieved", using: :btree
+  add_index "goods_received_number", ["DeliveryDate"], name: "DeliveryDate", using: :btree
+  add_index "goods_received_number", ["isReceived"], name: "irseceived", using: :btree
+
+  create_table "issue_categories", force: :cascade do |t|
+    t.string "IssueCategory", limit: 500, null: false
+    t.string "IssueTemplate", limit: 500
+  end
+
+  create_table "issue_types", force: :cascade do |t|
+    t.integer "IssueCategoryID",  limit: 4,   null: false
+    t.integer "PenaltyID",        limit: 4
+    t.string  "IssueName",        limit: 500, null: false
+    t.string  "IssueTranslation", limit: 500
+  end
+
+  create_table "issues", force: :cascade do |t|
+    t.string "issue_type", limit: 500, null: false
+    t.string "value",      limit: 500
+  end
+
+  create_table "issues_to_grn", force: :cascade do |t|
+    t.integer "grn",               limit: 4,                                         null: false
+    t.integer "IssueTypeID",       limit: 4,                                         null: false
+    t.string  "SkuList",           limit: 500
+    t.string  "PidList",           limit: 500
+    t.string  "Comments",          limit: 500
+    t.integer "Units",             limit: 4
+    t.integer "TimeToResolve",     limit: 4
+    t.string  "CreditNote",        limit: 500
+    t.integer "Status",            limit: 4,                             default: 0
+    t.string  "InvoiceNumber",     limit: 500
+    t.decimal "InvoiceValue",                   precision: 11, scale: 2
+    t.string  "GeneralComments",   limit: 500
+    t.string  "Attachments",       limit: 1000
+    t.date    "DatePenaltyIssued"
+    t.string  "IssueStatus",       limit: 500
+  end
+
+  add_index "issues_to_grn", ["IssueStatus"], name: "IssueStatus", using: :btree
+  add_index "issues_to_grn", ["IssueTypeID"], name: "IssueTypeID", using: :btree
+  add_index "issues_to_grn", ["Status"], name: "status", using: :btree
+  add_index "issues_to_grn", ["grn"], name: "grn", using: :btree
+
   create_table "manage", force: :cascade do |t|
     t.string   "Initials",     limit: 4,     null: false
     t.string   "Name",         limit: 64,    null: false
@@ -263,6 +389,10 @@ ActiveRecord::Schema.define(version: 20151207122747) do
   end
 
   add_index "mnp_elements", ["elementname"], name: "element name", using: :btree
+
+  create_table "o_u_tool_debit_notes", primary_key: "DebitNoteID", force: :cascade do |t|
+    t.string "DebitNoteNumber", limit: 100
+  end
 
   create_table "order_exports", force: :cascade do |t|
     t.integer  "order_id",          limit: 4
@@ -309,6 +439,73 @@ ActiveRecord::Schema.define(version: 20151207122747) do
     t.string   "order_type", limit: 255, default: "reorder"
   end
 
+  create_table "over_booking", primary_key: "over_bookings_id", force: :cascade do |t|
+    t.string  "message",      limit: 5000
+    t.integer "requested_by", limit: 4
+    t.date    "requested_on"
+    t.integer "approved",     limit: 4,    default: 0
+    t.integer "approved_by",  limit: 4
+    t.date    "approved_on"
+    t.integer "grn",          limit: 4,                null: false
+  end
+
+  create_table "packing_conditions", primary_key: "ID", force: :cascade do |t|
+    t.integer "grn",                         limit: 4,   null: false
+    t.integer "arrived_corectly",            limit: 4,   null: false
+    t.integer "booked_in",                   limit: 4,   null: false
+    t.integer "cartons_good_condition",      limit: 4,   null: false
+    t.integer "cartons_markings_correct",    limit: 4,   null: false
+    t.integer "cartons_palletised_corectly", limit: 4,   null: false
+    t.integer "packing_list_received",       limit: 4,   null: false
+    t.integer "packed_corectly",             limit: 4,   null: false
+    t.string  "packing_comments",            limit: 500, null: false
+    t.integer "barcoded",                    limit: 4,   null: false
+    t.integer "poly_bagged",                 limit: 4,   null: false
+    t.string  "general_comments",            limit: 500, null: false
+    t.string  "Attachments",                 limit: 500, null: false
+  end
+
+  create_table "packing_conditions_new", primary_key: "ID", force: :cascade do |t|
+    t.integer "grn",                            limit: 4,               null: false
+    t.integer "arrived_corectly",               limit: 4,               null: false
+    t.integer "booked_in",                      limit: 4,               null: false
+    t.integer "cartons_good_condition",         limit: 4,               null: false
+    t.integer "packing_list_received",          limit: 4,               null: false
+    t.integer "grn_or_po_marked_on_cartons",    limit: 4,               null: false
+    t.integer "packing_list_outside_of_carton", limit: 4,               null: false
+    t.integer "cartons_sequentially_numbered",  limit: 4
+    t.integer "packed_corectly",                limit: 4,               null: false
+    t.integer "packed_corectly_issues_id",      limit: 4
+    t.integer "cartons_markings_correct",       limit: 4,               null: false
+    t.integer "cartons_palletised_corectly",    limit: 4,               null: false
+    t.string  "packing_comments",               limit: 500,             null: false
+    t.integer "barcoded",                       limit: 4,               null: false
+    t.integer "poly_bagged",                    limit: 4,               null: false
+    t.string  "general_comments",               limit: 500,             null: false
+    t.string  "Attachments",                    limit: 500,             null: false
+    t.integer "items_in_quarantine",            limit: 4,   default: 0
+  end
+
+  create_table "paking_conditions_issues", force: :cascade do |t|
+    t.integer "packing_conditions_id", limit: 4,     null: false
+    t.string  "issue_type",            limit: 50
+    t.text    "sku_list",              limit: 65535
+    t.text    "pid_list",              limit: 65535
+    t.integer "issue_id",              limit: 4,     null: false
+    t.text    "comments",              limit: 65535, null: false
+    t.integer "units_affected",        limit: 4
+    t.string  "time_taken_to_resolve", limit: 50
+  end
+
+  create_table "penalties", primary_key: "PenaltyID", force: :cascade do |t|
+    t.string  "PenaltyName",        limit: 500
+    t.string  "PenaltyDescription", limit: 1000
+    t.string  "PenaltyIssuePer",    limit: 500
+    t.decimal "PenaltyValue",                    precision: 11, scale: 2
+    t.decimal "PenaltyPrecentage",               precision: 11, scale: 2
+    t.decimal "PenaltyMaxValue",                 precision: 11, scale: 2
+  end
+
   create_table "po_summary", primary_key: "po_num", force: :cascade do |t|
     t.string  "Brand",         limit: 64,  default: "", null: false
     t.date    "drop_date",                              null: false
@@ -325,6 +522,40 @@ ActiveRecord::Schema.define(version: 20151207122747) do
   add_index "po_summary", ["orderGrouping"], name: "grouping", using: :btree
   add_index "po_summary", ["orderType"], name: "orderTpye", using: :btree
   add_index "po_summary", ["venID"], name: "vendorID", using: :btree
+
+  create_table "po_terms", force: :cascade do |t|
+    t.integer "BrandID",                        limit: 4
+    t.integer "SupplierID",                     limit: 4
+    t.string  "suppliers_response",             limit: 2000
+    t.string  "general_comments",               limit: 2000
+    t.integer "packing_list_send",              limit: 4
+    t.string  "packing_list_send_comments",     limit: 2000
+    t.integer "packing_list_attached",          limit: 4
+    t.string  "packing_list_attached_comments", limit: 2000
+    t.integer "packing_list_size",              limit: 4
+    t.string  "packing_list_size_comments",     limit: 2000
+    t.integer "po_packing",                     limit: 4
+    t.string  "po_packing_comments",            limit: 2000
+    t.integer "shrink_wrapped",                 limit: 4
+    t.string  "shrink_wrapped_comments",        limit: 2000
+    t.integer "po_grn",                         limit: 4
+    t.string  "po_grn_comments",                limit: 2000
+    t.integer "carton_marks",                   limit: 4
+    t.string  "carton_marks_comments",          limit: 2000
+    t.integer "booked_in",                      limit: 4
+    t.string  "booked_in_comments",             limit: 2000
+    t.integer "barcode_sku",                    limit: 4
+    t.string  "barcode_sku_comments",           limit: 2000
+    t.integer "barcodes_match",                 limit: 4
+    t.string  "barcodes_match_comments",        limit: 2000
+    t.integer "protective_packaging",           limit: 4
+    t.string  "protective_packaging_comments",  limit: 2000
+    t.integer "advise_time",                    limit: 4
+    t.string  "advise_time_comments",           limit: 2000
+    t.integer "solid_packed",                   limit: 4
+    t.string  "solid_packed_comments",          limit: 2000
+    t.string  "Attachments",                    limit: 1000
+  end
 
   create_table "product_supplier", primary_key: "pid", force: :cascade do |t|
     t.integer "supplierID", limit: 4, null: false
@@ -387,6 +618,16 @@ ActiveRecord::Schema.define(version: 20151207122747) do
   add_index "purchase_orders", ["po_season"], name: "po_season", using: :btree
   add_index "purchase_orders", ["reporting_pID"], name: "reporting_pID", using: :btree
   add_index "purchase_orders", ["status"], name: "status", using: :btree
+
+  create_table "refused_deliveries_log", force: :cascade do |t|
+    t.date    "delivery_date",                              null: false
+    t.string  "courier",        limit: 200
+    t.integer "brand_id",       limit: 4
+    t.decimal "pallets",                     precision: 10
+    t.integer "boxes",          limit: 4
+    t.string  "info",           limit: 1000
+    t.string  "refusal_reason", limit: 500
+  end
 
   create_table "sd_product_details", primary_key: "pID", force: :cascade do |t|
     t.string  "colour",             limit: 20, null: false
