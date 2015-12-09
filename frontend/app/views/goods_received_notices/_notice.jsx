@@ -1,5 +1,4 @@
 import React from 'react';
-import GoodsReceivedNoticesRollup from './_rollup';
 
 export default class GoodsReceivedNoticesNotice extends React.Component {
   render() {
