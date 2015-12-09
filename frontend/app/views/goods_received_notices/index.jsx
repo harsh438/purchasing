@@ -14,8 +14,44 @@ class GoodsReceivedNoticesIndex extends React.Component {
     return (
       <div className="suppliers_index  container-fluid"
            style={{ marginTop: '70px' }}>
+        {this.renderNavigation()}
         {this.renderDayHeadings()}
         {this.renderWeeks()}
+      </div>
+    );
+  }
+
+  renderNavigation() {
+    return (
+      <div className="row" style={{ marginBottom: '2em' }}>
+        <div className="col-md-3">
+          <div className="input-group">
+            <span className="input-group-addon">
+              <span className="glyphicon glyphicon-calendar"></span>
+            </span>
+
+            <input type="date" className="form-control" />
+
+            <span className="input-group-btn">
+              <button className="btn btn-default">
+                This week
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div className="col-md-3 col-md-offset-6">
+          <div className="input-group">
+            <input type="text"
+                   className="form-control"
+                   placeholder="GRN #" />
+            <span className="input-group-btn">
+              <button className="btn btn-success">
+                Find
+              </button>
+            </span>
+          </div>
+        </div>
       </div>
     );
   }
