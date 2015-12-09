@@ -10,9 +10,9 @@ export default class GoodsReceivedNoticesDay extends React.Component {
           <div className="list-group-item">
             <span className="grn_day__title">{this.props.deliveryDate}</span>
 
-            <span className="badge grn_day__badge" title="Pallets">{3}</span>
-            <span className="badge grn_day__badge" title="Cartons">{3}</span>
-            <span className="badge grn_day__badge" title="Units">{15}</span>
+            <span className="badge grn_day__badge" title="Pallets">{this.props.pallets}</span>
+            <span className="badge grn_day__badge" title="Cartons">{this.props.cartons}</span>
+            <span className="badge grn_day__badge" title="Units">{this.props.units}</span>
           </div>
 
           {this.renderNotices()}

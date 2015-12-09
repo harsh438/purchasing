@@ -9,9 +9,9 @@ export default class GoodsReceivedNoticesWeek extends React.Component {
         <div className="grn_week__summary text-right">
           <h2 className="h4">Week #{this.props.weekNum}</h2>
 
-          <span className="badge grn_week__badge" title="Units">{75}</span>
-          <span className="badge grn_week__badge" title="Cartons">{15}</span>
-          <span className="badge grn_week__badge" title="Pallets">{15}</span>
+          <span className="badge grn_week__badge" title="Units">{this.props.units}</span>
+          <span className="badge grn_week__badge" title="Cartons">{this.props.cartons}</span>
+          <span className="badge grn_week__badge" title="Pallets">{this.props.pallets}</span>
         </div>
 
         {this.renderDates()}
