@@ -19,6 +19,10 @@ describe ProductMigrator do
         expect(Sku.first.element_id).to eq(@first_product.language_product_options.first.element.id)
       end
 
+      it 'should generate skus correctly' do
+        expect(Sku.first.sku).to eq("#{@first_product.id}-#{@first_product.language_product_options.first.element.id}")
+      end
+
       it 'should create the correct number of sku records' do
         expect(Sku.all.count).to eq(2)
       end
