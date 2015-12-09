@@ -101,6 +101,7 @@ class Sku::Generator
   def product_attrs
     { name: attrs[:manufacturer_sku],
       price: attrs[:price],
+      cost: attrs[:cost_price],
       on_sale: attrs[:on_sale] || '',
       vendor_id: attrs[:vendor_id] }
   end
