@@ -28,6 +28,8 @@ class LanguageProductOption < ActiveRecord::Base
               mnp_elements.elementname = ds_language_product_options.pOption')
       .where('mnp_elements.elementid = ?', element_id)
       .where('ds_language_product_options.pID = ?', product_id)
-      .where('ds_language_product_options.langID = 1').first
+      .where('ds_language_product_options.langID = 1')
+      .order('id ASC')
+      .last
   end
 end
