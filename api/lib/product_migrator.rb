@@ -40,6 +40,7 @@ class ProductMigrator
     { product_id: product.id,
       manufacturer_sku: product.manufacturer_sku,
       manufacturer_size: product.size,
+      inv_track: product.inv_track,
       size: product.size,
       cost_price: product.cost,
       price: product.price,
