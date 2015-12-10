@@ -3,7 +3,7 @@ import React from 'react';
 export default class GoodsReceivedNoticesNotice extends React.Component {
   render() {
     return (
-      <a href="#edit" className={this.groupItemClass()}>
+      <a href="#edit" className={this.containerClass()}>
         GRN #{this.props.id}
 
         <span className={this.badgeClass()} title="Pallets">{this.props.pallets}</span>
@@ -13,8 +13,10 @@ export default class GoodsReceivedNoticesNotice extends React.Component {
     );
   }
 
-  groupItemClass() {
-    return `grn_notice list-group-item ${this.statusClass()}`;
+  containerClass() {
+    let classes = `grn_notice list-group-item ${this.statusClass()}`;
+    if (this.props.compact) classes += ' grn_notice--compact';
+    return classes;
   }
 
   badgeClass() {

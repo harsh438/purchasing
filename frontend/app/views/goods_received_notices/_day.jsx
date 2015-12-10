@@ -5,7 +5,7 @@ import { map } from 'lodash';
 export default class GoodsReceivedNoticesDay extends React.Component {
   render() {
     return (
-      <div className="grn_day">
+      <div className={this.containerClass()}>
         <div className="list-group">
           <div className="list-group-item">
             <span className="grn_day__title">{this.props.deliveryDate}</span>
@@ -33,7 +33,17 @@ export default class GoodsReceivedNoticesDay extends React.Component {
 
   renderNotice(notice, i) {
     return (
-      <GoodsReceivedNoticesNotice key={i} {...notice} />
+      <GoodsReceivedNoticesNotice key={i}
+                                  compact={this.props.compact}
+                                  {...notice} />
     );
+  }
+
+  containerClass() {
+    if (this.props.compact) {
+      return 'grn_day grn_day--compact';
+    } else {
+      return 'grn_day';
+    }
   }
 }

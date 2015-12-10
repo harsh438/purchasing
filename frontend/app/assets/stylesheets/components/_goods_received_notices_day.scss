@@ -12,6 +12,10 @@
   }
 }
 
+.grn_day--compact {
+  width: 10%;
+}
+
 .grn_day__title {
   font-size: 1.2em;
   font-weight: bold;
@@ -21,6 +25,10 @@
 .grn_day__badge {
   background: #337ab7;
   font-size: 1.1em;
+
+  .grn_day--compact & {
+    display: none;
+  }
 }
 
 .grn_day__add_btn {

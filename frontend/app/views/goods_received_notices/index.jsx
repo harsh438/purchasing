@@ -7,6 +7,7 @@ import { loadGoodsReceivedNotices } from '../../actions/goods_received_notices';
 
 class GoodsReceivedNoticesIndex extends React.Component {
   componentWillMount() {
+    this.state = { compact: false };
     this.props.dispatch(loadGoodsReceivedNotices());
   }
 
@@ -46,7 +47,8 @@ class GoodsReceivedNoticesIndex extends React.Component {
                    className="form-control"
                    placeholder="GRN #" />
             <span className="input-group-btn">
-              <button className="btn btn-success">
+              <button className="btn btn-success"
+                      onClick={this.handleToggleCompact.bind(this)}>
                 Find
               </button>
             </span>
@@ -59,11 +61,21 @@ class GoodsReceivedNoticesIndex extends React.Component {
   renderDayHeadings() {
     return (
       <div className="row">
-        <GoodsReceivedNoticesDayHeading key="1" day="Monday" />
-        <GoodsReceivedNoticesDayHeading key="2" day="Tuesday" />
-        <GoodsReceivedNoticesDayHeading key="3" day="Wednesday" />
-        <GoodsReceivedNoticesDayHeading key="4" day="Thursday" />
-        <GoodsReceivedNoticesDayHeading key="5" day="Friday" />
+        <GoodsReceivedNoticesDayHeading key="1"
+                                        day="Monday"
+                                        compact={this.state.compact} />
+        <GoodsReceivedNoticesDayHeading key="2"
+                                        day="Tuesday"
+                                        compact={this.state.compact} />
+        <GoodsReceivedNoticesDayHeading key="3"
+                                        day="Wednesday"
+                                        compact={this.state.compact} />
+        <GoodsReceivedNoticesDayHeading key="4"
+                                        day="Thursday"
+                                        compact={this.state.compact} />
+        <GoodsReceivedNoticesDayHeading key="5"
+                                        day="Friday"
+                                        compact={this.state.compact} />
       </div>
     );
   }
@@ -74,8 +86,14 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   renderWeek(noticesByDates, weekNum) {
     return (
-      <GoodsReceivedNoticesWeek key={weekNum} {...noticesByDates} />
+      <GoodsReceivedNoticesWeek key={weekNum}
+                                compact={this.state.compact}
+                                {...noticesByDates} />
     );
+  }
+
+  handleToggleCompact() {
+    this.setState({ compact: !this.state.compact });
   }
 }
 
