@@ -19,6 +19,11 @@ describe ProductMigrator do
         expect(Sku.first.element_id).to eq(@first_product.language_product_options.first.element.id)
       end
 
+      it 'should have the correct season' do
+        expect(Sku.first.season).to eq(@first_product.season)
+        expect(Sku.second.season).to eq(@second_product.season)
+      end
+
       it 'should generate skus correctly' do
         expect(Sku.first.sku).to eq("#{@first_product.id}-#{@first_product.language_product_options.first.element.id}")
       end
