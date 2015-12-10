@@ -16,6 +16,7 @@ Originally brought to you by the [Made Tech team](https://github.com/madetech).
 
 * Clone this repo.
 * Install the [Docker Toolbox](https://www.docker.com/docker-toolbox).
+* Run the docker quickstart terminal (cmd-space should find it) to set up the VirtualBox VMs.
 * Run `docker-machine start default` to start the VM.
 * Run `eval $(docker-machine env default)` to bootstrap the env vars. Either add this line to your bashrc or run it in each new tab you open (For fish shell, use `eval (docker-machine env default)`).
 * `cd` into `api/` and run `docker compose up`.
