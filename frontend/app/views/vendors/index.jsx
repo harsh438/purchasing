@@ -30,10 +30,22 @@ class VendorsIndex extends React.Component {
     return (
       <div className="suppliers_index  container-fluid"
            style={{ marginTop: '70px' }}>
+        <div className="row" style={{ marginBottom: '20px' }}>
+          <div className="col-md-4">
+            <h1>Brands</h1>
+          </div>
+
+          <div className="col-md-2 col-md-offset-6 text-right">
+            <Link to="/vendors/new"
+                  className="btn btn-success">
+              Add New Brand
+            </Link>
+          </div>
+        </div>
         <div className="row">
           <div className="col-md-12">
-          	<div className="panel panel-default">
-        			<div className="panel-body">
+            <div className="panel panel-default">
+              <div className="panel-body">
                 <VendorsFilters filters={this.props.location.query.filters}
                                 suppliers={this.props.suppliers}
                                 buyers={this.props.buyers}
@@ -41,27 +53,12 @@ class VendorsIndex extends React.Component {
                                 onFilterVendors={this.handleFilterVendors.bind(this)} />
               </div>
             </div>
-          </div>
-        </div>
 
-        <div className="row">
-          <div className="col-md-12">
-          	<div className="panel panel-default">
-        			<div className="panel-body">
-                <Link to="/vendors/new"
-                      className="btn btn-success">
-                  Add New Brand
-                </Link>
+            <VendorsTable vendors={this.props.vendors}/>
 
-                <hr style={{ clear: 'both' }} />
-
-                <VendorsTable vendors={this.props.vendors}/>
-
-                <NumberedPagination activePage={this.props.activePage || 1}
-                                    index={this}
-                                    totalPages={this.props.totalPages} />
-              </div>
-            </div>
+            <NumberedPagination activePage={this.props.activePage || 1}
+                                index={this}
+                                totalPages={this.props.totalPages} />
           </div>
         </div>
       </div>

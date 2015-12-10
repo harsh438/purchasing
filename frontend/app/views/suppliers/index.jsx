@@ -28,7 +28,7 @@ class SuppliersIndex extends React.Component {
 
   render() {
     return (
-      <div className="suppliers_index  container-fluid"
+      <div className="suppliers_index container-fluid"
            style={{ marginTop: '70px' }}>
         <div className="row" style={{ marginBottom: '20px' }}>
           <div className="col-md-4">

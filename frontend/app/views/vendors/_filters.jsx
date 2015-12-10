@@ -64,9 +64,10 @@ export default class VendorsFilters extends React.Component {
             </select>
           </div>
 
-          <div className="form-group col-md-2"
-               style={{ paddingTop: '1.6em' }}>
-            <div className="checkbox">
+          <div className="form-group col-md-4"
+               style={{ marginTop: '1.74em' }}>
+            <div className="checkbox pull-left"
+                 style={{ width: '30%' }}>
               <label>
                 <input type="checkbox"
                        name="discontinued"
@@ -78,19 +79,20 @@ export default class VendorsFilters extends React.Component {
                 Discontinued
               </label>
             </div>
-          </div>
 
-          <div className="form-group col-md-2"
-               style={{ marginTop: '1.74em' }}>
-            <button className="btn btn-success"
-                    style={{ width: '100%' }}
-                    disabled={this.state.submitting}>
-              {this.submitText()}
-            </button>
+            <div className="btn-group pull-right"
+                 style={{ width: '70%' }}>
+              <button className="btn btn-primary"
+                      disabled={this.state.submitting}
+                      style={{ width: '70%' }}>
+                {this.submitText()}
+              </button>
 
-            <div className="text-right"
-                 style={{ marginTop: '1em' }}>
-              <Link to="/vendors">clear filters</Link>
+              <Link to="/vendors"
+                    className="btn btn-default"
+                    style={{ width: '30%' }}>
+                Reset
+              </Link>
             </div>
           </div>
         </div>
