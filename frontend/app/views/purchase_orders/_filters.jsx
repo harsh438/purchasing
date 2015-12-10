@@ -205,13 +205,19 @@ export default class PurchaseOrdersFilters extends React.Component {
                 </div>
 
                 <div className="col-md-4 text-right">
-                  <button className="btn btn-success"
-                          disabled={this.isSubmitDisabled()}
-                          style={{ marginTop: '1.74em', width: '100%' }}>
-                    {this.submitText()}
-                  </button>
+                  <div className="btn-group" style={{ width: '100%' }}>
+                    <button className="btn btn-primary"
+                            disabled={this.isSubmitDisabled()}
+                            style={{ marginTop: '1.74em', width: '70%' }}>
+                      {this.submitText()}
+                    </button>
 
-                  {this.renderClearFiltersLink()}
+                    <Link to="/"
+                          className={this.resetButtonClass()}
+                          style={{ marginTop: '1.74em', width: '30%' }}>
+                      Reset
+                    </Link>
+                  </div>
                 </div>
               </div>
             </form>
@@ -221,16 +227,12 @@ export default class PurchaseOrdersFilters extends React.Component {
     );
   }
 
-  renderClearFiltersLink() {
-    if (isEmptyObject(this.state.filters)) return;
-
-    return (
-      <div style={{ marginTop: '1em' }}>
-        <Link to="/">
-          clear all filters
-        </Link>
-      </div>
-    );
+  resetButtonClass() {
+    if (isEmptyObject(this.state.filters)) {
+      return 'btn btn-default disabled';
+    } else {
+      return 'btn btn-default';
+    }
   }
 
   isSubmitDisabled() {
