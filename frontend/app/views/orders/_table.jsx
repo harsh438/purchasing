@@ -1,31 +1,21 @@
 import React from 'react';
 import { contains, map, reject } from 'lodash';
 import OrdersTableRow from './_table_row';
-import OrdersForm from './_form';
 import { loadOrders } from '../../actions/orders';
 
 export class OrdersTable extends React.Component {
   componentWillMount() {
-    this.state = { exportingOrders: false,
-                   selectedOrders: [] };
+    this.state = { selectedOrders: [] };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ exportingOrders: false,
-                    selectedOrders: [] });
+    this.setState({ selectedOrders: [] });
   }
 
   render() {
     return (
       <div className="panel panel-default">
         <div className="panel-body">
-          <button className="btn btn-warning"
-                  disabled={this.isExportButtonDisabled()}
-                  onClick={this.handleExportOrders.bind(this)}>
-            Generate Purchase Orders
-          </button>
-
-          <OrdersForm onCreateOrder={this.props.onCreateOrder} />
 
           <hr />
 
@@ -71,14 +61,6 @@ export class OrdersTable extends React.Component {
     }
 
     this.setState({ selectedOrders });
-  }
-
-  handleExportOrders() {
-    this.setState({ exportingOrders: true });
-    this.props.onExportOrders(this.state.selectedOrders);
-  }
-
-  isExportButtonDisabled() {
-    return this.state.exportingOrders || this.state.selectedOrders.length === 0;
+    this.props.onOrderSelection(selectedOrders);
   }
 }
