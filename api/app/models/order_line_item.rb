@@ -68,7 +68,7 @@ class OrderLineItem < ActiveRecord::Base
 
     self.product_id = sku.product_id
     self.vendor_id = sku.vendor_id
-    self.option_id = sku.option_id
+    self.option_id = sku.option_id || 0
     self.cost = sku.cost_price
     self.season = sku.season
     self.product_name = sku.product_name
@@ -81,7 +81,7 @@ class OrderLineItem < ActiveRecord::Base
   rescue SkuNotFound
     self.product_id = build_pid
     self.vendor_id = product.try(:vendor_id)
-    self.option_id = LanguageProductOption.oid_from_element(build_pid, build_element_id)
+    self.option_id = LanguageProductOption.oid_from_element(build_pid, build_element_id) || 0
     self.cost = product.try(:price)
     self.season = last_po_line.try(:season)
     self.product_name = last_po_line.try(:product_name)
