@@ -28,7 +28,6 @@ describe Sku::Generator do
       expect(sku.language_product_option.present?).to eq(true)
       expect(sku.language_category.present?).to eq(true)
       expect(sku.element.present?).to eq(true)
-      expect(sku.season).to eq('witch')
     end
   end
 
@@ -56,6 +55,10 @@ describe Sku::Generator do
 
     it 'should create a language product option' do
       expect(subject.language_product_option).to be_a(LanguageProductOption)
+    end
+
+    it 'should set the season correctly' do
+      expect(subject.season).to eq('witch')
     end
 
     it 'should create an option' do
