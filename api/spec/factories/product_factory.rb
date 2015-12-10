@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :product do
     pSale 0
 
+    season 'ss18'
     manufacturer_sku '123456-123'
     vendor_id { create(:vendor).id }
 
