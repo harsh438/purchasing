@@ -1,14 +1,14 @@
 import React from 'react';
 import GoodsReceivedNoticesNotice from './_notice';
 import { map } from 'lodash';
-
+import moment from 'moment';
 export default class GoodsReceivedNoticesDay extends React.Component {
   render() {
     return (
       <div className={this.containerClass()}>
         <div className="list-group">
           <div className="list-group-item">
-            <span className="grn_day__title">{this.props.deliveryDate}</span>
+            <span className="grn_day__title">{this.deliveryDate()}</span>
 
             <span className="badge grn_day__badge" title="Pallets">{this.props.pallets}</span>
             <span className="badge grn_day__badge" title="Cartons">{this.props.cartons}</span>
@@ -48,6 +48,10 @@ export default class GoodsReceivedNoticesDay extends React.Component {
     } else {
       return 'grn_day';
     }
+  }
+
+  deliveryDate() {
+    return moment(this.props.deliveryDate, 'DD/MM/YYYY').format('Do MMM YYYY');
   }
 
   handleEditGoodsReceivedNotice(e) {
