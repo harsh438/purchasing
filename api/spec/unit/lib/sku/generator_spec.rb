@@ -28,6 +28,7 @@ describe Sku::Generator do
       expect(sku.language_product_option.present?).to eq(true)
       expect(sku.language_category.present?).to eq(true)
       expect(sku.element.present?).to eq(true)
+      expect(sku.season).to eq('witch')
     end
   end
 
