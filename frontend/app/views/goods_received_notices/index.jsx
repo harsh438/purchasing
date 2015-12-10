@@ -3,21 +3,39 @@ import { connect } from 'react-redux';
 import { assign, map } from 'lodash';
 import GoodsReceivedNoticesWeek from './_week';
 import GoodsReceivedNoticesDayHeading from './_day_heading';
+import GoodsReceivedNoticesEdit from './_edit';
 import { loadGoodsReceivedNotices } from '../../actions/goods_received_notices';
 
 class GoodsReceivedNoticesIndex extends React.Component {
   componentWillMount() {
-    this.state = { compact: false };
+    this.state = { editing: false };
     this.props.dispatch(loadGoodsReceivedNotices());
   }
 
   render() {
+    let leftClass, rightClass;
+
+    if (this.state.editing) {
+      leftClass = 'col-md-8';
+      rightClass = 'col-md-4';
+    } else {
+      leftClass = 'col-md-12';
+      rightClass = '';
+    }
+
     return (
-      <div className="suppliers_index  container-fluid"
+      <div className="suppliers_index container-fluid"
            style={{ marginTop: '70px' }}>
         {this.renderNavigation()}
-        {this.renderDayHeadings()}
-        {this.renderWeeks()}
+
+        <div className={leftClass}>
+          {this.renderDayHeadings()}
+          {this.renderWeeks()}
+        </div>
+
+        <div className={rightClass}>
+          {this.renderEditPanel()}
+        </div>
       </div>
     );
   }
@@ -48,7 +66,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
                    placeholder="GRN #" />
             <span className="input-group-btn">
               <button className="btn btn-success"
-                      onClick={this.handleToggleCompact.bind(this)}>
+                      onClick={this.handleToggleEditing.bind(this)}>
                 Find
               </button>
             </span>
@@ -63,19 +81,19 @@ class GoodsReceivedNoticesIndex extends React.Component {
       <div className="row">
         <GoodsReceivedNoticesDayHeading key="1"
                                         day="Monday"
-                                        compact={this.state.compact} />
+                                        compact={this.state.editing} />
         <GoodsReceivedNoticesDayHeading key="2"
                                         day="Tuesday"
-                                        compact={this.state.compact} />
+                                        compact={this.state.editing} />
         <GoodsReceivedNoticesDayHeading key="3"
                                         day="Wednesday"
-                                        compact={this.state.compact} />
+                                        compact={this.state.editing} />
         <GoodsReceivedNoticesDayHeading key="4"
                                         day="Thursday"
-                                        compact={this.state.compact} />
+                                        compact={this.state.editing} />
         <GoodsReceivedNoticesDayHeading key="5"
                                         day="Friday"
-                                        compact={this.state.compact} />
+                                        compact={this.state.editing} />
       </div>
     );
   }
@@ -87,13 +105,21 @@ class GoodsReceivedNoticesIndex extends React.Component {
   renderWeek(noticesByDates, weekNum) {
     return (
       <GoodsReceivedNoticesWeek key={weekNum}
-                                compact={this.state.compact}
+                                compact={this.state.editing}
                                 {...noticesByDates} />
     );
   }
 
-  handleToggleCompact() {
-    this.setState({ compact: !this.state.compact });
+  renderEditPanel() {
+    if (this.state.editing) {
+      return (
+        <GoodsReceivedNoticesEdit />
+      );
+    }
+  }
+
+  handleToggleEditing() {
+    this.setState({ editing: !this.state.editing });
   }
 }
 
