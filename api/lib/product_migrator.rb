@@ -46,6 +46,10 @@ class ProductMigrator
     "#{product.id}-#{element.id}"
   end
 
+  def manufacturer_color
+    product.manufacturer_sku.split('-').drop(1).last || ''
+  end
+
   def ok_to_migrate?
     if !product.manufacturer_sku.present?
       @validation_error = "Skipping `#{internal_sku}` (Product has no manufacturer_sku)..."
@@ -81,7 +85,7 @@ class ProductMigrator
   def product_attrs
     { product_id: product.id,
       manufacturer_sku: product.manufacturer_sku,
-      manufacturer_size: product.size,
+      manufacturer_size: language_option.option.size,
       inv_track: product.inv_track,
       size: language_option.name,
       cost_price: product.cost,
@@ -91,8 +95,8 @@ class ProductMigrator
   end
 
   def product_detail_attrs
-    { manufacturer_color: product.try(:product_detail).try(:color) || '',
-      color: product.try(:product_detail).try(:color) || '',
+    { manufacturer_color: manufacturer_color,
+      color: manufacturer_color,
       gender: product.try(:product_detail).try(:gender) || '' }
   end
 end
