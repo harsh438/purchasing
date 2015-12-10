@@ -14,29 +14,22 @@ export class OrdersTable extends React.Component {
 
   render() {
     return (
-      <div className="panel panel-default">
-        <div className="panel-body">
+      <div className="orders_table">
+        <table className="table">
+          <thead>
+            <tr>
+              <th style={{ width: '5%' }}>&nbsp;</th>
+              <th>Order name</th>
+              <th className="text-center" style={{ width: '15%' }}># of Products</th>
+              <th className="text-center" style={{ width: '15%' }}>Created</th>
+              <th className="text-center" style={{ width: '15%' }}>Exported</th>
+            </tr>
+          </thead>
 
-          <hr />
-
-          <div className="orders_table">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th style={{ width: '5%' }}>&nbsp;</th>
-                  <th>Order name</th>
-                  <th className="text-center" style={{ width: '15%' }}># of Products</th>
-                  <th className="text-center" style={{ width: '15%' }}>Created</th>
-                  <th className="text-center" style={{ width: '15%' }}>Exported</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {this.renderRows()}
-              </tbody>
-            </table>
-          </div>
-        </div>
+          <tbody>
+            {this.renderRows()}
+          </tbody>
+        </table>
       </div>
     );
   }

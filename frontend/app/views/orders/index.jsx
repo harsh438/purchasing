@@ -26,8 +26,11 @@ class OrdersIndex extends React.Component {
     return (
       <div className="orders_index container-fluid"
            style={{ marginTop: '70px' }}>
-        <div className="row">
-          <div className="col-md-4"></div>
+        <div className="row" style={{ marginBottom: '20px' }}>
+          <div className="col-md-4">
+            <h1>Reorders</h1>
+          </div>
+
           <div className="col-md-2 col-md-offset-6">
             <OrdersForm onCreateOrder={this.handleCreateOrder.bind(this)} />
           </div>
@@ -40,6 +43,8 @@ class OrdersIndex extends React.Component {
                     onClick={this.handleExportOrders.bind(this)}>
               Generate Purchase Orders
             </button>
+
+            <hr />
 
             <OrdersTable orders={this.props.orders}
                          query={this.props.location.query}
