@@ -3,7 +3,9 @@ import React from 'react';
 export default class GoodsReceivedNoticesNotice extends React.Component {
   render() {
     return (
-      <a href="#edit" className={this.containerClass()}>
+      <a href="#edit"
+         className={this.containerClass()}
+         onClick={this.handleClick.bind(this)}>
         GRN #{this.props.id}
 
         <span className={this.badgeClass()} title="Pallets">{this.props.pallets}</span>
@@ -32,5 +34,10 @@ export default class GoodsReceivedNoticesNotice extends React.Component {
     default:
       return '';
     }
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    this.props.onClick(this.props.id);
   }
 }

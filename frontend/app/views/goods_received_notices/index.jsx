@@ -28,13 +28,15 @@ class GoodsReceivedNoticesIndex extends React.Component {
            style={{ marginTop: '70px' }}>
         {this.renderNavigation()}
 
-        <div className={leftClass}>
-          {this.renderDayHeadings()}
-          {this.renderWeeks()}
-        </div>
+        <div className="row">
+          <div className={leftClass}>
+            {this.renderDayHeadings()}
+            {this.renderWeeks()}
+          </div>
 
-        <div className={rightClass}>
-          {this.renderEditPanel()}
+          <div className={rightClass}>
+            {this.renderEditPanel()}
+          </div>
         </div>
       </div>
     );
@@ -106,6 +108,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
     return (
       <GoodsReceivedNoticesWeek key={weekNum}
                                 compact={this.state.editing}
+                                onEditGoodsReceivedNotice={this.handleEditGoodsReceivedNotice.bind(this)}
                                 {...noticesByDates} />
     );
   }
@@ -120,6 +123,10 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   handleToggleEditing() {
     this.setState({ editing: !this.state.editing });
+  }
+
+  handleEditGoodsReceivedNotice(id) {
+    this.setState({ editing: true });
   }
 }
 

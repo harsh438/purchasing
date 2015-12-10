@@ -19,7 +19,9 @@ export default class GoodsReceivedNoticesDay extends React.Component {
         </div>
 
         <div className="text-center">
-          <a href="#add" className="grn_day__add_btn btn btn-default">
+          <a href="#add"
+             className="grn_day__add_btn btn btn-default"
+             onClick={this.handleEditGoodsReceivedNotice.bind(this)}>
             <span className="glyphicon glyphicon-plus"></span>
           </a>
         </div>
@@ -35,6 +37,7 @@ export default class GoodsReceivedNoticesDay extends React.Component {
     return (
       <GoodsReceivedNoticesNotice key={i}
                                   compact={this.props.compact}
+                                  onClick={this.props.onEditGoodsReceivedNotice}
                                   {...notice} />
     );
   }
@@ -45,5 +48,10 @@ export default class GoodsReceivedNoticesDay extends React.Component {
     } else {
       return 'grn_day';
     }
+  }
+
+  handleEditGoodsReceivedNotice(e) {
+    e.preventDefault();
+    this.props.onEditGoodsReceivedNotice();
   }
 }
