@@ -57,7 +57,8 @@ class ProductMigrator
       size: language_option.name,
       cost_price: product.cost,
       price: product.price,
-      vendor_id: product.vendor_id }
+      vendor_id: product.vendor_id,
+      season: product.season }
   end
 
   def product_detail_attrs

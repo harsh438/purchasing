@@ -103,7 +103,8 @@ class Sku::Generator
       price: attrs[:price],
       cost: attrs[:cost_price],
       on_sale: attrs[:on_sale] || '',
-      vendor_id: attrs[:vendor_id] }
+      vendor_id: attrs[:vendor_id],
+      season: attrs[:season] }
   end
 
   def category_attrs
