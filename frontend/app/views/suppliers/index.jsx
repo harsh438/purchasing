@@ -30,6 +30,19 @@ class SuppliersIndex extends React.Component {
     return (
       <div className="suppliers_index  container-fluid"
            style={{ marginTop: '70px' }}>
+        <div className="row" style={{ marginBottom: '20px' }}>
+          <div className="col-md-4">
+            <h1>Suppliers</h1>
+          </div>
+
+          <div className="col-md-2 col-md-offset-6 text-right">
+            <Link to="/suppliers/new"
+                  className="btn btn-success">
+              Add New Supplier
+            </Link>
+          </div>
+        </div>
+
         <div className="row">
           <div className="col-md-12">
           	<div className="panel panel-default">
@@ -39,29 +52,15 @@ class SuppliersIndex extends React.Component {
                                   buyers={this.props.buyers}
                                   buyerAssistants={this.props.buyerAssistants}
                                   onFilterSuppliers={this.handleFilterSuppliers.bind(this)} />
+
               </div>
             </div>
-          </div>
-        </div>
 
-        <div className="row">
-          <div className="col-md-12">
-          	<div className="panel panel-default">
-        			<div className="panel-body">
-                <Link to="/suppliers/new"
-                      className="btn btn-success">
-                  Add New Supplier
-                </Link>
+            <SuppliersTable suppliers={this.props.suppliers}/>
 
-                <hr style={{ clear: 'both' }} />
-
-                <SuppliersTable suppliers={this.props.suppliers}/>
-
-                <NumberedPagination activePage={this.props.activePage || 1}
-                      index={this}
-                      totalPages={this.props.totalPages} />
-              </div>
-            </div>
+            <NumberedPagination activePage={this.props.activePage || 1}
+                  index={this}
+                  totalPages={this.props.totalPages} />
           </div>
         </div>
       </div>

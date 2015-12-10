@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 export default class SuppliersTable extends React.Component {
   render() {
     return (
-      <table className="table">
+      <table className="table table-hover">
         <thead>
           <tr>
             <th>Name</th>
