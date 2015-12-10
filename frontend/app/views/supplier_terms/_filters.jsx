@@ -23,72 +23,76 @@ export default class SupplierTermsFilters extends React.Component {
       <form className="form clearfix"
             onChange={this.handleFormChange.bind(this)}
             onSubmit={this.handleFormSubmit.bind(this)}>
-        <div className="form-group col-md-2">
-          <label htmlFor="supplierId">Supplier</label>
-          <Select id="supplierId"
-                  name="supplierId"
-                  multi
-                  onChange={this.handleMultiSelectChange.bind(this, 'supplierId')}
-                  value={this.getFilter('supplierId')}
-                  options={renderMultiSelectOptions(this.props.suppliers)} />
-        </div>
-
-        <div className="form-group col-md-2">
-          <label htmlFor="vendorId">Brands</label>
-          <Select id="suppliers"
-                  name="vendorId"
-                  multi
-                  onChange={this.handleMultiSelectChange.bind(this, 'vendorId')}
-                  value={this.getFilter('vendorId')}
-                  options={renderMultiSelectOptions(this.props.brands)} />
-        </div>
-
-        <div className="form-group col-md-2">
-          <label htmlFor="season">Seasons</label>
-          <Select id="season"
-                  name="season"
-                  multi
-                  onChange={this.handleMultiSelectChange.bind(this, 'season')}
-                  value={this.getFilter('season')}
-                  options={renderMultiSelectOptions(this.props.seasons)} />
-        </div>
-
-        <div className="form-group col-md-2">
-          <label htmlFor="terms">Terms</label>
-          <Select id="terms"
-                  name="terms"
-                  multi
-                  onChange={this.handleMultiSelectChange.bind(this, 'terms')}
-                  value={this.getFilter('terms')}
-                  options={renderMultiSelectOptions(this.props.supplierTermsList)} />
-        </div>
-
-        <div className="form-group col-md-2"
-             style={{ paddingTop: '1.6em' }}>
-          <div className="checkbox">
-            <label>
-              <input className="checkbox"
-                     type="checkbox"
-                     name="default"
-                     value="1"
-                     checked={this.getFilter('default')}
-                     onChange={this.handleCheckboxChange.bind(this)} />
-              Default terms only
-            </label>
+        <div className="row">
+          <div className="form-group col-md-2">
+            <label htmlFor="supplierId">Supplier</label>
+            <Select id="supplierId"
+                    name="supplierId"
+                    multi
+                    onChange={this.handleMultiSelectChange.bind(this, 'supplierId')}
+                    value={this.getFilter('supplierId')}
+                    options={renderMultiSelectOptions(this.props.suppliers)} />
           </div>
-        </div>
 
-        <div className="form-group col-md-2"
-             style={{ marginTop: '1.74em' }}>
-          <button className="btn btn-success"
-                  style={{ width: '100%' }}
-                  disabled={this.state.submitting}>
-              Search
-          </button>
+          <div className="form-group col-md-2">
+            <label htmlFor="vendorId">Brands</label>
+            <Select id="suppliers"
+                    name="vendorId"
+                    multi
+                    onChange={this.handleMultiSelectChange.bind(this, 'vendorId')}
+                    value={this.getFilter('vendorId')}
+                    options={renderMultiSelectOptions(this.props.brands)} />
+          </div>
 
-          <div className="text-right"
-               style={{ marginTop: '1em' }}>
-            <Link to="/terms">clear filters</Link>
+          <div className="form-group col-md-2">
+            <label htmlFor="season">Seasons</label>
+            <Select id="season"
+                    name="season"
+                    multi
+                    onChange={this.handleMultiSelectChange.bind(this, 'season')}
+                    value={this.getFilter('season')}
+                    options={renderMultiSelectOptions(this.props.seasons)} />
+          </div>
+
+          <div className="form-group col-md-2">
+            <label htmlFor="terms">Terms</label>
+            <Select id="terms"
+                    name="terms"
+                    multi
+                    onChange={this.handleMultiSelectChange.bind(this, 'terms')}
+                    value={this.getFilter('terms')}
+                    options={renderMultiSelectOptions(this.props.supplierTermsList)} />
+          </div>
+
+          <div className="form-group col-md-4"
+               style={{ marginTop: '1.74em' }}>
+            <div className="checkbox pull-left"
+                 style={{ width: '30%' }}>
+              <label>
+               <input className="checkbox"
+                      type="checkbox"
+                      name="default"
+                      value="1"
+                      checked={this.getFilter('default')}
+                      onChange={this.handleCheckboxChange.bind(this)} />
+               Default terms
+              </label>
+            </div>
+
+            <div className="btn-group pull-right"
+                 style={{ width: '70%' }}>
+              <button className="btn btn-primary"
+                      disabled={this.state.submitting}
+                      style={{ width: '70%' }}>
+                {this.submitText()}
+              </button>
+
+              <Link to="/terms"
+                    className="btn btn-default"
+                    style={{ width: '30%' }}>
+                Reset
+              </Link>
+            </div>
           </div>
         </div>
       </form>
@@ -132,6 +136,14 @@ export default class SupplierTermsFilters extends React.Component {
       return get(this.state.filters, field, '1') === '1';
     default:
       return get(this.state.filters, field, '');
+    }
+  }
+
+  submitText() {
+    if (this.state.submitting) {
+      return 'Searching...';
+    } else {
+      return 'Search';
     }
   }
 }
