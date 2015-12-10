@@ -40,6 +40,22 @@
   $output = json_decode(curl_exec($ch));
 
   var_dump($output);
-
   curl_close($ch);
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERPWD, 'purchasing' . ":" . 'lastordersplease');
+  curl_setopt($ch, CURLOPT_VERBOSE, true);
+
+  $id_params = array('id' => $order_id);
+
+  $endpoint = 'http://localhost:5000/api/orders/export.json';
+  curl_setopt($ch, CURLOPT_URL, $endpoint);
+  curl_setopt($ch, CURLOPT_POST, 1);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($id_params));
+
+  $output = json_decode(curl_exec($ch));
+  var_dump($output);
+
+
 ?>
