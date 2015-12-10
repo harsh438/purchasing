@@ -69,13 +69,13 @@ export default class SupplierTermsFilters extends React.Component {
             <div className="checkbox pull-left"
                  style={{ width: '30%' }}>
               <label>
-               <input className="checkbox"
-                      type="checkbox"
-                      name="default"
-                      value="1"
-                      checked={this.getFilter('default')}
-                      onChange={this.handleCheckboxChange.bind(this)} />
-               Default terms
+                <input className="checkbox"
+                       type="checkbox"
+                       name="default"
+                       value="1"
+                       checked={this.getFilter('default')}
+                       onChange={this.handleCheckboxChange.bind(this)} />
+                Default terms
               </label>
             </div>
 
