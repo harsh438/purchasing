@@ -562,7 +562,6 @@ ActiveRecord::Schema.define(version: 20151209151431) do
     t.string  "gender", limit: 0,             null: false
   end
 
-  add_index "product_gender", ["gender"], name: "gender", using: :btree
   add_index "product_gender", ["pid"], name: "pID", using: :btree
 
   create_table "product_supplier", primary_key: "pid", force: :cascade do |t|
