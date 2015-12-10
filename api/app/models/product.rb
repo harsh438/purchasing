@@ -10,7 +10,8 @@ class Product < ActiveRecord::Base
                  size: :pSize,
                  vendor_id: :venID,
                  on_sale: :pSale,
-                 inv_track: :invTrack
+                 inv_track: :invTrack,
+                 season: :pUDFValue4
 
   has_one :language_product, foreign_key: :pID
   has_many :language_product_options, foreign_key: :pID
