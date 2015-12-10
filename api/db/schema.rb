@@ -370,7 +370,7 @@ ActiveRecord::Schema.define(version: 20151209151431) do
     t.string  "IssueStatus",       limit: 500
   end
 
-  add_index "issues_to_grn", ["IssueStatus"], name: "IssueStatus", using: :btree
+  add_index "issues_to_grn", ["IssueStatus"], name: "IssueStatus", length: {"IssueStatus"=>255}, using: :btree
   add_index "issues_to_grn", ["IssueTypeID"], name: "IssueTypeID", using: :btree
   add_index "issues_to_grn", ["Status"], name: "status", using: :btree
   add_index "issues_to_grn", ["grn"], name: "grn", using: :btree
@@ -526,36 +526,44 @@ ActiveRecord::Schema.define(version: 20151209151431) do
   create_table "po_terms", force: :cascade do |t|
     t.integer "BrandID",                        limit: 4
     t.integer "SupplierID",                     limit: 4
-    t.text  "suppliers_response",             limit: 2000
-    t.text  "general_comments",               limit: 2000
+    t.text    "suppliers_response",             limit: 65535
+    t.text    "general_comments",               limit: 65535
     t.integer "packing_list_send",              limit: 4
-    t.text  "packing_list_send_comments",     limit: 2000
+    t.text    "packing_list_send_comments",     limit: 65535
     t.integer "packing_list_attached",          limit: 4
-    t.text  "packing_list_attached_comments", limit: 2000
+    t.text    "packing_list_attached_comments", limit: 65535
     t.integer "packing_list_size",              limit: 4
-    t.text  "packing_list_size_comments",     limit: 2000
+    t.text    "packing_list_size_comments",     limit: 65535
     t.integer "po_packing",                     limit: 4
-    t.text  "po_packing_comments",            limit: 2000
+    t.text    "po_packing_comments",            limit: 65535
     t.integer "shrink_wrapped",                 limit: 4
-    t.text  "shrink_wrapped_comments",        limit: 2000
+    t.text    "shrink_wrapped_comments",        limit: 65535
     t.integer "po_grn",                         limit: 4
-    t.text  "po_grn_comments",                limit: 2000
+    t.text    "po_grn_comments",                limit: 65535
     t.integer "carton_marks",                   limit: 4
-    t.text  "carton_marks_comments",          limit: 2000
+    t.text    "carton_marks_comments",          limit: 65535
     t.integer "booked_in",                      limit: 4
-    t.text  "booked_in_comments",             limit: 2000
+    t.text    "booked_in_comments",             limit: 65535
     t.integer "barcode_sku",                    limit: 4
-    t.text  "barcode_sku_comments",           limit: 2000
+    t.text    "barcode_sku_comments",           limit: 65535
     t.integer "barcodes_match",                 limit: 4
-    t.text  "barcodes_match_comments",        limit: 2000
+    t.text    "barcodes_match_comments",        limit: 65535
     t.integer "protective_packaging",           limit: 4
-    t.text  "protective_packaging_comments",  limit: 2000
+    t.text    "protective_packaging_comments",  limit: 65535
     t.integer "advise_time",                    limit: 4
-    t.text  "advise_time_comments",           limit: 2000
+    t.text    "advise_time_comments",           limit: 65535
     t.integer "solid_packed",                   limit: 4
-    t.text  "solid_packed_comments",          limit: 2000
+    t.text    "solid_packed_comments",          limit: 65535
     t.string  "Attachments",                    limit: 1000
   end
+
+  create_table "product_gender", id: false, force: :cascade do |t|
+    t.integer "pid",    limit: 4, default: 0, null: false
+    t.string  "gender", limit: 0,             null: false
+  end
+
+  add_index "product_gender", ["gender"], name: "gender", using: :btree
+  add_index "product_gender", ["pid"], name: "pID", using: :btree
 
   create_table "product_supplier", primary_key: "pid", force: :cascade do |t|
     t.integer "supplierID", limit: 4, null: false
