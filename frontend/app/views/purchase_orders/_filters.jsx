@@ -8,7 +8,7 @@ import { isEmptyObject } from '../../utilities/inspection';
 import { renderSelectOptions,
          renderMultiSelectOptions } from '../../utilities/dom';
 
-export default class PurchaseOrdersForm extends React.Component {
+export default class PurchaseOrdersFilters extends React.Component {
   componentWillMount() {
     this.setStateFromQuery(this.props.query);
   }

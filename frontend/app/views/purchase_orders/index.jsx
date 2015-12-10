@@ -10,7 +10,7 @@ import { clearPurchaseOrders,
          loadMorePurchaseOrders,
          loadPurchaseOrders,
          loadSummary } from '../../actions/purchase_orders';
-import PurchaseOrdersForm from './_form';
+import PurchaseOrdersFilters from './_filters';
 import PurchaseOrdersTable from './_table';
 import { assign, intersection, isEqual, map } from 'lodash';
 import { isEmptyObject } from '../../utilities/inspection';
@@ -40,16 +40,16 @@ class PurchaseOrdersIndex extends React.Component {
   render() {
     return (
       <div className="purchase_orders_index">
-        <PurchaseOrdersForm brands={this.props.brands}
-                            categories={this.props.categories}
-                            genders={this.props.genders}
-                            history={this.props.history}
-                            loading={this.props.loading}
-                            loadPurchaseOrders={this.loadPurchaseOrders.bind(this)}
-                            orderTypes={this.props.orderTypes}
-                            seasons={this.props.seasons}
-                            suppliers={this.props.suppliers}
-                            query={this.props.location.query} />
+        <PurchaseOrdersFilters brands={this.props.brands}
+                               categories={this.props.categories}
+                               genders={this.props.genders}
+                               history={this.props.history}
+                               loading={this.props.loading}
+                               loadPurchaseOrders={this.loadPurchaseOrders.bind(this)}
+                               orderTypes={this.props.orderTypes}
+                               seasons={this.props.seasons}
+                               suppliers={this.props.suppliers}
+                               query={this.props.location.query} />
 
         <PurchaseOrdersTable dispatch={this.props.dispatch}
                              exportable={this.props.exportable}
