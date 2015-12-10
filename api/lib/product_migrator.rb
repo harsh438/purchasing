@@ -9,8 +9,15 @@ class ProductMigrator
     @product = product
     product.language_product_options.where(language_id: 1).each do |language_option|
       @language_option = language_option
-      Sku.create!(sku_attrs)
+
+      if ok_to_migrate?
+        Sku.create!(sku_attrs)
+      else
+        puts validation_error
+      end
     end
+
+    puts "Migrated product #{product.id}."
   end
 
   private
@@ -27,12 +34,34 @@ class ProductMigrator
     @product.language_product
   end
 
+  def validation_error
+    @validation_error
+  end
+
   def element
     Element.find_by(name: language_option.name)
   end
 
+  def internal_sku
+    "#{product.id}-#{element.id}"
+  end
+
+  def ok_to_migrate?
+    if !product.manufacturer_sku.present?
+      @validation_error = "Skipping `#{internal_sku}` (Product has no manufacturer_sku)..."
+      return false
+    end
+
+    if Sku.find_by(sku: internal_sku)
+      @validation_error = "Skipping #{internal_sku} (`#{internal_sku}` already exists)..."
+      return false
+    end
+
+    true
+  end
+
   def sku_attrs
-    { sku: "#{product.id}-#{element.id}" }
+    { sku: internal_sku }
       .merge!(product_attrs)
       .merge!(product_detail_attrs)
       .merge!(language_product_attrs)
