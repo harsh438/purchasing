@@ -6,7 +6,7 @@ export default class GoodsReceivedNoticesNotice extends React.Component {
       <a href="#edit"
          className={this.containerClass()}
          onClick={this.handleClick.bind(this)}>
-        GRN #{this.props.id}
+        GRN #{this.props.id} ({this.props.brandName})
 
         <span className={this.badgeClass()} title="Pallets">{this.props.pallets}</span>
         <span className={this.badgeClass()} title="Cartons">{this.props.cartons}</span>
