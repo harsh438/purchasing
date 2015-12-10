@@ -40,6 +40,15 @@ class PurchaseOrdersIndex extends React.Component {
   render() {
     return (
       <div className="purchase_orders_index">
+        <div className="container-fluid"
+             style={{ marginTop: '70px' }}>
+          <div className="row" style={{ marginBottom: '20px' }}>
+            <div className="col-md-12">
+              <h1>Purchase Order Line items</h1>
+            </div>
+          </div>
+        </div>
+
         <PurchaseOrdersFilters brands={this.props.brands}
                                categories={this.props.categories}
                                genders={this.props.genders}

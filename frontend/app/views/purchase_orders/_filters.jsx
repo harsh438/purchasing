@@ -21,7 +21,7 @@ export default class PurchaseOrdersFilters extends React.Component {
     const filters = this.state.filters;
 
     return (
-      <div className="form-container filters">
+      <div className="form-container">
         <div className="panel panel-default">
           <div className="panel-body">
             <form className="form"
