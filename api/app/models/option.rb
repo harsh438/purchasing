@@ -6,5 +6,6 @@ class Option < ActiveRecord::Base
   map_attributes id: :oID,
                  product_id: :pID,
                  parent_id: :parentID,
-                 name: :oNum
+                 name: :oNum,
+                 size: :oSizeL
 end
