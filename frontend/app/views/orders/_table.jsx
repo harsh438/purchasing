@@ -2,7 +2,6 @@ import React from 'react';
 import { contains, map, reject } from 'lodash';
 import OrdersTableRow from './_table_row';
 import OrdersForm from './_form';
-import NumberedPagination from '../pagination/_numbered';
 import { loadOrders } from '../../actions/orders';
 
 export class OrdersTable extends React.Component {
@@ -48,10 +47,6 @@ export class OrdersTable extends React.Component {
             </table>
           </div>
         </div>
-
-        <NumberedPagination activePage={this.props.activePage}
-                            index={this.props.index}
-                            totalPages={this.props.totalPages} />
       </div>
     );
   }

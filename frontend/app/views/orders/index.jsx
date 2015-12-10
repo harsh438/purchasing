@@ -2,6 +2,7 @@ import React from 'react';
 import { assign } from 'lodash';
 import { connect } from 'react-redux';
 import { OrdersTable } from './_table';
+import NumberedPagination from '../pagination/_numbered';
 import { loadOrders, createOrder, exportOrders } from '../../actions/orders';
 
 class OrdersIndex extends React.Component {
@@ -22,13 +23,14 @@ class OrdersIndex extends React.Component {
            style={{ marginTop: '70px' }}>
         <div className="row">
           <div className="col-md-12">
-            <OrdersTable index={this}
-                         orders={this.props.orders}
-                         totalPages={this.props.totalPages}
-                         activePage={this.props.activePage}
+            <OrdersTable orders={this.props.orders}
                          query={this.props.location.query}
                          onCreateOrder={this.handleCreateOrder.bind(this)}
                          onExportOrders={this.handleExportOrder.bind(this)} />
+
+            <NumberedPagination activePage={this.props.activePage}
+                                index={this}
+                                totalPages={this.props.totalPages} />
           </div>
         </div>
       </div>
