@@ -12,14 +12,20 @@ Originally brought to you by the [Made Tech team](https://github.com/madetech).
 | production | https://purchasing.surfdome.io  | purchasing | lastordersplease |
 | staging    | https://purchasing.surfdome.cc  | purchasing | lastordersplease |
 
-## Prerequisites
+## Installation
 
-The Made Team are currently running this app inside our Vagrant env. This env
-provides a few required dependencies listed below. Provided your dev env has
-these you'll be okay.
+* Clone this repo.
+* Install the [Docker Toolbox](https://www.docker.com/docker-toolbox).
+* Run `docker-machine start default` to start the VM.
+* Run `eval $(docker-machine env default)` to bootstrap the env vars. Either add this line to your bashrc or run it in each new tab you open (For fish shell, use `eval (docker-machine env default)`).
+* `cd` into `api/` and run `docker compose up`.
+* Run `docker-compose run web rake db:create db:schema:load`.
 
- - Ruby (via rbenv preferably)
- - MySQL (setup as per config/database.yml or with config injected with DATABASE_URL)
+Gotchas:
+* Instead of `bundle exec X`, use `docker-compose run web X` to run commands inside the container.
+* Use `docker ps` to see running containers.
+* To connect to the DB via sequel pro, run `docker-machine env default` and use the IP of the docker host, and use the port `13306`.
+* To connect in the browser, use the docker host IP from the previous example at port 3000 (e.g. `http://192.168.99.100:3000/`).
 
 ## Developing
 
