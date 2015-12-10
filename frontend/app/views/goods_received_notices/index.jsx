@@ -5,11 +5,12 @@ import GoodsReceivedNoticesWeek from './_week';
 import GoodsReceivedNoticesDayHeading from './_day_heading';
 import GoodsReceivedNoticesEdit from './_edit';
 import { loadGoodsReceivedNotices } from '../../actions/goods_received_notices';
+import moment from 'moment';
 
 class GoodsReceivedNoticesIndex extends React.Component {
   componentWillMount() {
     this.state = { editing: false };
-    this.props.dispatch(loadGoodsReceivedNotices());
+    this.props.dispatch(loadGoodsReceivedNotices(this.weekNum()));
   }
 
   render() {
@@ -45,23 +46,48 @@ class GoodsReceivedNoticesIndex extends React.Component {
   renderNavigation() {
     return (
       <div className="row" style={{ marginBottom: '2em' }}>
-        <div className="col-md-3">
+        <div className="col-md-1">
+          <button className="btn btn-default">
+            This week
+          </button>
+        </div>
+
+        <div className="col-md-4 col-md-offset-3">
           <div className="input-group">
-            <span className="input-group-addon">
-              <span className="glyphicon glyphicon-calendar"></span>
+            <span className="input-group-btn">
+              <button className="btn btn-default">
+                &nbsp;<span className="glyphicon glyphicon-fast-backward"></span>&nbsp;
+              </button>
+
+              <button className="btn btn-default">
+                &nbsp;<span className="glyphicon glyphicon-backward"></span>&nbsp;
+              </button>
             </span>
 
-            <input type="date" className="form-control" />
+            <input type="date"
+                   className="form-control text-center" />
 
             <span className="input-group-btn">
               <button className="btn btn-default">
-                This week
+                &nbsp;<span className="glyphicon glyphicon-forward"></span>&nbsp;
+              </button>
+
+              <button className="btn btn-default">
+                &nbsp;<span className="glyphicon glyphicon-fast-forward"></span>&nbsp;
               </button>
             </span>
           </div>
+
+          <div className="grn_week__summary text-center">
+            <h2 className="h4">Week #{this.weekNum()}</h2>
+
+            <span className="badge grn_week__badge" title="Units">{this.props.units}</span>
+            <span className="badge grn_week__badge" title="Cartons">{this.props.cartons}</span>
+            <span className="badge grn_week__badge" title="Pallets">{this.props.pallets}</span>
+          </div>
         </div>
 
-        <div className="col-md-3 col-md-offset-6">
+        <div className="col-md-3 col-md-offset-1">
           <div className="input-group">
             <input type="text"
                    className="form-control"
@@ -127,6 +153,10 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   handleEditGoodsReceivedNotice(id) {
     this.setState({ editing: true });
+  }
+
+  weekNum() {
+    return this.props.weekNum || moment().isoWeek();
   }
 }
 
