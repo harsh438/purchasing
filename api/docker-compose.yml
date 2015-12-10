@@ -11,7 +11,7 @@ web:
     MYSQL_USER: root
     MYSQL_PASSWORD: root
 db:
-  image: mysql
+  image: mysql:5.5
   ports:
     - "13306:3306"
   environment:
