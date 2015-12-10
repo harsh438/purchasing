@@ -32,19 +32,25 @@ class SuppliersTermsIndex extends React.Component {
   render() {
     return (
       <div className="container-fluid" style={{ marginTop: '70px' }}>
-        <div className="panel panel-default">
-          <div className="panel-body">
-            <SupplierTermsFilters supplierTermsList={this.props.supplierTermsList}
-                                  suppliers={this.props.suppliers}
-                                  brands={this.props.brands}
-                                  seasons={this.props.seasons}
-                                  filters={this.props.location.query.filters}
-                                  onFilter={this.handleFilters.bind(this)}/>
+        <div className="row" style={{ marginBottom: '20px' }}>
+          <div className="col-md-12">
+            <h1>Supplier Terms</h1>
           </div>
         </div>
 
-        <div className="panel panel-default">
-          <div className="panel-body">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="panel panel-default">
+              <div className="panel-body">
+                <SupplierTermsFilters supplierTermsList={this.props.supplierTermsList}
+                                      suppliers={this.props.suppliers}
+                                      brands={this.props.brands}
+                                      seasons={this.props.seasons}
+                                      filters={this.props.location.query.filters}
+                                      onFilter={this.handleFilters.bind(this)}/>
+              </div>
+            </div>
+
             <div className="text-right">
               <a href={this.exportUrl()} className="btn btn-default">
                 <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>&nbsp;
