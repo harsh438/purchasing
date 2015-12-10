@@ -85,7 +85,7 @@ class ProductMigrator
   def product_attrs
     { product_id: product.id,
       manufacturer_sku: product.manufacturer_sku,
-      manufacturer_size: language_option.option.size,
+      manufacturer_size: language_option.try(:option).try(:size),
       inv_track: product.inv_track,
       size: language_option.name,
       cost_price: product.cost,
