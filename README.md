@@ -19,7 +19,7 @@ Originally brought to you by the [Made Tech team](https://github.com/madetech).
 * Run `docker-machine start default` to start the VM.
 * Run `eval $(docker-machine env default)` to bootstrap the env vars. Either add this line to your bashrc or run it in each new tab you open (For fish shell, use `eval (docker-machine env default)`).
 * `cd` into `api/` and run `docker compose up`.
-* Run `docker-compose run web rake db:create db:schema:load`.
+* Run `docker-compose run web rake db:create db:schema:load` in a new tab (you'll need to bootstrap the env vars here, too).
 
 Gotchas:
 * Instead of `bundle exec X`, use `docker-compose run web X` to run commands inside the container.
