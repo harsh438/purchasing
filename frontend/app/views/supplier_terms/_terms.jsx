@@ -44,16 +44,12 @@ export default class SupplierTerms extends React.Component {
   }
 
   renderRow(field, i) {
-    let value = this.getField(field);
-
-    if (value) {
-      return (
-        <tr key={i}>
-          <th>{startCase(field)}</th>
-          <td>{value}</td>
-        </tr>
-      );
-    }
+    return (
+      <tr key={i}>
+        <th>{startCase(field)}</th>
+        <td>{this.getField(field)}</td>
+      </tr>
+    );
   }
 
   getField(field) {
