@@ -7,7 +7,7 @@ class SupplierTermsController < ApplicationController
   end
 
   def show
-    render json: SupplierTerms.find(params[:id]).as_json_with_url
+    render json: SupplierTerms.find(params[:id]).as_json_with_url_and_supplier_name
   end
 
   private

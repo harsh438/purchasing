@@ -19,17 +19,30 @@ class SupplierTermsShow extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
-      <div className="col-md-6 col-md-offset-3">
-        <div className="suppliers_terms_show" style={{ marginTop: '70px' }}>
-          <div className="panel panel-default">
-              <div className="panel-heading" style={{ overflow: 'hidden' }}>
-                <h3 className="panel-title pull-left">Term</h3>
-                {this.renderBackLink()}
-              </div>
-              <div className="panel-body">
-                <SupplierTerms terms={this.props.supplierTerms} />
-              </div>
+      <div className="suppliers_terms_show container-fluid" style={{ marginTop: '70px' }}>
+        <div className="row" style={{ marginBottom: '20px' }}>
+          <div className="col-md-12">
+            <h1>
+              <Link to="/suppliers">Suppliers</Link>
+              &nbsp;/&nbsp;
+              <Link to={`/suppliers/${this.props.supplierTerms.supplierId}/edit`}>
+                {this.props.supplierTerms.supplierName}
+              </Link>
+              &nbsp;/&nbsp;
+              <Link to={`/suppliers/${this.props.supplierTerms.supplierId}/terms`}>
+                Terms
+              </Link>
+              &nbsp;/&nbsp;
+              {this.props.supplierTerms.createdAt}
+            </h1>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-6">
+            <SupplierTerms terms={this.props.supplierTerms} />
           </div>
         </div>
       </div>

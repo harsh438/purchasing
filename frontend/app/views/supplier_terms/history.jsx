@@ -1,9 +1,9 @@
 import React from 'react';
-import { loadSupplier } from '../../actions/suppliers';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
+import { loadSupplier } from '../../actions/suppliers';
 import { assign } from 'lodash';
 import { map } from 'lodash';
-import { Link } from 'react-router';
 import SuppliersTable from './_table';
 
 class SupplierTermsHistory extends React.Component {
@@ -13,24 +13,27 @@ class SupplierTermsHistory extends React.Component {
 
   render() {
     return (
-      <div className="suppliers_terms_history" style={{ marginTop: '70px' }}>
-        <div className="col-md-12">
-            <div className="panel panel-default">
-              <div className="panel-heading" style={{ overflow: 'hidden' }}>
-                <h3 className="panel-title pull-left">
-                  Terms history for {this.props.supplier.name}
-                </h3>
-
-                <Link className="pull-right" to={`/suppliers/${this.props.params.id}/edit`}>
-                  <span className="glyphicon glyphicon-arrow-left"></span>
-                  &nbsp; Go back to supplier page
-                </Link>
-              </div>
-              <div className="panel-body">
-                <SuppliersTable terms={this.props.supplier.terms} />
-              </div>
-            </div>
+      <div className="suppliers_terms_history container-fluid"
+           style={{ marginTop: '70px' }}>
+        <div className="row" style={{ marginBottom: '20px' }}>
+          <div className="col-md-8">
+            <h1>
+              <Link to="/suppliers">Suppliers</Link>
+              &nbsp;/&nbsp;
+              <Link to={`/suppliers/${this.props.supplier.id}/edit`}>
+                {this.props.supplier.name}
+              </Link>
+              &nbsp;/&nbsp;
+              Terms
+            </h1>
           </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-6">
+            <SuppliersTable terms={this.props.supplier.terms} />
+          </div>
+        </div>
       </div>
     );
   }

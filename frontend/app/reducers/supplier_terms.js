@@ -1,7 +1,9 @@
 import { assign, map } from 'lodash';
 import { camelizeKeys } from '../utilities/inspection';
 
-export function reduceSupplierTerms(state = {}, action) {
+const initialState = { supplierTerms: {} };
+
+export function reduceSupplierTerms(state = initialState, action) {
   switch (action.type) {
   case 'SET_SUPPLIER_TERMS':
     return assign({}, state, { supplierTerms: camelizeKeys(action.results) });
@@ -10,7 +12,7 @@ export function reduceSupplierTerms(state = {}, action) {
   }
 }
 
-export function reduceTerms(state = {}, action) {
+export function reduceTerms(state = initialState, action) {
   switch (action.type) {
   case 'LOAD_TERMS':
     return assign({}, state, { terms: map(action.results.terms, camelizeKeys),
