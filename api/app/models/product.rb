@@ -10,7 +10,6 @@ class Product < ActiveRecord::Base
                  size: :pSize,
                  vendor_id: :venID,
                  on_sale: :pSale,
-                 inv_track: :invTrack,
                  color: :pUDFValue2,
                  season: :pUDFValue4
 
