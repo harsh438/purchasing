@@ -24,6 +24,7 @@ class OrdersEdit extends React.Component {
               <h1>
                 <Link to="/orders">Reorders</Link>
                 &nbsp;/ {this.props.order.name}
+                {this.renderExportedBadge()}
               </h1>
             </div>
           </div>
@@ -50,13 +51,21 @@ class OrdersEdit extends React.Component {
   }
 
   renderAddLineItemsForm() {
-    if (this.props.order.exported) {
-      return (<span className="label label-success">Exported</span>);
-    } else {
+    if (!this.props.order.exported) {
       return (
         <OrderLineItemsForm errors={this.props.errors}
                             erroredFields={this.props.erroredFields}
                             onAddLineItems={this.handleOrderLineItemsAdd.bind(this)} />
+      );
+    }
+  }
+
+  renderExportedBadge() {
+    if (this.props.order.exported) {
+      return (
+        <small style={{ position: 'relative', top: '-6px', left: '20px' }}>
+          <span className="label label-success">Exported</span>
+        </small>
       );
     }
   }
@@ -68,7 +77,7 @@ class OrdersEdit extends React.Component {
 
     return (
       <div className="row">
-        <div className="col-md-12">
+        <div className="col-md-6">
           <div className="panel panel-default">
             <div className="panel-heading">
               <h3 className="panel-title">Generated Purchase Orders</h3>
@@ -80,7 +89,7 @@ class OrdersEdit extends React.Component {
                   <tr>
                     <th>PO #</th>
                     <th>Vendor</th>
-                    <th>Download</th>
+                    <th className="text-right">Download</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -108,7 +117,7 @@ class OrdersEdit extends React.Component {
             </Link>
           </td>
           <td>{po.vendorName}</td>
-          <td>
+          <td className="text-right">
             <a href={`/api/purchase_order_line_items.csv?po_number=${po.id}&summary_id=${po.id}`}
                className="btn btn-default btn-sm"
                target="_blank">
