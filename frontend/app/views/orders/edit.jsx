@@ -19,17 +19,18 @@ class OrdersEdit extends React.Component {
     return (
       <div className="order_edit" style={{ marginTop: '70px' }}>
         <div className="container-fluid">
+          <div className="row" style={{ marginBottom: '20px' }}>
+            <div className="col-md-6">
+              <h1>
+                <Link to="/orders">Reorders</Link>
+                &nbsp;/ {this.props.order.name}
+              </h1>
+            </div>
+          </div>
+
           <div className="row">
             <div className="col-md-12">
-              <div className="panel panel-default">
-                <div className="panel-heading">
-                  <h3 className="panel-title">{this.props.order.name}</h3>
-                </div>
-
-                <div className="panel-body">
-                  {this.renderAddLineItemsForm()}
-                </div>
-              </div>
+              {this.renderAddLineItemsForm()}
             </div>
           </div>
 

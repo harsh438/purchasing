@@ -18,7 +18,8 @@ export default class OrderLineItemsForm extends React.Component {
 
   render() {
     return (
-      <div className="order_line_item_form">
+      <div className="order_line_item_form"
+           style={{ marginBottom: '40px' }}>
         <Nav bsStyle="tabs"
              activeKey={this.state.tab}
              onSelect={this.handleTabChange.bind(this)}>
@@ -39,13 +40,17 @@ export default class OrderLineItemsForm extends React.Component {
     if (this.state.tab !== 'multi') return;
 
     return(
-      <form className="form" onSubmit={this.handleMultiSubmit.bind(this)}>
-        <OrderLineItemsSpreadsheet ref="spreadsheet" />
+      <form onSubmit={this.handleMultiSubmit.bind(this)}>
+        <div className="row">
+          <div className="col-md-4">
+            <OrderLineItemsSpreadsheet ref="spreadsheet" />
+          </div>
 
-        <div className="form-group" style={{ marginTop: '1.7em' }}>
-          <button className="btn btn-success">
-            Create
-          </button>
+          <div className="form-group col-md-2">
+            <button className="btn btn-success">
+              Create
+            </button>
+          </div>
         </div>
       </form>
     );
@@ -55,7 +60,8 @@ export default class OrderLineItemsForm extends React.Component {
     if (this.state.tab !== 'single') return;
 
     return (
-      <form className="form" onSubmit={this.handleSingleSubmit.bind(this)}>
+      <form className="form"
+            onSubmit={this.handleSingleSubmit.bind(this)}>
         <div className="row">
           <div className="form-group col-md-2">
             <label htmlFor="internalSku">Internal SKU</label>

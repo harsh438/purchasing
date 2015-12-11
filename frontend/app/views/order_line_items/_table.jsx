@@ -14,7 +14,7 @@ export default class OrderLineItemsTable extends React.Component {
     if (this.props.lineItems.length === 0) {
       return (
         <div style={{ width: '100%', textAlign: 'center' }}>
-          No results to show.
+          <em>Add some items to this order :D</em>
         </div>
       );
     }
@@ -22,35 +22,31 @@ export default class OrderLineItemsTable extends React.Component {
     return (
       <div className="row">
         <div className="col-md-12">
-          <div className="panel panel-default">
-            <div className="panel-body">
-              <button className="btn btn-warning"
-                      disabled={this.isExportButtonDisabled()}
-                      onClick={this.handleExportOrder.bind(this)}>
-                Generate Purchase Orders
-              </button>
+          <button className="btn btn-warning"
+                  disabled={this.isExportButtonDisabled()}
+                  onClick={this.handleExportOrder.bind(this)}>
+            Generate Purchase Orders
+          </button>
 
-              <hr />
+          <hr />
 
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th style={{ width: '10%' }}>Brand Name</th>
-                    <th style={{ width: '30%' }}>Product Name</th>
-                    <th style={{ width: '10%' }}>Internal SKU</th>
-                    <th className="text-center" style={{ width: '8%' }}>Quantity</th>
-                    <th className="text-center" style={{ width: '8%' }}>Cost</th>
-                    <th className="text-center" style={{ width: '8%' }}>Discount %</th>
-                    <th className="text-center" style={{ width: '12%' }}>Drop Date</th>
-                    <th style={{ width: '10%' }}>&nbsp;</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.renderLineItems()}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <table className="table">
+            <thead>
+              <tr>
+                <th style={{ width: '10%' }}>Brand Name</th>
+                <th style={{ width: '30%' }}>Product Name</th>
+                <th style={{ width: '10%' }}>Internal SKU</th>
+                <th className="text-center" style={{ width: '8%' }}>Quantity</th>
+                <th className="text-center" style={{ width: '8%' }}>Cost</th>
+                <th className="text-center" style={{ width: '8%' }}>Discount %</th>
+                <th className="text-center" style={{ width: '12%' }}>Drop Date</th>
+                <th style={{ width: '10%' }}>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.renderLineItems()}
+            </tbody>
+          </table>
         </div>
       </div>
     );
