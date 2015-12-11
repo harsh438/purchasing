@@ -99,7 +99,8 @@ class Sku::Generator
   end
 
   def product_attrs
-    { manufacturer_sku: attrs[:manufacturer_sku],
+    { manufacturer_sku: "#{attrs[:manufacturer_sku]}-#{attrs[:manufacturer_color]}",
+      color: attrs[:color],
       price: attrs[:price],
       cost: attrs[:cost_price],
       on_sale: attrs[:on_sale] || '',
