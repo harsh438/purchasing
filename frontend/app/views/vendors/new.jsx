@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { assign } from 'lodash';
 import VendorsForm from './_form';
 import { createVendor } from '../../actions/vendors';
@@ -19,8 +20,16 @@ class VendorsNew extends React.Component {
     return (
       <div className="vendors_new container-fluid"
            style={{ marginTop: '70px' }}>
+        <div className="row" style={{ marginBottom: '20px' }}>
+          <div className="col-md-6">
+            <h1>
+              <Link to="/vendors">Brands</Link>
+              &nbsp;/ Add brand
+            </h1>
+          </div>
+        </div>
         <div className="row">
-          <div className="col-md-6 col-md-offset-3">
+          <div className="col-md-6">
             <VendorsForm title="Create Brand"
                          submitText="Add Brand"
                          onSubmitVendor={this.handleCreateVendor.bind(this)} />

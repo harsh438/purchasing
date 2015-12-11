@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { map, assign } from 'lodash';
 import { loadVendor, editVendor } from '../../actions/vendors';
 import { loadSeasons, loadSuppliers } from '../../actions/filters';
@@ -17,18 +18,29 @@ class VendorsEdit extends React.Component {
 
   render() {
     return (
-      <div className="vendors_edit" style={{ marginTop: '70px' }}>
-        <div className="col-md-6">
-          <VendorsForm title="Edit Brand"
-                       submitText="Save"
-                       vendor={this.props.vendor}
-                       onSubmitVendor={this.handleEditVendor.bind(this)} />
+      <div className="vendors_edit container-fluid" style={{ marginTop: '70px' }}>
+        <div className="row" style={{ marginBottom: '20px' }}>
+          <div className="col-md-6">
+            <h1>
+              <Link to="/vendors">Brands</Link>
+              &nbsp;/ {this.props.vendor.name}
+            </h1>
+          </div>
         </div>
 
-        <div className="col-md-6">
-          <VendorsAssociateSupplierForm onAssociateSupplier={this.handleAssociateSupplier.bind(this)}
-                                        suppliers={this.props.suppliers} />
-          <VendorsSupplierTable suppliers={this.props.vendor.suppliers} />
+        <div className="row">
+          <div className="col-md-6">
+            <VendorsForm title="Edit Brand"
+                         submitText="Save"
+                         vendor={this.props.vendor}
+                         onSubmitVendor={this.handleEditVendor.bind(this)} />
+          </div>
+
+          <div className="col-md-6">
+            <VendorsAssociateSupplierForm onAssociateSupplier={this.handleAssociateSupplier.bind(this)}
+                                          suppliers={this.props.suppliers} />
+            <VendorsSupplierTable suppliers={this.props.vendor.suppliers} />
+          </div>
         </div>
       </div>
     );

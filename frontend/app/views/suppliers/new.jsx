@@ -24,7 +24,7 @@ class SuppliersNew extends React.Component {
           <div className="col-md-6">
             <h1>
               <Link to="/suppliers">Suppliers</Link>
-              &nbsp;/ Add new supplier
+              &nbsp;/ Add supplier
             </h1>
           </div>
         </div>

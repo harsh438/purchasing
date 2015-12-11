@@ -17,53 +17,46 @@ export default class VendorsForm extends React.Component {
 
   render() {
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <h3 className="panel-title">{this.props.title}</h3>
-        </div>
-        <div className="panel-body">
-          <form className="form"
-                onChange={this.handleFormChange.bind(this)}
-                onSubmit={this.handleFormSubmit.bind(this)}>
-            <table className="table">
-              <tbody>
-                <tr>
-                  <td><label htmlFor="vendor_name">Name</label></td>
-                  <td><input className="form-control"
-                             id="vendor_name"
-                             name="name"
-                             placeholder="Name"
-                             required
-                             value={this.state.name} /></td>
-                </tr>
+      <form className="form"
+            onChange={this.handleFormChange.bind(this)}
+            onSubmit={this.handleFormSubmit.bind(this)}>
+        <table className="table">
+          <tbody>
+            <tr>
+              <td><label htmlFor="vendor_name">Name</label></td>
+              <td><input className="form-control"
+                         id="vendor_name"
+                         name="name"
+                         placeholder="Name"
+                         required
+                         value={this.state.name} /></td>
+            </tr>
 
-                <tr>
-                  <td>
-                    <div className="checkbox">
-                      <label>
-                        <input type="checkbox"
-                               name="discontinued"
-                               value="1"
-                               className="checkbox"
-                               checked={this.state.discontinued}
-                               onChange={this.handleCheckboxChange.bind(this)} />
+            <tr>
+              <td>
+                <div className="checkbox">
+                  <label>
+                    <input type="checkbox"
+                           name="discontinued"
+                           value="1"
+                           className="checkbox"
+                           checked={this.state.discontinued}
+                           onChange={this.handleCheckboxChange.bind(this)} />
 
-                        Discontinued
-                      </label>
-                    </div>
-                  </td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
+                    Discontinued
+                  </label>
+                </div>
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
 
-            <button className="btn btn-success"
-                    disabled={this.state.submitting}>
-              {this.props.submitText}
-            </button>
-          </form>
-        </div>
-      </div>
+        <button className="btn btn-success"
+                disabled={this.state.submitting}>
+          {this.props.submitText}
+        </button>
+      </form>
     );
   }
 
