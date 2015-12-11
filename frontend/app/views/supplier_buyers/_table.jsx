@@ -47,7 +47,7 @@ export default class SupplierBuyersTable extends React.Component {
 
   renderBuyers() {
     if (this.state.addingBuyer) return;
-    
+
     return map(this.props.supplier.buyers, (buyer, i) => {
       return (
         <li style={{ listStyleType: 'none' }} key={buyer.id}>
@@ -106,7 +106,7 @@ export default class SupplierBuyersTable extends React.Component {
   renderBuyersText() {
     if (this.props.supplier.buyers.length === 0) {
       return (
-        <p>
+        <p className="pull-left">
           <em>No buyers for this supplier</em>
         </p>
       );

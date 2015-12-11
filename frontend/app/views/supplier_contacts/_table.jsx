@@ -67,7 +67,7 @@ export default class SupplierContacts extends React.Component {
 
   renderContact(contact) {
     if (this.state.addingContact) return;
-    
+
     if (this.state.editingContact === contact.id) {
       return (
         <SupplierContactForm contact={contact}
@@ -118,7 +118,7 @@ export default class SupplierContacts extends React.Component {
   renderContactsText() {
     if (this.props.supplier.contacts.length === 0) {
       return (
-        <p>
+        <p className="pull-left">
           <em>No contacts for this supplier</em>
         </p>
       );
