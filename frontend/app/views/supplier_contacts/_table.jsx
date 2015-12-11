@@ -25,40 +25,29 @@ export default class SupplierContacts extends React.Component {
   renderContactAdd() {
     if (this.state.addingContact) {
       return (
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">Add Contact</h3>
-          </div>
-          <div className="panel-body">
-            <SupplierContactForm contact={{}}
-                                 onFormSubmit={this.props.onContactAdd}
-                                 submitText="Add contact"
-                                 submittingText="Adding contact..." />
-          </div>
-        </div>
+        <SupplierContactForm contact={{}}
+                             onFormSubmit={this.props.onContactAdd}
+                             submitText="Add contact"
+                             submittingText="Adding contact..." />
       );
     } else {
       return (
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">Contacts</h3>
-          </div>
-          <div className="panel-body">
-            <div style={{ marginBottom: '10px' }}>
-              {this.renderContactsText()}
+        <div className="clearfix"
+             style={{ marginBottom: '10px' }}>
+          {this.renderContactsText()}
 
-              <button className="btn btn-success"
-                      onClick={() => this.setState({ addingContact: true })}>
-                Add new contact
-              </button>
-            </div>
-          </div>
+          <button className="btn btn-success pull-right"
+                  onClick={() => this.setState({ addingContact: true })}>
+            Add new contact
+          </button>
         </div>
       );
     }
   }
 
   renderContacts() {
+    if (this.state.addingContact) return;
+
     return map(this.props.supplier.contacts, (contact, i) => {
       return (
         <li style={{ listStyleType: 'none' }} key={contact.id}>
@@ -77,6 +66,8 @@ export default class SupplierContacts extends React.Component {
   }
 
   renderContact(contact) {
+    if (this.state.addingContact) return;
+    
     if (this.state.editingContact === contact.id) {
       return (
         <SupplierContactForm contact={contact}

@@ -25,40 +25,29 @@ export default class SupplierBuyersTable extends React.Component {
   renderBuyerAdd() {
     if (this.state.addingBuyer) {
       return (
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">Add Buyer</h3>
-          </div>
-          <div className="panel-body">
-            <SupplierBuyersForm submitText="Add buyer"
-                                submittingText="Adding buyer..."
-                                buyer={{}}
-                                onFormSubmit={this.props.onBuyerAdd} />
-          </div>
-        </div>
+        <SupplierBuyersForm submitText="Add buyer"
+                            submittingText="Adding buyer..."
+                            buyer={{}}
+                            onFormSubmit={this.props.onBuyerAdd} />
       );
     } else {
       return (
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">Buyers</h3>
-          </div>
-          <div className="panel-body">
-            <div style={{ marginBottom: '10px' }}>
-              {this.renderBuyersText()}
+        <div className="clearfix"
+             style={{ marginBottom: '10px' }}>
+          {this.renderBuyersText()}
 
-              <button className="btn btn-success"
-                      onClick={() => this.setState({ addingBuyer: true })}>
-                Add new buyer
-              </button>
-            </div>
-          </div>
+          <button className="btn btn-success pull-right"
+                  onClick={() => this.setState({ addingBuyer: true })}>
+            Add new buyer
+          </button>
         </div>
       );
     }
   }
 
   renderBuyers() {
+    if (this.state.addingBuyer) return;
+    
     return map(this.props.supplier.buyers, (buyer, i) => {
       return (
         <li style={{ listStyleType: 'none' }} key={buyer.id}>
@@ -73,6 +62,8 @@ export default class SupplierBuyersTable extends React.Component {
   }
 
   renderBuyer(buyer) {
+    if (this.state.addingBuyer) return;
+
     if (this.state.editingBuyer === buyer.id) {
       return (
         <SupplierBuyersForm submitText="Save buyer"

@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
+import { Nav, NavItem } from 'react-bootstrap';
 import { at, assign, compact, flatten, map } from 'lodash';
 import { loadSupplier,
          editSupplier,
@@ -14,43 +16,65 @@ import SupplierTermsDefault from '../supplier_terms/_default';
 
 class SuppliersEdit extends React.Component {
   componentWillMount () {
-    this.state = { editingSupplier: false };
+    this.state = { editingSupplier: false, tab: 'details' };
     this.props.dispatch(loadSupplier(this.props.params.id));
     this.props.dispatch(loadSeasons());
   }
 
   render() {
     return (
-      <div className="suppliers_edit" style={{ marginTop: '70px' }}>
-        <div className="col-md-6">
-          <div className="panel panel-default">
-            <div className="panel-heading">
-              <h3 className="panel-title">{this.props.supplier.name}</h3>
-            </div>
-            <div className="panel-body">
-              {this.renderSupplier()}
-            </div>
+      <div className="suppliers_edit container-fluid" style={{ marginTop: '70px' }}>
+        <div className="row" style={{ marginBottom: '20px' }}>
+          <div className="col-md-6">
+            <h1>
+              <Link to="/suppliers">Suppliers</Link>
+              &nbsp;/ {this.props.supplier.name}
+            </h1>
           </div>
-
-          <SupplierContactsTable supplier={this.props.supplier}
-                                 onContactAdd={this.handleContactSave.bind(this)}
-                                 onContactEdit={this.handleContactSave.bind(this)} />
         </div>
 
-        <div className="col-md-6">
-          <SupplierTermsDefault supplier={this.props.supplier}
-                                seasons={this.props.seasons}
-                                onTermsSave={this.handleTermsSave.bind(this)} />
+        <div className="row">
+          <div className="col-md-6">
+            <Nav bsStyle="tabs"
+                 activeKey={this.state.tab}
+                 onSelect={this.handleTabChange.bind(this)}
+                 style={{ marginBottom: '10px' }}>
+              <NavItem eventKey="details">Details</NavItem>
+              <NavItem eventKey="contacts">Contacts</NavItem>
+              <NavItem eventKey="buyers">Buyers</NavItem>
+            </Nav>
 
-          <SupplierBuyersTable supplier={this.props.supplier}
-                               onBuyerAdd={this.handleBuyerSave.bind(this)}
-                               onBuyerEdit={this.handleBuyerSave.bind(this)} />
+            {this.renderTab()}
+          </div>
+
+          <div className="col-md-6">
+            <SupplierTermsDefault supplier={this.props.supplier}
+                                  seasons={this.props.seasons}
+                                  onTermsSave={this.handleTermsSave.bind(this)} />
+          </div>
         </div>
       </div>
     );
   }
 
-
+  renderTab() {
+    switch (this.state.tab) {
+    case 'details':
+      return this.renderSupplier();
+    case 'contacts':
+      return (
+        <SupplierContactsTable supplier={this.props.supplier}
+                               onContactAdd={this.handleContactSave.bind(this)}
+                               onContactEdit={this.handleContactSave.bind(this)} />
+      );
+    case 'buyers':
+      return (
+        <SupplierBuyersTable supplier={this.props.supplier}
+                             onBuyerAdd={this.handleBuyerSave.bind(this)}
+                             onBuyerEdit={this.handleBuyerSave.bind(this)} />
+      );
+    }
+  }
 
   renderSupplier() {
     if (this.state.editingSupplier) {
@@ -66,8 +90,8 @@ class SuppliersEdit extends React.Component {
           <table className="table">
             <tbody>
               <tr>
-                <th>Returns Address</th>
-                <td>{this.renderReturnsAddress()}</td>
+                <th style={{ border: '0' }}>Returns Address</th>
+                <td style={{ border: '0' }}>{this.renderReturnsAddress()}</td>
               </tr>
 
               <tr>
@@ -120,6 +144,10 @@ class SuppliersEdit extends React.Component {
                                                           'returnsPostalCode']));
 
     return flatten(map(addressParts, part => [part, (<br />)]));
+  }
+
+  handleTabChange(tab) {
+    this.setState({ tab });
   }
 
   handleSupplierEdit(supplier) {
