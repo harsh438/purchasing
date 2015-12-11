@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { assign } from 'lodash';
 import SuppliersForm from './_form';
 import { createSupplier } from '../../actions/suppliers';
+import { Link } from 'react-router';
 
 class SuppliersNew extends React.Component {
   componentWillMount() {
@@ -19,12 +20,18 @@ class SuppliersNew extends React.Component {
     return (
       <div className="suppliers_new container-fluid"
            style={{ marginTop: '70px' }}>
+        <div className="row" style={{ marginBottom: '20px' }}>
+          <div className="col-md-6">
+            <h1>
+              <Link to="/suppliers">Suppliers</Link>
+              &nbsp;/ Add new supplier
+            </h1>
+          </div>
+        </div>
+
         <div className="row">
-          <div className="col-md-6 col-md-offset-3">
+          <div className="col-md-6">
             <div className="panel panel-default">
-              <div className="panel-heading">
-                <h3 className="panel-title">Add supplier</h3>
-              </div>
               <div className="panel-body">
                 <SuppliersForm title="Create Supplier"
                                submitText="Add Supplier"
