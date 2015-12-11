@@ -136,7 +136,8 @@ export default class PurchaseOrdersTableActions extends React.Component {
          className="btn btn-default pull-right"
          target="_blank"
          {...additionalParams}>
-        export as .csv
+        <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+        &nbsp;Export as CSV
       </a>
     );
   }

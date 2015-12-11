@@ -111,7 +111,8 @@ class OrdersEdit extends React.Component {
             <a href={`/api/purchase_order_line_items.csv?po_number=${po.id}&summary_id=${po.id}`}
                className="btn btn-default btn-sm"
                target="_blank">
-              export as .csv
+              <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+              &nbsp;Export as CSV
             </a>
           </td>
         </tr>

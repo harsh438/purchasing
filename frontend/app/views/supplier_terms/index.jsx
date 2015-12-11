@@ -53,8 +53,8 @@ class SuppliersTermsIndex extends React.Component {
 
             <div className="text-right">
               <a href={this.exportUrl()} className="btn btn-default">
-                <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>&nbsp;
-                Export as CSV
+                <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+                &nbsp;Export as CSV
               </a>
             </div>
 
