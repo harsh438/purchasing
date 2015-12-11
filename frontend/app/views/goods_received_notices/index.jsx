@@ -32,19 +32,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
             <h1>Goods Received Notices</h1>
           </div>
 
-
           <div className="col-md-3 col-md-offset-5">
-            <div className="input-group">
-              <input type="text"
-                     className="form-control"
-                     placeholder="GRN #" />
-              <span className="input-group-btn">
-                <button className="btn btn-success"
-                        onClick={this.handleToggleEditing.bind(this)}>
-                  Find
-                </button>
-              </span>
-            </div>
           </div>
         </div>
 
@@ -105,6 +93,20 @@ class GoodsReceivedNoticesIndex extends React.Component {
             <span className="badge grn_week__badge" title="Units">{this.props.units}</span>
             <span className="badge grn_week__badge" title="Cartons">{this.props.cartons}</span>
             <span className="badge grn_week__badge" title="Pallets">{this.props.pallets}</span>
+          </div>
+        </div>
+
+        <div className="col-md-3 col-md-offset-1">
+          <div className="input-group">
+            <input type="text"
+                   className="form-control"
+                   placeholder="GRN #" />
+            <span className="input-group-btn">
+              <button className="btn btn-primary"
+                      onClick={this.handleToggleEditing.bind(this)}>
+                Find
+              </button>
+            </span>
           </div>
         </div>
       </div>
