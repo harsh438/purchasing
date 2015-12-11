@@ -1,7 +1,7 @@
 module LegacyMappings
   extend ActiveSupport::Concern
 
-  def as_json(options)
+  def as_json(options = {})
     map(super, self.class.mapped_attributes, serializable_hash)
   end
 
