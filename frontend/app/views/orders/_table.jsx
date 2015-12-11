@@ -4,14 +4,6 @@ import OrdersTableRow from './_table_row';
 import { loadOrders } from '../../actions/orders';
 
 export class OrdersTable extends React.Component {
-  componentWillMount() {
-    this.state = { selectedOrders: [] };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ selectedOrders: [] });
-  }
-
   render() {
     return (
       <div className="orders_table">
@@ -47,13 +39,12 @@ export class OrdersTable extends React.Component {
   toggleOrderSelection(orderId) {
     let selectedOrders;
 
-    if (contains(this.state.selectedOrders, orderId)) {
-      selectedOrders = reject(this.state.selectedOrders, (id) => id === orderId);
+    if (contains(this.props.selectedOrders, orderId)) {
+      selectedOrders = reject(this.props.selectedOrders, (id) => id === orderId);
     } else {
-      selectedOrders = [...this.state.selectedOrders, orderId];
+      selectedOrders = [...this.props.selectedOrders, orderId];
     }
 
-    this.setState({ selectedOrders });
     this.props.onOrderSelection(selectedOrders);
   }
 }

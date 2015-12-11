@@ -18,7 +18,7 @@ class OrdersIndex extends React.Component {
     if (this.state.creatingOrder && nextProps.order) {
       this.props.history.pushState(null, `/orders/${nextProps.order.id}/edit`);
     } else {
-      this.setState({ exportingOrders: false });
+      this.setState({ exportingOrders: false, selectedOrders: [] });
     }
   }
 
@@ -48,6 +48,8 @@ class OrdersIndex extends React.Component {
 
             <OrdersTable orders={this.props.orders}
                          query={this.props.location.query}
+                         exportingOrders={this.state.exportingOrders}
+                         selectedOrders={this.state.selectedOrders}
                          onOrderSelection={this.handleOrderSelection.bind(this)} />
 
             <NumberedPagination activePage={this.props.activePage}
