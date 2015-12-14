@@ -11,7 +11,7 @@
   $order = array('order' => array('name' => 'A brand new order',
                                   'order_type' => 'preorder'));
 
-  $endpoint = 'http://localhost:5000/api/orders.json';
+  $endpoint = 'https://purchasing.surfdome.cc/api/orders.json';
   curl_setopt($ch, CURLOPT_URL, $endpoint);
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($order));
@@ -32,7 +32,7 @@
 
   $order = array('order' => array('line_items_attributes' => $line_items));
 
-  $endpoint = "http://localhost:5000/api/orders/{$order_id}.json";
+  $endpoint = "https://purchasing.surfdome.cc/api/orders/{$order_id}.json";
   curl_setopt($ch, CURLOPT_URL, $endpoint);
   curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
   curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($order));
@@ -49,13 +49,13 @@
 
   $id_params = array('id' => $order_id);
 
-  $endpoint = 'http://localhost:5000/api/orders/export.json';
+  $endpoint = 'https://purchasing.surfdome.cc/api/orders/export.json';
   curl_setopt($ch, CURLOPT_URL, $endpoint);
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($id_params));
 
   $output = json_decode(curl_exec($ch));
   var_dump($output);
-
+  curl_close($ch);
 
 ?>
