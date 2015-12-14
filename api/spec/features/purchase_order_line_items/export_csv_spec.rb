@@ -25,6 +25,11 @@ feature 'Download purchase orders as CSV' do
     then_the_csv_file_should_contain_more_than_50_results
   end
 
+  scenario 'Specify fields to be included' do
+    when_the_fields_are_specified
+    then_the_export_should_only_include_the_specified_fields
+  end
+
   def when_a_user_tries_to_download_csv_without_filters
     visit purchase_order_line_items_path(format: :csv)
   end
@@ -64,6 +69,20 @@ feature 'Download purchase orders as CSV' do
 
   def then_the_csv_file_should_contain_more_than_50_results
     expect(csv_result_rows.count).to be > 50
+  end
+
+  def when_the_fields_are_specified
+    visit purchase_order_line_items_path(format: :csv,
+                                         vendor_id: vendor.id,
+                                         columns: [
+                                           :product_sku,
+                                           :ordered_quantity,
+                                           :ordered_cost
+                                         ])
+  end
+
+  def then_the_export_should_only_include_the_specified_fields
+    expect(csv_result_rows.first.length).to be(3)
   end
 
   private
