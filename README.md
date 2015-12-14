@@ -24,6 +24,7 @@ Originally brought to you by the [Made Tech team](https://github.com/madetech).
 
 Gotchas:
 * Instead of `bundle exec X`, use `docker-compose run web X` to run commands inside the container.
+* ALWAYS use `docker-compose build` instead of `bundle install`.
 * Use `docker ps` to see running containers.
 * To connect to the DB via sequel pro, run `docker-machine env default` and use the IP of the docker host, and use the port `13306`.
 * To connect in the browser, use the docker host IP from the previous example at port 3000 (e.g. `http://192.168.99.100:3000/`).
