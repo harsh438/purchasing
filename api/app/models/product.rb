@@ -14,7 +14,7 @@ class Product < ActiveRecord::Base
                  season: :pUDFValue4
 
 
-  has_many :product_gender, foreign_key: :pid
+  has_many :product_genders, foreign_key: :pid
   has_one :language_product, foreign_key: :pID
   has_many :language_product_options, foreign_key: :pID
   has_many :product_categories, foreign_key: :pID
