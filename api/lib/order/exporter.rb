@@ -1,28 +1,28 @@
 class Order::Exporter
-  def export(orders)
+  def export(orders, extra_params = {})
     GroupedOrders.new(orders).flat_map do |vendor_id, drop_date, order_line_items, orders|
-      assign_po_to_orders(create_po(order_line_items), orders)
+      assign_po_to_orders(create_po(order_line_items, extra_params), orders)
     end
   end
 
   private
 
-  def create_po(order_line_items)
+  def create_po(order_line_items, extra_params)
     PurchaseOrder.create!(vendor_id: order_line_items.first.vendor_id,
                           vendor_name: order_line_items.first.vendor_name,
-                          operator: 'REORDER_TOOL',
+                          operator: extra_params[:operator] || 'REORDER_TOOL',
                           order_type: 'R',
-                          line_items: create_po_line_items(order_line_items),
+                          line_items: create_po_line_items(order_line_items, extra_params),
                           drop_date: order_line_items.first.drop_date)
   end
 
-  def create_po_line_items(order_line_items)
+  def create_po_line_items(order_line_items, extra_params)
     order_line_items.map do |order_line_item|
-      create_po_line_item(order_line_item)
+      create_po_line_item(order_line_item, extra_params)
     end
   end
 
-  def create_po_line_item(order_line_item)
+  def create_po_line_item(order_line_item, extra_params)
     PurchaseOrderLineItem.create!(order_date: order_line_item.order.created_at,
                                   drop_date: order_line_item.drop_date,
                                   season: order_line_item.season || '',
@@ -35,7 +35,8 @@ class Order::Exporter
                                   option_id: order_line_item.option_id || 0,
                                   quantity: order_line_item.quantity,
                                   product_name: order_line_item.product_name,
-                                  reporting_pid: order_line_item.reporting_pid)
+                                  reporting_pid: order_line_item.reporting_pid,
+                                  single_line_id: extra_params[:single_line_id] || nil)
   end
 
   def assign_po_to_orders(purchase_order, orders)
