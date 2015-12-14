@@ -1,4 +1,8 @@
 class ProductMigrator
+  class NoManufacturerSku < RuntimeError; end
+  class InternalSkuAlreadyExists < RuntimeError; end
+  class NoLanguageProduct < RuntimeError; end
+
   def migrate
     Product.find_in_batches.with_index do |group, batch|
       group.each { |product| migrate_single(product) }
@@ -76,18 +80,32 @@ class ProductMigrator
     product.manufacturer_sku.split('-').drop(1).last || ''
   end
 
-  def ok_to_migrate?
+  def check_manufacturer_sku
     if !product.manufacturer_sku.present?
-      @validation_error = "Skipping `#{internal_sku}` (Product has no manufacturer_sku)..."
-      return false
+      raise NoManufacturerSku, "Skipping `#{internal_sku}` (Product has no manufacturer_sku)..."
     end
+  end
 
+  def check_language_product
+    if !product.language_product.present?
+      raise NoLanguageProduct, "Skipping `#{internal_sku}` (Product has no language_product)..."
+    end
+  end
+
+  def check_internal_sku
     if Sku.find_by(sku: internal_sku)
-      @validation_error = "Skipping #{internal_sku} (`#{internal_sku}` already exists)..."
-      return false
+      raise InternalSkuAlreadyExists, "Skipping #{internal_sku} (`#{internal_sku}` already exists)..."
     end
+  end
 
+  def ok_to_migrate?
+    check_manufacturer_sku
+    check_language_product
+    check_internal_sku
     true
+  rescue => e
+    puts e
+    false
   end
 
   def sku_attrs
