@@ -128,7 +128,7 @@ class ProductMigrator
 
   def product_detail_attrs
     { manufacturer_color: manufacturer_color,
-      color: manufacturer_color,
-      gender: product.try(:product_detail).try(:gender) || '' }
+      color: product.color,
+      gender: product.product_genders.first.gender }
   end
 end
