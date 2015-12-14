@@ -126,7 +126,8 @@ class PurchaseOrderLineItem < ActiveRecord::Base
                  product_rrp: :orderTool_RRP,
                  reporting_pid: :reporting_pID,
                  original_pid: :original_pID,
-                 original_option_id: :original_oID
+                 original_option_id: :original_oID,
+                 single_line_id: :orderTool_SingleLineID
 
   filters :vendor_id,
           :gender,
