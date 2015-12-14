@@ -17,6 +17,10 @@ class Sku::Generator
     @product ||= Product.create(product_attrs)
   end
 
+  def product_gender
+    @product_gender ||= ProductGender.create(product_gender_attrs)
+  end
+
   def option
     @option ||= Option.create(option_attrs)
   end
@@ -68,11 +72,16 @@ class Sku::Generator
                 element_id: element.id,
                 option_id: language_product_option.id,
                 category_id: language_category.id,
-                gender: attrs[:lead_gender] })
+                gender: product_gender.gender })
   end
 
   def element_attrs
     { name: attrs[:size] }
+  end
+
+  def product_gender_attrs
+    { product_id: product.id,
+      gender: attrs[:lead_gender].to_sym }
   end
 
   def product_option_attrs
