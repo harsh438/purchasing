@@ -26,7 +26,7 @@ class OrdersController < ApplicationController
 
   def export
     orders = Order.where(id: params[:id]).includes(:line_items, :exports)
-    Order::Exporter.new.export(orders)
+    Order::Exporter.new.export(orders, export_attrs.to_h)
     render json: orders.reload.map { |order| order.as_json(include: [:line_items, :exports]) }
   end
 
@@ -34,6 +34,10 @@ class OrdersController < ApplicationController
 
   def order
     @order ||= Order.find(params[:id])
+  end
+
+  def export_attrs
+    params.permit(:single_line_id, :operator)
   end
 
   def order_attrs
