@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { map, assign } from 'lodash';
+import Qs from 'qs';
 import { loadOrder,
          createLineItemsForOrder,
          deleteLineItem,
@@ -118,7 +119,7 @@ class OrdersEdit extends React.Component {
           </td>
           <td>{po.vendorName}</td>
           <td className="text-right">
-            <a href={`/api/purchase_order_line_items.csv?po_number=${po.id}&summary_id=${po.id}`}
+            <a href={this.csvExportUrl(po)}
                className="btn btn-default btn-sm"
                target="_blank">
               <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
@@ -128,6 +129,23 @@ class OrdersEdit extends React.Component {
         </tr>
       );
     });
+  }
+
+  csvExportUrl(po) {
+    const params = {po_number: po.id,
+                    summary_id: po.id,
+                    columns: ['orderTool_SKU',
+                              'supplier_product_name',
+                              'supplier_color_name',
+                              'product_size',
+                              'brand_size',
+                              'ordered_quantity',
+                              'ordered_cost',
+                              'ordered_value']
+    }
+    const queryParams = Qs.stringify(params, { arrayFormat: 'brackets' });
+
+    return `/api/purchase_order_line_items.csv?${queryParams}`;
   }
 
   handleOrderLineItemsAdd(lineItems) {
