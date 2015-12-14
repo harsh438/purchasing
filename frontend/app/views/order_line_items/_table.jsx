@@ -14,7 +14,7 @@ export default class OrderLineItemsTable extends React.Component {
     if (this.props.lineItems.length === 0) {
       return (
         <div style={{ width: '100%', textAlign: 'center' }}>
-          <em>Add some items to this order :D</em>
+          <em>Add some items to this order</em>
         </div>
       );
     }
