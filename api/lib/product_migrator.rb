@@ -57,11 +57,19 @@ class ProductMigrator
   end
 
   def element
-    Element.find_by(name: language_option.name)
+    if @language_option
+      Element.find_by(name: language_option.name)
+    else
+      nil
+    end
   end
 
   def internal_sku
-    "#{product.id}-#{element.id}"
+    if element.present?
+      "#{product.id}-#{element.id}"
+    else
+      "#{product.id}"
+    end
   end
 
   def manufacturer_color
