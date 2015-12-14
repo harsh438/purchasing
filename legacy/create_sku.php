@@ -16,7 +16,7 @@
                  'vendor_id' => 232,
                  'inv_track' => 'P');
 
-  $endpoint = 'http://localhost:5000/api/skus.json';
+  $endpoint = 'http://192.168.99.100:3000/api/skus.json';
 
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, $endpoint);

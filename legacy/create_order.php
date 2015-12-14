@@ -11,7 +11,7 @@
   $order = array('order' => array('name' => 'A brand new order',
                                   'order_type' => 'preorder'));
 
-  $endpoint = 'https://purchasing.surfdome.cc/api/orders.json';
+  $endpoint = 'http://192.168.99.100:3000/api/orders.json';
   curl_setopt($ch, CURLOPT_URL, $endpoint);
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($order));
@@ -32,13 +32,12 @@
 
   $order = array('order' => array('line_items_attributes' => $line_items));
 
-  $endpoint = "https://purchasing.surfdome.cc/api/orders/{$order_id}.json";
+  $endpoint = "http://192.168.99.100:3000/api/orders/{$order_id}.json";
   curl_setopt($ch, CURLOPT_URL, $endpoint);
   curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
   curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($order));
 
   $output = json_decode(curl_exec($ch));
-
   var_dump($output);
   curl_close($ch);
 
@@ -47,9 +46,9 @@
   curl_setopt($ch, CURLOPT_USERPWD, 'purchasing' . ":" . 'lastordersplease');
   curl_setopt($ch, CURLOPT_VERBOSE, true);
 
-  $id_params = array('id' => $order_id);
+  $id_params = array('id' => $order_id, 'operator' => 'OT_4324', 'single_line_id' => 123);
 
-  $endpoint = 'https://purchasing.surfdome.cc/api/orders/export.json';
+  $endpoint = 'http://192.168.99.100:3000/api/orders/export.json';
   curl_setopt($ch, CURLOPT_URL, $endpoint);
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($id_params));
