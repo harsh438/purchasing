@@ -37,7 +37,7 @@ class OrdersController < ApplicationController
   end
 
   def export_attrs
-    params.permit(:single_line_id, :operator)
+    params.permit(:single_line_id, :operator, :id, :format)
   end
 
   def order_attrs
