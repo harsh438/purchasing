@@ -68,7 +68,7 @@ class ProductMigrator
     if element.present?
       "#{product.id}-#{element.id}"
     else
-      "#{product.id}"
+      product.id.to_s
     end
   end
 
