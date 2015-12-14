@@ -559,7 +559,7 @@ ActiveRecord::Schema.define(version: 20151211025334) do
 
   create_table "product_gender", id: false, force: :cascade do |t|
     t.integer "pid",    limit: 4, default: 0, null: false
-    t.string  "gender", limit: 0,             null: false
+    t.string  "gender", limit: 1,             null: false
   end
 
   add_index "product_gender", ["pid"], name: "pID", using: :btree
