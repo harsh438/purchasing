@@ -28,7 +28,7 @@ class Order::Exporter
                                   season: order_line_item.season || '',
                                   gender: order_line_item.gender || '',
                                   status: 2,
-                                  operator: 'REORDER_TOOL',
+                                  operator: extra_params[:operator] || 'REORDER_TOOL',
                                   cost: order_line_item.discounted_cost,
                                   vendor_id: order_line_item.vendor_id,
                                   product_id: order_line_item.product_id,
