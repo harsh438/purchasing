@@ -32,7 +32,7 @@ export default class SupplierTerms extends React.Component {
     return (
       <table className="table">
         <tbody>
-          {map(this.fields, this.renderRow, this)}
+          {map(this.props.termsSelected || this.fields, this.renderRow, this)}
         </tbody>
       </table>
     );

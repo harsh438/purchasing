@@ -19,7 +19,6 @@ class SupplierTermsShow extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="suppliers_terms_show container-fluid" style={{ marginTop: '70px' }}>
         <div className="row" style={{ marginBottom: '20px' }}>

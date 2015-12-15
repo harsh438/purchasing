@@ -36,30 +36,9 @@ export default class SupplierTermsDefault extends React.Component {
                    onClick={() => this.setState({ editingTerms: true })}>
             Edit terms
           </button>
-
-
-          <Link className="btn btn-default pull-right"
-                to={`/suppliers/${this.props.supplier.id}/terms`}
-                style={{ marginLeft: '10px' }}>
-            View terms history
-          </Link>
-
-          {this.renderPreviousVersionLink()}
         </p>
       </div>
     );
-  }
-
-  renderPreviousVersionLink() {
-    if (this.props.supplier.defaultTerms.parentId) {
-      return (
-        <Link className="btn btn-default pull-right"
-              to={`/suppliers/term/${this.props.supplier.defaultTerms.parentId}`}>
-          <span className="glyphicon glyphicon-arrow-left"></span>
-          &nbsp;View previous version
-        </Link>
-      );
-    }
   }
 
   renderEmptyTerms() {

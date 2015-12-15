@@ -5,8 +5,6 @@ import SupplierTerms from './_terms';
 
 export default class SuppliersTermsTable extends React.Component {
   render() {
-    console.log('terms', this.props.terms);
-
     if (this.props.terms.length === 0) {
       return (
         <p>
@@ -43,16 +41,16 @@ export default class SuppliersTermsTable extends React.Component {
   }
 
   renderTermsSelectedTitle() {
-    if (this.props.termsSelected) {
+    if (this.props.termsSelected.length) {
       return (<th>Terms</th>);
     }
   }
 
   renderTermsSelectedRow(term) {
-    if (this.props.termsSelected) {
+    if (this.props.termsSelected.length) {
       return (
         <td>
-          <SupplierTerms fieldList={map(this.props.termsSelected, camelCase)}
+          <SupplierTerms termsSelected={map(this.props.termsSelected, camelCase)}
                          terms={term} />
         </td>
       );

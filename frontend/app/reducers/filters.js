@@ -5,7 +5,8 @@ const initialState = { brands: [],
                        genders: [],
                        orderTypes: [],
                        seasons: [],
-                       suppliers: [] };
+                       suppliers: [],
+                       supplierTermsList: [] };
 
 function removeEmpty(filters) {
   return filters.filter(function (filter) {

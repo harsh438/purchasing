@@ -1,7 +1,7 @@
 import { assign, map } from 'lodash';
 import { camelizeKeys } from '../utilities/inspection';
 
-const initialState = { supplierTerms: {} };
+const initialState = { supplierTerms: {}, terms: [] };
 
 export function reduceSupplierTerms(state = initialState, action) {
   switch (action.type) {
