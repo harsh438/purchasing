@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { assign, map } from 'lodash';
 import GoodsReceivedNoticesWeek from './_week';
-import GoodsReceivedNoticesDayHeading from './_day_heading';
 import GoodsReceivedNoticesEdit from './_edit';
 import { loadGoodsReceivedNotices } from '../../actions/goods_received_notices';
 import moment from 'moment';
@@ -40,7 +39,6 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
         <div className="row">
           <div className={leftClass}>
-            {this.renderDayHeadings()}
             {this.renderWeeks()}
           </div>
 
@@ -109,28 +107,6 @@ class GoodsReceivedNoticesIndex extends React.Component {
             </span>
           </div>
         </div>
-      </div>
-    );
-  }
-
-  renderDayHeadings() {
-    return (
-      <div className="row">
-        <GoodsReceivedNoticesDayHeading key="1"
-                                        day="Monday"
-                                        compact={this.state.editing} />
-        <GoodsReceivedNoticesDayHeading key="2"
-                                        day="Tuesday"
-                                        compact={this.state.editing} />
-        <GoodsReceivedNoticesDayHeading key="3"
-                                        day="Wednesday"
-                                        compact={this.state.editing} />
-        <GoodsReceivedNoticesDayHeading key="4"
-                                        day="Thursday"
-                                        compact={this.state.editing} />
-        <GoodsReceivedNoticesDayHeading key="5"
-                                        day="Friday"
-                                        compact={this.state.editing} />
       </div>
     );
   }

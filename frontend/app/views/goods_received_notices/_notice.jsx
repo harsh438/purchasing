@@ -6,7 +6,7 @@ export default class GoodsReceivedNoticesNotice extends React.Component {
       <a href="#edit"
          className={this.containerClass()}
          onClick={this.handleClick.bind(this)}>
-        GRN #{this.props.id} ({this.props.brandName})
+        GRN #{this.props.id} - {this.props.brandName}
 
         <span className={this.badgeClass()} title="Pallets">{this.props.pallets}</span>
         <span className={this.badgeClass()} title="Cartons">{this.props.cartons}</span>
@@ -30,7 +30,9 @@ export default class GoodsReceivedNoticesNotice extends React.Component {
     case 'late':
       return 'grn_notice--late list-group-item-danger';
     case 'delivered':
-      return 'grn_notice--delivered';
+      return 'grn_notice--delivered list-group-item-warning';
+    case 'received':
+      return 'grn_notice--received list-group-item-success';
     default:
       return '';
     }

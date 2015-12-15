@@ -6,16 +6,18 @@ export default class GoodsReceivedNoticesDay extends React.Component {
   render() {
     return (
       <div className={this.containerClass()}>
-        <div className="list-group">
-          <div className="list-group-item">
+        <div className="panel panel-default">
+          <div className="panel-heading">
             <span className="grn_day__title">{this.deliveryDate()}</span>
 
             <span className="badge grn_day__badge" title="Pallets">{this.props.pallets}</span>
             <span className="badge grn_day__badge" title="Cartons">{this.props.cartons}</span>
             <span className="badge grn_day__badge" title="Units">{this.props.units}</span>
           </div>
-
-          {this.renderNotices()}
+          
+          <div className="list-group">
+            {this.renderNotices()}
+          </div>
         </div>
 
         <div className="text-center">
@@ -51,7 +53,7 @@ export default class GoodsReceivedNoticesDay extends React.Component {
   }
 
   deliveryDate() {
-    return moment(this.props.deliveryDate, 'DD/MM/YYYY').format('Do MMM YYYY');
+    return moment(this.props.deliveryDate, 'DD/MM/YYYY').format('ddd, Do MMM');
   }
 
   handleEditGoodsReceivedNotice(e) {
