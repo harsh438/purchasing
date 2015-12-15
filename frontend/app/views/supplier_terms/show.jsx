@@ -31,10 +31,6 @@ class SupplierTermsShow extends React.Component {
                 {this.props.supplierTerms.supplierName}
               </Link>
               &nbsp;/&nbsp;
-              <Link to={`/suppliers/${this.props.supplierTerms.supplierId}/terms`}>
-                Terms
-              </Link>
-              &nbsp;/&nbsp;
               {this.props.supplierTerms.createdAt}
             </h1>
           </div>

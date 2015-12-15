@@ -3,8 +3,18 @@ import { map, find, matchesProperty, camelCase } from 'lodash';
 import { Link } from 'react-router';
 import SupplierTerms from './_terms';
 
-export default class SuppliersTable extends React.Component {
+export default class SuppliersTermsTable extends React.Component {
   render() {
+    console.log('terms', this.props.terms);
+
+    if (this.props.terms.length === 0) {
+      return (
+        <p>
+          <em>There aren't any terms here</em>
+        </p>
+      );
+    }
+
     return (
       <table className="table">
         <thead>
@@ -41,12 +51,15 @@ export default class SuppliersTable extends React.Component {
   renderTermsSelectedRow(term) {
     if (this.props.termsSelected) {
       return (
-        <td><SupplierTerms fieldList={map(this.props.termsSelected, camelCase)} terms={term} /></td>
+        <td>
+          <SupplierTerms fieldList={map(this.props.termsSelected, camelCase)}
+                         terms={term} />
+        </td>
       );
     }
   }
 
-  renderTerm(term) {
+  renderTerm(term, i) {
     return (
       <tr key={term.id}>
         {this.renderSupplierNameRow(term)}

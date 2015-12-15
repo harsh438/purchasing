@@ -9,19 +9,6 @@ export default class SupplierTermsDefault extends React.Component {
   }
 
   render() {
-    return (
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <h3 className="panel-title">Default Terms</h3>
-        </div>
-        <div className="panel-body">
-          {this.renderPanelBody()}
-        </div>
-      </div>
-    );
-  }
-
-  renderPanelBody() {
     if (this.state.editingTerms) {
       return this.renderTermsForm();
     } else if (this.props.supplier.defaultTerms) {

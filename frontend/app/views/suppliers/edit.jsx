@@ -13,10 +13,13 @@ import SuppliersForm from './_form';
 import SupplierContactsTable from '../supplier_contacts/_table';
 import SupplierBuyersTable from '../supplier_buyers/_table';
 import SupplierTermsDefault from '../supplier_terms/_default';
+import SuppliersTermsTable from '../supplier_terms/_table';
 
 class SuppliersEdit extends React.Component {
   componentWillMount () {
-    this.state = { editingSupplier: false, tab: 'details' };
+    this.state = { editingSupplier: false,
+                   tab: { supplier: 'details',
+                          terms: 'default' } };
     this.props.dispatch(loadSupplier(this.props.params.id));
     this.props.dispatch(loadSeasons());
   }
@@ -28,7 +31,8 @@ class SuppliersEdit extends React.Component {
           <div className="col-md-6">
             <h1>
               <Link to="/suppliers">Suppliers</Link>
-              &nbsp;/ {this.props.supplier.name}
+              &nbsp;/&nbsp;
+              {this.props.supplier.name}
             </h1>
           </div>
         </div>
@@ -36,29 +40,35 @@ class SuppliersEdit extends React.Component {
         <div className="row">
           <div className="col-md-6">
             <Nav bsStyle="tabs"
-                 activeKey={this.state.tab}
-                 onSelect={this.handleTabChange.bind(this)}
+                 activeKey={this.state.tab.supplier}
+                 onSelect={this.handleTabChange.bind(this, 'supplier')}
                  style={{ marginBottom: '10px' }}>
               <NavItem eventKey="details">Details</NavItem>
               <NavItem eventKey="contacts">Contacts</NavItem>
               <NavItem eventKey="buyers">Buyers</NavItem>
             </Nav>
 
-            {this.renderTab()}
+            {this.renderSupplierTab()}
           </div>
 
           <div className="col-md-6">
-            <SupplierTermsDefault supplier={this.props.supplier}
-                                  seasons={this.props.seasons}
-                                  onTermsSave={this.handleTermsSave.bind(this)} />
+            <Nav bsStyle="tabs"
+                 activeKey={this.state.tab.terms}
+                 onSelect={this.handleTabChange.bind(this, 'terms')}
+                 style={{ marginBottom: '10px' }}>
+              <NavItem eventKey="default">Default</NavItem>
+              <NavItem eventKey="history">History</NavItem>
+            </Nav>
+
+            {this.renderTermsTab()}
           </div>
         </div>
       </div>
     );
   }
 
-  renderTab() {
-    switch (this.state.tab) {
+  renderSupplierTab() {
+    switch (this.state.tab.supplier) {
     case 'details':
       return this.renderSupplier();
     case 'contacts':
@@ -72,6 +82,21 @@ class SuppliersEdit extends React.Component {
         <SupplierBuyersTable supplier={this.props.supplier}
                              onBuyerAdd={this.handleBuyerSave.bind(this)}
                              onBuyerEdit={this.handleBuyerSave.bind(this)} />
+      );
+    }
+  }
+
+  renderTermsTab() {
+    switch (this.state.tab.terms) {
+    case 'default':
+      return (
+        <SupplierTermsDefault supplier={this.props.supplier}
+                              seasons={this.props.seasons}
+                              onTermsSave={this.handleTermsSave.bind(this)} />
+      );
+    case 'history':
+      return (
+        <SuppliersTermsTable terms={this.props.supplier.terms} />
       );
     }
   }
@@ -127,7 +152,7 @@ class SuppliersEdit extends React.Component {
           </table>
 
           <button className="btn btn-success"
-                   onClick={() => this.setState({ editingSupplier: true })}>
+                  onClick={() => this.setState({ editingSupplier: true })}>
             Edit supplier
           </button>
         </div>
@@ -146,7 +171,8 @@ class SuppliersEdit extends React.Component {
     return flatten(map(addressParts, part => [part, (<br />)]));
   }
 
-  handleTabChange(tab) {
+  handleTabChange(tabGroup, nextTab) {
+    const tab = assign({}, this.state.tab, { [tabGroup]: nextTab });
     this.setState({ tab });
   }
 

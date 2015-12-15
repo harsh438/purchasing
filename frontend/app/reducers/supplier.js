@@ -3,11 +3,13 @@ import { camelizeKeys } from '../utilities/inspection';
 
 const initialSupplierState = { supplier: { contacts: [],
                                            buyers: [],
-                                           vendors: [] } };
+                                           vendors: [],
+                                           terms: [] } };
 
 const initialSuppliersState = { supplier: { contacts: [],
                                             buyers: [],
-                                            vendors: [] },
+                                            vendors: [],
+                                            terms: [] },
                                 suppliers: [],
                                 totalPages: null,
                                 activePage: null };

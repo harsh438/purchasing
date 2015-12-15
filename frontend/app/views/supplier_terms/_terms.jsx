@@ -4,50 +4,53 @@ import { Link } from 'react-router';
 
 export default class SupplierTerms extends React.Component {
   componentWillMount() {
-    this.state = {};
-    this.fields = this.props.fieldList || ['season',
-                                           'creditLimit',
-                                           'preOrderDiscount',
-                                           'creditTermsPreOrder',
-                                           'reOrderDiscount',
-                                           'creditTermsReOrder',
-                                           'faultyReturnsDiscount',
-                                           'settlementDiscount',
-                                           'marketingContribution',
-                                           'rebateStructure',
-                                           'riskOrderDetails',
-                                           'markDownContributionDetails',
-                                           'cancellationAllowance',
-                                           'stockSwapAllowance',
-                                           'bulkOrderDetails',
-                                           'saleOrReturnDetails',
-                                           'agreedWith',
-                                           'samples',
-                                           'productImagery',
-                                           'by',
-                                           'comments',
-                                           'confirmationFile'];
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ fields: nextProps.fieldList || this.fields });
+    this.fields = ['season',
+                   'creditLimit',
+                   'preOrderDiscount',
+                   'creditTermsPreOrder',
+                   'reOrderDiscount',
+                   'creditTermsReOrder',
+                   'faultyReturnsDiscount',
+                   'settlementDiscount',
+                   'marketingContribution',
+                   'rebateStructure',
+                   'riskOrderDetails',
+                   'markDownContributionDetails',
+                   'cancellationAllowance',
+                   'stockSwapAllowance',
+                   'bulkOrderDetails',
+                   'saleOrReturnDetails',
+                   'agreedWith',
+                   'samples',
+                   'productImagery',
+                   'by',
+                   'comments',
+                   'confirmationFile'];
   }
 
   render() {
     return (
       <table className="table">
         <tbody>
-          {map(this.state.fields, this.renderRow, this)}
+          {map(this.fields, this.renderRow, this)}
         </tbody>
       </table>
     );
   }
 
   renderRow(field, i) {
+    let attrs;
+
+    if (i === 0) {
+      attrs = { style: { border: '0' } };
+    } else {
+      attrs = {};
+    }
+
     return (
       <tr key={i}>
-        <th>{startCase(field)}</th>
-        <td>{this.getField(field)}</td>
+        <th {...attrs}>{startCase(field)}</th>
+        <td {...attrs}>{this.getField(field)}</td>
       </tr>
     );
   }
