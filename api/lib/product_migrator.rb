@@ -62,7 +62,7 @@ class ProductMigrator
 
   def element
     if @language_option
-      Element.find_by(name: language_option.name)
+      Element.where(name: language_option.name).order(id: :asc).last
     else
       nil
     end
