@@ -24,7 +24,11 @@ class Order::Exporter
   end
 
   def create_po_line_item(order_line_item, extra_params)
-    PurchaseOrderLineItem.create!(order_date: order_line_item.order.created_at,
+    PurchaseOrderLineItem.create!(supplier_list_price: order_line_item.product.cost,
+                                  product_rrp: order_line_item.product.price,
+                                  product_sku: order_line_item.product.manufacturer_sku,
+                                  product_size: order_line_item.product.size,
+                                  order_date: order_line_item.order.created_at,
                                   drop_date: order_line_item.drop_date,
                                   season: order_line_item.season || '',
                                   gender: order_line_item.gender || '',
