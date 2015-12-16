@@ -13,7 +13,6 @@ class Product < ActiveRecord::Base
                  color: :pUDFValue2,
                  season: :pUDFValue4
 
-
   has_many :product_genders, foreign_key: :pid
   has_one :language_product, foreign_key: :pID
   has_many :language_product_options, foreign_key: :pID
