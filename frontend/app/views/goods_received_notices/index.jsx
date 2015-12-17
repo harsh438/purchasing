@@ -91,7 +91,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
            style={{ marginBottom: '20px' }}>
         <div className="col-md-12">
           <ul className="nav nav-tabs nav-justified">
-            {map(this.props.noticesByWeek, this.renderWeekTab, this)}
+            {map(this.props.noticeWeeks, this.renderWeekTab, this)}
           </ul>
         </div>
       </div>
@@ -120,11 +120,10 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   renderWeek() {
-    const noticesByDates = this.props.noticesByWeek[2];
+    const noticesByDates = this.props.noticeWeeks[2];
 
     return (
-      <GoodsReceivedNoticesWeek key={this.weekNum()}
-                                compact={this.state.editing}
+      <GoodsReceivedNoticesWeek compact={this.state.editing}
                                 onEditGoodsReceivedNotice={this.handleEditGoodsReceivedNotice.bind(this)}
                                 {...noticesByDates} />
     );

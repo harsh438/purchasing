@@ -1,7 +1,7 @@
-import { assign, map, sum, reduce } from 'lodash';
+import { assign, mapValues, sum, reduce, values } from 'lodash';
 import moment from 'moment';
 
-const initialState = { noticesByWeek: {} };
+const initialState = { noticeWeeks: {} };
 
 function placeReceivedNoticeIntoDay(byDate, notice) {
   if (!byDate[notice.deliveryDate]) {
@@ -14,16 +14,19 @@ function placeReceivedNoticeIntoDay(byDate, notice) {
 
 function reduceGoodsReceivedNoticesByWeek(byWeek, notice) {
   const date = moment(notice.deliveryDate, 'DD/MM/YYYY');
-  const week = date.isoWeek();
+  const start = date.startOf('isoweek').format('DD/MM/YYYY');
 
-  if (!byWeek[week]) {
-    byWeek[week] = { weekNum: week,
-                     start: date.startOf('isoweek').format('DD/MM/YYYY'),
-                     end: date.startOf('isoweek').add(5, 'days').format('DD/MM/YYYY'),
-                     noticesByDate: {} };
+  if (!byWeek[start]) {
+    const weekNum = date.isoWeek();
+    const end = date.startOf('isoweek').add(5, 'days').format('DD/MM/YYYY');
+
+    byWeek[start] = { weekNum,
+                      start,
+                      end,
+                      noticesByDate: {} };
   }
 
-  placeReceivedNoticeIntoDay(byWeek[week].noticesByDate, notice);
+  placeReceivedNoticeIntoDay(byWeek[start].noticesByDate, notice);
 
   return byWeek;
 }
@@ -33,8 +36,8 @@ function buildGoodsReceivedNoticesByWeek(goodsReceivedNotices) {
 }
 
 function addCounts(byWeek) {
-  return map(byWeek, function (week) {
-    const noticesByDate = map(week.noticesByDate, function (date) {
+  return mapValues(byWeek, function (week) {
+    const noticesByDate = mapValues(week.noticesByDate, function (date) {
       const units = sum(date.notices, 'units');
       const cartons = sum(date.notices, 'cartons');
       const pallets = sum(date.notices, 'pallets');
@@ -52,7 +55,7 @@ export default function reduceGoodsReceivedNotices(state = initialState, action)
   switch (action.type) {
   case 'SET_GOODS_RECEIVED_NOTICES':
     const noticesByWeek = addCounts(buildGoodsReceivedNoticesByWeek(action.goodsReceivedNotices));
-    return assign({}, state, { noticesByWeek });
+    return assign({}, state, { noticeWeeks: values(noticesByWeek) });
   default:
     return state;
   }
