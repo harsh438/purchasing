@@ -7,4 +7,5 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   map_attributes id: :ID
 
   belongs_to :goods_received_notice, foreign_key: :grn
+  belongs_to :vendor, foreign_key: :BrandID
 end

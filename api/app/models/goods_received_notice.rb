@@ -3,6 +3,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   self.primary_key = :grn
 
   include LegacyMappings
+  include ActionView::Helpers::NumberHelper
 
   map_attributes id: :grn,
                  units: :TotalUnits,
@@ -20,10 +21,9 @@ class GoodsReceivedNotice < ActiveRecord::Base
                  cartons_received: :CartonsReceived
 
   belongs_to :order, foreign_key: :OrderID
-  has_one :vendor, through: :order
-
-  belongs_to :vendor, foreign_key: :orderTool_venID
-  has_many :goods_received_notice_events
+  has_many :goods_received_notice_events, foreign_key: :grn
+  has_many :vendors, through: :goods_received_notice_events
+  has_many :purchase_orders, through: :goods_received_notice_events
 
   def received_at
     date = super
@@ -55,7 +55,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
     end
   end
 
-  def brand_name
+  def vendor_name
     vendors.map(&:name).join(', ')
   end
 
@@ -63,6 +63,10 @@ class GoodsReceivedNotice < ActiveRecord::Base
     super.tap do |grn|
       grn[:delivery_date] = grn['delivery_date'].to_s
       grn[:status] = status
+      grn[:vendor_name] = vendor_name
+      grn[:units] = number_with_delimiter(units.ceil)
+      grn[:cartons] = number_with_delimiter(cartons.ceil)
+      grn[:pallets] = number_with_delimiter(pallets.ceil)
     end
   end
 end
