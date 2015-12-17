@@ -96,7 +96,8 @@ class SuppliersEdit extends React.Component {
       );
     case 'history':
       return (
-        <SuppliersTermsTable terms={this.props.supplier.terms} />
+        <SuppliersTermsTable terms={this.props.supplier.terms}
+                             termsSelected={[]} />
       );
     }
   }
