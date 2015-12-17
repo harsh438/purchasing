@@ -33,5 +33,6 @@ Rails.application.routes.draw do
     resources :suppliers, only: [:index, :create, :update, :show]
     resources :supplier_terms, only: [:index, :show]
     resources :vendors, only: [:index, :create, :show, :update]
+    resources :goods_received_notices, only: [:index]
   end
 end
