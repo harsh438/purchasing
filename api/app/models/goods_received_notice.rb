@@ -27,7 +27,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
 
   def received_at
     date = super
-    
+
     unless date.to_s === '00/00/0000' or date.to_s === '01/01/0001'
       date
     end
