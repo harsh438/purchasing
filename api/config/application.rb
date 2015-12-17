@@ -15,6 +15,10 @@ module Purchasing
                          username: 'purchasing',
                          password: 'lastordersplease' }
 
+    config.pvx_credentials = { url: ENV['PVX_URL'],
+                               key: ENV['PVX_KEY'],
+                               token: ENV['PVX_TOKEN'] }
+
     config.paperclip_defaults = { s3_permissions: :private,
                                   s3_credentials: { bucket: ENV['AWS_ASSET_BUCKET'],
                                                     s3_host_name: "s3-eu-west-1.amazonaws.com",
