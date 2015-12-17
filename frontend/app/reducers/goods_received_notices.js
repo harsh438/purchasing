@@ -1,7 +1,7 @@
 import { assign, map, sum, reduce } from 'lodash';
 import moment from 'moment';
 
-const initialState = { goodsReceivedNoticesByWeek: {} };
+const initialState = { noticesByWeek: {} };
 
 function placeReceivedNoticeIntoDay(byDate, notice) {
   if (!byDate[notice.deliveryDate]) {

@@ -40,7 +40,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
         <div className="row">
           <div className={leftClass}>
-            {this.renderWeeks()}
+            {this.renderWeek()}
           </div>
 
           <div className={rightClass}>
@@ -86,34 +86,12 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   renderWeekTabs() {
-    const weeks = [{ weekNum: this.weekNum() - 2,
-                     units: 10,
-                     cartons: 10,
-                     pallets: 2 },
-                   { weekNum: this.weekNum() - 1,
-                     units: 10,
-                     cartons: 10,
-                     pallets: 2 },
-                   { weekNum: this.weekNum(),
-                     units: 10,
-                     cartons: 10,
-                     pallets: 2,
-                     class: 'active' },
-                   { weekNum: this.weekNum() + 1,
-                     units: 10,
-                     cartons: 10,
-                     pallets: 2 },
-                   { weekNum: this.weekNum() + 2,
-                     units: 10,
-                     cartons: 10,
-                     pallets: 2 }];
-
     return (
       <div className="row"
            style={{ marginBottom: '20px' }}>
         <div className="col-md-12">
           <ul className="nav nav-tabs nav-justified">
-            {map(weeks, this.renderWeekTab, this)}
+            {map(this.props.noticesByWeek, this.renderWeekTab, this)}
           </ul>
         </div>
       </div>
@@ -121,8 +99,11 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   renderWeekTab(week, i) {
+    let className = '';
+    if (i === 2) className += 'active';
+
     return (
-      <li className={week.class}>
+      <li className={className}>
         <a href="#" className="grn_week__summary text-center">
           <h2 className="h4">Week #{week.weekNum}</h2>
 
@@ -134,13 +115,11 @@ class GoodsReceivedNoticesIndex extends React.Component {
     );
   }
 
-  renderWeeks() {
-    return map(this.props.noticesByWeek, this.renderWeek, this);
-  }
+  renderWeek() {
+    const noticesByDates = this.props.noticesByWeek[2];
 
-  renderWeek(noticesByDates, weekNum) {
     return (
-      <GoodsReceivedNoticesWeek key={weekNum}
+      <GoodsReceivedNoticesWeek key={this.weekNum()}
                                 compact={this.state.editing}
                                 onEditGoodsReceivedNotice={this.handleEditGoodsReceivedNotice.bind(this)}
                                 {...noticesByDates} />
@@ -164,7 +143,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   weekNum() {
-    return this.props.weekNum || moment().isoWeek();
+    return this.props.weekNum || 51;
   }
 }
 
