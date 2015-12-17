@@ -1,6 +1,6 @@
 class Sku::Api
   def config
-    @config ||= YAML.load_file(Rails.root.join('config/pvx.yml'))[Rails.env]
+    @config ||= Rails.application.config.pvx_credentials
   end
 
   def headers
@@ -8,9 +8,9 @@ class Sku::Api
   end
 
   def find(fields, custom_url = nil)
-    @response = Excon.post(custom_url || config['url'],
-                           body: fields.merge!(key: config['key'],
-                                               token: config['token']).to_json,
+    @response = Excon.post(custom_url || config[:url],
+                           body: fields.merge!(key: config[:key],
+                                               token: config[:token]).to_json,
                            headers: headers)
 
     Sku::ApiResponse.new(@response)
