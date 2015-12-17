@@ -2,6 +2,7 @@ import React from 'react';
 import GoodsReceivedNoticesNotice from './_notice';
 import { map } from 'lodash';
 import moment from 'moment';
+
 export default class GoodsReceivedNoticesDay extends React.Component {
   render() {
     return (
@@ -14,7 +15,7 @@ export default class GoodsReceivedNoticesDay extends React.Component {
             <span className="badge grn_day__badge" title="Cartons">{this.props.cartons}</span>
             <span className="badge grn_day__badge" title="Units">{this.props.units}</span>
           </div>
-          
+
           <div className="list-group">
             {this.renderNotices()}
           </div>

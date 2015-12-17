@@ -1,5 +1,6 @@
-import { assign, mapValues, sum, reduce, values } from 'lodash';
+import { assign, map, mapValues, sum, reduce, values } from 'lodash';
 import moment from 'moment';
+import { camelizeKeys } from '../utilities/inspection';
 
 const initialState = { noticeWeeks: {} };
 
@@ -54,8 +55,10 @@ function addCounts(byWeek) {
 export default function reduceGoodsReceivedNotices(state = initialState, action) {
   switch (action.type) {
   case 'SET_GOODS_RECEIVED_NOTICES':
-    const noticesByWeek = addCounts(buildGoodsReceivedNoticesByWeek(action.goodsReceivedNotices));
-    return assign({}, state, { noticeWeeks: values(noticesByWeek) });
+    const camelizedNotices = map(action.goodsReceivedNotices, camelizeKeys);
+    const noticesByWeek = buildGoodsReceivedNoticesByWeek(camelizedNotices);
+    const noticesByWeekWithCounts = addCounts(noticesByWeek);
+    return assign({}, state, { noticeWeeks: values(noticesByWeekWithCounts) });
   default:
     return state;
   }

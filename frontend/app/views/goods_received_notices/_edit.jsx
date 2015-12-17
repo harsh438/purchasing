@@ -11,7 +11,14 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
           <div className="panel-body">
             <form>
+              <div className="form-group">
+                <select className="form-control">
+                  <option>Nike</option>
+                </select>
+              </div>
             </form>
+
+            <a href="#close" onClick={this.props.onClose}>close</a>
           </div>
         </div>
       </div>

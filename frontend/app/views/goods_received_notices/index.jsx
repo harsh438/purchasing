@@ -146,7 +146,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   weekNum() {
-    return this.props.weekNum || 51;
+    return moment().startOf('isoweek').format('DD/MM/YYYY');
   }
 }
 
