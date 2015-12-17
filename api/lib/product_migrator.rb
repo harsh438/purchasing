@@ -3,6 +3,8 @@ class ProductMigrator
   class InternalSkuAlreadyExists < RuntimeError; end
   class NoLanguageProduct < RuntimeError; end
 
+  attr_writer :kernel
+
   def migrate
     Product.find_in_batches.with_index do |group, batch|
       group.each { |product| migrate_single(product) }
@@ -21,6 +23,14 @@ class ProductMigrator
   end
 
   private
+
+  def kernel
+    @kernel ||= Kernel
+  end
+
+  def puts(*args)
+    kernel.puts(*args)
+  end
 
   def migrate_product_with_options
     product.language_product_options.where(language_id: 1).each do |language_option|

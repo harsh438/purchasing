@@ -4,7 +4,9 @@ describe ProductMigrator do
       before do
         @first_product = create(:product)
         @second_product = create(:product)
-        subject.migrate
+        migrator = ProductMigrator.new
+        migrator.kernel = double(puts: nil)
+        migrator.migrate
       end
 
       it 'should correctly link the product_id' do
