@@ -6,12 +6,11 @@ FactoryGirl.define do
     pID 1
     oID
     langID 1
-    elementID 1
     pOption
 
-    after(:create) do |language_product_option, evaluator|
+    after(:build) do |language_product_option, evaluator|
       element = create(:element, elementname: language_product_option.pOption)
-      language_product_option.update_attributes(elementID: element.elementID)
+      language_product_option.element_id = element.id
     end
   end
 end
