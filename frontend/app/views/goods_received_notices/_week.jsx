@@ -5,7 +5,7 @@ import { map } from 'lodash';
 export default class GoodsReceivedNoticesWeek extends React.Component {
   render() {
     return (
-      <div className="grn_week row">
+      <div className="grn_week">
         {this.renderDates()}
       </div>
     );

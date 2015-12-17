@@ -36,6 +36,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
         </div>
 
         {this.renderNavigation()}
+        {this.renderWeekTabs()}
 
         <div className="row">
           <div className={leftClass}>
@@ -54,47 +55,20 @@ class GoodsReceivedNoticesIndex extends React.Component {
     return (
       <div className="row" style={{ marginBottom: '2em' }}>
         <div className="col-md-1">
-          <button className="btn btn-default">
-            This week
+          <button className="btn btn-default"
+                  style={{ width: '100%' }}>
+            <span className="glyphicon glyphicon-time"></span>
+            &nbsp;Now
           </button>
         </div>
 
-        <div className="col-md-4 col-md-offset-3">
-          <div className="input-group">
-            <span className="input-group-btn">
-              <button className="btn btn-default">
-                &nbsp;<span className="glyphicon glyphicon-fast-backward"></span>&nbsp;
-              </button>
-
-              <button className="btn btn-default">
-                &nbsp;<span className="glyphicon glyphicon-backward"></span>&nbsp;
-              </button>
-            </span>
-
-            <input type="date"
-                   className="form-control text-center" />
-
-            <span className="input-group-btn">
-              <button className="btn btn-default">
-                &nbsp;<span className="glyphicon glyphicon-forward"></span>&nbsp;
-              </button>
-
-              <button className="btn btn-default">
-                &nbsp;<span className="glyphicon glyphicon-fast-forward"></span>&nbsp;
-              </button>
-            </span>
-          </div>
-
-          <div className="grn_week__summary text-center">
-            <h2 className="h4">Week #{this.weekNum()}</h2>
-
-            <span className="badge grn_week__badge" title="Units">{this.props.units}</span>
-            <span className="badge grn_week__badge" title="Cartons">{this.props.cartons}</span>
-            <span className="badge grn_week__badge" title="Pallets">{this.props.pallets}</span>
-          </div>
+        <div className="col-md-2">
+          <select className="form-control">
+            <option>December 2015</option>
+          </select>
         </div>
 
-        <div className="col-md-3 col-md-offset-1">
+        <div className="col-md-3 col-md-offset-6">
           <div className="input-group">
             <input type="text"
                    className="form-control"
@@ -108,6 +82,55 @@ class GoodsReceivedNoticesIndex extends React.Component {
           </div>
         </div>
       </div>
+    );
+  }
+
+  renderWeekTabs() {
+    const weeks = [{ weekNum: this.weekNum() - 2,
+                     units: 10,
+                     cartons: 10,
+                     pallets: 2 },
+                   { weekNum: this.weekNum() - 1,
+                     units: 10,
+                     cartons: 10,
+                     pallets: 2 },
+                   { weekNum: this.weekNum(),
+                     units: 10,
+                     cartons: 10,
+                     pallets: 2,
+                     class: 'active' },
+                   { weekNum: this.weekNum() + 1,
+                     units: 10,
+                     cartons: 10,
+                     pallets: 2 },
+                   { weekNum: this.weekNum() + 2,
+                     units: 10,
+                     cartons: 10,
+                     pallets: 2 }];
+
+    return (
+      <div className="row"
+           style={{ marginBottom: '20px' }}>
+        <div className="col-md-12">
+          <ul className="nav nav-tabs nav-justified">
+            {map(weeks, this.renderWeekTab, this)}
+          </ul>
+        </div>
+      </div>
+    );
+  }
+
+  renderWeekTab(week, i) {
+    return (
+      <li className={week.class}>
+        <a href="#" className="grn_week__summary text-center">
+          <h2 className="h4">Week #{week.weekNum}</h2>
+
+          <span className="badge grn_week__badge" title="Units">{week.units}</span>
+          <span className="badge grn_week__badge" title="Cartons">{week.cartons}</span>
+          <span className="badge grn_week__badge" title="Pallets">{week.pallets}</span>
+        </a>
+      </li>
     );
   }
 
@@ -127,7 +150,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   renderEditPanel() {
     if (this.state.editing) {
       return (
-        <GoodsReceivedNoticesEdit />
+        <GoodsReceivedNoticesEdit onClose={this.handleToggleEditing.bind(this)} />
       );
     }
   }
