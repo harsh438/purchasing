@@ -19,7 +19,7 @@ function reduceGoodsReceivedNoticesByWeek(byWeek, notice) {
   if (!byWeek[week]) {
     byWeek[week] = { weekNum: week,
                      start: date.startOf('isoweek').format('DD/MM/YYYY'),
-                     end: date.startOf('isoweek').add('days', 5).format('DD/MM/YYYY'),
+                     end: date.startOf('isoweek').add(5, 'days').format('DD/MM/YYYY'),
                      noticesByDate: {} };
   }
 
