@@ -107,6 +107,10 @@ class GoodsReceivedNoticesIndex extends React.Component {
         <a href="#" className="grn_week__summary text-center">
           <h2 className="h4">Week #{week.weekNum}</h2>
 
+          <p>
+            {week.start} – {week.end}
+          </p>
+
           <span className="badge grn_week__badge" title="Units">{week.units}</span>
           <span className="badge grn_week__badge" title="Cartons">{week.cartons}</span>
           <span className="badge grn_week__badge" title="Pallets">{week.pallets}</span>

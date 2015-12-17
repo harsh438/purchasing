@@ -13,10 +13,13 @@ function placeReceivedNoticeIntoDay(byDate, notice) {
 }
 
 function reduceGoodsReceivedNoticesByWeek(byWeek, notice) {
-  const week = moment(notice.deliveryDate, 'DD/MM/YYYY').isoWeek();
+  const date = moment(notice.deliveryDate, 'DD/MM/YYYY');
+  const week = date.isoWeek();
 
   if (!byWeek[week]) {
     byWeek[week] = { weekNum: week,
+                     start: date.startOf('isoweek').format('DD/MM/YYYY'),
+                     end: date.startOf('isoweek').add('days', 5).format('DD/MM/YYYY'),
                      noticesByDate: {} };
   }
 
