@@ -4,61 +4,22 @@ import { camelizeKeys } from '../utilities/inspection';
 
 const initialState = { noticeWeeks: {} };
 
-function placeReceivedNoticeIntoDay(byDate, notice) {
-  if (!byDate[notice.deliveryDate]) {
-    byDate[notice.deliveryDate] = { deliveryDate: notice.deliveryDate,
-                                    notices: [notice] };
-  } else {
-    byDate[notice.deliveryDate].notices.push(notice);
-  }
+function transformNoticeDate(noticeDate) {
+  return assign({}, camelizeKeys(noticeDate), { notices: map(noticeDate.notices, camelizeKeys) });
 }
 
-function reduceGoodsReceivedNoticesByWeek(byWeek, notice) {
-  const date = moment(notice.deliveryDate, 'DD/MM/YYYY');
-  const start = date.startOf('isoweek').format('DD/MM/YYYY');
-
-  if (!byWeek[start]) {
-    const weekNum = date.isoWeek();
-    const end = date.startOf('isoweek').add(5, 'days').format('DD/MM/YYYY');
-
-    byWeek[start] = { weekNum,
-                      start,
-                      end,
-                      noticesByDate: {} };
-  }
-
-  placeReceivedNoticeIntoDay(byWeek[start].noticesByDate, notice);
-
-  return byWeek;
-}
-
-function buildGoodsReceivedNoticesByWeek(goodsReceivedNotices) {
-  return reduce(goodsReceivedNotices, reduceGoodsReceivedNoticesByWeek, {});
-}
-
-function addCounts(byWeek) {
-  return mapValues(byWeek, function (week) {
-    const noticesByDate = mapValues(week.noticesByDate, function (date) {
-      const units = sum(date.notices, 'units');
-      const cartons = sum(date.notices, 'cartons');
-      const pallets = sum(date.notices, 'pallets');
-      return assign({}, date, { units, cartons, pallets });
-    });
-
-    const units = sum(noticesByDate, 'units');
-    const cartons = sum(noticesByDate, 'cartons');
-    const pallets = sum(noticesByDate, 'pallets');
-    return assign({}, week, { noticesByDate, units, cartons, pallets });
-  });
+function transformNoticeWeek(noticeWeek) {
+  let camelizedNoticeWeek = camelizeKeys(noticeWeek);
+  camelizedNoticeWeek.noticesByDate = mapValues(camelizedNoticeWeek.noticesByDate, transformNoticeDate);
+  console.log(camelizedNoticeWeek);
+  return camelizedNoticeWeek;
 }
 
 export default function reduceGoodsReceivedNotices(state = initialState, action) {
   switch (action.type) {
   case 'SET_GOODS_RECEIVED_NOTICES':
-    const camelizedNotices = map(action.goodsReceivedNotices, camelizeKeys);
-    const noticesByWeek = buildGoodsReceivedNoticesByWeek(camelizedNotices);
-    const noticesByWeekWithCounts = addCounts(noticesByWeek);
-    return assign({}, state, { noticeWeeks: values(noticesByWeekWithCounts) });
+    const camelizedNotices = map(action.goodsReceivedNotices, transformNoticeWeek);
+    return assign({}, state, { noticeWeeks: camelizedNotices });
   default:
     return state;
   }

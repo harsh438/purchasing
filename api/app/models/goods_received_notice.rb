@@ -3,7 +3,6 @@ class GoodsReceivedNotice < ActiveRecord::Base
   self.primary_key = :grn
 
   include LegacyMappings
-  include ActionView::Helpers::NumberHelper
 
   map_attributes id: :grn,
                  units: :TotalUnits,
@@ -64,9 +63,6 @@ class GoodsReceivedNotice < ActiveRecord::Base
       grn[:delivery_date] = grn['delivery_date'].to_s
       grn[:status] = status
       grn[:vendor_name] = vendor_name
-      grn[:units] = number_with_delimiter(units.ceil)
-      grn[:cartons] = number_with_delimiter(cartons.ceil)
-      grn[:pallets] = number_with_delimiter(pallets.ceil)
     end
   end
 end
