@@ -2,6 +2,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   self.table_name = :goods_received_number
   self.primary_key = :grn
 
+  include BookingInConnection
   include LegacyMappings
 
   def self.delivered_between(range)
