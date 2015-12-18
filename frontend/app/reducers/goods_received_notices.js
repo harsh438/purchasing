@@ -11,7 +11,6 @@ function transformNoticeDate(noticeDate) {
 function transformNoticeWeek(noticeWeek) {
   let camelizedNoticeWeek = camelizeKeys(noticeWeek);
   camelizedNoticeWeek.noticesByDate = mapValues(camelizedNoticeWeek.noticesByDate, transformNoticeDate);
-  console.log(camelizedNoticeWeek);
   return camelizedNoticeWeek;
 }
 
