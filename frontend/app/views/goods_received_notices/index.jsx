@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { assign, map } from 'lodash';
 import GoodsReceivedNoticesWeek from './_week';
 import GoodsReceivedNoticesEdit from './_edit';
@@ -9,7 +10,14 @@ import moment from 'moment';
 class GoodsReceivedNoticesIndex extends React.Component {
   componentWillMount() {
     this.state = { editing: false };
-    this.props.dispatch(loadGoodsReceivedNotices(this.weekNum()));
+    this.props.dispatch(loadGoodsReceivedNotices(this.startDate()));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.location.query.startDate !== nextProps.location.query.startDate) {
+      this.setState({ editing: false });
+      this.props.dispatch(loadGoodsReceivedNotices(this.startDate(nextProps)));
+    }
   }
 
   render() {
@@ -103,8 +111,9 @@ class GoodsReceivedNoticesIndex extends React.Component {
     if (i === 2) className += 'active';
 
     return (
-      <li className={className}>
-        <a href="#" className="grn_week__summary text-center">
+      <li className={className} key={week.start}>
+        <Link to={`/goods-received-notices?startDate=${week.start}`}
+              className="grn_week__summary text-center">
           <h2 className="h4">Week #{week.weekNum}</h2>
 
           <p>
@@ -114,7 +123,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
           <span className="badge grn_week__badge" title="Units">{week.units}</span>
           <span className="badge grn_week__badge" title="Cartons">{week.cartons}</span>
           <span className="badge grn_week__badge" title="Pallets">{week.pallets}</span>
-        </a>
+        </Link>
       </li>
     );
   }
@@ -145,8 +154,14 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.setState({ editing: true });
   }
 
-  weekNum() {
-    return moment().startOf('isoweek').format('DD/MM/YYYY');
+  startDate(props = this.props) {
+    const { startDate } = props.location.query;
+
+    if (startDate) {
+      return startDate;
+    } else {
+      return moment().startOf('isoweek').format('DD/MM/YYYY');
+    }
   }
 }
 
