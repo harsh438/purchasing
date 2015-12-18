@@ -6,10 +6,13 @@ import GoodsReceivedNoticesWeek from './_week';
 import GoodsReceivedNoticesEdit from './_edit';
 import { loadGoodsReceivedNotices } from '../../actions/goods_received_notices';
 import moment from 'moment';
+import { renderSelectOptions } from '../../utilities/dom';
 
 class GoodsReceivedNoticesIndex extends React.Component {
   componentWillMount() {
-    this.state = { editing: false };
+    this.state = { editing: false,
+                   startDateMonth: this.startDateMonth(),
+                   startDateYear: this.startDateYear() };
     this.props.dispatch(loadGoodsReceivedNotices(this.startDate()));
   }
 
@@ -66,19 +69,32 @@ class GoodsReceivedNoticesIndex extends React.Component {
           {this.renderNowButton()}
         </div>
 
-        <div className="col-md-2">
+        <div className="col-md-3">
           <select className="form-control pull-left"
-                  style={{ width: '66%' }}>
-            <option>December</option>
+                  name="startDateMonth"
+                  style={{ width: '49%', marginRight: '1%' }}
+                  value={this.state.startDateMonth}
+                  onChange={this.handleFormChange.bind(this)}>
+            {renderSelectOptions(moment.months())}
           </select>
 
-          <select className="form-control pull-right"
-                  style={{ width: '33%' }}>
-            <option>2015</option>
+          <select className="form-control pull-left"
+                  name="startDateYear"
+                  style={{ width: '29%', marginRight: '1%' }}
+                  value={this.state.startDateYear}
+                  onChange={this.handleFormChange.bind(this)}>
+            {renderSelectOptions([2012, 2013, 2014, 2015, 2016, 2017, 2018])}
           </select>
+
+          <button className="btn btn-success pull-left"
+                  style={{ width: '15%' }}
+                  disabled={this.monthAndYearMatches()}
+                  onClick={this.handleFilter.bind(this)}>
+            Go
+          </button>
         </div>
 
-        <div className="col-md-3 col-md-offset-6">
+        <div className="col-md-3 col-md-offset-5">
           <div className="input-group">
             <input type="text"
                    className="form-control"
@@ -180,6 +196,15 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.setState({ editing: true });
   }
 
+  handleFormChange({ target }) {
+    this.setState({ [target.name]: target.value });
+  }
+
+  handleFilter() {
+    console.log(`01/${this.state.startDateMonth}/${this.state.startDateYear}`);
+    // this.props.history.pushState(null, '/', { startDate: `01/${this.state.startDateMonth}/` });
+  }
+
   startDate(props = this.props) {
     const { startDate } = props.location.query;
 
@@ -190,12 +215,24 @@ class GoodsReceivedNoticesIndex extends React.Component {
     }
   }
 
+  startDateMonth() {
+    return moment(this.startDate(), 'DD/MM/YYYY').format('MMMM');
+  }
+
+  startDateYear() {
+    return moment(this.startDate(), 'DD/MM/YYYY').year();
+  }
+
   now() {
     return moment().startOf('isoweek').format('DD/MM/YYYY');
   }
 
   isNow() {
     return this.startDate() === this.now();
+  }
+
+  monthAndYearMatches() {
+    return this.startDateMonth() === this.state.startDateMonth && this.startDateYear() === this.state.startDateYear;
   }
 }
 
