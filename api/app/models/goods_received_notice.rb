@@ -63,7 +63,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   end
 
   def vendor_name
-    vendors.map(&:name).join(', ')
+    vendors.first.try(:name)
   end
 
   def as_json(options = {})
