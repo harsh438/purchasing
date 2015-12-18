@@ -14,6 +14,7 @@ dependencies:
 
 database:
   override:
+    - cp config/database.ci.yml config/database.yml
     - bundle exec rake db:create db:schema:load
 
 test:
