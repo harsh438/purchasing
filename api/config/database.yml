@@ -26,18 +26,18 @@ production:
   <<: *default
   database: no_thanks
 
-booking_in_development:
+bookingin_development:
   <<: *default
   database: purchasing_development
 
-booking_in_test:
+bookingin_test:
   <<: *default
   database: purchasing_test
 
-booking_in_staging:
+bookingin_staging:
   <<: *default
   database: no_thanks
 
-booking_in_production:
+bookingin_production:
   <<: *default
   database: no_thanks
