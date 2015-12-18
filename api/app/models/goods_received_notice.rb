@@ -4,6 +4,14 @@ class GoodsReceivedNotice < ActiveRecord::Base
 
   include LegacyMappings
 
+  def self.delivered_between(range)
+    where(delivery_date: range)
+  end
+
+  def self.not_on_weekends
+    where('DAYOFWEEK(DeliveryDate) != 1 AND DAYOFWEEK(DeliveryDate) != 7')
+  end
+
   map_attributes id: :grn,
                  units: :TotalUnits,
                  cartons: :CartonsExpected,
