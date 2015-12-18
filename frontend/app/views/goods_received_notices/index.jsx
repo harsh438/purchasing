@@ -63,17 +63,18 @@ class GoodsReceivedNoticesIndex extends React.Component {
     return (
       <div className="row" style={{ marginBottom: '2em' }}>
         <div className="col-md-1">
-          <Link to="/goods-received-notices"
-                className="btn btn-default"
-                style={{ width: '100%' }}>
-            <span className="glyphicon glyphicon-time"></span>
-            &nbsp;Now
-          </Link>
+          {this.renderNowButton()}
         </div>
 
         <div className="col-md-2">
-          <select className="form-control">
-            <option>December 2015</option>
+          <select className="form-control pull-left"
+                  style={{ width: '66%' }}>
+            <option>December</option>
+          </select>
+
+          <select className="form-control pull-right"
+                  style={{ width: '33%' }}>
+            <option>2015</option>
           </select>
         </div>
 
@@ -92,6 +93,30 @@ class GoodsReceivedNoticesIndex extends React.Component {
         </div>
       </div>
     );
+  }
+
+  renderNowButton() {
+    if (this.isNow()) {
+      return (
+        <button className="btn btn-default"
+                style={{ width: '100%' }}
+                disabled
+                title="This is now :)">
+          <span className="glyphicon glyphicon-time"></span>
+          &nbsp;Now
+        </button>
+      );
+    } else {
+      return (
+        <Link to="/goods-received-notices"
+              className="btn btn-default"
+              style={{ width: '100%' }}
+              disabled={this.isNow()}>
+          <span className="glyphicon glyphicon-time"></span>
+          &nbsp;Now
+        </Link>
+      );
+    }
   }
 
   renderWeekTabs() {
@@ -161,8 +186,16 @@ class GoodsReceivedNoticesIndex extends React.Component {
     if (startDate) {
       return startDate;
     } else {
-      return moment().startOf('isoweek').format('DD/MM/YYYY');
+      return this.now();
     }
+  }
+
+  now() {
+    return moment().startOf('isoweek').format('DD/MM/YYYY');
+  }
+
+  isNow() {
+    return this.startDate() === this.now();
   }
 }
 
