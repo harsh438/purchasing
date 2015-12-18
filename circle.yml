@@ -12,6 +12,10 @@ dependencies:
     - npm run build:
         pwd: ../frontend/
 
+database:
+  override:
+    - bundle exec rake db:create db:schema:load
+
 test:
   override:
     - bundle exec rake build
