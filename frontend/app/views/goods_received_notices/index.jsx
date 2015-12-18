@@ -63,11 +63,12 @@ class GoodsReceivedNoticesIndex extends React.Component {
     return (
       <div className="row" style={{ marginBottom: '2em' }}>
         <div className="col-md-1">
-          <button className="btn btn-default"
-                  style={{ width: '100%' }}>
+          <Link to="/goods-received-notices"
+                className="btn btn-default"
+                style={{ width: '100%' }}>
             <span className="glyphicon glyphicon-time"></span>
             &nbsp;Now
-          </button>
+          </Link>
         </div>
 
         <div className="col-md-2">
