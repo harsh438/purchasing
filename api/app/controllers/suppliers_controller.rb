@@ -53,9 +53,12 @@ class SuppliersController < ApplicationController
   end
 
   def supplier_terms_attrs
-    params.require(:supplier).permit(terms: [:season,
-                                             :confirmation,
-                                             :confirmation_file_name] + SupplierTerms.stored_attributes[:terms])
+    terms_fields = SupplierTerms.stored_attributes[:terms]
+    terms_fields.concat([:season,
+                         :confirmation,
+                         :confirmation_file_name])
+    terms_fields.push(marketing_contribution: [:percentage, :of])
+    params.require(:supplier).permit(terms: terms_fields)
   end
 
   def supplier_buyers_attrs

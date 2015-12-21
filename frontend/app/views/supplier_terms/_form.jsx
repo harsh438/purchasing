@@ -41,7 +41,13 @@ export default class SuppliersForm extends React.Component {
             </tr>
 
             {this.renderMoneyField('creditLimit')}
-
+            {this.renderPercentageField('preOrderDiscount')}
+            {this.renderMoneyField('creditTermsPreOrder')}
+            {this.renderPercentageField('reOrderDiscount')}
+            {this.renderMoneyField('creditTermsReOrder')}
+            {this.renderPercentageField('faultyReturnsDiscount')}
+            {this.renderPercentageField('settlementDiscount')}
+            {this.renderMarketingContributionField()}
             {this.renderTextFields()}
 
             <tr>
@@ -122,7 +128,8 @@ export default class SuppliersForm extends React.Component {
           <label htmlFor={field}>{startCase(field)}</label>
         </td>
         <td>
-          <div className="input-group">
+          <div className="input-group"
+               style={{ width: '100%' }}>
             <span className="input-group-addon">£</span>
             <input className="form-control"
                    type="number"
@@ -130,11 +137,66 @@ export default class SuppliersForm extends React.Component {
                    id={field}
                    name={field}
                    value={this.getField(field)} />
-            <span className="input-group-addon">.00</span>
+            <span className="input-group-addon"
+                  style={{ width: '45px' }}>.00</span>
           </div>
         </td>
       </tr>
     );
+  }
+
+  renderPercentageField(field) {
+    return (
+      <tr>
+        <td>
+          <label htmlFor={field}>{startCase(field)}</label>
+        </td>
+        <td>
+          <div className="input-group"
+               style={{ width: '100%' }}>
+            <input className="form-control"
+                   type="number"
+                   id={field}
+                   name={field}
+                   value={this.getField(field)} />
+            <span className="input-group-addon"
+                  style={{ width: '45px' }}>%</span>
+          </div>
+        </td>
+      </tr>
+    );
+  }
+
+  renderMarketingContributionField() {
+    return (
+      <tr onChange={this.handleNestedFormChange.bind(this, 'marketingContribution')}>
+        <td>
+          <label htmlFor="marketingContribution">{startCase('marketingContribution')}</label>
+        </td>
+        <td>
+          <div className="input-group pull-left"
+               style={{ width: '55%' }}>
+            <input className="form-control"
+                   type="number"
+                   id="marketingContribution"
+                   name="marketingContributionPercentage"
+                   value={this.getField('marketingContributionPercentage')} />
+            <span className="input-group-addon"
+                  style={{ width: '45px' }}>%</span>
+          </div>
+
+          <select className="form-control pull-right"
+                  name="marketingContributionOf"
+                  value={this.getField('marketingContributionOf')}
+                  style={{ width: '44%' }}>
+            <option value="pre_order_total">Pre Order Total</option>
+            <option value="season_total">Season Total</option>
+            <option value="year_total">Year Total</option>
+          </select>
+        </td>
+      </tr>
+    );
+
   }
 
   renderCheckboxField(field) {
@@ -171,6 +233,14 @@ export default class SuppliersForm extends React.Component {
     case 'samples':
     case 'productImagery':
       return this.state.terms[field];
+    case 'marketingContributionOf':
+      if (this.state.terms.marketingContribution) {
+        return this.state.terms.marketingContribution.of;
+      }
+    case 'marketingContributionPercentage':
+      if (this.state.terms.marketingContribution) {
+        return this.state.terms.marketingContribution.percentage;
+      }
     default:
       return get(this.state.terms, field, '');
     }
@@ -187,6 +257,14 @@ export default class SuppliersForm extends React.Component {
   handleFormChange({ target }) {
     const terms = assign({}, this.state.terms, { [target.name]: target.value });
     this.setState({ terms });
+  }
+
+  handleNestedFormChange(fieldNs, e) {
+    const { target } = e;
+    const nestedKey = target.name.replace(fieldNs, '').toLowerCase();
+    const nestedValues = assign({}, this.state.terms[fieldNs], { [nestedKey]: target.value });
+    this.handleFormChange({ target: { name: fieldNs, value: nestedValues } });
+    e.stopPropagation();
   }
 
   handleCheckboxChange(e) {
@@ -207,18 +285,11 @@ export default class SuppliersForm extends React.Component {
   }
 
   getTextFieldList() {
-    return [['preOrderDiscount', ''],
-            ['creditTermsPreOrder', ''],
-            ['reOrderDiscount', ''],
-            ['creditTermsReOrder', ''],
-            ['faultyReturnsDiscount', ''],
-            ['settlementDiscount', ''],
-            ['marketingContribution', ''],
-            ['rebateStructure', ''],
+    return [['rebateStructure', ''],
             ['riskOrderDetails', ''],
             ['markDownContributionDetails', ''],
-            ['cancellationAllowance', ''],
-            ['stockSwapAllowance', ''],
+            ['preOrderCancellationAllowance', ''],
+            ['preOrderStockSwapAllowance', ''],
             ['bulkOrderDetails', ''],
             ['saleOrReturnDetails', ''],
             ['agreedWith', 'Supplier staff name'],

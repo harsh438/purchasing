@@ -62,6 +62,8 @@ export default class SupplierTerms extends React.Component {
     case 'samples':
     case 'productImagery':
       return terms[field] ? '✔' : '✘';
+    case 'marketingContribution':
+      return `${terms[field].percentage}% of ${startCase(terms[field].of)}`;
     case 'confirmationFile':
       if (terms.confirmationFileName) {
         return (
