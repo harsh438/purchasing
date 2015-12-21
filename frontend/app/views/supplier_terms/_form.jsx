@@ -48,6 +48,7 @@ export default class SuppliersForm extends React.Component {
             {this.renderPercentageField('faultyReturnsDiscount')}
             {this.renderPercentageField('settlementDiscount')}
             {this.renderMarketingContributionField()}
+            {this.renderTextField(['rebateStructure', ''], 'rebateStructure')}
             {this.renderTextFields()}
 
             <tr>
@@ -285,8 +286,7 @@ export default class SuppliersForm extends React.Component {
   }
 
   getTextFieldList() {
-    return [['rebateStructure', ''],
-            ['riskOrderAgreement', ''],
+    return [['riskOrderAgreement', ''],
             ['markdownContributionDetails', ''],
             ['preOrderCancellationAllowance', ''],
             ['preOrderStockSwapAllowance', ''],
