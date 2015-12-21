@@ -39,12 +39,12 @@ export default class SuppliersForm extends React.Component {
                 </select>
               </td>
             </tr>
-
+            
             {this.renderMoneyField('creditLimit')}
             {this.renderPercentageField('preOrderDiscount')}
-            {this.renderMoneyField('creditTermsPreOrder')}
+            {this.renderNumOfDaysField('creditTermsPreOrder')}
             {this.renderPercentageField('reOrderDiscount')}
-            {this.renderMoneyField('creditTermsReOrder')}
+            {this.renderNumOfDaysField('creditTermsReOrder')}
             {this.renderPercentageField('faultyReturnsDiscount')}
             {this.renderPercentageField('settlementDiscount')}
             {this.renderMarketingContributionField()}
@@ -163,6 +163,29 @@ export default class SuppliersForm extends React.Component {
                    value={this.getField(field)} />
             <span className="input-group-addon"
                   style={{ width: '45px' }}>%</span>
+          </div>
+        </td>
+      </tr>
+    );
+  }
+
+  renderNumOfDaysField(field) {
+    return (
+      <tr>
+        <td>
+          <label htmlFor={field}>{startCase(field)}</label>
+        </td>
+        <td>
+          <div className="input-group"
+               style={{ width: '100%' }}>
+            <input className="form-control"
+                   type="number"
+                   step="1"
+                   id={field}
+                   name={field}
+                   value={this.getField(field)} />
+            <span className="input-group-addon"
+                  style={{ width: '45px' }}>days</span>
           </div>
         </td>
       </tr>
