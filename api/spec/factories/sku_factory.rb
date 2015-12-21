@@ -15,8 +15,9 @@ FactoryGirl.define do
     list_price 29.99
 
     product_id { create(:product).id }
-    option_id { create(:language_product_option, product_id: product_id).id }
+    option_id { create(:option).id }
+    language_product_option_id { create(:language_product_option, product_id: product_id).id }
     category_id { create(:language_category, category_id: create(:category).id).id }
-    element_id { LanguageProductOption.find(option_id).elementID }
+    element_id { LanguageProductOption.find(language_product_option_id).elementID }
   end
 end

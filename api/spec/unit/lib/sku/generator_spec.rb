@@ -20,11 +20,11 @@ describe Sku::Generator do
     it 'should retrieve the exitsing sku' do
       sku = subject.sku_from!({ manufacturer_sku: 'MANU-FACTURER-SKU-11',
                                 manufacturer_size: :biggish })
-
       expect(sku.sku.present?).to eq(true)
       expect(sku.size.present?).to eq(true)
       expect(sku.color.present?).to eq(true)
       expect(sku.product.present?).to eq(true)
+      expect(sku.option.present?).to eq(true)
       expect(sku.language_product_option.present?).to eq(true)
       expect(sku.language_category.present?).to eq(true)
       expect(sku.element.present?).to eq(true)
@@ -55,6 +55,7 @@ describe Sku::Generator do
 
     it 'should create a language product option' do
       expect(subject.language_product_option).to be_a(LanguageProductOption)
+      expect(subject.language_product_option.name).to eq(new_sku_attrs[:size])
     end
 
     it 'should set the season correctly' do
@@ -62,8 +63,8 @@ describe Sku::Generator do
     end
 
     it 'should create an option' do
-      expect(subject.language_product_option.option).to be_a(Option)
-      expect(subject.language_product_option.name).to eq(new_sku_attrs[:size])
+      expect(subject.option).to be_a(Option)
+      expect(subject.option.size).to eq(new_sku_attrs[:manufacturer_size])
     end
 
     it 'should create an element' do

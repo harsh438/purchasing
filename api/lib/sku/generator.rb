@@ -81,7 +81,8 @@ class Sku::Generator
                 product_id: product.id,
                 language_product_id: language_product.id,
                 element_id: element.id,
-                option_id: language_product_option.id,
+                option_id: option.id,
+                language_product_option_id: language_product_option.id,
                 category_id: language_category.id,
                 gender: product_gender.gender })
   end
