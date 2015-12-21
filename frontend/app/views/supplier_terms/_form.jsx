@@ -276,7 +276,12 @@ export default class SuppliersForm extends React.Component {
 
   getNestedField(fieldNs, nestedKey) {
     if (this.state.terms[fieldNs]) {
-      return this.state.terms[fieldNs][nestedKey];
+      switch (nestedKey) {
+      case 'deadline':
+        return this.state.terms[fieldNs][nestedKey].split('/').reverse().join('-');
+      default:
+        return this.state.terms[fieldNs][nestedKey];
+      }
     }
   }
 
