@@ -2,36 +2,57 @@ class GoodsReceivedOrder::WeeklyReporter
   def report(params)
     start_date, end_date = params.values_at(:start_date, :end_date).map(&:to_date)
     notices = GoodsReceivedNotice.includes(:vendors).delivered_between(start_date..end_date).not_on_weekends
-    by_week = notices.reduce(NoticesByWeek.new, &:<<)
+    by_week = notices.reduce(NoticesByWeek.new(start_date, end_date), &:<<)
     counted = Counter.new.count(by_week)
     formatted = Formatter.new.format(counted)
   end
 
   class NoticesByWeek < Hash
+    def initialize(start_date, end_date)
+      create_weeks_between(start_date, end_date)
+    end
+
     def <<(notice)
       beginning_of_week = notice.delivery_date.beginning_of_week
-
-      self[beginning_of_week] ||= begin
-        { week_num: beginning_of_week.strftime('%W'),
-          start: beginning_of_week.to_s,
-          end: (beginning_of_week + 5.days).to_s,
-          notices_by_date: NoticesByDate.new }
-      end
-
       self[beginning_of_week][:notices_by_date] << notice
       self
+    end
+
+    private
+
+    def create_weeks_between(start_date, end_date)
+      (start_date..end_date).map(&:beginning_of_week).uniq.each do |beginning_of_week|
+        self[beginning_of_week] ||= begin
+          { week_num: beginning_of_week.strftime('%W'),
+            start: beginning_of_week.to_s,
+            end: (beginning_of_week + 5.days).to_s,
+            notices_by_date: NoticesByDate.new(beginning_of_week) }
+        end
+      end
     end
   end
 
   class NoticesByDate < Hash
-    def <<(notice)
-      self[notice.delivery_date.to_s] ||= begin
-        { delivery_date: notice.delivery_date.to_s,
-          notices: [] }
-      end
+    def initialize(beginning_of_week)
+      create_week_days(beginning_of_week)
+    end
 
+    def <<(notice)
       self[notice.delivery_date.to_s][:notices] << notice.as_json
       self
+    end
+
+    private
+
+    def create_week_days(beginning_of_week)
+      friday = beginning_of_week + 4.days
+
+      (beginning_of_week..friday).each do |week_day|
+        self[week_day.to_s] ||= begin
+          { delivery_date: week_day.to_s,
+            notices: [] }
+        end
+      end
     end
   end
 

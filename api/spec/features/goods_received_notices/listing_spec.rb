@@ -11,6 +11,11 @@ feature 'Listing GRNs' do
     then_i_should_also_see_unit_carton_and_pallet_counts
   end
 
+  scenario 'Listing days that do not have GRNs' do
+    when_i_request_a_date_range_that_includes_days_without_grns
+    then_i_should_see_empty_days
+  end
+
   def when_i_request_a_grns_within_a_date_range
     create_grns
     visit goods_received_notices_path(start_date: 3.weeks.ago,
@@ -34,7 +39,25 @@ feature 'Listing GRNs' do
     expect(subject.values.first).to match(a_hash_including('units', 'cartons', 'pallets'))
   end
 
+  def when_i_request_a_date_range_that_includes_days_without_grns
+    create_list(:goods_received_notice, 2, delivery_date: Date.today)
+    visit goods_received_notices_path(start_date: 2.weeks.ago,
+                                      end_date: 2.days.from_now)
+  end
+
+  def then_i_should_see_empty_days
+    expect(subject).to match(a_hash_including(last_monday.to_date.to_s))
+  end
+
   private
+
+  def last_monday
+    if Date.today.monday?
+      1.week.ago
+    else
+      Date.today.beginning_of_week
+    end
+  end
 
   def create_grns
     create_list(:goods_received_notice, 2, delivery_date: 4.weeks.ago)
