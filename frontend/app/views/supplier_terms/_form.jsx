@@ -4,14 +4,13 @@ import { assign, get, map, omit, startCase, pick } from 'lodash';
 
 export default class SuppliersForm extends React.Component {
   componentWillMount() {
-    this.state = { submitting: false };
-    this.setTerms(this.props.terms);
+    this.state = { submitting: false, terms: this.props.terms };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ submitting: false });
     // the file has to be re-uploaded every time anyway
-    this.setTerms(nextProps.terms);
+    this.setTerms({ terms: nextProps.terms });
   }
 
   render() {
@@ -20,6 +19,10 @@ export default class SuppliersForm extends React.Component {
             onChange={this.handleFormChange.bind(this)}
             onSubmit={this.handleFormSubmit.bind(this)}>
         <table className="table">
+          <colgroup>
+            <col style={{ width: '45%' }} />
+          </colgroup>
+
           <tbody>
             <tr>
               <td>
@@ -36,6 +39,8 @@ export default class SuppliersForm extends React.Component {
                 </select>
               </td>
             </tr>
+
+            {this.renderMoneyField('creditLimit')}
 
             {this.renderTextFields()}
 
@@ -105,6 +110,28 @@ export default class SuppliersForm extends React.Component {
                  name={field}
                  placeholder={hint}
                  value={this.getField(field)} />
+        </td>
+      </tr>
+    );
+  }
+
+  renderMoneyField(field) {
+    return (
+      <tr>
+        <td>
+          <label htmlFor={field}>{startCase(field)}</label>
+        </td>
+        <td>
+          <div className="input-group">
+            <span className="input-group-addon">£</span>
+            <input className="form-control"
+                   type="number"
+                   step="1"
+                   id={field}
+                   name={field}
+                   value={this.getField(field)} />
+            <span className="input-group-addon">.00</span>
+          </div>
         </td>
       </tr>
     );
@@ -180,8 +207,7 @@ export default class SuppliersForm extends React.Component {
   }
 
   getTextFieldList() {
-    return [['creditLimit', ''],
-            ['preOrderDiscount', ''],
+    return [['preOrderDiscount', ''],
             ['creditTermsPreOrder', ''],
             ['reOrderDiscount', ''],
             ['creditTermsReOrder', ''],
