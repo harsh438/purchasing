@@ -12,7 +12,7 @@ class Order::Exporter
     PurchaseOrder.create!(vendor_id: order_line_items.first.vendor_id,
                           vendor_name: order_line_items.first.vendor_name,
                           operator: extra_params[:operator] || 'REORDER_TOOL',
-                          order_type: 'R',
+                          order_type: OrderType.char_from(order_line_items.first.order.order_type) || 'R',
                           line_items: create_po_line_items(order_line_items, extra_params),
                           drop_date: order_line_items.first.drop_date)
   end
