@@ -57,11 +57,24 @@ export default class SupplierTerms extends React.Component {
 
   getField(field) {
     let terms = this.props.terms || {};
+    if (terms[field] === undefined) {
+      return;
+    }
 
     switch (field) {
     case 'samples':
     case 'productImagery':
       return terms[field] ? '✔' : '✘';
+    case 'creditLimit':
+      return `£${terms[field]}.00`;
+    case 'preOrderDiscount':
+    case 'reOrderDiscount':
+    case 'faultyReturnsDiscount':
+    case 'settlementDiscount':
+      return `${terms[field]}%`;
+    case 'creditTermsPreOrder':
+    case 'creditTermsReOrder':
+      return `${terms[field]} days`;
     case 'marketingContribution':
       return `${terms[field].percentage}% of ${startCase(terms[field].of)}`;
     case 'riskOrderAgreement':
