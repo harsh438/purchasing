@@ -60,6 +60,7 @@ class SuppliersController < ApplicationController
     terms_fields.push(marketing_contribution: [:percentage, :of])
     terms_fields.push(risk_order_agreement: [:enabled, :percentage, :deadline])
     terms_fields.push(markdown_contribution_details: [:enabled, :percentage, :of])
+    terms_fields.push(bulk_order_agreement: [:enabled, :deadline])
     params.require(:supplier).permit(terms: terms_fields)
   end
 

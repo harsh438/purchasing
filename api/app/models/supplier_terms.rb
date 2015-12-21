@@ -54,6 +54,10 @@ class SupplierTerms < ActiveRecord::Base
       if terms['risk_order_agreement'].present? and terms['risk_order_agreement']['deadline'].present?
         terms['risk_order_agreement']['deadline'] = Date.parse(terms['risk_order_agreement']['deadline']).to_s
       end
+
+      if terms['bulk_order_agreement'].present? and terms['bulk_order_agreement']['deadline'].present?
+        terms['bulk_order_agreement']['deadline'] = Date.parse(terms['bulk_order_agreement']['deadline']).to_s
+      end
     end
   end
 

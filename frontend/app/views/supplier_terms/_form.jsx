@@ -53,6 +53,7 @@ export default class SuppliersForm extends React.Component {
             {this.renderMarkdownContributionDetails()}
             {this.renderPercentageField('preOrderCancellationAllowance')}
             {this.renderPercentageField('preOrderStockSwapAllowance')}
+            {this.renderBulkOrderAgreement()}
             {this.renderTextFields()}
 
             <tr>
@@ -302,6 +303,31 @@ export default class SuppliersForm extends React.Component {
     );
   }
 
+  renderBulkOrderAgreement() {
+    return (
+      <tr onChange={this.handleNestedFormChange.bind(this, 'bulkOrderAgreement')}>
+        <td>
+          <label htmlFor="bulkOrderAgreement">Bulk Order Agreement</label>
+
+          <span className="toggle-field pull-right">
+            <input type="checkbox"
+                   name="bulkOrderAgreementEnabled"
+                   checked={this.getNestedField('bulkOrderAgreement', 'enabled')} />
+          </span>
+        </td>
+
+        <td>
+          <input className="form-control"
+                 type="date"
+                 id="bulkOrderAgreement"
+                 name="bulkOrderAgreementDeadline"
+                 value={this.getNestedField('bulkOrderAgreement', 'deadline')}
+                 disabled={this.getNestedField('bulkOrderAgreement', 'enabled') !== true} />
+        </td>
+      </tr>
+    );
+  }
+
   renderCheckboxField(field) {
     return (
       <tr>
@@ -401,8 +427,7 @@ export default class SuppliersForm extends React.Component {
   }
 
   getTextFieldList() {
-    return [['bulkOrderAgreement', ''],
-            ['saleOrReturnDetails', ''],
+    return [['saleOrReturnDetails', ''],
             ['agreedWith', 'Supplier staff name'],
             ['by', 'Buyers name']];
   }

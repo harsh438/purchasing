@@ -89,6 +89,12 @@ export default class SupplierTerms extends React.Component {
       } else {
         return '✘';
       }
+    case 'bulkOrderAgreement':
+      if (terms[field].enabled) {
+        return terms[field].deadline;
+      } else {
+        return '✘';
+      }
     case 'confirmationFile':
       if (terms.confirmationFileName) {
         return (
