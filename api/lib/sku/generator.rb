@@ -134,6 +134,7 @@ class Sku::Generator
 
   def option_attrs
     { product_id: product.id,
-      name: attrs[:manufacturer_size] }
+      name: "#{attrs[:manufacturer_sku]}-#{attrs[:manufacturer_color]}-#{attrs[:manufacturer_size]}",
+      size: attrs[:manufacturer_size] }
   end
 end
