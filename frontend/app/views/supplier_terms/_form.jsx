@@ -427,7 +427,7 @@ export default class SuppliersForm extends React.Component {
   }
 
   getTextFieldList() {
-    return [['saleOrReturnDetails', ''],
+    return [['saleOrReturnAgreement', ''],
             ['agreedWith', 'Supplier staff name'],
             ['by', 'Buyers name']];
   }

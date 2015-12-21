@@ -31,7 +31,7 @@ class SupplierTerms < ActiveRecord::Base
                               cancellation_allowance
                               stock_swap_allowance
                               bulk_order_agreement
-                              sale_or_return_details
+                              sale_or_return_agreement
                               samples
                               product_imagery
                               agreed_with
