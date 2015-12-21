@@ -183,8 +183,7 @@ export default class SuppliersForm extends React.Component {
                    id="marketingContribution"
                    name="marketingContributionPercentage"
                    value={this.getNestedField('marketingContribution', 'percentage')} />
-            <span className="input-group-addon"
-                  style={{ width: '45px' }}>%</span>
+            <span className="input-group-addon">%</span>
           </div>
 
           <select className="form-control pull-right"
@@ -205,6 +204,12 @@ export default class SuppliersForm extends React.Component {
       <tr onChange={this.handleNestedFormChange.bind(this, 'riskOrderAgreement')}>
         <td>
           <label htmlFor="riskOrderAgreement">{startCase('riskOrderAgreement')}</label>
+
+          <span className="toggle-field pull-right">
+            <input type="checkbox"
+                   name="riskOrderAgreementEnabled"
+                   checked={this.getNestedField('riskOrderAgreement', 'enabled')} />
+          </span>
         </td>
         <td>
           <div className="input-group pull-left"
@@ -213,16 +218,18 @@ export default class SuppliersForm extends React.Component {
                    type="number"
                    id="riskOrderAgreement"
                    name="riskOrderAgreementPercentage"
-                   value={this.getNestedField('riskOrderAgreement', 'percentage')} />
-            <span className="input-group-addon"
-                  style={{ width: '45px' }}>%</span>
+                   value={this.getNestedField('riskOrderAgreement', 'percentage')}
+                   disabled={this.getNestedField('riskOrderAgreement', 'enabled') !== true} />
+
+            <span className="input-group-addon">%</span>
           </div>
 
           <input type="date"
                  className="form-control pull-right"
                  name="riskOrderAgreementDeadline"
                  value={this.getNestedField('riskOrderAgreement', 'deadline')}
-                 style={{ width: '44%' }} />
+                 style={{ width: '44%' }}
+                 disabled={this.getNestedField('riskOrderAgreement', 'enabled') !== true} />
         </td>
       </tr>
     );
@@ -289,7 +296,15 @@ export default class SuppliersForm extends React.Component {
   handleNestedFormChange(fieldNs, e) {
     const { target } = e;
     const nestedKey = target.name.replace(fieldNs, '').toLowerCase();
-    const nestedValues = assign({}, this.state.terms[fieldNs], { [nestedKey]: target.value });
+    let nestedValue;
+
+    if (target.type === 'checkbox') {
+      nestedValue = target.checked;
+    } else {
+      nestedValue = target.value;
+    }
+
+    const nestedValues = assign({}, this.state.terms[fieldNs], { [nestedKey]: nestedValue });
     this.handleFormChange({ target: { name: fieldNs, value: nestedValues } });
     e.stopPropagation();
   }

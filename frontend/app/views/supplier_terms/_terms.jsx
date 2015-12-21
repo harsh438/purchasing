@@ -65,7 +65,11 @@ export default class SupplierTerms extends React.Component {
     case 'marketingContribution':
       return `${terms[field].percentage}% of ${startCase(terms[field].of)}`;
     case 'riskOrderAgreement':
-      return `${terms[field].percentage}% by ${terms[field].deadline}`;
+      if (terms[field].enabled) {
+        return `${terms[field].percentage}% by ${terms[field].deadline}`;
+      } else {
+        return '✘';
+      }
     case 'confirmationFile':
       if (terms.confirmationFileName) {
         return (

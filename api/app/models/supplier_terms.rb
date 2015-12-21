@@ -50,6 +50,10 @@ class SupplierTerms < ActiveRecord::Base
     super.tap do |terms|
       terms['created_at'] = terms['created_at'].to_s
       terms.merge!(terms.delete('terms'))
+
+      if terms['risk_order_agreement'].present? and terms['risk_order_agreement']['deadline'].present?
+        terms['risk_order_agreement']['deadline'] = Date.parse(terms['risk_order_agreement']['deadline']).to_s
+      end
     end
   end
 
