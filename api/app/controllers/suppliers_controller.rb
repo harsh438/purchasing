@@ -58,6 +58,7 @@ class SuppliersController < ApplicationController
                          :confirmation,
                          :confirmation_file_name])
     terms_fields.push(marketing_contribution: [:percentage, :of])
+    terms_fields.push(risk_order_agreement: [:percentage, :deadline])
     params.require(:supplier).permit(terms: terms_fields)
   end
 

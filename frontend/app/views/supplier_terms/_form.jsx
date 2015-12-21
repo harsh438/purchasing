@@ -49,6 +49,7 @@ export default class SuppliersForm extends React.Component {
             {this.renderPercentageField('settlementDiscount')}
             {this.renderMarketingContributionField()}
             {this.renderTextField(['rebateStructure', ''], 'rebateStructure')}
+            {this.renderRiskOrderAgreement()}
             {this.renderTextFields()}
 
             <tr>
@@ -181,14 +182,14 @@ export default class SuppliersForm extends React.Component {
                    type="number"
                    id="marketingContribution"
                    name="marketingContributionPercentage"
-                   value={this.getField('marketingContributionPercentage')} />
+                   value={this.getNestedField('marketingContribution', 'percentage')} />
             <span className="input-group-addon"
                   style={{ width: '45px' }}>%</span>
           </div>
 
           <select className="form-control pull-right"
                   name="marketingContributionOf"
-                  value={this.getField('marketingContributionOf')}
+                  value={this.getNestedField('marketingContribution', 'of')}
                   style={{ width: '44%' }}>
             <option value="pre_order_total">Pre Order Total</option>
             <option value="season_total">Season Total</option>
@@ -197,7 +198,34 @@ export default class SuppliersForm extends React.Component {
         </td>
       </tr>
     );
+  }
 
+  renderRiskOrderAgreement() {
+    return (
+      <tr onChange={this.handleNestedFormChange.bind(this, 'riskOrderAgreement')}>
+        <td>
+          <label htmlFor="riskOrderAgreement">{startCase('riskOrderAgreement')}</label>
+        </td>
+        <td>
+          <div className="input-group pull-left"
+               style={{ width: '55%' }}>
+            <input className="form-control"
+                   type="number"
+                   id="riskOrderAgreement"
+                   name="riskOrderAgreementPercentage"
+                   value={this.getNestedField('riskOrderAgreement', 'percentage')} />
+            <span className="input-group-addon"
+                  style={{ width: '45px' }}>%</span>
+          </div>
+
+          <input type="date"
+                 className="form-control pull-right"
+                 name="riskOrderAgreementDeadline"
+                 value={this.getNestedField('riskOrderAgreement', 'deadline')}
+                 style={{ width: '44%' }} />
+        </td>
+      </tr>
+    );
   }
 
   renderCheckboxField(field) {
@@ -234,16 +262,14 @@ export default class SuppliersForm extends React.Component {
     case 'samples':
     case 'productImagery':
       return this.state.terms[field];
-    case 'marketingContributionOf':
-      if (this.state.terms.marketingContribution) {
-        return this.state.terms.marketingContribution.of;
-      }
-    case 'marketingContributionPercentage':
-      if (this.state.terms.marketingContribution) {
-        return this.state.terms.marketingContribution.percentage;
-      }
     default:
       return get(this.state.terms, field, '');
+    }
+  }
+
+  getNestedField(fieldNs, nestedKey) {
+    if (this.state.terms[fieldNs]) {
+      return this.state.terms[fieldNs][nestedKey];
     }
   }
 
@@ -286,8 +312,7 @@ export default class SuppliersForm extends React.Component {
   }
 
   getTextFieldList() {
-    return [['riskOrderAgreement', ''],
-            ['markdownContributionDetails', ''],
+    return [['markdownContributionDetails', ''],
             ['preOrderCancellationAllowance', ''],
             ['preOrderStockSwapAllowance', ''],
             ['bulkOrderAgreement', ''],
