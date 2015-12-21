@@ -39,7 +39,7 @@ export default class SuppliersForm extends React.Component {
                 </select>
               </td>
             </tr>
-            
+
             {this.renderMoneyField('creditLimit')}
             {this.renderPercentageField('preOrderDiscount')}
             {this.renderNumOfDaysField('creditTermsPreOrder')}
@@ -50,6 +50,7 @@ export default class SuppliersForm extends React.Component {
             {this.renderMarketingContributionField()}
             {this.renderTextField(['rebateStructure', ''], 'rebateStructure')}
             {this.renderRiskOrderAgreement()}
+            {this.renderMarkdownContributionDetails()}
             {this.renderTextFields()}
 
             <tr>
@@ -258,6 +259,47 @@ export default class SuppliersForm extends React.Component {
     );
   }
 
+  renderMarkdownContributionDetails() {
+    return (
+      <tr onChange={this.handleNestedFormChange.bind(this, 'markdownContributionDetails')}>
+        <td>
+          <label htmlFor="markdownContributionDetails">Markdown Contribution Details</label>
+
+          <span className="toggle-field pull-right">
+            <input type="checkbox"
+                   name="markdownContributionDetailsEnabled"
+                   checked={this.getNestedField('markdownContributionDetails', 'enabled')} />
+          </span>
+        </td>
+
+        <td>
+          <div className="input-group pull-left"
+               style={{ width: '55%' }}>
+            <input className="form-control"
+                   type="number"
+                   id="markdownContributionDetails"
+                   name="markdownContributionDetailsPercentage"
+                   value={this.getNestedField('markdownContributionDetails', 'percentage')}
+                   disabled={this.getNestedField('markdownContributionDetails', 'enabled') !== true} />
+
+            <span className="input-group-addon">%</span>
+          </div>
+
+          <select className="form-control pull-right"
+                  name="markdownContributionDetailsOf"
+                  value={this.getNestedField('markdownContributionDetails', 'of')}
+                  style={{ width: '44%' }}
+                  required
+                  disabled={this.getNestedField('markdownContributionDetails', 'enabled') !== true}>
+            <option> -- select -- </option>
+            <option value="pre_orders">Pre orders</option>
+            <option value="all_orders">All orders</option>
+          </select>
+        </td>
+      </tr>
+    );
+  }
+
   renderCheckboxField(field) {
     return (
       <tr>
@@ -301,7 +343,9 @@ export default class SuppliersForm extends React.Component {
     if (this.state.terms[fieldNs]) {
       switch (nestedKey) {
       case 'deadline':
-        return this.state.terms[fieldNs][nestedKey].split('/').reverse().join('-');
+        if (this.state.terms[fieldNs][nestedKey]) {
+          return this.state.terms[fieldNs][nestedKey].split('/').reverse().join('-');
+        }
       default:
         return this.state.terms[fieldNs][nestedKey];
       }
@@ -355,8 +399,7 @@ export default class SuppliersForm extends React.Component {
   }
 
   getTextFieldList() {
-    return [['markdownContributionDetails', ''],
-            ['preOrderCancellationAllowance', ''],
+    return [['preOrderCancellationAllowance', ''],
             ['preOrderStockSwapAllowance', ''],
             ['bulkOrderAgreement', ''],
             ['saleOrReturnDetails', ''],

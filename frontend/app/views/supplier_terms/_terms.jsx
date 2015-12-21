@@ -83,6 +83,12 @@ export default class SupplierTerms extends React.Component {
       } else {
         return '✘';
       }
+    case 'markdownContributionDetails':
+      if (terms[field].enabled) {
+        return `${terms[field].percentage}% of ${startCase(terms[field].of)}`;
+      } else {
+        return '✘';
+      }
     case 'confirmationFile':
       if (terms.confirmationFileName) {
         return (
