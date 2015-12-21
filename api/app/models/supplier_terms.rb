@@ -26,11 +26,11 @@ class SupplierTerms < ActiveRecord::Base
                               settlement_discount
                               marketing_contribution
                               rebate_structure
-                              risk_order_details
-                              mark_down_contribution_details
+                              risk_order_agreement
+                              markdown_contribution_details
                               cancellation_allowance
                               stock_swap_allowance
-                              bulk_order_details
+                              bulk_order_agreement
                               sale_or_return_details
                               samples
                               product_imagery

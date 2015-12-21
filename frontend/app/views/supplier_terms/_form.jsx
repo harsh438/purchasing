@@ -286,11 +286,11 @@ export default class SuppliersForm extends React.Component {
 
   getTextFieldList() {
     return [['rebateStructure', ''],
-            ['riskOrderDetails', ''],
-            ['markDownContributionDetails', ''],
+            ['riskOrderAgreement', ''],
+            ['markdownContributionDetails', ''],
             ['preOrderCancellationAllowance', ''],
             ['preOrderStockSwapAllowance', ''],
-            ['bulkOrderDetails', ''],
+            ['bulkOrderAgreement', ''],
             ['saleOrReturnDetails', ''],
             ['agreedWith', 'Supplier staff name'],
             ['by', 'Buyers name']];
