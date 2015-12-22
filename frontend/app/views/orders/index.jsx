@@ -28,7 +28,7 @@ class OrdersIndex extends React.Component {
            style={{ marginTop: '70px' }}>
         <div className="row" style={{ marginBottom: '20px' }}>
           <div className="col-md-4">
-            <h1>Reorders</h1>
+            <h1>Orders</h1>
           </div>
 
           <div className="col-md-2 col-md-offset-6">

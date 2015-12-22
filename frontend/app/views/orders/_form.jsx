@@ -21,7 +21,7 @@ export default class OrdersForm extends React.Component {
           <span className="input-group-btn">
             <button className="btn btn-success"
                     disabled={this.state.creatingOrder}>
-              Create order
+              Create reorder
             </button>
           </span>
         </div>
@@ -35,7 +35,7 @@ export default class OrdersForm extends React.Component {
 
   handleFormSubmit(e) {
     e.preventDefault();
-    this.setState({ creatingOrder: true });    
+    this.setState({ creatingOrder: true });
     this.props.onCreateOrder(this.state);
   }
 }
