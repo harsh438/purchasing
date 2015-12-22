@@ -58,8 +58,8 @@ class PurchaseOrderLineItem < ActiveRecord::Base
       .pluck(:orderType)
       .uniq
       .map do |c|
-        name = OrderType.string_from(c).split(/(\W)/).map(&:capitalize).join
-        { id: c, name: name } if name
+        name = OrderType.string_from(c)
+        { id: c, name: name.split(/(\W)/).map(&:capitalize).join } if name
       end
       .compact
   end
