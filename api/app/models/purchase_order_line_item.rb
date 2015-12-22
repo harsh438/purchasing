@@ -280,8 +280,8 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   def as_json(options = {})
     options[:unit] ||= '£'
 
-    super.merge(product_json)
-         .merge(quantity_cost_and_value_json)
+    super.merge(product_json(options))
+         .merge(quantity_cost_and_value_json(options))
          .merge(order_id: id,
                 order_type: order_type,
                 order_first_received: order_first_received,
@@ -321,7 +321,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
     self.line_id ||= 0
   end
 
-  def product_json
+  def product_json(options)
     { internal_sku: internal_sku,
       product_cost: number_to_currency(product_cost, options),
       product_size: product_size,
@@ -339,7 +339,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
       item_code: item_code }
   end
 
-  def quantity_cost_and_value_json
+  def quantity_cost_and_value_json(options)
     { ordered_quantity: ordered_quantity,
       ordered_cost: number_to_currency(ordered_cost, options),
       ordered_value: number_to_currency(ordered_value, options),
