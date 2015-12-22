@@ -37,7 +37,7 @@ class OrdersController < ApplicationController
   end
 
   def filter_params
-    params.permit(:order_type)
+    params.permit(filters: [:order_type])[:filters]
   end
 
   def export_attrs

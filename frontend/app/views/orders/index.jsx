@@ -1,7 +1,8 @@
 import React from 'react';
-import { assign } from 'lodash';
+import { assign, isEqual } from 'lodash';
 import { connect } from 'react-redux';
 import { OrdersTable } from './_table';
+import OrdersFilter from './_filters';
 import NumberedPagination from '../pagination/_numbered';
 import OrdersForm from './_form';
 import { loadOrders, createOrder, exportOrders } from '../../actions/orders';
@@ -15,8 +16,12 @@ class OrdersIndex extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const nextQuery = nextProps.location.query;
+
     if (this.state.creatingOrder && nextProps.order) {
       this.props.history.pushState(null, `/orders/${nextProps.order.id}/edit`);
+    } else if (!isEqual(this.props.location.query, nextQuery)) {
+      this.loadPage(nextQuery.page, (nextQuery.filters || {}));
     } else {
       this.setState({ exportingOrders: false, selectedOrders: [] });
     }
@@ -37,6 +42,16 @@ class OrdersIndex extends React.Component {
         </div>
 
         <div className="row">
+          <div className="col-md-12">
+            <div className="panel panel-default">
+              <div className="panel-body">
+                <OrdersFilter filters={this.props.location.query.filters}
+                              orderTypes={this.props.orderTypes}
+                              onFilterOrders={this.handleFilterOrders.bind(this)} />
+              </div>
+            </div>
+          </div>
+
           <div className="col-md-12">
             <button className="btn btn-warning"
                     disabled={this.isExportButtonDisabled()}
@@ -61,8 +76,12 @@ class OrdersIndex extends React.Component {
     );
   }
 
-  loadPage(page) {
-    this.props.dispatch(loadOrders(page || 1));
+  loadPage(page = 1, filters) {
+    this.props.dispatch(loadOrders({ page, filters }));
+  }
+
+  handleFilterOrders(filters) {
+    this.props.history.pushState(null, '/orders', { filters });
   }
 
   handleCreateOrder(order) {

@@ -25,7 +25,7 @@ feature 'Listing Orders' do
   def when_i_request_list_of_only_reorders
     create(:order, order_type: 'reorder')
     create(:order, order_type: 'order')
-    visit orders_path(order_type: 'reorder')
+    visit orders_path(filters: { order_type: 'reorder' })
   end
 
   def then_i_should_see_only_reorders

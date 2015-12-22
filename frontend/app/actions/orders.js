@@ -3,9 +3,10 @@ import 'whatwg-fetch';
 import { map } from 'lodash';
 import { snakeizeKeys } from '../utilities/inspection';
 
-export function loadOrders(page) {
+export function loadOrders({ page, filters }) {
   return dispatch => {
-    const queryString = Qs.stringify({ page });
+    const snakedFilters = snakeizeKeys(filters);
+    const queryString = Qs.stringify({ page, filters: snakedFilters });
     fetch(`/api/orders.json?${queryString}`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(results => dispatch({ results, type: 'SET_ORDERS' }));
