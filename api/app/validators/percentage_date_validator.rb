@@ -4,7 +4,7 @@ class PercentageDateValidator < ActiveModel::EachValidator
 
     if !is_percentage?(value[:percentage])
       record.errors[attribute] << 'Must be a percentage'
-    elsif !is_valid_date?(value[:date])
+    elsif value[:date].blank? or !is_valid_date?(value[:date])
       record.errors[attribute] << 'Must be a valid date'
     end
   end

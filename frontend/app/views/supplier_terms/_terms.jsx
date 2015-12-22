@@ -92,7 +92,7 @@ export default class SupplierTerms extends React.Component {
       }
     case 'riskOrderAgreement':
       if (terms[field] && terms[field].enabled) {
-        return `${terms[field].percentage}% by ${terms[field].deadline}`;
+        return `${terms[field].percentage}% by ${terms[field].date}`;
       } else {
         return '✘';
       }

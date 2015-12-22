@@ -254,8 +254,8 @@ export default class SuppliersForm extends React.Component {
 
           <input type="date"
                  className="form-control pull-right"
-                 name="riskOrderAgreementDeadline"
-                 value={this.getNestedField('riskOrderAgreement', 'deadline')}
+                 name="riskOrderAgreementDate"
+                 value={this.getNestedField('riskOrderAgreement', 'date')}
                  style={{ width: '44%' }}
                  disabled={this.getNestedField('riskOrderAgreement', 'enabled') !== true} />
         </td>
