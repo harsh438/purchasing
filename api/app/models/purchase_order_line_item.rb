@@ -121,7 +121,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
                  product_size: :orderTool_SDsize,
                  product_barcode: :orderTool_barcode,
                  sell_price: :orderTool_sellPrice,
-                 brand_size: :orderTool_brandSize,
+                 manufacturer_size: :orderTool_brandSize,
                  supplier_list_price: :orderTool_SupplierListPrice,
                  product_rrp: :orderTool_RRP,
                  reporting_pid: :reporting_pID,

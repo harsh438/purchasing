@@ -30,8 +30,11 @@ describe Order::Exporter do
           po_line = create(:purchase_order_line_item, :with_option, product: product)
           internal_sku = "#{product.id}-#{Element.id_from_option(product.id, po_line.option_id)}"
 
-          [create(:order_line_item, drop_date: 1.week.from_now, internal_sku: internal_sku),
-           create(:order_line_item, drop_date: 1.week.from_now, internal_sku: internal_sku)]
+          [create(:order_line_item, drop_date: 1.week.from_now,
+                                    internal_sku: internal_sku),
+
+           create(:order_line_item, drop_date: 1.week.from_now,
+                                    internal_sku: internal_sku)]
         end
 
         context 'then the orders exports' do

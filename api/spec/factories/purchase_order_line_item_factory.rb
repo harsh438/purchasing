@@ -24,6 +24,14 @@ FactoryGirl.define do
     end
 
     trait :with_option do
+      option_id { create(:option).id }
+
+      after(:create) do |po, evaluator|
+        create(:language_product_option, oID: po.option_id, pID: po.product.id || 1)
+      end
+    end
+
+    trait :with_language_option do
       option_id 1
 
       after(:create) do |po, evaluator|

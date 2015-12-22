@@ -10,7 +10,7 @@ feature 'Purchase Order Drop Number' do
 
     create_list(:purchase_order_line_item,
                 1,
-                :with_option,
+                :with_language_option,
                 :with_summary,
                 status: 5,
                 product: product,
@@ -19,7 +19,7 @@ feature 'Purchase Order Drop Number' do
 
     create_list(:purchase_order_line_item,
                 1,
-                :with_option,
+                :with_language_option,
                 :with_summary,
                 status: 5,
                 product: product,

@@ -28,19 +28,28 @@ class Order::Exporter
   end
 
   def po_line_item_attrs(order_line_item, extra_params)
-    { supplier_list_price: order_line_item.product.cost,
-      order_date: order_line_item.order.created_at,
-      drop_date: order_line_item.drop_date,
-      season: order_line_item.season || '',
-      gender: order_line_item.gender || '',
-      status: 2,
-      operator: extra_params[:operator] || 'REORDER_TOOL',
+    { operator: extra_params[:operator] || 'REORDER_TOOL',
+      single_line_id: extra_params[:single_line_id] || nil,
+      reporting_pid: order_line_item.reporting_pid }
+      .merge!(po_line_item_core_attrs(order_line_item))
+      .merge!(po_line_item_relationship_attrs(order_line_item))
+      .merge!(po_line_item_product_attrs(order_line_item))
+      .merge!(po_line_item_size_attrs(order_line_item))
+      .merge!(po_line_item_date_attrs(order_line_item))
+  end
+
+  def po_line_item_core_attrs(order_line_item)
+    { status: 2,
+      supplier_list_price: order_line_item.product.cost,
       cost: order_line_item.discounted_cost,
       quantity: order_line_item.quantity,
-      reporting_pid: order_line_item.reporting_pid,
-      single_line_id: extra_params[:single_line_id] || nil }
-      .merge!(po_line_item_relationship_attrs(order_line_item))
-      .merge!(po_line_product_attrs(order_line_item))
+      season: order_line_item.season || '',
+      gender: order_line_item.gender || '' }
+  end
+
+  def po_line_item_date_attrs(order_line_item)
+    { order_date: order_line_item.order.created_at,
+      drop_date: order_line_item.drop_date }
   end
 
   def po_line_item_relationship_attrs(order_line_item)
@@ -49,11 +58,22 @@ class Order::Exporter
       option_id: order_line_item.option_id || 0 }
   end
 
-  def po_line_product_attrs(order_line_item)
+  def language_option(product_id, option_id)
+    LanguageProductOption.find_by(product_id, option_id)
+  end
+
+  def po_line_item_product_attrs(order_line_item)
     { product_rrp: order_line_item.product.price,
       product_sku: order_line_item.product.manufacturer_sku,
-      product_size: order_line_item.product.size,
       product_name: order_line_item.product_name }
+  end
+
+  def po_line_item_size_attrs(order_line_item)
+    language_product_option = language_option(order_line_item.product_id,
+                                              order_line_item.option_id)
+
+    { product_size: Option.find(order_line_item.option_id).try(:size),
+      manufacturer_size: language_product_option.name }
   end
 
   def assign_po_to_orders(purchase_order, orders)
