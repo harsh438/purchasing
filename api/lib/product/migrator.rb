@@ -1,4 +1,4 @@
-class ProductMigrator
+class Product::Migrator
   class NoManufacturerSku < RuntimeError; end
   class InternalSkuAlreadyExists < RuntimeError; end
   class NoLanguageProduct < RuntimeError; end

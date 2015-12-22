@@ -1,10 +1,10 @@
-describe ProductMigrator do
+describe Product::Migrator do
   context 'it should correctly migrate products to the skus table' do
     context 'create a record in the sku table for each combination of product options' do
       before do
         @first_product = create(:product)
         @second_product = create(:product)
-        migrator = ProductMigrator.new
+        migrator = Product::Migrator.new
         migrator.kernel = double(puts: nil)
         migrator.migrate
       end
