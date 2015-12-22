@@ -17,8 +17,8 @@ class SupplierTerms < ActiveRecord::Base
   validates :pre_order_cancellation_allowance, percentage_or_blank: true
   validates :pre_order_stock_swap_allowance, percentage_or_blank: true
   validates :risk_order_agreement, percentage_date: true
-  validates :bulk_order_agreement, date: true
-  validates :sale_or_return_agreement, date: true
+  validates :bulk_order_agreement, nested_date: true
+  validates :sale_or_return_agreement, nested_date: true
   validates :marketing_contribution, percentage_of: { of: %w(pre_order_total
                                                              season_total
                                                              year_total) }

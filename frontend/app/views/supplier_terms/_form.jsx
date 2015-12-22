@@ -53,8 +53,8 @@ export default class SuppliersForm extends React.Component {
             {this.renderMarkdownContributionDetails()}
             {this.renderPercentageField('preOrderCancellationAllowance')}
             {this.renderPercentageField('preOrderStockSwapAllowance')}
-            {this.renderCheckboxDeadline('bulkOrderAgreement')}
-            {this.renderCheckboxDeadline('saleOrReturnAgreement')}
+            {this.renderCheckboxDate('bulkOrderAgreement')}
+            {this.renderCheckboxDate('saleOrReturnAgreement')}
             {this.renderTextFields()}
 
             <tr>
@@ -306,7 +306,7 @@ export default class SuppliersForm extends React.Component {
     );
   }
 
-  renderCheckboxDeadline(fieldNs) {
+  renderCheckboxDate(fieldNs) {
     const field = nestedKey => `${fieldNs}${nestedKey}`;
 
     return (
@@ -326,8 +326,8 @@ export default class SuppliersForm extends React.Component {
           <input className="form-control"
                  type="date"
                  id={fieldNs}
-                 name={field('Deadline')}
-                 value={this.getNestedField(fieldNs, 'deadline')}
+                 name={field('Date')}
+                 value={this.getNestedField(fieldNs, 'date')}
                  disabled={this.getNestedField(fieldNs, 'enabled') !== true} />
         </td>
       </tr>
@@ -376,7 +376,7 @@ export default class SuppliersForm extends React.Component {
   getNestedField(fieldNs, nestedKey) {
     if (this.state.terms[fieldNs]) {
       switch (nestedKey) {
-      case 'deadline':
+      case 'date':
         if (this.state.terms[fieldNs][nestedKey]) {
           return this.state.terms[fieldNs][nestedKey].split('/').reverse().join('-');
         }
