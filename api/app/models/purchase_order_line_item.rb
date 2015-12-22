@@ -280,38 +280,11 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   def as_json(options = {})
     options[:unit] ||= '£'
 
-    super.merge(internal_sku: internal_sku,
-                product_cost: number_to_currency(product_cost, options),
-                product_size: product_size,
-                product_rrp: number_to_currency(product_rrp, options),
-                category: category,
-                brand: brand,
-                supplier_style_code: supplier_style_code,
-                supplier_color_code: supplier_color_code,
-                supplier_product_name: supplier_product_name,
-                supplier_color_name: supplier_color_name,
-                brand_style_code: brand_style_code,
-                brand_color_code: brand_color_code,
-                brand_product_name: brand_product_name,
-                brand_color_name: brand_color_name,
-                item_code: item_code,
-                order_id: id,
+    super.merge(product_json)
+         .merge(quantity_cost_and_value_json)
+         .merge(order_id: id,
                 order_type: order_type,
                 order_first_received: order_first_received,
-                ordered_quantity: ordered_quantity,
-                ordered_cost: number_to_currency(ordered_cost, options),
-                ordered_value: number_to_currency(ordered_value, options),
-                total: ordered_cost,
-                delivery_date: delivery_date.to_s,
-                delivered_quantity: delivered_quantity,
-                delivered_cost: number_to_currency(delivered_cost, options),
-                delivered_value: number_to_currency(delivered_value, options),
-                cancelled_quantity: cancelled_quantity,
-                cancelled_cost: number_to_currency(cancelled_cost, options),
-                cancelled_value: number_to_currency(cancelled_value, options),
-                balance_quantity: balance_quantity,
-                balance_cost: number_to_currency(balance_cost, options),
-                balance_value: number_to_currency(balance_value, options),
                 weeks_on_sale: weeks_on_sale,
                 closing_date: closing_date)
   end
@@ -346,5 +319,40 @@ class PurchaseOrderLineItem < ActiveRecord::Base
     self.original_pid ||= 0
     self.original_option_id ||= 0
     self.line_id ||= 0
+  end
+
+  def product_json
+    { internal_sku: internal_sku,
+      product_cost: number_to_currency(product_cost, options),
+      product_size: product_size,
+      product_rrp: number_to_currency(product_rrp, options),
+      category: category,
+      brand: brand,
+      supplier_style_code: supplier_style_code,
+      supplier_color_code: supplier_color_code,
+      supplier_product_name: supplier_product_name,
+      supplier_color_name: supplier_color_name,
+      brand_style_code: brand_style_code,
+      brand_color_code: brand_color_code,
+      brand_product_name: brand_product_name,
+      brand_color_name: brand_color_name,
+      item_code: item_code }
+  end
+
+  def quantity_cost_and_value_json
+    { ordered_quantity: ordered_quantity,
+      ordered_cost: number_to_currency(ordered_cost, options),
+      ordered_value: number_to_currency(ordered_value, options),
+      total: ordered_cost,
+      delivery_date: delivery_date.to_s,
+      delivered_quantity: delivered_quantity,
+      delivered_cost: number_to_currency(delivered_cost, options),
+      delivered_value: number_to_currency(delivered_value, options),
+      cancelled_quantity: cancelled_quantity,
+      cancelled_cost: number_to_currency(cancelled_cost, options),
+      cancelled_value: number_to_currency(cancelled_value, options),
+      balance_quantity: balance_quantity,
+      balance_cost: number_to_currency(balance_cost, options),
+      balance_value: number_to_currency(balance_value, options) }
   end
 end
