@@ -57,9 +57,6 @@ export default class SupplierTerms extends React.Component {
 
   getField(field) {
     let terms = this.props.terms || {};
-    if (terms[field] === undefined) {
-      return;
-    }
 
     switch (field) {
     case 'samples':
