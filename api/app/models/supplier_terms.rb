@@ -22,7 +22,7 @@ class SupplierTerms < ActiveRecord::Base
   validates :marketing_contribution, percentage_of: { of: ['pre_order_total',
                                                          'season_total',
                                                          'year_total'] }
-  validates :markdown_contribution_details, percentage_of: { of: ['pre_order',
+  validates :markdown_contribution_details, percentage_of: { of: ['pre_orders',
                                                                   'all_orders'] }
 
   has_attached_file :confirmation
