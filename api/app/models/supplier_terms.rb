@@ -19,11 +19,11 @@ class SupplierTerms < ActiveRecord::Base
   validates :risk_order_agreement, percentage_date: true
   validates :bulk_order_agreement, date: true
   validates :sale_or_return_agreement, date: true
-  validates :marketing_contribution, percentage_of: { of: ['pre_order_total',
-                                                         'season_total',
-                                                         'year_total'] }
-  validates :markdown_contribution_details, percentage_of: { of: ['pre_orders',
-                                                                  'all_orders'] }
+  validates :marketing_contribution, percentage_of: { of: %w(pre_order_total
+                                                             season_total
+                                                             year_total) }
+  validates :markdown_contribution_details, percentage_of: { of: %w(pre_orders
+                                                                    all_orders) }
 
   has_attached_file :confirmation
   validates_attachment_content_type :confirmation, content_type: %w(image/jpeg
