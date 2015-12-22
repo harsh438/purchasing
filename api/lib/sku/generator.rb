@@ -138,7 +138,8 @@ class Sku::Generator
       cost: attrs[:cost_price],
       on_sale: attrs[:on_sale] || '',
       vendor_id: attrs[:vendor_id],
-      season: attrs[:season] }
+      season: attrs[:season],
+      barcode: attrs[:barcode] }
   end
 
   def category_attrs
@@ -148,6 +149,7 @@ class Sku::Generator
   def option_attrs
     { product_id: product.id,
       name: "#{attrs[:manufacturer_sku]}-#{attrs[:manufacturer_color]}-#{attrs[:manufacturer_size]}",
-      size: attrs[:manufacturer_size] }
+      size: attrs[:manufacturer_size],
+      barcode: attrs[:barcode] }
   end
 end
