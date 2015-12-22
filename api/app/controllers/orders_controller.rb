@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
 
   def create
     order = Order.create!(order_attrs)
-    render json: order.as_json_with_line_items_and_purchase_orders
+    render json: order.as_json_with_line_items_and_purchase_orders.merge!(url: url_for(order))
   end
 
   def show
