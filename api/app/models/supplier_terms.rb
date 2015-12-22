@@ -5,6 +5,7 @@ class SupplierTerms < ActiveRecord::Base
 
   belongs_to :supplier
 
+  validates :season, presence: true
   validates :credit_limit, numericality: true, presence: true
   validates :pre_order_discount, percentage_or_blank: true
   validates :credit_terms_pre_order, number_or_blank: true
@@ -15,8 +16,11 @@ class SupplierTerms < ActiveRecord::Base
   validates :settlement_discount, percentage_or_blank: true
   validates :pre_order_cancellation_allowance, percentage_or_blank: true
   validates :pre_order_stock_swap_allowance, percentage_or_blank: true
-
-  validates :season, presence: true
+  validates :risk_order_agreement, percentage_of: { of: ['pre_order_total',
+                                                         'season_total',
+                                                         'year_total'] }
+  validates :markdown_contribution_details, percentage_of: { of: ['pre_order',
+                                                                  'all_orders'] }
 
   has_attached_file :confirmation
   validates_attachment_content_type :confirmation, content_type: %w(image/jpeg
