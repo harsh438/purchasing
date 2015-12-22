@@ -41,20 +41,12 @@ class PurchaseOrderLineItem::CsvExporter
     query = PurchaseOrderLineItem.mapped.with_valid_status.with_summary
     query = PurchaseOrderLineItem::Filter.new.filter(query, attrs)
     columns = csv_columns(attrs[:columns] || {})
-    to_csv(query, columns)
+    csv = Csv::ViewModel.new
+    csv << columns.map(&:humanize)
+    csv.concat(query.map { |purchase_order| row_data(purchase_order, columns) })
   end
 
   private
-
-  def to_csv(query, columns)
-    CSV.generate do |csv|
-      csv << columns.map(&:humanize)
-
-      query.each do |purchase_order|
-        csv << row_data(purchase_order, columns)
-      end
-    end
-  end
 
   def row_data(purchase_order, columns)
     data = purchase_order.as_json(unit: '').with_indifferent_access
