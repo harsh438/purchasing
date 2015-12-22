@@ -51,12 +51,12 @@ class SupplierTerms < ActiveRecord::Base
       terms['created_at'] = terms['created_at'].to_s
       terms.merge!(terms.delete('terms'))
 
-      if terms['risk_order_agreement'].present? and terms['risk_order_agreement']['deadline'].present?
-        terms['risk_order_agreement']['deadline'] = Date.parse(terms['risk_order_agreement']['deadline']).to_s
-      end
-
-      if terms['bulk_order_agreement'].present? and terms['bulk_order_agreement']['deadline'].present?
-        terms['bulk_order_agreement']['deadline'] = Date.parse(terms['bulk_order_agreement']['deadline']).to_s
+      %w(risk_order_agreement
+         bulk_order_agreement
+         sale_or_return_agreement).each do |field|
+        if terms[field].present? and terms[field]['deadline'].present?
+          terms[field]['deadline'] = Date.parse(terms[field]['deadline']).to_s
+        end
       end
     end
   end

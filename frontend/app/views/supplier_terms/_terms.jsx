@@ -87,6 +87,7 @@ export default class SupplierTerms extends React.Component {
         return '✘';
       }
     case 'bulkOrderAgreement':
+    case 'saleOrReturnAgreement':
       if (terms[field].enabled) {
         return terms[field].deadline;
       } else {

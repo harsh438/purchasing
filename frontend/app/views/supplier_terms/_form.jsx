@@ -54,6 +54,7 @@ export default class SuppliersForm extends React.Component {
             {this.renderPercentageField('preOrderCancellationAllowance')}
             {this.renderPercentageField('preOrderStockSwapAllowance')}
             {this.renderCheckboxDeadline('bulkOrderAgreement')}
+            {this.renderCheckboxDeadline('saleOrReturnAgreement')}
             {this.renderTextFields()}
 
             <tr>
@@ -430,8 +431,7 @@ export default class SuppliersForm extends React.Component {
   }
 
   getTextFieldList() {
-    return [['saleOrReturnAgreement', ''],
-            ['agreedWith', 'Supplier staff name'],
+    return [['agreedWith', 'Supplier staff name'],
             ['by', 'Buyers name']];
   }
 
