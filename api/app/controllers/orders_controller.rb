@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   def index
-    orders = Order.latest.includes(:line_items, :exports).page(params[:page])
+    orders = Order.latest.where(filter_params).includes(:line_items, :exports).page(params[:page])
     render json: { orders: orders.as_json(include: [:line_items, :exports]),
                    total_pages: orders.total_pages,
                    page: params[:page] || 1 }
@@ -34,6 +34,10 @@ class OrdersController < ApplicationController
 
   def order
     @order ||= Order.find(params[:id])
+  end
+
+  def filter_params
+    params.permit(:order_type)
   end
 
   def export_attrs
