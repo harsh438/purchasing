@@ -55,13 +55,13 @@ class PurchaseOrderLineItem < ActiveRecord::Base
 
   def self.order_types
     PurchaseOrderLineItem.joins(:purchase_order)
-                         .pluck(:orderType)
-                         .uniq
-                         .map do |c|
-                           name = OrderType.string_from(c)
-                           { id: c, name: name } if name
-                         end
-                         .compact
+      .pluck(:orderType)
+      .uniq
+      .map do |c|
+        name = OrderType.string_from(c).split(/(\W)/).map(&:capitalize).join
+        { id: c, name: name } if name
+      end
+      .compact
   end
 
   def self.seasons
@@ -255,7 +255,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   def order_type
     order_type = purchase_order.try(:order_type)
     return '' unless order_type.present?
-    OrderType.string_from(order_type)
+    OrderType.string_from(order_type).split(/(\W)/).map(&:capitalize).join
   end
 
   def internal_sku
