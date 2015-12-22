@@ -132,19 +132,7 @@ class OrdersEdit extends React.Component {
   }
 
   csvExportUrl(po) {
-    const params = { po_number: po.id,
-                     columns: ['orderTool_SKU',
-                               'supplier_product_name',
-                               'supplier_color_name',
-                               'product_size',
-                               'brand_size',
-                               'ordered_quantity',
-                               'ordered_cost',
-                               'ordered_value'] };
-
-    const queryParams = Qs.stringify(params, { arrayFormat: 'brackets' });
-
-    return `/api/purchase_order_line_items.csv?${queryParams}`;
+    return `/api/purchase_orders/${po.id}.csv`;
   }
 
   handleOrderLineItemsAdd(lineItems) {
