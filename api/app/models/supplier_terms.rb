@@ -19,6 +19,8 @@ class SupplierTerms < ActiveRecord::Base
   validates :risk_order_agreement, percentage_of: { of: ['pre_order_total',
                                                          'season_total',
                                                          'year_total'] }
+  validates :bulk_order_agreement, date: true
+  validates :sale_or_return_agreement, date: true
   validates :markdown_contribution_details, percentage_of: { of: ['pre_order',
                                                                   'all_orders'] }
 
