@@ -11,7 +11,8 @@ class Product < ActiveRecord::Base
                  vendor_id: :venID,
                  on_sale: :pSale,
                  color: :pUDFValue2,
-                 season: :pUDFValue4
+                 season: :pUDFValue4,
+                 barcode: :pUDFValue1
 
   has_many :product_genders, foreign_key: :pid
   has_one :language_product, foreign_key: :pID

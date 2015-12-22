@@ -7,5 +7,6 @@ class Option < ActiveRecord::Base
                  product_id: :pID,
                  parent_id: :parentID,
                  name: :oNum,
-                 size: :oSizeL
+                 size: :oSizeL,
+                 barcode: :oSizeB
 end

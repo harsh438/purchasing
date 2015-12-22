@@ -37,7 +37,8 @@ class Product::Migrator
       @language_option = language_option
 
       if ok_to_migrate?
-        Sku.create!(sku_attrs)
+        sku = Sku.create!(sku_attrs)
+        create_option_barcode_for(sku)
       else
         puts validation_error
       end
@@ -48,7 +49,8 @@ class Product::Migrator
     @language_option = nil
 
     if ok_to_migrate?
-      Sku.create!(sku_attrs_with_no_option)
+      sku = Sku.create!(sku_attrs_with_no_option)
+      create_product_barcode_for(sku)
     else
       puts validation_error
     end
@@ -131,6 +133,20 @@ class Product::Migrator
       .merge!(product_attrs)
       .merge!(product_detail_attrs)
       .merge!(language_product_attrs)
+  end
+
+  def create_product_barcode_for(sku)
+    return unless product.barcode.present?
+    Barcode.create!({ sku: sku,
+                      barcode: product.barcode })
+
+  end
+
+  def create_option_barcode_for(sku)
+    barcode = @language_option.option.barcode
+    return unless barcode.present?
+    Barcode.create!({ sku: sku,
+                      barcode: barcode })
   end
 
   def language_option_attrs
