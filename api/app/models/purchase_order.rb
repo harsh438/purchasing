@@ -23,6 +23,14 @@ class PurchaseOrder < ActiveRecord::Base
     id
   end
 
+  def quantity
+    line_items.map(&:quantity).sum
+  end
+
+  def total
+    line_items.map(&:total).sum
+  end
+
   private
 
   def ensure_defaults

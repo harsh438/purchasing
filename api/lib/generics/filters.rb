@@ -1,7 +1,7 @@
 module Generics
   class Filters
     def initialize(model, params)
-      @attrs = Attrs.new(model, params)
+      @attrs = Attrs.new(model, params.with_indifferent_access)
     end
 
     def filter(collection)

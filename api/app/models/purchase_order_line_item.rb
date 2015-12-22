@@ -119,7 +119,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
                  product_name: :orderTool_productName,
                  product_sku: :orderTool_SKU,
                  product_size: :orderTool_SDsize,
-                 product_barcode: :orderTool_barcode,
+                 barcode: :orderTool_barcode,
                  sell_price: :orderTool_sellPrice,
                  manufacturer_size: :orderTool_brandSize,
                  supplier_list_price: :orderTool_SupplierListPrice,
@@ -171,17 +171,29 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   def supplier_style_code
     product.try(:product_detail).try(:supplier_style_code)
   end
+  alias_method :brand_style_code, :supplier_style_code
 
   def supplier_color_code
     product.try(:product_detail).try(:supplier_color_code)
   end
+  alias_method :brand_color_code, :supplier_color_code
 
   def supplier_product_name
     product.try(:product_detail).try(:supplier_product_name)
   end
+  alias_method :brand_product_name, :supplier_product_name
 
   def supplier_color_name
     product.try(:product_detail).try(:supplier_color_name)
+  end
+  alias_method :brand_color_name, :supplier_color_name
+
+  def item_code
+    product_sku
+  end
+
+  def brand_size
+    manufacturer_size
   end
 
   def order_first_received
@@ -195,6 +207,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   def ordered_cost
     ordered_quantity * cost
   end
+  alias_method :total, :ordered_cost
 
   def ordered_value
     ordered_quantity * product_price
@@ -277,12 +290,18 @@ class PurchaseOrderLineItem < ActiveRecord::Base
                 supplier_color_code: supplier_color_code,
                 supplier_product_name: supplier_product_name,
                 supplier_color_name: supplier_color_name,
+                brand_style_code: brand_style_code,
+                brand_color_code: brand_color_code,
+                brand_product_name: brand_product_name,
+                brand_color_name: brand_color_name,
+                item_code: item_code,
                 order_id: id,
                 order_type: order_type,
                 order_first_received: order_first_received,
                 ordered_quantity: ordered_quantity,
                 ordered_cost: number_to_currency(ordered_cost, options),
                 ordered_value: number_to_currency(ordered_value, options),
+                total: ordered_cost,
                 delivery_date: delivery_date.to_s,
                 delivered_quantity: delivered_quantity,
                 delivered_cost: number_to_currency(delivered_cost, options),

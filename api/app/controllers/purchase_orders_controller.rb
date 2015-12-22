@@ -3,6 +3,10 @@ class PurchaseOrdersController < ApplicationController
     render json: PurchaseOrder::Summariser.new.summary(params)
   end
 
+  def show
+    render csv: PurchaseOrder::CsvExporter.new.export(params)
+  end
+
   def cancel
     orders = PurchaseOrderLineItem.where('LENGTH(po_number) > 0')
                                   .where(po_number: params[:id])

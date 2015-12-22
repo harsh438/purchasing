@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
     resources :order_line_items, only: [:destroy, :update]
 
-    resources :purchase_orders, only: :index do
+    resources :purchase_orders, only: [:index, :show] do
       member do
         post :cancel
       end

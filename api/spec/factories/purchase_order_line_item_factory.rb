@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :purchase_order_line_item do
     # These are the minimum fields required for insertion.
+    cost 10
     quantity 5
     created_at Time.now
 
@@ -8,6 +9,7 @@ FactoryGirl.define do
     drop_date 4.days.ago
     invoice_payable_date 3.days.ago
     product_sku { Faker::Lorem.characters(32) }
+    status 4
 
     # These should be blank.
 

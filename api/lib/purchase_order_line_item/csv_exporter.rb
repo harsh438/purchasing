@@ -1,5 +1,5 @@
 class PurchaseOrderLineItem::CsvExporter
-  CSV_DEFAULT_COLUMNS = %w(product_barcode
+  CSV_DEFAULT_COLUMNS = %w(barcode
                            po_number
                            order_type
                            product_id
@@ -45,6 +45,7 @@ class PurchaseOrderLineItem::CsvExporter
                                            :purchase_order,
                                            product: :product_detail)
     query = PurchaseOrderLineItem::Filter.new.filter(query, attrs)
+
     columns = csv_columns(attrs[:columns] || {})
     csv = Csv::ViewModel.new
     csv << columns.map(&:humanize)
