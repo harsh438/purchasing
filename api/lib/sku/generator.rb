@@ -59,16 +59,14 @@ class Sku::Generator
                               LanguageProduct.create(language_product_attrs),
                               find_or_create_language_category)
 
-    Sku.create!(new_sku_attrs.merge!(pvx_fields).to_h)
+    new_sku = Sku.create!(new_sku_attrs.to_h)
+    create_barcode_for(new_sku)
+    new_sku
   end
 
-  def pvx_fields
-    response = Sku::Api.new.find(man_sku: attrs[:manufacturer_sku],
-                                 size: attrs[:manufacturer_size])
-
-    return {} if response.fields.keys.size == 0
-
-    response.fields
+  def create_barcode_for(sku)
+    return unless attrs[:barcode].present?
+    Barcode.create(sku: sku, barcode: attrs[:barcode])
   end
 
   def attrs
@@ -76,7 +74,7 @@ class Sku::Generator
   end
 
   def sku_attrs(language_product_option, language_product, language_category)
-    attrs.except(:lead_gender)
+    attrs.except(:lead_gender, :barcode)
       .merge!({ sku: "#{product.id}-#{element.id}",
                 product_id: product.id,
                 language_product_id: language_product.id,
