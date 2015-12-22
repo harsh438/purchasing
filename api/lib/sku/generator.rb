@@ -13,15 +13,33 @@ class Sku::Generator
   private
 
   def find_sku
-    sku = Sku.find_by(manufacturer_sku: @attrs[:manufacturer_sku],
-                      size: @attrs[:size])
+    if @attrs[:barcode].present?
+      sku = find_sku_by_barcode
+    else
+      sku = find_sku_by_surfdome_size
+    end
 
     if sku.nil?
-      sku = Sku.find_by(manufacturer_sku: @attrs[:manufacturer_sku],
-                        manufacturer_size: @attrs[:manufacturer_size])
+      sku = find_sku_by_manufacturer_size
     end
 
     sku
+  end
+
+  def find_sku_by_barcode
+    barcode = Barcode.find_by(@attrs[:barcode])
+    return nil unless barcode.present?
+    Sku.find(barcode.sku)
+  end
+
+  def find_sku_by_surfdome_size
+    Sku.find_by(manufacturer_sku: @attrs[:manufacturer_sku],
+                size: @attrs[:size])
+  end
+
+  def find_sku_by_manufacturer_size
+    Sku.find_by(manufacturer_sku: @attrs[:manufacturer_sku],
+                manufacturer_size: @attrs[:manufacturer_size])
   end
 
   def product
