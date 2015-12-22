@@ -5,7 +5,17 @@ class SupplierTerms < ActiveRecord::Base
 
   belongs_to :supplier
 
-  validates :credit_limit, numericality: true
+  validates :credit_limit, numericality: true, presence: true
+  validates :pre_order_discount, percentage_or_blank: true
+  validates :credit_terms_pre_order, number_or_blank: true
+  validates :pre_order_discount, percentage_or_blank: true
+  validates :credit_terms_re_order, number_or_blank: true
+  validates :re_order_discount, percentage_or_blank: true
+  validates :faulty_returns_discount, percentage_or_blank: true
+  validates :settlement_discount, percentage_or_blank: true
+  validates :pre_order_cancellation_allowance, percentage_or_blank: true
+  validates :pre_order_stock_swap_allowance, percentage_or_blank: true
+
   validates :season, presence: true
 
   has_attached_file :confirmation
