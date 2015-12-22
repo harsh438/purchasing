@@ -38,7 +38,12 @@ class PurchaseOrderLineItem::CsvExporter
                            comment)
 
   def export(attrs)
-    query = PurchaseOrderLineItem.mapped.with_valid_status.with_summary
+    query = PurchaseOrderLineItem.mapped
+                                 .with_valid_status
+                                 .with_summary
+                                 .includes(:vendor,
+                                           :purchase_order,
+                                           product: :product_detail)
     query = PurchaseOrderLineItem::Filter.new.filter(query, attrs)
     columns = csv_columns(attrs[:columns] || {})
     csv = Csv::ViewModel.new
