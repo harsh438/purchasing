@@ -5,6 +5,7 @@ class SupplierTerms < ActiveRecord::Base
 
   belongs_to :supplier
 
+  validates :credit_limit, numericality: true
   validates :season, presence: true
 
   has_attached_file :confirmation

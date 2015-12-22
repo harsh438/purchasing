@@ -4,5 +4,6 @@ FactoryGirl.define do
     pre_order_discount '12.5'
     re_order_discount '10.0'
     supplier
+    credit_limit '100'
   end
 end
