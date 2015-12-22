@@ -1,6 +1,5 @@
 class NestedDateValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
-    p record
     return if value.blank?
 
     unless is_valid_date?(value[:date])
