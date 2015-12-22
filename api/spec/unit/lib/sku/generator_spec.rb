@@ -14,7 +14,8 @@ describe Sku::Generator do
                           size_scale: 'thumb',
                           cost_price: 10.00,
                           list_price: 15.00,
-                          price: 5.00 } }
+                          price: 5.00,
+                          barcode: '5052094029950' } }
 
   context 'find a sku based on a previously existing sku' do
     it 'should retrieve the exitsing sku' do
@@ -33,9 +34,7 @@ describe Sku::Generator do
 
   context 'generate a sku based on the information passed in the attributes' do
     subject do
-      VCR.use_cassette 'existent_sku' do
-        described_class.new.sku_from!(new_sku_attrs)
-      end
+      described_class.new.sku_from!(new_sku_attrs)
     end
 
     it { is_expected.to_not be_nil }
