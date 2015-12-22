@@ -336,6 +336,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
       brand_color_code: brand_color_code,
       brand_product_name: brand_product_name,
       brand_color_name: brand_color_name,
+      brand_size: brand_size,
       item_code: item_code }
   end
 
