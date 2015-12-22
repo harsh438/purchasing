@@ -81,7 +81,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
                          .compact
   end
 
-  scope :with_summary, -> { where.not(summary_id: '').where.not(summary_id: 0) }
+  scope :with_summary, -> { where.not(po_number: '').where.not(po_number: 0) }
   scope :with_valid_status, -> { where('purchase_orders.status in (-1,2,3,4,5)') }
 
   belongs_to :vendor, foreign_key: :orderTool_venID
@@ -94,6 +94,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   after_initialize :ensure_defaults
 
   map_attributes id: :id,
+                 po_number: :po_number,
                  product_id: :pID,
                  option_id: :oID,
                  quantity: :qty,
@@ -105,7 +106,6 @@ class PurchaseOrderLineItem < ActiveRecord::Base
                  delivery_date: :drop_date,
                  arrived_date: :arrived_date,
                  invoice_payable_date: :inv_date,
-                 summary_id: :po_number,
                  operator: :operator,
                  comment: :comment,
                  cost: :cost,
@@ -132,7 +132,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
 
   filters :vendor_id,
           :gender,
-          :summary_id,
+          :po_number,
           :season,
           :category_id,
           :product_id,
@@ -267,8 +267,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   def as_json(options = {})
     options[:unit] ||= '£'
 
-    super.merge(po_number: po_number,
-                internal_sku: internal_sku,
+    super.merge(internal_sku: internal_sku,
                 product_cost: number_to_currency(product_cost, options),
                 product_size: product_size,
                 product_rrp: number_to_currency(product_rrp, options),

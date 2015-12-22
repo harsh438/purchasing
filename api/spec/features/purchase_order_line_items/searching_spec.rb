@@ -54,6 +54,11 @@ feature 'Listing purchase orders' do
     then_i_should_see_orders_with_a_similar_sku
   end
 
+  scenario 'Filtering by PO Number' do
+    when_i_filter_by_po_number
+    then_i_should_see_the_first_page_of_line_items_for_that_po_number
+  end
+
   def given_there_are_many_pages_of_purchase_orders
     create_list(:purchase_order_line_item,
                 150,
@@ -144,6 +149,16 @@ feature 'Listing purchase orders' do
     first_product = PurchaseOrderLineItem.first
     product_in_results = subject['results'].select { |h| h['id'] == first_product.id }
     expect(product_in_results).to_not be_nil
+  end
+
+  def when_i_filter_by_po_number
+    create_purchase_orders
+    po_line_item = create(:purchase_order_line_item, :with_summary, status: 4)
+    visit purchase_order_line_items_path(po_number: po_line_item.po_number)
+  end
+
+  def then_i_should_see_the_first_page_of_line_items_for_that_po_number
+    expect(subject['results'].count).to eq(1)
   end
 
   private

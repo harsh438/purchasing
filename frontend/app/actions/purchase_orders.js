@@ -9,7 +9,7 @@ function fetchPurchaseOrders(params, page, action) {
   return dispatch => {
     const translatedParams = assign({}, snakeizeKeys(params), { page,
                                                                 vendor_id: params.brand,
-                                                                summary_id: params.poNumber,
+                                                                po_number: params.poNumber,
                                                                 category_id: params.category,
                                                                 product_id: params.pid,
                                                                 product_sku: params.sku });
@@ -30,7 +30,7 @@ function fetchPurchaseOrders(params, page, action) {
 function fetchSummary(params) {
   return dispatch => {
     const translatedParams = assign({}, snakeizeKeys(params), { vendor_id: params.brand,
-                                                            summary_id: params.poNumber,
+                                                            po_number: params.poNumber,
                                                             category_id: params.category,
                                                             product_id: params.pid,
                                                             product_sku: params.sku });

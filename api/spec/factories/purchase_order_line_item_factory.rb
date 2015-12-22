@@ -20,7 +20,7 @@ FactoryGirl.define do
     end
 
     trait :with_summary do
-      summary_id { create(:purchase_order).id }
+      po_number { create(:purchase_order).id }
     end
 
     trait :with_option do

@@ -32,7 +32,7 @@ feature 'Purchase Order Summary' do
   end
 
   def when_i_request_purchase_order_summaries_for_the_order_with_cancelled_items
-    visit purchase_orders_path(summary_id: @purchase_order.id)
+    visit purchase_orders_path(po_number: @purchase_order.id)
   end
 
   def then_i_should_see_correct_totals

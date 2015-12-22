@@ -133,7 +133,7 @@ class OrdersEdit extends React.Component {
 
   csvExportUrl(po) {
     const params = { po_number: po.id,
-                     summary_id: po.id,
+                     po_number: po.id,
                      columns: ['orderTool_SKU',
                                'supplier_product_name',
                                'supplier_color_name',
