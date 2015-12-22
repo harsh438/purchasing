@@ -63,32 +63,48 @@ export default class SupplierTerms extends React.Component {
     case 'productImagery':
       return terms[field] ? '✔' : '✘';
     case 'creditLimit':
-      return `£${terms[field]}.00`;
+      if (terms[field]) {
+        return `£${terms[field]}.00`;
+      } else {
+        break;
+      }
     case 'preOrderDiscount':
     case 'reOrderDiscount':
     case 'faultyReturnsDiscount':
     case 'settlementDiscount':
-      return `${terms[field]}%`;
+      if (terms[field]) {
+        return `${terms[field]}%`;
+      } else {
+        break;
+      }
     case 'creditTermsPreOrder':
     case 'creditTermsReOrder':
-      return `${terms[field]} days`;
+      if (terms[field]) {
+        return `${terms[field]} days`;
+      } else {
+        break;
+      }
     case 'marketingContribution':
-      return `${terms[field].percentage}% of ${startCase(terms[field].of)}`;
+      if (terms[field]) {
+        return `${terms[field].percentage}% of ${startCase(terms[field].of)}`;
+      } else {
+        break;
+      }
     case 'riskOrderAgreement':
-      if (terms[field].enabled) {
+      if (terms[field] && terms[field].enabled) {
         return `${terms[field].percentage}% by ${terms[field].deadline}`;
       } else {
         return '✘';
       }
     case 'markdownContributionDetails':
-      if (terms[field].enabled) {
+      if (terms[field] && terms[field].enabled) {
         return `${terms[field].percentage}% of ${startCase(terms[field].of)}`;
       } else {
         return '✘';
       }
     case 'bulkOrderAgreement':
     case 'saleOrReturnAgreement':
-      if (terms[field].enabled) {
+      if (terms[field] && terms[field].enabled) {
         return terms[field].deadline;
       } else {
         return '✘';
