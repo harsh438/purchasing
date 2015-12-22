@@ -53,7 +53,7 @@ export default class SuppliersForm extends React.Component {
             {this.renderMarkdownContributionDetails()}
             {this.renderPercentageField('preOrderCancellationAllowance')}
             {this.renderPercentageField('preOrderStockSwapAllowance')}
-            {this.renderBulkOrderAgreement()}
+            {this.renderCheckboxDeadline('bulkOrderAgreement')}
             {this.renderTextFields()}
 
             <tr>
@@ -303,26 +303,29 @@ export default class SuppliersForm extends React.Component {
     );
   }
 
-  renderBulkOrderAgreement() {
+  renderCheckboxDeadline(fieldNs) {
+    const field = nestedKey => `${fieldNs}${nestedKey}`;
+
     return (
-      <tr onChange={this.handleNestedFormChange.bind(this, 'bulkOrderAgreement')}>
+      <tr onChange={this.handleNestedFormChange.bind(this, fieldNs)}>
         <td>
-          <label htmlFor="bulkOrderAgreement">Bulk Order Agreement</label>
+          <label htmlFor={field('Enabled')}>{startCase(fieldNs)}</label>
 
           <span className="toggle-field pull-right">
             <input type="checkbox"
-                   name="bulkOrderAgreementEnabled"
-                   checked={this.getNestedField('bulkOrderAgreement', 'enabled')} />
+                   name={field('Enabled')}
+                   id={field('Enabled')}
+                   checked={this.getNestedField(fieldNs, 'enabled')} />
           </span>
         </td>
 
         <td>
           <input className="form-control"
                  type="date"
-                 id="bulkOrderAgreement"
-                 name="bulkOrderAgreementDeadline"
-                 value={this.getNestedField('bulkOrderAgreement', 'deadline')}
-                 disabled={this.getNestedField('bulkOrderAgreement', 'enabled') !== true} />
+                 id={fieldNs}
+                 name={field('Deadline')}
+                 value={this.getNestedField(fieldNs, 'deadline')}
+                 disabled={this.getNestedField(fieldNs, 'enabled') !== true} />
         </td>
       </tr>
     );
