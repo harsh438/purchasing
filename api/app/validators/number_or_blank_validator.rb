@@ -1,6 +1,6 @@
 class NumberOrBlankValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
-    if !value.blank? and is_int?(value)
+    if !value.blank? and !is_int?(value)
       record.errors[attribute] << 'Must be a number or blank'
     end
   end
