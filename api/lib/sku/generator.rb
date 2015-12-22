@@ -41,7 +41,7 @@ class Sku::Generator
   end
 
   def element
-    @element ||= Element.create(element_attrs)
+    @element ||= Element.find_or_create_by!(name: attrs[:size])
   end
 
   def find_or_create_language_category
@@ -85,10 +85,6 @@ class Sku::Generator
                 language_product_option_id: language_product_option.id,
                 category_id: language_category.id,
                 gender: product_gender.gender })
-  end
-
-  def element_attrs
-    { name: attrs[:size] }
   end
 
   def product_gender_attrs
