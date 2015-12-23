@@ -6,7 +6,7 @@ class SupplierTerms < ActiveRecord::Base
   belongs_to :supplier
 
   validates :season, presence: true
-  validates :credit_limit, numericality: { integer: true, optional: true }
+  validates :credit_limit, numericality: { allow_blank: true }
   validates :pre_order_discount, percentage_or_blank: true
   validates :credit_terms_pre_order, number_or_blank: true
   validates :pre_order_discount, percentage_or_blank: true
