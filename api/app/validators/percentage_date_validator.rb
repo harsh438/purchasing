@@ -22,11 +22,9 @@ class PercentageDateValidator < ActiveModel::EachValidator
   end
 
   def is_valid_date?(date)
-    begin
-      Date.parse(date)
-      true
-    rescue ArgumentError
-      false
-    end
+    Date.parse(date)
+    true
+  rescue ArgumentError
+    false
   end
 end

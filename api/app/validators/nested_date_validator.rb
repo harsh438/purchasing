@@ -10,11 +10,9 @@ class NestedDateValidator < ActiveModel::EachValidator
   private
 
   def is_valid_date?(date)
-    begin
-      Date.parse(date)
-      true
-    rescue ArgumentError
-      false
-    end
+    Date.parse(date)
+    true
+  rescue ArgumentError
+    false
   end
 end
