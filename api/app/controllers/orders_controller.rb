@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
 
   def create
     order = Order.create!(order_attrs)
-    render json: order.as_json_with_line_items_and_purchase_orders.merge!(url: url_for(order))
+    render json: order.as_json_with_line_items_and_purchase_orders.merge!(url: order_url_for(order))
   end
 
   def show
@@ -31,6 +31,11 @@ class OrdersController < ApplicationController
   end
 
   private
+
+  def order_url_for(order)
+    url = url_for(order)
+    url.sub('/api/', '/#/').sub('.json', '/edit')
+  end
 
   def order
     @order ||= Order.find(params[:id])
