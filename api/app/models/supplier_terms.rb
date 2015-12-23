@@ -71,8 +71,8 @@ class SupplierTerms < ActiveRecord::Base
       %w(risk_order_agreement
          bulk_order_agreement
          sale_or_return_agreement).each do |field|
-        if terms[field].present? and terms[field]['deadline'].present?
-          terms[field]['deadline'] = Date.parse(terms[field]['deadline']).to_s
+        if terms[field].present? and terms[field]['date'].present?
+          terms[field]['date'] = Date.parse(terms[field]['date']).to_s
         end
       end
     end
