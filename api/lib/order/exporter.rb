@@ -38,13 +38,25 @@ class Order::Exporter
       .merge!(po_line_item_date_attrs(order_line_item))
   end
 
+  def attempt_barcode(order_line_item)
+    barcode = Option.find(order_line_item.option_id).try(:barcode)
+    return barcode if barcode.present?
+
+    barcode = order_line_item.product.barcode
+    return barcode if barcode.present?
+
+    sku = Sku.find_by(sku: order_line_item.internal_sku)
+    return sku.try(:barcodes).try(:first).try(:barcode)
+  end
+
   def po_line_item_core_attrs(order_line_item)
     { status: 2,
       supplier_list_price: order_line_item.product.cost,
       cost: order_line_item.discounted_cost,
       quantity: order_line_item.quantity,
       season: order_line_item.season || '',
-      gender: order_line_item.gender || '' }
+      gender: order_line_item.gender || '',
+      barcode: attempt_barcode(order_line_item) }
   end
 
   def po_line_item_date_attrs(order_line_item)
