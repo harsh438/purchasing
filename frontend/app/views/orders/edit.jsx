@@ -23,7 +23,7 @@ class OrdersEdit extends React.Component {
           <div className="row" style={{ marginBottom: '20px' }}>
             <div className="col-md-6">
               <h1>
-                <Link to="/orders">Reorders</Link>
+                <Link to="/orders">Orders</Link>
                 &nbsp;/ {this.props.order.name}
                 {this.renderExportedBadge()}
               </h1>
