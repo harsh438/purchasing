@@ -2,7 +2,7 @@ class NestedDateValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     return if value.blank?
 
-    unless is_valid_date?(value[:date])
+    if value[:enabled] and !is_valid_date?(value[:date])
       record.errors[attribute] << 'Must be a valid date'
     end
   end
@@ -12,7 +12,7 @@ class NestedDateValidator < ActiveModel::EachValidator
   def is_valid_date?(date)
     Date.parse(date)
     true
-  rescue ArgumentError
+  rescue
     false
   end
 end
