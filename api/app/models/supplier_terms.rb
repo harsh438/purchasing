@@ -12,7 +12,7 @@ class SupplierTerms < ActiveRecord::Base
   validates :credit_terms_re_order, number_or_blank: true
   validates :re_order_discount, percentage_or_blank: true
   validates :faulty_returns_discount, percentage_or_blank: true
-  validates :settlement_discount, percentage_or_blank: true
+  validates :settlement_discount, percentage_days_or_blank: true
   validates :pre_order_cancellation_allowance, percentage_or_blank: true
   validates :pre_order_stock_swap_allowance, percentage_or_blank: true
   validates :risk_order_agreement, percentage_date: true

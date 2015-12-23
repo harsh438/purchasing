@@ -58,6 +58,7 @@ class SuppliersController < ApplicationController
                          :confirmation,
                          :confirmation_file_name])
     terms_fields.push(marketing_contribution: [:percentage, :of])
+    terms_fields.push(settlement_discount: [:percentage, :days])
     terms_fields.push(risk_order_agreement: [:enabled, :percentage, :date])
     terms_fields.push(markdown_contribution_details: [:enabled, :percentage, :of])
     terms_fields.push(bulk_order_agreement: [:enabled, :date])

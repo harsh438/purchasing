@@ -46,7 +46,7 @@ export default class SuppliersForm extends React.Component {
             {this.renderPercentageField('reOrderDiscount')}
             {this.renderNumOfDaysField('creditTermsReOrder')}
             {this.renderPercentageField('faultyReturnsDiscount')}
-            {this.renderPercentageField('settlementDiscount')}
+            {this.renderSettlementDiscountField()}
             {this.renderMarketingContributionField()}
             {this.renderTextField(['rebateStructure', ''], 'rebateStructure')}
             {this.renderRiskOrderAgreement()}
@@ -220,6 +220,7 @@ export default class SuppliersForm extends React.Component {
                   name="marketingContributionOf"
                   value={this.getNestedField('marketingContribution', 'of')}
                   style={{ width: '44%' }}>
+            <option> -- select -- </option>
             <option value="pre_order_total">Pre Order Total</option>
             <option value="season_total">Season Total</option>
             <option value="year_total">Year Total</option>
@@ -249,7 +250,8 @@ export default class SuppliersForm extends React.Component {
                    id="riskOrderAgreement"
                    name="riskOrderAgreementPercentage"
                    value={this.getNestedField('riskOrderAgreement', 'percentage')}
-                   disabled={this.getNestedField('riskOrderAgreement', 'enabled') !== true} />
+                   disabled={this.getNestedField('riskOrderAgreement', 'enabled') !== true}
+                   required />
 
             <span className="input-group-addon">%</span>
           </div>
@@ -259,7 +261,41 @@ export default class SuppliersForm extends React.Component {
                  name="riskOrderAgreementDate"
                  value={this.getNestedField('riskOrderAgreement', 'date')}
                  style={{ width: '44%' }}
-                 disabled={this.getNestedField('riskOrderAgreement', 'enabled') !== true} />
+                 disabled={this.getNestedField('riskOrderAgreement', 'enabled') !== true}
+                 required />
+        </td>
+      </tr>
+    );
+  }
+
+  renderSettlementDiscountField() {
+    return (
+      <tr onChange={this.handleNestedFormChange.bind(this, 'settlementDiscount')}>
+        <td>
+          <label htmlFor="settlementDiscount">Settlement Discount</label>
+        </td>
+        <td>
+          <div className="input-group pull-left"
+               style={{ width: '55%' }}>
+            <input className="form-control"
+                   type="number"
+                   id="settlementDiscount"
+                   name="settlementDiscountPercentage"
+                   value={this.getNestedField('settlementDiscount', 'percentage')} />
+
+            <span className="input-group-addon">%</span>
+          </div>
+
+          <div className="input-group pull-right"
+               style={{ width: '44%' }}>
+            <input className="form-control"
+                   name="settlementDiscountDays"
+                   type="number"
+                   step="1"
+                   value={this.getNestedField('settlementDiscount', 'days')} />
+
+            <span className="input-group-addon">days</span>
+          </div>
         </td>
       </tr>
     );
@@ -286,7 +322,8 @@ export default class SuppliersForm extends React.Component {
                    id="markdownContributionDetails"
                    name="markdownContributionDetailsPercentage"
                    value={this.getNestedField('markdownContributionDetails', 'percentage')}
-                   disabled={this.getNestedField('markdownContributionDetails', 'enabled') !== true} />
+                   disabled={this.getNestedField('markdownContributionDetails', 'enabled') !== true}
+                   required />
 
             <span className="input-group-addon">%</span>
           </div>
@@ -295,8 +332,8 @@ export default class SuppliersForm extends React.Component {
                   name="markdownContributionDetailsOf"
                   value={this.getNestedField('markdownContributionDetails', 'of')}
                   style={{ width: '44%' }}
-                  required
-                  disabled={this.getNestedField('markdownContributionDetails', 'enabled') !== true}>
+                  disabled={this.getNestedField('markdownContributionDetails', 'enabled') !== true}
+                  required>
             <option> -- select -- </option>
             <option value="pre_orders">Pre orders</option>
             <option value="all_orders">All orders</option>
@@ -328,7 +365,8 @@ export default class SuppliersForm extends React.Component {
                  id={fieldNs}
                  name={field('Date')}
                  value={this.getNestedField(fieldNs, 'date')}
-                 disabled={this.getNestedField(fieldNs, 'enabled') !== true} />
+                 disabled={this.getNestedField(fieldNs, 'enabled') !== true}
+                 required />
         </td>
       </tr>
     );

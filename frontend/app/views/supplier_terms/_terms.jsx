@@ -71,7 +71,6 @@ export default class SupplierTerms extends React.Component {
     case 'preOrderDiscount':
     case 'reOrderDiscount':
     case 'faultyReturnsDiscount':
-    case 'settlementDiscount':
       if (terms[field]) {
         return `${terms[field]}%`;
       } else {
@@ -81,6 +80,12 @@ export default class SupplierTerms extends React.Component {
     case 'creditTermsReOrder':
       if (terms[field]) {
         return `${terms[field]} days`;
+      } else {
+        break;
+      }
+    case 'settlementDiscount':
+      if (terms[field]) {
+        return `${terms[field].percentage}% within ${startCase(terms[field].days)} days`;
       } else {
         break;
       }
