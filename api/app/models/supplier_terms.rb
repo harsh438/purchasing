@@ -9,7 +9,6 @@ class SupplierTerms < ActiveRecord::Base
   validates :credit_limit, numericality: { allow_blank: true }
   validates :pre_order_discount, percentage_or_blank: true
   validates :credit_terms_pre_order, number_or_blank: true
-  validates :pre_order_discount, percentage_or_blank: true
   validates :credit_terms_re_order, number_or_blank: true
   validates :re_order_discount, percentage_or_blank: true
   validates :faulty_returns_discount, percentage_or_blank: true
