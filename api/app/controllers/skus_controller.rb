@@ -1,6 +1,6 @@
 class SkusController < ApplicationController
   def index
-    skus = Sku.latest.includes(:vendor, :language_category).page(params[:page])
+    skus = Sku::Search.new.search(params)
     render json: { skus: skus.map(&:as_json_with_vendor_and_category),
                    total_pages: skus.total_pages,
                    page: params[:page] || 1 }
