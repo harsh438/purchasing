@@ -1,6 +1,6 @@
 class Sku::Generator
   def sku_from!(attrs)
-    @attrs = attrs
+    @attrs = attrs.with_indifferent_access
     sku = find_sku
 
     if sku.nil?
