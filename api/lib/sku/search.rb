@@ -13,6 +13,10 @@ class Sku::Search
       skus = skus.where(sku: filters[:sku])
     end
 
+    if filters[:vendor_id]
+      skus = skus.where(vendor_id: filters[:vendor_id])
+    end
+
     skus
   end
 end
