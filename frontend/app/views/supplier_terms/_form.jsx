@@ -2,7 +2,7 @@ import React from 'react';
 import DropZone from 'react-dropzone';
 import { assign, get, map, omit, startCase, pick } from 'lodash';
 
-export default class SuppliersForm extends React.Component {
+export default class SupplierTermsForm extends React.Component {
   componentWillMount() {
     this.state = { submitting: false, terms: this.props.terms };
   }
