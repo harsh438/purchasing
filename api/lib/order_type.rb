@@ -11,6 +11,8 @@ class OrderType
       'over_delivery'
     when 'B'
       'bulk_order'
+    else
+      ''
     end
   end
 
@@ -30,6 +32,8 @@ class OrderType
       'O'
     when 'bulk_order'
       'B'
+    else
+      ''
     end
   end
 end
