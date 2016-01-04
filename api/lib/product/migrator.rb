@@ -143,7 +143,7 @@ class Product::Migrator
   end
 
   def create_option_barcode_for(sku)
-    barcode = @language_option.option.barcode
+    barcode = @language_option.try(:option).try(:barcode)
     return unless barcode.present?
     Barcode.create!({ sku: sku,
                       barcode: barcode })
