@@ -61,8 +61,8 @@ class VendorsEdit extends React.Component {
   }
 }
 
-function applyState({ filters, vendor }) {
-  return assign({}, filters, vendor);
+function applyState({ filters, vendors }) {
+  return assign({}, filters, vendors);
 }
 
 export default connect(applyState)(VendorsEdit);

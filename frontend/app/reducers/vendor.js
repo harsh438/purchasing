@@ -1,8 +1,10 @@
 import { assign, map } from 'lodash';
 import { camelizeKeys } from '../utilities/inspection';
 
-const initialVendorState =  { vendor: { suppliers: [] } };
-const initialVendorsState = { vendors: [], activePage: null, totalPages: null };
+const initialState = { vendor: { suppliers: [] },
+                      vendors: [],
+                      activePage: null,
+                      totalPages: null };
 
 function transformVendor(vendor) {
   return camelizeKeys(vendor);
@@ -18,21 +20,14 @@ function setVendors(state, results) {
                              totalPages: results.total_pages });
 }
 
-export function reduceVendor(state = initialVendorState, action) {
+export default function reduceVendors(state = initialState, action) {
   switch (action.type) {
+  case 'SET_VENDORS':
+    return setVendors(state, action.results);
   case 'CREATE_VENDOR':
     return setVendor(state, action.vendor);
   case 'SET_VENDOR':
     return setVendor(state, action.vendor);
-  default:
-    return state;
-  }
-}
-
-export function reduceVendors(state = initialVendorsState, action) {
-  switch (action.type) {
-  case 'SET_VENDORS':
-    return setVendors(state, action.results);
   default:
     return state;
   }

@@ -45,8 +45,8 @@ class VendorsNew extends React.Component {
   }
 }
 
-function applyState({ vendor }) {
-  return vendor;
+function applyState({ vendors }) {
+  return vendors;
 }
 
 export default connect(applyState)(VendorsNew);
