@@ -151,7 +151,7 @@ class Product::Migrator
 
   def language_option_attrs
     { language_product_option_id: language_option.id,
-      option_id: language_option.option.id,
+      option_id: language_option.try(:option).try(:id),
       element_id: element.id }
   end
 
