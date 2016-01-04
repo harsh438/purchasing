@@ -57,11 +57,9 @@ class PurchaseOrderLineItem < ActiveRecord::Base
     PurchaseOrderLineItem.joins(:purchase_order)
       .pluck(:orderType)
       .uniq
-      .compact
       .map do |order_type|
-        if order_type.present?
-          { id: order_type, name: OrderType.human_string_from(order_type) }
-        end
+        name = OrderType.human_string_from(order_type)
+        { id: order_type, name: name } if name.present?
       end
       .compact
   end
