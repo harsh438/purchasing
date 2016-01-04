@@ -15,7 +15,7 @@ class SkusEdit extends React.Component {
         <div className="row" style={{ marginBottom: '20px' }}>
           <div className="col-md-6">
             <h1>
-              <Link to="/suppliers">SKUs</Link>
+              <Link to="/skus">SKUs</Link>
               &nbsp;/&nbsp;
               {this.props.sku.sku}
             </h1>
