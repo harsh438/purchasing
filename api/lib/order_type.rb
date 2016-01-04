@@ -15,7 +15,7 @@ class OrderType
   end
 
   def self.char_from(str)
-    case str
+    case str.downcase
       when 'preorder'
         'P'
       when 'suppliers_risk'
