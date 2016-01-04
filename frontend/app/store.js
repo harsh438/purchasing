@@ -5,6 +5,7 @@ import reduceOrders from './reducers/orders';
 import reduceOrder from './reducers/order';
 import { reduceSuppliers, reduceSupplier }  from './reducers/supplier';
 import { reduceSupplierTerms, reduceTerms }  from './reducers/supplier_terms';
+import reduceSkus  from './reducers/skus';
 import { reduceVendor, reduceVendors }  from './reducers/vendor';
 import reduceGoodsReceivedNotices  from './reducers/goods_received_notices';
 
@@ -18,6 +19,7 @@ const reducer = combineReducers({ filters: reduceFilters,
                                   purchaseOrders: reducePurchaseOrders,
                                   suppliers: reduceSuppliers,
                                   supplier: reduceSupplier,
+                                  skus: reduceSkus,
                                   vendors: reduceVendors,
                                   vendor: reduceVendor,
                                   supplierTerms: reduceSupplierTerms,
