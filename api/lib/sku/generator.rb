@@ -105,7 +105,7 @@ class Sku::Generator
 
   def product_gender_attrs
     { product_id: product.id,
-      gender: attrs[:lead_gender].to_sym }
+      gender: attrs[:lead_gender].try(:to_sym) || '' }
   end
 
   def product_option_attrs
