@@ -12,3 +12,11 @@ export function loadSkus(query) {
       .then(results => dispatch({ results, type: 'LOAD_SKUS' }));
   };
 }
+
+export function loadSku(id) {
+  return dispatch => {
+    fetch(`/api/skus/${id}.json`, { credentials: 'same-origin' })
+      .then(response => response.json())
+      .then(sku => dispatch({ sku, type: 'LOAD_SKU' }));
+  };
+}

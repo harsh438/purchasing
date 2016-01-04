@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import { Link } from 'react-router';
 
 export default class SkusTable extends React.Component {
   render() {
@@ -35,7 +36,9 @@ export default class SkusTable extends React.Component {
     return map(this.props.skus, (sku, i) => {
       return (
         <tr key={i}>
-          <td>{sku.sku}</td>
+          <td>
+            <Link to={`/skus/${sku.id}/edit`}>{sku.sku}</Link>
+          </td>
           <td>{sku.productName}</td>
           <td>{sku.vendorName}</td>
           <td>{sku.season}</td>
