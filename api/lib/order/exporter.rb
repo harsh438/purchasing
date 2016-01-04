@@ -84,7 +84,7 @@ class Order::Exporter
     language_product_option = language_option(order_line_item.product_id,
                                               order_line_item.option_id)
 
-    { product_size: Option.find(order_line_item.option_id).try(:size),
+    { product_size: Option.find_by(id: order_line_item.option_id).try(:size),
       manufacturer_size: language_product_option.name }
   end
 
