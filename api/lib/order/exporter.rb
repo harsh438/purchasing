@@ -39,7 +39,7 @@ class Order::Exporter
   end
 
   def attempt_barcode(order_line_item)
-    barcode = Option.find(order_line_item.option_id).try(:barcode)
+    barcode = Option.find_by(id: order_line_item.option_id).try(:barcode)
     return barcode if barcode.present?
 
     barcode = order_line_item.product.barcode
