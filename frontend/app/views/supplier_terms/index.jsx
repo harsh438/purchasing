@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { assign, isEqual, map } from 'lodash';
-import { loadTerms } from '../../actions/supplier_terms';
-import { loadSuppliers, loadVendors, loadSeasons, loadSupplierTermsList } from '../../actions/filters';
+import { loadSupplierTerms } from '../../actions/supplier_terms';
+import { loadSuppliers,
+         loadVendors,
+         loadSeasons,
+         loadSupplierTermsList } from '../../actions/filters';
 import NumberedPagination from '../pagination/_numbered';
 import SuppliersTable from './_table';
 import SupplierTermsFilters from './_filters';
@@ -23,10 +26,6 @@ class SuppliersTermsIndex extends React.Component {
     if (!isEqual(this.props.location.query, nextQuery)) {
       this.loadPage(nextQuery.page, (nextQuery.filters || {}));
     }
-  }
-
-  loadPage(page = this.props.location.query.page, filters = this.props.location.query.filters) {
-    this.props.dispatch(loadTerms({ filters, page }));
   }
 
   render() {
@@ -60,7 +59,7 @@ class SuppliersTermsIndex extends React.Component {
 
             <hr />
 
-            <SuppliersTable terms={this.props.terms}
+            <SuppliersTable terms={this.props.supplierTerms}
                             termsSelected={this.termsSelected()}
                             hasSupplierName />
 
@@ -71,6 +70,10 @@ class SuppliersTermsIndex extends React.Component {
         </div>
       </div>
     );
+  }
+
+  loadPage(page = this.props.location.query.page, filters = this.props.location.query.filters) {
+    this.props.dispatch(loadSupplierTerms({ filters, page }));
   }
 
   handleFilters(filters) {
@@ -93,8 +96,8 @@ class SuppliersTermsIndex extends React.Component {
   }
 }
 
-function applyState({ filters, terms, supplierTermsList }) {
-  return assign({}, filters, terms, supplierTermsList);
+function applyState({ filters, supplierTerms, supplierTermsList }) {
+  return assign({}, filters, supplierTerms, supplierTermsList);
 }
 
 export default connect(applyState)(SuppliersTermsIndex);
