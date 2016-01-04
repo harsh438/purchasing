@@ -27,9 +27,9 @@ class Sku::Generator
   end
 
   def find_sku_by_barcode
-    barcode = Barcode.find_by(@attrs[:barcode])
+    barcode = Barcode.find_by(barcode: @attrs[:barcode])
     return nil unless barcode.present?
-    Sku.find(barcode.sku)
+    Sku.find_by(barcode: barcode.sku)
   end
 
   def find_sku_by_surfdome_size
