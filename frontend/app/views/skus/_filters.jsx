@@ -42,7 +42,7 @@ export default class SkusFilters extends React.Component {
             </select>
           </div>
 
-          <div className="form-group col-md-3 col-md-offset-5"
+          <div className="form-group col-md-3"
                style={{ marginTop: '1.74em' }}>
             <div className="btn-group"
                  style={{ width: '100%' }}>
