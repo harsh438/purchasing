@@ -14,6 +14,10 @@ class OrderType
     end
   end
 
+  def self.human_string_from(char)
+    string_from(char).split(/(\W)/).map(&:capitalize).join if char
+  end
+
   def self.char_from(str)
     case str.downcase
       when 'preorder'

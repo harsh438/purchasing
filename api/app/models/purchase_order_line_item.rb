@@ -58,8 +58,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
       .pluck(:orderType)
       .uniq
       .map do |c|
-        name = OrderType.string_from(c)
-        { id: c, name: name.split(/(\W)/).map(&:capitalize).join } if name
+        { id: c, name: OrderType.human_string_from(c) } if name
       end
       .compact
   end
@@ -268,7 +267,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   def order_type
     order_type = purchase_order.try(:order_type)
     return '' unless order_type.present?
-    OrderType.string_from(order_type).split(/(\W)/).map(&:capitalize).join
+    OrderType.human_string_from(order_type)
   end
 
   def internal_sku
