@@ -14,6 +14,7 @@ import VendorsIndex from './views/vendors/index';
 import VendorsEdit from './views/vendors/edit';
 import VendorsNew from './views/vendors/new';
 import GoodsReceivedNoticesIndex from './views/goods_received_notices/index';
+import SkusIndex from './views/skus/index';
 
 export default (
   <Route path="/" component={Layout}>
@@ -21,6 +22,8 @@ export default (
 
     <Route path="/orders" component={OrdersIndex} />
     <Route path="/orders/:id/edit" component={OrdersEdit} />
+
+    <Route path="/skus" component={SkusIndex} />
 
     <Route path="/suppliers" component={SuppliersIndex} />
     <Route path="/suppliers/new" component={SuppliersNew} />
