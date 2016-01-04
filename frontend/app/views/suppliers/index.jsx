@@ -76,8 +76,8 @@ class SuppliersIndex extends React.Component {
   }
 }
 
-function applyState({ filters, supplier, suppliers }) {
-  return assign({}, filters, supplier, suppliers);
+function applyState({ filters, suppliers }) {
+  return assign({}, filters, suppliers);
 }
 
 export default connect(applyState)(SuppliersIndex);

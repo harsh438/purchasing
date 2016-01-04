@@ -41,8 +41,8 @@ class SupplierTermsHistory extends React.Component {
 
 
 
-function applyState({ supplier }) {
-  return assign({}, supplier);
+function applyState({ suppliers }) {
+  return assign({}, suppliers);
 }
 
 export default connect(applyState)(SupplierTermsHistory);

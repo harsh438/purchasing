@@ -50,8 +50,8 @@ class SuppliersNew extends React.Component {
   }
 }
 
-function applyState({ supplier }) {
-  return supplier;
+function applyState({ suppliers }) {
+  return suppliers;
 }
 
 export default connect(applyState)(SuppliersNew);

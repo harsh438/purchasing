@@ -195,8 +195,8 @@ class SuppliersEdit extends React.Component {
   }
 }
 
-function applyState({ filters, supplier }) {
-  return assign({}, filters, supplier);
+function applyState({ filters, suppliers }) {
+  return assign({}, filters, suppliers);
 }
 
 export default connect(applyState)(SuppliersEdit);
