@@ -31,11 +31,11 @@ class Order::Exporter
     { operator: extra_params[:operator] || 'REORDER_TOOL',
       single_line_id: extra_params[:single_line_id] || nil,
       reporting_pid: order_line_item.reporting_pid }
-      .merge!(po_line_item_core_attrs(order_line_item))
-      .merge!(po_line_item_relationship_attrs(order_line_item))
-      .merge!(po_line_item_product_attrs(order_line_item))
-      .merge!(po_line_item_size_attrs(order_line_item))
-      .merge!(po_line_item_date_attrs(order_line_item))
+      .merge(po_line_item_core_attrs(order_line_item))
+      .merge(po_line_item_relationship_attrs(order_line_item))
+      .merge(po_line_item_product_attrs(order_line_item))
+      .merge(po_line_item_size_attrs(order_line_item))
+      .merge(po_line_item_date_attrs(order_line_item))
   end
 
   def attempt_barcode(order_line_item)
