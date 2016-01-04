@@ -1,4 +1,6 @@
 class Sku < ActiveRecord::Base
+  scope :latest, -> { order(created_at: :desc) }
+
   paginates_per 50
 
   belongs_to :product

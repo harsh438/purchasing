@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :sku do
-    sku '11111-111'
     manufacturer_sku 'MANU-FACTURER-SKU-11'
     season :AW15
 
@@ -19,5 +18,9 @@ FactoryGirl.define do
     language_product_option_id { create(:language_product_option, product_id: product_id).id }
     category_id { create(:language_category, category_id: create(:category).id).id }
     element_id { LanguageProductOption.find(language_product_option_id).elementID }
+
+    after(:build) do |sku|
+      sku.sku = "#{sku.product_id}-#{sku.element_id}"
+    end
   end
 end

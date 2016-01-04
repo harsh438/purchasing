@@ -1,6 +1,9 @@
 class SkusController < ApplicationController
   def index
-    render json: Sku.page(params[:page])
+    skus = Sku.latest.page(params[:page])
+    render json: { skus: skus,
+                   total_pages: skus.total_pages,
+                   page: params[:page] || 1 }
   end
 
   def create
