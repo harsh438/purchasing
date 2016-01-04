@@ -23,7 +23,7 @@ class SkusController < ApplicationController
   private
 
   def sku
-    @sku ||= Sku.find(params[:id])
+    @sku ||= Sku.find_by(id: params[:id])
   end
 
   def sku_attrs
