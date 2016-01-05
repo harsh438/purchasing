@@ -23,6 +23,7 @@ feature 'SKU Listing' do
 
   def then_i_should_see_paginated_list_of_skus
     expect(subject['skus'].count).to eq(50)
+    expect(subject['skus'].first).to match(a_hash_including('barcodes' => a_kind_of(Array)))
   end
 
   def when_i_request_a_specific_sku

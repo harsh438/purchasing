@@ -1,6 +1,6 @@
 class Sku::Search
   def search(params)
-    skus = Sku.latest.includes(:vendor, :language_category)
+    skus = Sku.latest.includes(:vendor, :language_category, :barcodes)
     skus = apply_filters(skus, params[:filters] || {})
     skus = skus.page(params[:page])
     skus

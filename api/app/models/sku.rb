@@ -17,8 +17,9 @@ class Sku < ActiveRecord::Base
   validates :sku, uniqueness: true
   validates_presence_of :manufacturer_sku
 
-  def as_json_with_vendor_and_category
+  def as_json_with_vendor_category_and_barcodes
     as_json.merge(category_name: language_category.try(:name),
-                  vendor_name: vendor.try(:name))
+                  vendor_name: vendor.try(:name),
+                  barcodes: barcodes.map(&:as_json))
   end
 end
