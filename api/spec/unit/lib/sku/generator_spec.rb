@@ -19,7 +19,7 @@ describe Sku::Generator do
 
   context 'find a sku based on a previously existing sku' do
     it 'should retrieve the exitsing sku' do
-      sku = subject.sku_from!({ manufacturer_sku: 'MANU-FACTURER-SKU-11',
+      sku = subject.generate({ manufacturer_sku: 'MANU-FACTURER-SKU-11',
                                 manufacturer_size: :biggish })
       expect(sku.sku.present?).to eq(true)
       expect(sku.size.present?).to eq(true)
@@ -34,7 +34,7 @@ describe Sku::Generator do
 
   context 'generate a sku based on the information passed in the attributes' do
     subject do
-      described_class.new.sku_from!(new_sku_attrs)
+      described_class.new.generate(new_sku_attrs)
     end
 
     it { is_expected.to_not be_nil }

@@ -7,8 +7,8 @@ class SkusController < ApplicationController
   end
 
   def create
-    new_sku = Sku::Generator.new.sku_from!(sku_create_attrs)
-    render json: new_sku.as_json
+    sku = Sku::Generator.new.generate(sku_create_attrs)
+    render json: sku.as_json_with_vendor_category_and_barcodes
   end
 
   def show
@@ -23,7 +23,7 @@ class SkusController < ApplicationController
   private
 
   def sku
-    @sku = Sku.find(params[:id])
+    Sku.find(params[:id])
   end
 
   def sku_create_attrs
