@@ -55,7 +55,7 @@ class Sku::Generator
   end
 
   def category
-    @category ||= Category.find_or_create_by!(attrs[:category_id])
+    @category ||= Category.find_or_create_by!(id: attrs[:category_id])
   end
 
   def element
@@ -118,7 +118,7 @@ class Sku::Generator
 
   def language_category_attrs
     { language_id: 1,
-      name: attrs[:category_name],
+      name: attrs[:category_name] || 'Bad Category',
       category_id: category.id }
   end
 
