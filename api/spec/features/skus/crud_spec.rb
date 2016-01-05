@@ -1,6 +1,11 @@
 feature 'SKU updating' do
   subject { JSON.parse(page.body) }
 
+  scenario 'Showing SKU' do
+    when_i_request_a_sku
+    then_i_should_receive_the_skus_details
+  end
+
   scenario 'Updating a SKU' do
     when_i_update_a_skus_cost
     then_the_updated_cost_should_be_be_shown
@@ -9,6 +14,14 @@ feature 'SKU updating' do
   scenario 'Adding Barcode to SKU' do
     when_i_add_a_barcode_to_sku
     then_the_barcode_should_be_listed_under_the_sku
+  end
+
+  def when_i_request_a_sku
+    visit sku_path(sku)
+  end
+
+  def then_i_should_receive_the_skus_details
+    expect(subject).to include('sku' => sku.sku)
   end
 
   def when_i_update_a_skus_cost
