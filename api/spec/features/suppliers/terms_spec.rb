@@ -13,6 +13,11 @@ feature 'Suppliers Terms' do
 
   scenario 'Updating terms to Supplier' do
     when_updating_supplier_terms
+    then_new_terms_should_not_be_created
+  end
+
+  scenario 'Adding confirmation file to terms' do
+    when_adding_a_confirmation_file_to_terms
     then_new_terms_should_be_created
   end
 
@@ -47,10 +52,20 @@ feature 'Suppliers Terms' do
                      supplier: { terms: terms_attrs.merge(updated_attrs) })
   end
 
+  def when_adding_a_confirmation_file_to_terms
+    page.driver.post(supplier_path(create(:supplier, terms: terms_attrs)),
+                     _method: 'patch',
+                     supplier: { terms: terms_attrs.merge(new_file_attrs) })
+  end
+
   def then_new_terms_should_be_created
-    next_id = updated_attrs['id'] + 1
-    expect(subject['terms']).to include(a_hash_including(updated_attrs.merge('id' => next_id)),
-                                        a_hash_including(terms_attrs))
+    next_id = new_file_attrs['id'] + 1
+    expect(subject['terms']).to include(a_hash_including(terms_attrs.merge('id' => next_id)))
+  end
+
+  def then_new_terms_should_not_be_created
+    current_id = updated_attrs['id']
+    expect(subject['terms']).to include(a_hash_including(updated_attrs.merge('id' => current_id)))
   end
 
   def when_updating_supplier_terms_with_invalid_input_should_error
@@ -66,7 +81,12 @@ feature 'Suppliers Terms' do
   end
 
   let(:updated_attrs) do
-    { 'id' => create(:supplier_terms).id, 'pre_order_discount' => '30.0' }
+    { 'id' => SupplierTerms.last.id, 'pre_order_discount' => '30.0' }
+  end
+
+  let(:new_file_attrs) do
+    { 'id' => SupplierTerms.last.id,
+      'confirmation' => fixture_file_upload(Rails.root.join('spec/fixtures/files/1x1.jpg'), 'image/jpeg') }
   end
 
   let(:invalid_attrs) do

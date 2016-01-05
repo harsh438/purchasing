@@ -73,13 +73,32 @@ class Supplier < ActiveRecord::Base
 
   def terms=(terms_attrs)
     return if terms_attrs.is_a?(Array)
+
     terms.update_all(default: false)
-    res = terms.build(terms_attrs.merge(default: true, parent_id: terms.last.try(:id)))
-    res.validate!
-    res
+
+    if terms.length < 1 or new_confirmation_upload?(terms_attrs)
+      create_new_terms(terms_attrs)
+    else
+      update_most_recent_terms(terms_attrs)
+    end
   end
 
   private
+
+  def new_confirmation_upload?(terms_attrs)
+    terms_attrs.has_key?('confirmation')
+  end
+
+  def create_new_terms(terms_attrs)
+    new_terms = terms.build(terms_attrs.merge(default: true, parent_id: terms.last.try(:id)))
+    new_terms.validate!
+  end
+
+  def update_most_recent_terms(terms_attrs)
+    latest_terms = terms.last
+    latest_terms.update(terms_attrs.merge(default: true))
+    latest_terms.validate!
+  end
 
   def ensure_primary_key
     self.id ||= (self.class.maximum(:id) || 0) + 1
