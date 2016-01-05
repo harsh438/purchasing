@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { assign } from 'lodash';
-import { loadSku } from '../../actions/skus';
+import { loadSku, addBarcodeToSku } from '../../actions/skus';
 import SkusBarcodeForm from './_barcode_form';
 import SkusBarcodeTable from './_barcode_table';
 
@@ -30,8 +30,7 @@ class SkusEdit extends React.Component {
           </div>
 
           <div className="col-md-6">
-            <SkusBarcodeForm />
-            <SkusBarcodeTable />
+            {this.renderBarcodes()}
           </div>
         </div>
       </div>
@@ -103,6 +102,22 @@ class SkusEdit extends React.Component {
         </tbody>
       </table>
     );
+  }
+
+  renderBarcodes() {
+    if (this.props.sku.barcodes.length > 0) {
+      return (
+        <SkusBarcodeTable barcodes={this.props.sku.barcodes} />
+      );
+    } else {
+      return (
+        <SkusBarcodeForm onAddBarcode={this.handleAddBarcode.bind(this)} />
+      );
+    }
+  }
+
+  handleAddBarcode(barcode) {
+    this.props.dispatch(addBarcodeToSku(this.props.sku.id, barcode));
   }
 }
 

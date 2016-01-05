@@ -20,3 +20,18 @@ export function loadSku(id) {
       .then(sku => dispatch({ sku, type: 'LOAD_SKU' }));
   };
 }
+
+export function saveSku(id, attrs) {
+  return dispatch => {
+    fetch(`/api/skus/${id}.json`, { credentials: 'same-origin',
+                                    method: 'PATCH',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ sku: snakeizeKeys(attrs) }) })
+    .then(response => response.json())
+    .then(sku => dispatch({ sku, type: 'LOAD_SKU' }));
+  };
+}
+
+export function addBarcodeToSku(id, barcode) {
+  return saveSku(id, { barcodes_attributes: [{ barcode }] });
+}

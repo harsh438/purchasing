@@ -4,7 +4,7 @@ import { camelizeKeys } from '../utilities/inspection';
 const initialState = { skus: [],
                        totalPages: null,
                        activePage: null,
-                       sku: {} };
+                       sku: { barcodes: [] } };
 
 export default function reduceSkus(state = initialState, action) {
   switch (action.type) {
