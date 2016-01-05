@@ -12,18 +12,18 @@ class SkusController < ApplicationController
   end
 
   def show
-    render json: sku.try(:as_json)
+    render json: sku.as_json
   end
 
   def update
     sku.update!(sku_attrs)
-    render json: sku.try(:as_json)
+    render json: sku.as_json
   end
 
   private
 
   def sku
-    @sku ||= Sku.find_by(id: params[:id])
+    @sku = Sku.find(params[:id])
   end
 
   def sku_attrs
