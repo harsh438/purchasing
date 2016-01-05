@@ -1,4 +1,6 @@
 class Sku < ActiveRecord::Base
+  include ActionView::Helpers::NumberHelper
+
   scope :latest, -> { order(created_at: :desc) }
 
   paginates_per 50
@@ -16,6 +18,15 @@ class Sku < ActiveRecord::Base
 
   validates :sku, uniqueness: true
   validates_presence_of :manufacturer_sku
+
+  def as_json(options = {})
+    super.tap do |sku|
+      sku['created_at'] = sku['created_at'].to_s
+      sku['updated_at'] = sku['updated_at'].to_s
+      sku['cost_price'] = number_to_currency(sku['cost_price'], unit: '£')
+      sku['price'] = number_to_currency(sku['price'], unit: '£')
+    end
+  end
 
   def as_json_with_vendor_category_and_barcodes
     as_json.merge(category_name: language_category.try(:name),

@@ -7,17 +7,17 @@ class SkusController < ApplicationController
   end
 
   def create
-    new_sku = Sku::Generator.new.sku_from!(sku_attrs)
+    new_sku = Sku::Generator.new.sku_from!(sku_create_attrs)
     render json: new_sku.as_json
   end
 
   def show
-    render json: sku.as_json
+    render json: sku.as_json_with_vendor_category_and_barcodes
   end
 
   def update
-    sku.update!(sku_attrs)
-    render json: sku.as_json
+    sku.update!(sku_update_attrs)
+    render json: sku.as_json_with_vendor_category_and_barcodes
   end
 
   private
@@ -26,12 +26,16 @@ class SkusController < ApplicationController
     @sku = Sku.find(params[:id])
   end
 
-  def sku_attrs
+  def sku_create_attrs
     params.permit(:sku, :product_id, :language_product_id,
                   :element_id, :option_id, :category_id,
                   :manufacturer_sku, :lead_gender, :vendor_id,
                   :product_name, :manufacturer_color, :manufacturer_size,
                   :season, :color, :size, :color_family, :size_scale,
                   :cost_price, :list_price, :price, :barcode)
+  end
+
+  def sku_update_attrs
+    params.require(:sku).permit(:cost_price, barcodes_attributes: [:barcode])
   end
 end
