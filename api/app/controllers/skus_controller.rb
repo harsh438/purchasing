@@ -11,10 +11,6 @@ class SkusController < ApplicationController
     render json: sku.as_json_with_vendor_category_and_barcodes
   end
 
-  def show
-    render json: sku.as_json_with_vendor_category_and_barcodes
-  end
-
   def update
     sku.update!(sku_update_attrs)
     render json: sku.as_json_with_vendor_category_and_barcodes
