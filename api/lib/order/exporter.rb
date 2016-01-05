@@ -71,7 +71,7 @@ class Order::Exporter
   end
 
   def language_option(product_id, option_id)
-    LanguageProductOption.find_by(product_id, option_id)
+    LanguageProductOption.find_by(product_id: product_id, option_id: option_id)
   end
 
   def po_line_item_product_attrs(order_line_item)
