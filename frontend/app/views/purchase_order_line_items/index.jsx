@@ -10,12 +10,12 @@ import { clearPurchaseOrders,
          loadMorePurchaseOrders,
          loadPurchaseOrders,
          loadSummary } from '../../actions/purchase_orders';
-import PurchaseOrdersFilters from './_filters';
-import PurchaseOrdersTable from './_table';
+import Filters from './_filters';
+import Table from './_table';
 import { assign, intersection, isEqual, map } from 'lodash';
 import { isEmptyObject } from '../../utilities/inspection';
 
-class PurchaseOrdersIndex extends React.Component {
+class PurchaseOrderLineItemsIndex extends React.Component {
   componentWillMount() {
     this.props.dispatch(loadVendors({ relevant: true }));
     this.props.dispatch(loadSuppliers({ relevant: true }));
@@ -49,24 +49,24 @@ class PurchaseOrdersIndex extends React.Component {
           </div>
         </div>
 
-        <PurchaseOrdersFilters brands={this.props.brands}
-                               categories={this.props.categories}
-                               genders={this.props.genders}
-                               history={this.props.history}
-                               loading={this.props.loading}
-                               loadPurchaseOrders={this.loadPurchaseOrders.bind(this)}
-                               orderTypes={this.props.orderTypes}
-                               seasons={this.props.seasons}
-                               suppliers={this.props.suppliers}
-                               query={this.props.location.query} />
+        <Filters brands={this.props.brands}
+                 categories={this.props.categories}
+                 genders={this.props.genders}
+                 history={this.props.history}
+                 loading={this.props.loading}
+                 loadPurchaseOrders={this.loadPurchaseOrders.bind(this)}
+                 orderTypes={this.props.orderTypes}
+                 seasons={this.props.seasons}
+                 suppliers={this.props.suppliers}
+                 query={this.props.location.query} />
 
-        <PurchaseOrdersTable dispatch={this.props.dispatch}
-                             exportable={this.props.exportable}
-                             purchaseOrders={this.props.purchaseOrders}
-                             summary={this.props.summary}
-                             totalPages={this.props.totalPages}
-                             totalCount={this.props.totalCount}
-                             query={this.props.location.query} />
+        <Table dispatch={this.props.dispatch}
+               exportable={this.props.exportable}
+               purchaseOrders={this.props.purchaseOrders}
+               summary={this.props.summary}
+               totalPages={this.props.totalPages}
+               totalCount={this.props.totalCount}
+               query={this.props.location.query} />
 
         {this.renderLoadMoreButton()}
       </div>
@@ -129,4 +129,4 @@ function applyState({ filters, purchaseOrders }) {
   return assign({}, filters, purchaseOrders);
 }
 
-export default connect(applyState)(PurchaseOrdersIndex);
+export default connect(applyState)(PurchaseOrderLineItemsIndex);

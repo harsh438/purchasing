@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute, NotFoundRoute } from 'react-router';
 import Layout from './views/layouts/application';
-import PurchaseOrdersIndex from './views/purchase_orders/index';
+import PurchaseOrderLineItemsIndex from './views/purchase_order_line_items/index';
 import OrdersIndex from './views/orders/index';
 import OrdersEdit from './views/orders/edit';
 import SuppliersIndex from './views/suppliers/index';
@@ -19,13 +19,14 @@ import SkusEdit from './views/skus/edit';
 
 export default (
   <Route path="/" component={Layout}>
-    <IndexRoute component={PurchaseOrdersIndex} />
+    <Route path="/skus" component={SkusIndex} />
+    <Route path="/skus/:id/edit" component={SkusEdit} />
 
     <Route path="/orders" component={OrdersIndex} />
     <Route path="/orders/:id/edit" component={OrdersEdit} />
 
-    <Route path="/skus" component={SkusIndex} />
-    <Route path="/skus/:id/edit" component={SkusEdit} />
+    <Route path="/orders" component={OrdersIndex} />
+    <IndexRoute component={PurchaseOrderLineItemsIndex} />
 
     <Route path="/suppliers" component={SuppliersIndex} />
     <Route path="/suppliers/new" component={SuppliersNew} />
@@ -33,11 +34,11 @@ export default (
     <Route path="/suppliers/:id/terms" component={SupplierTermsHistory} />
     <Route path="/suppliers/term/:id" component={SupplierTermsShow} />
 
-    <Route path="/terms" component={SuppliersTermsIndex} />
-
     <Route path="/vendors" component={VendorsIndex} />
     <Route path="/vendors/new" component={VendorsNew} />
     <Route path="/vendors/:id/edit" component={VendorsEdit} />
+
+    <Route path="/terms" component={SuppliersTermsIndex} />
 
     <Route path="/goods-received-notices" component={GoodsReceivedNoticesIndex} />
   </Route>
