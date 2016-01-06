@@ -211,6 +211,7 @@ export default class SupplierTermsForm extends React.Component {
                style={{ width: '55%' }}>
             <input className="form-control"
                    type="number"
+                   step="any"
                    id="marketingContribution"
                    name="marketingContributionPercentage"
                    value={this.getNestedField('marketingContribution', 'percentage')} />
@@ -221,7 +222,7 @@ export default class SupplierTermsForm extends React.Component {
                   name="marketingContributionOf"
                   value={this.getNestedField('marketingContribution', 'of')}
                   style={{ width: '44%' }}>
-            <option> -- select -- </option>
+            <option value=""> -- select -- </option>
             <option value="pre_order_total">Pre Order Total</option>
             <option value="season_total">Season Total</option>
             <option value="year_total">Year Total</option>
@@ -248,6 +249,7 @@ export default class SupplierTermsForm extends React.Component {
                style={{ width: '55%' }}>
             <input className="form-control"
                    type="number"
+                   step="any"
                    id="riskOrderAgreement"
                    name="riskOrderAgreementPercentage"
                    value={this.getNestedField('riskOrderAgreement', 'percentage')}
@@ -280,6 +282,7 @@ export default class SupplierTermsForm extends React.Component {
                style={{ width: '55%' }}>
             <input className="form-control"
                    type="number"
+                   step="any"
                    id="settlementDiscount"
                    name="settlementDiscountPercentage"
                    value={this.getNestedField('settlementDiscount', 'percentage')} />
@@ -320,6 +323,7 @@ export default class SupplierTermsForm extends React.Component {
                style={{ width: '55%' }}>
             <input className="form-control"
                    type="number"
+                   step="any"
                    id="markdownContributionDetails"
                    name="markdownContributionDetailsPercentage"
                    value={this.getNestedField('markdownContributionDetails', 'percentage')}
@@ -335,7 +339,7 @@ export default class SupplierTermsForm extends React.Component {
                   style={{ width: '44%' }}
                   disabled={this.getNestedField('markdownContributionDetails', 'enabled') !== true}
                   required>
-            <option> -- select -- </option>
+            <option value=""> -- select -- </option>
             <option value="pre_orders">Pre orders</option>
             <option value="all_orders">All orders</option>
           </select>
