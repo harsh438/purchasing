@@ -1,13 +1,6 @@
 class Sku::Exporter
   attr_reader :attrs
 
-  def new_sku_attrs_for(generator_attrs)
-    @attrs = generator_attrs
-    sku_attrs(language_product_option,
-              language_product,
-              find_or_create_language_category)
-  end
-
   def export(sku)
     return if sku.barcodes.empty?
     return if sku.product.present?
