@@ -1,9 +1,9 @@
 class SkusController < ApplicationController
   def index
-    skus = Sku::Search.new.search(params)
-    render json: { skus: skus.map(&:as_json_with_vendor_category_and_barcodes),
-                   total_pages: skus.total_pages,
-                   page: params[:page] || 1 }
+    respond_to do |format|
+      format.json { render_index_json }
+      format.csv { render_index_csv }
+    end
   end
 
   def create
@@ -37,5 +37,17 @@ class SkusController < ApplicationController
 
   def sku_update_attrs
     params.require(:sku).permit(:cost_price, barcodes_attributes: [:barcode])
+  end
+
+  def render_index_json
+    skus = Sku::Search.new.search(params)
+
+    render json: { skus: skus.map(&:as_json_with_vendor_category_and_barcodes),
+                   total_pages: skus.total_pages,
+                   page: params[:page] || 1 }
+  end
+
+  def render_index_csv
+    render csv: Sku::CsvExporter.new.export(params)
   end
 end

@@ -22,5 +22,17 @@ FactoryGirl.define do
     after(:build) do |sku|
       sku.sku = "#{sku.product_id}-#{sku.element_id}"
     end
+
+    trait :with_purchase_order_line_item do
+      transient do
+        purchase_order { create(:purchase_order) }
+      end
+
+      after(:build) do |sku, evaluator|
+        create(:purchase_order_line_item, product_id: sku.product_id,
+                                          option_id: sku.option_id,
+                                          purchase_order: evaluator.purchase_order)
+      end
+    end
   end
 end
