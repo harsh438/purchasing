@@ -19,7 +19,10 @@ class Sku::Exporter
                cost_price: sku.cost_price,
                vendor_id: sku.vendor_id,
                season: sku.season,
-               barcode: sku.barcodes.last.barcode }
+               barcode: sku.barcodes.last.barcode,
+               manufacturer_sku: sku.manufacturer_sku,
+               manufacturer_color: sku.manufacturer_color,
+               manufacturer_size: sku.manufacturer_size }
 
     sku.update!(sku_attrs(LanguageProductOption.create(product_option_attrs),
                           LanguageProduct.create(language_product_attrs),
