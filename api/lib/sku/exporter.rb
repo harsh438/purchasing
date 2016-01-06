@@ -9,6 +9,7 @@ class Sku::Exporter
 
   def export(sku)
     return if sku.barcodes.empty?
+    return if sku.product.present?
 
     @attrs = { lead_gender: sku.gender,
                size: sku.size,

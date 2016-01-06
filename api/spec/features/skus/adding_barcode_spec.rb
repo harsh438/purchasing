@@ -11,6 +11,11 @@ feature 'Adding a barcode to an existing sku' do
     then_legacy_records_should_be_created_for_the_sku
   end
 
+  scenario 'Avoid creating legacy records more than once' do
+    when_i_add_a_barcode_to_a_sku_for_the_second_time
+    then_legacy_records_should_not_be_created_for_the_sku
+  end
+
   def when_i_add_a_barcode_to_sku
     add_barcode_to_sku(create(:sku))
   end
@@ -27,7 +32,17 @@ feature 'Adding a barcode to an existing sku' do
     expect(subject[:product_id]).to_not be(nil)
   end
 
+  def when_i_add_a_barcode_to_a_sku_for_the_second_time
+    add_barcode_to_sku(sku)
+  end
+
+  def then_legacy_records_should_not_be_created_for_the_sku
+    expect(subject[:product_id]).to eq(sku.product_id)
+  end
+
   private
+
+  let(:sku) { create(:sku) }
 
   def add_barcode_to_sku(sku)
     attrs = { barcodes_attributes: [{ barcode: '00000' }] }
