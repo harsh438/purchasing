@@ -1,5 +1,7 @@
 class Sku::Exporter
-  attr_reader :attrs
+  attr_reader :attrs, :product, :language_product,
+              :option, :element, :language_product_option,
+              :category, :product_gender, :language_category
 
   def export(sku)
     return if sku.barcodes.empty?
@@ -9,9 +11,7 @@ class Sku::Exporter
 
     create_legacy_records(sku)
 
-    sku.update!(sku_attrs(language_product_option,
-                          language_product,
-                          find_or_create_language_category))
+    sku.update!(sku_attrs)
   end
 
   private
@@ -43,38 +43,38 @@ class Sku::Exporter
   end
 
   def create_product(sku)
-    product
+    @product ||= Product.create(product_attrs)
   end
 
   def create_language_product(sku)
-    language_product
+    @language_product ||= LanguageProduct.create(language_product_attrs)
   end
 
   def create_option(sku)
-    option
+    @option ||= Option.create(option_attrs)
   end
 
   def create_element(sku)
-    element
+    @element ||= Element.find_or_create_by!(name: attrs[:size])
   end
 
   def create_language_product_option(sku)
-    language_product_option
+    @language_product_option ||= LanguageProductOption.create(product_option_attrs)
   end
 
   def create_category(sku)
-    category
+    @category ||= Category.find_or_create_by!(id: attrs[:category_id])
   end
 
   def create_language_category(sku)
-    find_or_create_language_category
+    @language_category ||= find_or_create_language_category
   end
 
   def create_product_gender(sku)
-    product_gender
+    @product_gender ||= ProductGender.create(product_gender_attrs)
   end
 
-  def sku_attrs(language_product_option, language_product, language_category)
+  def sku_attrs
     attrs.except(:lead_gender, :barcode)
       .merge!({ sku: "#{product.id}-#{element.id}",
                 product_id: product.id,
@@ -86,14 +86,6 @@ class Sku::Exporter
                 gender: product_gender.gender })
   end
 
-  def language_product_option
-    @language_product_option ||= LanguageProductOption.create(product_option_attrs)
-  end
-
-  def language_product
-    @language_product ||= LanguageProduct.create(language_product_attrs)
-  end
-
   def find_or_create_language_category
     category.language_category ||= LanguageCategory.create(language_category_attrs)
 
@@ -102,26 +94,6 @@ class Sku::Exporter
     end
 
     category.language_category
-  end
-
-  def product
-    @product ||= Product.create(product_attrs)
-  end
-
-  def product_gender
-    @product_gender ||= ProductGender.create(product_gender_attrs)
-  end
-
-  def option
-    @option ||= Option.create(option_attrs)
-  end
-
-  def category
-    @category ||= Category.find_or_create_by!(id: attrs[:category_id])
-  end
-
-  def element
-    @element ||= Element.find_or_create_by!(name: attrs[:size])
   end
 
   def product_gender_attrs
