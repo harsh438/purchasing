@@ -17,6 +17,7 @@ class SkusController < ApplicationController
 
   def update
     sku.update!(sku_update_attrs)
+    Sku::Exporter.new.export(sku)
     render json: sku.as_json_with_vendor_category_and_barcodes
   end
 

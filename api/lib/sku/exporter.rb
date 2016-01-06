@@ -7,6 +7,24 @@ class Sku::Exporter
               find_or_create_language_category)
   end
 
+  def export(sku)
+    return if sku.barcodes.empty?
+
+    @attrs = { lead_gender: sku.gender,
+               size: sku.size,
+               product_name: sku.product_name,
+               color: sku.color,
+               price: sku.price,
+               cost_price: sku.cost_price,
+               vendor_id: sku.vendor_id,
+               season: sku.season,
+               barcode: sku.barcodes.last.barcode }
+
+    sku.update!(sku_attrs(LanguageProductOption.create(product_option_attrs),
+                          LanguageProduct.create(language_product_attrs),
+                          find_or_create_language_category))
+  end
+
   private
 
   def sku_attrs(language_product_option, language_product, language_category)
