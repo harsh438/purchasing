@@ -13,7 +13,7 @@ class Product::Migrator
 
   def migrate_single(product)
     @product = product
-    
+
     if product.language_product_options.count > 0
       migrate_product_with_options
     else
