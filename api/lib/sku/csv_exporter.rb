@@ -1,15 +1,25 @@
 class Sku::CsvExporter
   def export(params)
-    po = PurchaseOrder.find(params[:purchase_order_id])
     csv = Csv::ViewModel.new
     csv << columns
-    csv.concat(skus_in_purchase_order(po))
+
+    if params[:order_id].present?
+      order = Order.find(params[:order_id])
+      csv.concat(skus_in_order(order))
+    elsif params[:purchase_order_id].present?
+      purchase_order = PurchaseOrder.find(params[:purchase_order_id])
+      csv.concat(skus_in_purchase_order(purchase_order))
+    end
   end
 
   private
 
   def columns
     [:internal_sku, :barcode]
+  end
+
+  def skus_in_order(order)
+    order.purchase_orders.flat_map { |po| skus_in_purchase_order(po) }
   end
 
   def skus_in_purchase_order(po)
