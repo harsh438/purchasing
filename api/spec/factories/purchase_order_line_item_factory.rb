@@ -16,6 +16,8 @@ FactoryGirl.define do
     season :AW15
     vendor_id 0
     gender ''
+    manufacturer_size 'MAN_SIZE'
+    product_size 'SD_SIZE'
 
     trait :arrived do
       arrived_date 1.day.ago
