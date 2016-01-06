@@ -16,6 +16,11 @@ feature 'Sku CSV Export' do
 
   def then_i_should_receive_all_skus_in_that_order
     expect(csv_result_rows.count).to eq(skus.count)
+    expected_internal_skus = skus.map(&:sku)
+
+    csv_result_rows.map(&:first).each do |internal_sku|
+      expect(expected_internal_skus).to include(internal_sku)
+    end
   end
 
   def when_exporting_skus_for_a_purchase_order

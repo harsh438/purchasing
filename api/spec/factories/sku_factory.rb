@@ -13,6 +13,8 @@ FactoryGirl.define do
     cost_price 19.99
     list_price 29.99
 
+    vendor
+
     product_id { create(:product).id }
     option_id { create(:option).id }
     language_product_option_id { create(:language_product_option, product_id: product_id, option_id: option_id).id }

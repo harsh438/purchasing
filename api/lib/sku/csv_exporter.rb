@@ -30,7 +30,7 @@ class Sku::CsvExporter
 
   def values_from_sku(sku)
     if sku.present?
-      sku.attributes.values_at(columns.map(&:to_s))
+      [sku.sku, sku.barcodes.first.try(:barcode)]
     end
   end
 end
