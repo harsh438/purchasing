@@ -12,9 +12,9 @@ class PercentageOfValidator < ActiveModel::EachValidator
   private
 
   def is_percentage?(percent)
-    return false unless is_float?(percent)
+    return false if !percent.blank? and !is_float?(percent)
 
-    percent.to_f > 0 || percent.to_f <= 100
+    percent.to_f >= 0 || percent.to_f <= 100
   end
 
   def is_float?(value)
@@ -22,6 +22,6 @@ class PercentageOfValidator < ActiveModel::EachValidator
   end
 
   def is_valid_of?(of)
-    options[:of].include?(of)
+    of.blank? or options[:of].include?(of)
   end
 end
