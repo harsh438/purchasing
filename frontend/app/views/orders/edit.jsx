@@ -90,7 +90,8 @@ class OrdersEdit extends React.Component {
                   <tr>
                     <th>PO #</th>
                     <th>Vendor</th>
-                    <th className="text-right">Download</th>
+                    <th className="text-right">Summary</th>
+                    <th className="text-right">SKU Export</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -119,20 +120,33 @@ class OrdersEdit extends React.Component {
           </td>
           <td>{po.vendorName}</td>
           <td className="text-right">
-            <a href={this.csvExportUrl(po)}
-               className="btn btn-default btn-sm"
-               target="_blank">
-              <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
-              &nbsp;Export as CSV
-            </a>
+            {this.renderCsvExportLink(this.purchaseOrderSummaryExportUrl(po))}
+          </td>
+          <td className="text-right">
+            {this.renderCsvExportLink(this.purchaseOrderSkuExportUrl(po))}
           </td>
         </tr>
       );
     });
   }
 
-  csvExportUrl(po) {
+  renderCsvExportLink(url) {
+    return (
+      <a href={url}
+         className="btn btn-default btn-sm"
+         target="_blank">
+        <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+        &nbsp;Export as CSV
+      </a>
+    );
+  }
+
+  purchaseOrderSummaryExportUrl(po) {
     return `/api/purchase_orders/${po.id}.csv`;
+  }
+
+  purchaseOrderSkuExportUrl(po) {
+    return `/api/skus.csv?purchase_order_id=${po.id}`;
   }
 
   handleOrderLineItemsAdd(lineItems) {
