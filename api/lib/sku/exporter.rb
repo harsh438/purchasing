@@ -1,9 +1,10 @@
 class Sku::Exporter
+  attr_reader :attrs
 
   def new_sku_attrs_for(generator_attrs)
     @attrs = generator_attrs
-    sku_attrs(LanguageProductOption.create(product_option_attrs),
-              LanguageProduct.create(language_product_attrs),
+    sku_attrs(language_product_option,
+              language_product,
               find_or_create_language_category)
   end
 
@@ -11,6 +12,18 @@ class Sku::Exporter
     return if sku.barcodes.empty?
     return if sku.product.present?
 
+    set_attrs_from(sku)
+
+    create_legacy_records(sku)
+
+    sku.update!(sku_attrs(language_product_option,
+                          language_product,
+                          find_or_create_language_category))
+  end
+
+  private
+
+  def set_attrs_from(sku)
     @attrs = { lead_gender: sku.gender,
                size: sku.size,
                product_name: sku.product_name,
@@ -23,13 +36,50 @@ class Sku::Exporter
                manufacturer_sku: sku.manufacturer_sku,
                manufacturer_color: sku.manufacturer_color,
                manufacturer_size: sku.manufacturer_size }
-
-    sku.update!(sku_attrs(LanguageProductOption.create(product_option_attrs),
-                          LanguageProduct.create(language_product_attrs),
-                          find_or_create_language_category))
   end
 
-  private
+  def create_legacy_records(sku)
+    create_product(sku)
+    create_language_product(sku)
+    create_option(sku)
+    create_element(sku)
+    create_language_product_option(sku)
+    create_category(sku)
+    create_language_category(sku)
+    create_product_gender(sku)
+  end
+
+  def create_product(sku)
+    product
+  end
+
+  def create_language_product(sku)
+    language_product
+  end
+
+  def create_option(sku)
+    option
+  end
+
+  def create_element(sku)
+    element
+  end
+
+  def create_language_product_option(sku)
+    language_product_option
+  end
+
+  def create_category(sku)
+    category
+  end
+
+  def create_language_category(sku)
+    find_or_create_language_category
+  end
+
+  def create_product_gender(sku)
+    product_gender
+  end
 
   def sku_attrs(language_product_option, language_product, language_category)
     attrs.except(:lead_gender, :barcode)
@@ -43,8 +93,12 @@ class Sku::Exporter
                 gender: product_gender.gender })
   end
 
-  def attrs
-    @attrs
+  def language_product_option
+    @language_product_option ||= LanguageProductOption.create(product_option_attrs)
+  end
+
+  def language_product
+    @language_product ||= LanguageProduct.create(language_product_attrs)
   end
 
   def find_or_create_language_category
