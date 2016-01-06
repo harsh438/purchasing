@@ -163,6 +163,7 @@ export default class SupplierTermsForm extends React.Component {
                style={{ width: '100%' }}>
             <input className="form-control"
                    type="number"
+                   step="any"
                    min="0"
                    max="100"
                    id={field}
