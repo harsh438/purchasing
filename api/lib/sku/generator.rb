@@ -51,6 +51,7 @@ class Sku::Generator
       new_sku_attrs = Sku::Exporter.new.new_sku_attrs_for(attrs)
     else
       new_sku_attrs = attrs.except(:lead_gender, :barcode)
+                           .merge!(gender: attrs[:lead_gender].try(:to_sym) || '')
     end
 
     new_sku = Sku.create!(new_sku_attrs.to_h)
