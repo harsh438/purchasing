@@ -85,6 +85,11 @@ class OrdersEdit extends React.Component {
             </div>
 
             <div className="panel-body">
+              <div className="text-right">
+                {this.renderCsvExportLink(this.orderSkuExportUrl(this.props.order), 'Export all SKUs as CSV')}
+              </div>
+
+              <hr />
               <table className="table">
                 <thead>
                   <tr>
@@ -130,15 +135,19 @@ class OrdersEdit extends React.Component {
     });
   }
 
-  renderCsvExportLink(url) {
+  renderCsvExportLink(url, text = 'Export as CSV') {
     return (
       <a href={url}
          className="btn btn-default btn-sm"
          target="_blank">
         <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
-        &nbsp;Export as CSV
+        &nbsp;{text}
       </a>
     );
+  }
+
+  orderSkuExportUrl(order) {
+    return `/api/skus.csv?order_id=${order.id}`;
   }
 
   purchaseOrderSummaryExportUrl(po) {
