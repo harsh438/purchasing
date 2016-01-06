@@ -11,6 +11,11 @@ feature 'SKU generation' do
     then_only_skus_should_be_generated
   end
 
+  scenario 'Finding an existing sku by barcode' do
+    #when_i_try_to_generate_a_sku_with_an_existing_barcode
+    #then_it_should_return_the_existing_sku
+  end
+
   def when_i_generate_skus_with_a_barcode
     page.driver.post skus_path(sku_with_barcode_attrs)
   end
