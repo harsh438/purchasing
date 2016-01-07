@@ -28,7 +28,6 @@ Rails.application.routes.draw do
       get ':action' => 'filters#:action'
     end
 
-    resources :products, only: :show
     resources :skus, only: [:index, :create, :show, :update]
     resources :suppliers, only: [:index, :create, :update, :show]
     resources :supplier_terms, only: [:index, :show]
