@@ -59,7 +59,6 @@ feature 'SKU generation' do
                                   :lead_gender,
                                   :category_id,
                                   :category_name,
-                                  :inv_track,
                                   :barcode).each do |key, a|
       expect(subject[key]).to eq(a)
     end
