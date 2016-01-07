@@ -1,27 +1,29 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
+import reduceBarcodes from './reducers/barcodes';
 import reduceFilters from './reducers/filters';
-import reducePurchaseOrders from './reducers/purchase_orders';
-import reduceOrders from './reducers/orders';
+import reduceGoodsReceivedNotices  from './reducers/goods_received_notices';
 import reduceOrder from './reducers/order';
+import reduceOrders from './reducers/orders';
+import reducePurchaseOrders from './reducers/purchase_orders';
+import reduceSkus  from './reducers/skus';
 import reduceSuppliers  from './reducers/supplier';
 import reduceSupplierTerms from './reducers/supplier_terms';
-import reduceSkus  from './reducers/skus';
 import reduceVendors  from './reducers/vendor';
-import reduceGoodsReceivedNotices  from './reducers/goods_received_notices';
 
 import thunk from 'redux-thunk';
 
 const middleware = [thunk];
 
-const reducer = combineReducers({ filters: reduceFilters,
-                                  orders: reduceOrders,
+const reducer = combineReducers({ barcodes: reduceBarcodes,
+                                  filters: reduceFilters,
+                                  goodsReceivedNotices: reduceGoodsReceivedNotices,
                                   order: reduceOrder,
+                                  orders: reduceOrders,
                                   purchaseOrders: reducePurchaseOrders,
-                                  suppliers: reduceSuppliers,
                                   skus: reduceSkus,
-                                  vendors: reduceVendors,
+                                  suppliers: reduceSuppliers,
                                   supplierTerms: reduceSupplierTerms,
-                                  goodsReceivedNotices: reduceGoodsReceivedNotices });
+                                  vendors: reduceVendors });
 
 const store = applyMiddleware(...middleware)(createStore)(reducer);
 
