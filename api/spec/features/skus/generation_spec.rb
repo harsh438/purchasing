@@ -28,27 +28,26 @@ feature 'SKU generation' do
   def when_i_generate_skus_with_a_barcode
     page.driver.post skus_path(sku_with_barcode_attrs)
   end
-
   def when_i_generate_skus_without_a_barcode
-    page.driver.post skus_path(sku_with_no_barcode_attrs)
+   page.driver.post skus_path(sku_with_no_barcode_attrs)
   end
 
   def then_no_legacy_option_should_be_generated
-    check_correct_skus
+    check_correct_skus(single_size_sku_attrs)
 
     expect(subject[:sku]).to eq("#{Product.first.id}")
-    expect(sku_with_barcode_attrs[:barcode]).to eq(Sku.find_by(sku: subject[:sku]).barcodes.first.barcode)
+    expect(single_size_sku_attrs[:barcode]).to eq(Sku.find_by(sku: subject[:sku]).barcodes.first.barcode)
 
     expect(sku.product).to be_a(Product)
     expect(sku.language_product).to be_a(LanguageProduct)
-    expect(sku.language_product_option).to be_a(nil)
-    expect(sku.element).to be_a(Element)
-    expect(sku.option).to be_a(nil)
+    expect(sku.language_product_option).to eq(nil)
+    expect(sku.element).to eq(nil)
+    expect(sku.option).to eq(nil)
     expect(sku.language_category).to be_a(LanguageCategory)
   end
 
   def then_both_skus_and_legacy_records_should_be_generated
-    check_correct_skus
+    check_correct_skus(sku_with_barcode_attrs)
 
     expect(subject[:sku]).to eq("#{Product.first.id}-#{Element.first.id}")
     expect(sku_with_barcode_attrs[:barcode]).to eq(Sku.find_by(sku: subject[:sku]).barcodes.first.barcode)
@@ -62,7 +61,7 @@ feature 'SKU generation' do
   end
 
   def then_only_skus_should_be_generated
-    check_correct_skus
+    check_correct_skus(sku_with_no_barcode_attrs)
 
     expect(subject[:sku]).to eq(sku_with_no_barcode_attrs[:sku])
 
@@ -76,8 +75,8 @@ feature 'SKU generation' do
 
   private
 
-  def check_correct_skus
-    sku_with_barcode_attrs.except(:cost_price,
+  def check_correct_skus(attrs)
+    attrs.except(:cost_price,
                                   :price,
                                   :lead_gender,
                                   :category_id,
@@ -104,8 +103,8 @@ feature 'SKU generation' do
                            category_name: 'Whatever',
                            inv_track: 'O' } }
 
-  let (:single_size_sku_attrs) { base_sku_attrs.merge!({ barcode: '123892123', inv_track: 'P' }) }
-  let (:sku_with_barcode_attrs) { base_sku_attrs.merge!({ barcode: '12389123' }) }
-  let (:sku_with_no_barcode_attrs) { base_sku_attrs.merge!({ sku: 'NEGATIVE-EXAMPLE' }) }
+  let (:single_size_sku_attrs) { base_sku_attrs.merge({ barcode: '12223892123', inv_track: 'P' }) }
+  let (:sku_with_barcode_attrs) { base_sku_attrs.merge({ barcode: '121389123' }) }
+  let (:sku_with_no_barcode_attrs) { base_sku_attrs.merge({ sku: 'NEGATIVE-EXAMPLE' }) }
   let (:sku) { Sku.find_by(sku: subject[:sku]) }
 end
