@@ -6,6 +6,11 @@ feature 'SKU generation' do
     then_both_skus_and_legacy_records_should_be_generated
   end
 
+  scenario 'Generating a single-size sku' do
+    when_i_generate_a_single_size_sku_with_a_barcode
+    then_no_legacy_option_should_be_generated
+  end
+
   scenario 'Generating skus without a barcode' do
     when_i_generate_skus_without_a_barcode
     then_only_skus_should_be_generated
@@ -16,12 +21,30 @@ feature 'SKU generation' do
     #then_it_should_return_the_existing_sku
   end
 
+  def when_i_generate_a_single_size_sku_with_a_barcode
+    page.driver.post skus_path(single_size_sku_attrs)
+  end
+
   def when_i_generate_skus_with_a_barcode
     page.driver.post skus_path(sku_with_barcode_attrs)
   end
 
   def when_i_generate_skus_without_a_barcode
     page.driver.post skus_path(sku_with_no_barcode_attrs)
+  end
+
+  def then_no_legacy_option_should_be_generated
+    check_correct_skus
+
+    expect(subject[:sku]).to eq("#{Product.first.id}")
+    expect(sku_with_barcode_attrs[:barcode]).to eq(Sku.find_by(sku: subject[:sku]).barcodes.first.barcode)
+
+    expect(sku.product).to be_a(Product)
+    expect(sku.language_product).to be_a(LanguageProduct)
+    expect(sku.language_product_option).to be_a(nil)
+    expect(sku.element).to be_a(Element)
+    expect(sku.option).to be_a(nil)
+    expect(sku.language_category).to be_a(LanguageCategory)
   end
 
   def then_both_skus_and_legacy_records_should_be_generated
@@ -79,8 +102,9 @@ feature 'SKU generation' do
                            vendor_id: 919,
                            category_id: 12,
                            category_name: 'Whatever',
-                           inv_track: 'P' } }
+                           inv_track: 'O' } }
 
+  let (:single_size_sku_attrs) { base_sku_attrs.merge!({ barcode: '123892123', inv_track: 'P' }) }
   let (:sku_with_barcode_attrs) { base_sku_attrs.merge!({ barcode: '12389123' }) }
   let (:sku_with_no_barcode_attrs) { base_sku_attrs.merge!({ sku: 'NEGATIVE-EXAMPLE' }) }
   let (:sku) { Sku.find_by(sku: subject[:sku]) }
