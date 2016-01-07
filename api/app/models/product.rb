@@ -12,7 +12,8 @@ class Product < ActiveRecord::Base
                  on_sale: :pSale,
                  color: :pUDFValue2,
                  season: :pUDFValue4,
-                 barcode: :pUDFValue1
+                 barcode: :pUDFValue1,
+                 inv_track: :invTrack
 
   has_many :product_genders, foreign_key: :pid
   has_one :language_product, foreign_key: :pID
