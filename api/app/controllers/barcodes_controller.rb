@@ -1,6 +1,9 @@
 class BarcodesController < ApplicationController
   def import
     render json: imported_barcodes
+  rescue ActiveRecord::RecordNotUnique
+    render json: { error: 'Some barcodes are already associated with SKUs so we did not import any',
+                   duplicate_barcodes: duplicate_barcodes }
   end
 
   private
@@ -14,15 +17,16 @@ class BarcodesController < ApplicationController
       barcodes.map do |barcode|
         sku = Sku.find_by(sku: barcode[:sku])
 
-        begin
-          if sku.present?
-            barcode = sku.barcodes.create!(barcode: barcode[:barcode])
-            Sku::Exporter.new.export(sku)
-            barcode
-          end
-        rescue ActiveRecord::RecordNotUnique
+        if sku.present? and !sku.has_barcode?(barcode[:barcode])
+          barcode = sku.barcodes.create!(barcode: barcode[:barcode])
+          Sku::Exporter.new.export(sku)
+          barcode
         end
       end.compact
     end
+  end
+
+  def duplicate_barcodes
+    Barcode.where(barcode: barcodes.map { |barcode| barcode[:barcode] })
   end
 end

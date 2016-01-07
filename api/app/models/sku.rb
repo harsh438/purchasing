@@ -19,6 +19,10 @@ class Sku < ActiveRecord::Base
   validates :sku, uniqueness: true
   validates_presence_of :manufacturer_sku
 
+  def has_barcode?(barcode)
+    barcodes.pluck(:barcode).include?(barcode)
+  end
+
   def as_json(options = {})
     super.tap do |sku|
       sku['created_at'] = sku['created_at'].to_s

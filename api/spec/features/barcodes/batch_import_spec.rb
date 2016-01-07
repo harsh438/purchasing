@@ -44,7 +44,8 @@ feature 'Batch importing Barcodes' do
   end
 
   def then_already_imported_barcodes_should_be_not_be_associated
-    expect(subject.count).to eq(0)
+    expect(subject['error']).to_not be_nil
+    expect(subject['duplicate_barcodes'].count).to eq(1)
   end
 
   let(:skus) { create_list(:sku, 2) }
