@@ -33,6 +33,6 @@ class BarcodesController < ApplicationController
   end
 
   def duplicate_barcodes
-    Barcode.where(barcode: barcodes.map { |barcode| barcode[:barcode] })
+    Barcode.where(barcode: barcodes.map { |barcode| barcode[:barcode] }).pluck(:barcode)
   end
 end

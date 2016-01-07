@@ -32,11 +32,11 @@ export function renderMultiSelectOptions(options) {
   });
 }
 
-export function renderErrors(errors) {
+function renderFlashes(type, messages) {
   return (
-    <Alert bsStyle="danger">
+    <Alert bsStyle={type}>
       <ul>
-        {map(errors, (err, i) => {
+        {map(messages, (err, i) => {
           return (
             <li key={i}><strong>{err}</strong></li>
           );
@@ -44,4 +44,12 @@ export function renderErrors(errors) {
       </ul>
     </Alert>
   );
+}
+
+export function renderErrors(errors) {
+  return renderFlashes('danger', errors);
+}
+
+export function renderSuccesses(messages) {
+  return renderFlashes('success', messages);
 }
