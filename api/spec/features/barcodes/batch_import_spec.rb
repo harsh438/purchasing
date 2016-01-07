@@ -6,6 +6,16 @@ feature 'Batch importing Barcodes' do
     then_those_barcodes_should_be_associated_with_skus
   end
 
+  scenario 'Importing barcodes for SKUs that do not exist' do
+    when_i_batch_import_several_barcodes_including_one_for_nonexistant_sku
+    then_only_barcodes_for_existing_skus_should_be_returned
+  end
+
+  scenario 'Importing barcodes already associated with other SKUs' do
+    when_i_batch_import_barcodes_already_associated_with_skus
+    then_already_imported_barcodes_should_be_not_be_associated
+  end
+
   def when_i_batch_import_several_barcodes
     barcodes = [{ sku: skus.first.sku, barcode: 'new' },
                 { sku: skus.second.sku, barcode: 'new2' }]
@@ -17,5 +27,26 @@ feature 'Batch importing Barcodes' do
     expect(subject.second['barcode']).to eq('new2')
   end
 
+  def when_i_batch_import_several_barcodes_including_one_for_nonexistant_sku
+    barcodes = [{ sku: skus.first.sku, barcode: 'new' },
+                { sku: 'nope', barcode: 'new2' }]
+    page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
+  end
+
+  def then_only_barcodes_for_existing_skus_should_be_returned
+    expect(subject.count).to eq(1)
+  end
+
+  def when_i_batch_import_barcodes_already_associated_with_skus
+    create(:sku, barcodes: [barcode])
+    barcodes = [{ sku: skus.first.sku, barcode: barcode.barcode }]
+    page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
+  end
+
+  def then_already_imported_barcodes_should_be_not_be_associated
+    expect(subject.count).to eq(0)
+  end
+
   let(:skus) { create_list(:sku, 2) }
+  let(:barcode) { create(:barcode, barcode: 'cool') }
 end

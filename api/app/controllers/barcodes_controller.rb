@@ -10,14 +10,19 @@ class BarcodesController < ApplicationController
   end
 
   def imported_barcodes
-    barcodes.map do |barcode|
-      sku = Sku.find_by(sku: barcode[:sku])
+    ActiveRecord::Base.transaction do
+      barcodes.map do |barcode|
+        sku = Sku.find_by(sku: barcode[:sku])
 
-      if sku.present?
-        barcode = sku.barcodes.create!(barcode: barcode[:barcode])
-        Sku::Exporter.new.export(sku)
-        barcode
-      end
-    end.compact
+        begin
+          if sku.present?
+            barcode = sku.barcodes.create!(barcode: barcode[:barcode])
+            Sku::Exporter.new.export(sku)
+            barcode
+          end
+        rescue ActiveRecord::RecordNotUnique
+        end
+      end.compact
+    end
   end
 end
