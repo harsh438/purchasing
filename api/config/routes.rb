@@ -3,6 +3,12 @@ Rails.application.routes.draw do
 
   scope :api, format: true, defaults: { format: :json } do
     resources :skus, only: [:index, :create, :show, :update]
+    
+    resources :barcodes do
+      collection do
+        post :import
+      end
+    end
 
     resources :orders, only: [:index, :show, :create, :update] do
       collection do
