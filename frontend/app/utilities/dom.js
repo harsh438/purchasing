@@ -1,5 +1,6 @@
 import React from 'react';
 import { isPlainObject, map } from 'lodash';
+import { Alert } from 'react-bootstrap';
 
 function optionHashes(options) {
   return map(options, function (option) {
@@ -29,4 +30,18 @@ export function renderMultiSelectOptions(options) {
   return map(optionHashes(options), function ({ id, name }) {
     return { value: id, label: name };
   });
+}
+
+export function renderErrors(errors) {
+  return (
+    <Alert bsStyle="danger">
+      <ul>
+        {map(errors, (err, i) => {
+          return (
+            <li key={i}><strong>{err}</strong></li>
+          );
+        })}
+      </ul>
+    </Alert>
+  );
 }

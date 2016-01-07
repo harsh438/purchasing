@@ -1,7 +1,8 @@
 import React from 'react';
 import Spreadsheet from '../application/_spreadsheet';
-import { Alert, Nav, NavItem } from 'react-bootstrap';
+import { Nav, NavItem } from 'react-bootstrap';
 import { WeekSelect } from './_week_select';
+import { renderErrors } from '../../utilities/dom';
 import { filter, map } from 'lodash';
 
 export default class OrderLineItemsForm extends React.Component {
@@ -113,17 +114,7 @@ export default class OrderLineItemsForm extends React.Component {
 
   renderErrors() {
     if (this.hasErrors(this.props)) {
-      return (
-        <Alert bsStyle="danger">
-          <ul>
-            {map(this.props.errors, (err, i) => {
-              return (
-                <li key={i}><strong>{err}</strong></li>
-              );
-            })}
-          </ul>
-        </Alert>
-      );
+      return renderErrors(this.props.errors);
     }
   }
 
