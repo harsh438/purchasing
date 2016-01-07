@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   root to: 'frontend#index'
 
   scope :api, format: true, defaults: { format: :json } do
+    resources :skus, only: [:index, :create, :show, :update]
+
     resources :orders, only: [:index, :show, :create, :update] do
       collection do
         post :export
@@ -24,14 +26,15 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :suppliers, only: [:index, :create, :update, :show]
+    resources :supplier_terms, only: [:index, :show]
+
+    resources :vendors, only: [:index, :create, :show, :update]
+
+    resources :goods_received_notices, only: [:index]
+
     scope :filters do
       get ':action' => 'filters#:action'
     end
-
-    resources :skus, only: [:index, :create, :show, :update]
-    resources :suppliers, only: [:index, :create, :update, :show]
-    resources :supplier_terms, only: [:index, :show]
-    resources :vendors, only: [:index, :create, :show, :update]
-    resources :goods_received_notices, only: [:index]
   end
 end
