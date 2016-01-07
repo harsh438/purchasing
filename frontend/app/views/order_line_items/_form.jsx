@@ -1,8 +1,8 @@
 import React from 'react';
-import OrderLineItemsSpreadsheet from './_spreadsheet';
+import Spreadsheet from '../application/_spreadsheet';
 import { Alert, Nav, NavItem } from 'react-bootstrap';
 import { WeekSelect } from './_week_select';
-import { map } from 'lodash';
+import { filter, map } from 'lodash';
 
 export default class OrderLineItemsForm extends React.Component {
   componentWillMount() {
@@ -43,7 +43,12 @@ export default class OrderLineItemsForm extends React.Component {
       <form onSubmit={this.handleMultiSubmit.bind(this)}>
         <div className="row">
           <div className="col-md-4">
-            <OrderLineItemsSpreadsheet ref="spreadsheet" />
+            <Spreadsheet ref="spreadsheet"
+                         columnHeaders={['Internal SKU', 'Quantity', 'Discount %', 'Drop Date']}
+                         columns={[{ data: 'internalSku' },
+                                   { data: 'quantity', type: 'numeric' },
+                                   { data: 'discount', type: 'numeric', format: '0.0' },
+                                   { data: 'dropDate', type: 'date', dateFormat: 'YYYY-MM-DD', correctFormat: true }]} />
           </div>
 
           <div className="form-group col-md-2">
@@ -123,7 +128,11 @@ export default class OrderLineItemsForm extends React.Component {
   }
 
   multiData() {
-    return map(this.refs.spreadsheet.data(), (line) => {
+    const filteredData = filter(this.refs.spreadsheet.data(), function ([internalSku, qty, _, dropDate]) {
+      return internalSku && qty >= 1 && dropDate;
+    });
+
+    return map(filteredData, (line) => {
       return { internalSku: line[0],
                quantity: parseInt(line[1], 10),
                discount: parseFloat(line[2], 10),
