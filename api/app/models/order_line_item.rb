@@ -18,7 +18,7 @@ class OrderLineItem < ActiveRecord::Base
 
   def internal_sku=(internal_sku)
     super
-    cache_product
+    cache_product unless product_id.present?
   end
 
   def as_json(options = {})
