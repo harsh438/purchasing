@@ -11,10 +11,22 @@ class Sku::Exporter
 
     create_legacy_records(sku)
 
+    update_order_skus(sku)
+
     sku.update!(sku_attrs)
   end
 
   private
+
+  def update_order_skus(sku)
+    return unless sku.sku.present?
+    return unless sku_attrs[:sku].present?
+
+    line_items = OrderLineItem.where(internal_sku: sku.sku)
+    line_items.each do |line|
+      line.update_attributes!(internal_sku: sku_attrs[:sku])
+    end
+  end
 
   def set_attrs_from(sku)
     @attrs = { lead_gender: sku.gender,
