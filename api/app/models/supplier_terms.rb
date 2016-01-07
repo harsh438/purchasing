@@ -45,6 +45,7 @@ class SupplierTerms < ActiveRecord::Base
                               rebate_structure
                               risk_order_agreement
                               markdown_contribution_details
+                              markdown_contribution_explanation
                               pre_order_cancellation_allowance
                               pre_order_stock_swap_allowance
                               bulk_order_agreement

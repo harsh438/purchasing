@@ -51,6 +51,7 @@ export default class SupplierTermsForm extends React.Component {
             {this.renderTextField(['rebateStructure', ''], 'rebateStructure')}
             {this.renderRiskOrderAgreement()}
             {this.renderMarkdownContributionDetails()}
+            {this.renderTextField(['markdownContributionExplanation', ''], 'markdownContributionExplanation')}
             {this.renderPercentageField('preOrderCancellationAllowance')}
             {this.renderPercentageField('preOrderStockSwapAllowance')}
             {this.renderCheckboxDate('bulkOrderAgreement')}

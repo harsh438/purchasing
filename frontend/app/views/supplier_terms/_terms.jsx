@@ -16,6 +16,7 @@ export default class SupplierTerms extends React.Component {
                    'rebateStructure',
                    'riskOrderAgreement',
                    'markdownContributionDetails',
+                   'markdownContributionExplanation',
                    'preOrderCancellationAllowance',
                    'preOrderStockSwapAllowance',
                    'bulkOrderAgreement',
