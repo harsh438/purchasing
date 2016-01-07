@@ -11,6 +11,11 @@ feature 'Batch importing Barcodes' do
     then_only_barcodes_for_existing_skus_should_be_returned
   end
 
+  scenario 'Importing barcodes already associate with the same SKU' do
+    when_i_batch_import_barcodes_already_associated_with_the_same_skus
+    then_already_imported_barcodes_should_be_returned
+  end
+
   scenario 'Importing barcodes already associated with other SKUs' do
     when_i_batch_import_barcodes_already_associated_with_skus
     then_already_imported_barcodes_should_be_not_be_associated
@@ -34,6 +39,16 @@ feature 'Batch importing Barcodes' do
   end
 
   def then_only_barcodes_for_existing_skus_should_be_returned
+    expect(subject.count).to eq(1)
+  end
+
+  def when_i_batch_import_barcodes_already_associated_with_the_same_skus
+    sku = create(:sku, barcodes: [barcode])
+    barcodes = [{ sku: sku.sku, barcode: barcode.barcode }]
+    page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
+  end
+
+  def then_already_imported_barcodes_should_be_returned
     expect(subject.count).to eq(1)
   end
 

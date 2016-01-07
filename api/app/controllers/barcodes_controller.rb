@@ -17,8 +17,8 @@ class BarcodesController < ApplicationController
       barcodes.map do |barcode|
         sku = Sku.find_by(sku: barcode[:sku])
 
-        if sku.present? and !sku.has_barcode?(barcode[:barcode])
-          barcode = sku.barcodes.create!(barcode: barcode[:barcode])
+        if sku.present?
+          barcode = sku.barcodes.find_or_create_by!(barcode: barcode[:barcode])
           Sku::Exporter.new.export(sku)
           barcode
         end
