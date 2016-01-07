@@ -18,7 +18,7 @@ feature 'Adding a barcode to an existing sku' do
 
   scenario 'Change internal_sku when adding barcode to sku' do
     when_i_add_a_barcode_to_a_sku_with_temporary_reference
-    then_the_internal_sku_should_be_updated
+    then_the_internal_sku_and_purchase_orders_should_be_updated
   end
 
   def when_i_add_a_barcode_to_sku
@@ -46,12 +46,19 @@ feature 'Adding a barcode to an existing sku' do
   end
 
   def when_i_add_a_barcode_to_a_sku_with_temporary_reference
+    create(:order, line_item_count: 1)
+    create(:order, line_item_count: 1)
+    Order.first.line_items.first.update!(internal_sku: sku_without_barcode.sku)
+    Order.second.line_items.first.update!(internal_sku: sku_without_barcode.sku)
+
     add_barcode_to_sku(sku_without_barcode)
   end
 
-  def then_the_internal_sku_should_be_updated
+  def then_the_internal_sku_and_orders_should_be_updated
     old_sku = sku_without_barcode.sku
     expect(subject[:sku]).to_not eq(old_sku)
+    expect(Order.first.line_items.first.internal_sku).to_not eq(old_sku)
+    expect(Order.second.line_items.first.internal_sku).to_not eq(old_sku)
   end
 
   private
