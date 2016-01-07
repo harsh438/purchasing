@@ -169,7 +169,8 @@ class Product::Migrator
       cost_price: product.cost,
       price: product.price,
       vendor_id: product.vendor_id,
-      season: product.season }
+      season: product.season,
+      inv_track: product.inv_track }
   end
 
   def product_detail_attrs
