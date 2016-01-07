@@ -15,15 +15,16 @@ class BarcodesIndex extends React.Component {
 
         <div className="row">
           <div className="col-md-12">
-            <ImportForm onImport={this.handleImport.bind(this)} {...this.props} />
+            <ImportForm onImport={this.handleImport.bind(this)}
+                        {...this.props} />
           </div>
         </div>
       </div>
     );
   }
 
-  handleImport(barcodes) {
-    this.props.dispatch(importBarcodes(barcodes));
+  handleImport(barcodes, handleResults) {
+    return this.props.dispatch(importBarcodes(barcodes, handleResults));
   }
 }
 

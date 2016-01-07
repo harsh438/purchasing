@@ -5,16 +5,10 @@ import { renderSuccesses, renderErrors } from '../../utilities/dom';
 
 export default class ImportForm extends React.Component {
   componentWillMount() {
-    this.state = { success: false };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.hasErrors) {
-      this.setState({ success: true });
-      this.refs.spreadsheet.clear();
-    } else {
-      this.setState({ success: false });
-    }
+    this.state = { success: false,
+                   errors: [],
+                   nonexistantSkus: [],
+                   duplicateBarcodes: [] };
   }
 
   render() {
@@ -39,12 +33,12 @@ export default class ImportForm extends React.Component {
   }
 
   renderFlashes() {
-    if (this.props.hasErrors) {
-      return renderErrors([...values(this.props.errors),
-                           ...this.props.nonexistantSkus,
-                           ...this.props.duplicateBarcodes]);
-    } else if (this.state.success) {
+    if (this.state.success) {
       return renderSuccesses([`${this.props.barcodes.length} barcodes added successfully!`]);
+    } else if (this.state.errors.length > 0) {
+      return renderErrors([...this.state.errors,
+                           ...this.state.nonexistantSkus,
+                           ...this.state.duplicateBarcodes]);
     }
   }
 
@@ -56,6 +50,6 @@ export default class ImportForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.onImport(this.barcodes());
+    this.props.onImport(this.barcodes(), this.setState.bind(this));
   }
 }
