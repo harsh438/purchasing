@@ -81,7 +81,8 @@ class SuppliersTermsIndex extends React.Component {
   }
 
   exportUrl() {
-    const queryString = Qs.stringify({ filters: this.props.location.query.filters });
+    const queryString = Qs.stringify({ filters: this.props.location.query.filters },
+                                     { arrayFormat: 'brackets' });
     return `/api/supplier_terms.csv?${queryString}`;
   }
 
