@@ -8,7 +8,7 @@ feature 'Batch importing Barcodes' do
 
   scenario 'Importing barcodes for SKUs that do not exist' do
     when_i_batch_import_several_barcodes_including_one_for_nonexistant_sku
-    then_only_barcodes_for_existing_skus_should_be_returned
+    then_no_barcodes_should_be_imported
   end
 
   scenario 'Importing barcodes already associate with the same SKU' do
@@ -38,8 +38,9 @@ feature 'Batch importing Barcodes' do
     page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
   end
 
-  def then_only_barcodes_for_existing_skus_should_be_returned
-    expect(subject.count).to eq(1)
+  def then_no_barcodes_should_be_imported
+    expect(subject['errors']).to_not be_nil
+    expect(subject['nonexistant_skus'].count).to eq(1)
   end
 
   def when_i_batch_import_barcodes_already_associated_with_the_same_skus
@@ -59,7 +60,7 @@ feature 'Batch importing Barcodes' do
   end
 
   def then_already_imported_barcodes_should_be_not_be_associated
-    expect(subject['error']).to_not be_nil
+    expect(subject['errors']).to_not be_nil
     expect(subject['duplicate_barcodes'].count).to eq(1)
   end
 
