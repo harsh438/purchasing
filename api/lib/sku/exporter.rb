@@ -46,9 +46,13 @@ class Sku::Exporter
   def create_legacy_records(sku)
     create_product(sku)
     create_language_product(sku)
-    create_option(sku)
-    create_element(sku)
-    create_language_product_option(sku)
+
+    if sku.inv_track != 'P'
+      create_option(sku)
+      create_element(sku)
+      create_language_product_option(sku)
+    end
+
     create_category(sku)
     create_language_category(sku)
     create_product_gender(sku)
@@ -86,16 +90,29 @@ class Sku::Exporter
     @product_gender ||= ProductGender.create(product_gender_attrs)
   end
 
+  def internal_sku
+    if option.present?
+      "#{product.id}-#{element.id}"
+    else
+      product.id.to_s
+    end
+  end
+
+  def sku_option_attrs
+    return {} unless option.present?
+    { language_product_option_id: language_product_option.id,
+      element_id: element.id,
+      option_id: option.id }
+  end
+
   def sku_attrs
     attrs.except(:lead_gender, :barcode)
-      .merge!({ sku: "#{product.id}-#{element.id}",
+      .merge!({ sku: internal_sku,
                 product_id: product.id,
                 language_product_id: language_product.id,
-                element_id: element.id,
-                option_id: option.id,
-                language_product_option_id: language_product_option.id,
                 category_id: language_category.id,
                 gender: product_gender.gender })
+      .merge!(sku_option_attrs)
   end
 
   def find_or_create_language_category
