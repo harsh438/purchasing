@@ -18,7 +18,7 @@ feature 'Adding a barcode to an existing sku' do
 
   scenario 'Change internal_sku when adding barcode to sku' do
     when_i_add_a_barcode_to_a_sku_with_temporary_reference
-    then_the_internal_sku_and_purchase_orders_should_be_updated
+    then_the_internal_sku_and_orders_should_be_updated
   end
 
   def when_i_add_a_barcode_to_sku
