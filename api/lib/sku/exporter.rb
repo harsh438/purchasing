@@ -113,11 +113,11 @@ class Sku::Exporter
 
   def sku_attrs
     attrs.except(:lead_gender, :barcode)
-      .merge!({ sku: internal_sku,
-                product_id: product.id,
-                language_product_id: language_product.id,
-                category_id: language_category.id,
-                gender: product_gender.gender })
+      .merge!(sku: internal_sku,
+              product_id: product.id,
+              language_product_id: language_product.id,
+              category_id: language_category.id,
+              gender: product_gender.gender)
       .merge!(sku_option_attrs)
   end
 
