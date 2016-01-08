@@ -18,7 +18,7 @@ class Sku::Generator
 
   def find_sku
     if attrs[:barcode].present?
-      sku = find_sku_by_barcode
+      sku = find_sku_by_barcode_and_season
     else
       sku = find_sku_by_surfdome_size
     end
@@ -30,10 +30,9 @@ class Sku::Generator
     sku
   end
 
-  def find_sku_by_barcode
-    barcode = Barcode.find_by(barcode: attrs[:barcode])
-    return nil unless barcode.present?
-    Sku.find_by(sku: barcode.sku)
+  def find_sku_by_barcode_and_season
+    Sku.joins(:barcodes).find_by(barcodes: { barcode: attrs[:barcode] },
+                                 season: attrs[:season])
   end
 
   def find_sku_by_surfdome_size

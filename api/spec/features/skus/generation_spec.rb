@@ -16,9 +16,9 @@ feature 'SKU generation' do
     then_only_skus_should_be_generated
   end
 
-  scenario 'Finding an existing sku by barcode' do
-    #when_i_try_to_generate_a_sku_with_an_existing_barcode
-    #then_it_should_return_the_existing_sku
+  scenario 'Finding an existing sku by barcode and season' do
+    when_i_try_to_generate_a_sku_with_an_existing_barcode_and_season
+    then_it_should_return_the_existing_sku
   end
 
   def when_i_generate_a_single_size_sku_with_a_barcode
@@ -35,8 +35,8 @@ feature 'SKU generation' do
   def then_no_legacy_option_should_be_generated
     check_correct_skus(single_size_sku_attrs)
 
-    expect(subject[:sku]).to eq("#{Product.first.id}")
-    expect(single_size_sku_attrs[:barcode]).to eq(Sku.find_by(sku: subject[:sku]).barcodes.first.barcode)
+    expect(subject[:sku]).to eq(Product.first.id.to_s)
+    expect(single_size_sku_attrs[:barcode]).to eq(sku.barcodes.first.barcode)
 
     expect(sku.product).to be_a(Product)
     expect(sku.language_product).to be_a(LanguageProduct)
@@ -50,7 +50,7 @@ feature 'SKU generation' do
     check_correct_skus(sku_with_barcode_attrs)
 
     expect(subject[:sku]).to eq("#{Product.first.id}-#{Element.first.id}")
-    expect(sku_with_barcode_attrs[:barcode]).to eq(Sku.find_by(sku: subject[:sku]).barcodes.first.barcode)
+    expect(sku_with_barcode_attrs[:barcode]).to eq(sku.barcodes.first.barcode)
 
     expect(sku.product).to be_a(Product)
     expect(sku.language_product).to be_a(LanguageProduct)
@@ -73,15 +73,23 @@ feature 'SKU generation' do
     expect(sku.language_category).to be(nil)
   end
 
+  def when_i_try_to_generate_a_sku_with_an_existing_barcode_and_season
+    page.driver.post skus_path(existing_barcode_and_season_sku_attrs)
+  end
+
+  def then_it_should_return_the_existing_sku
+    expect(subject[:id]).to eq(existing_sku.id)
+  end
+
   private
 
   def check_correct_skus(attrs)
     attrs.except(:cost_price,
-                                  :price,
-                                  :lead_gender,
-                                  :category_id,
-                                  :category_name,
-                                  :barcode).each do |key, a|
+                 :price,
+                 :lead_gender,
+                 :category_id,
+                 :category_name,
+                 :barcode).each do |key, a|
       expect(subject[key]).to eq(a)
     end
 
@@ -103,8 +111,11 @@ feature 'SKU generation' do
                            category_name: 'Whatever',
                            inv_track: 'O' } }
 
-  let (:single_size_sku_attrs) { base_sku_attrs.merge({ barcode: '12223892123', inv_track: 'P' }) }
-  let (:sku_with_barcode_attrs) { base_sku_attrs.merge({ barcode: '121389123' }) }
-  let (:sku_with_no_barcode_attrs) { base_sku_attrs.merge({ sku: 'NEGATIVE-EXAMPLE' }) }
-  let (:sku) { Sku.find_by(sku: subject[:sku]) }
+  let(:existing_barcode_and_season_sku_attrs) { base_sku_attrs.merge(barcode: existing_sku.barcodes.first.barcode,
+                                                                     season: existing_sku.season) }
+  let(:single_size_sku_attrs) { base_sku_attrs.merge(barcode: '12223892123', inv_track: 'P') }
+  let(:sku_with_barcode_attrs) { base_sku_attrs.merge(barcode: '121389123') }
+  let(:sku_with_no_barcode_attrs) { base_sku_attrs.merge(sku: 'NEGATIVE-EXAMPLE') }
+  let(:sku) { Sku.find_by(sku: subject[:sku]) }
+  let(:existing_sku) { create(:sku) }
 end
