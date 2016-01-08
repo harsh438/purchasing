@@ -4,6 +4,7 @@ class OrderLineItem < ActiveRecord::Base
   class SkuNotFound < RuntimeError; end
 
   belongs_to :order
+  belongs_to :sku
 
   validates :cost, presence: true
   validates :quantity, presence: true,
@@ -18,6 +19,7 @@ class OrderLineItem < ActiveRecord::Base
 
   def internal_sku=(internal_sku)
     super
+    find_and_assign_sku
     cache_product unless product_id.present?
   end
 
@@ -62,8 +64,11 @@ class OrderLineItem < ActiveRecord::Base
     internal_sku.split('-').second.to_i
   end
 
+  def find_and_assign_sku
+    self.sku = Sku.find_by(internal_sku)
+  end
+
   def cache_from_sku
-    sku = Sku.find_by(sku: internal_sku)
     raise SkuNotFound unless sku.present?
 
     self.product_id = sku.product_id

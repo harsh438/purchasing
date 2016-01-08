@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160108105613) do
+ActiveRecord::Schema.define(version: 20160108110632) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer "sku_id",  limit: 4
@@ -420,9 +420,11 @@ ActiveRecord::Schema.define(version: 20160108105613) do
     t.string   "season",        limit: 255
     t.integer  "reporting_pid", limit: 4
     t.string   "gender",        limit: 255
+    t.integer  "sku_id",        limit: 4
   end
 
   add_index "order_line_items", ["order_id"], name: "index_order_line_items_on_order_id", using: :btree
+  add_index "order_line_items", ["sku_id"], name: "index_order_line_items_on_sku_id", using: :btree
 
   create_table "order_suppliers", force: :cascade do |t|
     t.string  "orderID",      limit: 12
