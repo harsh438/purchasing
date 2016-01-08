@@ -8,13 +8,9 @@ class Sku::Exporter
     return if sku.product.present?
 
     set_attrs_from(sku)
-
     create_legacy_records(sku)
-
     update_order_skus(sku)
-
     sku.update!(sku_attrs)
-
     update_purchase_order_legacy_references(sku)
 
     sku
