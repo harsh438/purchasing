@@ -22,22 +22,6 @@ class Sku::Exporter
 
   private
 
-  def update_order_skus(sku)
-    return unless sku.sku.present?
-    return unless sku_attrs[:sku].present?
-
-    line_items = OrderLineItem.where(internal_sku: sku.sku)
-    line_items.each do |line|
-      line.update_attributes!(internal_sku: sku_attrs[:sku])
-    end
-  end
-
-  def update_purchase_order_legacy_references(sku)
-    PurchaseOrderLineItem.where(sku: sku).update_all(pID: sku.product_id,
-                                                     oID: sku.option_id,
-                                                     orderTool_Barcode: sku.barcodes.first.barcode)
-  end
-
   def set_attrs_from(sku)
     @attrs = { lead_gender: sku.gender,
                size: sku.size,
@@ -66,6 +50,22 @@ class Sku::Exporter
     create_category(sku)
     create_language_category(sku)
     create_product_gender(sku)
+  end
+
+  def update_order_skus(sku)
+    return unless sku.sku.present?
+    return unless sku_attrs[:sku].present?
+
+    line_items = OrderLineItem.where(internal_sku: sku.sku)
+    line_items.each do |line|
+      line.update_attributes!(internal_sku: sku_attrs[:sku])
+    end
+  end
+
+  def update_purchase_order_legacy_references(sku)
+    PurchaseOrderLineItem.where(sku: sku).update_all(pID: sku.product_id,
+                                                     oID: sku.option_id,
+                                                     orderTool_Barcode: sku.barcodes.first.barcode)
   end
 
   def create_product(sku)
