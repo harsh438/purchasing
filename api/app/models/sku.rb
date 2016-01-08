@@ -16,7 +16,6 @@ class Sku < ActiveRecord::Base
   has_many :barcodes
   accepts_nested_attributes_for :barcodes
 
-  validates :sku, uniqueness: true
   validates_presence_of :manufacturer_sku
 
   def as_json(options = {})

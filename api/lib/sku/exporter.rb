@@ -8,7 +8,7 @@ class Sku::Exporter
     return if sku.product.present?
 
     set_attrs_from(sku)
-    create_legacy_records(sku)
+    find_or_create_legacy_records(sku)
     update_order_skus(sku)
     sku.update!(sku_attrs)
     update_purchase_order_legacy_references(sku)
@@ -33,6 +33,33 @@ class Sku::Exporter
                manufacturer_size: sku.manufacturer_size }
   end
 
+  def find_or_create_legacy_records(sku)
+    existing_sku = Sku.joins(:barcodes).where(barcodes: { barcode: sku.barcodes.first.barcode })
+                                       .where.not(id: sku.id)
+                                       .order(created_at: :desc)
+                                       .first
+
+    if existing_sku.present?
+      update_sku_legacy_references(sku, existing_sku)
+    else
+      create_legacy_records(sku)
+    end
+  end
+
+  def update_sku_legacy_references(sku, existing_sku)
+    @product = sku.product = existing_sku.product
+    @language_product = sku.language_product = existing_sku.language_product
+
+    if sku.inv_track != 'P'
+      @option = sku.option = existing_sku.option
+      @element = sku.element = existing_sku.element
+      @language_product_option = sku.language_product_option = existing_sku.language_product_option
+    end
+
+    @language_category = sku.language_category = existing_sku.language_category
+    find_or_create_product_gender(sku)
+  end
+
   def create_legacy_records(sku)
     create_product(sku)
     create_language_product(sku)
@@ -45,7 +72,7 @@ class Sku::Exporter
 
     create_category(sku)
     create_language_category(sku)
-    create_product_gender(sku)
+    find_or_create_product_gender(sku)
   end
 
   def update_order_skus(sku)
@@ -92,8 +119,8 @@ class Sku::Exporter
     @language_category ||= find_or_create_language_category
   end
 
-  def create_product_gender(sku)
-    @product_gender ||= ProductGender.create!(product_gender_attrs)
+  def find_or_create_product_gender(sku)
+    @product_gender ||= ProductGender.find_or_create_by!(product_gender_attrs)
   end
 
   def internal_sku

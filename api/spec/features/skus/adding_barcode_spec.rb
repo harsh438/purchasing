@@ -27,7 +27,7 @@ feature 'Adding a barcode to an existing sku' do
   end
 
   scenario 'Add barcode to SKU already associated to another SKU' do
-    when_adding_barcode_to_sku_already_associated_with_other_sku
+    when_adding_barcode_to_sku_already_associated_with_another_sku
     then_the_new_sku_should_be_linked_to_existing_legacy_records
   end
 
@@ -80,6 +80,17 @@ feature 'Adding a barcode to an existing sku' do
     expect(negative_po_line.reload.product).to be_a(Product)
     expect(negative_po_line.reload.product).to eq(negative_sku.reload.product)
   end
+
+  def when_adding_barcode_to_sku_already_associated_with_another_sku
+    add_barcode_to_sku(sku_without_barcode, sku.barcodes.first.barcode)
+  end
+
+  def then_the_new_sku_should_be_linked_to_existing_legacy_records
+    expect(subject[:product_id]).to eq(sku.product_id)
+    expect(subject[:option_id]).to eq(sku.option_id)
+    expect(subject[:language_product_id]).to eq(sku.language_product_id)
+  end
+
   private
 
   let(:sku) { create(:sku) }
@@ -87,8 +98,8 @@ feature 'Adding a barcode to an existing sku' do
   let(:negative_sku) { create(:sku_without_barcode, sku: 'NEGATIVE-TEST') }
   let(:negative_po_line) { create(:purchase_order_line_item, sku: negative_sku) }
 
-  def add_barcode_to_sku(sku)
-    attrs = { barcodes_attributes: [{ barcode: '00000' }] }
+  def add_barcode_to_sku(sku, barcode = '00000')
+    attrs = { barcodes_attributes: [{ barcode: barcode }] }
     page.driver.post sku_path(sku), { _method: 'patch', sku: attrs }
   end
 end
