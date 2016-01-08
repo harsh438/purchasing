@@ -1,6 +1,6 @@
 class PurchaseOrderLineItem::SkuIdPopulator
   def populate
-    PurchaseOrderLineItem.where(sku_id: nil).find_in_batches.each do |group|
+    po_line_items.find_in_batches.each do |group|
       group.each do |po|
         print "purchase_order: #{po.id}"
         print "  product_id: #{po.product_id}"
@@ -17,6 +17,11 @@ class PurchaseOrderLineItem::SkuIdPopulator
   end
 
   private
+
+  def po_line_items
+    PurchaseOrderLineItem.where(sku_id: nil)
+                         .where('pID > 0')
+  end
 
   def populate_sku(po, sku)
     po.update!(sku: sku)
