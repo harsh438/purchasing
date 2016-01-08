@@ -18,7 +18,7 @@ feature 'Batch importing Barcodes' do
 
   scenario 'Importing barcodes already associated with other SKUs' do
     when_i_batch_import_barcodes_already_associated_with_skus
-    then_already_imported_barcodes_should_be_not_be_associated
+    then_already_imported_barcodes_should_be_associated
   end
 
   def when_i_batch_import_several_barcodes
@@ -59,9 +59,8 @@ feature 'Batch importing Barcodes' do
     page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
   end
 
-  def then_already_imported_barcodes_should_be_not_be_associated
-    expect(subject['errors']).to_not be_nil
-    expect(subject['duplicate_barcodes'].count).to eq(1)
+  def then_already_imported_barcodes_should_be_associated
+    expect(subject.count).to eq(1)
   end
 
   let(:skus) { create_list(:sku, 2) }
