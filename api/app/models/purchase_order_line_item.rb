@@ -87,6 +87,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   belongs_to :vendor, foreign_key: :orderTool_venID
   belongs_to :product, foreign_key: :pID
   belongs_to :purchase_order, foreign_key: :po_number
+  belongs_to :sku
 
   has_many :suppliers, through: :vendor
 
