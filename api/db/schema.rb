@@ -726,6 +726,9 @@ ActiveRecord::Schema.define(version: 20160111132311) do
     t.integer  "vendor_id",                  limit: 4
     t.integer  "language_product_option_id", limit: 4
     t.string   "inv_track",                  limit: 255
+    t.string   "category_name",              limit: 255
+    t.string   "on_sale",                    limit: 255
+    t.integer  "supplier_id",                limit: 4
   end
 
   add_index "skus", ["sku"], name: "index_skus_on_sku", using: :btree
