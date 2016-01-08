@@ -52,6 +52,8 @@ export default class SupplierContactForm extends React.Component {
                   <option value="Global Sales Director">Global Sales Director</option>
                   <option value="Regional CS Rep">Regional CS Rep</option>
                   <option value="Regional Accounting Rep">Regional Accounting Rep</option>
+                  <option value="Regional Marketing Manager">Regional Marketing Manager</option>
+                  <option value="Global Marketing Manager">Global Marketing Manager</option>
                 </select>
               </td>
 
