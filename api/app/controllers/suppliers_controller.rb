@@ -35,11 +35,17 @@ class SuppliersController < ApplicationController
   end
 
   def supplier_details_attrs
-    params.require(:supplier).permit(:invoicer_name,
-                                     :account_number,
-                                     :country_of_origin,
-                                     :needed_for_intrastat,
-                                     :discontinued)
+    attrs = params.require(:supplier).permit(:invoicer_name,
+                                             :account_number,
+                                             :country_of_origin,
+                                             :needed_for_intrastat,
+                                             :discontinued)
+
+    if attrs.empty?
+      {}
+    else
+      { details_attributes: attrs }
+    end
   end
 
   def supplier_contacts_attrs
@@ -75,7 +81,7 @@ class SuppliersController < ApplicationController
   end
 
   def full_supplier_attrs
-    supplier_attrs.merge(details_attributes: supplier_details_attrs)
+    supplier_attrs.merge(supplier_details_attrs)
                   .merge(supplier_contacts_attrs)
                   .merge(supplier_terms_attrs)
                   .merge(supplier_buyers_attrs)

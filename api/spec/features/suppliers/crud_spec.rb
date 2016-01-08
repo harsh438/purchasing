@@ -16,6 +16,11 @@ feature 'Suppliers CRUD' do
     then_the_changes_to_the_supplier_should_be_returned
   end
 
+  scenario 'Updating supplier without details should not delete details' do
+    when_updating_supplier_without_details
+    then_the_supplier_details_should_not_change
+  end
+
   def when_i_create_a_supplier
     page.driver.post suppliers_path(supplier: supplier_attrs)
   end
@@ -43,6 +48,16 @@ feature 'Suppliers CRUD' do
 
   def then_the_changes_to_the_supplier_should_be_returned
     expect(subject).to include('name' => 'Bob', 'invoicer_name' => 'James')
+  end
+
+  def when_updating_supplier_without_details
+    page.driver.post(supplier_path(supplier),
+                     _method: 'patch',
+                     supplier: { name: 'Bob' })
+  end
+
+  def then_the_supplier_details_should_not_change
+    expect(subject).to include('invoicer_name' => supplier.details.invoicer_name)
   end
 
   private
