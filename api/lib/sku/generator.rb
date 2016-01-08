@@ -1,13 +1,7 @@
 class Sku::Generator
   def generate(attrs)
     @attrs = attrs.with_indifferent_access
-    sku = find_sku
-
-    if sku.nil?
-      sku = generate_new_sku
-    end
-
-    sku
+    find_sku || generate_new_sku
   end
 
   private
