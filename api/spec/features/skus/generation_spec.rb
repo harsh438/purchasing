@@ -21,6 +21,11 @@ feature 'SKU generation' do
     then_it_should_return_the_existing_sku
   end
 
+  scenario 'Finding an existing sku by reference and season' do
+    when_i_try_to_generate_a_sku_with_season_but_no_barcode
+    then_it_should_return_the_existing_sku_with_no_barcode
+  end
+
   def when_i_generate_a_single_size_sku_with_a_barcode
     page.driver.post skus_path(single_size_sku_attrs)
   end
@@ -81,6 +86,14 @@ feature 'SKU generation' do
     expect(subject[:id]).to eq(existing_sku.id)
   end
 
+  def when_i_try_to_generate_a_sku_with_season_but_no_barcode
+    page.driver.post skus_path(existing_season_sku_attrs)
+  end
+
+  def then_it_should_return_the_existing_sku_with_no_barcode
+    expect(subject[:id]).to eq(existing_sku_without_barcode.id)
+  end
+
   private
 
   def check_correct_skus(attrs)
@@ -113,9 +126,11 @@ feature 'SKU generation' do
 
   let(:existing_barcode_and_season_sku_attrs) { base_sku_attrs.merge(barcode: existing_sku.barcodes.first.barcode,
                                                                      season: existing_sku.season) }
+  let(:existing_season_sku_attrs) { base_sku_attrs.merge(season: existing_sku_without_barcode.season) }
   let(:single_size_sku_attrs) { base_sku_attrs.merge(barcode: '12223892123', inv_track: 'P') }
   let(:sku_with_barcode_attrs) { base_sku_attrs.merge(barcode: '121389123') }
   let(:sku_with_no_barcode_attrs) { base_sku_attrs.merge(sku: 'NEGATIVE-EXAMPLE') }
   let(:sku) { Sku.find_by(sku: subject[:sku]) }
   let(:existing_sku) { create(:sku) }
+  let(:existing_sku_without_barcode) { create(:sku_without_barcode) }
 end

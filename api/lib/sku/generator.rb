@@ -18,16 +18,10 @@ class Sku::Generator
 
   def find_sku
     if attrs[:barcode].present?
-      sku = find_sku_by_barcode_and_season
+      find_sku_by_barcode_and_season
     else
-      sku = find_sku_by_surfdome_size
+      find_sku_by_reference_and_season
     end
-
-    if sku.nil?
-      sku = find_sku_by_manufacturer_size
-    end
-
-    sku
   end
 
   def find_sku_by_barcode_and_season
@@ -35,14 +29,8 @@ class Sku::Generator
                                  season: attrs[:season])
   end
 
-  def find_sku_by_surfdome_size
-    Sku.find_by(manufacturer_sku: attrs[:manufacturer_sku],
-                size: attrs[:size])
-  end
-
-  def find_sku_by_manufacturer_size
-    Sku.find_by(manufacturer_sku: attrs[:manufacturer_sku],
-                manufacturer_size: attrs[:manufacturer_size])
+  def find_sku_by_reference_and_season
+    Sku.find_by(attrs.slice(:sku, :season))
   end
 
   def generate_new_sku
