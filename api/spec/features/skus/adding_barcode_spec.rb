@@ -16,9 +16,19 @@ feature 'Adding a barcode to an existing sku' do
     then_legacy_records_should_not_be_created_for_the_sku
   end
 
-  scenario 'Change internal_sku when adding barcode to sku' do
+  scenario 'Change internal_sku when adding barcode to SKU' do
     when_i_add_a_barcode_to_a_sku_with_temporary_reference
     then_the_internal_sku_and_orders_should_be_updated
+  end
+
+  scenario 'Update legacy references in purchase orders when adding barcode to SKU' do
+    when_i_add_a_barcode_to_a_negative_referenced_sku
+    then_the_legacy_references_in_purchase_orders_should_be_updated
+  end
+
+  scenario 'Add barcode to SKU already associated to another SKU' do
+    when_adding_barcode_to_sku_already_associated_with_other_sku
+    then_the_new_sku_should_be_linked_to_existing_legacy_records
   end
 
   def when_i_add_a_barcode_to_sku
@@ -61,10 +71,21 @@ feature 'Adding a barcode to an existing sku' do
     expect(Order.second.line_items.first.internal_sku).to_not eq(old_sku)
   end
 
+  def when_i_add_a_barcode_to_a_negative_referenced_sku
+    negative_po_line
+    add_barcode_to_sku(negative_sku)
+  end
+
+  def then_the_legacy_references_in_purchase_orders_should_be_updated
+    expect(negative_po_line.reload.product).to be_a(Product)
+    expect(negative_po_line.reload.product).to eq(negative_sku.reload.product)
+  end
   private
 
   let(:sku) { create(:sku) }
   let(:sku_without_barcode) { create(:sku_without_barcode) }
+  let(:negative_sku) { create(:sku_without_barcode, sku: 'NEGATIVE-TEST') }
+  let(:negative_po_line) { create(:purchase_order_line_item, sku: negative_sku) }
 
   def add_barcode_to_sku(sku)
     attrs = { barcodes_attributes: [{ barcode: '00000' }] }

@@ -14,6 +14,10 @@ class Sku::Exporter
     update_order_skus(sku)
 
     sku.update!(sku_attrs)
+
+    update_purchase_order_legacy_references(sku)
+
+    sku
   end
 
   private
@@ -26,6 +30,12 @@ class Sku::Exporter
     line_items.each do |line|
       line.update_attributes!(internal_sku: sku_attrs[:sku])
     end
+  end
+
+  def update_purchase_order_legacy_references(sku)
+    PurchaseOrderLineItem.where(sku: sku).update_all(pID: sku.product_id,
+                                                     oID: sku.option_id,
+                                                     orderTool_Barcode: sku.barcodes.first.barcode)
   end
 
   def set_attrs_from(sku)
@@ -59,15 +69,15 @@ class Sku::Exporter
   end
 
   def create_product(sku)
-    @product ||= Product.create(product_attrs)
+    @product ||= Product.create!(product_attrs)
   end
 
   def create_language_product(sku)
-    @language_product ||= LanguageProduct.create(language_product_attrs)
+    @language_product ||= LanguageProduct.create!(language_product_attrs)
   end
 
   def create_option(sku)
-    @option ||= Option.create(option_attrs)
+    @option ||= Option.create!(option_attrs)
   end
 
   def create_element(sku)
@@ -75,7 +85,7 @@ class Sku::Exporter
   end
 
   def create_language_product_option(sku)
-    @language_product_option ||= LanguageProductOption.create(product_option_attrs)
+    @language_product_option ||= LanguageProductOption.create!(product_option_attrs)
   end
 
   def create_category(sku)
@@ -87,7 +97,7 @@ class Sku::Exporter
   end
 
   def create_product_gender(sku)
-    @product_gender ||= ProductGender.create(product_gender_attrs)
+    @product_gender ||= ProductGender.create!(product_gender_attrs)
   end
 
   def internal_sku
@@ -116,7 +126,7 @@ class Sku::Exporter
   end
 
   def find_or_create_language_category
-    category.language_category ||= LanguageCategory.create(language_category_attrs)
+    category.language_category ||= LanguageCategory.create!(language_category_attrs)
 
     unless product.categories.include? category
       product.categories << category
