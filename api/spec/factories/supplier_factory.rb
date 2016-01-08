@@ -18,6 +18,12 @@ FactoryGirl.define do
     end
 
     trait :with_details do
+      after :create do |supplier|
+        supplier.create_details!(invoicer_name: Faker::Name.name)
+      end
+    end
+
+    trait :with_detail_attrs do
       invoicer_name { Faker::Name.name }
       account_number '011'
       country_of_origin { Faker::AddressUK.country }
