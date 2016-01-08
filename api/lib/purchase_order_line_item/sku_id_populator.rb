@@ -1,4 +1,4 @@
-class PurchaseOrderLineItem::SkuPopulator
+class PurchaseOrderLineItem::SkuIdPopulator
   def populate
     PurchaseOrderLineItem.where(sku_id: nil).find_in_batches.each do |group|
       group.each do |po|

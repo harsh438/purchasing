@@ -5,6 +5,6 @@ namespace :legacy do
   end
 
   task po_line_item_sku_populate: :environment do
-    PurchaseOrderLineItem::SkuPopulator.new.populate
+    PurchaseOrderLineItem::SkuIdPopulator.new.populate
   end
 end
