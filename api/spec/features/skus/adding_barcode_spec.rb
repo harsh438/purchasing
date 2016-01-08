@@ -22,11 +22,11 @@ feature 'Adding a barcode to an existing sku' do
   end
 
   def when_i_add_a_barcode_to_sku
-    add_barcode_to_sku(create(:sku))
+    add_barcode_to_sku(sku_without_barcode)
   end
 
   def then_the_barcode_should_be_listed_under_the_sku
-    expect(subject[:barcodes].first).to include('barcode' => '00000')
+    expect(subject[:barcodes].last).to include('barcode' => '00000')
   end
 
   def when_i_add_a_barcode_to_a_sku_for_the_first_time

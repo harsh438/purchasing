@@ -27,6 +27,7 @@ FactoryGirl.define do
 
       after(:build) do |sku|
         sku.sku = "#{sku.product_id}-#{sku.element_id}"
+        sku.barcodes << create(:barcode)
       end
 
       trait :with_purchase_order_line_item do
