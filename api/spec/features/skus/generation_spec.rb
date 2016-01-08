@@ -26,6 +26,11 @@ feature 'SKU generation' do
     then_it_should_return_the_existing_sku_with_no_barcode
   end
 
+  scenario 'Ensuring existing skus are not updated' do
+    when_i_provide_new_attributes_for_a_sku
+    then_the_sku_should_not_be_updated
+  end
+
   def when_i_generate_a_single_size_sku_with_a_barcode
     page.driver.post skus_path(single_size_sku_attrs)
   end
@@ -33,6 +38,7 @@ feature 'SKU generation' do
   def when_i_generate_skus_with_a_barcode
     page.driver.post skus_path(sku_with_barcode_attrs)
   end
+
   def when_i_generate_skus_without_a_barcode
    page.driver.post skus_path(sku_with_no_barcode_attrs)
   end
@@ -92,6 +98,16 @@ feature 'SKU generation' do
 
   def then_it_should_return_the_existing_sku_with_no_barcode
     expect(subject[:id]).to eq(existing_sku_without_barcode.id)
+  end
+
+  def when_i_provide_new_attributes_for_a_sku
+    page.driver.post skus_path({ sku: existing_sku_without_barcode.sku,
+                                 season: existing_sku_without_barcode.season,
+                                 manufacturer_size: 'XX-Large' })
+  end
+
+  def then_the_sku_should_not_be_updated
+    expect(subject[:manufacturer_size]).to eq('biggish')
   end
 
   private
