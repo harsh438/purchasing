@@ -13,7 +13,7 @@ class AddSkuIdToOrderLineItems < ActiveRecord::Migration
 
   def set_sku_id_on_order_line_item(order_line_item)
     order_line_item.update!(sku: Sku.find_by!(sku: order_line_item.internal_sku))
-  rescue ActiveRecord::RecordNotFound => e
-    raise "sku=#{order_line_item.internal_sku}  order_line_item_id=#{order_line_item.id}\n"
+  rescue ActiveRecord::RecordNotFound
+    Rails.logger.error("sku=#{order_line_item.internal_sku}  order_line_item_id=#{order_line_item.id}")
   end
 end
