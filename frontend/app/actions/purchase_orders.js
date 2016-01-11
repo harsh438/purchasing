@@ -11,8 +11,7 @@ function fetchPurchaseOrders(params, page, action) {
                                                                 vendor_id: params.brand,
                                                                 po_number: params.poNumber,
                                                                 category_id: params.category,
-                                                                product_id: params.pid,
-                                                                product_sku: params.sku });
+                                                                product_id: params.pid });
     const query = removeEmptyKeys(assign({}, defaultParams, translatedParams));
     const queryString = Qs.stringify(query, { arrayFormat: 'brackets' });
 
