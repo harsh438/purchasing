@@ -1,6 +1,8 @@
 class AddSkuIdToOrderLineItems < ActiveRecord::Migration
   def change
-    add_reference :order_line_items, :sku, index: true
+    unless column_exists?(:order_line_items, :sku)
+      add_reference :order_line_items, :sku, index: true
+    end
 
     reversible do |dir|
       dir.up do
