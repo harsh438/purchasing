@@ -6,7 +6,7 @@ FactoryGirl.define do
 
     after(:create) do |order, evaluator|
       if evaluator.line_item_count > 0
-        order.line_items = create_list(:order_line_item, evaluator.line_item_count)
+        order.line_items = create_list(:order_line_item, evaluator.line_item_count, :with_sku)
       end
     end
   end
