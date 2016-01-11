@@ -84,7 +84,7 @@ export default class PurchaseOrdersFilters extends React.Component {
                 </div>
 
                 <div className="form-group col-md-2">
-                  <label htmlFor="sku">SKU</label>
+                  <label htmlFor="sku">Internal SKU</label>
 
                   <input className="form-control"
                          name="sku"
