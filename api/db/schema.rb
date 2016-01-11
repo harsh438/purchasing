@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160108114603) do
+ActiveRecord::Schema.define(version: 20160111105807) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer "sku_id",  limit: 4
