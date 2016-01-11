@@ -1,6 +1,6 @@
 class AddSkuIdToOrderLineItems < ActiveRecord::Migration
   def change
-    unless column_exists?(:order_line_items, :sku)
+    unless column_exists?(:order_line_items, :sku_id)
       add_reference :order_line_items, :sku, index: true
     end
 
