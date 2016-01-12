@@ -106,9 +106,9 @@ feature 'SKU generation' do
   end
 
   def when_i_provide_new_attributes_for_a_sku
-    page.driver.post skus_path({ sku: existing_sku_without_barcode.sku,
-                                 season: existing_sku_without_barcode.season,
-                                 manufacturer_size: 'XX-Large' })
+    page.driver.post skus_path(sku: existing_sku_without_barcode.sku,
+                               season: existing_sku_without_barcode.season,
+                               manufacturer_size: 'XX-Large')
   end
 
   def then_the_sku_should_not_be_updated
