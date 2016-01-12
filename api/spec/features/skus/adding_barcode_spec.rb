@@ -56,19 +56,16 @@ feature 'Adding a barcode to an existing sku' do
   end
 
   def when_i_add_a_barcode_to_a_sku_with_temporary_reference
-    create(:order, line_item_count: 1)
-    create(:order, line_item_count: 1)
-    Order.first.line_items.first.update!(internal_sku: sku_without_barcode.sku)
-    Order.second.line_items.first.update!(internal_sku: sku_without_barcode.sku)
-
+    order_line_1
+    order_line_2
     add_barcode_to_sku(sku_without_barcode)
   end
 
   def then_the_internal_sku_and_orders_should_be_updated
     old_sku = sku_without_barcode.sku
     expect(subject[:sku]).to_not eq(old_sku)
-    expect(Order.first.line_items.first.internal_sku).to_not eq(old_sku)
-    expect(Order.second.line_items.first.internal_sku).to_not eq(old_sku)
+    expect(order_line_1.reload.internal_sku).to_not eq(old_sku)
+    expect(order_line_1.reload.internal_sku).to_not eq(old_sku)
   end
 
   def when_i_add_a_barcode_to_a_negative_referenced_sku
@@ -97,6 +94,8 @@ feature 'Adding a barcode to an existing sku' do
   let(:sku_without_barcode) { create(:sku_without_barcode) }
   let(:negative_sku) { create(:sku_without_barcode, sku: 'NEGATIVE-TEST') }
   let(:negative_po_line) { create(:purchase_order_line_item, sku: negative_sku) }
+  let(:order_line_1) { create(:order_line_item, internal_sku: sku_without_barcode.sku) }
+  let(:order_line_2) { create(:order_line_item, internal_sku: sku_without_barcode.sku) }
 
   def add_barcode_to_sku(sku, barcode = '00000')
     attrs = { barcodes_attributes: [{ barcode: barcode }] }
