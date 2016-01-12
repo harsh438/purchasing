@@ -6,6 +6,8 @@ FactoryGirl.define do
     manufacturer_sku 'MANU-FACTURER-SKU-11'
     season :AW15
 
+    inv_track { 'O' }
+
     manufacturer_color :reddish
     manufacturer_size :biggish
 

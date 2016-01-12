@@ -30,7 +30,8 @@ class Sku::Exporter
                barcode: sku.barcodes.last.barcode,
                manufacturer_sku: sku.manufacturer_sku,
                manufacturer_color: sku.manufacturer_color,
-               manufacturer_size: sku.manufacturer_size }
+               manufacturer_size: sku.manufacturer_size,
+               inv_track: sku.inv_track }
   end
 
   def find_or_create_legacy_records(sku)
@@ -215,7 +216,8 @@ class Sku::Exporter
       on_sale: attrs[:on_sale] || '',
       vendor_id: attrs[:vendor_id],
       season: attrs[:season],
-      barcode: attrs[:barcode] }
+      barcode: attrs[:barcode],
+      inv_track: attrs[:inv_track] }
   end
 
   def category_attrs

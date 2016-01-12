@@ -12,6 +12,7 @@ describe Sku::Generator do
                           size: 'small',
                           color_family: 'blues',
                           size_scale: 'thumb',
+                          inv_track: 'O',
                           cost_price: 10.00,
                           list_price: 15.00,
                           price: 5.00,
