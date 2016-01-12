@@ -65,20 +65,7 @@ class OrderLineItem < ActiveRecord::Base
   end
 
   def find_and_assign_sku
-    self.sku = Sku.find_by(internal_sku)
-  end
-
-  def cache_from_sku
-    raise SkuNotFound unless sku.present?
-
-    self.product_id = sku.product_id
-    self.vendor_id = sku.vendor_id
-    self.option_id = sku.option_id || 0
-    self.cost = sku.cost_price
-    self.season = sku.season
-    self.product_name = sku.product_name
-    self.gender = sku.gender
-    self.reporting_pid = sku.product_id
+    self.sku = Sku.find_by(sku: internal_sku)
   end
 
   def cache_product
@@ -92,6 +79,18 @@ class OrderLineItem < ActiveRecord::Base
     self.product_name = last_po_line.try(:product_name)
     self.gender = Gender.char_from(last_po_line.try(:gender))
     self.reporting_pid = last_po_line.try(:reporting_pid)
+  end
+
+  def cache_from_sku
+    raise SkuNotFound unless sku.present?
+    self.product_id = sku.product_id
+    self.vendor_id = sku.vendor_id
+    self.option_id = sku.option_id || 0
+    self.cost = sku.cost_price
+    self.season = sku.season
+    self.product_name = sku.product_name
+    self.gender = sku.gender
+    self.reporting_pid = sku.product_id
   end
 
   def ensure_discount_is_at_least_zero
