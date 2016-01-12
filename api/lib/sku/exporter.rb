@@ -19,19 +19,22 @@ class Sku::Exporter
   private
 
   def set_attrs_from(sku)
-    @attrs = { lead_gender: sku.gender,
-               size: sku.size,
-               product_name: sku.product_name,
-               color: sku.color,
-               price: sku.price,
-               cost_price: sku.cost_price,
-               vendor_id: sku.vendor_id,
-               season: sku.season,
-               barcode: sku.barcodes.last.barcode,
-               manufacturer_sku: sku.manufacturer_sku,
-               manufacturer_color: sku.manufacturer_color,
-               manufacturer_size: sku.manufacturer_size,
-               inv_track: sku.inv_track }
+    @attrs = %i(size
+                product_name
+                color
+                price
+                cost_price
+                vendor_id
+                season
+                manufacturer_sku
+                manufacturer_color
+                manufacturer_size
+                inv_track).reduce({}) do |attrs, field|
+      attrs.merge(field => sku.send(field))
+    end
+
+    @attrs[:lead_gender] = sku.gender
+    @attrs[:barcode] = sku.barcodes.last.barcode
   end
 
   def find_or_create_legacy_records(sku)
