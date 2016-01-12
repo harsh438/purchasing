@@ -19,7 +19,7 @@ FactoryGirl.define do
     vendor
 
     factory :sku do
-      product_id { create(:product).id }
+      product_id { create(:product, manufacturer_sku: 'MANU-FACTURER-SKU-11-reddish').id }
       option_id { create(:option).id }
       language_product_id { create(:language_product, product_id: product_id).id }
       language_product_option_id { create(:language_product_option, product_id: product_id, option_id: option_id).id }

@@ -5,7 +5,7 @@ class Sku::Exporter
 
   def export(sku)
     return if sku.barcodes.empty?
-    return if sku.product.present?
+    return if sku.product.present? and (!sku.sized? or sku.option.present?)
 
     set_attrs_from(sku)
     find_or_create_legacy_records(sku)
@@ -34,23 +34,33 @@ class Sku::Exporter
   end
 
   def find_or_create_legacy_records(sku)
-    existing_sku = Sku.joins(:barcodes).where(barcodes: { barcode: sku.barcodes.first.barcode })
-                                       .where.not(id: sku.id)
-                                       .order(created_at: :desc)
-                                       .first
-
-    if existing_sku.present?
-      update_sku_legacy_references(sku, existing_sku)
+    if last_existing_sku_by_barcode(sku).present?
+      update_sku_legacy_references(sku, last_existing_sku_by_barcode(sku))
+    elsif product_by_manufacturer_sku(sku).present? and sku.sized?
+      create_option_legacy_records(sku, product_by_manufacturer_sku(sku))
     else
       create_legacy_records(sku)
     end
+  end
+
+  def last_existing_sku_by_barcode(sku)
+    Sku.joins(:barcodes).where(barcodes: { barcode: sku.barcodes.first.barcode })
+                        .where.not(id: sku.id)
+                        .order(created_at: :desc)
+                        .first
+  end
+
+  def product_by_manufacturer_sku(sku)
+    Product.where(manufacturer_sku: "#{attrs[:manufacturer_sku]}-#{attrs[:manufacturer_color]}")
+           .order(id: :desc)
+           .first
   end
 
   def update_sku_legacy_references(sku, existing_sku)
     @product = sku.product = existing_sku.product
     @language_product = sku.language_product = existing_sku.language_product
 
-    if sku.inv_track != 'P'
+    if sku.sized?
       @option = sku.option = existing_sku.option
       @element = sku.element = existing_sku.element
       @language_product_option = sku.language_product_option = existing_sku.language_product_option
@@ -60,11 +70,22 @@ class Sku::Exporter
     find_or_create_product_gender(sku)
   end
 
+  def create_option_legacy_records(sku, product)
+    @product = product
+    @language_product = product.language_product
+    create_option(sku)
+    create_element(sku)
+    create_language_product_option(sku)
+    create_category(sku)
+    create_language_category(sku)
+    find_or_create_product_gender(sku)
+  end
+
   def create_legacy_records(sku)
     create_product(sku)
     create_language_product(sku)
 
-    if sku.inv_track != 'P'
+    if sku.sized?
       create_option(sku)
       create_element(sku)
       create_language_product_option(sku)

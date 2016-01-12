@@ -31,6 +31,11 @@ feature 'SKU generation' do
     then_the_sku_should_not_be_updated
   end
 
+  scenario 'Adding SKU for new size of existing product' do
+    when_i_create_a_sku_for_a_new_size_of_product
+    then_the_sku_should_link_to_existing_legacy_product_and_create_new_size
+  end
+
   def when_i_generate_a_single_size_sku_with_a_barcode
     page.driver.post skus_path(single_size_sku_attrs)
   end
@@ -110,6 +115,18 @@ feature 'SKU generation' do
     expect(subject[:manufacturer_size]).to eq('biggish')
   end
 
+  def when_i_create_a_sku_for_a_new_size_of_product
+    existing_sku
+    page.driver.post skus_path(sku_for_new_size_attrs)
+  end
+
+  def then_the_sku_should_link_to_existing_legacy_product_and_create_new_size
+    expect(subject[:sku]).to_not eq(existing_sku.sku)
+    expect(subject[:sku]).to start_with(existing_sku.product_id.to_s)
+    expect(subject[:product_id]).to eq(existing_sku.product_id)
+    expect(subject[:option_id]).to_not eq(existing_sku.option_id)
+  end
+
   private
 
   def check_correct_skus(attrs)
@@ -146,6 +163,11 @@ feature 'SKU generation' do
   let(:single_size_sku_attrs) { base_sku_attrs.merge(barcode: '12223892123', inv_track: 'P') }
   let(:sku_with_barcode_attrs) { base_sku_attrs.merge(barcode: '121389123') }
   let(:sku_with_no_barcode_attrs) { base_sku_attrs.merge(sku: 'NEGATIVE-EXAMPLE') }
+  let(:sku_for_new_size_attrs) { base_sku_attrs.merge(season: existing_sku.season,
+                                                      manufacturer_sku: existing_sku.manufacturer_sku,
+                                                      manufacturer_color: existing_sku.manufacturer_color,
+                                                      barcode: '1213891231') }
+
   let(:sku) { Sku.find_by(sku: subject[:sku]) }
   let(:existing_sku) { create(:sku) }
   let(:existing_sku_without_barcode) { create(:sku_without_barcode) }

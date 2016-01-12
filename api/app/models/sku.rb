@@ -18,6 +18,10 @@ class Sku < ActiveRecord::Base
 
   validates_presence_of :manufacturer_sku
 
+  def sized?
+    inv_track != 'P'
+  end
+
   def as_json(options = {})
     super.tap do |sku|
       sku['created_at'] = sku['created_at'].to_s
