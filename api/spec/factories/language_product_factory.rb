@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :language_product do
-    name Faker::Name
-    teaser Faker::Name
-    pDesc Faker::Name
-    pCallEmailDisplay Faker::Name
+    name { Faker::Name.name }
+    teaser { Faker::Name.name }
+    pDesc { Faker::Name.name }
+    pCallEmailDisplay { Faker::Name.name }
   end
 end
