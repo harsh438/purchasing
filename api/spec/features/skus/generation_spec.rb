@@ -36,16 +36,13 @@ feature 'SKU generation' do
     then_the_sku_should_link_to_existing_legacy_product_and_create_new_size
   end
 
+  scenario 'Add SKU for existing product that does not already have language category' do
+    when_i_create_a_sku_for_a_an_existing_product_without_language_category
+    then_the_sku_created_should_have_a_language_category
+  end
+
   def when_i_generate_a_single_size_sku_with_a_barcode
     page.driver.post skus_path(single_size_sku_attrs)
-  end
-
-  def when_i_generate_skus_with_a_barcode
-    page.driver.post skus_path(sku_with_barcode_attrs)
-  end
-
-  def when_i_generate_skus_without_a_barcode
-   page.driver.post skus_path(sku_with_no_barcode_attrs)
   end
 
   def then_no_legacy_option_should_be_generated
@@ -62,6 +59,10 @@ feature 'SKU generation' do
     expect(sku.language_category).to be_a(LanguageCategory)
   end
 
+  def when_i_generate_skus_with_a_barcode
+    page.driver.post skus_path(sku_with_barcode_attrs)
+  end
+
   def then_both_skus_and_legacy_records_should_be_generated
     check_correct_skus(sku_with_barcode_attrs)
 
@@ -74,6 +75,10 @@ feature 'SKU generation' do
     expect(sku.element).to be_a(Element)
     expect(sku.option).to be_a(Option)
     expect(sku.language_category).to be_a(LanguageCategory)
+  end
+
+  def when_i_generate_skus_without_a_barcode
+   page.driver.post skus_path(sku_with_no_barcode_attrs)
   end
 
   def then_only_skus_should_be_generated
@@ -127,6 +132,14 @@ feature 'SKU generation' do
     expect(subject[:option_id]).to_not eq(existing_sku.option_id)
   end
 
+  def when_i_create_a_sku_for_a_an_existing_product_without_language_category
+    page.driver.post skus_path(new_sku_for_product_without_language)
+  end
+
+  def then_the_sku_created_should_have_a_language_category
+    expect(subject[:category_id]).to_not be_nil
+  end
+
   private
 
   def check_correct_skus(attrs)
@@ -167,8 +180,11 @@ feature 'SKU generation' do
                                                       manufacturer_sku: existing_sku.manufacturer_sku,
                                                       manufacturer_color: existing_sku.manufacturer_color,
                                                       barcode: '1213891231') }
+  let(:new_sku_for_product_without_language) { base_sku_attrs.merge(season: 'SS17',
+                                                                    barcode: existing_sku_without_category_id.barcodes.first.barcode) }
 
   let(:sku) { Sku.find_by(sku: subject[:sku]) }
   let(:existing_sku) { create(:sku) }
+  let(:existing_sku_without_category_id) { create(:sku, category_id: nil) }
   let(:existing_sku_without_barcode) { create(:sku_without_barcode) }
 end

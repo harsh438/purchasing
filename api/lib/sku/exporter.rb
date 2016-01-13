@@ -70,7 +70,8 @@ class Sku::Exporter
       @language_product_option = sku.language_product_option = existing_sku.language_product_option
     end
 
-    @language_category = sku.language_category = existing_sku.language_category
+    create_category(sku)
+    @language_category = sku.language_category = (existing_sku.language_category || create_language_category(sku))
     find_or_create_product_gender(sku)
   end
 
