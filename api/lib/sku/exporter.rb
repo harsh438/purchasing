@@ -59,7 +59,7 @@ class Sku::Exporter
   end
 
   def product_by_manufacturer_sku(sku)
-    Product.where(manufacturer_sku: "#{attrs[:manufacturer_sku]}-#{attrs[:manufacturer_color]}")
+    Product.where(manufacturer_sku: attrs[:manufacturer_sku])
            .order(id: :desc)
            .first
   end
@@ -193,7 +193,7 @@ class Sku::Exporter
   end
 
   def product_attrs
-    { manufacturer_sku: "#{attrs[:manufacturer_sku]}-#{attrs[:manufacturer_color]}",
+    { manufacturer_sku: attrs[:manufacturer_sku],
       color: attrs[:color],
       price: attrs[:price],
       cost: attrs[:cost_price],
@@ -206,7 +206,7 @@ class Sku::Exporter
 
   def option_attrs
     { product_id: product.id,
-      name: "#{attrs[:manufacturer_sku]}-#{attrs[:manufacturer_color]}-#{attrs[:manufacturer_size]}"[0..39],
+      name: "#{attrs[:manufacturer_sku]}-#{attrs[:manufacturer_size]}"[0..39],
       size: attrs[:manufacturer_size],
       barcode: attrs[:barcode] }
   end
