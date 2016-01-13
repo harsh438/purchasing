@@ -40,19 +40,13 @@ class Order::Exporter
   end
 
   def attempt_barcode(order_line_item)
-    barcode = Option.find_by(id: order_line_item.option_id).try(:barcode)
-    return barcode if barcode.present?
-
-    barcode = order_line_item.product.barcode
-    return barcode if barcode.present?
-
     sku = Sku.find_by(sku: order_line_item.internal_sku)
     return sku.try(:barcodes).try(:first).try(:barcode)
   end
 
   def po_line_item_core_attrs(order_line_item)
     { status: 2,
-      supplier_list_price: order_line_item.product.cost,
+      supplier_list_price: order_line_item.cost,
       cost: order_line_item.discounted_cost,
       quantity: order_line_item.quantity,
       season: order_line_item.season || '',
@@ -76,8 +70,8 @@ class Order::Exporter
   end
 
   def po_line_item_product_attrs(order_line_item)
-    { product_rrp: order_line_item.product.price,
-      product_sku: order_line_item.product.manufacturer_sku,
+    { product_rrp: order_line_item.sku.price,
+      product_sku: order_line_item.sku.manufacturer_sku,
       product_name: order_line_item.product_name }
   end
 
