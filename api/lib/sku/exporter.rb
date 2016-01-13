@@ -1,7 +1,11 @@
 class Sku::Exporter
-  attr_reader :attrs, :product, :language_product,
-              :option, :element, :language_product_option,
-              :category, :product_gender, :language_category
+  attr_reader :attrs,
+              :product,
+              :language_product,
+              :option,
+              :element,
+              :language_product_option,
+              :product_gender
 
   def export(sku)
     return if sku.barcodes.empty?
@@ -70,8 +74,6 @@ class Sku::Exporter
       @language_product_option = sku.language_product_option = existing_sku.language_product_option
     end
 
-    create_category(sku)
-    create_language_category(sku)
     find_or_create_product_gender(sku)
   end
 
@@ -81,8 +83,6 @@ class Sku::Exporter
     create_option(sku)
     create_element(sku)
     create_language_product_option(sku)
-    create_category(sku)
-    create_language_category(sku)
     find_or_create_product_gender(sku)
   end
 
@@ -96,8 +96,7 @@ class Sku::Exporter
       create_language_product_option(sku)
     end
 
-    create_category(sku)
-    create_language_category(sku)
+    associate_category_to_product(sku)
     find_or_create_product_gender(sku)
   end
 
@@ -137,14 +136,6 @@ class Sku::Exporter
     @language_product_option ||= LanguageProductOption.create!(product_option_attrs)
   end
 
-  def create_category(sku)
-    @category ||= Category.find_or_create_by!(id: attrs[:category_id])
-  end
-
-  def create_language_category(sku)
-    @language_category ||= find_or_create_language_category
-  end
-
   def find_or_create_product_gender(sku)
     @product_gender ||= ProductGender.find_or_create_by!(product_gender_attrs)
   end
@@ -157,6 +148,15 @@ class Sku::Exporter
     end
   end
 
+  def sku_attrs
+    attrs.except(:lead_gender, :barcode)
+      .merge!(sku: internal_sku,
+              product_id: product.id,
+              language_product_id: language_product.id,
+              gender: product_gender.gender)
+      .merge!(sku_option_attrs)
+  end
+
   def sku_option_attrs
     return {} unless option.present?
     { language_product_option_id: language_product_option.id,
@@ -164,24 +164,10 @@ class Sku::Exporter
       option_id: option.id }
   end
 
-  def sku_attrs
-    attrs.except(:lead_gender, :barcode)
-      .merge!(sku: internal_sku,
-              product_id: product.id,
-              language_product_id: language_product.id,
-              category_id: language_category.id,
-              gender: product_gender.gender)
-      .merge!(sku_option_attrs)
-  end
-
-  def find_or_create_language_category
-    category.language_category ||= LanguageCategory.create!(language_category_attrs)
-
-    unless product.categories.include? category
-      product.categories << category
+  def associate_category_to_product(sku)
+    unless product.categories.include?(sku.language_category.category)
+      product.categories << sku.language_category.category
     end
-
-    category.language_category
   end
 
   def product_gender_attrs
@@ -195,12 +181,6 @@ class Sku::Exporter
       product_id: product.id,
       option_id: option.id,
       element_id: element.id }
-  end
-
-  def language_category_attrs
-    { language_id: 1,
-      name: attrs[:category_name] || 'Bad Category',
-      category_id: category.id }
   end
 
   def language_product_attrs

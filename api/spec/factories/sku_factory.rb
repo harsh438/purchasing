@@ -11,6 +11,8 @@ FactoryGirl.define do
     manufacturer_color :reddish
     manufacturer_size :biggish
 
+    category_id { create(:language_category, category_id: create(:category).id).id }
+
     color :red
     size :big
 
@@ -25,7 +27,6 @@ FactoryGirl.define do
       option_id { create(:option).id }
       language_product_id { create(:language_product, product_id: product_id).id }
       language_product_option_id { create(:language_product_option, product_id: product_id, option_id: option_id).id }
-      category_id { create(:language_category, category_id: create(:category).id).id }
       element_id { LanguageProductOption.find(language_product_option_id).elementID }
 
       after(:build) do |sku|

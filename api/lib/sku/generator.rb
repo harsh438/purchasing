@@ -29,7 +29,8 @@ class Sku::Generator
 
   def generate_new_sku
     sku = Sku.create!(attrs.except(:lead_gender, :barcode)
-                           .merge(gender: attrs[:lead_gender].try(:to_sym) || ''))
+                           .merge(gender: attrs[:lead_gender].try(:to_sym) || '')
+                           .merge(category_id: find_or_create_language_category.id))
     create_barcode_for(sku)
     Sku::Exporter.new.export(sku)
     sku
@@ -38,5 +39,11 @@ class Sku::Generator
   def create_barcode_for(sku)
     return unless attrs[:barcode].present?
     Barcode.create(sku: sku, barcode: attrs[:barcode])
+  end
+
+  def find_or_create_language_category
+    LanguageCategory.find_by!(language_id: 1,
+                              name: attrs[:category_name],
+                              category_id: attrs[:category_id])
   end
 end

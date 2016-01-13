@@ -91,7 +91,6 @@ feature 'SKU generation' do
     expect(sku.language_product_option).to be(nil)
     expect(sku.element).to be(nil)
     expect(sku.option).to be(nil)
-    expect(sku.language_category).to be(nil)
   end
 
   def when_i_try_to_generate_a_sku_with_an_existing_barcode_and_season
@@ -146,6 +145,7 @@ feature 'SKU generation' do
   let(:existing_sku) { create(:sku) }
   let(:existing_sku_without_barcode) { create(:sku_without_barcode) }
   let(:existing_sku_without_category_id) { create(:sku, category_id: nil) }
+  let(:language_category) { create(:language_category) }
 
   let(:base_sku_attrs) do
     { manufacturer_sku: 'DA-ADFADET-WHT',
@@ -159,8 +159,8 @@ feature 'SKU generation' do
       lead_gender: 'M',
       product_name: 'Clarks Originals Boots - Clarks Originals BabyWarm - Pale Blue',
       vendor_id: 919,
-      category_id: 12,
-      category_name: 'Whatever',
+      category_id: language_category.category.id,
+      category_name: language_category.name,
       inv_track: 'O' }
   end
 

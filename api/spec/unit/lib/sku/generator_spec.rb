@@ -1,6 +1,8 @@
 describe Sku::Generator do
   before { create(:sku) }
 
+  let(:lang_category) { create(:language_category) }
+
   let(:new_sku_attrs) { { manufacturer_sku: 'SV507-A59',
                           product_name: 'The big name',
                           lead_gender: 'M',
@@ -16,7 +18,9 @@ describe Sku::Generator do
                           cost_price: 10.00,
                           list_price: 15.00,
                           price: 5.00,
-                          barcode: '5052094029950' } }
+                          barcode: '5052094029950',
+                          category_id: lang_category.category.id,
+                          category_name: lang_category.name } }
 
   context 'find a sku based on a previously existing sku' do
     it 'should retrieve the exitsing sku' do
