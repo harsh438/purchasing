@@ -36,6 +36,11 @@ feature 'SKU generation' do
     then_the_sku_should_link_to_existing_legacy_product_and_create_new_size
   end
 
+  scenario 'Add SKU for existing product that does not already have language category' do
+    when_i_create_a_sku_for_a_an_existing_product_without_language_category
+    then_the_sku_created_should_have_a_language_category
+  end
+
   def when_i_generate_a_single_size_sku_with_a_barcode
     page.driver.post skus_path(single_size_sku_attrs)
   end
@@ -127,20 +132,20 @@ feature 'SKU generation' do
     expect(subject[:option_id]).to_not eq(existing_sku.option_id)
   end
 
+  def when_i_create_a_sku_for_a_an_existing_product_without_language_category
+    page.driver.post skus_path(new_sku_for_product_without_language)
+  end
+
+  def then_the_sku_created_should_have_a_language_category
+    expect(subject[:category_id]).to_not be_nil
+  end
+
   private
 
-  def check_correct_skus(attrs)
-    attrs.except(:cost_price,
-                 :price,
-                 :lead_gender,
-                 :category_id,
-                 :category_name,
-                 :barcode).each do |key, a|
-      expect(subject[key]).to eq(a)
-    end
-
-    expect(sku.gender).to eq(base_sku_attrs[:lead_gender])
-  end
+  let(:sku) { Sku.find_by(sku: subject[:sku]) }
+  let(:existing_sku) { create(:sku) }
+  let(:existing_sku_without_barcode) { create(:sku_without_barcode) }
+  let(:existing_sku_without_category_id) { create(:sku, category_id: nil) }
 
   let(:base_sku_attrs) do
     { manufacturer_sku: 'DA-ADFADET-WHT',
@@ -178,7 +183,21 @@ feature 'SKU generation' do
                                                       manufacturer_color: existing_sku.manufacturer_color,
                                                       barcode: '1213891231') }
 
-  let(:sku) { Sku.find_by(sku: subject[:sku]) }
-  let(:existing_sku) { create(:sku) }
-  let(:existing_sku_without_barcode) { create(:sku_without_barcode) }
+  let(:new_sku_for_product_without_language) do
+    base_sku_attrs.merge(season: 'SS17',
+                         barcode: existing_sku_without_category_id.barcodes.first.barcode)
+  end
+
+  def check_correct_skus(attrs)
+    attrs.except(:cost_price,
+                 :price,
+                 :lead_gender,
+                 :category_id,
+                 :category_name,
+                 :barcode).each do |key, a|
+      expect(subject[key]).to eq(a)
+    end
+
+    expect(sku.gender).to eq(base_sku_attrs[:lead_gender])
+  end
 end
