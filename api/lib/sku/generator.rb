@@ -28,9 +28,23 @@ class Sku::Generator
   end
 
   def generate_new_sku
-    sku = Sku.create!(attrs.except(:lead_gender, :barcode)
-                           .merge(gender: attrs[:lead_gender].try(:to_sym) || '')
-                           .merge(category_id: find_or_create_language_category.id))
+    sku = Sku.create!(sku: attrs[:internal_sku],
+                      manufacturer_sku: attrs[:manufacturer_sku],
+                      manufacturer_color: attrs[:manufacturer_color],
+                      manufacturer_size: attrs[:manufacturer_size],
+                      vendor_id: attrs[:vendor_id],
+                      product_name: attrs[:product_name],
+                      season: attrs[:season],
+                      color: attrs[:color],
+                      size: attrs[:size],
+                      color_family: attrs[:color_family],
+                      size_scale: attrs[:size_scale],
+                      cost_price: attrs[:cost_price],
+                      list_price: attrs[:list_price],
+                      price: attrs[:price],
+                      inv_track: attrs[:inv_track],
+                      gender: attrs[:lead_gender].try(:to_sym) || '',
+                      category_id: find_or_create_language_category.id)
     create_barcode_for(sku)
     Sku::Exporter.new.export(sku)
     sku

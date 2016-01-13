@@ -84,7 +84,7 @@ feature 'SKU generation' do
   def then_only_skus_should_be_generated
     check_correct_skus(sku_with_no_barcode_attrs)
 
-    expect(subject[:sku]).to eq(sku_with_no_barcode_attrs[:sku])
+    expect(subject[:sku]).to eq(sku_with_no_barcode_attrs[:internal_sku])
 
     expect(sku.product).to be(nil)
     expect(sku.language_product).to be(nil)
@@ -176,7 +176,7 @@ feature 'SKU generation' do
 
   let(:sku_with_barcode_attrs) { base_sku_attrs.merge(barcode: '121389123') }
 
-  let(:sku_with_no_barcode_attrs) { base_sku_attrs.merge(sku: 'NEGATIVE-EXAMPLE') }
+  let(:sku_with_no_barcode_attrs) { base_sku_attrs.merge(internal_sku: 'NEGATIVE-EXAMPLE') }
 
   let(:sku_for_new_size_attrs) { base_sku_attrs.merge(season: existing_sku.season,
                                                       manufacturer_sku: existing_sku.manufacturer_sku,
@@ -189,15 +189,15 @@ feature 'SKU generation' do
   end
 
   def check_correct_skus(attrs)
-    attrs.except(:cost_price,
-                 :price,
-                 :lead_gender,
-                 :category_id,
-                 :category_name,
-                 :barcode).each do |key, a|
-      expect(subject[key]).to eq(a)
-    end
-
-    expect(sku.gender).to eq(base_sku_attrs[:lead_gender])
+    expect(subject[:manufacturer_sku]).to eq(attrs[:manufacturer_sku])
+    expect(subject[:manufacturer_color]).to eq(attrs[:manufacturer_color])
+    expect(subject[:manufacturer_size]).to eq(attrs[:manufacturer_size])
+    expect(subject[:vendor_id]).to eq(attrs[:vendor_id])
+    expect(subject[:product_name]).to eq(attrs[:product_name])
+    expect(subject[:season]).to eq(attrs[:season])
+    expect(subject[:color]).to eq(attrs[:color])
+    expect(subject[:inv_track]).to eq(attrs[:inv_track])
+    expect(subject[:category_id]).to eq(attrs[:category_id])
+    expect(subject[:gender]).to eq(base_sku_attrs[:lead_gender])
   end
 end
