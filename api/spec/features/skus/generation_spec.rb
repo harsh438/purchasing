@@ -142,18 +142,10 @@ feature 'SKU generation' do
 
   private
 
-  def check_correct_skus(attrs)
-    attrs.except(:cost_price,
-                 :price,
-                 :lead_gender,
-                 :category_id,
-                 :category_name,
-                 :barcode).each do |key, a|
-      expect(subject[key]).to eq(a)
-    end
-
-    expect(sku.gender).to eq(base_sku_attrs[:lead_gender])
-  end
+  let(:sku) { Sku.find_by(sku: subject[:sku]) }
+  let(:existing_sku) { create(:sku) }
+  let(:existing_sku_without_category_id) { create(:sku, category_id: nil) }
+  let(:existing_sku_without_barcode) { create(:sku_without_barcode) }
 
   let(:base_sku_attrs) { { manufacturer_sku: 'DA-ADFADET-WHT',
                            manufacturer_color: 'Pale Blue',
@@ -180,11 +172,21 @@ feature 'SKU generation' do
                                                       manufacturer_sku: existing_sku.manufacturer_sku,
                                                       manufacturer_color: existing_sku.manufacturer_color,
                                                       barcode: '1213891231') }
-  let(:new_sku_for_product_without_language) { base_sku_attrs.merge(season: 'SS17',
-                                                                    barcode: existing_sku_without_category_id.barcodes.first.barcode) }
+  let(:new_sku_for_product_without_language) do
+    base_sku_attrs.merge(season: 'SS17',
+                         barcode: existing_sku_without_category_id.barcodes.first.barcode)
+  end
 
-  let(:sku) { Sku.find_by(sku: subject[:sku]) }
-  let(:existing_sku) { create(:sku) }
-  let(:existing_sku_without_category_id) { create(:sku, category_id: nil) }
-  let(:existing_sku_without_barcode) { create(:sku_without_barcode) }
+  def check_correct_skus(attrs)
+    attrs.except(:cost_price,
+                 :price,
+                 :lead_gender,
+                 :category_id,
+                 :category_name,
+                 :barcode).each do |key, a|
+      expect(subject[key]).to eq(a)
+    end
+
+    expect(sku.gender).to eq(base_sku_attrs[:lead_gender])
+  end
 end
