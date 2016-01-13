@@ -223,10 +223,6 @@ class Sku::Exporter
       inv_track: attrs[:inv_track] }
   end
 
-  def category_attrs
-    { parent_id: 0 }
-  end
-
   def option_attrs
     { product_id: product.id,
       name: "#{attrs[:manufacturer_sku]}-#{attrs[:manufacturer_color]}-#{attrs[:manufacturer_size]}"[0..39],
