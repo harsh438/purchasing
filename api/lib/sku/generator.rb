@@ -24,7 +24,7 @@ class Sku::Generator
   end
 
   def find_sku_by_reference_and_season
-    Sku.find_by(attrs.slice(:sku, :season))
+    Sku.find_by(sku: attrs[:internal_sku], season: attrs[:season])
   end
 
   def generate_new_sku
