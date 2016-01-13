@@ -29,7 +29,7 @@ class SkusController < ApplicationController
 
   def sku_create_attrs
     params.permit(:sku, :product_id, :language_product_id,
-                  :element_id, :option_id, :category_id,
+                  :element_id, :option_id, :category_id, :internal_sku,
                   :manufacturer_sku, :lead_gender, :vendor_id,
                   :product_name, :manufacturer_color, :manufacturer_size,
                   :season, :color, :size, :color_family, :size_scale,
