@@ -20,8 +20,10 @@ describe Sku::Generator do
 
   context 'find a sku based on a previously existing sku' do
     it 'should retrieve the exitsing sku' do
-      sku = subject.generate({ manufacturer_sku: 'MANU-FACTURER-SKU-11',
-                                manufacturer_size: :biggish })
+      sku = subject.generate({ manufacturer_sku: 'mansku-dooby-doo',
+                               barcode: Barcode.first.barcode,
+                               season: :AW15 })
+
       expect(sku.sku.present?).to eq(true)
       expect(sku.size.present?).to eq(true)
       expect(sku.color.present?).to eq(true)
