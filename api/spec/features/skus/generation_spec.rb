@@ -142,30 +142,37 @@ feature 'SKU generation' do
     expect(sku.gender).to eq(base_sku_attrs[:lead_gender])
   end
 
-  let(:base_sku_attrs) { { manufacturer_sku: 'DA-ADFADET-WHT',
-                           manufacturer_color: 'Pale Blue',
-                           manufacturer_size: '12',
-                           season: 'ss15',
-                           color: 'Blue',
-                           size: '06-9 mths',
-                           cost_price: 12.06,
-                           price: 18.00,
-                           lead_gender: 'M',
-                           product_name: 'Clarks Originals Boots - Clarks Originals BabyWarm - Pale Blue',
-                           vendor_id: 919,
-                           category_id: 12,
-                           category_name: 'Whatever',
-                           inv_track: 'O' } }
+  let(:base_sku_attrs) do
+    { manufacturer_sku: 'DA-ADFADET-WHT',
+      manufacturer_color: 'Pale Blue',
+      manufacturer_size: '12',
+      season: 'ss15',
+      color: 'Blue',
+      size: '06-9 mths',
+      cost_price: 12.06,
+      price: 18.00,
+      lead_gender: 'M',
+      product_name: 'Clarks Originals Boots - Clarks Originals BabyWarm - Pale Blue',
+      vendor_id: 919,
+      category_id: 12,
+      category_name: 'Whatever',
+      inv_track: 'O' }
+  end
 
   let(:existing_barcode_and_season_sku_attrs) { base_sku_attrs.merge(barcode: existing_sku.barcodes.first.barcode,
                                                                      season: existing_sku.season) }
-  let(:existing_season_sku_attrs) {
+
+  let(:existing_season_sku_attrs) do
     base_sku_attrs.merge(season: existing_sku_without_barcode.season,
-                         internal_sku: existing_sku_without_barcode.sku) }
+                         internal_sku: existing_sku_without_barcode.sku)
+  end
 
   let(:single_size_sku_attrs) { base_sku_attrs.merge(barcode: '12223892123', inv_track: 'P') }
+
   let(:sku_with_barcode_attrs) { base_sku_attrs.merge(barcode: '121389123') }
+
   let(:sku_with_no_barcode_attrs) { base_sku_attrs.merge(sku: 'NEGATIVE-EXAMPLE') }
+
   let(:sku_for_new_size_attrs) { base_sku_attrs.merge(season: existing_sku.season,
                                                       manufacturer_sku: existing_sku.manufacturer_sku,
                                                       manufacturer_color: existing_sku.manufacturer_color,
