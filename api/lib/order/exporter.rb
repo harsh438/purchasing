@@ -79,8 +79,8 @@ class Order::Exporter
     language_product_option = language_option(order_line_item.product_id,
                                               order_line_item.option_id)
 
-    { product_size: language_product_option.try(:name),
-      manufacturer_size: language_product_option.try(:option).try(:size) }
+    { product_size: order_line_item.sku.size,
+      manufacturer_size: order_line_item.sku.manufacturer_size }
   end
 
   def assign_po_to_orders(purchase_order, orders)
