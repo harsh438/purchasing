@@ -170,6 +170,10 @@ class PurchaseOrderLineItem < ActiveRecord::Base
     cost
   end
 
+  def product_sized?
+    product_size.present?
+  end
+
   def supplier_style_code
     product_sku.split('-').first
   end

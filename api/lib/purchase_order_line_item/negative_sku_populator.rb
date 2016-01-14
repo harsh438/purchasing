@@ -8,6 +8,7 @@ class PurchaseOrderLineItem::NegativeSkuPopulator
           found = false
         end
 
+        sku.update!(sku_update_attrs(po_line_item))
         po_line_item.update!(sku: sku)
 
         record_result(po_line_item, sku, found)
@@ -25,6 +26,20 @@ class PurchaseOrderLineItem::NegativeSkuPopulator
     { sku: po_line_item.product_id,
       manufacturer_sku: po_line_item.product_sku,
       season: po_line_item.season }
+  end
+
+  def sku_update_attrs(po_line_item)
+    { product_name: po_line_item.product_name,
+      manufacturer_size: po_line_item.manufacturer_size,
+      vendor_id: po_line_item.vendor_id,
+      manufacturer_color: po_line_item.supplier_color_code,
+      size: po_line_item.product_size,
+      cost_price: po_line_item.supplier_list_price,
+      list_price: po_line_item.supplier_list_price,
+      price: po_line_item.sell_price,
+      category_id: po_line_item.category_id,
+      gender: po_line_item.gender,
+      inv_track: po_line_item.product_sized? ? 'O' : 'P' }
   end
 
   def record_result(po_line_item, sku, found)
