@@ -11,6 +11,7 @@ class PurchaseOrder::CsvExporter
 
   def columns
     %w(barcode
+       surfdome_sku
        item_code
        brand_color_code
        brand_product_name

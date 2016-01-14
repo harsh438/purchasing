@@ -280,6 +280,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   def internal_sku
     sku.try(:sku)
   end
+  alias_method :surfdome_sku, :internal_sku
 
   def as_json(options = {})
     options[:unit] ||= '£'
@@ -328,6 +329,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
 
   def product_json(options)
     { internal_sku: internal_sku,
+      surfdome_sku: surfdome_sku,
       product_cost: number_to_currency(product_cost, options),
       product_size: product_size,
       product_rrp: number_to_currency(product_rrp, options),
