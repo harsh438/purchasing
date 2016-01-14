@@ -94,7 +94,7 @@ class OrdersEdit extends React.Component {
                 <thead>
                   <tr>
                     <th>PO #</th>
-                    <th>Vendor</th>
+                    <th>Brand</th>
                     <th className="text-right">Summary</th>
                     <th className="text-right">SKU Export</th>
                   </tr>
