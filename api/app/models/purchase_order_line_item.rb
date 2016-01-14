@@ -120,6 +120,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
                  product_name: :orderTool_productName,
                  product_sku: :orderTool_SKU,
                  product_size: :orderTool_SDsize,
+                 product_color: :orderTool_SDcolor,
                  barcode: :orderTool_barcode,
                  sell_price: :orderTool_sellPrice,
                  manufacturer_size: :orderTool_brandSize,

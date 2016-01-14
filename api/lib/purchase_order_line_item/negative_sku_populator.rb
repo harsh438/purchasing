@@ -33,6 +33,7 @@ class PurchaseOrderLineItem::NegativeSkuPopulator
       manufacturer_size: po_line_item.manufacturer_size,
       vendor_id: po_line_item.vendor_id,
       manufacturer_color: po_line_item.supplier_color_code,
+      color: po_line_item.product_color,
       size: po_line_item.product_size,
       list_price: po_line_item.supplier_list_price,
       cost_price: po_line_item.cost,
