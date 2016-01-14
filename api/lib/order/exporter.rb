@@ -51,6 +51,7 @@ class Order::Exporter
       quantity: order_line_item.quantity,
       season: order_line_item.season || '',
       gender: order_line_item.gender || '',
+      sku: order_line_item.sku,
       barcode: attempt_barcode(order_line_item) }
   end
 
