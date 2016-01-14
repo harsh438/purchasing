@@ -1,5 +1,5 @@
-import { values } from 'lodash';
-import { camelizeKeys } from '../utilities/inspection';
+import { map, values } from 'lodash';
+import { camelizeKeys, snakeizeKeys } from '../utilities/inspection';
 
 function handleImportBarcodeResults(dispatch, statefulResultsDispatch) {
   return results => {
@@ -19,7 +19,7 @@ export function importBarcodes(barcodes, statefulResultsDispatch) {
     fetch(`/api/barcodes/import.json`, { credentials: 'same-origin',
                                          method: 'post',
                                          headers: { 'Content-Type': 'application/json' },
-                                         body: JSON.stringify({ barcodes }) })
+                                         body: JSON.stringify({ barcodes: map(barcodes, snakeizeKeys) }) })
       .then(response => response.json())
       .then(handleImportBarcodeResults(dispatch, statefulResultsDispatch));
   };

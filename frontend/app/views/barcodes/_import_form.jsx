@@ -18,8 +18,9 @@ export default class ImportForm extends React.Component {
 
         <div className="col-md-4">
           <Spreadsheet ref="spreadsheet"
-                       columnHeaders={['Internal SKU', 'Barcode']}
+                       columnHeaders={['Internal SKU', 'Brand Size', 'Barcode']}
                        columns={[{ data: 'sku' },
+                                 { data: 'brandSize' },
                                  { data: 'barcode' }]} />
         </div>
 
@@ -43,8 +44,8 @@ export default class ImportForm extends React.Component {
   }
 
   barcodes() {
-    return map(this.refs.spreadsheet.data(), function ([sku, barcode]) {
-      return { sku, barcode };
+    return map(this.refs.spreadsheet.data(), function ([sku, brandSize, barcode]) {
+      return { sku, brandSize, barcode };
     });
   }
 

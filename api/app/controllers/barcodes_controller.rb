@@ -18,7 +18,7 @@ class BarcodesController < ApplicationController
   def imported_barcodes
     ActiveRecord::Base.transaction do
       barcodes.map do |barcode|
-        sku = Sku.find_by!(sku: barcode[:sku])
+        sku = Sku.find_by!(sku: barcode[:sku], manufacturer_size: barcode[:brand_size])
         barcode = sku.barcodes.find_or_create_by!(barcode: barcode[:barcode])
         Sku::Exporter.new.export(sku)
         barcode
