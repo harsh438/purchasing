@@ -19,8 +19,10 @@ class OrdersController < ApplicationController
     order.update!(order_line_item_attrs)
     render json: order.as_json_with_line_items_and_purchase_orders
   rescue OrderLineItem::SkuNotFound => e
-    render json: { errors: ['Internal SKU was not recognised'] }
+    Rails.logger.debug("Internal SKU was not recognised: #{e.sku}")
+    render json: { errors: ["Internal SKU was not recognised: #{e.sku}"] }
   rescue ActiveRecord::RecordInvalid => e
+    Rails.logger.debug("ActiveRecord::RecordInvalid in OrdersController: #{e.record}")
     render json: { errors: e.record.errors.full_messages }
   end
 

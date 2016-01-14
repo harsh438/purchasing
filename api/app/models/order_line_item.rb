@@ -1,6 +1,13 @@
 class OrderLineItem < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
-  class SkuNotFound < RuntimeError; end
+
+  class SkuNotFound < RuntimeError
+    attr_reader :sku
+
+    def initialize(sku)
+      @sku = sku
+    end
+  end
 
   belongs_to :order
   belongs_to :sku
@@ -47,7 +54,9 @@ class OrderLineItem < ActiveRecord::Base
   end
 
   def cache_from_sku
-    raise SkuNotFound unless sku.present?
+    unless sku.present?
+      raise SkuNotFound.new(sku.sku)
+    end
 
     self.product_id = sku.product_id
     self.vendor_id = sku.vendor_id
