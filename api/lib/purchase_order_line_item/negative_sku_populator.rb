@@ -19,7 +19,7 @@ class PurchaseOrderLineItem::NegativeSkuPopulator
   private
 
   def po_line_items
-    PurchaseOrderLineItem.where('pID < 0').where(sku_id: nil)
+    PurchaseOrderLineItem.where('pID < 0')
   end
 
   def sku_attrs(po_line_item)
