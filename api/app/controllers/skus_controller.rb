@@ -21,6 +21,12 @@ class SkusController < ApplicationController
     render json: sku.as_json_with_vendor_category_and_barcodes
   end
 
+  def supplier_summary
+    respond_to do |format|
+      format.csv { render_supplier_summary_csv }
+    end
+  end
+
   private
 
   def sku
@@ -53,5 +59,9 @@ class SkusController < ApplicationController
 
   def render_index_csv
     render csv: Sku::CsvExporter.new.export(params)
+  end
+
+  def render_supplier_summary_csv
+    render csv: Sku::SupplierSummaryCsvExporter.new.export(params)
   end
 end

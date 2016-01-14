@@ -9,6 +9,11 @@ feature 'Sku CSV Export' do
     then_i_should_receive_all_skus_in_that_purchase_order
   end
 
+  scenario 'Exporting supplier CSV for specific filter terms' do
+    when_exporting_skus_for_filter_terms
+    then_i_should_receive_all_skus_that_match_the_filter_terms
+  end
+
   def when_exporting_skus_for_an_order
     create_order
     visit skus_path(format: :csv, order_id: order.id)
@@ -30,6 +35,15 @@ feature 'Sku CSV Export' do
 
   def then_i_should_receive_all_skus_in_that_purchase_order
     expect(csv_result_rows.count).to eq(skus.count)
+  end
+
+  def when_exporting_skus_for_filter_terms
+    visit supplier_summary_skus_path(format: :csv, filters: { vendor_id: skus.first.vendor_id })
+  end
+
+  def then_i_should_receive_all_skus_that_match_the_filter_terms
+    expect(csv_result_rows.length).to be(1)
+    expect(csv_result_rows.first).to include(skus.first.sku)
   end
 
   let(:order) { create(:order) }

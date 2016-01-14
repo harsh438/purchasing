@@ -2,8 +2,12 @@ Rails.application.routes.draw do
   root to: 'frontend#index'
 
   scope :api, format: true, defaults: { format: :json } do
-    resources :skus, only: [:index, :create, :show, :update]
-    
+    resources :skus, only: [:index, :create, :show, :update] do
+      collection do
+        get :supplier_summary
+      end
+    end
+
     resources :barcodes do
       collection do
         post :import
