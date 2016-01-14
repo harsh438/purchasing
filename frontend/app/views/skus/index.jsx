@@ -7,6 +7,8 @@ import { loadSeasons, loadVendors } from '../../actions/filters';
 import NumberedPagination from '../pagination/_numbered';
 import SkusTable from './_table';
 import SkusFilters from './_filters';
+import { renderCsvExportLink } from '../../utilities/dom';
+import Qs from 'qs';
 
 class SkusIndex extends React.Component {
   componentWillMount() {
@@ -45,6 +47,12 @@ class SkusIndex extends React.Component {
               </div>
             </div>
 
+            <div className="text-right">
+              {renderCsvExportLink(this.supplierSkuSummaryExportUrl())}
+            </div>
+
+            <hr />
+
             <SkusTable skus={this.props.skus}/>
 
             <NumberedPagination activePage={this.props.activePage || 1}
@@ -54,6 +62,12 @@ class SkusIndex extends React.Component {
         </div>
       </div>
     );
+  }
+
+  supplierSkuSummaryExportUrl() {
+    const queryString = Qs.stringify({ filters: this.props.location.query.filters },
+                                     { arrayFormat: 'brackets' });
+    return `/api/skus/supplier_summary.csv?${queryString}`;
   }
 
   loadPage(page = this.props.location.query.page, filters = this.props.location.query.filters) {
