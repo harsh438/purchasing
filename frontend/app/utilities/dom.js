@@ -53,3 +53,14 @@ export function renderErrors(errors) {
 export function renderSuccesses(messages) {
   return renderFlashes('success', messages);
 }
+
+export function renderCsvExportLink(url, text = 'Export as CSV') {
+  return (
+    <a href={url}
+       className="btn btn-default"
+       target="_blank">
+      <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+      &nbsp;{text}
+    </a>
+  );
+}

@@ -10,6 +10,7 @@ import NumberedPagination from '../pagination/_numbered';
 import SuppliersTable from './_table';
 import SupplierTermsFilters from './_filters';
 import Qs from 'qs';
+import { renderCsvExportLink } from '../../utilities/dom';
 
 class SuppliersTermsIndex extends React.Component {
   componentWillMount() {
@@ -51,10 +52,7 @@ class SuppliersTermsIndex extends React.Component {
             </div>
 
             <div className="text-right">
-              <a href={this.exportUrl()} className="btn btn-default">
-                <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
-                &nbsp;Export as CSV
-              </a>
+              {renderCsvExportLink(this.exportUrl())}
             </div>
 
             <hr />

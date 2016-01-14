@@ -10,6 +10,7 @@ import { loadOrder,
          exportOrder } from '../../actions/orders';
 import OrderLineItemsTable from '../order_line_items/_table';
 import OrderLineItemsForm from '../order_line_items/_form';
+import { renderCsvExportLink } from '../../utilities/dom';
 
 class OrdersEdit extends React.Component {
   componentWillMount() {
@@ -86,7 +87,7 @@ class OrdersEdit extends React.Component {
 
             <div className="panel-body">
               <div className="text-right">
-                {this.renderCsvExportLink(this.orderSkuExportUrl(this.props.order), 'Export all SKUs as CSV')}
+                {renderCsvExportLink(this.orderSkuExportUrl(this.props.order), 'Export all SKUs as CSV')}
               </div>
 
               <hr />
@@ -125,25 +126,14 @@ class OrdersEdit extends React.Component {
           </td>
           <td>{po.vendorName}</td>
           <td className="text-right">
-            {this.renderCsvExportLink(this.purchaseOrderSummaryExportUrl(po))}
+            {renderCsvExportLink(this.purchaseOrderSummaryExportUrl(po))}
           </td>
           <td className="text-right">
-            {this.renderCsvExportLink(this.purchaseOrderSkuExportUrl(po))}
+            {renderCsvExportLink(this.purchaseOrderSkuExportUrl(po))}
           </td>
         </tr>
       );
     });
-  }
-
-  renderCsvExportLink(url, text = 'Export as CSV') {
-    return (
-      <a href={url}
-         className="btn btn-default btn-sm"
-         target="_blank">
-        <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
-        &nbsp;{text}
-      </a>
-    );
   }
 
   orderSkuExportUrl(order) {
