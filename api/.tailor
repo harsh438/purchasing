@@ -10,7 +10,7 @@ Tailor.config do |config|
     style.allow_unnecessary_double_quotes false, level: :warn
     style.allow_invalid_ruby false, level: :warn
     style.indentation_spaces 2, level: :off
-    style.max_code_lines_in_class 300, level: :error
+    style.max_code_lines_in_class 350, level: :error
     style.max_code_lines_in_method 32, level: :error
     style.max_line_length 130, level: :error
     style.spaces_after_comma 1, level: :error
