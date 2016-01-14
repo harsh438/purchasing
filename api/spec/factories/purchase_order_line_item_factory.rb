@@ -10,6 +10,7 @@ FactoryGirl.define do
     invoice_payable_date 3.days.ago
     product_sku { Faker::Lorem.characters(32) }
     status 4
+    sku
 
     # These should be blank.
 

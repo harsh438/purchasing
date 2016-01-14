@@ -129,7 +129,8 @@ class PurchaseOrderLineItem < ActiveRecord::Base
                  original_pid: :original_pID,
                  original_option_id: :original_oID,
                  single_line_id: :orderTool_SingleLineID,
-                 item_id: :orderToolItemID
+                 item_id: :orderToolItemID,
+                 sku_id: :sku_id
 
   filters :vendor_id,
           :gender,
@@ -273,9 +274,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   end
 
   def internal_sku
-    return if option_id == 0
-
-    "#{pID}-#{Element.id_from_option(pID, option_id)}"
+    sku.try(:sku)
   end
 
   def as_json(options = {})
@@ -287,7 +286,8 @@ class PurchaseOrderLineItem < ActiveRecord::Base
                 order_type: order_type,
                 order_first_received: order_first_received,
                 weeks_on_sale: weeks_on_sale,
-                closing_date: closing_date)
+                closing_date: closing_date,
+                sku_id: sku.try(:id))
   end
 
   def cancel

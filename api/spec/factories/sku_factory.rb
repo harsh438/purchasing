@@ -42,7 +42,8 @@ FactoryGirl.define do
         after(:build) do |sku, evaluator|
           create(:purchase_order_line_item, product_id: sku.product_id,
                                             option_id: sku.option_id,
-                                            purchase_order: evaluator.purchase_order)
+                                            purchase_order: evaluator.purchase_order,
+                                            sku: sku)
         end
       end
     end

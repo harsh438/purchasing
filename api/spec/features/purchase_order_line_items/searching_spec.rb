@@ -74,6 +74,7 @@ feature 'Listing purchase orders' do
 
   def then_i_should_see_the_first_page_of_purchase_orders
     expect(subject['results'].count).to eq(200)
+    expect(subject['results'].first['sku_id']).to_not be_nil
   end
 
   def when_i_filter_by_vendor
