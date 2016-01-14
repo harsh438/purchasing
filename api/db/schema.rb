@@ -640,6 +640,12 @@ ActiveRecord::Schema.define(version: 20160114115051) do
     t.string  "refusal_reason", limit: 500
   end
 
+  create_table "reporting_categories", primary_key: "pid", force: :cascade do |t|
+    t.integer "catid", limit: 4, default: 0, null: false
+  end
+
+  add_index "reporting_categories", ["catid"], name: "catid", using: :btree
+
   create_table "sd_product_details", primary_key: "pID", force: :cascade do |t|
     t.string  "colour",             limit: 20, null: false
     t.string  "subCategory",        limit: 64, null: false

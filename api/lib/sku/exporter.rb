@@ -168,6 +168,8 @@ class Sku::Exporter
     unless product.categories.include?(sku.language_category.category)
       product.categories << sku.language_category.category
     end
+
+    ReportingCategory.create!(pid: product.id, catid: sku.language_category.category.id)
   end
 
   def product_gender_attrs
