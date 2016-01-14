@@ -16,8 +16,11 @@ class SkusController < ApplicationController
   end
 
   def update
-    sku.update!(sku_update_attrs)
-    Sku::Exporter.new.export(sku)
+    ActiveRecord::Base.transaction do
+      sku.update!(sku_update_attrs)
+      Sku::Exporter.new.export(sku)
+    end
+    
     render json: sku.as_json_with_vendor_category_and_barcodes
   end
 
