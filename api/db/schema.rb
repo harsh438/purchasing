@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160111132311) do
+ActiveRecord::Schema.define(version: 20160114084044) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer "sku_id",  limit: 4
@@ -258,7 +258,7 @@ ActiveRecord::Schema.define(version: 20160111132311) do
   add_index "ds_products", ["giftCert"], name: "giftCert", using: :btree
   add_index "ds_products", ["invLevel"], name: "invLevel", using: :btree
   add_index "ds_products", ["invTrack", "invLevel"], name: "idx_invTrack_oInvLevel", using: :btree
-  add_index "ds_products", ["meta_keywords"], name: "metakeywords", using: :btree
+  add_index "ds_products", ["meta_keywords"], name: "metakeywords", length: {"meta_keywords"=>255}, using: :btree
   add_index "ds_products", ["pContainerType"], name: "pContainerType", using: :btree
   add_index "ds_products", ["pFirstClassMailType"], name: "bestseller", using: :btree
   add_index "ds_products", ["pFlag"], name: "pFlag", using: :btree
@@ -627,7 +627,6 @@ ActiveRecord::Schema.define(version: 20160111132311) do
   add_index "purchase_orders", ["po_number"], name: "ponumber", using: :btree
   add_index "purchase_orders", ["po_season"], name: "po_season", using: :btree
   add_index "purchase_orders", ["reporting_pID"], name: "reporting_pID", using: :btree
-  add_index "purchase_orders", ["sku_id"], name: "sku_id", using: :btree
   add_index "purchase_orders", ["status"], name: "status", using: :btree
 
   create_table "refused_deliveries_log", force: :cascade do |t|
