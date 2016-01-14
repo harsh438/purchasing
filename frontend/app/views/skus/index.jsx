@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { assign, isEqual } from 'lodash';
 import { loadSkus } from '../../actions/skus';
-import { loadVendors } from '../../actions/filters';
+import { loadSeasons, loadVendors } from '../../actions/filters';
 import NumberedPagination from '../pagination/_numbered';
 import SkusTable from './_table';
 import SkusFilters from './_filters';
@@ -12,6 +12,7 @@ class SkusIndex extends React.Component {
   componentWillMount() {
     this.loadPage();
     this.props.dispatch(loadVendors());
+    this.props.dispatch(loadSeasons());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -38,6 +39,7 @@ class SkusIndex extends React.Component {
               <div className="panel-body">
                 <SkusFilters filters={this.props.location.query.filters}
                              brands={this.props.brands}
+                             seasons={this.props.seasons}
                              onFilterSkus={this.handleFilterSkus.bind(this)} />
 
               </div>

@@ -41,6 +41,18 @@ export default class SkusFilters extends React.Component {
               {this.selectOptions(this.props.brands)}
             </select>
           </div>
+          
+          <div className="form-group col-md-2">
+            <label htmlFor="season">Season</label>
+
+            <select className="form-control"
+                    id="season"
+                    name="season"
+                    value={this.getFilter('season')}>
+              <option value=""> -- select season -- </option>
+              {renderSelectOptions(this.props.seasons)}
+            </select>
+          </div>
 
           <div className="form-group col-md-3"
                style={{ marginTop: '1.74em' }}>

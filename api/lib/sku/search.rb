@@ -17,6 +17,10 @@ class Sku::Search
       skus = skus.where(vendor_id: filters[:vendor_id])
     end
 
+    if filters[:season]
+      skus = skus.where(season: filters[:season])
+    end
+
     skus
   end
 end
