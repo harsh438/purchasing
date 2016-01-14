@@ -21,6 +21,10 @@ class Sku::Search
       skus = skus.where(season: filters[:season])
     end
 
+    if filters[:without_barcodes]
+      skus = skus.where(barcodes: { id: nil })
+    end
+
     skus
   end
 end

@@ -41,7 +41,7 @@ export default class SkusFilters extends React.Component {
               {this.selectOptions(this.props.brands)}
             </select>
           </div>
-          
+
           <div className="form-group col-md-2">
             <label htmlFor="season">Season</label>
 
@@ -54,10 +54,24 @@ export default class SkusFilters extends React.Component {
             </select>
           </div>
 
-          <div className="form-group col-md-3"
+          <div className="form-group col-md-5"
                style={{ marginTop: '1.74em' }}>
+
+            <div className="checkbox pull-left"
+                 style={{ width: '40%' }}>
+              <label>
+                <input className="checkbox"
+                       type="checkbox"
+                       name="withoutBarcodes"
+                       value="1"
+                       checked={this.getFilter('withoutBarcodes')}
+                       onChange={this.handleCheckboxChange.bind(this)} />
+                Without barcodes
+              </label>
+            </div>
+
             <div className="btn-group"
-                 style={{ width: '100%' }}>
+                 style={{ width: '60%' }}>
               <button className="btn btn-primary"
                       disabled={this.state.submitting}
                       style={{ width: '70%' }}>
