@@ -1,6 +1,12 @@
 import { map, values } from 'lodash';
 import { camelizeKeys, snakeizeKeys } from '../utilities/inspection';
 
+function throwErrors(response) {
+  if (response.status < 200 || response.status >= 300) {
+    throw "We are experiencing technical difficulties, Support have been notified.";
+  }
+}
+
 function handleImportBarcodeResults(dispatch, statefulResultsDispatch) {
   return results => {
     if (results.errors) {
@@ -14,13 +20,22 @@ function handleImportBarcodeResults(dispatch, statefulResultsDispatch) {
   };
 }
 
+function handleError(dispatch, statefulResultsDispatch) {
+  return error => {
+    statefulResultsDispatch({ success: false, errors: [error] });
+    dispatch({ barcodes: [], type: 'IMPORT_BARCODES' });
+  };
+}
+
 export function importBarcodes(barcodes, statefulResultsDispatch) {
   return dispatch => {
     fetch(`/api/barcodes/import.json`, { credentials: 'same-origin',
                                          method: 'post',
                                          headers: { 'Content-Type': 'application/json' },
                                          body: JSON.stringify({ barcodes: map(barcodes, snakeizeKeys) }) })
+      .then(throwErrors)
       .then(response => response.json())
-      .then(handleImportBarcodeResults(dispatch, statefulResultsDispatch));
+      .then(handleImportBarcodeResults(dispatch, statefulResultsDispatch))
+      .catch(handleError(dispatch, statefulResultsDispatch));
   };
 }
