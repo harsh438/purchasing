@@ -112,7 +112,7 @@ class Sku::Exporter
 
   def update_purchase_order_legacy_references(sku)
     PurchaseOrderLineItem.where(sku: sku).update_all(pID: sku.product_id,
-                                                     oID: sku.option_id,
+                                                     oID: sku.option_id || 0,
                                                      orderTool_Barcode: sku.barcodes.first.barcode)
   end
 
