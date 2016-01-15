@@ -19,8 +19,7 @@ class PurchaseOrderLineItem::NegativeSkuPopulator
   private
 
   def batched_po_line_items(&block)
-    # po_line_items.find_in_batches.each(&block)
-    yield po_line_items.order(id: :desc).limit(100)
+    po_line_items.find_in_batches.each(&block)
   end
 
   def po_line_items
