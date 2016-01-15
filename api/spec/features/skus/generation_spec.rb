@@ -31,9 +31,14 @@ feature 'SKU generation' do
     then_the_sku_should_not_be_updated
   end
 
-  scenario 'Adding SKU for new size of existing product' do
-    when_i_create_a_sku_for_a_new_size_of_product
+  scenario 'Adding SKU for new size of existing product with barcode' do
+    when_i_create_a_sku_for_a_new_size_of_product_with_barcode
     then_the_sku_should_link_to_existing_legacy_product_and_create_new_size
+  end
+
+  scenario 'Adding SKU for new size without barcode' do
+    when_i_create_a_sku_for_new_size_of_product_without_barcode
+    then_a_new_sku_should_be_created_for_the_size
   end
 
   scenario 'Add SKU for existing product that does not already have language category' do
@@ -110,18 +115,18 @@ feature 'SKU generation' do
   end
 
   def when_i_provide_new_attributes_for_a_sku
-    page.driver.post skus_path({ internal_sku: existing_sku_without_barcode.sku,
-                                 season: existing_sku_without_barcode.season,
-                                 manufacturer_size: 'XX-Large' })
+    page.driver.post skus_path(internal_sku: existing_sku_without_barcode.sku,
+                               season: existing_sku_without_barcode.season,
+                               manufacturer_size: existing_sku_without_barcode.manufacturer_size,
+                               manufacturer_color: 'Blue')
   end
 
   def then_the_sku_should_not_be_updated
     expect(subject[:manufacturer_size]).to eq('biggish')
   end
 
-  def when_i_create_a_sku_for_a_new_size_of_product
-    existing_sku
-    page.driver.post skus_path(sku_for_new_size_attrs)
+  def when_i_create_a_sku_for_a_new_size_of_product_with_barcode
+    page.driver.post skus_path(sku_for_new_size_attrs_with_barcode)
   end
 
   def then_the_sku_should_link_to_existing_legacy_product_and_create_new_size
@@ -129,6 +134,15 @@ feature 'SKU generation' do
     expect(subject[:sku]).to start_with(existing_sku.product_id.to_s)
     expect(subject[:product_id]).to eq(existing_sku.product_id)
     expect(subject[:option_id]).to_not eq(existing_sku.option_id)
+  end
+
+  def when_i_create_a_sku_for_new_size_of_product_without_barcode
+    page.driver.post skus_path(sku_for_new_size_attrs_without_barcode)
+  end
+
+  def then_a_new_sku_should_be_created_for_the_size
+    expect(subject[:id]).to_not eq(existing_sku.id)
+    expect(subject[:manufacturer_size]).to eq(sku_for_new_size_attrs_without_barcode[:manufacturer_size])
   end
 
   def when_i_create_a_sku_for_a_an_existing_product_without_language_category
@@ -169,6 +183,7 @@ feature 'SKU generation' do
 
   let(:existing_season_sku_attrs) do
     base_sku_attrs.merge(season: existing_sku_without_barcode.season,
+                         manufacturer_size: existing_sku_without_barcode.manufacturer_size,
                          internal_sku: existing_sku_without_barcode.sku)
   end
 
@@ -178,10 +193,20 @@ feature 'SKU generation' do
 
   let(:sku_with_no_barcode_attrs) { base_sku_attrs.merge(internal_sku: 'NEGATIVE-EXAMPLE') }
 
-  let(:sku_for_new_size_attrs) { base_sku_attrs.merge(season: existing_sku.season,
-                                                      manufacturer_sku: existing_sku.manufacturer_sku,
-                                                      manufacturer_color: existing_sku.manufacturer_color,
-                                                      barcode: '1213891231') }
+  let(:sku_for_new_size_attrs_with_barcode) do
+    base_sku_attrs.merge(season: existing_sku.season,
+                         manufacturer_sku: existing_sku.manufacturer_sku,
+                         manufacturer_color: existing_sku.manufacturer_color,
+                         barcode: '1213891231')
+  end
+
+  let(:sku_for_new_size_attrs_without_barcode) do
+    base_sku_attrs.merge(season: existing_sku_without_barcode.season,
+                         manufacturer_sku: existing_sku_without_barcode.manufacturer_sku,
+                         manufacturer_color: existing_sku_without_barcode.manufacturer_color,
+                         manufacturer_size: '16',
+                         internal_sku: existing_sku_without_barcode.sku)
+  end
 
   let(:new_sku_for_product_without_language) do
     base_sku_attrs.merge(season: 'SS17',
