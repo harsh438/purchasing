@@ -173,7 +173,7 @@ class Sku::Exporter
   end
 
   def product_attrs
-    { manufacturer_sku: attrs[:manufacturer_sku],
+    { manufacturer_sku: attrs[:manufacturer_sku].to_s[0..39],
       color: attrs[:color],
       price: attrs[:price],
       cost: attrs[:cost_price],
