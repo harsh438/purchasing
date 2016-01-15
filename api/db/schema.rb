@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160115101334) do
+ActiveRecord::Schema.define(version: 20160115102229) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer "sku_id",  limit: 4
@@ -740,6 +740,8 @@ ActiveRecord::Schema.define(version: 20160115101334) do
     t.integer  "supplier_id",                limit: 4
   end
 
+  add_index "skus", ["manufacturer_sku"], name: "index_skus_on_manufacturer_sku", using: :btree
+  add_index "skus", ["season"], name: "index_skus_on_season", using: :btree
   add_index "skus", ["sku"], name: "index_skus_on_sku", using: :btree
 
   create_table "supplier_buyers", force: :cascade do |t|
