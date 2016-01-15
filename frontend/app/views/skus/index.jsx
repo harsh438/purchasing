@@ -8,6 +8,7 @@ import NumberedPagination from '../pagination/_numbered';
 import SkusTable from './_table';
 import SkusFilters from './_filters';
 import { renderCsvExportLink } from '../../utilities/dom';
+import { snakeizeKeys } from '../../utilities/inspection';
 import Qs from 'qs';
 
 class SkusIndex extends React.Component {
@@ -65,7 +66,8 @@ class SkusIndex extends React.Component {
   }
 
   supplierSkuSummaryExportUrl() {
-    const queryString = Qs.stringify({ filters: this.props.location.query.filters },
+    const filters = snakeizeKeys(this.props.location.query.filters);
+    const queryString = Qs.stringify({ filters },
                                      { arrayFormat: 'brackets' });
     return `/api/skus/supplier_summary.csv?${queryString}`;
   }
