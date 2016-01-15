@@ -2,8 +2,10 @@ class Order::Exporter
   def export(orders, extra_params = {})
     extra_params = extra_params.with_indifferent_access
 
-    GroupedOrders.new(orders).flat_map do |vendor_id, drop_date, order_line_items, orders|
-      assign_po_to_orders(create_po(order_line_items, extra_params), orders)
+    ActiveRecord::Base.transaction do
+      GroupedOrders.new(orders).flat_map do |vendor_id, drop_date, order_line_items, orders|
+        assign_po_to_orders(create_po(order_line_items, extra_params), orders)
+      end
     end
   end
 
