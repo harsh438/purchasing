@@ -11,12 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160114115051) do
+ActiveRecord::Schema.define(version: 20160115095043) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer "sku_id",  limit: 4
     t.string  "barcode", limit: 255
   end
+
+  add_index "barcodes", ["sku_id"], name: "index_barcodes_on_sku_id", using: :btree
 
   create_table "bookingin_events", primary_key: "ID", force: :cascade do |t|
     t.integer  "grn",                 limit: 4
