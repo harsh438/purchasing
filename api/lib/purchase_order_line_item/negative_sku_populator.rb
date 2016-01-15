@@ -1,6 +1,6 @@
 class PurchaseOrderLineItem::NegativeSkuPopulator
   def populate
-    po_line_items.find_in_batches.each do |group|
+    batched_po_line_items do |group|
       group.each do |po_line_item|
         found = true
 
@@ -17,6 +17,11 @@ class PurchaseOrderLineItem::NegativeSkuPopulator
   end
 
   private
+
+  def batched_po_line_items(&block)
+    # po_line_items.find_in_batches.each(&block)
+    yield po_line_items.order(id: :desc).limit(100)
+  end
 
   def po_line_items
     PurchaseOrderLineItem.where('pID < 0')
