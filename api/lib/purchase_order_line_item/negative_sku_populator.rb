@@ -43,7 +43,7 @@ class PurchaseOrderLineItem::NegativeSkuPopulator
       list_price: po_line_item.supplier_list_price,
       cost_price: po_line_item.cost,
       price: po_line_item.sell_price,
-      category_id: languge_category(po_line_item),
+      category_id: language_category(po_line_item),
       gender: po_line_item.gender,
       inv_track: po_line_item.product_sized? ? 'O' : 'P' }
   end
