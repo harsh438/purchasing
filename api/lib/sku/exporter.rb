@@ -133,7 +133,7 @@ class Sku::Exporter
   end
 
   def create_language_product_option(sku)
-    @language_product_option ||= LanguageProductOption.create!(product_option_attrs)
+    @language_product_option ||= LanguageProductOption.create!(language_product_option_attrs)
   end
 
   def find_or_create_product_gender(sku)
@@ -172,28 +172,6 @@ class Sku::Exporter
     ReportingCategory.create!(pid: product.id, catid: sku.language_category.category.id)
   end
 
-  def product_gender_attrs
-    { product_id: product.id,
-      gender: attrs[:lead_gender].try(:to_sym) || '' }
-  end
-
-  def product_option_attrs
-    { language_id: 1,
-      name: attrs[:size],
-      product_id: product.id,
-      option_id: option.id,
-      element_id: element.id }
-  end
-
-  def language_product_attrs
-    { name: attrs[:product_name],
-      product_id: product.id,
-      language_id: 1,
-      teaser: '',
-      description: '',
-      email_display: '' }
-  end
-
   def product_attrs
     { manufacturer_sku: attrs[:manufacturer_sku],
       color: attrs[:color],
@@ -206,10 +184,32 @@ class Sku::Exporter
       inv_track: attrs[:inv_track] }
   end
 
+  def language_product_attrs
+    { name: attrs[:product_name],
+      product_id: product.id,
+      language_id: 1,
+      teaser: '',
+      description: '',
+      email_display: '' }
+  end
+
   def option_attrs
     { product_id: product.id,
       name: "#{attrs[:manufacturer_sku]}-#{attrs[:manufacturer_size]}"[0..39],
       size: attrs[:manufacturer_size],
       barcode: attrs[:barcode] }
+  end
+
+  def language_product_option_attrs
+    { language_id: 1,
+      name: attrs[:size],
+      product_id: product.id,
+      option_id: option.id,
+      element_id: element.id }
+  end
+
+  def product_gender_attrs
+    { product_id: product.id,
+      gender: attrs[:lead_gender].try(:to_sym) || '' }
   end
 end
