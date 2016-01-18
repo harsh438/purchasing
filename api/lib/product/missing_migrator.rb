@@ -1,13 +1,23 @@
 class Product::MissingMigrator
+  class NoProductOptions < RuntimeError; end
+
   def migrate_missing_barcodes
     skus_missing_barcodes.each do |sku|
-      create_barcode(sku)
+      begin
+        create_barcode(sku)
+      rescue NoProductOptions => e
+        puts e
+      end
     end
   end
 
   def migrate_missing_skus_data
     skus_missing_data.each do |sku|
-      create_missing_sku_data(sku)
+      begin
+        create_missing_sku_data(sku)
+      rescue NoProductOptions => e
+        puts e
+      end
     end
   end
 
@@ -23,12 +33,15 @@ class Product::MissingMigrator
   end
 
   def options_for_sku(sku)
-    puts "Retrieving options for SKU: #{sku.product_id} / #{sku.size}"
+    options = Option.joins('INNER JOIN ds_language_product_options ON ds_language_product_options.oID = ds_options.oID')
+                    .where('ds_language_product_options.pID = ?', sku.product_id)
+                    .where('ds_language_product_options.pOption = ?', sku.size)
 
-    Option.joins('INNER JOIN ds_language_product_options ON ds_language_product_options.oID = ds_options.oID')
-          .where('ds_language_product_options.pID = ?', sku.product_id)
-          .where('ds_language_product_options.pOption = ?', sku.size)
-          .first
+    if options.length < 1
+      raise NoProductOptions, "No options found for product_id `#{sku.product_id}` and size `#{sku.size}`"
+    end
+
+    options.first
   end
 
   def skus_missing_data
