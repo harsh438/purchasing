@@ -46,12 +46,6 @@ class PurchaseOrderLineItem::MissingSkuPopulator
       manufacturer_color: po_line_item.supplier_color_code }
   end
 
-  def sku_manufacturer_attrs(po_line_item)
-    { manufacturer_sku: po_line_item.product_sku,
-      manufacturer_size: po_line_item.manufacturer_size,
-      manufacturer_color: po_line_item.supplier_color_code }
-  end
-
   def language_category(po_line_item)
     LanguageCategory.english.find_by(category_id: po_line_item.category_id).try(:id)
   end
