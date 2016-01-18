@@ -14,7 +14,7 @@ class Sku::Generator
     if attrs[:barcode].present?
       find_sku_by_barcode_and_season
     else
-      find_sku_by_reference_and_season
+      find_sku_by_reference_size_and_season
     end
   end
 
@@ -23,7 +23,7 @@ class Sku::Generator
                                  season: attrs[:season])
   end
 
-  def find_sku_by_reference_and_season
+  def find_sku_by_reference_size_and_season
     Sku.find_by(sku: attrs[:internal_sku],
                 manufacturer_size: attrs[:manufacturer_size],
                 season: attrs[:season])
