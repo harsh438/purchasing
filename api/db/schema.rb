@@ -632,6 +632,7 @@ ActiveRecord::Schema.define(version: 20160115102229) do
   add_index "purchase_orders", ["po_season"], name: "po_season", using: :btree
   add_index "purchase_orders", ["reporting_pID"], name: "reporting_pID", using: :btree
   add_index "purchase_orders", ["status"], name: "status", using: :btree
+  add_index "purchase_orders", ["sku_id"], name: "index_purchase_orders_on_sku_id", using: :btree
 
   create_table "refused_deliveries_log", force: :cascade do |t|
     t.date    "delivery_date",                              null: false
