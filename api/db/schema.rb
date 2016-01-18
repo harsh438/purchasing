@@ -631,6 +631,7 @@ ActiveRecord::Schema.define(version: 20160115102229) do
   add_index "purchase_orders", ["po_number"], name: "ponumber", using: :btree
   add_index "purchase_orders", ["po_season"], name: "po_season", using: :btree
   add_index "purchase_orders", ["reporting_pID"], name: "reporting_pID", using: :btree
+  add_index "purchase_orders", ["sku_id"], name: "index_purchase_orders_on_sku_id", using: :btree
   add_index "purchase_orders", ["status"], name: "status", using: :btree
 
   create_table "refused_deliveries_log", force: :cascade do |t|
@@ -642,12 +643,6 @@ ActiveRecord::Schema.define(version: 20160115102229) do
     t.string  "info",           limit: 1000
     t.string  "refusal_reason", limit: 500
   end
-
-  create_table "reporting_categories", primary_key: "pid", force: :cascade do |t|
-    t.integer "catid", limit: 4, default: 0, null: false
-  end
-
-  add_index "reporting_categories", ["catid"], name: "catid", using: :btree
 
   create_table "sd_product_details", primary_key: "pID", force: :cascade do |t|
     t.string  "colour",             limit: 20, null: false
