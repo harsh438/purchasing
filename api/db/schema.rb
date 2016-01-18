@@ -397,6 +397,75 @@ ActiveRecord::Schema.define(version: 20160115102229) do
     t.string "DebitNoteNumber", limit: 100
   end
 
+  create_table "order_data_details_temp", force: :cascade do |t|
+    t.integer "OrderID",                limit: 4,                                         null: false
+    t.string  "Sku",                    limit: 100,                                       null: false
+    t.string  "ProductName",            limit: 200
+    t.decimal "TradeCostPrice",                      precision: 11, scale: 2,             null: false
+    t.decimal "RRP",                                 precision: 11, scale: 2
+    t.decimal "SellingPrice",                        precision: 11, scale: 2
+    t.string  "BrandColourCode",        limit: 100,                                       null: false
+    t.string  "SubCategory1",           limit: 200
+    t.integer "ReportingCategory",      limit: 4
+    t.string  "BrandProductColour",     limit: 200
+    t.integer "BuyingOffice",           limit: 4
+    t.integer "BuyingGroup",            limit: 4
+    t.integer "BuyingDepartment",       limit: 4
+    t.string  "LeadGender",             limit: 200
+    t.string  "Tax",                    limit: 200
+    t.string  "ReportingColour",        limit: 200
+    t.string  "SurfdomeSize",           limit: 200
+    t.decimal "CostPriceAfterDiscount",              precision: 11, scale: 2
+    t.decimal "SurfdomePrice",                       precision: 11, scale: 2
+    t.decimal "MarkupPreDiscount",                   precision: 11, scale: 2
+    t.decimal "Discount",                            precision: 11, scale: 2
+    t.decimal "MarkupAfterDiscount",                 precision: 11, scale: 2
+    t.string  "BuyerComments",          limit: 500
+    t.string  "Teaser",                 limit: 500
+    t.string  "Keywords",               limit: 1000
+    t.string  "VolumeLine",             limit: 200
+    t.string  "PressDayProducts",       limit: 100
+    t.integer "Qty",                    limit: 4,                             default: 0, null: false
+    t.string  "AllGenders",             limit: 100
+    t.string  "SelectedProductName",    limit: 200
+    t.string  "Theme",                  limit: 500
+    t.string  "MaterialType1",          limit: 200
+    t.string  "MaterialType2",          limit: 200
+    t.string  "MaterialType3",          limit: 200
+    t.string  "MaterialType4",          limit: 200
+    t.string  "MaterialType5",          limit: 200
+    t.string  "MaterialProcentage1",    limit: 20
+    t.string  "MaterialProcentage2",    limit: 20
+    t.string  "MaterialProcentage3",    limit: 20
+    t.string  "MaterialProcentage4",    limit: 20
+    t.string  "MaterialProcentage5",    limit: 20
+    t.string  "Width",                  limit: 10
+    t.string  "Depth",                  limit: 10
+    t.string  "Height",                 limit: 10
+    t.string  "Volume",                 limit: 10
+    t.string  "FitsLaptopSize",         limit: 10
+    t.string  "UploadName",             limit: 500
+    t.string  "ROS",                    limit: 10
+    t.string  "PWOS",                   limit: 10
+    t.float   "PlannedSellThrough",     limit: 24
+    t.float   "PlannedPreOrderProc",    limit: 24
+    t.integer "SQPO",                   limit: 4
+    t.integer "QPO",                    limit: 4
+    t.integer "QTB",                    limit: 4
+    t.integer "FQTB",                   limit: 4
+    t.float   "FullCostValue",          limit: 24
+    t.float   "DiscountedCostValue",    limit: 24
+    t.float   "SellingValue",           limit: 24
+    t.float   "FinalMarkup",            limit: 24
+    t.integer "GroupForce",             limit: 4
+  end
+
+  add_index "order_data_details_temp", ["BrandColourCode"], name: "BrandColourCode", using: :btree
+  add_index "order_data_details_temp", ["LeadGender"], name: "Leadgenderx", using: :btree
+  add_index "order_data_details_temp", ["OrderID"], name: "orderidx", using: :btree
+  add_index "order_data_details_temp", ["ReportingCategory"], name: "ReportingCategoryx", using: :btree
+  add_index "order_data_details_temp", ["ReportingColour"], name: "ReportingColourX", using: :btree
+
   create_table "order_exports", force: :cascade do |t|
     t.integer  "order_id",          limit: 4
     t.integer  "purchase_order_id", limit: 4
@@ -710,6 +779,23 @@ ActiveRecord::Schema.define(version: 20160115102229) do
   add_index "sd_product_details", ["startDate"], name: "startSellingDate", using: :btree
   add_index "sd_product_details", ["subCategory"], name: "subcategory", using: :btree
   add_index "sd_product_details", ["volumeLine"], name: "volumeline", using: :btree
+
+  create_table "sizemapper_to_orders", primary_key: "ID", force: :cascade do |t|
+    t.integer "OrderID",                   limit: 4,   null: false
+    t.string  "LeadGender",                limit: 10,  null: false
+    t.integer "ReportingCategory",         limit: 4,   null: false
+    t.string  "BrandEquivalentSizePrefix", limit: 100
+    t.string  "BrandEquivalentSize",       limit: 100, null: false
+    t.string  "SurfdomeSize",              limit: 100, null: false
+    t.string  "GroupID",                   limit: 10
+  end
+
+  add_index "sizemapper_to_orders", ["BrandEquivalentSize"], name: "BrandEquivalentSize", using: :btree
+  add_index "sizemapper_to_orders", ["BrandEquivalentSizePrefix"], name: "BrandEquivalentSizePrefix", using: :btree
+  add_index "sizemapper_to_orders", ["LeadGender"], name: "LeadGender", using: :btree
+  add_index "sizemapper_to_orders", ["OrderID"], name: "OrderID", using: :btree
+  add_index "sizemapper_to_orders", ["ReportingCategory"], name: "reportingCAtegory", using: :btree
+  add_index "sizemapper_to_orders", ["SurfdomeSize"], name: "SurfdomeSize", using: :btree
 
   create_table "skus", force: :cascade do |t|
     t.string   "sku",                        limit: 255
