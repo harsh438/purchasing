@@ -37,6 +37,7 @@ class Product::MissingMigrator
                     .where('ds_language_product_options.pID = ?', sku.product_id)
                     .where('ds_language_product_options.pOption = ?', sku.size)
                     .where('ds_options.oSizeB IS NOT NULL')
+                    .where('ds_options.oSizeB != \'\'')
 
     if options.length < 1
       raise NoProductOptions, "No options found for product_id `#{sku.product_id}` and size `#{sku.size}`"
