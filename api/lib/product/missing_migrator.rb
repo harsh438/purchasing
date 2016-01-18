@@ -30,7 +30,7 @@ class Product::MissingMigrator
   end
 
   def skus_missing_data
-    Sku.where('option_id IS NULL and manufacturer_size IS NULL')
+    Sku.where('option_id IS NULL AND manufacturer_size IS NULL')
   end
 
   def create_missing_sku_data(sku)
