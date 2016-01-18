@@ -12,4 +12,8 @@ namespace :legacy do
     Product::MissingMigrator.new.migrate_missing_barcodes
     Product::MissingMigrator.new.migrate_missing_skus_data
   end
+
+  task po_line_item_missing_sku_populate: :environment do
+    PurchaseOrderLineItem::MissingSkuPopulator.new.populate
+  end
 end
