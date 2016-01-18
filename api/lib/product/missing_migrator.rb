@@ -5,6 +5,12 @@ class Product::MissingMigrator
     end
   end
 
+  def migrate_missing_skus_data
+    skus_missing_data.each do |sku|
+      create_missing_sku_data(sku)
+    end
+  end
+
   private
 
   def skus_missing_barcodes
@@ -13,15 +19,24 @@ class Product::MissingMigrator
 
   def create_barcode(sku)
     Barcode.create!(sku: sku,
-                    barcode: barcode_for_sku(sku))
+                    barcode: options_for_sku(sku).oSizeB)
   end
 
-  def barcode_for_sku(sku)
-    option = Option.joins('INNER JOIN ds_language_product_options ON ds_language_product_options.oID = ds_options.oID')
-                   .where('ds_language_product_options.pID = ?', sku.product_id)
-                   .where('ds_language_product_options.pOption = ?', sku.size)
-                   .first
+  def options_for_sku(sku)
+    Option.joins('INNER JOIN ds_language_product_options ON ds_language_product_options.oID = ds_options.oID')
+          .where('ds_language_product_options.pID = ?', sku.product_id)
+          .where('ds_language_product_options.pOption = ?', sku.size)
+          .first
+  end
 
-    option.oSizeB
+  def skus_missing_data
+    Sku.where('option_id IS NULL and manufacturer_size IS NULL')
+  end
+
+  def create_missing_sku_data(sku)
+    options = options_for_sku(sku)
+
+    sku.update!(option_id: options.oID,
+                manufacturer_size: options.oSizeL)
   end
 end
