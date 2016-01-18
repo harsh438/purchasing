@@ -4,9 +4,6 @@ class BarcodesController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     render json: { errors: { skus: ['Some SKUs were not recognised so we did not import any barcodes'] },
                    nonexistant_skus: nonexistant_skus }
-  rescue ActiveRecord::RecordNotUnique
-    render json: { errors: { barcodes: ['Some barcodes are already associated with SKUs so we did not import any barcodes'] },
-                   duplicate_barcodes: duplicate_barcodes }
   end
 
   private
