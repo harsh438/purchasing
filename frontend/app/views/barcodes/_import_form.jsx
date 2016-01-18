@@ -54,7 +54,7 @@ export default class ImportForm extends React.Component {
   successfulBarcodesAdded() {
     return flatten(map(this.props.barcodes, function(barcode) {
       return (
-        <Link to="/skus/${barcode.skuId}/edit">{barcode.barcode}</Link>
+        Added barcode <Link to="/skus/${barcode.skuId}/edit">{barcode.barcode}</Link>.
       );
     }));
   }
