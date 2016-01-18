@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router';
 import Spreadsheet from '../application/_spreadsheet';
-import { map, values } from 'lodash';
+import { map, values, flatten } from 'lodash';
 import { renderSuccesses, renderErrors } from '../../utilities/dom';
 
 export default class ImportForm extends React.Component {
@@ -34,8 +35,9 @@ export default class ImportForm extends React.Component {
   }
 
   renderFlashes() {
-    if (this.state.success) {
-      return renderSuccesses([`${this.props.barcodes.length} barcodes added successfully!`]);
+    if (this.state.success && this.props.barcodes.length > 0) {
+      return renderSuccesses([`${this.props.barcodes.length} barcodes added successfully!`,
+                              ...this.successfulBarcodesAdded()]);
     } else if (this.state.errors.length > 0) {
       return renderErrors([...this.state.errors,
                            ...this.state.nonexistantSkus,
@@ -47,6 +49,14 @@ export default class ImportForm extends React.Component {
     return map(this.refs.spreadsheet.data(), function ([sku, brandSize, barcode]) {
       return { sku, brandSize, barcode };
     });
+  }
+
+  successfulBarcodesAdded() {
+    return flatten(map(this.props.barcodes, function(barcode) {
+      return (
+        <Link to="/skus/${barcode.skuId}/edit">{barcode.barcode}</Link>
+      );
+    }));
   }
 
   handleSubmit(e) {
