@@ -23,6 +23,8 @@ class Product::MissingMigrator
   end
 
   def options_for_sku(sku)
+    puts "Retrieving options for SKU: #{sku.product_id} / #{sku.size}"
+
     Option.joins('INNER JOIN ds_language_product_options ON ds_language_product_options.oID = ds_options.oID')
           .where('ds_language_product_options.pID = ?', sku.product_id)
           .where('ds_language_product_options.pOption = ?', sku.size)
