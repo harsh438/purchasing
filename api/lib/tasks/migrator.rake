@@ -7,4 +7,9 @@ namespace :legacy do
   task po_line_item_negative_sku_populate: :environment do
     PurchaseOrderLineItem::NegativeSkuPopulator.new.populate
   end
+
+  task product_migrate_missing: :environment do
+    Product::MissingMigrator.new.migrate_missing_barcodes
+    Product::MissingMigrator.new.migrate_missing_skus_data
+  end
 end
