@@ -23,18 +23,18 @@ class PurchaseOrderLineItem::NegativeSkuPopulator
   end
 
   def po_line_items
-    PurchaseOrderLineItem.where('pID < 0')
+    PurchaseOrderLineItem.where('pID < 0').where('orderToolLine > 0')
   end
 
   def sku_attrs(po_line_item)
     { sku: po_line_item.product_id,
       manufacturer_sku: po_line_item.product_sku,
+      manufacturer_size: po_line_item.manufacturer_size,
       season: po_line_item.season }
   end
 
   def sku_update_attrs(po_line_item)
     { product_name: po_line_item.product_name,
-      manufacturer_size: po_line_item.manufacturer_size,
       vendor_id: po_line_item.vendor_id,
       manufacturer_color: po_line_item.supplier_color_code,
       color: po_line_item.product_color,
