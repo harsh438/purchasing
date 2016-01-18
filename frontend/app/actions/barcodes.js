@@ -3,7 +3,9 @@ import { camelizeKeys, snakeizeKeys } from '../utilities/inspection';
 
 function throwErrors(response) {
   if (response.status < 200 || response.status >= 300) {
-    throw "We are experiencing technical difficulties, Support have been notified.";
+    throw "We are experiencing technical difficulties. Support has been notified.";
+  } else {
+    return response;
   }
 }
 
