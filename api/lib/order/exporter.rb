@@ -42,8 +42,7 @@ class Order::Exporter
   end
 
   def attempt_barcode(order_line_item)
-    sku = Sku.find_by(sku: order_line_item.internal_sku)
-    return sku.try(:barcodes).try(:first).try(:barcode)
+    order_line_item.sku.try(:barcodes).try(:first).try(:barcode)
   end
 
   def po_line_item_core_attrs(order_line_item)
