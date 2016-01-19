@@ -173,7 +173,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   end
 
   def product_sized?
-    product_size.present?
+    product_size.present? or option_id > 0
   end
 
   def supplier_style_code
