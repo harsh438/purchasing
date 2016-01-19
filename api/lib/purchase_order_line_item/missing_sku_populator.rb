@@ -2,8 +2,8 @@ class PurchaseOrderLineItem::MissingSkuPopulator
   def populate
     purchase_order_line_items.each do |po_line_item|
       sku_attrs = sku_attrs(po_line_item)
-      sku = Sku::Generator.new.generate(sku_attrs)
       p sku_attrs
+      sku = Sku::Generator.new.generate(sku_attrs)
       po_line_item.update!(sku: sku)
       p "po_line_item=#{po_line_item.id}  sku_id=#{sku.id}"
     end
