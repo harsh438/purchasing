@@ -1,12 +1,20 @@
 class Order::LineItemAdder
   def add(order, line_items_attrs)
-    line_items_attrs.each do |line_item_attrs|
+    standardize(line_items_attrs).each do |line_item_attrs|
       sku = find_sku(line_item_attrs)
       order.line_items.create!(line_item_and_sku_attrs(line_item_attrs, sku))
     end
   end
 
   private
+
+  def standardize(line_item_attrs)
+    if line_item_attrs.is_a?(Hash)
+      line_item_attrs.values
+    else
+      line_item_attrs
+    end
+  end
 
   def find_sku(line_item_attrs)
     Sku.find_by!(sku: line_item_attrs[:internal_sku],
