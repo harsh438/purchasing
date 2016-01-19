@@ -34,7 +34,7 @@ class PurchaseOrderLineItem::MissingSkuPopulator
       list_price: po_line_item.supplier_list_price,
       cost_price: po_line_item.cost,
       price: po_line_item.sell_price,
-      category_id: language_category(po_line_item),
+      category_id: po_line_item.category_id,
       lead_gender: po_line_item.gender,
       inv_track: inv_track(po_line_item),
       barcode: po_line_item.barcode }
@@ -44,10 +44,6 @@ class PurchaseOrderLineItem::MissingSkuPopulator
     { manufacturer_sku: po_line_item.product_sku,
       manufacturer_size: po_line_item.manufacturer_size,
       manufacturer_color: po_line_item.supplier_color_code }
-  end
-
-  def language_category(po_line_item)
-    LanguageCategory.english.find_by(category_id: po_line_item.category_id).try(:id)
   end
 
   def inv_track(po_line_item)
