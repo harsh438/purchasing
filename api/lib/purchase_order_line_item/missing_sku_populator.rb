@@ -29,7 +29,7 @@ class PurchaseOrderLineItem::MissingSkuPopulator
     { season: po_line_item.season,
       product_name: po_line_item.product_name,
       vendor_id: po_line_item.vendor_id,
-      color: po_line_item.product_color,
+      color: po_line_item.product_color || po_line_item.supplier_color_code,
       size: po_line_item.product_size,
       list_price: po_line_item.supplier_list_price,
       cost_price: po_line_item.cost,
