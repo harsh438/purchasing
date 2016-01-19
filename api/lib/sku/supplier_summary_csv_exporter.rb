@@ -18,7 +18,7 @@ class Sku::SupplierSummaryCsvExporter
   end
 
   def find_skus(params)
-    skus = Sku::Search.new.search(params)
+    skus = Sku::Search.new.search(params.merge(no_paging: true))
     values_from_skus(skus)
   end
 
