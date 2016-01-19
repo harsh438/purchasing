@@ -16,7 +16,7 @@ class OrdersController < ApplicationController
   end
 
   def update
-    order.update!(order_line_item_attrs)
+    Order::LineItemAdder.new.add(order, order_line_item_attrs[:line_items_attributes])
     render json: order.as_json_with_line_items_and_purchase_orders
   rescue OrderLineItem::SkuNotFound => e
     Rails.logger.debug("Internal SKU was not recognised: #{e.sku}")
@@ -57,6 +57,8 @@ class OrdersController < ApplicationController
 
   def order_line_item_attrs
     params.require(:order).permit(line_items_attributes: [:internal_sku,
+                                                          :manufacturer_size,
+                                                          :season,
                                                           :cost,
                                                           :quantity,
                                                           :discount,

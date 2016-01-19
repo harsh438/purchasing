@@ -12,6 +12,12 @@ feature 'Manage order details' do
     then_i_should_see_the_list_item_under_the_order
   end
 
+  scenario 'Adding line item of negative sku and different size to order' do
+    given_i_am_building_an_order
+    when_i_add_a_negative_list_item_of_a_different_size_to_the_order
+    then_i_should_see_the_negative_sku_in_the_order
+  end
+
   scenario 'Generating POs from order' do
     given_i_have_added_list_items_to_an_order
     when_i_want_to_generate_purchase_orders
@@ -31,6 +37,8 @@ feature 'Manage order details' do
 
   def when_i_add_a_new_list_item_to_the_order
     line_item_attrs = { internal_sku: sku.sku,
+                        manufacturer_size: sku.manufacturer_size,
+                        season: sku.season,
                         cost: '1',
                         quantity: '1',
                         drop_date: Time.now,
@@ -46,6 +54,30 @@ feature 'Manage order details' do
                                                                 quantity: 1,
                                                                 product_name: sku.product_name,
                                                                 discount: '0.0' }.stringify_keys))
+  end
+
+  def when_i_add_a_negative_list_item_of_a_different_size_to_the_order
+    line_item_attrs = [{ internal_sku: negative_sku.sku,
+                         manufacturer_size: negative_sku.manufacturer_size,
+                         season: negative_sku.season,
+                         cost: '1',
+                         quantity: '1',
+                         drop_date: Time.now,
+                         discount: '0.0' },
+                       { internal_sku: negative_sku_of_different_size.sku,
+                         season: negative_sku_of_different_size.season,
+                         manufacturer_size: negative_sku_of_different_size.manufacturer_size,
+                         cost: '1',
+                         quantity: '1',
+                         drop_date: Time.now,
+                         discount: '0.0' }]
+
+    page.driver.post(order_path(itemless_order), _method: 'patch',
+                                                 order: { line_items_attributes: line_item_attrs })
+  end
+
+  def then_i_should_see_the_negative_sku_in_the_order
+    expect(subject['line_items'].first['sku_id']).to_not eq(subject['line_items'].second['sku_id'])
   end
 
   def given_i_have_added_list_items_to_an_order
@@ -65,5 +97,9 @@ feature 'Manage order details' do
   let(:product) { create(:product) }
   let(:language_product_option) { create(:language_product_option, pID: product.id) }
   let(:sku) { create(:sku) }
+  let(:negative_sku) { create(:sku_without_barcode) }
+  let(:negative_sku_of_different_size) { create(:sku_without_barcode, sku: negative_sku.sku,
+                                                                      manufacturer_size: :smallish) }
+  let(:itemless_order) { create(:order) }
   let(:order) { create(:order, line_item_count: 2) }
 end

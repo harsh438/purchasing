@@ -24,12 +24,6 @@ class OrderLineItem < ActiveRecord::Base
 
   after_initialize :ensure_discount_is_at_least_zero
 
-  def internal_sku=(internal_sku)
-    super
-    find_and_assign_sku
-    cache_from_sku
-  end
-
   def as_json(options = {})
     super(options).tap do |line_item|
       line_item[:cost] = number_to_currency(cost, unit: '£')
@@ -47,26 +41,6 @@ class OrderLineItem < ActiveRecord::Base
   end
 
   private
-
-  def find_and_assign_sku
-    return if sku.present?
-    self.sku = Sku.find_by(sku: internal_sku)
-  end
-
-  def cache_from_sku
-    unless sku.present?
-      raise SkuNotFound.new(sku.sku)
-    end
-
-    self.product_id = sku.product_id
-    self.vendor_id = sku.vendor_id
-    self.option_id = sku.option_id || 0
-    self.cost = sku.cost_price
-    self.season = sku.season
-    self.product_name = sku.product_name
-    self.gender = sku.gender
-    self.reporting_pid = sku.product_id
-  end
 
   def ensure_discount_is_at_least_zero
     self.discount ||= 0
