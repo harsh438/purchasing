@@ -43,13 +43,10 @@ class Sku::Exporter
 
   def find_or_create_legacy_records(sku)
     if last_existing_sku_by_barcode(sku).present?
-      p 'Updating SKU legacy references'
       update_sku_legacy_references(sku, last_existing_sku_by_barcode(sku))
     elsif product_by_manufacturer_sku(sku).present? and sku.sized?
-      p 'Creating option legacy records'
       create_option_legacy_records(sku, product_by_manufacturer_sku(sku))
     else
-      p 'Creating legacy records'
       create_legacy_records(sku)
     end
   end
@@ -70,12 +67,8 @@ class Sku::Exporter
   def update_sku_legacy_references(sku, existing_sku)
     @product = sku.product = existing_sku.product
     @language_product = sku.language_product = existing_sku.language_product
-    p sku
-    p '-----------'
-    p existing_sku
 
     if sku.sized?
-      p 'Sized!'
       @option = sku.option = existing_sku.option
       @element = sku.element = existing_sku.element
       @language_product_option = sku.language_product_option = existing_sku.language_product_option
