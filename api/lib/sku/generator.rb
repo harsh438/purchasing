@@ -63,7 +63,10 @@ class Sku::Generator
   end
 
   def find_or_create_language_category
-    LanguageCategory.find_by!(language_id: 1,
-                              category_id: attrs[:category_id])
+    LanguageCategory.find_by!(language_id: 1, category_id: attrs[:category_id])
+  rescue ActiveRecord::RecordNotFound => e
+    puts "LanguageCategory not found!"
+    p attrs
+    raise e
   end
 end
