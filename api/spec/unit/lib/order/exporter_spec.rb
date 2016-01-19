@@ -31,10 +31,10 @@ describe Order::Exporter do
 
         let(:line_items) do
           [create(:order_line_item, drop_date: 1.week.from_now,
-                                    internal_sku: sku1.sku),
+                                    sku: sku1),
 
            create(:order_line_item, drop_date: 1.week.from_now,
-                                    internal_sku: sku2.sku)]
+                                    sku: sku2)]
         end
 
         context 'then the orders exports' do
@@ -109,11 +109,11 @@ describe Order::Exporter do
       let(:sku2) { create(:sku, vendor: vendor) }
 
       let(:first_line_item) do
-        create(:order_line_item, drop_date: 1.week.from_now, internal_sku: sku1.sku)
+        create(:order_line_item, drop_date: 1.week.from_now, sku: sku1)
       end
 
       let(:second_line_item) do
-        create(:order_line_item, drop_date: 1.week.from_now, internal_sku: sku2.sku)
+        create(:order_line_item, drop_date: 1.week.from_now, sku: sku2)
       end
 
       let(:orders) do
