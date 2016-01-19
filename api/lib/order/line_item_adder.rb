@@ -12,7 +12,7 @@ class Order::LineItemAdder
     if line_item_attrs.is_a?(Hash)
       line_item_attrs.values
     else
-      line_item_attrs
+      line_item_attrs || []
     end
   end
 
