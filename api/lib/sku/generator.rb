@@ -64,7 +64,6 @@ class Sku::Generator
 
   def find_or_create_language_category
     LanguageCategory.find_by!(language_id: 1,
-                              name: attrs[:category_name],
                               category_id: attrs[:category_id])
   end
 end
