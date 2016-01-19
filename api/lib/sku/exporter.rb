@@ -70,11 +70,15 @@ class Sku::Exporter
   def update_sku_legacy_references(sku, existing_sku)
     @product = sku.product = existing_sku.product
     @language_product = sku.language_product = existing_sku.language_product
+    p sku
 
     if sku.sized?
+      p 'Sized!'
       @option = sku.option = existing_sku.option
       @element = sku.element = existing_sku.element
       @language_product_option = sku.language_product_option = existing_sku.language_product_option
+    else
+      p 'Unsized!'
     end
 
     find_or_create_product_gender(sku)
