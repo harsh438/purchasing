@@ -1,14 +1,6 @@
 class OrderLineItem < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
 
-  class SkuNotFound < RuntimeError
-    attr_reader :sku
-
-    def initialize(sku)
-      @sku = sku
-    end
-  end
-
   belongs_to :order
   belongs_to :sku
   belongs_to :product
