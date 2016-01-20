@@ -17,9 +17,13 @@ class Order::LineItemAdder
   end
 
   def find_sku(line_item_attrs)
-    Sku.find_by!(sku: line_item_attrs[:internal_sku],
-                 season: line_item_attrs[:season],
-                 manufacturer_size: line_item_attrs[:manufacturer_size])
+    if line_item_attrs[:internal_sku].starts_with?('-')
+      Sku.find_by!(sku: line_item_attrs[:internal_sku],
+                   season: line_item_attrs[:season],
+                   manufacturer_size: line_item_attrs[:manufacturer_size])
+    else
+      Sku.order(created_at: :desc).find_by!(sku: line_item_attrs[:internal_sku])
+    end
   end
 
   def line_item_and_sku_attrs(line_item_attrs, sku)
