@@ -29,7 +29,7 @@ class Order::LineItemAdder
   def line_item_and_sku_attrs(line_item_attrs, sku)
     { sku: sku,
       internal_sku: sku.sku,
-      cost: line_item_attrs[:cost],
+      cost: line_item_attrs[:cost] || sku.cost_price,
       quantity: line_item_attrs[:quantity],
       discount: line_item_attrs[:discount],
       drop_date: line_item_attrs[:drop_date],
