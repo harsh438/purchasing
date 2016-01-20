@@ -49,7 +49,7 @@ class Sku::Generator
                       price: attrs[:price],
                       inv_track: attrs[:inv_track],
                       gender: attrs[:lead_gender].try(:to_sym) || '',
-                      category_id: find_or_create_language_category.id,
+                      category_id: find_or_create_language_category.try(:id),
                       on_sale: attrs[:on_sale],
                       category_name: attrs[:category_name])
     create_barcode_for(sku)
