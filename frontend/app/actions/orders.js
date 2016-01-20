@@ -16,7 +16,7 @@ export function loadOrders({ page, filters }) {
 export function createOrder(params = {}) {
   return dispatch => {
     fetch(`/api/orders.json`, { credentials: 'same-origin',
-                                method: 'post',
+                                method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ order: params }) })
       .then(response => response.json())
