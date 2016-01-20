@@ -104,9 +104,12 @@ class Sku::Exporter
     return unless sku.sku.present?
     return unless sku_attrs[:sku].present?
 
-    line_items = OrderLineItem.where(internal_sku: sku.sku)
+    line_items = OrderLineItem.where(sku: sku)
+
     line_items.each do |line|
-      line.update_attributes!(internal_sku: sku_attrs[:sku])
+      line.update_attributes!(internal_sku: sku_attrs[:sku],
+                              product_id: sku_attrs[:product_id],
+                              option_id: sku_attrs[:option_id])
     end
   end
 
