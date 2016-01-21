@@ -17,7 +17,7 @@ export default class ImportForm extends React.Component {
       <form className="form" onSubmit={this.handleSubmit.bind(this)}>
         {this.renderFlashes()}
 
-        <div className="col-md-4">
+        <div className="col-md-5">
           <Spreadsheet ref="spreadsheet"
                        columnHeaders={['Internal SKU', 'Brand Size', 'Barcode']}
                        columns={[{ data: 'sku' },
