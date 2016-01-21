@@ -18,6 +18,11 @@ feature 'Manage order details' do
     then_i_should_see_the_negative_sku_in_the_order
   end
 
+  scenario 'Adding nonexistant sku to order' do
+    when_i_add_a_nonexistant_sku_to_an_order
+    then_i_should_receive_error_with_all_missing_skus
+  end
+
   scenario 'Generating POs from order' do
     given_i_have_added_list_items_to_an_order
     when_i_want_to_generate_purchase_orders
@@ -78,6 +83,32 @@ feature 'Manage order details' do
 
   def then_i_should_see_the_negative_sku_in_the_order
     expect(subject['line_items'].first['sku_id']).to_not eq(subject['line_items'].second['sku_id'])
+  end
+
+  def when_i_add_a_nonexistant_sku_to_an_order
+    line_item_attrs = [{ internal_sku: 'bleh-1',
+                         manufacturer_size: '10',
+                         season: 'SS16',
+                         cost: '1',
+                         quantity: '1',
+                         drop_date: Time.now,
+                         discount: '0.0' },
+                       { internal_sku: 'bleh-2',
+                         manufacturer_size: '12',
+                         season: 'SS16',
+                         cost: '1',
+                         quantity: '1',
+                         drop_date: Time.now,
+                         discount: '0.0' }]
+
+    page.driver.post(order_path(itemless_order), _method: 'patch',
+                                                 order: { line_items_attributes: line_item_attrs })
+
+  end
+
+  def then_i_should_receive_error_with_all_missing_skus
+    expect(subject['errors'].first).to include('bleh-1')
+    expect(subject['errors'].first).to include('bleh-2')
   end
 
   def given_i_have_added_list_items_to_an_order

@@ -16,11 +16,11 @@ class OrdersController < ApplicationController
   end
 
   def update
-    Order::LineItemAdder.new.add(order, order_line_item_attrs[:line_items_attributes])
+    Order::LineItemAdder.new.add(order, order_line_item_attrs)
     render json: order.as_json_with_line_items_and_purchase_orders
   rescue Order::SkuNotFound => e
-    Rails.logger.debug("Internal SKU was not recognised: #{e.sku}")
-    render json: { errors: ["Internal SKU was not recognised: #{e.sku}"] }
+    Rails.logger.debug("Internal SKU was not recognised: #{nonexistant_skus}")
+    render json: { errors: ["Internal SKU was not recognised: #{nonexistant_skus}"] }
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.debug("ActiveRecord::RecordInvalid in OrdersController: #{e.record}")
     render json: { errors: e.record.errors.full_messages }
@@ -56,12 +56,22 @@ class OrdersController < ApplicationController
   end
 
   def order_line_item_attrs
-    params.require(:order).permit(line_items_attributes: [:internal_sku,
-                                                          :manufacturer_size,
-                                                          :season,
-                                                          :cost,
-                                                          :quantity,
-                                                          :discount,
-                                                          :drop_date])
+    lines = params.require(:order).permit(line_items_attributes: [:internal_sku,
+                                                                  :manufacturer_size,
+                                                                  :season,
+                                                                  :cost,
+                                                                  :quantity,
+                                                                  :discount,
+                                                                  :drop_date])
+    if lines[:line_items_attributes].is_a?(Hash)
+      lines[:line_items_attributes].values
+    else
+      lines[:line_items_attributes] || []
+    end
+  end
+
+  def nonexistant_skus
+    skus = order_line_item_attrs.map { |line_item| line_item[:internal_sku] }
+    Sku.nonexistant_skus(skus).join(', ')
   end
 end

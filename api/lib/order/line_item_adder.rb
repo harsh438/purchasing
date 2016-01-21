@@ -1,6 +1,6 @@
 class Order::LineItemAdder
   def add(order, line_items_attrs)
-    standardize(line_items_attrs).each do |line_item_attrs|
+    line_items_attrs.each do |line_item_attrs|
       if line_item_attrs[:internal_sku].present?
         sku = find_sku(line_item_attrs)
         order.line_items.create!(line_item_and_sku_attrs(line_item_attrs, sku))
@@ -9,14 +9,6 @@ class Order::LineItemAdder
   end
 
   private
-
-  def standardize(line_item_attrs)
-    if line_item_attrs.is_a?(Hash)
-      line_item_attrs.values
-    else
-      line_item_attrs || []
-    end
-  end
 
   def preorder?(line_item_attrs)
     line_item_attrs[:internal_sku].present? and
@@ -32,6 +24,8 @@ class Order::LineItemAdder
     else
       Sku.order(created_at: :desc).find_by!(sku: line_item_attrs[:internal_sku])
     end
+  rescue ActiveRecord::RecordNotFound
+    raise Order::SkuNotFound.new(line_item_attrs[:internal_sku])
   end
 
   def line_item_and_sku_attrs(line_item_attrs, sku)

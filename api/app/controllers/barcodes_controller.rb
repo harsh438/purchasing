@@ -24,9 +24,7 @@ class BarcodesController < ApplicationController
   end
 
   def nonexistant_skus
-    all_skus = barcodes.map { |barcode| barcode[:sku] }
-    existing_skus = Sku.where(sku: all_skus).pluck(:sku)
-    all_skus - existing_skus
+    Sku.nonexistant_skus(barcodes.map { |barcode| barcode[:sku] })
   end
 
   def duplicate_barcodes

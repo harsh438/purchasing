@@ -1,6 +1,11 @@
 class Sku < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
 
+  def self.nonexistant_skus(all_skus)
+    existing_skus = Sku.where(sku: all_skus).pluck(:sku)
+    all_skus - existing_skus
+  end
+
   scope :latest, -> { order(created_at: :desc) }
 
   paginates_per 50
