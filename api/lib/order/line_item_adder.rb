@@ -1,9 +1,11 @@
 class Order::LineItemAdder
   def add(order, line_items_attrs)
-    line_items_attrs.each do |line_item_attrs|
-      if line_item_attrs[:internal_sku].present?
-        sku = find_sku(line_item_attrs)
-        order.line_items.create!(line_item_and_sku_attrs(line_item_attrs, sku))
+    ActiveRecord::Base.transaction do
+      line_items_attrs.each do |line_item_attrs|
+        if line_item_attrs[:internal_sku].present?
+          sku = find_sku(line_item_attrs)
+          order.line_items.create!(line_item_and_sku_attrs(line_item_attrs, sku))
+        end
       end
     end
   end
