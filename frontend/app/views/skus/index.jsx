@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { assign, isEqual } from 'lodash';
+import { assign, isEqual, isEmpty } from 'lodash';
 import { loadSkus } from '../../actions/skus';
 import { loadSeasons, loadVendors } from '../../actions/filters';
 import NumberedPagination from '../pagination/_numbered';
@@ -49,7 +49,7 @@ class SkusIndex extends React.Component {
             </div>
 
             <div className="text-right">
-              {renderCsvExportLink(this.supplierSkuSummaryExportUrl())}
+              {this.renderCSVButton()}
             </div>
 
             <hr />
@@ -63,6 +63,12 @@ class SkusIndex extends React.Component {
         </div>
       </div>
     );
+  }
+
+  renderCSVButton() {
+    if (!isEmpty(this.props.location.query.filters)) {
+      return renderCsvExportLink(this.supplierSkuSummaryExportUrl())
+    }
   }
 
   supplierSkuSummaryExportUrl() {
