@@ -3,7 +3,7 @@ class PurchaseOrder::CsvExporter
     po = PurchaseOrder.find(attrs[:id])
     line_items_csv(po).tap do |csv|
       csv.unshift([order_number(po), '', delivery_date(po)], [])
-      csv.push(['', '', '', '', '', 'TOTALS', po.quantity, '', po.total])
+      csv.push(['', '', '', '', '', '', 'TOTALS', po.quantity, '', '', po.total, '', ''])
     end
   end
 
@@ -19,6 +19,7 @@ class PurchaseOrder::CsvExporter
        brand_size
        quantity
        supplier_list_price
+       product_cost
        total)
   end
 
