@@ -49,9 +49,9 @@ feature 'Suppliers Listing' do
 
   def when_i_filter_suppliers_by_name
     create_list(:supplier, 10)
-    create_list(:supplier, 2, name: 'Luke Clothing Supplies')
-    create_list(:supplier, 2, name: 'Supplies by Luke')
-    visit suppliers_path(filters: { name: 'Luke' })
+    create_list(:supplier, 2, name: 'The Great Luke Clothing Supplies')
+    create_list(:supplier, 2, name: 'Supplies by The Great Luke')
+    visit suppliers_path(filters: { name: 'The Great Luke' })
   end
 
   def then_only_suppliers_whose_name_matches_should_be_listed
