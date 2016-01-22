@@ -6,12 +6,12 @@ feature 'Suppliers Terms' do
     then_i_should_see_paginated_list_of_supplier_terms
   end
 
-  scenario 'Adding terms to Supplier' do
+  scenario 'Adding terms to Supplier without Brand' do
     when_i_add_a_set_of_terms_to_a_supplier
     then_those_terms_should_be_listed_under_the_supplier
   end
 
-  scenario 'Updating terms to Supplier' do
+  scenario 'Updating terms to Supplier without Brand' do
     when_updating_supplier_terms
     then_new_terms_should_not_be_created
   end
