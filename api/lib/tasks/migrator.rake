@@ -16,4 +16,8 @@ namespace :legacy do
   task po_line_item_missing_sku_populate: :environment do
     PurchaseOrderLineItem::MissingSkuPopulator.new.populate
   end
+
+  task remove_duplicate_skus: :environment do
+    Sku::RemoveDuplicates.new.remove
+  end
 end
