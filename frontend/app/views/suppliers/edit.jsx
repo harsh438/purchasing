@@ -20,7 +20,7 @@ class SuppliersEdit extends React.Component {
     this.state = { editingSupplier: false,
                    tab: { supplier: 'details',
                           terms: 'default',
-                          brands: 'default'
+                          brands: 'default',
                         } };
     this.props.dispatch(loadSupplier(this.props.params.id));
     this.props.dispatch(loadSeasons());
@@ -72,7 +72,7 @@ class SuppliersEdit extends React.Component {
   }
 
   renderBrandsList() {
-    if (!this.props.supplier || !(this.props.supplier.termsByVendor)) { return }
+    if (!this.props.supplier || !(this.props.supplier.termsByVendor)) { return ; }
     return (
      <div className="col-md-6" style={{ marginBottom: '10px' }}>
       <Nav bsStyle="tabs"
@@ -82,7 +82,7 @@ class SuppliersEdit extends React.Component {
         {this.props.supplier.termsByVendor.map(this.renderBrand)}
       </Nav>
      </div>
-    )
+    );
   }
 
   renderBrand(termsByVendor) {
