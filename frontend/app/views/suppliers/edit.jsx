@@ -52,7 +52,7 @@ class SuppliersEdit extends React.Component {
           </div>
 
           <div className="col-md-6">
-            <Nav bsStyle="tabs"
+            <Nav bsStyle="pills"
                  activeKey={this.state.tab.terms}
                  onSelect={this.handleTabChange.bind(this, 'terms')}
                  style={{ marginBottom: '10px' }}>
