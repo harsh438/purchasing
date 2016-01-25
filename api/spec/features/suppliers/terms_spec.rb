@@ -47,10 +47,9 @@ feature 'Suppliers Terms' do
   def when_adding_terms_for_brand_to_supplier_with_multiple_terms
     vendor_id = vendor_attrs['id']
     # creating three different terms with the same vendor_id for each
-    create_terms_attrs_with_confirmation_file_and_vendor_id(vendor_id: vendor_id, count: 3)
-      .each do |term|
+    create_terms_attrs_with_confirmation_file_and_vendor_id(vendor_id: vendor_id, count: 3).each do |term|
         add_a_set_of_terms_to_a_supplier(supplier_with_default_terms, term)
-      end
+    end
   end
 
   def then_supplier_should_have_multiple_default_terms_by_brands
@@ -60,6 +59,7 @@ feature 'Suppliers Terms' do
     expect(subject['terms_by_vendor'].second['history'].map do |history|
       history['default']
     end).to eq([false, false, true])
+    expect(subject['terms_by_vendor'].first['default']['default']).to eq(true)
   end
 
   def then_supplier_should_have_multiple_default_terms
