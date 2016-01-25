@@ -57,6 +57,9 @@ feature 'Suppliers Terms' do
     expect(subject['terms_by_vendor'].count).to eq(2)
     expect(subject['terms_by_vendor'].first['history'].count).to eq(1)
     expect(subject['terms_by_vendor'].second['history'].count).to eq(3)
+    expect(subject['terms_by_vendor'].second['history'].map do |history|
+      history['default']
+    end).to eq([false, false, true])
   end
 
   def then_supplier_should_have_multiple_default_terms
