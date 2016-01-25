@@ -26,6 +26,11 @@ feature 'Suppliers Terms' do
     then_supplier_should_have_multiple_default_terms
   end
 
+  scenario 'Adding terms for brand to supplier with multiple terms' do
+    when_adding_terms_for_brand_to_supplier_with_multiple_terms
+    then_supplier_should_have_multiple_default_terms_by_brands
+  end
+
   scenario 'Adding confirmation file to terms' do
     when_adding_a_confirmation_file_to_terms
     then_new_terms_should_be_created
@@ -37,6 +42,21 @@ feature 'Suppliers Terms' do
 
   def when_adding_terms_for_brand_to_supplier_with_brandless_terms
     add_a_set_of_terms_to_a_supplier_with_brand(supplier_with_default_terms)
+  end
+
+  def when_adding_terms_for_brand_to_supplier_with_multiple_terms
+    vendor_id = vendor_attrs['id']
+    # creating three different terms with the same vendor_id for each
+    create_terms_attrs_with_confirmation_file_and_vendor_id(vendor_id: vendor_id, count: 3)
+      .each do |term|
+        add_a_set_of_terms_to_a_supplier(supplier_with_default_terms, term)
+      end
+  end
+
+  def then_supplier_should_have_multiple_default_terms_by_brands
+    expect(subject['terms_by_vendor'].count).to eq(2)
+    expect(subject['terms_by_vendor'].first['history'].count).to eq(1)
+    expect(subject['terms_by_vendor'].second['history'].count).to eq(3)
   end
 
   def then_supplier_should_have_multiple_default_terms
@@ -107,6 +127,10 @@ feature 'Suppliers Terms' do
 
   private
 
+  let(:vendor_attrs) do
+    create(:vendor).as_json
+  end
+
   let(:terms_attrs) do
     attributes_for(:supplier_terms).stringify_keys
   end
@@ -121,7 +145,7 @@ feature 'Suppliers Terms' do
 
   let(:new_file_attrs) do
     { 'id' => SupplierTerms.last.id,
-      'confirmation' => fixture_file_upload(Rails.root.join('spec/fixtures/files/1x1.jpg'), 'image/jpeg') }
+      'confirmation' => fixture_confirmation_file_upload }
   end
 
   let(:invalid_attrs) do
@@ -132,9 +156,37 @@ feature 'Suppliers Terms' do
     create(:supplier, :with_default_terms)
   end
 
+
+  def fixture_confirmation_file_upload
+    fixture_file_upload(Rails.root.join('spec/fixtures/files/1x1.jpg'), 'image/jpeg')
+  end
+
   def add_a_set_of_terms_to_a_supplier_with_brand(supplier = create(:supplier))
     page.driver.post(supplier_path(supplier),
                      _method: 'patch',
                      supplier: { terms: terms_attrs_with_brand })
   end
+
+  def add_a_set_of_terms_to_a_supplier(supplier, terms)
+    page.driver.post(supplier_path(supplier),
+                     _method: 'patch',
+                     supplier: { terms: terms })
+  end
+
+  def create_terms_attrs_with_confirmation_file_and_vendor_id(attrs = {})
+    terms = []
+    (1..attrs[:count]).each do
+      terms << create_term_attrs_with_confirmation_file.merge('vendor_id' => attrs[:vendor_id])
+    end
+    terms
+  end
+
+  def create_term_attrs_with_confirmation_file_and_vendor_id(vendor_id)
+    create_term_attrs_with_confirmation_file.merge('vendor_id' => vendor_id)
+  end
+
+  def create_term_attrs_with_confirmation_file
+    attributes_for(:supplier_terms).stringify_keys.merge('confirmation' => fixture_confirmation_file_upload)
+  end
+
 end
