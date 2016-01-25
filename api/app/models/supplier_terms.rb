@@ -4,6 +4,7 @@ class SupplierTerms < ActiveRecord::Base
   scope :latest, -> { order(id: :desc) }
 
   belongs_to :supplier
+  belongs_to :vendor, class_name: 'Vendor'
 
   validates :season, presence: true
   validates :credit_limit, numericality: { allow_blank: true }
@@ -82,6 +83,16 @@ class SupplierTerms < ActiveRecord::Base
   def as_json_with_url(term = {})
     as_json.tap do |term|
       term['by'] = by
+      if confirmation.exists?
+        term['confirmation_url'] = confirmation.expiring_url(300)
+      end
+    end
+  end
+
+  def as_json_with_url_and_vendor_name(term = {})
+    as_json.tap do |term|
+      term['by'] = by
+      term['vendor'] = vendor.try(:name)
       if confirmation.exists?
         term['confirmation_url'] = confirmation.expiring_url(300)
       end
