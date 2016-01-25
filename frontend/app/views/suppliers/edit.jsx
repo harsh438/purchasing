@@ -19,7 +19,9 @@ class SuppliersEdit extends React.Component {
   componentWillMount () {
     this.state = { editingSupplier: false,
                    tab: { supplier: 'details',
-                          terms: 'default' } };
+                          terms: 'default',
+                          brands: 'default'
+                        } };
     this.props.dispatch(loadSupplier(this.props.params.id));
     this.props.dispatch(loadSeasons());
   }
@@ -51,6 +53,8 @@ class SuppliersEdit extends React.Component {
             {this.renderSupplierTab()}
           </div>
 
+          {this.renderBrandsList()}
+
           <div className="col-md-6">
             <Nav bsStyle="pills"
                  activeKey={this.state.tab.terms}
@@ -65,6 +69,27 @@ class SuppliersEdit extends React.Component {
         </div>
       </div>
     );
+  }
+
+  renderBrandsList() {
+    if (!this.props.supplier || !(this.props.supplier.termsByVendor)) { return }
+    return (
+     <div className="col-md-6" style={{ marginBottom: '10px' }}>
+      <Nav bsStyle="tabs"
+           activeKey={this.state.tab.brands}
+        >
+        <NavItem eventKey="default">All Brands</NavItem>
+        {this.props.supplier.termsByVendor.map(this.renderBrand)}
+      </Nav>
+     </div>
+    )
+  }
+
+  renderBrand(termsByVendor) {
+    if (!(termsByVendor['default']['vendor_id'])) {
+      return ;
+    }
+    // TODO: Render each brand
   }
 
   renderSupplierTab() {
