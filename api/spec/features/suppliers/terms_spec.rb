@@ -11,6 +11,11 @@ feature 'Suppliers Terms' do
     then_those_terms_should_be_listed_under_the_supplier_without_brand
   end
 
+  scenario 'Adding terms to Supplier with Brand' do
+    when_i_add_a_set_of_terms_to_a_supplier_with_brand
+    then_those_terms_should_be_listed_under_the_supplier_with_brand
+  end
+
   scenario 'Updating terms to Supplier without Brand' do
     when_updating_supplier_terms_without_brand
     then_new_terms_should_not_be_created_without_brand
@@ -46,6 +51,17 @@ feature 'Suppliers Terms' do
     expect(subject['terms']).to include(a_hash_including(terms_attrs))
   end
 
+  def when_i_add_a_set_of_terms_to_a_supplier_with_brand
+    page.driver.post(supplier_path(create(:supplier)),
+                     _method: 'patch',
+                     supplier: { terms: terms_attrs_with_brand })
+  end
+
+  def then_those_terms_should_be_listed_under_the_supplier_with_brand
+    vendor_check = a_hash_including('id' => terms_attrs_with_brand['vendor_id'])
+    expect(subject['terms']).to include(a_hash_including('vendor' => vendor_check))
+  end
+
   def when_updating_supplier_terms_without_brand
     page.driver.post(supplier_path(create(:supplier, terms: terms_attrs)),
                      _method: 'patch',
@@ -78,6 +94,10 @@ feature 'Suppliers Terms' do
 
   let(:terms_attrs) do
     attributes_for(:supplier_terms).stringify_keys
+  end
+
+  let(:terms_attrs_with_brand) do
+    terms_attrs.merge('vendor_id' => create(:vendor).id)
   end
 
   let(:updated_attrs) do
