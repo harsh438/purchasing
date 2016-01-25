@@ -1,6 +1,9 @@
 FactoryGirl.define do
   factory :sku_without_barcode, class: Sku do
-    sku { ((Sku.last.try(:id) || 0) + 1) *-1 }
+    sku do
+      negative_pid = ((Sku.last.try(:id) || 0) + 1) *-1
+      "#{negative_pid}-biggish"
+    end
 
     product_name 'An Example Product'
     manufacturer_sku 'MANU-FACTURER-SKU-11-reddish'

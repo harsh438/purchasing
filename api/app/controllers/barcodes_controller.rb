@@ -12,7 +12,7 @@ class BarcodesController < ApplicationController
   private
 
   def barcodes
-    params.require(:barcodes)
+    params.require(:barcodes).uniq
   end
 
   def bad_barcodes

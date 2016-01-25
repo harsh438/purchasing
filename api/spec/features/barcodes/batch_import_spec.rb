@@ -21,6 +21,11 @@ feature 'Batch importing Barcodes' do
     then_already_imported_barcodes_should_be_associated
   end
 
+  scenario 'Importing barcodes for SKU twice in one import' do
+    when_i_batch_import_the_same_barcode_twice_in_one_import
+    then_the_barcode_should_be_associated_once
+  end
+
   def when_i_batch_import_several_barcodes
     barcodes = [{ sku: skus.first.sku,
                   brand_size: skus.first.manufacturer_size,
@@ -77,10 +82,28 @@ feature 'Batch importing Barcodes' do
     expect(subject.count).to eq(1)
   end
 
+  def when_i_batch_import_the_same_barcode_twice_in_one_import
+    barcodes = [{ sku: negative_sku.sku,
+                  brand_size: negative_sku.manufacturer_size,
+                  barcode: 'cool' },
+                { sku: negative_sku.sku,
+                  brand_size: negative_sku.manufacturer_size,
+                  barcode: 'cool' }]
+    page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
+  end
+
+  def then_the_barcode_should_be_associated_once
+    expect(subject.first).to include('barcode' => 'cool')
+    expect(subject.count).to eq(1)
+  end
+
   let(:skus) do
     skus = create_list(:sku, 3)
     skus.second.update!(sku: skus.third.sku, manufacturer_size: 'Bleh')
     skus
   end
+
+  let(:negative_sku) { create(:sku_without_barcode) }
+
   let(:barcode) { create(:barcode, barcode: 'cool') }
 end
