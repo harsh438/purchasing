@@ -7,7 +7,7 @@ feature 'Suppliers Terms' do
   end
 
   scenario 'Adding terms to Supplier without Brand' do
-    when_i_add_a_set_of_terms_to_a_supplier
+    when_i_add_a_set_of_terms_to_a_supplier_without_brand
     then_those_terms_should_be_listed_under_the_supplier
   end
 
@@ -36,7 +36,7 @@ feature 'Suppliers Terms' do
     expect(subject['terms']).to include(a_hash_including('id', 'supplier_name', 'by', 'parent_id'))
   end
 
-  def when_i_add_a_set_of_terms_to_a_supplier
+  def when_i_add_a_set_of_terms_to_a_supplier_without_brand
     page.driver.post(supplier_path(create(:supplier)),
                      _method: 'patch',
                      supplier: { terms: terms_attrs })
