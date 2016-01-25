@@ -55,7 +55,8 @@ class SupplierTerms < ActiveRecord::Base
                               product_imagery
                               agreed_with
                               by
-                              comments)
+                              comments
+                              )
 
   def supplier_name
     supplier.name
@@ -89,10 +90,10 @@ class SupplierTerms < ActiveRecord::Base
     end
   end
 
-  def as_json_with_url_and_vendor_name(term = {})
+  def as_json_with_url_and_vendor(term = {})
     as_json.tap do |term|
       term['by'] = by
-      term['vendor'] = vendor.try(:name)
+      term['vendor'] = vendor.as_json
       if confirmation.exists?
         term['confirmation_url'] = confirmation.expiring_url(300)
       end

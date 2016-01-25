@@ -61,6 +61,7 @@ class SuppliersController < ApplicationController
   def supplier_terms_attrs
     terms_fields = SupplierTerms.stored_attributes[:terms]
     terms_fields.concat([:season,
+                         :vendor_id,
                          :confirmation,
                          :confirmation_file_name])
     terms_fields.push(marketing_contribution: [:percentage, :of])
