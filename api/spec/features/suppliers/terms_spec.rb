@@ -8,12 +8,12 @@ feature 'Suppliers Terms' do
 
   scenario 'Adding terms to Supplier without Brand' do
     when_i_add_a_set_of_terms_to_a_supplier_without_brand
-    then_those_terms_should_be_listed_under_the_supplier
+    then_those_terms_should_be_listed_under_the_supplier_without_brand
   end
 
   scenario 'Updating terms to Supplier without Brand' do
-    when_updating_supplier_terms
-    then_new_terms_should_not_be_created
+    when_updating_supplier_terms_without_brand
+    then_new_terms_should_not_be_created_without_brand
   end
 
   scenario 'Adding confirmation file to terms' do
@@ -42,11 +42,11 @@ feature 'Suppliers Terms' do
                      supplier: { terms: terms_attrs })
   end
 
-  def then_those_terms_should_be_listed_under_the_supplier
+  def then_those_terms_should_be_listed_under_the_supplier_without_brand
     expect(subject['terms']).to include(a_hash_including(terms_attrs))
   end
 
-  def when_updating_supplier_terms
+  def when_updating_supplier_terms_without_brand
     page.driver.post(supplier_path(create(:supplier, terms: terms_attrs)),
                      _method: 'patch',
                      supplier: { terms: terms_attrs.merge(updated_attrs) })
@@ -63,7 +63,7 @@ feature 'Suppliers Terms' do
     expect(subject['terms']).to include(a_hash_including(terms_attrs.merge('id' => next_id)))
   end
 
-  def then_new_terms_should_not_be_created
+  def then_new_terms_should_not_be_created_without_brand
     current_id = updated_attrs['id']
     expect(subject['terms']).to include(a_hash_including(updated_attrs.merge('id' => current_id)))
   end
