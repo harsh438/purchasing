@@ -21,6 +21,11 @@ feature 'Suppliers Terms' do
     then_new_terms_should_not_be_created_without_brand
   end
 
+  scenario 'Adding terms for brand to supplier with brandless terms' do
+    when_adding_terms_for_brand_to_supplier_with_brandless_terms
+    then_supplier_should_have_multiple_default_terms
+  end
+
   scenario 'Adding confirmation file to terms' do
     when_adding_a_confirmation_file_to_terms
     then_new_terms_should_be_created
@@ -28,6 +33,16 @@ feature 'Suppliers Terms' do
 
   scenario 'Validating terms fields' do
     when_updating_supplier_terms_with_invalid_input_should_error
+  end
+
+  def when_adding_terms_for_brand_to_supplier_with_brandless_terms
+    add_a_set_of_terms_to_a_supplier_with_brand(supplier_with_default_terms)
+  end
+
+  def then_supplier_should_have_multiple_default_terms
+    expect(subject['terms_by_vendor'].count).to eq(2)
+    expect(subject['terms_by_vendor'].first['default']['vendor_id']).to be_nil
+    expect(subject['terms_by_vendor'].second['default']['vendor_id']).to eq(terms_attrs_with_brand['vendor_id'])
   end
 
   def when_i_request_list_of_supplier_terms
@@ -52,9 +67,7 @@ feature 'Suppliers Terms' do
   end
 
   def when_i_add_a_set_of_terms_to_a_supplier_with_brand
-    page.driver.post(supplier_path(create(:supplier)),
-                     _method: 'patch',
-                     supplier: { terms: terms_attrs_with_brand })
+    add_a_set_of_terms_to_a_supplier_with_brand
   end
 
   def then_those_terms_should_be_listed_under_the_supplier_with_brand
@@ -92,6 +105,8 @@ feature 'Suppliers Terms' do
     }.to raise_error(ActiveRecord::RecordInvalid)
   end
 
+  private
+
   let(:terms_attrs) do
     attributes_for(:supplier_terms).stringify_keys
   end
@@ -111,5 +126,15 @@ feature 'Suppliers Terms' do
 
   let(:invalid_attrs) do
     { 'id' => create(:supplier_terms).id, 'credit_limit' => 'derek' }
+  end
+
+  let(:supplier_with_default_terms) do
+    create(:supplier, :with_default_terms)
+  end
+
+  def add_a_set_of_terms_to_a_supplier_with_brand(supplier = create(:supplier))
+    page.driver.post(supplier_path(supplier),
+                     _method: 'patch',
+                     supplier: { terms: terms_attrs_with_brand })
   end
 end

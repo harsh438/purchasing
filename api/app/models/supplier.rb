@@ -54,6 +54,7 @@ class Supplier < ActiveRecord::Base
       supplier['vendors'] = vendors.map(&:as_json)
       supplier['contacts'] = contacts.map(&:as_json)
       supplier['terms'] = terms.last(10).reverse.map(&:as_json_with_url_and_vendor)
+      supplier['terms_by_vendor'] = terms_by_vendor
 
       if default_terms
         supplier['default_terms'] = default_terms.as_json_with_url_and_vendor
@@ -61,6 +62,19 @@ class Supplier < ActiveRecord::Base
         supplier['default_terms'] = nil
       end
     end
+  end
+
+  def terms_by_vendor
+    terms.reduce({}) do |terms_by_vendor, terms|
+      terms_by_vendor[terms.vendor_id] ||= { default: {}, history: [] }
+      terms_by_vendor[terms.vendor_id][:history] << terms
+
+      if terms.default?
+        terms_by_vendor[terms.vendor_id][:default] = terms
+      end
+
+      terms_by_vendor
+    end.values
   end
 
   def default_terms
@@ -74,12 +88,13 @@ class Supplier < ActiveRecord::Base
   def terms=(terms_attrs)
     return if terms_attrs.is_a?(Array)
 
-    terms.update_all(default: false)
+    vendor_terms = terms.where(vendor_id: terms_attrs['vendor_id'])
+    vendor_terms.update_all(default: false)
 
-    if terms.length < 1 or new_confirmation_upload?(terms_attrs)
+    if vendor_terms.length < 1 or new_confirmation_upload?(terms_attrs)
       create_new_terms(terms_attrs)
     else
-      update_most_recent_terms(terms_attrs)
+      update_most_recent_terms(vendor_terms, terms_attrs)
     end
   end
 
@@ -94,8 +109,8 @@ class Supplier < ActiveRecord::Base
     new_terms.validate!
   end
 
-  def update_most_recent_terms(terms_attrs)
-    latest_terms = terms.last
+  def update_most_recent_terms(vendor_terms, terms_attrs)
+    latest_terms = vendor_terms.last
     latest_terms.update(terms_attrs.merge(default: true))
     latest_terms.validate!
   end

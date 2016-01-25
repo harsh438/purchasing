@@ -29,5 +29,9 @@ FactoryGirl.define do
       country_of_origin { Faker::AddressUK.country }
       needed_for_intrastat { Faker::Boolean.maybe }
     end
+
+    trait :with_default_terms do
+      terms { attributes_for(:supplier_terms) }
+    end
   end
 end
