@@ -1,6 +1,6 @@
 class Sku::RemoveDuplicates
   def remove
-    puts "Looking for duplicate SKUs... "
+    puts 'Looking for duplicate SKUs... '
     puts "We have matched #{duplicates.count} potential duplicates, more info to come..."
     puts "We found #{identical_groups.count} groups with a total of #{identical_groups.sum(&:count)} SKUs"
     puts "We found #{non_identical_groups.count} unique SKUs that we will leave alone"
