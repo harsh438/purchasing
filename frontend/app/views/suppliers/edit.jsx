@@ -8,7 +8,7 @@ import { loadSupplier,
          saveSupplierContact,
          saveSupplierBuyer,
          saveSupplierTerms } from '../../actions/suppliers';
-import { loadSeasons } from '../../actions/filters';
+import { loadSeasons, loadVendors } from '../../actions/filters';
 import SuppliersForm from './_form';
 import SupplierContactsTable from '../supplier_contacts/_table';
 import SupplierBuyersTable from '../supplier_buyers/_table';
@@ -24,6 +24,7 @@ class SuppliersEdit extends React.Component {
                         } };
     this.props.dispatch(loadSupplier(this.props.params.id));
     this.props.dispatch(loadSeasons());
+    this.props.dispatch(loadVendors());
   }
 
   render() {
@@ -56,19 +57,25 @@ class SuppliersEdit extends React.Component {
           {this.renderBrandsNav()}
 
           <div className="col-md-6">
-            <Nav bsStyle="pills"
-                 activeKey={this.state.tab.terms}
-                 onSelect={this.handleTabChange.bind(this, 'terms')}
-                 style={{ marginBottom: '10px' }}>
-              <NavItem eventKey="default">Default</NavItem>
-              <NavItem eventKey="history">History</NavItem>
-            </Nav>
+            {this.renderDefaultHistoryTab()}
 
             {this.renderTermsTab()}
           </div>
         </div>
       </div>
     );
+  }
+
+  renderDefaultHistoryTab() {
+    if (this.state.tab.brands === 'new') { return ; }
+    return (
+      <Nav bsStyle="pills"
+        activeKey={this.state.tab.terms}
+        onSelect={this.handleTabChange.bind(this, 'terms')}
+        style={{ marginBottom: '10px' }}>
+        <NavItem eventKey="default">Default</NavItem>
+        <NavItem eventKey="history">History</NavItem>
+      </Nav>);
   }
 
   renderBrandsNav() {
@@ -80,6 +87,7 @@ class SuppliersEdit extends React.Component {
         >
         <NavItem key="default" eventKey="default">All Brands</NavItem>
         {this.renderBrandList()}
+        <NavItem key="new" eventKey="new"><i className="glyphicon glyphicon-plus"></i>&nbsp;</NavItem>
       </Nav>
      </div>
     );
@@ -119,13 +127,18 @@ class SuppliersEdit extends React.Component {
   }
 
   renderTermsTab() {
-    switch (this.state.tab.terms) {
+    let tabTerms = this.state.tab.terms;
+    if (this.state.tab.brands === 'new') {
+      tabTerms = 'default';
+    }
+    switch (tabTerms) {
     case 'default':
       return (
         <SupplierTermsDefault supplier={this.props.supplier}
                               seasons={this.props.seasons}
                               onTermsSave={this.handleTermsSave.bind(this)}
-                              brand={this.state.tab.brands} />
+                              brand={this.state.tab.brands}
+                              brands={this.props.brands} />
       );
     case 'history':
       return (
