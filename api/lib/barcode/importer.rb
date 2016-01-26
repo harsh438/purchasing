@@ -48,7 +48,7 @@ class Barcode::Importer
   end
 
   def find_skus(barcode)
-    skus = Sku.where(sku: barcode[:sku], manufacturer_size: barcode[:brand_size])
+    skus = Sku.where(sku: barcode[:sku])
     raise SkuNotFound.new(barcode[:sku]) unless skus.any?
     skus
   end

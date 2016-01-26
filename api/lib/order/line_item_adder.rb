@@ -14,15 +14,13 @@ class Order::LineItemAdder
 
   def preorder?(line_item_attrs)
     line_item_attrs[:internal_sku].present? and
-      line_item_attrs[:season].present? and
-      line_item_attrs[:manufacturer_size].present?
+      line_item_attrs[:season].present?
   end
 
   def find_sku(line_item_attrs)
     if preorder?(line_item_attrs)
       Sku.find_by!(sku: line_item_attrs[:internal_sku],
-                   season: line_item_attrs[:season],
-                   manufacturer_size: line_item_attrs[:manufacturer_size])
+                   season: line_item_attrs[:season])
     else
       Sku.order(created_at: :desc).find_by!(sku: line_item_attrs[:internal_sku])
     end
