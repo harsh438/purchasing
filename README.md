@@ -19,15 +19,7 @@ Originally brought to you by the [Made Tech team](https://github.com/madetech).
 * Run the docker quickstart terminal (cmd-space should find it) to set up the VirtualBox VMs.
 * Run `docker-machine start default` to start the VM.
 * Run `eval $(docker-machine env default)` to bootstrap the env vars. Either add this line to your bashrc or run it in each new tab you open (For fish shell, use `eval (docker-machine env default)`).
-* `cd` into `api/` and run `docker-compose up`.
-* Run `docker-compose run web rake db:create db:schema:load` in a new tab (you'll need to bootstrap the env vars here, too).
-
-Gotchas:
-* Instead of `bundle exec X`, use `docker-compose run web X` to run commands inside the container.
-* ALWAYS use `docker-compose build` instead of `bundle install`.
-* Use `docker ps` to see running containers.
-* To connect to the DB via sequel pro, run `docker-machine env default` and use the IP of the docker host, and use the port `13306`.
-* To connect in the browser, use the docker host IP from the previous example at port 3000 (e.g. `http://192.168.99.100:3000/`).
+* Now follow the development information below
 
 ## Developing
 
@@ -38,7 +30,13 @@ cd api/
 docker-compose up
 ```
 
-This will boot the rails server.
+This will boot the rails server. To connect in the browser, visit the docker
+host IP at port 3000 (e.g. `http://192.168.99.100:3000/`). To find out the IP
+simply run:
+
+```
+docker-compose env default
+```
 
 Now run the following in another tab to setup your DB:
 
@@ -47,7 +45,9 @@ docker-compose run web rake db:setup
 ```
 
 Now import the [redacted dataset][redacted-data] to your local DB. We usually
-do this using SequelPro connected to your docker DB instance.
+do this using SequelPro connected to your docker DB instance. To connect to the
+DB via sequel pro, run `docker-machine env default` and use the IP of the docker
+host, and use the port 13306.
 
 **Reset your DB**
 
@@ -56,6 +56,12 @@ docker-compose run web rake db:reset
 ```
 
 Now import the [redacted dataset][redacted-data] to your local DB.
+
+**Updating gems**
+
+```
+docker-compose build
+```
 
 **Booting frontend for the first time**
 
@@ -106,6 +112,5 @@ docker-compose run web rspec
 cd api/
 docker-compose run web rake build
 ```
-
 
 [redacted-data]: https://drive.google.com/open?id=0BzNvNNGUQGxLUkJRTGRCaGJYMzQ
