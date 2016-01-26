@@ -63,7 +63,7 @@ class Order::Exporter
   end
 
   def po_line_item_relationship_attrs(order_line_item)
-    { product_id: order_line_item.product_id || Integer(order_line_item.sku.sku),
+    { product_id: order_line_item.product_id || 0,
       vendor_id: order_line_item.vendor_id,
       option_id: order_line_item.option_id || 0 }
   end
