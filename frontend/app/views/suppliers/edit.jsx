@@ -76,6 +76,7 @@ class SuppliersEdit extends React.Component {
     return (
      <div className="col-md-6" style={{ marginBottom: '10px' }}>
       <Nav bsStyle="tabs"
+           onSelect={this.handleTabChange.bind(this, 'brands')}
            activeKey={this.state.tab.brands}
         >
         <NavItem eventKey="default">All Brands</NavItem>
@@ -86,10 +87,12 @@ class SuppliersEdit extends React.Component {
   }
 
   renderBrand(termsByVendor) {
-    if (!(termsByVendor['default']['vendor_id'])) {
+    let vendor_id = termsByVendor['default']['vendor_id'];
+    if (!vendor_id) {
       return ;
     }
-    // TODO: Render each brand
+    let vendor_name = termsByVendor['default']['vendor_id']
+    return (<NavItem eventKey="{ vendor_id }">{ vendor_name }</NavItem>);
   }
 
   renderSupplierTab() {
