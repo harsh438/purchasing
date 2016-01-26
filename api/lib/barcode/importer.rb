@@ -32,24 +32,25 @@ class Barcode::Importer
   end
 
   def import_barcodes(barcodes)
-    barcodes.map(&method(:import_barcode))
+    barcodes.flat_map(&method(:assign_barcode_to_skus))
   rescue SkuNotFound
     raise SkusNotFound.new(nonexistant_skus(barcodes))
   rescue BadBarcode
     raise BarcodesInvalid.new(invalid_barcodes(barcodes))
   end
 
-  def import_barcode(barcode)
-    sku = find_sku(barcode)
-    barcode = find_or_create_barcode(sku, barcode)
-    Sku::Exporter.new.export(sku)
-    barcode
+  def assign_barcode_to_skus(barcode)
+    find_skus(barcode).map do |sku|
+      barcode = find_or_create_barcode(sku, barcode)
+      Sku::Exporter.new.export(sku)
+      barcode
+    end
   end
 
-  def find_sku(barcode)
-    Sku.find_by!(sku: barcode[:sku], manufacturer_size: barcode[:brand_size])
-  rescue ActiveRecord::RecordNotFound
-    raise SkuNotFound.new(barcode[:sku])
+  def find_skus(barcode)
+    skus = Sku.where(sku: barcode[:sku], manufacturer_size: barcode[:brand_size])
+    raise SkuNotFound.new(barcode[:sku]) unless skus.any?
+    skus
   end
 
   def find_or_create_barcode(sku, barcode)
