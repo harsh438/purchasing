@@ -156,9 +156,15 @@ feature 'SKU generation' do
   private
 
   let(:sku) { Sku.find_by(sku: subject[:sku]) }
+
   let(:existing_sku) { create(:sku) }
+
   let(:existing_sku_without_barcode) { create(:sku_without_barcode) }
+
+  let(:new_size_sku_without_barcode) { create(:sku_without_barcode, sku: '-100000-16',
+                                                                    manufacturer_size: '16') }
   let(:existing_sku_without_category_id) { create(:sku, category_id: nil) }
+
   let(:language_category) { create(:language_category) }
 
   let(:base_sku_attrs) do
@@ -201,11 +207,11 @@ feature 'SKU generation' do
   end
 
   let(:sku_for_new_size_attrs_without_barcode) do
-    base_sku_attrs.merge(season: existing_sku_without_barcode.season,
-                         manufacturer_sku: existing_sku_without_barcode.manufacturer_sku,
-                         manufacturer_color: existing_sku_without_barcode.manufacturer_color,
+    base_sku_attrs.merge(season: new_size_sku_without_barcode.season,
+                         manufacturer_sku: new_size_sku_without_barcode.manufacturer_sku,
+                         manufacturer_color: new_size_sku_without_barcode.manufacturer_color,
                          manufacturer_size: '16',
-                         internal_sku: existing_sku_without_barcode.sku)
+                         internal_sku: new_size_sku_without_barcode.sku)
   end
 
   let(:new_sku_for_product_without_language) do

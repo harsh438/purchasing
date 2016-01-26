@@ -128,8 +128,9 @@ feature 'Manage order details' do
   let(:product) { create(:product) }
   let(:language_product_option) { create(:language_product_option, pID: product.id) }
   let(:sku) { create(:sku) }
-  let(:negative_sku) { create(:sku_without_barcode) }
-  let(:negative_sku_of_different_size) { create(:sku_without_barcode, sku: negative_sku.sku,
+  let(:negative_sku) { create(:sku_without_barcode, sku: '-123456-largeish',
+                                                    manufacturer_size: 'largeish') }
+  let(:negative_sku_of_different_size) { create(:sku_without_barcode, sku: '-123456-smallish',
                                                                       manufacturer_size: :smallish) }
   let(:itemless_order) { create(:order) }
   let(:order) { create(:order, line_item_count: 2) }

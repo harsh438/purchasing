@@ -98,9 +98,9 @@ feature 'Batch importing Barcodes' do
   end
 
   let(:skus) do
-    skus = create_list(:sku, 3)
-    skus.second.update!(sku: skus.third.sku, manufacturer_size: 'Bleh')
-    skus
+    [create(:sku),
+     create(:sku, sku: '-bob-small', manufacturer_size: 'small'),
+     create(:sku, sku: '-bob-large', manufacturer_size: 'large')]
   end
 
   let(:negative_sku) { create(:sku_without_barcode) }
