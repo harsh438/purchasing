@@ -78,7 +78,7 @@ class SuppliersEdit extends React.Component {
            onSelect={this.handleTabChange.bind(this, 'brands')}
            activeKey={this.state.tab.brands}
         >
-        <NavItem eventKey="default">All Brands</NavItem>
+        <NavItem key="default" eventKey="default">All Brands</NavItem>
         {this.renderBrandList()}
       </Nav>
      </div>
@@ -91,12 +91,12 @@ class SuppliersEdit extends React.Component {
   }
 
   renderBrand(termsByVendor) {
-    let vendor_id = termsByVendor['default']['vendor_id'];
-    if (!vendor_id) {
+    let vendorId = termsByVendor['default']['vendorId'];
+    if (!vendorId) {
       return ;
     }
-    let vendor_name = termsByVendor['default']['vendor_id'];
-    return (<NavItem eventKey={vendor_id}>{vendor_name}</NavItem>);
+    let vendorName = termsByVendor['default']['vendor']['name'];
+    return (<NavItem key={vendorId} eventKey={vendorId}>{vendorName}</NavItem>);
   }
 
   renderSupplierTab() {
@@ -129,10 +129,28 @@ class SuppliersEdit extends React.Component {
       );
     case 'history':
       return (
-        <SuppliersTermsTable terms={this.props.supplier.terms}
-                             termsSelected={[]} />
+        <SuppliersTermsTable terms={this.getTermHistoryByBrand()}
+                             termsSelected={[]}
+                             brand={this.state.tab.brands} />
       );
     }
+  }
+
+  getTermHistoryByBrand() {
+    let brand = this.state.tab.brands;
+    if (brand === 'default') {
+      brand = null;
+    }
+    if (!(this.props.supplier.termsByVendor)) {
+      return this.props.supplier.terms;
+    }
+    let history = [];
+    this.props.supplier.termsByVendor.forEach( (term) => {
+      if (term['default']['vendorId'] === brand) {
+        history = term['history'];
+      }
+    });
+    return history;
   }
 
   renderSupplier() {
