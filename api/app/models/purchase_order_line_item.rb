@@ -177,12 +177,12 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   end
 
   def supplier_style_code
-    product_sku.split('-').first
+    (product_sku || '').split('-').first
   end
   alias_method :brand_style_code, :supplier_style_code
 
   def supplier_color_code
-    product_sku.split('-').last
+    (product_sku || '').split('-').last
   end
   alias_method :brand_color_code, :supplier_color_code
 
