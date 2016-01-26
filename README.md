@@ -35,17 +35,24 @@ Gotchas:
 
 ```sh
 cd api/
-bundle install
-bundle exec rake db:setup
-bundle exec rails
+docker-compose up
 ```
 
-Now import the [redacted dataset][redacted-data] to your local DB.
+This will boot the rails server.
+
+Now run the following in another tab to setup your DB:
+
+```
+docker-compose run web rake db:setup
+```
+
+Now import the [redacted dataset][redacted-data] to your local DB. We usually
+do this using SequelPro connected to your docker DB instance.
 
 **Reset your DB**
 
 ```sh
-bundle exec rake db:reset
+docker-compose run web rake db:reset
 ```
 
 Now import the [redacted dataset][redacted-data] to your local DB.
@@ -77,25 +84,28 @@ npm install
 
 **Developing frontend**
 
-In one terminal run this to start API:
-
-```sh
-cd api/
-bundle exec rackup -o 0.0.0.0 -p 3000
-```
-
-And in another to watch for JS/SCSS/Image changes run:
+To watch for JS/SCSS/Image changes run:
 
 ```sh
 cd frontend/
 npm run watch
 ```
 
+The first build takes a bit of time but subsequent builds will be faster.
+
 **Running tests locally**
 
 ```sh
 cd api/
-bundle exec rspec
+docker-compose run web rspec
 ```
+
+**Running entire build locally**
+
+```sh
+cd api/
+docker-compose run web rake build
+```
+
 
 [redacted-data]: https://drive.google.com/open?id=0BzNvNNGUQGxLUkJRTGRCaGJYMzQ
