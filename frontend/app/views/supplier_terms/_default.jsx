@@ -8,6 +8,10 @@ export default class SupplierTermsDefault extends React.Component {
     this.state = { editingTerms: false };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ editingTerms: false })
+  }
+
   render() {
     let term = this.getTermByBrand();
     if (this.state.editingTerms || this.props.brand === 'new') {
