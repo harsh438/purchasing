@@ -35,7 +35,7 @@ class Barcode::Importer
     barcodes.flat_map(&method(:assign_barcode_to_skus))
   rescue SkuNotFound
     raise SkusNotFound.new(nonexistant_skus(barcodes))
-  rescue BadBarcode
+  rescue BarcodeInvalid
     raise BarcodesInvalid.new(invalid_barcodes(barcodes))
   end
 
