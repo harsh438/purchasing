@@ -10,6 +10,11 @@ const initialState = { supplier: { contacts: [],
                        activePage: null };
 
 function transformSupplier(supplier) {
+  supplier.termsByVendor = map(supplier.terms_by_vendor, function (terms) {
+    terms['default'] = camelizeKeys(terms['default']);
+    terms.history = map(terms.history, camelizeKeys);
+    return terms;
+  });
   supplier.defaultTerms = camelizeKeys(supplier.default_terms);
   supplier.terms = map(supplier.terms, camelizeKeys);
   supplier.contacts = map(supplier.contacts, camelizeKeys);
