@@ -24,6 +24,8 @@ export default class SupplierTermsForm extends React.Component {
           </colgroup>
 
           <tbody>
+            {this.renderBrandField()}
+
             <tr>
               <td>
                 <label htmlFor="season">Season</label>
@@ -95,6 +97,23 @@ export default class SupplierTermsForm extends React.Component {
         </button>
       </form>
     );
+  }
+
+  renderBrandField() {
+    if (this.props.brand !== 'new') { return ; }
+    return (
+      <tr>
+        <td>
+          <label htmlFor="brand">Brand</label>
+        </td>
+        <td>
+          <select className="form-control" id="vendorId" name="vendorId" value={this.getField('vendorId')}>
+            {this.props.brands.map((brand) => {
+              return <option value={brand.id}>{brand.name}</option>;
+            })}
+          </select>
+        </td>
+      </tr>);
   }
 
   renderFileUploadText() {
