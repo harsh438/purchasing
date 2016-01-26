@@ -100,20 +100,37 @@ export default class SupplierTermsForm extends React.Component {
   }
 
   renderBrandField() {
-    if (this.props.brand !== 'new') { return ; }
-    return (
-      <tr>
-        <td>
-          <label htmlFor="brand">Brand</label>
-        </td>
-        <td>
-          <select className="form-control" id="vendorId" name="vendorId" value={this.getField('vendorId')}>
-            {this.props.brands.map((brand) => {
-              return <option value={brand.id}>{brand.name}</option>;
-            })}
-          </select>
-        </td>
-      </tr>);
+    switch (this.props.brand) {
+      case 'new':
+        return (
+          <tr>
+            <td>
+              <label htmlFor="brand">Brand</label>
+            </td>
+            <td>
+              <select className="form-control" id="vendorId" name="vendorId" value={this.getField('vendorId')}>
+                {this.props.brands.map((brand) => {
+                  return <option value={brand.id}>{brand.name}</option>;
+                })}
+                </select>
+            </td>
+          </tr>);
+      case 'default':
+      break;
+      default:
+          return (
+            <tr>
+              <td>
+                <label htmlFor="brand">Brand</label>
+              </td>
+              <td>
+                <select className="form-control" id="vendorId" name="vendorId" value={this.getField('vendorId')} disabled>
+                  <option>{(this.props.brands.find((brand) => brand.id === this.props.brand) || {}).name}</option>
+                </select>
+              </td>
+            </tr>);
+      break;
+    }
   }
 
   renderFileUploadText() {
