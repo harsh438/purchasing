@@ -37,7 +37,7 @@ export default class SupplierTermsDefault extends React.Component {
     }
     let vendorTerm = null;
     this.props.supplier.termsByVendor.forEach( (term) => {
-      if (term['default']['vendor_id'] === brand) {
+      if (term['default']['vendorId'] === brand) {
         vendorTerm = term['default'];
       }
     });
