@@ -9,27 +9,45 @@ export default class SupplierTermsDefault extends React.Component {
   }
 
   render() {
+    let term = this.getTermByBrand();
     if (this.state.editingTerms) {
-      return this.renderTermsForm();
-    } else if (this.props.supplier.defaultTerms) {
-      return this.renderTermsView();
+      return this.renderTermsForm(term);
+    } else if (term) {
+      return this.renderTermsView(term);
     } else {
       return this.renderEmptyTerms();
     }
   }
 
-  renderTermsForm() {
+  renderTermsForm(term) {
     return (
-      <SupplierTermsForm terms={this.props.supplier.defaultTerms}
+      <SupplierTermsForm terms={term}
                          seasons={this.props.seasons}
                          onFormSubmit={this.handleTermsSave.bind(this)} />
     );
   }
 
-  renderTermsView() {
+  getTermByBrand() {
+    let brand = this.props.brand;
+    if (brand === 'default') {
+      brand = null;
+    }
+    if (!(this.props.supplier.termsByVendor)) {
+      return this.props.supplier.defaultTerms;
+    }
+    let vendorTerm = null;
+    this.props.supplier.termsByVendor.forEach( (term) => {
+      if (term['default']['vendor_id'] === brand) {
+        vendorTerm = term['default'];
+      }
+    });
+    return vendorTerm;
+  }
+
+  renderTermsView(term) {
     return (
       <div>
-        <SupplierTerms terms={this.props.supplier.defaultTerms} />
+        <SupplierTerms terms={term} />
 
         <p>
           <button className="btn btn-success"

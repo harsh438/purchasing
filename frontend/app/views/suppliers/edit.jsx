@@ -120,7 +120,8 @@ class SuppliersEdit extends React.Component {
       return (
         <SupplierTermsDefault supplier={this.props.supplier}
                               seasons={this.props.seasons}
-                              onTermsSave={this.handleTermsSave.bind(this)} />
+                              onTermsSave={this.handleTermsSave.bind(this)}
+                              brand={this.state.tab.brands} />
       );
     case 'history':
       return (
