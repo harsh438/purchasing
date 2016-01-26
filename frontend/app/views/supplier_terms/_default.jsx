@@ -9,7 +9,7 @@ export default class SupplierTermsDefault extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ editingTerms: false })
+    this.setState({ editingTerms: false });
   }
 
   render() {
