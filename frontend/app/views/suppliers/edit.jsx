@@ -53,7 +53,7 @@ class SuppliersEdit extends React.Component {
             {this.renderSupplierTab()}
           </div>
 
-          {this.renderBrandsList()}
+          {this.renderBrandsNav()}
 
           <div className="col-md-6">
             <Nav bsStyle="pills"
@@ -71,8 +71,7 @@ class SuppliersEdit extends React.Component {
     );
   }
 
-  renderBrandsList() {
-    if (!this.props.supplier || !(this.props.supplier.termsByVendor)) { return ; }
+  renderBrandsNav() {
     return (
      <div className="col-md-6" style={{ marginBottom: '10px' }}>
       <Nav bsStyle="tabs"
@@ -80,10 +79,15 @@ class SuppliersEdit extends React.Component {
            activeKey={this.state.tab.brands}
         >
         <NavItem eventKey="default">All Brands</NavItem>
-        {this.props.supplier.termsByVendor.map(this.renderBrand)}
+        {this.renderBrandList()}
       </Nav>
      </div>
     );
+  }
+
+  renderBrandList() {
+    if (!this.props.supplier || !(this.props.supplier.termsByVendor)) { return ; }
+    this.props.supplier.termsByVendor.map(this.renderBrand)
   }
 
   renderBrand(termsByVendor) {
