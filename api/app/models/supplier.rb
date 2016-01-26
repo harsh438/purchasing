@@ -67,10 +67,11 @@ class Supplier < ActiveRecord::Base
   def terms_by_vendor
     terms.reduce({}) do |terms_by_vendor, terms|
       terms_by_vendor[terms.vendor_id] ||= { default: {}, history: [] }
-      terms_by_vendor[terms.vendor_id][:history] << terms
+      terms_attrs = terms.as_json_with_url_and_vendor
+      terms_by_vendor[terms.vendor_id][:history] << terms_attrs
 
       if terms.default?
-        terms_by_vendor[terms.vendor_id][:default] = terms
+        terms_by_vendor[terms.vendor_id][:default] = terms_attrs
       end
 
       terms_by_vendor
