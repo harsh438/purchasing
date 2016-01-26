@@ -220,7 +220,9 @@ class SuppliersEdit extends React.Component {
                                                           'returnsAddress3',
                                                           'returnsPostalCode']));
 
-    return flatten(map(addressParts, part => [part, (<br />)]));
+    return flatten(map(addressParts, (part, i) => {
+      return [(<span key={i}>{part}</span>), (<br key={`br-${i}`} />)];
+    }));
   }
 
   handleTabChange(tabGroup, nextTab) {
