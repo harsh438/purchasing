@@ -91,8 +91,8 @@ class SuppliersEdit extends React.Component {
     if (!vendor_id) {
       return ;
     }
-    let vendor_name = termsByVendor['default']['vendor_id']
-    return (<NavItem eventKey="{ vendor_id }">{ vendor_name }</NavItem>);
+    let vendor_name = termsByVendor['default']['vendor_id'];
+    return (<NavItem eventKey={vendor_id}>{vendor_name}</NavItem>);
   }
 
   renderSupplierTab() {
