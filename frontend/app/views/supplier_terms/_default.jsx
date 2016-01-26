@@ -10,7 +10,7 @@ export default class SupplierTermsDefault extends React.Component {
 
   render() {
     let term = this.getTermByBrand();
-    if (this.state.editingTerms) {
+    if (this.state.editingTerms || this.props.brand === 'new') {
       return this.renderTermsForm(term || {});
     } else if (term) {
       return this.renderTermsView(term);
@@ -23,7 +23,9 @@ export default class SupplierTermsDefault extends React.Component {
     return (
       <SupplierTermsForm terms={term}
                          seasons={this.props.seasons}
-                         onFormSubmit={this.handleTermsSave.bind(this)} />
+                         onFormSubmit={this.handleTermsSave.bind(this)}
+                         brand={this.props.brand}
+                         brands={this.props.brands} />
     );
   }
 
