@@ -19,9 +19,8 @@ export default class ImportForm extends React.Component {
 
         <div className="col-md-5">
           <Spreadsheet ref="spreadsheet"
-                       columnHeaders={['Internal SKU', 'Brand Size', 'Barcode']}
+                       columnHeaders={['Internal SKU', 'Barcode']}
                        columns={[{ data: 'sku' },
-                                 { data: 'brandSize' },
                                  { data: 'barcode' }]} />
         </div>
 

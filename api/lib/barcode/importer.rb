@@ -65,9 +65,7 @@ class Barcode::Importer
 
   def invalid_barcodes(barcodes)
     barcodes.map do |barcode|
-      barcode unless barcode[:sku].present? and
-                     barcode[:brand_size].present? and
-                     barcode[:barcode].present?
+      barcode unless barcode[:sku].present? and barcode[:barcode].present?
     end.compact
   end
 end
