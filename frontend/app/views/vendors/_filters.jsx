@@ -32,7 +32,7 @@ export default class VendorsFilters extends React.Component {
           </div>
 
           <div className="form-group col-md-2">
-            <label htmlFor="vendor_id">Supplier</label>
+            <label htmlFor="supplierId">Supplier</label>
             <select className="form-control"
                     id="supplier_id"
                     name="supplierId"
