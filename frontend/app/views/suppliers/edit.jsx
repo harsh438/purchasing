@@ -87,7 +87,7 @@ class SuppliersEdit extends React.Component {
 
   renderBrandList() {
     if (!this.props.supplier || !(this.props.supplier.termsByVendor)) { return ; }
-    this.props.supplier.termsByVendor.map(this.renderBrand)
+    return this.props.supplier.termsByVendor.map(this.renderBrand);
   }
 
   renderBrand(termsByVendor) {
