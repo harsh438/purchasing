@@ -45,8 +45,8 @@ export default class ImportForm extends React.Component {
   }
 
   barcodes() {
-    return map(this.refs.spreadsheet.data(), function ([sku, brandSize, barcode]) {
-      return { sku, brandSize, barcode };
+    return map(this.refs.spreadsheet.data(), function ([sku, barcode]) {
+      return { sku, barcode };
     });
   }
 
