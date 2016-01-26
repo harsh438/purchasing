@@ -11,7 +11,7 @@ export default class SupplierTermsDefault extends React.Component {
   render() {
     let term = this.getTermByBrand();
     if (this.state.editingTerms) {
-      return this.renderTermsForm(term);
+      return this.renderTermsForm(term || {});
     } else if (term) {
       return this.renderTermsView(term);
     } else {
