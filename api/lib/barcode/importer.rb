@@ -60,7 +60,7 @@ class Barcode::Importer
   end
 
   def nonexistant_skus(barcodes)
-    Sku.nonexistant_skus(barcodes.map { |barcode| barcode[:sku] }).map(&:sku)
+    Sku.nonexistant_skus(barcodes.map { |barcode| barcode[:sku] })
   end
 
   def unique_and_valid_barcodes(barcodes)
