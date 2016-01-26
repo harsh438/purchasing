@@ -8,7 +8,7 @@ export default class SuppliersTermsTable extends React.Component {
     if (this.props.terms.length === 0) {
       return (
         <p>
-          <em>There aren't any terms here</em>
+          <em>There aren&rsquo;t any terms here</em>
         </p>
       );
     }
