@@ -71,14 +71,14 @@ export function deleteLineItem(id) {
   };
 }
 
-export function exportOrders(id) {
+export function exportOrders(id, { page, filters }) {
   return dispatch => {
     fetch(`/api/orders/export.json`, { credentials: 'same-origin',
                                        method: 'POST',
                                        headers: { 'Content-Type': 'application/json' },
                                        body: JSON.stringify({ id }) })
       .then(response => response.json())
-      .then(orders => dispatch(loadOrders()));
+      .then(orders => dispatch(loadOrders({ page, filters })));
   };
 }
 

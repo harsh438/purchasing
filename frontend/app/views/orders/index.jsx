@@ -94,8 +94,9 @@ class OrdersIndex extends React.Component {
   }
 
   handleExportOrders(orderIds) {
+    const { page, filters } = this.props.location.query;
     this.setState({ exportingOrders: true });
-    this.props.dispatch(exportOrders(this.state.selectedOrders));
+    this.props.dispatch(exportOrders(this.state.selectedOrders, { page, filters }));
   }
 
   isExportButtonDisabled() {
