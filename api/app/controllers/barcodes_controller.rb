@@ -5,7 +5,7 @@ class BarcodesController < ApplicationController
     render json: { errors: { skus: ['Some SKUs were not recognised so we did not import any barcodes'] },
            nonexistant_skus: e.nonexistant_skus }
   rescue Barcode::Importer::BarcodesInvalid => e
-    render json: { errors: { skus: ['Some records were missing or invalid'] },
+    render json: { errors: { skus: ['Some barcodes were invalid. Can you check them and try again?'] },
            nonexistant_skus: e.invalid_barcodes }
   end
 

@@ -28,7 +28,7 @@ class Barcode::Importer
   private
 
   def import_unique_barcodes(barcodes)
-    import_barcodes(barcodes.uniq)
+    import_barcodes(unique_and_valid_barcodes(barcodes))
   end
 
   def import_barcodes(barcodes)
@@ -36,7 +36,7 @@ class Barcode::Importer
   rescue SkuNotFound
     raise SkusNotFound.new(nonexistant_skus(barcodes))
   rescue BarcodeInvalid
-    raise BarcodesInvalid.new(invalid_barcodes(barcodes))
+    raise BarcodesInvalid.new(barcodes)
   end
 
   def assign_barcode_to_skus(barcode)
@@ -63,9 +63,9 @@ class Barcode::Importer
     Sku.nonexistant_skus(barcodes.map { |barcode| barcode[:sku] })
   end
 
-  def invalid_barcodes(barcodes)
-    barcodes.map do |barcode|
-      barcode unless barcode[:sku].present? and barcode[:barcode].present?
-    end.compact
+  def unique_and_valid_barcodes(barcodes)
+    barcodes.uniq.select do |barcode|
+      barcode[:sku].present? and barcode[:barcode].present?
+    end
   end
 end
