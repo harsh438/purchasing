@@ -67,14 +67,15 @@ class SkusIndex extends React.Component {
 
   renderCSVButton() {
     const disabled = isEmpty(this.props.location.query.filters);
-    return renderCsvExportLink(this.supplierSkuSummaryExportUrl(), { disabled });
+    const text =  'Export to Excel';
+    return renderCsvExportLink(this.supplierSkuSummaryExportUrl(), { disabled, text });
   }
 
   supplierSkuSummaryExportUrl() {
     const filters = snakeizeKeys(this.props.location.query.filters);
     const queryString = Qs.stringify({ filters },
                                      { arrayFormat: 'brackets' });
-    return `/api/skus/supplier_summary.csv?${queryString}`;
+    return `/api/skus/supplier_summary.xlsx?${queryString}`;
   }
 
   loadPage(page = this.props.location.query.page, filters = this.props.location.query.filters) {
