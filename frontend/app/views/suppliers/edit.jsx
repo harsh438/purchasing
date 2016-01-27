@@ -20,8 +20,7 @@ class SuppliersEdit extends React.Component {
     this.state = { editingSupplier: false,
                    tab: { supplier: 'details',
                           terms: 'default',
-                          brands: 'default',
-                        } };
+                          brands: 'default' } };
     this.props.dispatch(loadSupplier(this.props.params.id));
     this.props.dispatch(loadSeasons());
   }
