@@ -66,10 +66,10 @@ class SkusController < ApplicationController
   end
 
   def render_supplier_summary_csv
-    render csv: Sku::SupplierSummaryCsvExporter.new.export(params)
+    render csv: Sku::SupplierSummaryExporter.new.export(params)
   end
 
   def render_supplier_summary_xlsx
-    render xlsx: Sku::SupplierSummaryCsvExporter.new.export(params)
+    render xlsx: Sku::SupplierSummaryExporter.new.export(params)
   end
 end

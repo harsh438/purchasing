@@ -1,4 +1,4 @@
-class Sku::SupplierSummaryCsvExporter
+class Sku::SupplierSummaryExporter
   def export(params)
     csv = Table::ViewModel.new
     csv << columns
