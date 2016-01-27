@@ -29,8 +29,8 @@ class SuppliersEdit extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.state.switchBrandsTab) {
-      this.handleTabChange('brands', this.state.switchBrandsTab)
-      this.setState({switchBrandsTab: null})
+      this.handleTabChange('brands', this.state.switchBrandsTab);
+      this.setState({ switchBrandsTab: null });
     }
   }
 
@@ -261,7 +261,7 @@ class SuppliersEdit extends React.Component {
 
   handleTermsSave(terms) {
     if (this.state.tab.brands === 'new') {
-      this.setState({switchBrandsTab: parseInt(terms.vendorId, 10)});
+      this.setState({ switchBrandsTab: parseInt(terms.vendorId, 10) });
     }
     this.props.dispatch(saveSupplierTerms(this.props.supplier.id, terms));
   }
