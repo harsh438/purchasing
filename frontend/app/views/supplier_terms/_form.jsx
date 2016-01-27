@@ -102,14 +102,19 @@ export default class SupplierTermsForm extends React.Component {
   renderBrandField() {
     switch (this.props.brand) {
     case 'new':
+      let brandText = '--- Please select a brand ---';
+      if (this.props.brands.length === 0) {
+        brandText = 'No brands available for this supplier, please add one.';
+      }
       return (
         <tr>
           <td>
             <label htmlFor="brand">Brand</label>
           </td>
           <td>
-            <select className="form-control" id="vendorId" name="vendorId" value={this.getField('vendorId')} required>
-              <option value="">--- Please select a brand ---</option>
+            <select className="form-control" id="vendorId" name="vendorId" value={this.getField('vendorId')}
+                    required>
+              <option value="">{ brandText }</option>
               {this.props.brands.map((brand) => {
                 return <option value={brand.id}>{brand.name}</option>;
               })}
