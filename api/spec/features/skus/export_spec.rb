@@ -1,4 +1,4 @@
-feature 'Sku CSV Export' do
+feature 'Sku Exporting' do
   scenario 'Exporting CSV for specific Order' do
     when_exporting_skus_for_an_order
     then_i_should_receive_all_skus_in_that_order
