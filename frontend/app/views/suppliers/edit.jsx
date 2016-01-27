@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Nav, NavItem } from 'react-bootstrap';
-import { at, assign, compact, flatten, map } from 'lodash';
+import { at, assign, compact, flatten, map, filter } from 'lodash';
 import { loadSupplier,
          editSupplier,
          saveSupplierContact,
@@ -20,7 +20,7 @@ class SuppliersEdit extends React.Component {
     this.state = { editingSupplier: false,
                    tab: { supplier: 'details',
                           terms: 'default',
-                          brands: 'default' } };
+                          vendors: 'default' } };
     this.props.dispatch(loadSupplier(this.props.params.id));
     this.props.dispatch(loadSeasons());
   }
@@ -162,12 +162,8 @@ class SuppliersEdit extends React.Component {
       return this.props.supplier.terms;
     }
     let history = [];
-    this.props.supplier.termsByVendor.forEach( (term) => {
-      if (term['default']['vendorId'] === brand) {
-        history = term['history'];
-      }
-    });
-    return history;
+    const vendorTerms = filter(this.props.supplier.termsByVendor, terms => terms.default.vendorId === brand);
+    return (vendorTerms[0] || {}).history || [];
   }
 
   renderSupplier() {
