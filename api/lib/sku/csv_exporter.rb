@@ -1,6 +1,6 @@
 class Sku::CsvExporter
   def export(params)
-    csv = Csv::ViewModel.new
+    csv = Table::ViewModel.new
     csv << columns
 
     if params[:order_id].present?

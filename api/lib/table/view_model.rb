@@ -1,4 +1,4 @@
-class Csv::ViewModel < Array
+class Table::ViewModel < Array
   def to_csv
     CSV.generate do |csv|
       reduce(csv, &:<<)

@@ -46,7 +46,7 @@ class PurchaseOrderLineItem::CsvExporter
                                            product: :product_detail)
     query = PurchaseOrderLineItem::Filter.new.filter(query, attrs)
     columns = csv_columns(attrs[:columns] || {})
-    csv = Csv::ViewModel.new
+    csv = Table::ViewModel.new
     csv << columns.map(&:humanize)
     csv.concat(query.map { |purchase_order| row_data(purchase_order, columns) })
   end

@@ -1,6 +1,6 @@
 class Sku::SupplierSummaryCsvExporter
   def export(params)
-    csv = Csv::ViewModel.new
+    csv = Table::ViewModel.new
     csv << columns
     csv.concat(find_skus(params))
   end
