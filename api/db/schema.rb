@@ -11,11 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160125095958) do
+ActiveRecord::Schema.define(version: 20160127173338) do
 
   create_table "barcodes", force: :cascade do |t|
-    t.integer "sku_id",  limit: 4
-    t.string  "barcode", limit: 255
+    t.integer  "sku_id",     limit: 4
+    t.string   "barcode",    limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "barcodes", ["barcode"], name: "index_barcodes_on_barcode", using: :btree
@@ -631,8 +633,8 @@ ActiveRecord::Schema.define(version: 20160125095958) do
   add_index "purchase_orders", ["po_number"], name: "ponumber", using: :btree
   add_index "purchase_orders", ["po_season"], name: "po_season", using: :btree
   add_index "purchase_orders", ["reporting_pID"], name: "reporting_pID", using: :btree
-  add_index "purchase_orders", ["status"], name: "status", using: :btree
   add_index "purchase_orders", ["sku_id"], name: "index_purchase_orders_on_sku_id", using: :btree
+  add_index "purchase_orders", ["status"], name: "status", using: :btree
 
   create_table "refused_deliveries_log", force: :cascade do |t|
     t.date    "delivery_date",                              null: false
