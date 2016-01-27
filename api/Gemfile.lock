@@ -43,6 +43,10 @@ GEM
     aws-sdk-v1 (1.64.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
+    axlsx (2.0.1)
+      htmlentities (~> 4.3.1)
+      nokogiri (>= 1.4.1)
+      rubyzip (~> 1.0.0)
     brakeman (3.1.1)
       erubis (~> 2.6)
       fastercsv (~> 1.5)
@@ -92,6 +96,7 @@ GEM
     haml (4.0.7)
       tilt
     highline (1.7.8)
+    htmlentities (4.3.4)
     i18n (0.7.0)
     json (1.8.3)
     kaminari (0.16.2)
@@ -192,6 +197,7 @@ GEM
       sexp_processor (~> 4.0)
     ruby_parser (3.7.1)
       sexp_processor (~> 4.1)
+    rubyzip (1.0.0)
     safe_yaml (1.0.4)
     sass (3.4.18)
     scss-lint (0.37.0)
@@ -247,6 +253,7 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk
+  axlsx
   brakeman
   cane (= 2.6.2)
   capybara (= 2.4.1)
