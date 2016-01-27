@@ -2,6 +2,7 @@ import React from 'react';
 import SupplierTerms from './_terms';
 import SupplierTermsForm from './_form';
 import { Link } from 'react-router';
+import { filter } from 'lodash';
 
 export default class SupplierTermsDefault extends React.Component {
   componentWillMount() {
@@ -41,13 +42,8 @@ export default class SupplierTermsDefault extends React.Component {
     if (!(this.props.supplier.termsByVendor)) {
       return this.props.supplier.defaultTerms;
     }
-    let vendorTerm = null;
-    this.props.supplier.termsByVendor.forEach( (term) => {
-      if (term['default']['vendorId'] === brand) {
-        vendorTerm = term['default'];
-      }
-    });
-    return vendorTerm;
+    const vendorTerms = filter(this.props.supplier.termsByVendor, terms => terms.default.vendorId === brand);
+    return (vendorTerms[0] || {}).default;
   }
 
   renderTermsView(term) {
