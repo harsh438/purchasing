@@ -24,7 +24,6 @@ class SuppliersEdit extends React.Component {
                         } };
     this.props.dispatch(loadSupplier(this.props.params.id));
     this.props.dispatch(loadSeasons());
-    this.props.dispatch(loadVendors());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -144,8 +143,7 @@ class SuppliersEdit extends React.Component {
         <SupplierTermsDefault supplier={this.props.supplier}
                               seasons={this.props.seasons}
                               onTermsSave={this.handleTermsSave.bind(this)}
-                              brand={this.state.tab.brands}
-                              brands={this.props.brands} />
+                              brand={this.state.tab.brands} />
       );
     case 'history':
       return (
