@@ -47,9 +47,12 @@ feature 'Batch importing Barcodes' do
     barcodes = [{ sku: skus.first.sku,
                   brand_size: skus.first.manufacturer_size,
                   barcode: 'new' },
+                { sku: skus.second.sku,
+                  brand_size: skus.second.manufacturer_size,
+                  barcode: 'new2' },
                 { sku: 'nope',
                   brand_size: 'derk',
-                  barcode: 'new2' }]
+                  barcode: 'new3' }]
     page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
   end
 
@@ -99,8 +102,8 @@ feature 'Batch importing Barcodes' do
 
   let(:skus) do
     [create(:sku),
-     create(:sku, sku: '-bob-small', manufacturer_size: 'small'),
-     create(:sku, sku: '-bob-large', manufacturer_size: 'large')]
+     create(:sku_without_barcode, sku: '-bob-small', manufacturer_size: 'small'),
+     create(:sku_without_barcode, sku: '-bob-large', manufacturer_size: 'large')]
   end
 
   let(:negative_sku) { create(:sku_without_barcode) }
