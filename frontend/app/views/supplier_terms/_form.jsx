@@ -114,7 +114,7 @@ export default class SupplierTermsForm extends React.Component {
           <td>
             <select className="form-control" id="vendorId" name="vendorId" value={this.getField('vendorId')}
                     required>
-              <option value="">{ brandText }</option>
+              <option value="">{brandText}</option>
               {this.props.brands.map((brand) => {
                 return <option value={brand.id}>{brand.name}</option>;
               })}
