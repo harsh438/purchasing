@@ -744,6 +744,8 @@ ActiveRecord::Schema.define(version: 20160127173338) do
   end
 
   add_index "skus", ["manufacturer_sku"], name: "index_skus_on_manufacturer_sku", using: :btree
+  add_index "skus", ["option_id"], name: "index_skus_on_option_id", using: :btree
+  add_index "skus", ["product_id"], name: "index_skus_on_product_id", using: :btree
   add_index "skus", ["season"], name: "index_skus_on_season", using: :btree
   add_index "skus", ["sku"], name: "index_skus_on_sku", using: :btree
 
