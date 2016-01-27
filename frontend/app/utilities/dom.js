@@ -54,7 +54,9 @@ export function renderSuccesses(messages) {
   return renderFlashes('success', messages);
 }
 
-export function renderCsvExportLink(url, { text = 'Export as CSV', disabled = false }) {
+export function renderCsvExportLink(url, options = {}) {
+  const { disabled, text } = { text: 'Export as CSV', disabled: false, ...options };
+  
   return (
     <a href={url}
        className="btn btn-default"
