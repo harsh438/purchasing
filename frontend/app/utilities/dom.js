@@ -54,11 +54,12 @@ export function renderSuccesses(messages) {
   return renderFlashes('success', messages);
 }
 
-export function renderCsvExportLink(url, text = 'Export as CSV') {
+export function renderCsvExportLink(url, { text = 'Export as CSV', disabled = false }) {
   return (
     <a href={url}
        className="btn btn-default"
-       target="_blank">
+       target="_blank"
+       disabled={disabled}>
       <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
       &nbsp;{text}
     </a>

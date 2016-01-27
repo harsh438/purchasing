@@ -66,9 +66,8 @@ class SkusIndex extends React.Component {
   }
 
   renderCSVButton() {
-    if (!isEmpty(this.props.location.query.filters)) {
-      return renderCsvExportLink(this.supplierSkuSummaryExportUrl());
-    }
+    const disabled = isEmpty(this.props.location.query.filters);
+    return renderCsvExportLink(this.supplierSkuSummaryExportUrl(), { disabled });
   }
 
   supplierSkuSummaryExportUrl() {

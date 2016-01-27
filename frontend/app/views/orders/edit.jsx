@@ -87,7 +87,7 @@ class OrdersEdit extends React.Component {
 
             <div className="panel-body">
               <div className="text-right">
-                {renderCsvExportLink(this.orderSkuExportUrl(this.props.order), 'Export all SKUs as CSV')}
+                {renderCsvExportLink(this.orderSkuExportUrl(this.props.order), { text: 'Export all SKUs as CSV' })}
               </div>
 
               <hr />
