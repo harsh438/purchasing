@@ -116,7 +116,7 @@ export default class SupplierTermsForm extends React.Component {
                     required>
               <option value="">{brandText}</option>
               {this.props.brands.map((brand) => {
-                return <option value={brand.id}>{brand.name}</option>;
+                return <option key={brand.id} value={brand.id}>{brand.name}</option>;
               })}
               </select>
           </td>
