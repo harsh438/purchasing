@@ -101,6 +101,7 @@ export default class SupplierTermsForm extends React.Component {
 
   renderBrandField() {
     switch (this.props.brand) {
+    case 'default': return ;
     case 'new':
       let brandText = '--- Please select a brand ---';
       if (this.props.brands.length === 0) {
@@ -121,8 +122,6 @@ export default class SupplierTermsForm extends React.Component {
               </select>
           </td>
         </tr>);
-    case 'default':
-      return ;
     default:
       return (
         <tr>
