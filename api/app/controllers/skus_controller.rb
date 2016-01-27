@@ -27,6 +27,7 @@ class SkusController < ApplicationController
   def supplier_summary
     respond_to do |format|
       format.csv { render_supplier_summary_csv }
+      format.xlsx { render_supplier_summary_xlsx }
     end
   end
 
@@ -66,5 +67,9 @@ class SkusController < ApplicationController
 
   def render_supplier_summary_csv
     render csv: Sku::SupplierSummaryCsvExporter.new.export(params)
+  end
+
+  def render_supplier_summary_xlsx
+    render xlsx: Sku::SupplierSummaryCsvExporter.new.export(params)
   end
 end

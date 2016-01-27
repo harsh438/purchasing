@@ -21,6 +21,7 @@ group :test do
   gem 'rspec-its',                '1.0.1'
   gem 'rspec-rails',              '3.2.1'
   gem 'rspec',                    '3.2.0'
+  gem 'simple_xlsx_reader'
   gem 'scss-lint',                '~> 0.37.0'
   gem 'simplecov-rcov',           '0.2.3'
   gem 'simplecov',                '0.9.2'
