@@ -159,7 +159,7 @@ class SuppliersEdit extends React.Component {
     if (brand === 'default') {
       brand = null;
     }
-    if (!(this.props.supplier.termsByVendor)) {
+    if (!this.props.supplier.termsByVendor) {
       return this.props.supplier.terms;
     }
     let history = [];
