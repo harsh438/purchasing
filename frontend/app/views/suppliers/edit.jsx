@@ -27,7 +27,7 @@ class SuppliersEdit extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.state.switchBrandsTab) {
-      this.handleTabChange('brands', this.state.switchBrandsTab);
+      this.handleTabChange('vendors', this.state.switchBrandsTab);
       this.setState({ switchBrandsTab: null });
     }
   }
@@ -72,7 +72,7 @@ class SuppliersEdit extends React.Component {
   }
 
   renderDefaultHistoryTab() {
-    if (this.state.tab.brands === 'new') { return ; }
+    if (this.state.tab.vendors === 'new') { return ; }
     return (
       <Nav bsStyle="pills"
         activeKey={this.state.tab.terms}
@@ -87,8 +87,8 @@ class SuppliersEdit extends React.Component {
     return (
      <div className="col-md-6" style={{ marginBottom: '10px' }}>
       <Nav bsStyle="tabs"
-           onSelect={this.handleTabChange.bind(this, 'brands')}
-           activeKey={this.state.tab.brands}
+           onSelect={this.handleTabChange.bind(this, 'vendors')}
+           activeKey={this.state.tab.vendors}
         >
         <NavItem key="default" eventKey="default">All Brands</NavItem>
         {this.renderBrandList()}
@@ -133,7 +133,7 @@ class SuppliersEdit extends React.Component {
 
   renderTermsTab() {
     let tabTerms = this.state.tab.terms;
-    if (this.state.tab.brands === 'new') {
+    if (this.state.tab.vendors === 'new') {
       tabTerms = 'default';
     }
     switch (tabTerms) {
@@ -142,19 +142,19 @@ class SuppliersEdit extends React.Component {
         <SupplierTermsDefault supplier={this.props.supplier}
                               seasons={this.props.seasons}
                               onTermsSave={this.handleTermsSave.bind(this)}
-                              brand={this.state.tab.brands} />
+                              brand={this.state.tab.vendors} />
       );
     case 'history':
       return (
         <SuppliersTermsTable terms={this.getTermHistoryByBrand()}
                              termsSelected={[]}
-                             brand={this.state.tab.brands} />
+                             brand={this.state.tab.vendors} />
       );
     }
   }
 
   getTermHistoryByBrand() {
-    let brand = this.state.tab.brands;
+    let brand = this.state.tab.vendors;
     if (brand === 'default') {
       brand = null;
     }
@@ -257,7 +257,7 @@ class SuppliersEdit extends React.Component {
   }
 
   handleTermsSave(terms) {
-    if (this.state.tab.brands === 'new') {
+    if (this.state.tab.vendors === 'new') {
       this.setState({ switchBrandsTab: parseInt(terms.vendorId, 10) });
     }
     this.props.dispatch(saveSupplierTerms(this.props.supplier.id, terms));
