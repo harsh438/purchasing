@@ -29,7 +29,7 @@ export default class SupplierTermsDefault extends React.Component {
                          seasons={this.props.seasons}
                          onFormSubmit={this.handleTermsSave.bind(this)}
                          brand={this.props.brand}
-                         brands={this.props.brands} />
+                         brands={this.props.supplier.vendors} />
     );
   }
 
