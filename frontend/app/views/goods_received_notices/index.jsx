@@ -10,17 +10,26 @@ import { renderSelectOptions } from '../../utilities/dom';
 
 class GoodsReceivedNoticesIndex extends React.Component {
   componentWillMount() {
-    this.state = { editing: false,
+    this.state = { currentDate: new Date(),
+                   editing: false,
                    startDateMonth: this.startDateMonth(),
-                   startDateYear: this.startDateYear() };
-    this.props.dispatch(loadGoodsReceivedNotices(this.startDate()));
+                   startDateYear: this.startDateYear(),
+                 };
+    this.loadCurrentDate();
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.location.query.startDate !== nextProps.location.query.startDate) {
-      this.setState({ editing: false });
-      this.props.dispatch(loadGoodsReceivedNotices(this.startDate(nextProps)));
+      const startDate = nextProps.location.query.startDate || moment().format('DD/MM/YYYY');
+      let date = moment(startDate, 'DD/MM/YYYY').toDate();
+      this.setState({ editing: false, currentDate: date });
+      this.loadCurrentDate(date);
     }
+  }
+
+  loadCurrentDate(date = this.state.currentDate) {
+    const dateFormat = moment(date).format('DD/MM/YYYY');
+    this.props.dispatch(loadGoodsReceivedNotices(dateFormat));
   }
 
   render() {
@@ -206,17 +215,16 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   handleFilter() {
     const nextDate = `01/${this.state.startDateMonth}/${this.state.startDateYear}`;
+    this.setState({ currentDate: moment(nextDate, 'DD/MM/YYYY').toDate() });
     this.props.dispatch(loadGoodsReceivedNotices(nextDate));
   }
 
-  startDate(props = this.props) {
-    const { startDate } = props.location.query;
-
-    if (startDate) {
-      return startDate;
-    } else {
-      return this.now();
+  startDate() {
+    let date = new Date();
+    if (this.state && this.state.currentDate) {
+      date = this.state.currentDate;
     }
+    return moment(date).format('DD/MM/YYYY');
   }
 
   startDateMonth() {
