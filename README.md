@@ -23,10 +23,9 @@ Originally brought to you by the [Made Tech team](https://github.com/madetech).
 
 ## Developing
 
-**Booting API for the first time**
+**Booting the project for the first time**
 
 ```sh
-cd api/
 docker-compose up
 ```
 
@@ -63,53 +62,22 @@ Now import the [redacted dataset][redacted-data] to your local DB.
 docker-compose build
 ```
 
-**Booting frontend for the first time**
-
-You're recommended to run the frontend outside of Vagrant or other virtualised environments. You may need some additional dependencies.
-
-Install Homebrew if you don't already have it:
-```sh
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
-
-Install node if you don't already have it:
-```sh
-brew install node
-```
-
-Rebuild node-sass:
-```sh
-npm rebuild node-sass
-```
-
-Finally you can install the local node packages:
-```sh
-cd frontend/
-npm install
-```
-
 **Developing frontend**
 
-To watch for JS/SCSS/Image changes run:
+JS/SCSS/Image changes are updated automatically from the frontend docker instance, no action is needed.
 
-```sh
-cd frontend/
-npm run watch
-```
 
 The first build takes a bit of time but subsequent builds will be faster.
 
 **Running tests locally**
 
 ```sh
-cd api/
 docker-compose run web rspec
 ```
 
 **Running entire build locally**
 
 ```sh
-cd api/
 docker-compose run web rake build
 ```
 
