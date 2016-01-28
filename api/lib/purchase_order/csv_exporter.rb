@@ -19,7 +19,7 @@ class PurchaseOrder::CsvExporter
        brand_size
        quantity
        supplier_list_price
-       product_cost
+       discounted_cost
        total)
   end
 

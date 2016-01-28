@@ -172,6 +172,10 @@ class PurchaseOrderLineItem < ActiveRecord::Base
     cost
   end
 
+  def discounted_cost
+    cost
+  end
+
   def product_sized?
     product_size.present? or option_id > 0
   end
