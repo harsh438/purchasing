@@ -75,7 +75,11 @@ class GoodsReceivedNoticesIndex extends React.Component {
                   style={{ width: '49%', marginRight: '1%' }}
                   value={this.state.startDateMonth}
                   onChange={this.handleFormChange.bind(this)}>
-            {renderSelectOptions(moment.months())}
+            {renderSelectOptions(moment.months().map(
+              function (month, index) {
+                return {name: month, id: index + 1}
+              }))
+            }
           </select>
 
           <select className="form-control pull-left"
@@ -201,8 +205,8 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   handleFilter() {
-    console.log(`01/${this.state.startDateMonth}/${this.state.startDateYear}`);
-    // this.props.history.pushState(null, '/', { startDate: `01/${this.state.startDateMonth}/` });
+    const nextDate = `01/${this.state.startDateMonth}/${this.state.startDateYear}`;
+    this.props.dispatch(loadGoodsReceivedNotices(nextDate));
   }
 
   startDate(props = this.props) {
