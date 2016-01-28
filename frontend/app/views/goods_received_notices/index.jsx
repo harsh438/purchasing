@@ -16,7 +16,6 @@ class GoodsReceivedNoticesIndex extends React.Component {
                    startDateYear: this.startDateYear(),
                  };
     this.loadCurrentDate();
-    this.loadCurrentDate();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -87,7 +86,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
                   onChange={this.handleFormChange.bind(this)}>
             {renderSelectOptions(moment.months().map(
               function (month, index) {
-                return { name: month, id: index + 1 };
+                return { name: month, id: (index + 1) < 9 ? `0${index}` : index  };
               }))
             }
           </select>
@@ -216,8 +215,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   handleFilter() {
     const nextDate = `01/${this.state.startDateMonth}/${this.state.startDateYear}`;
-    this.setState({ currentDate: moment(nextDate, 'DD/MM/YYYY').toDate() });
-    this.props.dispatch(loadGoodsReceivedNotices(nextDate));
+    this.props.history.pushState(null, this.props.route.path, {startDate: nextDate});
   }
 
   startDate() {
@@ -229,7 +227,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   startDateMonth() {
-    return moment(this.startDate(), 'DD/MM/YYYY').format('MMMM');
+    return moment(this.startDate(), 'DD/MM/YYYY').format('MM');
   }
 
   startDateYear() {
