@@ -216,7 +216,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   handleFilter() {
     const nextDate = `01/${this.state.startDateMonth}/${this.state.startDateYear}`;
-    this.props.history.pushState(null, this.props.route.path, {startDate: nextDate});
+    this.props.history.pushState(null, this.props.route.path, { startDate: nextDate });
   }
 
   startDate() {
