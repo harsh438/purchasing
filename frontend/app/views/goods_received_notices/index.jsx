@@ -77,7 +77,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
                   onChange={this.handleFormChange.bind(this)}>
             {renderSelectOptions(moment.months().map(
               function (month, index) {
-                return {name: month, id: index + 1}
+                return { name: month, id: index + 1 };
               }))
             }
           </select>
