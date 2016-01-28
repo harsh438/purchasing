@@ -16,11 +16,12 @@ class GoodsReceivedNoticesIndex extends React.Component {
                    startDateYear: this.startDateYear(),
                  };
     this.loadCurrentDate();
+    this.loadCurrentDate();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (moment(this.state.currentDate).format('DD/MM/YYYY') !== nextProps.location.query.startDate) {
-      const startDate = nextProps.location.query.startDate || moment().format('DD/MM/YYYY');
+    let startDate = nextProps.location.query.startDate || moment().format('DD/MM/YYYY');
+    if (moment(this.state.currentDate).format('DD/MM/YYYY') !== startDate) {
       let date = moment(startDate, 'DD/MM/YYYY').toDate();
       this.setState({ editing: false, currentDate: date });
       this.loadCurrentDate(date);
