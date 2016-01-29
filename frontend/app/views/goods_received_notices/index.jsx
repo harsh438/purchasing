@@ -19,7 +19,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const now = moment()
+    const now = moment();
     let startDate = moment(nextProps.location.query.startDate, 'DD/MM/YYYY');
     if (!(startDate.isValid())) {
       startDate = moment();
