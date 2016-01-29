@@ -1,4 +1,4 @@
-class PurchaseOrderLineItem::CsvExporter
+class PurchaseOrderLineItem::Exporter
   CSV_DEFAULT_COLUMNS = %w(barcode
                            po_number
                            order_type
