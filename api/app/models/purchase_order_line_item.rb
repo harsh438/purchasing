@@ -337,6 +337,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
     { internal_sku: internal_sku,
       surfdome_sku: surfdome_sku,
       product_cost: number_to_currency(product_cost, options),
+      discounted_cost: number_to_currency(discounted_cost, options),
       product_size: product_size,
       product_rrp: number_to_currency(product_rrp, options),
       category: category,
