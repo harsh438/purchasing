@@ -46,16 +46,26 @@ feature 'SKU generation' do
     then_the_sku_created_should_have_a_language_category
   end
 
-  def when_i_generate_a_single_size_sku_with_a_barcode
-    page.driver.post skus_path(single_size_sku_attrs)
-  end
-
   def when_i_generate_skus_with_a_barcode
     page.driver.post skus_path(sku_with_barcode_attrs)
   end
 
-  def when_i_generate_skus_without_a_barcode
-   page.driver.post skus_path(sku_with_no_barcode_attrs)
+  def then_both_skus_and_legacy_records_should_be_generated
+    check_correct_skus(sku_with_barcode_attrs)
+
+    expect(subject[:sku]).to eq("#{Product.first.id}-#{Element.first.id}")
+    expect(sku_with_barcode_attrs[:barcode]).to eq(sku.barcodes.first.barcode)
+
+    expect(sku.product).to be_a(Product)
+    expect(sku.language_product).to be_a(LanguageProduct)
+    expect(sku.language_product_option).to be_a(LanguageProductOption)
+    expect(sku.element).to be_a(Element)
+    expect(sku.option).to be_a(Option)
+    expect(sku.language_category).to be_a(LanguageCategory)
+  end
+
+  def when_i_generate_a_single_size_sku_with_a_barcode
+    page.driver.post skus_path(single_size_sku_attrs)
   end
 
   def then_no_legacy_option_should_be_generated
@@ -72,18 +82,8 @@ feature 'SKU generation' do
     expect(sku.language_category).to be_a(LanguageCategory)
   end
 
-  def then_both_skus_and_legacy_records_should_be_generated
-    check_correct_skus(sku_with_barcode_attrs)
-
-    expect(subject[:sku]).to eq("#{Product.first.id}-#{Element.first.id}")
-    expect(sku_with_barcode_attrs[:barcode]).to eq(sku.barcodes.first.barcode)
-
-    expect(sku.product).to be_a(Product)
-    expect(sku.language_product).to be_a(LanguageProduct)
-    expect(sku.language_product_option).to be_a(LanguageProductOption)
-    expect(sku.element).to be_a(Element)
-    expect(sku.option).to be_a(Option)
-    expect(sku.language_category).to be_a(LanguageCategory)
+  def when_i_generate_skus_without_a_barcode
+   page.driver.post skus_path(sku_with_no_barcode_attrs)
   end
 
   def then_only_skus_should_be_generated
