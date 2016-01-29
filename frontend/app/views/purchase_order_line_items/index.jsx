@@ -11,7 +11,7 @@ import { clearPurchaseOrders,
          loadPurchaseOrders,
          loadSummary } from '../../actions/purchase_orders';
 import Filters from './_filters';
-import Table from './_table';
+import PurchaseOrdersTableActions from './_table';
 import { assign, intersection, isEqual, map } from 'lodash';
 import { isEmptyObject } from '../../utilities/inspection';
 
@@ -60,7 +60,7 @@ class PurchaseOrderLineItemsIndex extends React.Component {
                  suppliers={this.props.suppliers}
                  query={this.props.location.query} />
 
-        <Table dispatch={this.props.dispatch}
+        <PurchaseOrdersTableActions dispatch={this.props.dispatch}
                exportable={this.props.exportable}
                purchaseOrders={this.props.purchaseOrders}
                summary={this.props.summary}
