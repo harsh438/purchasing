@@ -137,7 +137,7 @@ export default class PurchaseOrdersTableActions extends React.Component {
          target="_blank"
          {...additionalParams}>
         <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
-        &nbsp;Export as CSV
+        &nbsp;Export as Excel
       </a>
     );
   }
