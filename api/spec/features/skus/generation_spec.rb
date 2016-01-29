@@ -177,6 +177,7 @@ feature 'SKU generation' do
       cost_price: 12.06,
       price: 18.00,
       lead_gender: 'M',
+      listing_genders: 'M',
       product_name: 'Clarks Originals Boots - Clarks Originals BabyWarm - Pale Blue',
       vendor_id: 919,
       category_id: language_category.category.id,
@@ -230,5 +231,6 @@ feature 'SKU generation' do
     expect(subject[:inv_track]).to eq(attrs[:inv_track])
     expect(subject[:category_id]).to eq(attrs[:category_id])
     expect(subject[:gender]).to eq(base_sku_attrs[:lead_gender])
+    expect(subject[:listing_genders]).to eq(attrs[:listing_genders])
   end
 end

@@ -13,6 +13,7 @@ class Product < ActiveRecord::Base
                  color: :pUDFValue2,
                  season: :pUDFValue4,
                  barcode: :pUDFValue1,
+                 listing_genders: :pUDFValue3,
                  inv_track: :invTrack
 
   has_many :product_genders, foreign_key: :pid

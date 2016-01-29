@@ -41,7 +41,7 @@ class SkusController < ApplicationController
     params.permit(:sku, :product_id, :language_product_id,
                   :element_id, :option_id, :category_id, :internal_sku,
                   :category_name,
-                  :manufacturer_sku, :lead_gender, :vendor_id,
+                  :manufacturer_sku, :lead_gender, :listing_genders, :vendor_id,
                   :product_name,
                   :manufacturer_color,
                   :manufacturer_size,

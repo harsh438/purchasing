@@ -33,6 +33,7 @@ class Sku::Exporter
                 manufacturer_sku
                 manufacturer_color
                 manufacturer_size
+                listing_genders
                 inv_track).reduce({}) do |attrs, field|
       attrs.merge(field => sku.send(field))
     end
@@ -184,6 +185,7 @@ class Sku::Exporter
       vendor_id: attrs[:vendor_id],
       season: attrs[:season],
       barcode: attrs[:barcode],
+      listing_genders: attrs[:listing_genders],
       inv_track: attrs[:inv_track] }
   end
 

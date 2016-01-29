@@ -23,6 +23,9 @@ FactoryGirl.define do
     cost_price 19.99
     list_price 29.99
 
+    gender 'M'
+    listing_genders 'M'
+
     vendor
 
     factory :sku do

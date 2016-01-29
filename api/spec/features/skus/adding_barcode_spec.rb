@@ -47,6 +47,7 @@ feature 'Adding a barcode to an existing sku' do
     expect(subject[:product_id]).to_not be(nil)
     expected_cat_name = ProductCategory.find_by(subject[:product_id]).category.language_category.name
     expect(subject[:category_name]).to eq(expected_cat_name)
+    expect(Product.find(subject[:product_id]).listing_genders).to eq('M')
   end
 
   def when_i_add_a_barcode_to_a_sku_for_the_second_time
