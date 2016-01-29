@@ -2,7 +2,8 @@ class PurchaseOrderLineItemsController < ApplicationController
   def index
     respond_to do |format|
       format.json { render_index_json }
-      format.csv { render_index_csv }
+      format.csv { render_exporter(:csv) }
+      format.xlsx { render_exporter(:xlsx) }
     end
   end
 
@@ -27,12 +28,12 @@ class PurchaseOrderLineItemsController < ApplicationController
   private
 
   def render_index_json
-    export_url = url_for(params.merge(format: :csv))
+    export_url = url_for(params.merge(format: :xlsx))
     render json: PurchaseOrderLineItem::Search.new.search(params, export_url: export_url)
   end
 
-  def render_index_csv
-    render csv: PurchaseOrderLineItem::CsvExporter.new.export(params)
+  def render_exporter(format)
+    render format => PurchaseOrderLineItem::Exporter.new.export(params)
   rescue PurchaseOrderLineItem::Filter::NoFiltersError => e
     render plain: 'Please select filters'
   end
