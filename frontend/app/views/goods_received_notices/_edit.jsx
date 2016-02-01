@@ -18,7 +18,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
               </div>
             </form>
 
-            <a href="#close" onClick={this.props.onClose}>close</a>
+            <a onClick={this.props.onClose}>close</a>
           </div>
         </div>
       </div>
