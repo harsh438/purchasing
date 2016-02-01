@@ -27,7 +27,12 @@ class GoodsReceivedNoticesIndex extends React.Component {
     startDate = startDate.format('DD/MM/YYYY');
     if (moment(this.state.currentDate).format('DD/MM/YYYY') !== startDate) {
       let date = moment(startDate, 'DD/MM/YYYY').toDate();
-      this.setState({ editing: false, currentDate: date });
+      this.setState({
+        editing: false,
+        currentDate: date,
+        startDateMonth: date.toISOString().substr(5,2),
+        startDateYear: date.getFullYear(),
+      });
       this.loadCurrentDate(date);
     }
   }
