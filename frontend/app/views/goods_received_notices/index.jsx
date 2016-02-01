@@ -186,9 +186,9 @@ class GoodsReceivedNoticesIndex extends React.Component {
             {week.start} – {week.end}
           </p>
 
-          <span className="badge grn_week__badge" title="Units">{week.units}</span>
-          <span className="badge grn_week__badge" title="Cartons">{week.cartons}</span>
-          <span className="badge grn_week__badge" title="Pallets">{week.pallets}</span>
+          <span className="badge grn_week__badge" title="Units">U {week.units}</span>
+          <span className="badge grn_week__badge" title="Cartons">C {week.cartons}</span>
+          <span className="badge grn_week__badge" title="Pallets">P {week.pallets}</span>
         </Link>
       </li>
     );
