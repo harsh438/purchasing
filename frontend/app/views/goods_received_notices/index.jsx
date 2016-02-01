@@ -97,7 +97,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
             {renderSelectOptions(moment.months().map(
               function (month, index) {
                 index = index + 1;
-                return { name: month, id: (index < 9) ? `0${index}` : index };
+                return { name: month, id: (index < 10) ? `0${index}` : index };
               }))
             }
           </select>
