@@ -24,7 +24,7 @@ class PurchaseOrder::CsvExporter
   end
 
   def line_items_csv(po)
-    PurchaseOrderLineItem::CsvExporter.new.export(po_number: po.id, columns: columns)
+    PurchaseOrderLineItem::Exporter.new.export(po_number: po.id, columns: columns)
   end
 
   def order_number(po)
