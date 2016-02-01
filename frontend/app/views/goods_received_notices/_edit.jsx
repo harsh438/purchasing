@@ -16,8 +16,21 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                   <option>Nike</option>
                 </select>
               </div>
+              <div className="col-xs-12">
+                <div className="form-group col-xs-3">
+                  <label for="units">Units</label>
+                  <input name="units" className="form-control" />
+                </div>
+                <div className="form-group col-xs-3">
+                  <label for="cartons">Cartons</label>
+                  <input name="cartons" className="form-control" />
+                </div>
+                <div className="form-group col-xs-3">
+                  <label>Palettes</label>
+                  <input name="palettes" className="form-control" />
+                </div>
+              </div>
             </form>
-
             <a onClick={this.props.onClose}>close</a>
           </div>
         </div>
