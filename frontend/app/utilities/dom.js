@@ -55,8 +55,8 @@ export function renderSuccesses(messages) {
 }
 
 export function renderCsvExportLink(url, options = {}) {
-  const { disabled, text } = { text: 'Export as CSV', disabled: false, ...options };
-  
+  const { disabled, text } = { text: 'Export as Excel', disabled: false, ...options };
+
   return (
     <a href={url}
        className="btn btn-default"
