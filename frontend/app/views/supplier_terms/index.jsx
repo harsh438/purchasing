@@ -51,11 +51,10 @@ class SuppliersTermsIndex extends React.Component {
               </div>
             </div>
 
-            <div className="text-right">
-              {renderCsvExportLink(this.exportUrl())}
-            </div>
 
+            {this.renderCSVBlock()}
             <hr />
+
 
             <SuppliersTable terms={this.props.supplierTerms}
                             termsSelected={this.termsSelected()}
@@ -68,6 +67,16 @@ class SuppliersTermsIndex extends React.Component {
         </div>
       </div>
     );
+  }
+
+  renderCSVBlock() {
+    if (this.props.location.query.filters && this.props.location.query.filters.terms) {
+      return (
+        <div className="text-right">
+          {renderCsvExportLink(this.exportUrl())}
+        </div>
+      );
+    }
   }
 
   loadPage(page = this.props.location.query.page, filters = this.props.location.query.filters) {
