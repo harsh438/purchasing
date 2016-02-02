@@ -142,7 +142,7 @@ class OrdersEdit extends React.Component {
   }
 
   purchaseOrderSummaryExportUrl(po) {
-    return `/api/purchase_orders/${po.id}.csv`;
+    return `/api/purchase_orders/${po.id}.xlsx`;
   }
 
   purchaseOrderSkuExportUrl(po) {
