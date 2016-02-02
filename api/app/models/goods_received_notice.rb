@@ -26,20 +26,24 @@ class GoodsReceivedNotice < ActiveRecord::Base
                  received_at: :DateReceived,
                  page_count: :NoOfPages,
                  units_received: :UnitsReceived,
-                 cartons_received: :CartonsReceived
+                 cartons_received: :CartonsReceived,
+                 booked_in_at: :BookedInDate,
+                 order_id: :OrderID
 
   belongs_to :order, foreign_key: :OrderID
   has_many :goods_received_notice_events, foreign_key: :grn
   has_many :vendors, through: :goods_received_notice_events
   has_many :purchase_orders, through: :goods_received_notice_events
 
-  def received_at
-    date = super
+  after_initialize :ensure_defaults
 
-    unless date.to_s === '00/00/0000' or date.to_s === '01/01/0001'
-      date
-    end
-  end
+  # def received_at
+  #   date = super
+
+  #   unless date.to_s === '00/00/0000' or date.to_s === '01/01/0001'
+  #     date
+  #   end
+  # end
 
   def late?
     delivery_date < Date.today
@@ -73,5 +77,23 @@ class GoodsReceivedNotice < ActiveRecord::Base
       grn[:status] = status
       grn[:vendor_name] = vendor_name
     end
+  end
+
+  private
+
+  def ensure_defaults
+    self.received ||= 0
+    self.checking ||= 0
+    self.checked ||= 0
+    self.processing ||= 0
+    self.processed ||= 0
+    self.booked_in_at ||= Time.now
+    self.received_at ||= 0
+    self.page_count ||= 0
+    self.order_id ||= 0
+    self.cartons_received ||= 0
+    self.units ||= 0
+    self.cartons ||= 0
+    self.pallets ||= 0
   end
 end
