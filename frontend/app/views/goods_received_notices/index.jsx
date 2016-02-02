@@ -110,7 +110,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
             {renderSelectOptions([2012, 2013, 2014, 2015, 2016, 2017, 2018])}
           </select>
 
-          <button className="btn btn-success pull-left"
+          <button className="btn btn-primary pull-left"
                   style={{ width: '15%' }}
                   disabled={this.monthAndYearMatches()}
                   onClick={this.handleFilter.bind(this)}>
