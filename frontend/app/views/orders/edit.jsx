@@ -87,7 +87,7 @@ class OrdersEdit extends React.Component {
 
             <div className="panel-body">
               <div className="text-right">
-                {renderCsvExportLink(this.orderSkuExportUrl(this.props.order), { text: 'Export all SKUs as CSV' })}
+                {renderCsvExportLink(this.orderSkuExportUrl(this.props.order), { text: 'Export all SKUs as Excel' })}
               </div>
 
               <hr />
@@ -100,6 +100,7 @@ class OrdersEdit extends React.Component {
                     <th className="text-right">SKU Export</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {this.renderPurchaseOrders()}
                 </tbody>
@@ -137,7 +138,7 @@ class OrdersEdit extends React.Component {
   }
 
   orderSkuExportUrl(order) {
-    return `/api/skus.csv?order_id=${order.id}`;
+    return `/api/skus.xlsx?order_id=${order.id}`;
   }
 
   purchaseOrderSummaryExportUrl(po) {
@@ -145,7 +146,7 @@ class OrdersEdit extends React.Component {
   }
 
   purchaseOrderSkuExportUrl(po) {
-    return `/api/skus.csv?purchase_order_id=${po.id}`;
+    return `/api/skus.xlsx?purchase_order_id=${po.id}`;
   }
 
   handleOrderLineItemsAdd(lineItems) {
