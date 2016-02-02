@@ -32,6 +32,10 @@ export default class SuppliersTermsTable extends React.Component {
     );
   }
 
+  termsSelected() {
+    return this.props.termsSelected || [];
+  }
+
   renderSupplierNameTitle() {
     if (this.props.hasSupplierName) {
       return (
@@ -41,16 +45,16 @@ export default class SuppliersTermsTable extends React.Component {
   }
 
   renderTermsSelectedTitle() {
-    if (this.props.termsSelected.length) {
+    if (this.termsSelected.length) {
       return (<th>Terms</th>);
     }
   }
 
   renderTermsSelectedRow(term) {
-    if (this.props.termsSelected.length) {
+    if (this.termsSelected.length) {
       return (
         <td>
-          <SupplierTerms termsSelected={map(this.props.termsSelected, camelCase)}
+          <SupplierTerms termsSelected={map(termsSelected, camelCase)}
                          terms={term} />
         </td>
       );
