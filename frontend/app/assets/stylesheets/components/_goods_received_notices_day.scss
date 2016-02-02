@@ -12,6 +12,14 @@
   }
 }
 
+.grn_day__heading {
+  text-align: center;
+
+  .grn_day--compact & {
+    text-align: left;
+  }
+}
+
 .grn_day__title {
   font-size: 1.2em;
   font-weight: bold;
@@ -23,10 +31,6 @@
   background: #555 !important;
   font-size: 1.1em;
   margin-left: 5px;
-
-  .grn_day--compact & {
-    display: none;
-  }
 }
 
 .grn_day__add_btn--before-grns,

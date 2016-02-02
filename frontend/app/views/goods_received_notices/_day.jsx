@@ -8,7 +8,7 @@ export default class GoodsReceivedNoticesDay extends React.Component {
     return (
       <div className={this.containerClass()}>
         <div className="panel panel-default">
-          <div className="panel-heading text-center">
+          <div className="panel-heading grn_day__heading">
             <div className="grn_day__title">{this.deliveryDate()}</div>
 
             <span className="badge grn_day__badge" title="Units">{this.props.units} U</span>
