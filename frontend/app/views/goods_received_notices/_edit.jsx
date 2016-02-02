@@ -25,17 +25,17 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
                 <div className="form-group grn_edit__form_group--units">
                   <label htmlFor="units">Units</label>
-                  <input name="units" className="form-control" />
+                  <input type="number" name="units" className="form-control" />
                 </div>
 
                 <div className="form-group grn_edit__form_group--cartons">
                   <label htmlFor="cartons">Cartons</label>
-                  <input name="cartons" className="form-control" />
+                  <input type="number" name="cartons" className="form-control" />
                 </div>
 
                 <div className="form-group grn_edit__form_group--palettes">
                   <label>Palettes</label>
-                  <input name="palettes" className="form-control" />
+                  <input type="number" name="palettes" className="form-control" />
                 </div>
 
                 <div className="text-right">
