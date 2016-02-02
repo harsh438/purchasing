@@ -37,6 +37,10 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                   <label>Palettes</label>
                   <input name="palettes" className="form-control" />
                 </div>
+
+                <div className="text-right">
+                  <button className="btn btn-success">Add</button>
+                </div>
               </div>
             </form>
             <a onClick={this.props.onClose}>close</a>
