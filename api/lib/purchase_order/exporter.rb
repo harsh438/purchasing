@@ -1,4 +1,4 @@
-class PurchaseOrder::CsvExporter
+class PurchaseOrder::Exporter
   def export(attrs)
     po = PurchaseOrder.find(attrs[:id])
     line_items_csv(po).tap do |csv|

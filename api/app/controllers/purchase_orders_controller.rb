@@ -12,7 +12,7 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def render_exporter(format)
-    render format => PurchaseOrder::CsvExporter.new.export(params)
+    render format => PurchaseOrder::Exporter.new.export(params)
   end
 
   def cancel
