@@ -23,7 +23,7 @@ feature 'Download supplier terms as CSV' do
   end
 
   def then_they_should_see_an_error
-    expect(page).to have_content('Please select terms')
+    expect(page).to have_content('Please filter by terms')
   end
 
   def when_a_user_downloads_csv_filtered_by_vendor
