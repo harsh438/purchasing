@@ -15,8 +15,8 @@ export default class GoodsReceivedNoticesDay extends React.Component {
           </a>
         </div>
         <div className="panel panel-default">
-          <div className="panel-heading">
-            <span className="grn_day__title">{this.deliveryDate()}</span>
+          <div className="panel-heading text-center">
+            <div className="grn_day__title">{this.deliveryDate()}</div>
 
             <span className="badge grn_day__badge" title="Pallets">{this.props.pallets} P</span>
             <span className="badge grn_day__badge" title="Cartons">{this.props.cartons} C</span>
