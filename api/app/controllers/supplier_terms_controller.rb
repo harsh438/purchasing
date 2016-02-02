@@ -2,7 +2,8 @@ class SupplierTermsController < ApplicationController
   def index
     respond_to do |format|
       format.json { render_index_json }
-      format.csv { render_index_csv }
+      format.csv { render_export(:csv) }
+      format.xlsx { render_export(:xlsx) }
     end
   end
 
@@ -19,8 +20,8 @@ class SupplierTermsController < ApplicationController
                    page: params[:page] }
   end
 
-  def render_index_csv
-    render csv: SupplierTerms::CsvExporter.new.export(params)
+  def render_export(format)
+    render format => SupplierTerms::CsvExporter.new.export(params)
   rescue SupplierTerms::CsvExporter::NoTermsSelectedError => e
     render plain: 'Please filter by terms'
   end
