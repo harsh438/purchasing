@@ -13,9 +13,9 @@ export default class GoodsReceivedNoticesNotice extends React.Component {
         </span>
 
         <span className="grn_notice__badge_group">
-          <span className={this.badgeClass()} title="Units">U {this.props.units}</span>
-          <span className={this.badgeClass()} title="Cartons">C {this.props.cartons}</span>
-          <span className={this.badgeClass()} title="Pallets">P {this.props.pallets}</span>
+          <span className={this.badgeClass()} title="Units">{this.props.units} U</span>
+          <span className={this.badgeClass()} title="Cartons">{this.props.cartons} C</span>
+          <span className={this.badgeClass()} title="Pallets">{this.props.pallets} P</span>
         </span>
       </a>
     );
