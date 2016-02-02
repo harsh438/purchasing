@@ -16,13 +16,12 @@ class SupplierTerms::CsvExporter
 
     columns = csv_columns(params[:filters][:terms])
 
-    CSV.generate do |csv|
-      csv << columns.map(&:humanize)
-
-      supplier_terms.each do |terms|
+    csv = Table::ViewModel.new
+    csv << columns.map(&:humanize)
+    supplier_terms.each do |terms|
         csv << column_values(terms, columns)
-      end
     end
+    csv
   end
 
   private
