@@ -4,7 +4,9 @@ import { Link } from 'react-router';
 import { assign, map } from 'lodash';
 import GoodsReceivedNoticesWeek from './_week';
 import GoodsReceivedNoticesEdit from './_edit';
-import { loadGoodsReceivedNotices } from '../../actions/goods_received_notices';
+import { loadGoodsReceivedNotices,
+         createGoodsReceivedNotice,
+         clearGoodsReceivedNotice } from '../../actions/goods_received_notices';
 import moment from 'moment';
 import { renderSelectOptions } from '../../utilities/dom';
 
@@ -13,8 +15,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.state = { currentDate: new Date(),
                    editing: false,
                    startDateMonth: this.startDateMonth(),
-                   startDateYear: this.startDateYear(),
-                 };
+                   startDateYear: this.startDateYear() };
     this.loadCurrentDate();
   }
 
@@ -45,7 +46,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   render() {
     let leftClass, rightClass;
 
-    if (this.state.editing) {
+    if (this.props.goodsReceivedNotice) {
       leftClass = 'col-md-8';
       rightClass = 'col-md-4';
     } else {
@@ -125,7 +126,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
                    placeholder="GRN #" />
             <span className="input-group-btn">
               <button className="btn btn-primary"
-                      onClick={this.handleToggleEditing.bind(this)}>
+                      onClick={this.handleFind.bind(this)}>
                 Find
               </button>
             </span>
@@ -198,26 +199,34 @@ class GoodsReceivedNoticesIndex extends React.Component {
     const noticesByDates = this.props.noticeWeeks[2];
 
     return (
-      <GoodsReceivedNoticesWeek compact={this.state.editing}
-                                onEditGoodsReceivedNotice={this.handleEditGoodsReceivedNotice.bind(this)}
+      <GoodsReceivedNoticesWeek compact={this.props.goodsReceivedNotice}
+                                onGoodsReceivedNoticeAdd={this.handleGoodsReceivedNoticeAdd.bind(this)}
                                 {...noticesByDates} />
     );
   }
 
   renderEditPanel() {
-    if (this.state.editing) {
+    if (this.props.goodsReceivedNotice) {
       return (
-        <GoodsReceivedNoticesEdit onClose={this.handleToggleEditing.bind(this)} />
+        <GoodsReceivedNoticesEdit goodsReceivedNotice={this.props.goodsReceivedNotice}
+                                  onSave={this.handleGoodsReceivedNoticeSave.bind(this)}
+                                  onClose={this.handleGoodsReceivedNoticeClose.bind(this)} />
       );
     }
   }
 
-  handleToggleEditing() {
-    this.setState({ editing: !this.state.editing });
+  handleGoodsReceivedNoticeClose() {
+    this.props.dispatch(clearGoodsReceivedNotice());
   }
 
-  handleEditGoodsReceivedNotice(id) {
-    this.setState({ editing: true });
+  handleGoodsReceivedNoticeAdd(deliveryDate) {
+    this.props.dispatch(createGoodsReceivedNotice({ deliveryDate }));
+  }
+
+  handleFind() {
+  }
+
+  handleGoodsReceivedNoticeSave() {
   }
 
   handleFormChange({ target }) {

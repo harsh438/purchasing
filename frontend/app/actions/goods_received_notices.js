@@ -14,3 +14,21 @@ export function loadGoodsReceivedNotices(middleWeekStart) {
       .then(goodsReceivedNotices => dispatch({ goodsReceivedNotices, type: 'SET_GOODS_RECEIVED_NOTICES' }));
   };
 }
+
+export function createGoodsReceivedNotice({ deliveryDate }) {
+  return dispatch => {
+    const formattedDeliveryDate = moment(deliveryDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    const goodsReceivedNotice = { goods_received_notice: { delivery_date: formattedDeliveryDate } };
+
+    fetch('/api/goods_received_notices.json', { credentials: 'same-origin',
+                                                method: 'post',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify(goodsReceivedNotice) })
+      .then(response => response.json())
+      .then(goodsReceivedNotice => dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' }));
+  };
+}
+
+export function clearGoodsReceivedNotice() {
+  return { type: 'CLEAR_GOODS_RECEIVED_NOTICE' };
+}

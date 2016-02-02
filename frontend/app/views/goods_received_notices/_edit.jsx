@@ -1,16 +1,25 @@
 import React from 'react';
 
 export default class GoodsReceivedNoticesEdit extends React.Component {
+  componentWillMount() {
+    this.state = {};
+  }
+
   render() {
     return (
       <div className="grn_edit">
         <div className="panel panel-default">
           <div className="panel-heading">
-            <h3 className="panel-title">GRN #0004</h3>
+            <h3 className="panel-title">
+              GRN #{this.props.goodsReceivedNotice.id}
+              &nbsp;–&nbsp;
+              {this.props.goodsReceivedNotice.deliveryDate}
+            </h3>
           </div>
 
           <div className="panel-body">
-            <form>
+            <form onChange={this.handleChange.bind(this)}
+                  onSubmit={this.handleSubmit.bind(this)}>
               <div className="form-group">
                 <select className="form-control">
                   <option>Nike</option>
@@ -48,5 +57,14 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         </div>
       </div>
     );
+  }
+
+  handleChange({ target }) {
+    this.setState({ [target.name]: target.value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.onSave(this.state);
   }
 }

@@ -17,7 +17,7 @@ export default class GoodsReceivedNoticesDay extends React.Component {
 
             <a href="#add"
                className="grn_day__add_btn--before-grns btn btn-default"
-               onClick={this.handleEditGoodsReceivedNotice.bind(this)}>
+               onClick={this.handleGoodsReceivedNoticeAdd.bind(this)}>
               <span className="glyphicon glyphicon-plus"></span>
             </a>
           </div>
@@ -30,7 +30,7 @@ export default class GoodsReceivedNoticesDay extends React.Component {
         <div className="text-center">
           <a href="#add"
              className="grn_day__add_btn--after-grns btn btn-default"
-             onClick={this.handleEditGoodsReceivedNotice.bind(this)}>
+             onClick={this.handleGoodsReceivedNoticeAdd.bind(this)}>
             <span className="glyphicon glyphicon-plus"></span>
           </a>
         </div>
@@ -63,8 +63,8 @@ export default class GoodsReceivedNoticesDay extends React.Component {
     return moment(this.props.deliveryDate, 'DD/MM/YYYY').format('ddd, Do MMM');
   }
 
-  handleEditGoodsReceivedNotice(e) {
+  handleGoodsReceivedNoticeAdd(e) {
     e.preventDefault();
-    this.props.onEditGoodsReceivedNotice();
+    this.props.onGoodsReceivedNoticeAdd(this.props.deliveryDate);
   }
 }
