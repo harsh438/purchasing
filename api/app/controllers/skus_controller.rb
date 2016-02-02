@@ -2,7 +2,8 @@ class SkusController < ApplicationController
   def index
     respond_to do |format|
       format.json { render_index_json }
-      format.csv { render_index_csv }
+      format.csv { render_exporter(:csv) }
+      format.xlsx { render_exporter(:xlsx) }
     end
   end
 
@@ -61,8 +62,8 @@ class SkusController < ApplicationController
                    page: params[:page] || 1 }
   end
 
-  def render_index_csv
-    render csv: Sku::CsvExporter.new.export(params)
+  def render_exporter(format)
+    render format => Sku::CsvExporter.new.export(params)
   end
 
   def supplier_summary_export
