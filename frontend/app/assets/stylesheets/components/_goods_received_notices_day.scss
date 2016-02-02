@@ -29,19 +29,30 @@
   }
 }
 
-.grn_day__add_btn {
+.grn_day__add_btn--before-grns,
+.grn_day__add_btn--after-grns {
   background: rgba(245,245,245, 0);
   border-color: #ddd;
   font-size: 1em;
   -webkit-transition: all .1s ease-in;
   position: relative;
-  padding-top: 10px;
-  top: -25px;
-  z-index: 0;
 
   .glyphicon {
     top: 0;
   }
+}
+
+.grn_day__add_btn--before-grns {
+  position: absolute;
+  right: .5em;
+  top: .5em;
+  background: white;
+}
+
+.grn_day__add_btn--after-grns {
+  padding-top: 10px;
+  top: -25px;
+  z-index: 0;
 
   &:hover,
   &:focus {

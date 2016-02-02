@@ -14,6 +14,12 @@ export default class GoodsReceivedNoticesDay extends React.Component {
             <span className="badge grn_day__badge" title="Pallets">{this.props.pallets} P</span>
             <span className="badge grn_day__badge" title="Cartons">{this.props.cartons} C</span>
             <span className="badge grn_day__badge" title="Units">{this.props.units} U</span>
+
+            <a href="#add"
+               className="grn_day__add_btn--before-grns btn btn-default"
+               onClick={this.handleEditGoodsReceivedNotice.bind(this)}>
+              <span className="glyphicon glyphicon-plus"></span>
+            </a>
           </div>
 
           <div className="list-group">
@@ -23,7 +29,7 @@ export default class GoodsReceivedNoticesDay extends React.Component {
 
         <div className="text-center">
           <a href="#add"
-             className="grn_day__add_btn btn btn-default"
+             className="grn_day__add_btn--after-grns btn btn-default"
              onClick={this.handleEditGoodsReceivedNotice.bind(this)}>
             <span className="glyphicon glyphicon-plus"></span>
           </a>
