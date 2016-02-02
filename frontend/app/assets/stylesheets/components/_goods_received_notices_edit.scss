@@ -1,0 +1,17 @@
+.grn_edit__form_group--purchase_order,
+.grn_edit__form_group--units,
+.grn_edit__form_group--cartons,
+.grn_edit__form_group--palettes {
+  float: left;
+}
+
+.grn_edit__form_group--units,
+.grn_edit__form_group--cartons,
+.grn_edit__form_group--palettes {
+  width: 18%;
+  margin-left: 2%;
+}
+
+.grn_edit__form_group--purchase_order {
+  width: 40%;
+}

@@ -16,16 +16,24 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                   <option>Nike</option>
                 </select>
               </div>
-              <div className="col-xs-12">
-                <div className="form-group col-xs-3">
-                  <label for="units">Units</label>
+
+              <div>
+                <div className="form-group grn_edit__form_group--purchase_order">
+                  <label htmlFor="po">PO #</label>
+                  <select name="po" className="form-control"></select>
+                </div>
+
+                <div className="form-group grn_edit__form_group--units">
+                  <label htmlFor="units">Units</label>
                   <input name="units" className="form-control" />
                 </div>
-                <div className="form-group col-xs-3">
-                  <label for="cartons">Cartons</label>
+
+                <div className="form-group grn_edit__form_group--cartons">
+                  <label htmlFor="cartons">Cartons</label>
                   <input name="cartons" className="form-control" />
                 </div>
-                <div className="form-group col-xs-3">
+
+                <div className="form-group grn_edit__form_group--palettes">
                   <label>Palettes</label>
                   <input name="palettes" className="form-control" />
                 </div>
