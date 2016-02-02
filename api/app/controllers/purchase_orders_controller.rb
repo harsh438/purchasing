@@ -4,7 +4,15 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def show
-    render csv: PurchaseOrder::CsvExporter.new.export(params)
+    respond_to do |format|
+      format.json { render_index_json }
+      format.csv { render_exporter(:csv) }
+      format.xlsx { render_exporter(:xlsx) }
+    end
+  end
+
+  def render_exporter(format)
+    render format => PurchaseOrder::Exporter.new.export(params)
   end
 
   def cancel
