@@ -36,7 +36,8 @@
   -webkit-transition: all .1s ease-in;
   position: relative;
   padding-top: 10px;
-  border-radius: 4px 4px 0px 0px;
+  top: -25px;
+  z-index: 0;
 
   .glyphicon {
     top: 0;
@@ -46,5 +47,6 @@
   &:focus {
     background: rgba(245,245,245, 1);
     border-color: #ddd;
+    top: -24px;
   }
 }

@@ -7,13 +7,6 @@ export default class GoodsReceivedNoticesDay extends React.Component {
   render() {
     return (
       <div className={this.containerClass()}>
-        <div className="text-center">
-          <a href="#add"
-             className="grn_day__add_btn btn btn-default"
-             onClick={this.handleEditGoodsReceivedNotice.bind(this)}>
-            <span className="glyphicon glyphicon-plus"></span>
-          </a>
-        </div>
         <div className="panel panel-default">
           <div className="panel-heading text-center">
             <div className="grn_day__title">{this.deliveryDate()}</div>
@@ -26,6 +19,14 @@ export default class GoodsReceivedNoticesDay extends React.Component {
           <div className="list-group">
             {this.renderNotices()}
           </div>
+        </div>
+
+        <div className="text-center">
+          <a href="#add"
+             className="grn_day__add_btn btn btn-default"
+             onClick={this.handleEditGoodsReceivedNotice.bind(this)}>
+            <span className="glyphicon glyphicon-plus"></span>
+          </a>
         </div>
       </div>
     );
