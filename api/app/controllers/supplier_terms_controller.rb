@@ -21,8 +21,8 @@ class SupplierTermsController < ApplicationController
   end
 
   def render_export(format)
-    render format => SupplierTerms::CsvExporter.new.export(params)
-  rescue SupplierTerms::CsvExporter::NoTermsSelectedError => e
+    render format => SupplierTerms::Exporter.new.export(params)
+  rescue SupplierTerms::Exporter::NoTermsSelectedError => e
     render plain: 'Please filter by terms'
   end
 end

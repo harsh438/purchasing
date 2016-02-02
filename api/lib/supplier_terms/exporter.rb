@@ -1,4 +1,4 @@
-class SupplierTerms::CsvExporter
+class SupplierTerms::Exporter
   class NoTermsSelectedError < RuntimeError; end
 
   CSV_COLUMNS = %w(supplier_name
