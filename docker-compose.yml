@@ -13,7 +13,7 @@ web:
 frontend:
   build: ./frontend
   volumes:
-    - ./:/app
+    - ./frontend:/app
 db:
   image: mysql:5.5
   ports:
