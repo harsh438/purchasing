@@ -63,7 +63,7 @@ class SkusController < ApplicationController
   end
 
   def render_exporter(format)
-    render format => Sku::CsvExporter.new.export(params)
+    render format => Sku::Exporter.new.export(params)
   end
 
   def supplier_summary_export
