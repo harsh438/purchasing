@@ -115,5 +115,5 @@ export function loadPurchaseOrderList({ vendorId }) {
     fetch(`/api/purchase_orders/list.json?${queryString}`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(purchaseOrders => dispatch({ purchaseOrders, type: 'SET_PURCHASE_ORDER_LIST' }));
-  }
+  };
 }
