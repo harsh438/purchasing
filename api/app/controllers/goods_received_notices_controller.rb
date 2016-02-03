@@ -4,16 +4,30 @@ class GoodsReceivedNoticesController < ApplicationController
   end
 
   def create
-    render json: GoodsReceivedNotice.create!(grn_attrs)
+    render json: GoodsReceivedNotice.create!(grn_attrs).as_json_with_purchase_orders
   end
 
   def show
-    render json: GoodsReceivedNotice.find(params[:id])
+    render json: grn.as_json_with_purchase_orders
+  end
+
+  def update
+    grn.update!(grn_attrs)
+    render json: grn.as_json_with_purchase_orders
   end
 
   private
 
+  def grn
+    GoodsReceivedNotice.find(params[:id])
+  end
+
   def grn_attrs
-    params.require(:goods_received_notice).permit(:delivery_date)
+    grn_params = params.require(:goods_received_notice)
+    grn_params.permit(:delivery_date,
+                      goods_received_notice_events_attributes: [:purchase_order_id,
+                                                                :units,
+                                                                :cartons,
+                                                                :pallets])
   end
 end

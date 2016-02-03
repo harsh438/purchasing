@@ -50,7 +50,7 @@ feature 'Manage order details' do
                         discount: '0.0' }
 
     page.driver.post(order_path(order), _method: 'patch',
-                                         order: { line_items_attributes: [line_item_attrs] })
+                                        order: { line_items_attributes: [line_item_attrs] })
   end
 
   def then_i_should_see_the_list_item_under_the_order

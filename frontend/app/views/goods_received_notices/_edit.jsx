@@ -42,9 +42,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                   <input type="number" name="cartons" className="form-control" />
                 </div>
 
-                <div className="form-group grn_edit__form_group--palettes">
+                <div className="form-group grn_edit__form_group--pallets">
                   <label>Palettes</label>
-                  <input type="number" name="palettes" className="form-control" />
+                  <input type="number" name="pallets" className="form-control" />
                 </div>
 
                 <div className="text-right">

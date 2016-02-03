@@ -31,8 +31,12 @@ class GoodsReceivedNotice < ActiveRecord::Base
                  order_id: :OrderID
 
   belongs_to :order, foreign_key: :OrderID
+
   has_many :goods_received_notice_events, foreign_key: :grn
+  accepts_nested_attributes_for :goods_received_notice_events
+
   has_many :vendors, through: :goods_received_notice_events
+
   has_many :purchase_orders, through: :goods_received_notice_events
 
   after_initialize :ensure_defaults
@@ -76,6 +80,12 @@ class GoodsReceivedNotice < ActiveRecord::Base
       grn[:delivery_date] = grn['delivery_date'].to_s
       grn[:status] = status
       grn[:vendor_name] = vendor_name
+    end
+  end
+
+  def as_json_with_purchase_orders
+    as_json.tap do |grn|
+      grn[:purchase_orders] = goods_received_notice_events.map(&:purchase_order).as_json
     end
   end
 
