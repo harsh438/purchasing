@@ -11,6 +11,6 @@ feature 'Show GRN' do
 
   def then_i_should_have_a_grn_as_json
     grn = JSON.parse page.body
-    expect(grn).to include("units_received", "cartons_received", "delivery_date", "id")
+    expect(grn).to include('units_received', 'cartons_received', 'delivery_date', 'id')
   end
 end
