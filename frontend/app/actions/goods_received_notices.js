@@ -8,6 +8,9 @@ export function loadGoodsReceivedNotice(id) {
       .then(response => response.json())
       .then(goodsReceivedNotice => {
         dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
+      })
+      .catch(() => {
+        dispatch({ text: `Unable to find GRN ${id}`, type: 'ERROR_NOTIFICATION' });
       });
   };
 }
