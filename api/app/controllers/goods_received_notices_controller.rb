@@ -7,10 +7,13 @@ class GoodsReceivedNoticesController < ApplicationController
     render json: GoodsReceivedNotice.create!(grn_attrs)
   end
 
+  def show
+    render json: GoodsReceivedNotice.find(params[:id])
+  end
+
   private
 
   def grn_attrs
     params.require(:goods_received_notice).permit(:delivery_date)
   end
-
 end
