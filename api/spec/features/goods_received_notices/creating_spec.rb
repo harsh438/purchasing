@@ -1,6 +1,5 @@
-feature 'GRN CRUD' do
+feature 'Creating GRN' do
   subject { JSON.parse(page.body) }
-
 
   scenario 'Create a GRN' do
     when_i_have_purchase_orders_to_book_into_warehouse
