@@ -65,9 +65,30 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                 </div>
               </div>
             </form>
+
             <a onClick={this.props.onClose}>close</a>
           </div>
+
+          <div className="list-group">
+            {this.renderPurchaseOrders()}
+          </div>
         </div>
+      </div>
+    );
+  }
+
+  renderPurchaseOrders() {
+    return map(this.props.goodsReceivedNotice.goodsReceivedNoticeEvents, this.renderPurchaseOrder, this);
+  }
+
+  renderPurchaseOrder(goodsReceivedNoticeEvent) {
+    return (
+      <div className="list-group-item">
+        #{goodsReceivedNoticeEvent.purchaseOrderId}
+
+        <span className="badge" title="Units">{goodsReceivedNoticeEvent.units} U</span>
+        <span className="badge" title="Cartons">{goodsReceivedNoticeEvent.cartons} C</span>
+        <span className="badge" title="Pallets">{goodsReceivedNoticeEvent.pallets} P</span>
       </div>
     );
   }
