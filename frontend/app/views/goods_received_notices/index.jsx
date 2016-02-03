@@ -4,6 +4,8 @@ import { Link } from 'react-router';
 import { assign, map } from 'lodash';
 import GoodsReceivedNoticesWeek from './_week';
 import GoodsReceivedNoticesEdit from './_edit';
+import GoodsReceivedNoticesFind from './_find';
+
 import { loadGoodsReceivedNotice,
          loadGoodsReceivedNotices,
          createGoodsReceivedNotice,
@@ -27,15 +29,25 @@ class GoodsReceivedNoticesIndex extends React.Component {
     const startDateFormatted = startDate.format('DD/MM/YYYY');
 
     if (this.state.currentDate !== startDateFormatted) {
-      this.setState({
-        editing: false,
-        currentDate: startDateFormatted,
-        startDateMonth: startDate.format('MM'),
-        startDateYear: startDate.format('YYYY'),
-      });
-
-      this.loadCurrentDate(startDateFormatted);
+      this.updateCurrentDate(startDate);
     }
+
+    const currentGrn = this.props.goodsReceivedNotice || {};
+    const nextGrn = nextProps.goodsReceivedNotice || {};
+    if (currentGrn.id !== nextGrn.id) {
+      this.props.history.pushState(null, this.props.route.path, { startDate: nextGrn.deliveryDate });
+    }
+  }
+
+  updateCurrentDate(startDate) {
+    const startDateFormatted = startDate.format('DD/MM/YYYY');
+    this.setState({
+      editing: false,
+      currentDate: startDateFormatted,
+      startDateMonth: startDate.format('MM'),
+      startDateYear: startDate.format('YYYY'),
+    });
+    this.loadCurrentDate(startDateFormatted);
   }
 
   render() {
@@ -115,17 +127,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
         </div>
 
         <div className="col-md-3 col-md-offset-5">
-          <div className="input-group">
-            <input type="text"
-                   className="form-control"
-                   placeholder="GRN #" />
-            <span className="input-group-btn">
-              <button className="btn btn-primary"
-                      onClick={this.handleFind.bind(this)}>
-                Find
-              </button>
-            </span>
-          </div>
+          <GoodsReceivedNoticesFind onSearch={this.handleSearch.bind(this)} />
         </div>
       </div>
     );
@@ -227,7 +229,8 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.props.dispatch(createGoodsReceivedNotice({ deliveryDate, currentDate: this.state.currentDate }));
   }
 
-  handleFind() {
+  handleSearch(grnId) {
+    this.props.dispatch(loadGoodsReceivedNotice(grnId));
   }
 
   handleGoodsReceivedNoticeSave() {
