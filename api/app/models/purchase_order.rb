@@ -16,6 +16,8 @@ class PurchaseOrder < ActiveRecord::Base
   has_many :order_exports
   has_many :orders, through: :order_exports
 
+  belongs_to :vendor, foreign_key: :venID
+
   after_initialize :ensure_defaults
   after_initialize :set_legacy
 

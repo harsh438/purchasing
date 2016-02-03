@@ -3,6 +3,10 @@ class PurchaseOrdersController < ApplicationController
     render json: PurchaseOrder::Summariser.new.summary(params)
   end
 
+  def list
+    render json: PurchaseOrder.where(vendor_id: params[:vendor_id])
+  end
+
   def show
     respond_to do |format|
       format.json { render_index_json }

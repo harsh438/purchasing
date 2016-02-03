@@ -12,7 +12,7 @@ feature 'Adding Purchase Order to Goods Received Notice' do
   end
 
   def then_purchase_order_should_be_listed_under_grn
-    expect(subject['purchase_orders']).to include('id' => purchase_order.id)
+    expect(subject['purchase_orders']).to include(a_hash_including('id' => purchase_order.id))
   end
 
   private

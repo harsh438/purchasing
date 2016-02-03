@@ -26,6 +26,10 @@ Rails.application.routes.draw do
       member do
         post :cancel
       end
+
+      collection do
+        get :list
+      end
     end
 
     resources :purchase_order_line_items, only: :index do
