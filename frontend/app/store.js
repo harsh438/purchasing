@@ -9,6 +9,7 @@ import reduceSkus  from './reducers/skus';
 import reduceSuppliers  from './reducers/supplier';
 import reduceSupplierTerms from './reducers/supplier_terms';
 import reduceVendors  from './reducers/vendor';
+import reduceErrorNotification  from './reducers/error_notification';
 
 import thunk from 'redux-thunk';
 
@@ -23,7 +24,9 @@ const reducer = combineReducers({ barcodes: reduceBarcodes,
                                   skus: reduceSkus,
                                   suppliers: reduceSuppliers,
                                   supplierTerms: reduceSupplierTerms,
-                                  vendors: reduceVendors });
+                                  vendors: reduceVendors,
+                                  errorNotification: reduceErrorNotification,
+                                  });
 
 const store = applyMiddleware(...middleware)(createStore)(reducer);
 
