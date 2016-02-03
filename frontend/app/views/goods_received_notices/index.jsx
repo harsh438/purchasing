@@ -22,7 +22,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const startDate = moment(nextProps.location.query.startDate, 'DD/MM/YYYY')
+    const startDate = moment(nextProps.location.query.startDate, 'DD/MM/YYYY');
     const startDateFormatted = startDate.format('DD/MM/YYYY');
 
     if (this.state.currentDate !== startDateFormatted) {
