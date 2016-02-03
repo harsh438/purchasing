@@ -4,7 +4,8 @@ import { Link } from 'react-router';
 import { assign, map } from 'lodash';
 import GoodsReceivedNoticesWeek from './_week';
 import GoodsReceivedNoticesEdit from './_edit';
-import { loadGoodsReceivedNotices,
+import { loadGoodsReceivedNotice,
+         loadGoodsReceivedNotices,
          createGoodsReceivedNotice,
          clearGoodsReceivedNotice } from '../../actions/goods_received_notices';
 import moment from 'moment';
@@ -191,10 +192,10 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   renderWeek() {
     const noticesByDates = this.props.noticeWeeks[2];
-
     return (
       <GoodsReceivedNoticesWeek compact={this.props.goodsReceivedNotice}
                                 onGoodsReceivedNoticeAdd={this.handleGoodsReceivedNoticeAdd.bind(this)}
+                                onGoodsReceivedNoticeEdit={this.handleGoodsReceivedNoticeEdit.bind(this)}
                                 {...noticesByDates} />
     );
   }
@@ -215,6 +216,10 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   handleGoodsReceivedNoticeClose() {
     this.props.dispatch(clearGoodsReceivedNotice());
+  }
+
+  handleGoodsReceivedNoticeEdit(grnId) {
+    this.props.dispatch(loadGoodsReceivedNotice(grnId));
   }
 
   handleGoodsReceivedNoticeAdd(deliveryDate) {
