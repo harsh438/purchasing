@@ -251,7 +251,6 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   handleLoadPurchaseOrdersForEdit(vendorId) {
-    console.log(vendorId);
     this.props.dispatch(loadPurchaseOrderList({ vendorId }));
   }
 
