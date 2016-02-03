@@ -30,6 +30,10 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.props.dispatch(loadVendors());
   }
 
+  componentDidMount() {
+    this.notificationSystem = this.refs.notificationSystem;
+  }
+
   componentWillReceiveProps(nextProps) {
     const startDate = moment(nextProps.location.query.startDate, 'DD/MM/YYYY');
     const startDateFormatted = startDate.format('DD/MM/YYYY');
@@ -44,18 +48,23 @@ class GoodsReceivedNoticesIndex extends React.Component {
     if (currentGrn.id !== nextGrn.id) {
       this.props.history.pushState(null, this.props.route.path, { startDate: nextGrn.deliveryDate });
     }
+
+    const currentNotify = this.props.errorNotification || {};
+    const nextNotify = nextProps.errorNotification || {};
+
+    if (currentNotify.date !== nextNotify.date) {
+      this.notificationSystem.addNotification({ message: nextProps.errorNotification.text, level: 'error' });
+    }
   }
 
   updateCurrentDate(startDate) {
     const startDateFormatted = startDate.format('DD/MM/YYYY');
-
     this.setState({
       editing: false,
       currentDate: startDateFormatted,
       startDateMonth: startDate.format('MM'),
       startDateYear: startDate.format('YYYY'),
     });
-
     this.loadCurrentDate(startDateFormatted);
   }
 
@@ -284,8 +293,8 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 }
 
-function applyState({ filters, goodsReceivedNotices, purchaseOrders }) {
-  return assign({}, filters, goodsReceivedNotices, purchaseOrders);
+function applyState({ filters, goodsReceivedNotices, purchaseOrders, errorNotification }) {
+  return assign({}, filters, goodsReceivedNotices, purchaseOrders, errorNotification);
 }
 
 export default connect(applyState)(GoodsReceivedNoticesIndex);
