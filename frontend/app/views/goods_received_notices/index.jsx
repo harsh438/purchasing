@@ -9,7 +9,12 @@ import GoodsReceivedNoticesFind from './_find';
 import { loadGoodsReceivedNotice,
          loadGoodsReceivedNotices,
          createGoodsReceivedNotice,
-         clearGoodsReceivedNotice } from '../../actions/goods_received_notices';
+         clearGoodsReceivedNotice,
+         addPurchaseOrderToGoodsReceivedNotice } from '../../actions/goods_received_notices';
+
+import { loadVendors } from '../../actions/filters';
+import { loadPurchaseOrderList } from '../../actions/purchase_orders';
+
 import moment from 'moment';
 import { renderSelectOptions } from '../../utilities/dom';
 
@@ -22,6 +27,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.state.startDateYear = this.startDateYear();
 
     this.loadCurrentDate();
+    this.props.dispatch(loadVendors());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,6 +40,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
     const currentGrn = this.props.goodsReceivedNotice || {};
     const nextGrn = nextProps.goodsReceivedNotice || {};
+
     if (currentGrn.id !== nextGrn.id) {
       this.props.history.pushState(null, this.props.route.path, { startDate: nextGrn.deliveryDate });
     }
@@ -41,12 +48,14 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   updateCurrentDate(startDate) {
     const startDateFormatted = startDate.format('DD/MM/YYYY');
+
     this.setState({
       editing: false,
       currentDate: startDateFormatted,
       startDateMonth: startDate.format('MM'),
       startDateYear: startDate.format('YYYY'),
     });
+
     this.loadCurrentDate(startDateFormatted);
   }
 
@@ -208,6 +217,9 @@ class GoodsReceivedNoticesIndex extends React.Component {
     if (this.props.goodsReceivedNotice) {
       return (
         <GoodsReceivedNoticesEdit goodsReceivedNotice={this.props.goodsReceivedNotice}
+                                  vendors={this.props.brands}
+                                  purchaseOrders={this.props.purchaseOrders}
+                                  onVendorChange={this.handleLoadPurchaseOrdersForEdit.bind(this)}
                                   onSave={this.handleGoodsReceivedNoticeSave.bind(this)}
                                   onClose={this.handleGoodsReceivedNoticeClose.bind(this)} />
       );
@@ -234,7 +246,13 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.props.dispatch(loadGoodsReceivedNotice(grnId));
   }
 
-  handleGoodsReceivedNoticeSave() {
+  handleGoodsReceivedNoticeSave(grn) {
+    this.props.dispatch(addPurchaseOrderToGoodsReceivedNotice(grn));
+  }
+
+  handleLoadPurchaseOrdersForEdit(vendorId) {
+    console.log(vendorId);
+    this.props.dispatch(loadPurchaseOrderList({ vendorId }));
   }
 
   handleFormChange({ target }) {
@@ -267,8 +285,8 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 }
 
-function applyState({ goodsReceivedNotices }) {
-  return assign({}, goodsReceivedNotices);
+function applyState({ filters, goodsReceivedNotices, purchaseOrders }) {
+  return assign({}, filters, goodsReceivedNotices, purchaseOrders);
 }
 
 export default connect(applyState)(GoodsReceivedNoticesIndex);

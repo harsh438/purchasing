@@ -1,8 +1,10 @@
 import React from 'react';
+import { renderSelectOptions } from '../../utilities/dom';
+import { map } from 'lodash';
 
 export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillMount() {
-    this.state = {};
+    this.state = { id: this.props.goodsReceivedNotice.id };
   }
 
   render() {
@@ -21,15 +23,26 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
             <form onChange={this.handleChange.bind(this)}
                   onSubmit={this.handleSubmit.bind(this)}>
               <div className="form-group">
-                <select className="form-control">
-                  <option>Nike</option>
+                <select className="form-control"
+                        id="vendorId"
+                        name="vendorId"
+                        value={this.state.vendorId}
+                        onChange={this.handleVendorChange.bind(this)}>
+                  <option value=""> -- select brand -- </option>
+                  {renderSelectOptions(this.props.vendors)}
                 </select>
               </div>
 
               <div>
                 <div className="form-group grn_edit__form_group--purchase_order">
-                  <label htmlFor="po">PO #</label>
-                  <select name="po" className="form-control"></select>
+                  <label htmlFor="purchaseOrderId">PO #</label>
+                  <select className="form-control"
+                          id="purchaseOrderId"
+                          name="purchaseOrderId"
+                          value={this.state.purchaseOrderId}>
+                    <option value=""> -- select purchase order -- </option>
+                    {renderSelectOptions(map(this.props.purchaseOrders, 'id'))}
+                  </select>
                 </div>
 
                 <div className="form-group grn_edit__form_group--units">
@@ -61,6 +74,11 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleChange({ target }) {
     this.setState({ [target.name]: target.value });
+  }
+
+  handleVendorChange(e) {
+    e.stopPropagation();
+    this.props.onVendorChange(e.target.value);
   }
 
   handleSubmit(e) {

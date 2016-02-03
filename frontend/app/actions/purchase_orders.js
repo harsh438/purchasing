@@ -107,3 +107,13 @@ export function updatePurchaseOrders(id, params = {}) {
 export function purchaseOrdersLoading(loading) {
   return { loading, type: 'IS_LOADING_PURCHASE_ORDERS' };
 }
+
+export function loadPurchaseOrderList({ vendorId }) {
+  const queryString = Qs.stringify({ vendor_id: vendorId });
+
+  return dispatch => {
+    fetch(`/api/purchase_orders/list.json?${queryString}`, { credentials: 'same-origin' })
+      .then(response => response.json())
+      .then(purchaseOrders => dispatch({ purchaseOrders, type: 'SET_PURCHASE_ORDER_LIST' }));
+  }
+}

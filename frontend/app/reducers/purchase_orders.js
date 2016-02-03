@@ -74,6 +74,8 @@ export default function reducePurchaseOrders(state = initialState, action) {
     return clearPurchaseOrders(state, action);
   case 'IS_LOADING_PURCHASE_ORDERS':
     return assign({}, state, { loading: action.loading });
+  case 'SET_PURCHASE_ORDER_LIST':
+    return assign({}, state, { purchaseOrders: map(action.purchaseOrders, camelizeKeys) });
   default:
     return state;
   }
