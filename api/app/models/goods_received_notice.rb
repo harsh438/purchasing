@@ -85,7 +85,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
 
   def as_json_with_purchase_orders
     as_json.tap do |grn|
-      grn[:purchase_orders] = goods_received_notice_events.map(&:purchase_order).as_json
+      grn[:goods_received_notice_events] = goods_received_notice_events.map(&:as_json_with_purchase_order)
     end
   end
 

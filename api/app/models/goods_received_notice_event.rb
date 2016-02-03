@@ -19,6 +19,12 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
 
   after_initialize :assign_vendor_from_purchase_order
 
+  def as_json_with_purchase_order
+    as_json.tap do |grn_event|
+      grn_event['purchase_order'] = purchase_order.as_json
+    end
+  end
+
   private
 
   def assign_vendor_from_purchase_order
