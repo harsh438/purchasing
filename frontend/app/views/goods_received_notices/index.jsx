@@ -194,6 +194,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
     const noticesByDates = this.props.noticeWeeks[2];
     return (
       <GoodsReceivedNoticesWeek compact={this.props.goodsReceivedNotice}
+                                currentGoodsReceivedNotice={this.props.goodsReceivedNotice || {}}
                                 onGoodsReceivedNoticeAdd={this.handleGoodsReceivedNoticeAdd.bind(this)}
                                 onGoodsReceivedNoticeEdit={this.handleGoodsReceivedNoticeEdit.bind(this)}
                                 {...noticesByDates} />

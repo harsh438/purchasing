@@ -18,6 +18,7 @@ export default class GoodsReceivedNoticesWeek extends React.Component {
   renderDate(noticesForDate, date) {
     return (
       <GoodsReceivedNoticesDay key={date}
+                               currentGoodsReceivedNotice={this.props.currentGoodsReceivedNotice}
                                compact={this.props.compact}
                                onGoodsReceivedNoticeAdd={this.props.onGoodsReceivedNoticeAdd}
                                onEditGoodsReceivedNotice={this.props.onGoodsReceivedNoticeEdit}

@@ -45,6 +45,7 @@ export default class GoodsReceivedNoticesDay extends React.Component {
   renderNotice(notice, i) {
     return (
       <GoodsReceivedNoticesNotice key={i}
+                                  currentGoodsReceivedNotice={this.props.currentGoodsReceivedNotice}
                                   compact={this.props.compact}
                                   onClick={this.props.onEditGoodsReceivedNotice}
                                   {...notice} />

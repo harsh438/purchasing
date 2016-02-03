@@ -8,7 +8,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   render() {
     return (
       <div className="grn_edit">
-        <div className="panel panel-default">
+        <div className="panel panel-default panel-info">
           <div className="panel-heading">
             <h3 className="panel-title">
               GRN #{this.props.goodsReceivedNotice.id}

@@ -24,6 +24,7 @@ export default class GoodsReceivedNoticesNotice extends React.Component {
   containerClass() {
     let classes = `grn_notice list-group-item ${this.statusClass()}`;
     if (this.props.compact) classes += ' grn_notice--compact';
+    if (this.props.id === this.props.currentGoodsReceivedNotice.id) classes += ' list-group-item-info';
     return classes;
   }
 
