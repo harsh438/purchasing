@@ -7,6 +7,10 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     this.state = { id: this.props.goodsReceivedNotice.id };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ id: nextProps.goodsReceivedNotice.id });
+  }
+
   render() {
     return (
       <div className="grn_edit">
