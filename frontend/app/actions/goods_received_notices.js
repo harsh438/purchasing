@@ -3,8 +3,6 @@ import 'whatwg-fetch';
 import moment from 'moment';
 
 export function loadGoodsReceivedNotices(middleWeekStart) {
-  console.log('middleWeekStart', middleWeekStart);
-
   const startDate = moment(middleWeekStart, 'DD/MM/YYYY').subtract(2, 'weeks').format('YYYY-MM-DD');
   const endDate = moment(middleWeekStart, 'DD/MM/YYYY').add({ weeks: 2 }).format('YYYY-MM-DD');
 
