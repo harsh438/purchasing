@@ -1,6 +1,16 @@
 import React from 'react';
 
 export default class GoodsReceivedNoticesFind extends React.Component {
+  componentWillMount() {
+    this.state = {};
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.goodsReceivedNotice) {
+      this.setState({ search: nextProps.goodsReceivedNotice.id });
+    }
+  }
+
   render() {
     return (
       <form onChange={this.handleChange.bind(this)}
@@ -9,6 +19,8 @@ export default class GoodsReceivedNoticesFind extends React.Component {
         <input type="number"
                className="form-control"
                placeholder="GRN #"
+               onChange={this.handleChange.bind(this, 'search')}
+               value={this.state.search}
                name="search" />
         <span className="input-group-btn">
           <input type="submit" className="btn btn-primary"
@@ -20,6 +32,7 @@ export default class GoodsReceivedNoticesFind extends React.Component {
   }
 
   handleChange({ target }) {
+    if (!target) { return ; }
     this.setState({ [target.name]: target.value });
   }
 

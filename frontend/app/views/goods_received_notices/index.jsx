@@ -127,7 +127,8 @@ class GoodsReceivedNoticesIndex extends React.Component {
         </div>
 
         <div className="col-md-3 col-md-offset-5">
-          <GoodsReceivedNoticesFind onSearch={this.handleSearch.bind(this)} />
+          <GoodsReceivedNoticesFind onSearch={this.handleSearch.bind(this)}
+                                    goodsReceivedNotice={this.props.goodsReceivedNotice} />
         </div>
       </div>
     );
