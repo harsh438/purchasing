@@ -1,4 +1,5 @@
 import React from 'react';
+import NotificationSystem from 'react-notification-system';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { assign, map } from 'lodash';
@@ -110,6 +111,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   renderNavigation() {
     return (
       <div className="row" style={{ marginBottom: '2em' }}>
+        <NotificationSystem ref="notificationSystem" />
         <div className="col-md-1">
           {this.renderNowButton()}
         </div>
