@@ -247,7 +247,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   handleGoodsReceivedNoticeSave(grn) {
-    this.props.dispatch(addPurchaseOrderToGoodsReceivedNotice(grn));
+    this.props.dispatch(addPurchaseOrderToGoodsReceivedNotice({ ...grn, currentDate: this.state.currentDate }));
   }
 
   handleLoadPurchaseOrdersForEdit(vendorId) {

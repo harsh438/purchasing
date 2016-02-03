@@ -87,7 +87,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   renderPurchaseOrder(goodsReceivedNoticeEvent) {
     return (
-      <div className="list-group-item">
+      <div className="list-group-item" key={goodsReceivedNoticeEvent.id}>
         #{goodsReceivedNoticeEvent.purchaseOrderId}
 
         <span className="badge" title="Units">{goodsReceivedNoticeEvent.units} U</span>

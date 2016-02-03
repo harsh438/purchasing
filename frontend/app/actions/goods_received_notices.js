@@ -42,7 +42,7 @@ export function createGoodsReceivedNotice({ currentDate, deliveryDate }) {
   };
 }
 
-export function addPurchaseOrderToGoodsReceivedNotice({ id, purchaseOrderId, units, cartons, pallets }) {
+export function addPurchaseOrderToGoodsReceivedNotice({ id, purchaseOrderId, units, cartons, pallets, currentDate }) {
   return dispatch => {
     const goods_received_notice_events_attributes = [{ units, cartons, pallets, purchase_order_id: purchaseOrderId }];
     const goodsReceivedNotice = { goods_received_notice: { id, goods_received_notice_events_attributes } };
@@ -55,7 +55,7 @@ export function addPurchaseOrderToGoodsReceivedNotice({ id, purchaseOrderId, uni
       .then(response => response.json())
       .then(goodsReceivedNotice => {
         dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
-        // dispatch(loadGoodsReceivedNotices(currentDate));
+        dispatch(loadGoodsReceivedNotices(currentDate));
       });
   };
 }
