@@ -48,7 +48,7 @@ feature 'Suppliers Terms' do
     vendor_id = vendor_attrs['id']
     # creating three different terms with the same vendor_id for each
     create_terms_attrs_with_confirmation_file_and_vendor_id(vendor_id: vendor_id, count: 3).each do |term|
-        add_a_set_of_terms_to_a_supplier(supplier_with_default_terms, term)
+      add_a_set_of_terms_to_a_supplier(supplier_with_default_terms, term)
     end
   end
 
@@ -191,5 +191,4 @@ feature 'Suppliers Terms' do
   def create_term_attrs_with_confirmation_file
     attributes_for(:supplier_terms).stringify_keys.merge('confirmation' => fixture_confirmation_file_upload)
   end
-
 end
