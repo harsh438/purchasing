@@ -7,7 +7,7 @@ export function loadGoodsReceivedNotice(id) {
     fetch(`/api/goods_received_notices/${id}.json`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(goodsReceivedNotice => {
-        dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' })
+        dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
       });
   };
 }

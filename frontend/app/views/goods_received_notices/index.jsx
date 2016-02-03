@@ -7,7 +7,7 @@ import GoodsReceivedNoticesEdit from './_edit';
 import { loadGoodsReceivedNotice,
          loadGoodsReceivedNotices,
          createGoodsReceivedNotice,
-         clearGoodsReceivedNotice, } from '../../actions/goods_received_notices';
+         clearGoodsReceivedNotice } from '../../actions/goods_received_notices';
 import moment from 'moment';
 import { renderSelectOptions } from '../../utilities/dom';
 
