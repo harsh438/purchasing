@@ -20,6 +20,7 @@ export default class GoodsReceivedNoticesWeek extends React.Component {
       <GoodsReceivedNoticesDay key={date}
                                compact={this.props.compact}
                                onGoodsReceivedNoticeAdd={this.props.onGoodsReceivedNoticeAdd}
+                               onEditGoodsReceivedNotice={this.props.onGoodsReceivedNoticeEdit}
                                {...noticesForDate} />
     );
   }
