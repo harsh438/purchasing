@@ -3,6 +3,8 @@ import 'whatwg-fetch';
 import moment from 'moment';
 
 export function loadGoodsReceivedNotices(middleWeekStart) {
+  console.log('middleWeekStart', middleWeekStart);
+
   const startDate = moment(middleWeekStart, 'DD/MM/YYYY').subtract(2, 'weeks').format('YYYY-MM-DD');
   const endDate = moment(middleWeekStart, 'DD/MM/YYYY').add({ weeks: 2 }).format('YYYY-MM-DD');
 
@@ -15,7 +17,7 @@ export function loadGoodsReceivedNotices(middleWeekStart) {
   };
 }
 
-export function createGoodsReceivedNotice({ deliveryDate }) {
+export function createGoodsReceivedNotice({ currentDate, deliveryDate }) {
   return dispatch => {
     const formattedDeliveryDate = moment(deliveryDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
     const goodsReceivedNotice = { goods_received_notice: { delivery_date: formattedDeliveryDate } };
@@ -25,7 +27,10 @@ export function createGoodsReceivedNotice({ deliveryDate }) {
                                                 headers: { 'Content-Type': 'application/json' },
                                                 body: JSON.stringify(goodsReceivedNotice) })
       .then(response => response.json())
-      .then(goodsReceivedNotice => dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' }));
+      .then(goodsReceivedNotice => {
+        dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
+        dispatch(loadGoodsReceivedNotices(currentDate));
+      });
   };
 }
 

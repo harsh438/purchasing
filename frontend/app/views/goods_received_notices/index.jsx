@@ -12,35 +12,29 @@ import { renderSelectOptions } from '../../utilities/dom';
 
 class GoodsReceivedNoticesIndex extends React.Component {
   componentWillMount() {
-    this.state = { currentDate: new Date(),
-                   editing: false,
-                   startDateMonth: this.startDateMonth(),
-                   startDateYear: this.startDateYear() };
+    this.state = { currentDate: moment().format('DD/MM/YYYY'),
+                   editing: false };
+
+    this.state.startDateMonth = this.startDateMonth();
+    this.state.startDateYear = this.startDateYear();
+
     this.loadCurrentDate();
   }
 
   componentWillReceiveProps(nextProps) {
-    const now = moment();
-    let startDate = moment(nextProps.location.query.startDate, 'DD/MM/YYYY');
-    if (!(startDate.isValid())) {
-      startDate = moment();
-    }
-    startDate = startDate.format('DD/MM/YYYY');
-    if (moment(this.state.currentDate).format('DD/MM/YYYY') !== startDate) {
-      let date = moment(startDate, 'DD/MM/YYYY').toDate();
+    const startDate = moment(nextProps.location.query.startDate, 'DD/MM/YYYY')
+    const startDateFormatted = startDate.format('DD/MM/YYYY');
+
+    if (this.state.currentDate !== startDateFormatted) {
       this.setState({
         editing: false,
-        currentDate: date,
-        startDateMonth: date.toISOString().substr(5,2),
-        startDateYear: date.getFullYear(),
+        currentDate: startDateFormatted,
+        startDateMonth: startDate.format('MM'),
+        startDateYear: startDate.format('YYYY'),
       });
-      this.loadCurrentDate(date);
-    }
-  }
 
-  loadCurrentDate(date = this.state.currentDate) {
-    const dateFormat = moment(date).format('DD/MM/YYYY');
-    this.props.dispatch(loadGoodsReceivedNotices(dateFormat));
+      this.loadCurrentDate(startDateFormatted);
+    }
   }
 
   render() {
@@ -215,12 +209,16 @@ class GoodsReceivedNoticesIndex extends React.Component {
     }
   }
 
+  loadCurrentDate(date = this.state.currentDate) {
+    this.props.dispatch(loadGoodsReceivedNotices(date));
+  }
+
   handleGoodsReceivedNoticeClose() {
     this.props.dispatch(clearGoodsReceivedNotice());
   }
 
   handleGoodsReceivedNoticeAdd(deliveryDate) {
-    this.props.dispatch(createGoodsReceivedNotice({ deliveryDate }));
+    this.props.dispatch(createGoodsReceivedNotice({ deliveryDate, currentDate: this.state.currentDate }));
   }
 
   handleFind() {
@@ -238,20 +236,12 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.props.history.pushState(null, this.props.route.path, { startDate: nextDate });
   }
 
-  startDate() {
-    let date = new Date();
-    if (this.state && this.state.currentDate) {
-      date = this.state.currentDate;
-    }
-    return moment(date).format('DD/MM/YYYY');
-  }
-
   startDateMonth() {
-    return moment(this.startDate(), 'DD/MM/YYYY').format('MM');
+    return moment(this.state.currentDate, 'DD/MM/YYYY').format('MM');
   }
 
   startDateYear() {
-    return moment(this.startDate(), 'DD/MM/YYYY').year();
+    return moment(this.state.currentDate, 'DD/MM/YYYY').year();
   }
 
   now() {
@@ -259,7 +249,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   isNow() {
-    return this.startDate() === this.now();
+    return this.state.currentDate === this.now();
   }
 
   monthAndYearMatches() {
