@@ -22,6 +22,6 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   private
 
   def assign_vendor_from_purchase_order
-    self.vendor_id = purchase_order.vendor_id
+    self.vendor_id = purchase_order.try(:vendor_id)
   end
 end
