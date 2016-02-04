@@ -28,9 +28,10 @@ feature 'Removing Purchase Order from Goods Received Notice' do
   end
 
   def then_only_totals_from_new_purchase_orders_should_be_added_from_grn
-    expect(subject['units']).to eq(subject['goods_received_notice_events'].sum { |grn_event| grn_event['units'] })
-    expect(subject['cartons']).to eq(subject['goods_received_notice_events'].sum { |grn_event| grn_event['cartons'] })
-    expect(subject['pallets']).to eq(subject['goods_received_notice_events'].sum { |grn_event| grn_event['pallets'].to_f }.to_f.to_s)
+    grn_event = subject['goods_received_notice_events']
+    expect(subject['units']).to eq(grn_event.sum { |grn_event| grn_event['units'] })
+    expect(subject['cartons']).to eq(grn_event.sum { |grn_event| grn_event['cartons'] })
+    expect(subject['pallets']).to eq(grn_event.sum { |grn_event| grn_event['pallets'].to_f }.to_f.to_s)
   end
 
   private
