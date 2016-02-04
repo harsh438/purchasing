@@ -20,6 +20,11 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
               GRN #{this.props.goodsReceivedNotice.id}
               &nbsp;–&nbsp;
               {this.props.goodsReceivedNotice.deliveryDate}
+              <a style={{ cursor:'pointer' }}
+                 className="pull-right glyphicon glyphicon-remove"
+                 onClick={this.props.onClose}
+                 aria-label="close"
+                 ></a>
             </h3>
           </div>
 
@@ -70,7 +75,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
               </div>
             </form>
 
-            <a onClick={this.props.onClose}>close</a>
           </div>
 
           <div className="list-group">
