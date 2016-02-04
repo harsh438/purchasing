@@ -4,11 +4,13 @@ import { map } from 'lodash';
 
 export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillMount() {
-    this.state = { id: this.props.goodsReceivedNotice.id };
+    const { id, deliveryDate } = this.props.goodsReceivedNotice;
+    this.state = { id, deliveryDate: deliveryDate.split('/').reverse().join('-') };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ id: nextProps.goodsReceivedNotice.id });
+    const { id, deliveryDate } = this.props.goodsReceivedNotice;
+    this.setState({ id, deliveryDate: deliveryDate.split('/').reverse().join('-') });
   }
 
   render() {
@@ -18,8 +20,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           <div className="panel-heading">
             <h3 className="panel-title">
               GRN #{this.props.goodsReceivedNotice.id}
-              &nbsp;–&nbsp;
-              {this.props.goodsReceivedNotice.deliveryDate}
+
               <a style={{ cursor:'pointer' }}
                  className="pull-right glyphicon glyphicon-remove"
                  onClick={this.props.onClose}
@@ -32,9 +33,15 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
             <form onChange={this.handleChange.bind(this)}
                   onSubmit={this.handleSubmit.bind(this)}>
               <div className="form-group">
+                <input className="form-control"
+                       type="date"
+                       name="deliveryDate"
+                       value={this.state.deliveryDate} />
+              </div>
+
+              <div className="form-group">
                 <select className="form-control"
                         id="vendorId"
-                        name="vendorId"
                         value={this.state.vendorId}
                         onChange={this.handleVendorChange.bind(this)}>
                   <option value=""> -- select brand -- </option>
