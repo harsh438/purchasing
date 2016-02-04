@@ -14,18 +14,23 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   render() {
+    console.log("FFFFF", this.props.goodsReceivedNotice);
     return (
       <div className="grn_edit">
         <div className="panel panel-default panel-info">
           <div className="panel-heading">
             <h3 className="panel-title">
               GRN #{this.props.goodsReceivedNotice.id}
-
-              <a style={{ cursor:'pointer' }}
-                 className="pull-right glyphicon glyphicon-remove"
-                 onClick={this.props.onClose}
-                 aria-label="close"
+              <span className="pull-right">
+                <span className="badge" title="Units">{this.props.goodsReceivedNotice.units} U</span>&nbsp;
+                <span className="badge" title="Cartons">{this.props.goodsReceivedNotice.cartons} C</span>&nbsp;
+                <span className="badge" title="Pallets">{this.props.goodsReceivedNotice.pallets} P</span>&nbsp;
+                <a style={{ cursor:'pointer', 'margin-left': '10px' }}
+                   className="glyphicon glyphicon-remove"
+                   onClick={this.props.onClose}
+                   aria-label="close"
                  ></a>
+              </span>
             </h3>
           </div>
 
