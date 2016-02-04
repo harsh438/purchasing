@@ -94,9 +94,11 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       <div className="list-group-item" key={goodsReceivedNoticeEvent.id}>
         #{goodsReceivedNoticeEvent.purchaseOrderId}
 
-        <span className="badge" title="Units">{goodsReceivedNoticeEvent.units} U</span>
-        <span className="badge" title="Cartons">{goodsReceivedNoticeEvent.cartons} C</span>
-        <span className="badge" title="Pallets">{goodsReceivedNoticeEvent.pallets} P</span>
+        <div className="pull-right">
+          <span className="badge" title="Units">{goodsReceivedNoticeEvent.units} U</span>&nbsp;
+          <span className="badge" title="Cartons">{goodsReceivedNoticeEvent.cartons} C</span>&nbsp;
+          <span className="badge" title="Pallets">{goodsReceivedNoticeEvent.pallets} P</span>&nbsp;
+        </div>
       </div>
     );
   }
