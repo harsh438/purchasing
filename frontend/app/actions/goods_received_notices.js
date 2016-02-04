@@ -78,3 +78,16 @@ export function removePurchaseOrderFromGoodsReceivedNotice({ id, goodsReceivedNo
   const goodsReceivedNotice = { goods_received_notice: { id, goods_received_notice_events_attributes } };
   return updateGrn(id, goodsReceivedNotice, currentDate);
 }
+
+export function deleteGoodsReceivedNotice({ id, currentDate }) {
+  return dispatch => {
+    fetch(`/api/goods_received_notices/${id}.json`, { credentials: 'same-origin',
+                                                      method: 'DELETE',
+                                                      headers: { 'Content-Type': 'application/json' } })
+      .then(response => response.json())
+      .then(function () {
+        dispatch(clearGoodsReceivedNotice());
+        dispatch(loadGoodsReceivedNotices(currentDate));
+      });
+  };
+}

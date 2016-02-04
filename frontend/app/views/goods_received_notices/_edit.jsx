@@ -181,7 +181,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
         <div>
           <p>If you a really sure:</p>
-          <button className="btn btn-danger">Delete GRN</button>
+          <button className="btn btn-danger"
+                  onClick={this.handleDelete.bind(this)}>Delete GRN</button>
         </div>
       </div>
     );
@@ -201,6 +202,14 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     this.props.onPurchaseOrderAdd(this.state);
   }
 
+  handleDelete() {
+    if (confirm('Are you sure you wish to delete this GRN?')) {
+      if (confirm('Really?')) {
+        this.props.onDelete(this.state.id);
+      }
+    }
+  }
+
   handleChangeDateSubmit(e) {
     e.preventDefault();
     const { id, deliveryDate } = this.state;
@@ -209,7 +218,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleDeletePurchaseOrder(id) {
     if (confirm('Are you sure you wish to remove this Purchase Order?')) {
-      this.props.onGoodsReceivedNoticeEventDelete(id);
+      this.props.onPurchaseOrderDelete(id);
     }
   }
 
