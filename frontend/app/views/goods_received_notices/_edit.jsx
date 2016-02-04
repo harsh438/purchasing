@@ -81,12 +81,12 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                 </div>
               </div>
             </form>
-          </div>
-          <ul className="nav nav-tabs">
-            <li className="active"><a>Purchase Orders</a></li>
-          </ul>
-          <div className="tab-content">
-              <div className="tabpanel">{this.renderPurchaseOrders()}</div>
+            <ul className="nav nav-tabs">
+              <li className="active"><a>Purchase Orders</a></li>
+            </ul>
+            <div className="tab-content">
+                <div className="tabpanel">{this.renderPurchaseOrders()}</div>
+            </div>
           </div>
         </div>
       </div>
