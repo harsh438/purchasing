@@ -32,7 +32,9 @@ class GoodsReceivedNotice < ActiveRecord::Base
 
   belongs_to :order, foreign_key: :OrderID
 
-  has_many :goods_received_notice_events, foreign_key: :grn
+  has_many :goods_received_notice_events, foreign_key: :grn,
+                                          after_add: :increment_totals,
+                                          after_remove: :decrement_totals
   accepts_nested_attributes_for :goods_received_notice_events
 
   has_many :vendors, through: :goods_received_notice_events
@@ -105,5 +107,19 @@ class GoodsReceivedNotice < ActiveRecord::Base
     self.units ||= 0
     self.cartons ||= 0
     self.pallets ||= 0
+  end
+
+  def increment_totals(grn_event)
+    self.units += grn_event.units
+    self.cartons += grn_event.cartons
+    self.pallets += grn_event.pallets
+    save!
+  end
+
+  def decrement_totals(grn_event)
+    self.units -= grn_event.units
+    self.cartons -= grn_event.cartons
+    self.pallets -= grn_event.pallets
+    save!
   end
 end
