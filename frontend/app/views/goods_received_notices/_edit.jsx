@@ -75,9 +75,11 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
               </div>
             </form>
           </div>
-
-          <div className="list-group">
-            {this.renderPurchaseOrders()}
+          <ul className="nav nav-tabs">
+            <li className="active"><a>Purchase Orders</a></li>
+          </ul>
+          <div className="tab-content">
+              <div className="tabpanel">{this.renderPurchaseOrders()}</div>
           </div>
         </div>
       </div>
@@ -85,12 +87,15 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   renderPurchaseOrders() {
+    if (this.props.goodsReceivedNotice.goodsReceivedNoticeEvents.length === 0) {
+      return (<div style={{ margin: '15px' }}><i>No purchase orders currently.</i></div>);
+    }
     return map(this.props.goodsReceivedNotice.goodsReceivedNoticeEvents, this.renderPurchaseOrder, this);
   }
 
   renderPurchaseOrder(goodsReceivedNoticeEvent) {
     return (
-      <div className="list-group-item" key={goodsReceivedNoticeEvent.id}>
+      <div className="list-group-item grn_edit__form_group--purchase_order_item" key={goodsReceivedNoticeEvent.id}>
         #{goodsReceivedNoticeEvent.purchaseOrderId}
 
         <div className="pull-right">

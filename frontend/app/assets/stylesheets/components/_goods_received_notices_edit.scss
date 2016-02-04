@@ -15,3 +15,7 @@
 .grn_edit__form_group--purchase_order {
   width: 40%;
 }
+
+.tab-content .grn_edit__form_group--purchase_order_item:first-child {
+  border-top: 0 !important;
+}
