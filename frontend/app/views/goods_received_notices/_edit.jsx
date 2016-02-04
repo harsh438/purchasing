@@ -74,7 +74,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                 </div>
               </div>
             </form>
-
           </div>
 
           <div className="list-group">
@@ -98,6 +97,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           <span className="badge" title="Units">{goodsReceivedNoticeEvent.units} U</span>&nbsp;
           <span className="badge" title="Cartons">{goodsReceivedNoticeEvent.cartons} C</span>&nbsp;
           <span className="badge" title="Pallets">{goodsReceivedNoticeEvent.pallets} P</span>&nbsp;
+          <button className="btn btn-sm btn-danger"
+                  style={{ marginTop: '-.4em' }}
+                  onClick={this.handleDelete.bind(this, goodsReceivedNoticeEvent.id)}>Delete</button>
         </div>
       </div>
     );
@@ -115,5 +117,11 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.onSave(this.state);
+  }
+
+  handleDelete(id) {
+    if (confirm('Are you sure you wish to remove this Purchase Order?')) {
+      this.props.onGoodsReceivedNoticeEventDelete(id);
+    }
   }
 }

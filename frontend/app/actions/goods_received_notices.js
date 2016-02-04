@@ -45,16 +45,12 @@ export function createGoodsReceivedNotice({ currentDate, deliveryDate }) {
   };
 }
 
-export function addPurchaseOrderToGoodsReceivedNotice({ id, purchaseOrderId, units, cartons, pallets, currentDate }) {
+function updateGrn(id, body, currentDate) {
   return dispatch => {
-    const goods_received_notice_events_attributes = [{ units, cartons, pallets, purchase_order_id: purchaseOrderId }];
-    const goodsReceivedNotice = { goods_received_notice: { id, goods_received_notice_events_attributes } };
-    console.log(goodsReceivedNotice);
-
     fetch(`/api/goods_received_notices/${id}.json`, { credentials: 'same-origin',
                                                       method: 'PATCH',
                                                       headers: { 'Content-Type': 'application/json' },
-                                                      body: JSON.stringify(goodsReceivedNotice) })
+                                                      body: JSON.stringify(body) })
       .then(response => response.json())
       .then(goodsReceivedNotice => {
         dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
@@ -63,6 +59,18 @@ export function addPurchaseOrderToGoodsReceivedNotice({ id, purchaseOrderId, uni
   };
 }
 
+export function addPurchaseOrderToGoodsReceivedNotice({ id, purchaseOrderId, units, cartons, pallets, currentDate }) {
+  const goods_received_notice_events_attributes = [{ units, cartons, pallets, purchase_order_id: purchaseOrderId }];
+  const goodsReceivedNotice = { goods_received_notice: { id, goods_received_notice_events_attributes } };
+  return updateGrn(id, goodsReceivedNotice, currentDate);
+}
+
 export function clearGoodsReceivedNotice() {
   return { type: 'CLEAR_GOODS_RECEIVED_NOTICE' };
+}
+
+export function removePurchaseOrderFromGoodsReceivedNotice({ id, goodsReceivedNoticeEventId, currentDate }) {
+  const goods_received_notice_events_attributes = [{ id: goodsReceivedNoticeEventId, _destroy: 1 }];
+  const goodsReceivedNotice = { goods_received_notice: { id, goods_received_notice_events_attributes } };
+  return updateGrn(id, goodsReceivedNotice, currentDate);
 }

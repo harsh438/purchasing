@@ -11,7 +11,8 @@ import { loadGoodsReceivedNotice,
          loadGoodsReceivedNotices,
          createGoodsReceivedNotice,
          clearGoodsReceivedNotice,
-         addPurchaseOrderToGoodsReceivedNotice } from '../../actions/goods_received_notices';
+         addPurchaseOrderToGoodsReceivedNotice,
+         removePurchaseOrderFromGoodsReceivedNotice } from '../../actions/goods_received_notices';
 
 import { loadVendors } from '../../actions/filters';
 import { loadPurchaseOrderList } from '../../actions/purchase_orders';
@@ -232,7 +233,8 @@ class GoodsReceivedNoticesIndex extends React.Component {
                                   purchaseOrders={this.props.purchaseOrders}
                                   onVendorChange={this.handleLoadPurchaseOrdersForEdit.bind(this)}
                                   onSave={this.handleGoodsReceivedNoticeSave.bind(this)}
-                                  onClose={this.handleGoodsReceivedNoticeClose.bind(this)} />
+                                  onClose={this.handleGoodsReceivedNoticeClose.bind(this)}
+                                  onGoodsReceivedNoticeEventDelete={this.handleGoodsReceivedNoticeEventDelete.bind(this)} />
       );
     }
   }
@@ -251,6 +253,12 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   handleGoodsReceivedNoticeAdd(deliveryDate) {
     this.props.dispatch(createGoodsReceivedNotice({ deliveryDate, currentDate: this.state.currentDate }));
+  }
+
+  handleGoodsReceivedNoticeEventDelete(goodsReceivedNoticeEventId) {
+    this.props.dispatch(removePurchaseOrderFromGoodsReceivedNotice({ id: this.props.goodsReceivedNotice.id,
+                                                                     currentDate: this.state.currentDate,
+                                                                     goodsReceivedNoticeEventId }));
   }
 
   handleSearch(grnId) {
