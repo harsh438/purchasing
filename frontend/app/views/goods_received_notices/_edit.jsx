@@ -17,7 +17,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   render() {
-    console.log("FFFFF", this.props.goodsReceivedNotice);
     return (
       <div className="grn_edit">
         <div className="panel panel-default panel-info">
@@ -29,7 +28,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                 <span className="badge" title="Cartons">{this.props.goodsReceivedNotice.cartons} C</span>&nbsp;
                 <span className="badge" title="Pallets">{this.props.goodsReceivedNotice.pallets} P</span>&nbsp;
 
-                <a style={{ cursor:'pointer', 'margin-left': '10px' }}
+                <a style={{ cursor: 'pointer', marginLeft: '10px' }}
                    className="glyphicon glyphicon-remove"
                    onClick={this.props.onClose}
                    aria-label="close"
