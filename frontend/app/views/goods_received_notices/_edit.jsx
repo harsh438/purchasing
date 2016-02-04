@@ -147,13 +147,16 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         <td>
           #{goodsReceivedNoticeEvent.purchaseOrderId}
         </td>
+
         <td className="text-right">
           <span className="badge" title="Units">{goodsReceivedNoticeEvent.units} U</span>&nbsp;
           <span className="badge" title="Cartons">{goodsReceivedNoticeEvent.cartons} C</span>&nbsp;
           <span className="badge" title="Pallets">{goodsReceivedNoticeEvent.pallets} P</span>&nbsp;
 
           <button className="btn btn-sm btn-danger"
-                  onClick={this.handleDelete.bind(this, goodsReceivedNoticeEvent.id)}>Delete</button>
+                  onClick={this.handleDeletePurchaseOrder.bind(this, goodsReceivedNoticeEvent.id)}>
+            Delete
+          </button>
         </td>
       </tr>
     );
@@ -162,7 +165,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   renderAdvanced() {
     return (
       <div>
-        <form>
+        <form onChange={this.handleChange.bind(this)}
+              onSubmit={this.handleChangeDateSubmit.bind(this)}>
           <div className="form-group">
             <input className="form-control"
                    type="date"
@@ -194,10 +198,16 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.onSave(this.state);
+    this.props.onPurchaseOrderAdd(this.state);
   }
 
-  handleDelete(id) {
+  handleChangeDateSubmit(e) {
+    e.preventDefault();
+    const { id, deliveryDate } = this.state;
+    this.props.onSave({ id, deliveryDate });
+  }
+
+  handleDeletePurchaseOrder(id) {
     if (confirm('Are you sure you wish to remove this Purchase Order?')) {
       this.props.onGoodsReceivedNoticeEventDelete(id);
     }
