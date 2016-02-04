@@ -1,16 +1,19 @@
 import React from 'react';
 import { renderSelectOptions } from '../../utilities/dom';
 import { map } from 'lodash';
+import { Nav, NavItem } from 'react-bootstrap';
 
 export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillMount() {
-    const { id, deliveryDate } = this.props.goodsReceivedNotice;
-    this.state = { id, deliveryDate: deliveryDate.split('/').reverse().join('-') };
+    let { id, deliveryDate } = this.props.goodsReceivedNotice;
+    const tab = 'purchaseOrders';
+    this.state = { id, deliveryDate, tab };
   }
 
   componentWillReceiveProps(nextProps) {
-    const { id, deliveryDate } = this.props.goodsReceivedNotice;
-    this.setState({ id, deliveryDate: deliveryDate.split('/').reverse().join('-') });
+    let { id, deliveryDate } = this.props.goodsReceivedNotice;
+    deliveryDate = deliveryDate.split('/').reverse().join('-');
+    this.setState({ id, deliveryDate });
   }
 
   render() {
@@ -25,6 +28,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                 <span className="badge" title="Units">{this.props.goodsReceivedNotice.units} U</span>&nbsp;
                 <span className="badge" title="Cartons">{this.props.goodsReceivedNotice.cartons} C</span>&nbsp;
                 <span className="badge" title="Pallets">{this.props.goodsReceivedNotice.pallets} P</span>&nbsp;
+
                 <a style={{ cursor:'pointer', 'margin-left': '10px' }}
                    className="glyphicon glyphicon-remove"
                    onClick={this.props.onClose}
@@ -35,88 +39,146 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           </div>
 
           <div className="panel-body">
-            <form onChange={this.handleChange.bind(this)}
-                  onSubmit={this.handleSubmit.bind(this)}>
-              <div className="form-group">
-                <input className="form-control"
-                       type="date"
-                       name="deliveryDate"
-                       value={this.state.deliveryDate} />
-              </div>
+            <Nav bsStyle="tabs"
+                 activeKey={this.state.tab}
+                 onSelect={this.handleTabChange.bind(this)}
+                 style={{ marginBottom: '10px' }}>
+              <NavItem eventKey="purchaseOrders">Purchase orders</NavItem>
+              <NavItem eventKey="advanced">Advanced</NavItem>
+            </Nav>
 
-              <div className="form-group">
-                <select className="form-control"
-                        id="vendorId"
-                        value={this.state.vendorId}
-                        onChange={this.handleVendorChange.bind(this)}>
-                  <option value=""> -- select brand -- </option>
-                  {renderSelectOptions(this.props.vendors)}
-                </select>
-              </div>
-
-              <div>
-                <div className="form-group grn_edit__form_group--purchase_order">
-                  <label htmlFor="purchaseOrderId">PO #</label>
-                  <select className="form-control"
-                          id="purchaseOrderId"
-                          name="purchaseOrderId"
-                          value={this.state.purchaseOrderId}>
-                    <option value=""> -- select purchase order -- </option>
-                    {renderSelectOptions(map(this.props.purchaseOrders, 'id'))}
-                  </select>
-                </div>
-
-                <div className="form-group grn_edit__form_group--units">
-                  <label htmlFor="units">Units</label>
-                  <input type="number" name="units" className="form-control" />
-                </div>
-
-                <div className="form-group grn_edit__form_group--cartons">
-                  <label htmlFor="cartons">Cartons</label>
-                  <input type="number" name="cartons" className="form-control" />
-                </div>
-
-                <div className="form-group grn_edit__form_group--pallets">
-                  <label>Palettes</label>
-                  <input type="number" name="pallets" className="form-control" />
-                </div>
-
-                <div className="text-right">
-                  <button className="btn btn-success">Add</button>
-                </div>
-              </div>
-            </form>
-            <ul className="nav nav-tabs">
-              <li className="active"><a>Purchase Orders</a></li>
-            </ul>
-            <div className="tab-content">
-                <div className="tabpanel">{this.renderPurchaseOrders()}</div>
-            </div>
+            {this.renderTab()}
           </div>
         </div>
       </div>
     );
   }
 
+  renderTab() {
+    switch (this.state.tab) {
+    case 'purchaseOrders':
+      return (
+        <div>
+          {this.renderAddPurchaseOrderForm()}
+
+          <div style={{ marginTop: '30px' }}>
+            {this.renderPurchaseOrders()}
+          </div>
+        </div>
+      );
+    case 'advanced':
+      return this.renderAdvanced();
+    }
+  }
+
+  renderAddPurchaseOrderForm() {
+    return (
+      <form onChange={this.handleChange.bind(this)}
+            onSubmit={this.handleSubmit.bind(this)}>
+        <div className="form-group">
+          <select className="form-control"
+                  id="vendorId"
+                  value={this.state.vendorId}
+                  onChange={this.handleVendorChange.bind(this)}>
+            <option value=""> -- select brand -- </option>
+            {renderSelectOptions(this.props.vendors)}
+          </select>
+        </div>
+
+        <div>
+          <div className="form-group grn_edit__form_group--purchase_order">
+            <label htmlFor="purchaseOrderId">PO #</label>
+            <select className="form-control"
+                    id="purchaseOrderId"
+                    name="purchaseOrderId"
+                    value={this.state.purchaseOrderId}>
+              <option value=""> -- select purchase order -- </option>
+              {renderSelectOptions(map(this.props.purchaseOrders, 'id'))}
+            </select>
+          </div>
+
+          <div className="form-group grn_edit__form_group--units">
+            <label htmlFor="units">Units</label>
+            <input type="number" name="units" className="form-control" />
+          </div>
+
+          <div className="form-group grn_edit__form_group--cartons">
+            <label htmlFor="cartons">Cartons</label>
+            <input type="number" name="cartons" className="form-control" />
+          </div>
+
+          <div className="form-group grn_edit__form_group--pallets">
+            <label>Palettes</label>
+            <input type="number" name="pallets" className="form-control" />
+          </div>
+
+          <div className="text-right">
+            <button className="btn btn-success">Add</button>
+          </div>
+        </div>
+      </form>
+    );
+  }
+
   renderPurchaseOrders() {
     if (this.props.goodsReceivedNotice.goodsReceivedNoticeEvents.length === 0) {
-      return (<div style={{ margin: '15px' }}><i>No purchase orders currently.</i></div>);
+      return (
+        <i>No purchase orders currently.</i>
+      );
     }
-    return map(this.props.goodsReceivedNotice.goodsReceivedNoticeEvents, this.renderPurchaseOrder, this);
+
+    return (
+      <table className="table">
+        <thead>
+          <tr>
+            <th>&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          {map(this.props.goodsReceivedNotice.goodsReceivedNoticeEvents, this.renderPurchaseOrder, this)}
+        </tbody>
+      </table>
+    );
   }
 
   renderPurchaseOrder(goodsReceivedNoticeEvent) {
     return (
-      <div className="list-group-item grn_edit__form_group--purchase_order_item" key={goodsReceivedNoticeEvent.id}>
-        #{goodsReceivedNoticeEvent.purchaseOrderId}
+      <tr className="grn_edit__form_group--purchase_order_item"
+           key={goodsReceivedNoticeEvent.id}>
+        <td>
+          #{goodsReceivedNoticeEvent.purchaseOrderId}
 
-        <div className="pull-right">
-          <span className="badge" title="Units">{goodsReceivedNoticeEvent.units} U</span>&nbsp;
-          <span className="badge" title="Cartons">{goodsReceivedNoticeEvent.cartons} C</span>&nbsp;
-          <span className="badge" title="Pallets">{goodsReceivedNoticeEvent.pallets} P</span>&nbsp;
-          <button className="btn btn-sm btn-danger"
-                  style={{ marginTop: '-.4em' }}
-                  onClick={this.handleDelete.bind(this, goodsReceivedNoticeEvent.id)}>Delete</button>
+          <div className="pull-right">
+            <span className="badge" title="Units">{goodsReceivedNoticeEvent.units} U</span>&nbsp;
+            <span className="badge" title="Cartons">{goodsReceivedNoticeEvent.cartons} C</span>&nbsp;
+            <span className="badge" title="Pallets">{goodsReceivedNoticeEvent.pallets} P</span>&nbsp;
+            <button className="btn btn-sm btn-danger"
+                    onClick={this.handleDelete.bind(this, goodsReceivedNoticeEvent.id)}>Delete</button>
+          </div>
+        </td>
+      </tr>
+    );
+  }
+
+  renderAdvanced() {
+    return (
+      <div>
+        <form>
+          <div className="form-group">
+            <input className="form-control"
+                   type="date"
+                   name="deliveryDate"
+                   value={this.state.deliveryDate} />
+          </div>
+
+          <div className="text-right">
+            <button className="btn btn-warning">Change date</button>
+          </div>
+        </form>
+
+        <div>
+          <p>If you a really sure:</p>
+          <button className="btn btn-danger">Delete GRN</button>
         </div>
       </div>
     );
@@ -140,5 +202,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     if (confirm('Are you sure you wish to remove this Purchase Order?')) {
       this.props.onGoodsReceivedNoticeEventDelete(id);
     }
+  }
+
+  handleTabChange(tab) {
+    this.setState({ tab });
   }
 }
