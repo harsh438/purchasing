@@ -20,6 +20,12 @@ FactoryGirl.define do
     manufacturer_size 'MAN_SIZE'
     product_size 'SD_SIZE'
 
+    trait :balanced do
+      qty 10
+      qtyAdded 0
+      qtyDone 10
+    end
+
     trait :arrived do
       arrived_date 1.day.ago
     end
