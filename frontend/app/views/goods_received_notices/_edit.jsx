@@ -130,7 +130,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       <table className="table">
         <thead>
           <tr>
-            <th>&nbsp;</th>
+            <th colSpan="2">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -143,17 +143,17 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   renderPurchaseOrder(goodsReceivedNoticeEvent) {
     return (
       <tr className="grn_edit__form_group--purchase_order_item"
-           key={goodsReceivedNoticeEvent.id}>
+          key={goodsReceivedNoticeEvent.id}>
         <td>
           #{goodsReceivedNoticeEvent.purchaseOrderId}
+        </td>
+        <td className="text-right">
+          <span className="badge" title="Units">{goodsReceivedNoticeEvent.units} U</span>&nbsp;
+          <span className="badge" title="Cartons">{goodsReceivedNoticeEvent.cartons} C</span>&nbsp;
+          <span className="badge" title="Pallets">{goodsReceivedNoticeEvent.pallets} P</span>&nbsp;
 
-          <div className="pull-right">
-            <span className="badge" title="Units">{goodsReceivedNoticeEvent.units} U</span>&nbsp;
-            <span className="badge" title="Cartons">{goodsReceivedNoticeEvent.cartons} C</span>&nbsp;
-            <span className="badge" title="Pallets">{goodsReceivedNoticeEvent.pallets} P</span>&nbsp;
-            <button className="btn btn-sm btn-danger"
-                    onClick={this.handleDelete.bind(this, goodsReceivedNoticeEvent.id)}>Delete</button>
-          </div>
+          <button className="btn btn-sm btn-danger"
+                  onClick={this.handleDelete.bind(this, goodsReceivedNoticeEvent.id)}>Delete</button>
         </td>
       </tr>
     );
