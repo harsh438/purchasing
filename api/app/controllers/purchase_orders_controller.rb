@@ -4,7 +4,8 @@ class PurchaseOrdersController < ApplicationController
   end
 
   def list
-    render json: PurchaseOrder.where(vendor_id: params[:vendor_id])
+    render json: PurchaseOrderLineItem.filter_status(status: 'balance')
+                                      .where(vendor_id: params[:vendor_id])
   end
 
   def show
