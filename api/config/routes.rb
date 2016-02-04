@@ -45,7 +45,7 @@ Rails.application.routes.draw do
 
     resources :vendors, only: [:index, :create, :show, :update]
 
-    resources :goods_received_notices, only: [:index, :create, :show, :update]
+    resources :goods_received_notices, except: [:new, :edit]
 
     scope :filters do
       get ':action' => 'filters#:action'

@@ -16,6 +16,11 @@ class GoodsReceivedNoticesController < ApplicationController
     render json: grn.as_json_with_purchase_orders
   end
 
+  def destroy
+    grn.destroy
+    render json: { success: true }
+  end
+
   private
 
   def grn
