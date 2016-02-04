@@ -62,7 +62,7 @@ class SuppliersEdit extends React.Component {
           {this.renderBrandsNav()}
 
           <div className="col-md-6">
-            {this.renderDefaultHistoryTab()}
+            {this.renderTermsSubTabs()}
 
             {this.renderTermsTab()}
           </div>
@@ -71,16 +71,18 @@ class SuppliersEdit extends React.Component {
     );
   }
 
-  renderDefaultHistoryTab() {
-    if (this.state.tab.vendors === 'new') { return ; }
+  renderTermsSubTabs() {
+    if (this.state.tab.vendors === 'new') return;
+
     return (
       <Nav bsStyle="pills"
-        activeKey={this.state.tab.terms}
-        onSelect={this.handleTabChange.bind(this, 'terms')}
-        style={{ marginBottom: '10px' }}>
+           activeKey={this.state.tab.terms}
+           onSelect={this.handleTabChange.bind(this, 'terms')}
+           style={{ marginBottom: '10px' }}>
         <NavItem eventKey="default">Default</NavItem>
         <NavItem eventKey="history">History</NavItem>
-      </Nav>);
+      </Nav>
+    );
   }
 
   renderBrandsNav() {
