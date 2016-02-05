@@ -4,16 +4,16 @@ class GoodsReceivedNoticesController < ApplicationController
   end
 
   def create
-    render json: GoodsReceivedNotice.create!(grn_attrs).as_json_with_purchase_orders_and_packing_list
+    render json: GoodsReceivedNotice.create!(grn_attrs).as_json_with_purchase_orders_and_packing_list_urls
   end
 
   def show
-    render json: grn.as_json_with_purchase_orders_and_packing_list
+    render json: grn.as_json_with_purchase_orders_and_packing_list_urls
   end
 
   def update
     grn.update!(grn_attrs)
-    render json: grn.as_json_with_purchase_orders_and_packing_list
+    render json: grn.as_json_with_purchase_orders_and_packing_list_urls
   end
 
   def destroy

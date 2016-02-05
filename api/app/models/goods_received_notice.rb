@@ -50,7 +50,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   #     date
   #   end
   # end
-  def packing_list
+  def packing_list_urls
     (attributes['Attachments'] || '').split(',').select do |attachment|
       attachment != ''
     end.map do |attachment|
@@ -98,9 +98,9 @@ class GoodsReceivedNotice < ActiveRecord::Base
     end
   end
 
-  def as_json_with_purchase_orders_and_packing_list
+  def as_json_with_purchase_orders_and_packing_list_urls
     as_json_with_purchase_orders.tap do |grn|
-      grn[:packing_list] = packing_list
+      grn[:packing_list_urls] = packing_list_urls
     end
   end
 

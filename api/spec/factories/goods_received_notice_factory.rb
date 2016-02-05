@@ -29,7 +29,7 @@ FactoryGirl.define do
     end
 
     trait :with_purchase_list do
-      Attachments ',RHYTHM SD91467-P  91468-P_DELIVERYNOTE.pdf'
+      Attachments ',RHYTHM SD91467-P  91468-P_DELIVERYNOTE.pdf,Surfdome 2016-01-26-083343.pdf'
     end
   end
 end
