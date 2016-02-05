@@ -90,9 +90,6 @@ class GoodsReceivedNoticesIndex extends React.Component {
           <div className="col-md-4">
             <h1>Goods Received Notices</h1>
           </div>
-
-          <div className="col-md-3 col-md-offset-5">
-          </div>
         </div>
 
         {this.renderNavigation()}
