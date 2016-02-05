@@ -96,10 +96,10 @@ class GoodsReceivedNoticesIndex extends React.Component {
         </div>
 
         {this.renderNavigation()}
-        {this.renderWeekTabs()}
 
         <div className="row">
           <div className={leftClass}>
+            {this.renderWeekTabs()}
             {this.renderWeek()}
           </div>
 
