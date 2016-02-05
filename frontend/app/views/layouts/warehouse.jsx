@@ -1,8 +1,7 @@
 import React from 'react';
-import { RouteHandler } from 'react-router';
-import Header from '../application/_header';
+import Header from '../application/_warehouse_header';
 
-export default class Application extends React.Component {
+export default class WarehouseLayout extends React.Component {
   render () {
     return (
       <div className="purchase_processing_app">
