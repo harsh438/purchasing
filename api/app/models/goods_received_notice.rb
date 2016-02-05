@@ -28,7 +28,9 @@ class GoodsReceivedNotice < ActiveRecord::Base
                  units_received: :UnitsReceived,
                  cartons_received: :CartonsReceived,
                  booked_in_at: :BookedInDate,
-                 order_id: :OrderID
+                 order_id: :OrderID,
+                 legacy_attachments: :Attachments
+
 
   belongs_to :order, foreign_key: :OrderID
 
@@ -40,7 +42,9 @@ class GoodsReceivedNotice < ActiveRecord::Base
   has_many :vendors, through: :goods_received_notice_events
 
   has_many :purchase_orders, through: :goods_received_notice_events
+
   has_many :packing_lists
+  accepts_nested_attributes_for :packing_lists
 
   after_initialize :ensure_defaults
 
@@ -52,10 +56,23 @@ class GoodsReceivedNotice < ActiveRecord::Base
   #   end
   # end
   def packing_list_urls
-    (attributes['Attachments'] || '').split(/(\..*?,)|^,/).select do |attachment|
-      attachment != ''
-    end.map do |attachment|
-      "https://www.sdometools.com/tools/bookingin_tool/attachments/#{URI.escape(attachment)}"
+    [].concat(packing_list_current_urls)
+      .concat(packing_list_legacy_urls)
+  end
+
+  def packing_list_current_urls
+    packing_lists.map(&:list).map { |list| list.expiring_url(300) }
+  end
+
+  def packing_list_legacy_urls
+    if !legacy_attachments
+      []
+    else
+      legacy_attachments.split(/,|^(.*?\.[a-z]{3,4})/).select do |attachment|
+        attachment != ''
+      end.map do |attachment|
+        "https://www.sdometools.com/tools/bookingin_tool/attachments/#{URI.escape(attachment)}"
+      end
     end
   end
 
