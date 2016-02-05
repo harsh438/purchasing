@@ -43,6 +43,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                  onSelect={this.handleTabChange.bind(this)}
                  style={{ marginBottom: '10px' }}>
               <NavItem eventKey="purchaseOrders">Purchase orders</NavItem>
+              <NavItem eventKey="attachements">Attachements</NavItem>
               <NavItem eventKey="advanced">Advanced</NavItem>
             </Nav>
 
@@ -65,6 +66,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           </div>
         </div>
       );
+    case 'attachements':
+      return this.renderAttachements();
     case 'advanced':
       return this.renderAdvanced();
     }
@@ -186,6 +189,10 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         </div>
       </div>
     );
+  }
+
+  renderAttachements() {
+
   }
 
   handleChange({ target }) {
