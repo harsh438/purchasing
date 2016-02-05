@@ -206,7 +206,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     return (
         <tr>
           <td>
-            <a target="" href={'https://www.sdometools.com/tools/bookingin_tool/attachments/' + attachment}>
+            <a target="_blank" href={'https://www.sdometools.com/tools/bookingin_tool/attachments/' + encodeURIComponent(attachment)}>
               Download {attachment}
             </a>
           </td>
