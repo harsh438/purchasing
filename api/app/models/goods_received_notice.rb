@@ -50,6 +50,13 @@ class GoodsReceivedNotice < ActiveRecord::Base
   #     date
   #   end
   # end
+  def packing_list
+    (attributes['Attachments'] || '').split(',').select do |attachment|
+      attachment != ''
+    end.map do |attachment|
+      "https://www.sdometools.com/tools/bookingin_tool/attachments/#{URI.escape(attachment)}"
+    end
+  end
 
   def late?
     delivery_date < Date.today
@@ -88,6 +95,12 @@ class GoodsReceivedNotice < ActiveRecord::Base
   def as_json_with_purchase_orders
     as_json.tap do |grn|
       grn[:goods_received_notice_events] = goods_received_notice_events.map(&:as_json_with_purchase_order)
+    end
+  end
+
+  def as_json_with_purchase_orders_and_packing_list
+    as_json_with_purchase_orders.tap do |grn|
+      grn[:packing_list] = packing_list
     end
   end
 
