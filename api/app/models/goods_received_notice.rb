@@ -40,6 +40,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   has_many :vendors, through: :goods_received_notice_events
 
   has_many :purchase_orders, through: :goods_received_notice_events
+  has_many :packing_lists
 
   after_initialize :ensure_defaults
 
@@ -51,7 +52,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   #   end
   # end
   def packing_list_urls
-    (attributes['Attachments'] || '').split(',').select do |attachment|
+    (attributes['Attachments'] || '').split(/(\..*?,)|^,/).select do |attachment|
       attachment != ''
     end.map do |attachment|
       "https://www.sdometools.com/tools/bookingin_tool/attachments/#{URI.escape(attachment)}"
