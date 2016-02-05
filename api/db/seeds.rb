@@ -6,5 +6,5 @@ include FactoryGirl::Syntax::Methods
 
 create_list(:order, 3, line_item_count: 2)
 create_list(:supplier, 5, contact_count: 2)
-create_list(:goods_received_notice, 50, :give_or_take_2_weeks)
+create_list(:goods_received_notice, 50, :give_or_take_2_weeks, :with_purchase_list)
 create_list(:sku, 10)
