@@ -14,13 +14,13 @@ feature 'Packing List URL Upload' do
   def when_i_upload_a_packing_list_file
     page.driver.post(goods_received_notice_path(grn),
                      _method: 'patch',
-                     goods_received_notice: { packing_lists_attributes: [{list: fixture_packing_file_upload}] })
+                     goods_received_notice: { packing_lists_attributes: [{ list: fixture_packing_file_upload }] })
   end
 
   def when_i_upload_a_packing_list_file_to_a_grn_with_legacy_attachments
     page.driver.post(goods_received_notice_path(grn_with_purchase_list),
                      _method: 'patch',
-                     goods_received_notice: { packing_lists_attributes: [{list: fixture_packing_file_upload}] })
+                     goods_received_notice: { packing_lists_attributes: [{ list: fixture_packing_file_upload }] })
   end
 
   def then_the_packing_list_should_be_stored
