@@ -43,7 +43,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                  onSelect={this.handleTabChange.bind(this)}
                  style={{ marginBottom: '10px' }}>
               <NavItem eventKey="purchaseOrders">Purchase orders</NavItem>
-              <NavItem eventKey="attachements">Attachements</NavItem>
+              <NavItem eventKey="attachments">Attachments</NavItem>
               <NavItem eventKey="advanced">Advanced</NavItem>
             </Nav>
 
@@ -66,8 +66,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           </div>
         </div>
       );
-    case 'attachements':
-      return this.renderAttachements();
+    case 'attachments':
+      return this.renderAttachments();
     case 'advanced':
       return this.renderAdvanced();
     }
@@ -191,8 +191,26 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     );
   }
 
-  renderAttachements() {
+  renderAttachments() {
+    let attachments = this.props.goodsReceivedNotice.attachments;
+    return (
+      <table className="table">
+        <tbody>
+          {(attachments || '').split(',').map(this.renderAttachment)}
+        </tbody>
+      </table>);
+  }
 
+  renderAttachment(attachment) {
+    if (!attachment) { return ; }
+    return (
+        <tr>
+          <td>
+            <a target="" href={'https://www.sdometools.com/tools/bookingin_tool/attachments/' + attachment}>
+              Download {attachment}
+            </a>
+          </td>
+        </tr>);
   }
 
   handleChange({ target }) {
