@@ -44,7 +44,7 @@ class PurchaseOrderLineItemsIndex extends React.Component {
              style={{ marginTop: '70px' }}>
           <div className="row" style={{ marginBottom: '20px' }}>
             <div className="col-md-12">
-              <h1>Purchase Order Line items</h1>
+              <h1>Purchase order lines</h1>
             </div>
           </div>
         </div>
