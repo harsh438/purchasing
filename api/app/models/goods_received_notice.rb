@@ -68,7 +68,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
     if !legacy_attachments
       []
     else
-      legacy_attachments.split(/,|^(.*?\.[a-z]{3,4})/).select do |attachment|
+      legacy_attachments.split(/,(.*?\.[a-z]{3,4})/).select do |attachment|
         attachment != ''
       end.map do |attachment|
         "https://www.sdometools.com/tools/bookingin_tool/attachments/#{URI.escape(attachment)}"
