@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160129131413) do
+ActiveRecord::Schema.define(version: 20160205114344) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -492,6 +492,18 @@ ActiveRecord::Schema.define(version: 20160129131413) do
     t.string  "Attachments",                    limit: 500,             null: false
     t.integer "items_in_quarantine",            limit: 4,   default: 0
   end
+
+  create_table "packing_lists", force: :cascade do |t|
+    t.integer  "goods_received_notice_id", limit: 4
+    t.string   "list_file_name",           limit: 255
+    t.string   "list_content_type",        limit: 255
+    t.integer  "list_file_size",           limit: 4
+    t.datetime "list_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "packing_lists", ["goods_received_notice_id"], name: "index_packing_lists_on_goods_received_notice_id", using: :btree
 
   create_table "paking_conditions_issues", force: :cascade do |t|
     t.integer "packing_conditions_id", limit: 4,     null: false
