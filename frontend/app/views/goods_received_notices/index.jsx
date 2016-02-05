@@ -88,7 +88,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
            style={{ marginTop: '70px' }}>
         <div className="row" style={{ marginBottom: '20px' }}>
           <div className="col-md-4">
-            <h1>Goods Received Notices</h1>
+            <h1>Intake planner</h1>
           </div>
         </div>
 
