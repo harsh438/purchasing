@@ -27,5 +27,9 @@ FactoryGirl.define do
         grn.goods_received_notice_events << create(:goods_received_notice_event)
       end
     end
+
+    trait :with_purchase_list do
+      Attachments ',RHYTHM SD91467-P  91468-P_DELIVERYNOTE.pdf'
+    end
   end
 end
