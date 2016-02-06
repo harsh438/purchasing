@@ -130,7 +130,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     }
 
     return (
-      <table className="table">
+      <table className="table table-striped table-condensed">
         <thead>
           <tr>
             <th colSpan="2">&nbsp;</th>
@@ -145,9 +145,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   renderPurchaseOrder(goodsReceivedNoticeEvent) {
     return (
-      <tr className="grn_edit__form_group--purchase_order_item"
+      <tr className={this.goodsReceivedNoticeEventClass(goodsReceivedNoticeEvent)}
           key={goodsReceivedNoticeEvent.id}>
-        <td>
+        <td style={{ fontSize: '.9em', lineHeight: '2.1em' }}>
           #{goodsReceivedNoticeEvent.purchaseOrderId}
         </td>
 
@@ -163,6 +163,33 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         </td>
       </tr>
     );
+  }
+
+  renderPackingLists() {
+    const attachments = this.props.goodsReceivedNotice.attachments || '';
+
+    return (
+      <table className="table table-striped table-condensed">
+        <tbody>
+          {attachments.split(',').map(this.renderPackingList)}
+        </tbody>
+      </table>
+    );
+  }
+
+  renderPackingList(packingList) {
+    if (!packingList) return;
+    const href = `https://www.sdometools.com/tools/bookingin_tool/attachments/${encodeURIComponent(packingList)}`;
+
+    return (
+        <tr>
+          <td>
+            <a target="_blank" href={href}>
+              Download {packingList}
+            </a>
+          </td>
+        </tr>
+      );
   }
 
   renderAdvanced() {
@@ -191,31 +218,23 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     );
   }
 
-  renderPackingLists() {
-    const attachments = this.props.goodsReceivedNotice.attachments || '';
-
-    return (
-      <table className="table">
-        <tbody>
-          {attachments.split(',').map(this.renderAttachment)}
-        </tbody>
-      </table>
-    );
+  goodsReceivedNoticeEventClass({ status }) {
+    let className = 'grn_edit__form_group--purchase_order_item';
+    className += ` ${this.goodsReceivedNoticeEventStatusClass(status)}`;
+    return className;
   }
 
-  renderAttachment(attachment) {
-    if (!attachment) return;
-    const href = `https://www.sdometools.com/tools/bookingin_tool/attachments/${encodeURIComponent(attachment)}`;
-
-    return (
-        <tr>
-          <td>
-            <a target="_blank" href={href}>
-              Download {attachment}
-            </a>
-          </td>
-        </tr>
-      );
+  goodsReceivedNoticeEventStatusClass(status) {
+    switch (status) {
+    case 'late':
+      return 'danger';
+    case 'received':
+      return 'success';
+    case 'delivered':
+      return 'warning';
+    default:
+      return '';
+    }
   }
 
   handleChange({ target }) {
