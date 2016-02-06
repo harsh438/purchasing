@@ -152,9 +152,12 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         </td>
 
         <td className="text-right">
-          <span className="badge" title="Units">{goodsReceivedNoticeEvent.units} U</span>&nbsp;
-          <span className="badge" title="Cartons">{goodsReceivedNoticeEvent.cartons} C</span>&nbsp;
-          <span className="badge" title="Pallets">{goodsReceivedNoticeEvent.pallets} P</span>&nbsp;
+          <span className="badge"
+                title="Units">{goodsReceivedNoticeEvent.units} U</span>&nbsp;
+          <span className="badge"
+                title="Cartons">{goodsReceivedNoticeEvent.cartons} C</span>&nbsp;
+          <span className="badge"
+                title="Pallets">{goodsReceivedNoticeEvent.pallets} P</span>&nbsp;
 
           <button className="btn btn-sm btn-danger"
                   onClick={this.handleDeletePurchaseOrder.bind(this, goodsReceivedNoticeEvent.id)}>
@@ -219,22 +222,21 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   goodsReceivedNoticeEventClass({ status }) {
-    let className = 'grn_edit__form_group--purchase_order_item';
-    className += ` ${this.goodsReceivedNoticeEventStatusClass(status)}`;
-    return className;
-  }
+    let className = 'grn_edit__purchase_order';
 
-  goodsReceivedNoticeEventStatusClass(status) {
     switch (status) {
     case 'late':
-      return 'danger';
+      className += ' danger';
+      break;
     case 'received':
-      return 'success';
+      className += ' success';
+      break;
     case 'delivered':
-      return 'warning';
-    default:
-      return '';
+      className += ' warning';
+      break;
     }
+
+    return className;
   }
 
   handleChange({ target }) {

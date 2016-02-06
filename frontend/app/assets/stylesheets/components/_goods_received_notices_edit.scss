@@ -15,3 +15,17 @@
 .grn_edit__form_group--purchase_order {
   width: 40%;
 }
+
+.grn_edit__purchase_order {
+  &.danger .badge {
+    background: #d9534f;
+  }
+
+  &.success .badge {
+    background: #449d44;
+  }
+
+  &.warning .badge {
+    background: #ec971f;
+  }
+}
