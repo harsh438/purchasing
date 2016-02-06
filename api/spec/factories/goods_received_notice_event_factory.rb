@@ -10,7 +10,7 @@ FactoryGirl.define do
       grn_event.vendor_id = grn_event.purchase_order.id
 
       if grn_event.delivery_date.past?
-        grn_event.status = [2, 4, 7].sample
+        grn_event.status = [2, 2, 2, 4, 4, 4, 4, 7].sample
       end
     end
   end
