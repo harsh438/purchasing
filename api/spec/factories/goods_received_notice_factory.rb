@@ -18,13 +18,19 @@ FactoryGirl.define do
     units_received 0
     cartons_received 0
 
+    transient do
+      po_count 1
+    end
+
     trait :give_or_take_2_weeks do
       delivery_date { rand(2.weeks.ago..2.weeks.from_now) }
     end
 
     trait :with_purchase_orders do
-      after(:create) do |grn|
-        grn.goods_received_notice_events << create(:goods_received_notice_event)
+      after(:create) do |grn, evaluator|
+        evaluator.po_count.times do
+          grn.goods_received_notice_events << create(:goods_received_notice_event, delivery_date: grn.delivery_date)
+        end
       end
     end
 

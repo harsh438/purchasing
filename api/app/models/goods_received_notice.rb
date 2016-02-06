@@ -81,20 +81,16 @@ class GoodsReceivedNotice < ActiveRecord::Base
   end
 
   def status
-    if processed?
-      :received
-    elsif processing?
-      :received
-    elsif checked?
-      :received
-    elsif checking?
-      :received
-    elsif received?
-      :delivered
-    elsif late?
+    if goods_received_notice_events.any?(&:late?)
       :late
+    elsif goods_received_notice_events.any?(&:booked?)
+      :booked
+    elsif goods_received_notice_events.any?(&:delivered?)
+      :delivered
+    elsif goods_received_notice_events.any? and goods_received_notice_events.all?(&:received?)
+      :received
     else
-      :balance
+      :booked
     end
   end
 
