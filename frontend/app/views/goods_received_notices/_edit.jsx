@@ -43,7 +43,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                  onSelect={this.handleTabChange.bind(this)}
                  style={{ marginBottom: '10px' }}>
               <NavItem eventKey="purchaseOrders">Purchase orders</NavItem>
-              <NavItem eventKey="attachments">Attachments</NavItem>
+              <NavItem eventKey="packingLists">Packing lists</NavItem>
               <NavItem eventKey="advanced">Advanced</NavItem>
             </Nav>
 
@@ -66,8 +66,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           </div>
         </div>
       );
-    case 'attachments':
-      return this.renderAttachments();
+    case 'packingLists':
+      return this.renderPackingLists();
     case 'advanced':
       return this.renderAdvanced();
     }
@@ -191,26 +191,31 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     );
   }
 
-  renderAttachments() {
-    let attachments = this.props.goodsReceivedNotice.attachments;
+  renderPackingLists() {
+    const attachments = this.props.goodsReceivedNotice.attachments || '';
+
     return (
       <table className="table">
         <tbody>
-          {(attachments || '').split(',').map(this.renderAttachment)}
+          {attachments.split(',').map(this.renderAttachment)}
         </tbody>
-      </table>);
+      </table>
+    );
   }
 
   renderAttachment(attachment) {
-    if (!attachment) { return ; }
+    if (!attachment) return;
+    const href = `https://www.sdometools.com/tools/bookingin_tool/attachments/${encodeURIComponent(attachment)}`;
+
     return (
         <tr>
           <td>
-            <a target="_blank" href={'https://www.sdometools.com/tools/bookingin_tool/attachments/' + encodeURIComponent(attachment)}>
+            <a target="_blank" href={href}>
               Download {attachment}
             </a>
           </td>
-        </tr>);
+        </tr>
+      );
   }
 
   handleChange({ target }) {
@@ -228,10 +233,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   handleDelete() {
-    if (confirm('Are you sure you wish to delete this GRN?')) {
-      if (confirm('Really?')) {
-        this.props.onDelete(this.state.id);
-      }
+    if (confirm('Are you sure you wish to delete this GRN?') && confirm('Really?')) {
+      this.props.onDelete(this.state.id);
     }
   }
 
