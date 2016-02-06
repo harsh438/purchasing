@@ -227,7 +227,8 @@ class GoodsReceivedNoticesIndex extends React.Component {
   renderEditPanel() {
     if (this.props.goodsReceivedNotice) {
       return (
-        <GoodsReceivedNoticesEdit goodsReceivedNotice={this.props.goodsReceivedNotice}
+        <GoodsReceivedNoticesEdit advanced={this.props.advanced}
+                                  goodsReceivedNotice={this.props.goodsReceivedNotice}
                                   vendors={this.props.brands}
                                   purchaseOrders={this.props.purchaseOrders}
                                   onVendorChange={this.handleLoadPurchaseOrdersForEdit.bind(this)}
@@ -312,8 +313,12 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 }
 
-function applyState({ filters, goodsReceivedNotices, purchaseOrders, errorNotification }) {
-  return assign({}, filters, goodsReceivedNotices, purchaseOrders, errorNotification);
+function applyState({ filters,
+                      goodsReceivedNotices,
+                      purchaseOrders,
+                      errorNotification,
+                      advanced }) {
+  return assign({ advanced }, filters, goodsReceivedNotices, purchaseOrders, errorNotification);
 }
 
 export default connect(applyState)(GoodsReceivedNoticesIndex);

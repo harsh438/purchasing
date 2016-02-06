@@ -81,4 +81,15 @@ docker-compose run web rspec
 docker-compose run web rake build
 ```
 
+## Advanced mode
+
+Staff who require advanced mode can add a bookmark with the following URL:
+
+```
+javascript:window.store.dispatch({ type: 'ADVANCED_MODE' });alert('Advanced mode enabled');
+```
+
+Clicking this whilst looking at the purchasing app will enable advanced
+features.
+
 [redacted-data]: https://drive.google.com/open?id=0BzNvNNGUQGxLUkJRTGRCaGJYMzQ

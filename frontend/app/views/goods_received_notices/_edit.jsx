@@ -44,7 +44,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                  style={{ marginBottom: '10px' }}>
               <NavItem eventKey="purchaseOrders">Purchase orders</NavItem>
               <NavItem eventKey="packingLists">Packing lists</NavItem>
-              <NavItem eventKey="advanced">Advanced</NavItem>
+              {this.props.advanced && <NavItem eventKey="advanced">Advanced</NavItem>}
             </Nav>
 
             {this.renderTab()}
