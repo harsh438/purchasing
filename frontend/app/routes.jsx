@@ -50,7 +50,7 @@ export default (
       <Route path="goods-received-notices" component={GoodsReceivedNoticesIndex} />
     </Route>
 
-    <Route path="/warehouse/" component={WarehouseLayout}>
+    <Route path="/warehouse" component={WarehouseLayout}>
       <IndexRedirect to="packing-lists" />
       <Route path="packing-lists" component={PackingListsIndex} />
     </Route>
