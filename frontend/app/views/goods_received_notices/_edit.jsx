@@ -177,7 +177,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
             {attachments.map(this.renderPackingList)}
           </tbody>
         </table>
-        {this.renderPackingListUpload()}
       </div>
     );
   }
