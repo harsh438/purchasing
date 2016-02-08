@@ -1,4 +1,4 @@
-feature 'Listing GRNs' do
+feature 'Listing GRNs', booking_db: true do
   subject { JSON.parse(page.body) }
 
   scenario 'Listing GRNs between a date range' do

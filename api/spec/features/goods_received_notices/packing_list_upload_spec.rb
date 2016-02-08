@@ -1,4 +1,4 @@
-feature 'Packing List URL Upload' do
+feature 'Packing List URL Upload', booking_db: true do
   subject { JSON.parse(page.body) }
 
   scenario 'Adding a packing list file to a GRN' do

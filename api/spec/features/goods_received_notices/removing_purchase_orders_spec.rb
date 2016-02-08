@@ -1,4 +1,4 @@
-feature 'Removing Purchase Order from Goods Received Notice' do
+feature 'Removing Purchase Order from Goods Received Notice', booking_db: true do
   subject { JSON.parse(page.body) }
 
   scenario 'Removing valid PO to GRN' do

@@ -1,4 +1,4 @@
-feature 'Adding Purchase Order to Goods Received Notice' do
+feature 'Adding Purchase Order to Goods Received Notice', booking_db: true do
   subject { JSON.parse(page.body) }
 
   scenario 'Adding valid PO to GRN' do

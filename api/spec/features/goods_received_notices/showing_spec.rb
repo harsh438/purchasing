@@ -1,4 +1,4 @@
-feature 'Showing GRN' do
+feature 'Showing GRN', booking_db: true do
   scenario 'Fetching a single GRN' do
     when_i_request_a_grn_which_exists
     then_i_should_have_a_grn_as_json

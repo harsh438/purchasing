@@ -1,4 +1,4 @@
-feature 'Deleting GRN' do
+feature 'Deleting GRN', booking_db: true do
   subject { JSON.parse(page.body) }
 
   scenario 'Delete a GRN' do

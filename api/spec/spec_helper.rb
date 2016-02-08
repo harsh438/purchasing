@@ -33,4 +33,11 @@ RSpec.configure do |config|
   config.before :example do
     ActionMailer::Base.deliveries.clear
   end
+
+  config.around :example, booking_db: true do |example|
+    GoodsReceivedNotice.transaction do
+      example.run
+      raise ActiveRecord::Rollback
+    end
+  end
 end

@@ -1,4 +1,4 @@
-feature 'Packing List URLS' do
+feature 'Packing List URLS', booking_db: true do
   subject { JSON.parse(page.body) }
 
   scenario 'Fetch a GRN with packing list' do

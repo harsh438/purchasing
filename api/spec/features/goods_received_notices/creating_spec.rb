@@ -1,4 +1,4 @@
-feature 'Creating GRN' do
+feature 'Creating GRN', booking_db: true do
   subject { JSON.parse(page.body) }
 
   scenario 'Create a GRN' do
