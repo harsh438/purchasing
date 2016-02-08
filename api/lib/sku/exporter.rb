@@ -185,7 +185,7 @@ class Sku::Exporter
       vendor_id: attrs[:vendor_id],
       season: attrs[:season],
       barcode: attrs[:barcode],
-      listing_genders: attrs[:listing_genders],
+      listing_genders: attrs[:listing_genders] || '',
       inv_track: attrs[:inv_track] }
   end
 
