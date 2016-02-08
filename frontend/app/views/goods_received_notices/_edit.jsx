@@ -230,7 +230,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       grn.packingLists = grn.packingLists || [];
       grn.packingLists.push({
         list: upload.target.result,
-        list_file_name: file.name
+        list_file_name: file.name,
       });
       self.setState({ goodsReceivedNotice: grn, packingFileName: file.name });
     };
