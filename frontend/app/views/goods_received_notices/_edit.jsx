@@ -31,8 +31,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                 <a style={{ cursor: 'pointer', marginLeft: '10px' }}
                    className="glyphicon glyphicon-remove"
                    onClick={this.props.onClose}
-                   aria-label="close"
-                 ></a>
+                   aria-label="close"></a>
               </span>
             </h3>
           </div>
