@@ -1,4 +1,5 @@
 import React from 'react';
+import DropZone from 'react-dropzone';
 import { renderSelectOptions } from '../../utilities/dom';
 import { map } from 'lodash';
 import { Nav, NavItem } from 'react-bootstrap';
@@ -177,6 +178,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
             {attachments.map(this.renderPackingList)}
           </tbody>
         </table>
+        {this.renderPackingListUpload()}
       </div>
     );
   }
@@ -186,7 +188,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
     const filenameIndex = packingListUrl.lastIndexOf('/');
     return (
-        <tr>
+        <tr key={packingListUrl}>
           <td>
             <a target="_blank" href={packingListUrl}>
               Download {decodeURIComponent(packingListUrl.substr(filenameIndex + 1))}
@@ -195,6 +197,47 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         </tr>
       );
   }
+
+  renderPackingListUpload() {
+    return (
+    <DropZone multiple={false}
+              onDrop={this.handlePackingFileUpload.bind(this)}
+              style={{ color: '#999', padding: '30px', border: '2px dashed #999' }}
+              accept=".jpg,.jpeg,.png,.pdf,.eml">
+      <div>Add a new packing list. Try dropping some file here, or click to select file to upload.</div>
+      {this.renderPackingListUploadText()}
+    </DropZone>);
+  }
+
+  renderPackingListUploadText() {
+    if (this.state.packingFileName) {
+      return (
+        <div style={{ margin: '5px 10px 0 10px' }}>
+          <span className="glyphicon glyphicon-open-file"></span>&nbsp;
+          <span style={{ color: 'grey' }}>File to upload: {this.state.packingFileName}</span>
+        </div>
+      );
+    }
+  }
+
+  handlePackingFileUpload(files) {
+    const self = this;
+    const reader = new FileReader();
+    const file = files[0];
+
+    reader.onload = function (upload) {
+      let grn = self.state.goodsReceivedNotice;
+      grn.packingLists = grn.packingLists || [];
+      grn.packingLists.push({
+        list: upload.target.result,
+        list_file_name: file.name
+      });
+      self.setState({ goodsReceivedNotice: grn, packingFileName: file.name });
+    };
+
+    reader.readAsDataURL(file);
+  }
+
 
   renderAdvanced() {
     return (
