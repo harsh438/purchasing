@@ -6,6 +6,10 @@ class PurchaseOrdersController < ApplicationController
   def list
     render json: PurchaseOrderLineItem.filter_status(status: 'balance')
                                       .where(vendor_id: params[:vendor_id])
+                                      .group(:po_number)
+                                      .map do |po_line_item|
+      { id: po_line_item.po_number }
+    end
   end
 
   def show

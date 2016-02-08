@@ -20,7 +20,7 @@ feature 'Purchase Order Listing' do
   let(:vendor) { create(:vendor) }
 
   def create_purchase_orders
-    create_list(:purchase_order_line_item, 3)
-    create_list(:purchase_order_line_item, 2, :balanced, vendor: vendor)
+    create_list(:purchase_order_line_item, 3, :with_summary)
+    create_list(:purchase_order_line_item, 2, :with_summary, :balanced, vendor: vendor)
   end
 end
