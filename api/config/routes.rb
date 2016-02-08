@@ -24,6 +24,8 @@ Rails.application.routes.draw do
 
     resources :order_line_items, only: [:update, :destroy]
 
+    resources :packing_lists, only: :index
+
     resources :purchase_orders, only: [:index, :show] do
       member do
         post :cancel
