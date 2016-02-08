@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :goods_received_notices, except: [:new, :edit]
+
     resources :orders, only: [:index, :show, :create, :update] do
       collection do
         post :export
@@ -44,8 +46,6 @@ Rails.application.routes.draw do
     resources :supplier_terms, only: [:index, :show]
 
     resources :vendors, only: [:index, :create, :show, :update]
-
-    resources :goods_received_notices, except: [:new, :edit]
 
     scope :filters do
       get ':action' => 'filters#:action'
