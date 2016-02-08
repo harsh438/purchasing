@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :order_line_items, only: [:destroy, :update]
+    resources :order_line_items, only: [:update, :destroy]
 
     resources :purchase_orders, only: [:index, :show] do
       member do
