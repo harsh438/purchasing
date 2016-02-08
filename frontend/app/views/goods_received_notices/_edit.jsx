@@ -7,13 +7,13 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillMount() {
     let { id, deliveryDate } = this.props.goodsReceivedNotice;
     const tab = 'purchaseOrders';
-    this.state = { id, deliveryDate, tab };
+    this.state = { id, deliveryDate, tab, goodsReceivedNotice: this.props.goodsReceivedNotice};
   }
 
   componentWillReceiveProps(nextProps) {
     let { id, deliveryDate } = this.props.goodsReceivedNotice;
     deliveryDate = deliveryDate.split('/').reverse().join('-');
-    this.setState({ id, deliveryDate });
+    this.setState({ id, deliveryDate, goodsReceivedNotice: this.props.goodsReceivedNotice });
   }
 
   render() {
@@ -22,11 +22,11 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         <div className="panel panel-default panel-info">
           <div className="panel-heading">
             <h3 className="panel-title">
-              GRN #{this.props.goodsReceivedNotice.id}
+              GRN #{this.state.goodsReceivedNotice.id}
               <span className="pull-right">
-                <span className="badge" title="Units">{this.props.goodsReceivedNotice.units} U</span>&nbsp;
-                <span className="badge" title="Cartons">{this.props.goodsReceivedNotice.cartons} C</span>&nbsp;
-                <span className="badge" title="Pallets">{this.props.goodsReceivedNotice.pallets} P</span>&nbsp;
+                <span className="badge" title="Units">{this.state.goodsReceivedNotice.units} U</span>&nbsp;
+                <span className="badge" title="Cartons">{this.state.goodsReceivedNotice.cartons} C</span>&nbsp;
+                <span className="badge" title="Pallets">{this.state.goodsReceivedNotice.pallets} P</span>&nbsp;
 
                 <a style={{ cursor: 'pointer', marginLeft: '10px' }}
                    className="glyphicon glyphicon-remove"
@@ -122,7 +122,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   renderPurchaseOrders() {
-    if (this.props.goodsReceivedNotice.goodsReceivedNoticeEvents.length === 0) {
+    if (this.state.goodsReceivedNotice.goodsReceivedNoticeEvents.length === 0) {
       return (
         <i>No purchase orders currently.</i>
       );
@@ -136,7 +136,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {map(this.props.goodsReceivedNotice.goodsReceivedNoticeEvents, this.renderPurchaseOrder, this)}
+          {map(this.state.goodsReceivedNotice.goodsReceivedNoticeEvents, this.renderPurchaseOrder, this)}
         </tbody>
       </table>
     );
@@ -168,14 +168,17 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   renderPackingLists() {
-    const attachments = this.props.goodsReceivedNotice.packingListUrls || [];
+    const attachments = this.state.goodsReceivedNotice.packingListUrls || [];
 
     return (
-      <table className="table table-striped table-condensed">
-        <tbody>
-          {attachments.map(this.renderPackingList)}
-        </tbody>
-      </table>
+      <div>
+        <table className="table table-striped table-condensed">
+          <tbody>
+            {attachments.map(this.renderPackingList)}
+          </tbody>
+        </table>
+        {this.renderPackingListUpload()}
+      </div>
     );
   }
 
