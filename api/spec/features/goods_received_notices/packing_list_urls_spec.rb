@@ -30,7 +30,7 @@ feature 'Packing List URLS' do
     expect(subject['packing_list_urls'][0][0]).not_to be(',')
   end
 
-  let(:grn_with_packing_list) { create(:goods_received_notice, :with_purchase_list) }
+  let(:grn_with_packing_list) { create(:goods_received_notice, :with_packing_list) }
   let(:grn_with_packing_list_with_invalid_characters) do
     create(:goods_received_notice, :with_packing_list_with_invalid_characters)
   end
