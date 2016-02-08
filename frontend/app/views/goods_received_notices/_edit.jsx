@@ -7,7 +7,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillMount() {
     let { id, deliveryDate } = this.props.goodsReceivedNotice;
     const tab = 'purchaseOrders';
-    this.state = { id, deliveryDate, tab, goodsReceivedNotice: this.props.goodsReceivedNotice};
+    this.state = { id, deliveryDate, tab, goodsReceivedNotice: this.props.goodsReceivedNotice };
   }
 
   componentWillReceiveProps(nextProps) {
