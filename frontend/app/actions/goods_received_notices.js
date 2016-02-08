@@ -59,8 +59,8 @@ function updateGrn(id, body, currentDate) {
   };
 }
 
-export function saveGoodsReceivedNotice({ id, deliveryDate, currentDate }) {
-  return updateGrn(id, { goods_received_notice: { delivery_date: deliveryDate } }, currentDate);
+export function saveGoodsReceivedNotice({ id, deliveryDate, currentDate, packingLists }) {
+  return updateGrn(id, { goods_received_notice: { delivery_date: deliveryDate, packing_lists_attributes: packingLists } }, currentDate);
 }
 
 export function addPurchaseOrderToGoodsReceivedNotice({ id, purchaseOrderId, units, cartons, pallets, currentDate }) {
