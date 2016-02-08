@@ -6,6 +6,7 @@ import reduceFilters from './reducers/filters';
 import reduceGoodsReceivedNotices  from './reducers/goods_received_notices';
 import reduceOrder from './reducers/order';
 import reduceOrders from './reducers/orders';
+import reducePackingLists from './reducers/packing_lists';
 import reducePurchaseOrders from './reducers/purchase_orders';
 import reduceSkus  from './reducers/skus';
 import reduceSuppliers  from './reducers/supplier';
@@ -23,6 +24,7 @@ const reducer = combineReducers({ advanced: reduceAdvancedMode,
                                   goodsReceivedNotices: reduceGoodsReceivedNotices,
                                   order: reduceOrder,
                                   orders: reduceOrders,
+                                  packingLists: reducePackingLists,
                                   purchaseOrders: reducePurchaseOrders,
                                   skus: reduceSkus,
                                   suppliers: reduceSuppliers,

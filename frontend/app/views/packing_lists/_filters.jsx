@@ -1,12 +1,13 @@
 import React from 'react';
+import moment from 'moment';
 
 export default class PackingListsFilters extends React.Component {
   componentWillMount() {
-    this.state = { submitting: false };
+    this.state = { submitting: false, ...this.props.filters };
   }
 
-  componentWillReceiveProps() {
-    this.setState({ submitting: false });
+  componentWillReceiveProps(nextProps) {
+    this.setState({ submitting: false, ...nextProps.filters });
   }
 
   render() {
@@ -18,29 +19,31 @@ export default class PackingListsFilters extends React.Component {
             <div className="row no_gutter">
               <div className="col-md-2"
                    style={{ marginTop: '1.8em' }}>
-                <button className="btn btn-default">Today</button>
+                <button className="btn btn-default"
+                        onClick={this.handleToday.bind(this)}>Today</button>
                 &nbsp;
-                <button className="btn btn-default">Tomorrow</button>
+                <button className="btn btn-default"
+                        onClick={this.handleTomorrow.bind(this)}>Tomorrow</button>
               </div>
 
               <div className="col-md-2 form-group">
                 <label htmlFor="startDate">From</label>
 
                 <input className="form-control"
-                       name="startDate"
+                       name="dateFrom"
                        id="startDate"
                        type="date"
-                       value={this.state.startDate} />
+                       value={this.state.dateFrom} />
               </div>
 
               <div className="col-md-2 form-group">
                 <label htmlFor="endDate">To</label>
 
                 <input className="form-control"
-                       name="endDate"
+                       name="dateTo"
                        id="endDate"
                        type="date"
-                       value={this.state.endDate} />
+                       value={this.state.dateTo} />
               </div>
 
               <div className="col-md-2 btn-group"
@@ -64,6 +67,16 @@ export default class PackingListsFilters extends React.Component {
     } else {
       return 'Search';
     }
+  }
+
+  handleToday(e) {
+    const today = moment().format('YYYY-MM-DD');
+    this.setState({ dateFrom: today, dateTo: today }, () => this.handleSubmit(e));
+  }
+
+  handleTomorrow(e) {
+    const tomorrow = moment().add({ days: 1 }).format('YYYY-MM-DD');
+    this.setState({ dateFrom: tomorrow, dateTo: tomorrow }, () => this.handleSubmit(e));
   }
 
   handleChange({ target }) {

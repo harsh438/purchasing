@@ -4,10 +4,12 @@ import { map } from 'lodash';
 export default class PackingListsTable extends React.Component {
   render() {
     return (
-      <table>
+      <table className="table table-striped">
         <thead>
           <tr>
-            <th>PO #</th>
+            <th>GRN</th>
+            <th>PO Numbers</th>
+            <th>Delivery date</th>
             <th>Packing list</th>
           </tr>
         </thead>
@@ -22,11 +24,13 @@ export default class PackingListsTable extends React.Component {
     return map(this.props.packingLists, this.renderRow, this);
   }
 
-  renderRow({ purchaseOrderId, url }) {
+  renderRow({ grn, deliveryDate, purchaseOrderIds, url }) {
     return (
-      <tr>
-        <td>{purchaseOrderId}</td>
-        <td>{url}</td>
+      <tr key={[grn, url]}>
+        <td>{grn}</td>
+        <td>{purchaseOrderIds.join(', ')}</td>
+        <td>{deliveryDate}</td>
+        <td><a href={url} target="_blank">{url}</a></td>
       </tr>
     );
   }

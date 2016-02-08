@@ -17,7 +17,8 @@ class PackingListsController < ApplicationController
 
         { grn: goods_received_notice['id'],
           purchase_order_ids: purchase_order_ids,
-          url: packing_list_url }
+          url: packing_list_url,
+          delivery_date: goods_received_notice['delivery_date'].to_s }
       end
     end
   end
