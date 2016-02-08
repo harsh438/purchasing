@@ -200,7 +200,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   renderPackingListUpload() {
     return (
-      <form onSubmit={this.handleFormSubmit.bind(this)}>
+      <form onSubmit={this.handleFileUploadSubmit.bind(this)}>
         <DropZone multiple={false}
                   onDrop={this.handlePackingFileUpload.bind(this)}
                   style={{ color: '#999', padding: '30px', border: '2px dashed #999' }}
@@ -270,9 +270,10 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     );
   }
 
-  handleFormSubmit(e) {
+  handleFileUploadSubmit(e) {
     e.preventDefault();
-    this.props.onFileUpload(this.state.goodsReceivedNotice);
+    console.log(this.state.goodsReceivedNotice);
+    this.props.onSave(this.state.goodsReceivedNotice);
   }
 
   goodsReceivedNoticeEventClass({ status }) {
