@@ -18,7 +18,11 @@ feature 'Listing Packing Lists', booking_db: true do
   private
 
   def create_packing_lists
-    create_list(:goods_received_notice, 2, :with_packing_list, delivery_date: 2.days.ago)
-    create_list(:goods_received_notice, 3, :with_packing_list, delivery_date: Date.today)
+    create_list(:goods_received_notice, 2, :with_packing_list,
+                                           :with_purchase_orders,
+                                           delivery_date: 2.days.ago)
+    create_list(:goods_received_notice, 3, :with_packing_list,
+                                           :with_purchase_orders,
+                                           delivery_date: Date.today)
   end
 end
