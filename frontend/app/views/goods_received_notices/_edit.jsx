@@ -168,26 +168,26 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   renderPackingLists() {
-    const attachments = this.props.goodsReceivedNotice.attachments || '';
+    const attachments = this.props.goodsReceivedNotice.packingListUrls || [];
 
     return (
       <table className="table table-striped table-condensed">
         <tbody>
-          {attachments.split(',').map(this.renderPackingList)}
+          {attachments.map(this.renderPackingList)}
         </tbody>
       </table>
     );
   }
 
-  renderPackingList(packingList) {
-    if (!packingList) return;
-    const href = `https://www.sdometools.com/tools/bookingin_tool/attachments/${encodeURIComponent(packingList)}`;
+  renderPackingList(packingListUrl) {
+    if (!packingListUrl) return;
 
+    const filenameIndex = packingListUrl.lastIndexOf('/');
     return (
         <tr>
           <td>
-            <a target="_blank" href={href}>
-              Download {packingList}
+            <a target="_blank" href={packingListUrl}>
+              Download {decodeURIComponent(packingListUrl.substr(filenameIndex + 1))}
             </a>
           </td>
         </tr>
