@@ -56,6 +56,9 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
 
   def ensure_defaults
     self.status ||= 1
+    self.pallets ||= 0
+    self.units ||= 0
+    self.cartons ||= 0
   end
 
   def assign_vendor_from_purchase_order
