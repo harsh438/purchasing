@@ -173,12 +173,14 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
     return (
       <div>
+        {this.renderPackingListUpload()}
+        <br />
+        <br />
         <table className="table table-striped table-condensed">
           <tbody>
             {attachments.map(this.renderPackingList)}
           </tbody>
         </table>
-        {this.renderPackingListUpload()}
       </div>
     );
   }
@@ -209,7 +211,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           {this.renderPackingListUploadText()}
         </DropZone>
         <br />
-        <input type="submit" className="btn btn-primary" value="Upload" />
+        <input type="submit" className="btn btn-success pull-right" value="Upload" />
       </form>
     );
   }
