@@ -55,26 +55,6 @@ class GoodsReceivedNotice < ActiveRecord::Base
   #     date
   #   end
   # end
-  def packing_list_urls
-    [].concat(packing_list_current_urls)
-      .concat(packing_list_legacy_urls)
-  end
-
-  def packing_list_current_urls
-    packing_lists.map(&:list).map { |list| list.expiring_url(300) }
-  end
-
-  def packing_list_legacy_urls
-    if !legacy_attachments
-      []
-    else
-      legacy_attachments.split(/,(.*?\.[a-z]{3,4})/).select do |attachment|
-        attachment != ''
-      end.map do |attachment|
-        "https://www.sdometools.com/tools/bookingin_tool/attachments/#{URI.escape(attachment)}"
-      end
-    end
-  end
 
   def late?
     delivery_date < Date.today
@@ -148,5 +128,26 @@ class GoodsReceivedNotice < ActiveRecord::Base
     self.cartons -= grn_event.cartons
     self.pallets -= grn_event.pallets
     save!
+  end
+
+  def packing_list_urls
+    [].concat(packing_list_current_urls)
+      .concat(packing_list_legacy_urls)
+  end
+
+  def packing_list_current_urls
+    packing_lists.map(&:list).map { |list| list.expiring_url(300) }
+  end
+
+  def packing_list_legacy_urls
+    if !legacy_attachments
+      []
+    else
+      legacy_attachments.split(/,(.*?\.[a-z]{3,4})/).select do |attachment|
+        attachment != ''
+      end.map do |attachment|
+        "https://www.sdometools.com/tools/bookingin_tool/attachments/#{URI.escape(attachment)}"
+      end
+    end
   end
 end

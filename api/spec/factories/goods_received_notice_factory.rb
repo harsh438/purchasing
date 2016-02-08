@@ -35,7 +35,7 @@ FactoryGirl.define do
     end
 
     trait :with_packing_list do
-      Attachments ',RHYTHM SD91467-P  91468-P_DELIVERYNOTE.pdf,Surfdome 2016-01-26-083343.pdf'
+      Attachments ',RHYTHM SD91467-P  91468-P_DELIVERYNOTE.pdf'
     end
 
     trait :with_packing_list_with_invalid_characters do

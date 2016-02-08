@@ -17,18 +17,20 @@ feature 'Packing List URL Upload', booking_db: true do
                      goods_received_notice: { packing_lists_attributes: [{ list: fixture_packing_file_upload }] })
   end
 
+  def then_the_packing_list_should_be_stored
+    expect(subject['packing_list_urls'].count).to eq(1)
+  end
+
   def when_i_upload_a_packing_list_file_to_a_grn_with_legacy_attachments
     page.driver.post(goods_received_notice_path(grn_with_packing_list),
                      _method: 'patch',
                      goods_received_notice: { packing_lists_attributes: [{ list: fixture_packing_file_upload }] })
   end
 
-  def then_the_packing_list_should_be_stored
-    expect(grn.packing_lists.count).to be(1)
-  end
-
   def then_the_packing_list_urls_should_have_both_lists
-    expect(grn_with_packing_list.packing_list_urls.count).to be(3) # 2 legacy + 1 new = 3
+    legacy_count = 1
+    new_count = 1
+    expect(subject['packing_list_urls'].count).to eq(legacy_count + new_count)
   end
 
   let(:fixture_packing_file_upload) do
@@ -36,5 +38,4 @@ feature 'Packing List URL Upload', booking_db: true do
   end
   let(:grn) { create(:goods_received_notice) }
   let(:grn_with_packing_list) { create(:goods_received_notice, :with_packing_list) }
-
 end
