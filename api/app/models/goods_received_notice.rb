@@ -153,12 +153,14 @@ class GoodsReceivedNotice < ActiveRecord::Base
       end
     end
 
-    attachement_list.map do |attachment|
-        "https://www.sdometools.com/tools/bookingin_tool/attachments/#{URI.escape(attachment)}"
-    end
+    attachement_list.map { |attachment| legacy_packing_list_url(attachment) }
   end
 
   private
+
+  def legacy_packing_list_url(filename)
+    "https://www.sdometools.com/tools/bookingin_tool/attachments/#{URI.escape(attachment)}"
+  end
 
   def has_a_file_extension?(filename)
     /\.[a-z]{3,4}/.match(filename)
