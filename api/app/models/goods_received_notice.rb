@@ -136,7 +136,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   end
 
   def packing_list_current_urls
-    packing_lists.map(&:list).map { |list| list.expiring_url(300) }
+    packing_lists.map(&:list).map { |list| list.expiring_url(300) }.reverse
   end
 
   def packing_list_legacy_urls
