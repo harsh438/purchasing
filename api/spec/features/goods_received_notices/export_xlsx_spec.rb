@@ -24,7 +24,7 @@ feature 'Download GRNs as XLSX', booking_db: true do
 
   def when_a_user_downloads_xlsx_of_current_view
     create_grns
-    visit goods_received_notices_path(format: :xlsx, type: :current, start_date: '2016-02-01', end_date: '2016-02-28')
+    visit goods_received_notices_path(format: :xlsx, type: :range, start_date: '2016-02-01', end_date: '2016-02-28')
   end
 
   def then_the_xlsx_file_should_contain_list_of_all_grn_for_current_view
