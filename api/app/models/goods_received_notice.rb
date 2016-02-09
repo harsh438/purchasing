@@ -159,7 +159,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   private
 
   def legacy_packing_list_url(filename)
-    "https://www.sdometools.com/tools/bookingin_tool/attachments/#{URI.escape(attachment)}"
+    "https://www.sdometools.com/tools/bookingin_tool/attachments/#{URI.escape(filename)}"
   end
 
   def has_a_file_extension?(filename)
