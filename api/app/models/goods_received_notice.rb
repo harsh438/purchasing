@@ -151,7 +151,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
     if is_packing_list_legacy_url?(url)
       delete_legacy_packing_list_by_url!(url)
     else
-      raise "NOT IMPLEMENTED YET: Deleting current packing lists"
+      raise 'NOT IMPLEMENTED YET: Deleting current packing lists'
     end
   end
 
