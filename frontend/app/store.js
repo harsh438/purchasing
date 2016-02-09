@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import reduceAdvancedMode from './reducers/advanced';
 import reduceBarcodes from './reducers/barcodes';
-import reduceErrorNotification  from './reducers/error_notification';
+import reduceNotification  from './reducers/notification';
 import reduceFilters from './reducers/filters';
 import reduceGoodsReceivedNotices  from './reducers/goods_received_notices';
 import reduceOrder from './reducers/order';
@@ -19,7 +19,7 @@ const middleware = [thunk];
 
 const reducer = combineReducers({ advanced: reduceAdvancedMode,
                                   barcodes: reduceBarcodes,
-                                  errorNotification: reduceErrorNotification,
+                                  notification: reduceNotification,
                                   filters: reduceFilters,
                                   goodsReceivedNotices: reduceGoodsReceivedNotices,
                                   order: reduceOrder,
