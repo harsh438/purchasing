@@ -123,15 +123,18 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
         <div className="col-md-3">
           <div className="btn-group" role="group">
-            <a href={this.exportUrl('month')}
+            <a href={this.exportMonthUrl()}
                className="btn btn-default"
                target="_blank">
               <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
               &nbsp;Month
             </a>
-            <button type="button"
-                    className="btn btn-default"
-                    disabled>Current</button>
+            <a href={this.exportCurrentUrl()}
+               className="btn btn-default"
+               target="_blank">
+              <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+              &nbsp;Current
+            </a>
             <button type="button"
                     className="btn btn-default"
                     disabled>Forcast</button>
@@ -239,7 +242,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   updateCurrentDate(query) {
-    const startDate = moment(query.startDate, 'DD/MM/YYYY');
+    const startDate = query.startDate ? moment(query.startDate, 'DD/MM/YYYY') : moment();
     const startDateFormatted = startDate.format('DD/MM/YYYY');
 
     if (this.state.currentDate !== startDateFormatted) {
@@ -323,8 +326,21 @@ class GoodsReceivedNoticesIndex extends React.Component {
     return this.startDateMonth() === this.state.startDateMonth && this.startDateYear() === this.state.startDateYear;
   }
 
-  exportUrl(type) {
-    const query = Qs.stringify({ month: this.state.startDateMonth, year: this.state.startDateYear, type });
+  exportMonthUrl() {
+    const query = Qs.stringify({ month: this.state.startDateMonth,
+                                 year: this.state.startDateYear,
+                                 type: 'month' });
+    return '/api/goods_received_notices.xlsx?' + query;
+  }
+
+  exportCurrentUrl() {
+    console.log(this.state.currentDate);
+    const startDate = moment(this.state.currentDate, 'DD/MM/YYYY').subtract(2, 'weeks').format('YYYY-MM-DD');
+    const endDate = moment(this.state.currentDate, 'DD/MM/YYYY').add({ weeks: 2 }).format('YYYY-MM-DD');
+    const query = Qs.stringify({ start_date: startDate,
+                                 end_date: endDate,
+                                 type: 'current' });
+    console.log(query);
     return '/api/goods_received_notices.xlsx?' + query;
   }
 }
