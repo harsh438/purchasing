@@ -36,7 +36,8 @@ class GoodsReceivedNotice < ActiveRecord::Base
 
   has_many :goods_received_notice_events, foreign_key: :grn,
                                           after_add: [:increment_totals, :set_delivery_date_on_event],
-                                          after_remove: :decrement_totals
+                                          after_remove: :decrement_totals,
+                                          dependent: :destroy
   accepts_nested_attributes_for :goods_received_notice_events, allow_destroy: true
 
   has_many :vendors, through: :goods_received_notice_events
