@@ -36,10 +36,6 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.props.dispatch(loadVendors());
   }
 
-  componentDidMount() {
-    this.notificationSystem = this.refs.notificationSystem;
-  }
-
   componentWillReceiveProps(nextProps) {
     const startDate = moment(nextProps.location.query.startDate, 'DD/MM/YYYY');
     const startDateFormatted = startDate.format('DD/MM/YYYY');
@@ -59,7 +55,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
     const nextNotify = nextProps.errorNotification || {};
 
     if (currentNotify.date !== nextNotify.date) {
-      this.notificationSystem.addNotification({ message: nextProps.errorNotification.text, level: 'error' });
+      this.refs.notificationSystem.addNotification({ message: nextProps.errorNotification.text, level: 'error' });
     }
   }
 
