@@ -140,14 +140,27 @@ class GoodsReceivedNotice < ActiveRecord::Base
   end
 
   def packing_list_legacy_urls
-    if !legacy_attachments
-      []
-    else
-      legacy_attachments.split(/,(.*?\.[a-z]{3,4})/).select do |attachment|
-        attachment != ''
-      end.map do |attachment|
-        "https://www.sdometools.com/tools/bookingin_tool/attachments/#{URI.escape(attachment)}"
+    return [] if !legacy_attachments
+    attachement_list = []
+    current_attachment = ''
+    legacy_attachments.split(',').select do |attachment|
+      current_attachment += attachment
+      if attachment != '' and has_a_file_extension?(attachment)
+        attachement_list.push(current_attachment)
+        current_attachment = ''
+      elsif current_attachment != ''
+          current_attachment += ','
       end
     end
+
+    attachement_list.map do |attachment|
+        "https://www.sdometools.com/tools/bookingin_tool/attachments/#{URI.escape(attachment)}"
+    end
+  end
+
+  private
+
+  def has_a_file_extension?(filename)
+    /\.[a-z]{3,4}/.match(filename)
   end
 end
