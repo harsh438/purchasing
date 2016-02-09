@@ -95,7 +95,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
     if is_packing_list_legacy_url?(url)
       delete_legacy_packing_list_by_url!(url)
     else
-      raise 'NOT IMPLEMENTED YET: Deleting current packing lists'
+      delete_current_packing_list_by_url!(url)
     end
   end
 
@@ -180,7 +180,9 @@ class GoodsReceivedNotice < ActiveRecord::Base
 
   def delete_current_packing_list_by_url!(url)
     filename = packing_list_filename_from_url(url)
-    raise filename.to_s
+    packing_list = packing_lists.find_by(:list_file_name => filename)
+    return nil unless packing_list
+    packing_list.destroy!
   end
 
   def delete_legacy_packing_list_by_url!(url)
