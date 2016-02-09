@@ -155,6 +155,8 @@ class GoodsReceivedNotice < ActiveRecord::Base
     end
   end
 
+  private
+
   def packing_list_urls
     [].concat(packing_list_current_urls)
       .concat(packing_list_legacy_urls)
@@ -180,8 +182,6 @@ class GoodsReceivedNotice < ActiveRecord::Base
 
     attachement_list.map { |attachment| legacy_packing_list_url(attachment) }
   end
-
-  private
 
   def delete_legacy_packing_list_by_url!(url)
     filename = self.class.packing_list_filename_from_url(url)

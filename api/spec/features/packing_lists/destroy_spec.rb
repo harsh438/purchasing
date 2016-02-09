@@ -7,12 +7,15 @@ feature 'Destroy Packing Lists' do
   end
 
   def when_i_destroy_an_old_packing_list_from_an_existing_grn
+    grn = grn_with_packing_list.as_json_with_purchase_orders_and_packing_list_urls
     path = delete_packing_list_goods_received_notice_path(grn_with_packing_list)
-    page.driver.post path, { _method: 'delete', packing_list: { url: grn_with_packing_list.packing_list_urls[1] } }
+    page.driver.post path, {
+        _method: 'delete',
+        packing_list: { url: grn[:packing_list_urls][1] } }
   end
 
   def it_should_be_removed_from_the_list_of_urls
-    old_url_count = grn_with_packing_list.packing_list_urls.count
+    old_url_count = grn_with_packing_list.as_json_with_purchase_orders_and_packing_list_urls[:packing_list_urls].count
     expect(subject['packing_list_urls'].count).to eq(old_url_count - 1) # one is now removed
   end
 
