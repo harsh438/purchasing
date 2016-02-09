@@ -7,7 +7,7 @@ FactoryGirl.define do
     status 1
 
     after(:build) do |grn_event|
-      grn_event.vendor_id = grn_event.purchase_order.id
+      grn_event.vendor_id = grn_event.purchase_order.vendor_id
 
       if grn_event.delivery_date.past?
         grn_event.status = [2, 2, 2, 4, 4, 4, 4, 7].sample

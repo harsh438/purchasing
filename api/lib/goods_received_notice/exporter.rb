@@ -87,19 +87,24 @@ class GoodsReceivedNotice::Exporter
   end
 
   def po_rows(grn_events)
-    grn_events.order('bookingin_events.DeliveryDate',
-                     'bookingin_events.grn')
-              .pluck('bookingin_events.DeliveryDate',
-                     'goods_received_number.DeliveryDate',
-                     'ds_vendors.venCompany',
-                     'bookingin_events.grn',
-                     'bookingin_events.po',
-                     'bookingin_events.TotalUnits',
-                     'bookingin_events.CartonsExpected',
-                     'bookingin_events.PaletsExpected',
-                     'bookingin_events.BookedInDate').map do |row|
+    po_rows = grn_events.order('bookingin_events.DeliveryDate',
+                               'bookingin_events.grn')
+                        .pluck('bookingin_events.DeliveryDate',
+                               'goods_received_number.DeliveryDate',
+                               'bookingin_events.BrandID',
+                               'bookingin_events.grn',
+                               'bookingin_events.po',
+                               'bookingin_events.TotalUnits',
+                               'bookingin_events.CartonsExpected',
+                               'bookingin_events.PaletsExpected',
+                               'bookingin_events.BookedInDate')
+
+    vendors = Vendor.where(id: po_rows.map { |row| row[2] }).index_by(&:id)
+
+    po_rows.map do |row|
       row[0] = row[0].to_s
       row[1] = row[1].to_s
+      row[2] = vendors[row[2]].name
       row[8] = row[8].to_s
       row
     end
