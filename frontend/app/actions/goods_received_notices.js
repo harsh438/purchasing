@@ -93,6 +93,23 @@ export function deleteGoodsReceivedNotice({ id, currentDate }) {
 }
 
 
-export function deleteGoodsReceivedNoticePackingList({ id, currentDate }) {
-
+export function deleteGoodsReceivedNoticePackingList({ id, packingListUrl }) {
+  const body = {
+    packing_list_attributes: { list_url: packingListUrl },
+  };
+  return dispatch => {
+    fetch(`/api/goods_received_notices/${id}/delete_packing_list.json`, { credentials: 'same-origin',
+                                                      method: 'DELETE',
+                                                      headers: { 'Content-Type': 'application/json' },
+                                                      body: JSON.stringify(body),
+                                                    })
+      .then(response => response.json())
+      .then((goodsReceivedNotice) => {
+        dispatch({ text: `${packingListUrl} has now been removed successfully.`, type: 'SUCCESS_NOTIFICATION' });
+        dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
+      })
+      .catch(() => {
+        dispatch({ text: `Unable to delete ${packingListUrl}`, type: 'ERROR_NOTIFICATION' });
+      });
+  };
 }
