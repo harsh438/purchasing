@@ -135,9 +135,12 @@ class GoodsReceivedNoticesIndex extends React.Component {
               <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
               &nbsp;Current
             </a>
-            <button type="button"
-                    className="btn btn-default"
-                    disabled>Forcast</button>
+            <a href={this.exportForcastUrl()}
+               className="btn btn-default"
+               target="_blank">
+              <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+              &nbsp;Forcast
+            </a>
           </div>
         </div>
 
@@ -334,13 +337,20 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   exportCurrentUrl() {
-    console.log(this.state.currentDate);
     const startDate = moment(this.state.currentDate, 'DD/MM/YYYY').subtract(2, 'weeks').format('YYYY-MM-DD');
     const endDate = moment(this.state.currentDate, 'DD/MM/YYYY').add({ weeks: 2 }).format('YYYY-MM-DD');
     const query = Qs.stringify({ start_date: startDate,
                                  end_date: endDate,
-                                 type: 'current' });
-    console.log(query);
+                                 type: 'range' });
+    return '/api/goods_received_notices.xlsx?' + query;
+  }
+
+  exportForcastUrl() {
+    const startDate = moment(this.state.currentDate, 'DD/MM/YYYY').subtract(2, 'weeks').format('YYYY-MM-DD');
+    const endDate = moment(this.state.currentDate, 'DD/MM/YYYY').add({ months: 2, weeks: 2 }).format('YYYY-MM-DD');
+    const query = Qs.stringify({ start_date: startDate,
+                                 end_date: endDate,
+                                 type: 'range' });
     return '/api/goods_received_notices.xlsx?' + query;
   }
 }
