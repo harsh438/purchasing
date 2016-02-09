@@ -35,7 +35,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   belongs_to :order, foreign_key: :OrderID
 
   has_many :goods_received_notice_events, foreign_key: :grn,
-                                          after_add: :increment_totals,
+                                          after_add: [:increment_totals, :set_delivery_date_on_event],
                                           after_remove: :decrement_totals
   accepts_nested_attributes_for :goods_received_notice_events, allow_destroy: true
 
@@ -128,6 +128,11 @@ class GoodsReceivedNotice < ActiveRecord::Base
     self.cartons -= grn_event.cartons
     self.pallets -= grn_event.pallets
     save!
+  end
+
+  def set_delivery_date_on_event(grn_event)
+    grn_event.delivery_date = delivery_date
+    grn_event.save!
   end
 
   def packing_list_urls

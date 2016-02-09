@@ -22,6 +22,7 @@ import { loadPurchaseOrderList } from '../../actions/purchase_orders';
 
 import moment from 'moment';
 import { renderSelectOptions } from '../../utilities/dom';
+import Qs from 'qs';
 
 class GoodsReceivedNoticesIndex extends React.Component {
   componentWillMount() {
@@ -147,7 +148,24 @@ class GoodsReceivedNoticesIndex extends React.Component {
           </button>
         </div>
 
-        <div className="col-md-3 col-md-offset-5">
+        <div className="col-md-3">
+          <div className="btn-group" role="group">
+            <a href={this.exportUrl('month')}
+               className="btn btn-default"
+               target="_blank">
+              <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+              &nbsp;Month
+            </a>
+            <button type="button"
+                    className="btn btn-default"
+                    disabled>Current</button>
+            <button type="button"
+                    className="btn btn-default"
+                    disabled>Forcast</button>
+          </div>
+        </div>
+
+        <div className="col-md-3 col-md-offset-2">
           <GoodsReceivedNoticesFind onSearch={this.handleSearch.bind(this)}
                                     goodsReceivedNotice={this.props.goodsReceivedNotice} />
         </div>
@@ -316,6 +334,11 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   monthAndYearMatches() {
     return this.startDateMonth() === this.state.startDateMonth && this.startDateYear() === this.state.startDateYear;
+  }
+
+  exportUrl(type) {
+    const query = Qs.stringify({ month: this.state.startDateMonth, year: this.state.startDateYear, type });
+    return '/api/goods_received_notices.xlsx?' + query;
   }
 }
 

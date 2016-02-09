@@ -20,10 +20,10 @@ class GoodsReceivedNotice::Exporter
   def export_month(attrs)
     export = Table::ViewModel.new
 
-    export << grn_columns
+    export << grn_columns.map(&:humanize)
     export.concat(grn_rows(attrs))
 
-    export << po_columns
+    export << po_columns.map(&:humanize)
     export.concat(po_rows(attrs))
   end
 
@@ -53,9 +53,7 @@ class GoodsReceivedNotice::Exporter
        po
        grn
        total_units
-       buyer
-       booked_in_date
-       season)
+       booked_in_date)
   end
 
 

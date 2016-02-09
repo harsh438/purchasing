@@ -12,7 +12,8 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
                  pallets: :PaletsExpected,
                  vendor_id: :BrandID,
                  status: :Status,
-                 delivery_date: :DeliveryDate
+                 delivery_date: :DeliveryDate,
+                 booked_in_at: :BookedInDate
 
   belongs_to :goods_received_notice, foreign_key: :grn
   belongs_to :vendor, foreign_key: :BrandID
@@ -59,6 +60,7 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
     self.pallets ||= 0
     self.units ||= 0
     self.cartons ||= 0
+    self.booked_in_at ||= Time.now
   end
 
   def assign_vendor_from_purchase_order
