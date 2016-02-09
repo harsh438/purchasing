@@ -1,6 +1,9 @@
 class GoodsReceivedNoticesController < ApplicationController
   def index
-    render json: GoodsReceivedOrder::WeeklyReporter.new.report(params)
+    respond_to do |format|
+      format.json { render json: GoodsReceivedOrder::WeeklyReporter.new.report(params) }
+      format.xlsx { render xlsx: GoodsReceivedNotice::Exporter.new.export(params) }
+    end
   end
 
   def create

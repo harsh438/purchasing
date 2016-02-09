@@ -36,8 +36,10 @@ RSpec.configure do |config|
 
   config.around :example, booking_db: true do |example|
     GoodsReceivedNotice.transaction do
-      example.run
-      raise ActiveRecord::Rollback
+      GoodsReceivedNoticeEvent.transaction do
+        example.run
+        raise ActiveRecord::Rollback
+      end
     end
   end
 end
