@@ -3,12 +3,12 @@ feature 'Destroy Packing Lists' do
 
   scenario 'Destroying an old packing List' do
     when_i_destroy_an_old_packing_list_from_an_existing_grn
-    it_should_be_removed_from_the_legacy_list_of_urls
+    it_should_be_removed_from_the_list_of_urls(grn_with_packing_list)
   end
 
   scenario 'Destroying an current packing List' do
-    #when_i_destroy_an_current_packing_list_from_an_existing_grn
-    #it_should_be_removed_from_the_current_list_of_urls
+    when_i_destroy_an_current_packing_list_from_an_existing_grn
+    it_should_be_removed_from_the_list_of_urls(grn_with_both_packing_lists)
   end
 
   def when_i_destroy_an_old_packing_list_from_an_existing_grn
@@ -19,8 +19,8 @@ feature 'Destroy Packing Lists' do
         packing_list: { url: grn[:packing_list_urls][1] } }
   end
 
-  def it_should_be_removed_from_the_legacy_list_of_urls
-    old_url_count = grn_with_packing_list.as_json_with_purchase_orders_and_packing_list_urls[:packing_list_urls].count
+  def it_should_be_removed_from_the_list_of_urls(grn)
+    old_url_count = grn.as_json_with_purchase_orders_and_packing_list_urls[:packing_list_urls].count
     expect(subject['packing_list_urls'].count).to eq(old_url_count - 1) # one is now removed
   end
 
@@ -30,11 +30,6 @@ feature 'Destroy Packing Lists' do
     page.driver.post path, {
         _method: 'delete',
         packing_list: { url: packing_list } }
-    binding.pry
-  end
-
-  def it_should_be_removed_from_the_legacy_list_of_urls
-
   end
 
   let(:grn_with_packing_list) { create(:goods_received_notice, :with_multiple_packing_lists) }
