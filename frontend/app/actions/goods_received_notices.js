@@ -91,3 +91,8 @@ export function deleteGoodsReceivedNotice({ id, currentDate }) {
       });
   };
 }
+
+
+export function deleteGoodsReceivedNoticePackingList({ id, currentDate }) {
+
+}
