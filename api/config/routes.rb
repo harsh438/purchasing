@@ -14,7 +14,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :goods_received_notices, except: [:new, :edit]
+    resources :goods_received_notices, except: [:new, :edit] do
+      member do
+        delete :delete_packing_list
+      end
+    end
 
     resources :orders, only: [:index, :show, :create, :update] do
       collection do

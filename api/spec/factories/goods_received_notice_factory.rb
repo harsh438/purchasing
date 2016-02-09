@@ -35,11 +35,19 @@ FactoryGirl.define do
     end
 
     trait :with_packing_list do
-      Attachments ',RHYTHM SD91467-P  91468-P_DELIVERYNOTE.pdf'
+      legacy_attachments ',RHYTHM SD91467-P  91468-P_DELIVERYNOTE.pdf'
+    end
+
+    trait :with_multiple_packing_list_with_no_trailing_comma do
+      legacy_attachments 'RHYTHM SD91467-P  91468-P_DELIVERYNOTE.pdf,second.pdf,third.pdf'
+    end
+
+    trait :with_multiple_packing_lists do
+      legacy_attachments ',RHYTHM SD91467-P  91468-P_DELIVERYNOTE.pdf,second.pdf,third.pdf'
     end
 
     trait :with_packing_list_with_invalid_characters do
-      Attachments ',Strange#filename_with_commas,,inside.xlsx'
+      legacy_attachments ',Strange#filename_with_commas,,inside.xlsx'
     end
   end
 end
