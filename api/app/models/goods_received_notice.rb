@@ -90,54 +90,6 @@ class GoodsReceivedNotice < ActiveRecord::Base
     end
   end
 
-  def packing_list_urls
-    [].concat(packing_list_current_urls)
-      .concat(packing_list_legacy_urls)
-  end
-
-  def packing_list_current_urls
-    packing_lists.map(&:list).map { |list| list.expiring_url(300) }.reverse
-  end
-
-  def packing_list_legacy_urls
-    return [] if !legacy_attachments
-    attachement_list = []
-    current_attachment = ''
-    legacy_attachments.split(',').select do |attachment|
-      current_attachment += attachment
-      if attachment != '' and has_a_file_extension?(attachment)
-        attachement_list.push(current_attachment)
-        current_attachment = ''
-      elsif current_attachment != ''
-          current_attachment += ','
-      end
-    end
-
-    attachement_list.map { |attachment| legacy_packing_list_url(attachment) }
-  end
-
-  def self.packing_list_filename_from_url(url)
-    slash_index = url.rindex('/')
-    encoded_filename = url[slash_index + 1..-1]
-    if encoded_filename
-      URI.decode(encoded_filename)
-    else
-      nil
-    end
-  end
-
-  def is_packing_list_legacy_url?(url)
-    packing_list_legacy_urls.include?(url)
-  end
-
-  def is_packing_list_current_url?(url)
-    packing_list_current_urls.include?(url)
-  end
-
-  def is_packing_list_url?(url)
-    is_packing_list_legacy_url?(url) || packing_list_current_urls.include?(url)
-  end
-
   def delete_packing_list_by_url!(url)
     return nil unless is_packing_list_url?(url)
     if is_packing_list_legacy_url?(url)
@@ -175,8 +127,64 @@ class GoodsReceivedNotice < ActiveRecord::Base
     attachement_list.map { |attachment| legacy_packing_list_url(attachment) }
   end
 
+  def is_packing_list_legacy_url?(url)
+    packing_list_legacy_urls.include?(url)
+  end
+
+  def is_packing_list_current_url?(url)
+    filename = packing_list_filename_from_url(url)
+    !!packing_lists.find_by(:list_file_name => filename)
+  end
+
+  def is_packing_list_url?(url)
+    is_packing_list_legacy_url?(url) || is_packing_list_current_url?(url)
+  end
+
+  def packing_list_filename_from_url(url)
+    slash_index = url.rindex('/')
+    return nil unless slash_index
+    encoded_filename = url[slash_index + 1..-1]
+    return nil unless encoded_filename
+    parameter_index = encoded_filename.index('?')
+    if parameter_index
+      encoded_filename = encoded_filename[0..parameter_index - 1]
+    end
+    URI.decode(encoded_filename)
+  end
+
+  def packing_list_urls
+    [].concat(packing_list_current_urls)
+      .concat(packing_list_legacy_urls)
+  end
+
+  def packing_list_current_urls
+    packing_lists.map(&:list).map { |list| list.list_url }.reverse
+  end
+
+  def packing_list_legacy_urls
+    return [] if !legacy_attachments
+    attachement_list = []
+    current_attachment = ''
+    legacy_attachments.split(',').select do |attachment|
+      current_attachment += attachment
+      if attachment != '' and has_a_file_extension?(attachment)
+        attachement_list.push(current_attachment)
+        current_attachment = ''
+      elsif current_attachment != ''
+          current_attachment += ','
+      end
+    end
+
+    attachement_list.map { |attachment| legacy_packing_list_url(attachment) }
+  end
+
+  def delete_current_packing_list_by_url!(url)
+    filename = packing_list_filename_from_url(url)
+    raise filename.to_s
+  end
+
   def delete_legacy_packing_list_by_url!(url)
-    filename = self.class.packing_list_filename_from_url(url)
+    filename = packing_list_filename_from_url(url)
     legacy_attachments.sub!(",#{filename}", '').sub(filename, ',')
     save!
   end
