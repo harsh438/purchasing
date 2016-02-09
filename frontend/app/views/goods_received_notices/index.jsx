@@ -39,11 +39,11 @@ class GoodsReceivedNoticesIndex extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.updateCurrentDate(nextProps.location.query);
 
-    const currentNotify = this.props.errorNotification || {};
-    const nextNotify = nextProps.errorNotification || {};
+    const currentNotify = this.props.notification || {};
+    const nextNotify = nextProps.notification || {};
 
     if (currentNotify.date !== nextNotify.date) {
-      this.refs.notificationSystem.addNotification({ message: nextProps.errorNotification.text, level: 'error' });
+      this.refs.notificationSystem.addNotification({ message: nextProps.notification.text, level: nextProps.notification.type });
     }
   }
 
@@ -283,7 +283,9 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   handleGoodsReceivedNoticeDeletePackingList({ goodsReceivedNotice, packingListUrl }) {
-    this.props.dispatch(deleteGoodsReceivedNoticePackingList({ goodsReceivedNoticeId: goodsReceivedNotice.id, packingListUrl }));
+    if (confirm('Are you sure to delete this packing list ?')) {
+      this.props.dispatch(deleteGoodsReceivedNoticePackingList({ id: goodsReceivedNotice.id, packingListUrl }));
+    }
   }
 
   handleAddPurchaseOrderToGoodsReceivedNotice(grn) {
@@ -358,9 +360,9 @@ class GoodsReceivedNoticesIndex extends React.Component {
 function applyState({ filters,
                       goodsReceivedNotices,
                       purchaseOrders,
-                      errorNotification,
+                      notification,
                       advanced }) {
-  return assign({ advanced }, filters, goodsReceivedNotices, purchaseOrders, errorNotification);
+  return assign({ advanced }, filters, goodsReceivedNotices, purchaseOrders, notification);
 }
 
 export default connect(applyState)(GoodsReceivedNoticesIndex);
