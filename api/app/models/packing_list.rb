@@ -17,4 +17,7 @@ class PackingList < ActiveRecord::Base
                                                             application/x-xls,
                                                             application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
                                                             application/x-pdf)
+  def list_url
+    list.expiring_url(300)
+  end
 end
