@@ -101,17 +101,26 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
           <div className="form-group grn_edit__form_group--units">
             <label htmlFor="units">Units</label>
-            <input type="number" name="units" className="form-control" />
+            <input type="number"
+                   name="units"
+                   className="form-control"
+                   value={this.state.units} />
           </div>
 
           <div className="form-group grn_edit__form_group--cartons">
             <label htmlFor="cartons">Cartons</label>
-            <input type="number" name="cartons" className="form-control" />
+            <input type="number"
+                   name="cartons"
+                   className="form-control"
+                   value={this.state.cartons} />
           </div>
 
           <div className="form-group grn_edit__form_group--pallets">
             <label>Palettes</label>
-            <input type="number" name="pallets" className="form-control" />
+            <input type="number"
+                   name="pallets"
+                   className="form-control"
+                   value={this.state.pallets} />
           </div>
 
           <div className="text-right">
@@ -302,8 +311,20 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     return className;
   }
 
+  calculatePalletsFromCartons(cartons) {
+    return parseInt(cartons, 10) / 16;
+  }
+
   handleChange({ target }) {
-    this.setState({ [target.name]: target.value });
+    console.log(target.name);
+    switch (target.name) {
+    case 'cartons':
+      this.setState({ pallets: this.calculatePalletsFromCartons(target.value),
+                      cartons: target.value });
+      break;
+    default:
+      this.setState({ [target.name]: target.value });
+    }
   }
 
   handleVendorChange(e) {
