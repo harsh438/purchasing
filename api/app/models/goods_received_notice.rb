@@ -155,6 +155,32 @@ class GoodsReceivedNotice < ActiveRecord::Base
     end
   end
 
+  def packing_list_urls
+    [].concat(packing_list_current_urls)
+      .concat(packing_list_legacy_urls)
+  end
+
+  def packing_list_current_urls
+    packing_lists.map(&:list).map { |list| list.expiring_url(300) }.reverse
+  end
+
+  def packing_list_legacy_urls
+    return [] if !legacy_attachments
+    attachement_list = []
+    current_attachment = ''
+    legacy_attachments.split(',').select do |attachment|
+      current_attachment += attachment
+      if attachment != '' and has_a_file_extension?(attachment)
+        attachement_list.push(current_attachment)
+        current_attachment = ''
+      elsif current_attachment != ''
+          current_attachment += ','
+      end
+    end
+
+    attachement_list.map { |attachment| legacy_packing_list_url(attachment) }
+  end
+
   private
 
   def delete_legacy_packing_list_by_url!(url)
@@ -196,32 +222,6 @@ class GoodsReceivedNotice < ActiveRecord::Base
   def set_delivery_date_on_event(grn_event)
     grn_event.delivery_date = delivery_date
     grn_event.save!
-  end
-
-  def packing_list_urls
-    [].concat(packing_list_current_urls)
-      .concat(packing_list_legacy_urls)
-  end
-
-  def packing_list_current_urls
-    packing_lists.map(&:list).map { |list| list.expiring_url(300) }.reverse
-  end
-
-  def packing_list_legacy_urls
-    return [] if !legacy_attachments
-    attachement_list = []
-    current_attachment = ''
-    legacy_attachments.split(',').select do |attachment|
-      current_attachment += attachment
-      if attachment != '' and has_a_file_extension?(attachment)
-        attachement_list.push(current_attachment)
-        current_attachment = ''
-      elsif current_attachment != ''
-          current_attachment += ','
-      end
-    end
-
-    attachement_list.map { |attachment| legacy_packing_list_url(attachment) }
   end
 
   private
