@@ -13,7 +13,7 @@ class GoodsReceivedNotice::Exporter
 
   def export_week(attrs)
     export = Table::ViewModel.new
-    export << grn_week_columns
+    export << grn_columns.map(&:humanize)
     export.concat(grn_week_rows(attrs))
 
     export << po_columns.map(&:humanize)
@@ -30,32 +30,22 @@ class GoodsReceivedNotice::Exporter
     export.concat(po_rows(attrs))
   end
 
-
-  def grn_week_columns
-    %w(week
-       delivery_date
-       total_pallets
-       total_cartons
-       total_units)
-  end
-
   def grn_columns
     %w(delivery_date
-       grn
-       total_pallets
+       total_units
        total_cartons
-       total_units)
+       total_pallets)
   end
 
   def po_columns
     %w(delivery_date
        original_delivery_date
        brand_name
-       cartons
-       total_pallets
-       po
        grn
-       total_units
+       po
+       units
+       cartons
+       pallets
        booked_in_date)
   end
 
@@ -66,9 +56,9 @@ class GoodsReceivedNotice::Exporter
                        .group('DeliveryDate')
                        .order('DeliveryDate')
                        .pluck('DeliveryDate',
-                              'sum(PaletsExpected) as total_pallets',
+                              'sum(TotalUnits) as total_units',
                               'sum(CartonsExpected) as total_cartons',
-                              'sum(TotalUnits) as total_units').map do |row|
+                              'sum(PaletsExpected) as total_pallets').map do |row|
       row[0] = row[0].to_s
       row
     end
@@ -84,11 +74,11 @@ class GoodsReceivedNotice::Exporter
                             .pluck('bookingin_events.DeliveryDate',
                                    'goods_received_number.DeliveryDate',
                                    'ds_vendors.venCompany',
+                                   'bookingin_events.grn',
+                                   'bookingin_events.po',
+                                   'bookingin_events.TotalUnits',
                                    'bookingin_events.CartonsExpected',
                                    'bookingin_events.PaletsExpected',
-                                   'bookingin_events.po',
-                                   'bookingin_events.grn',
-                                   'bookingin_events.TotalUnits',
                                    'bookingin_events.BookedInDate').map do |row|
       row[0] = row[0].to_s
       row[1] = row[1].to_s
@@ -105,9 +95,9 @@ class GoodsReceivedNotice::Exporter
                        .group('DeliveryDate')
                        .order('DeliveryDate')
                        .pluck('DeliveryDate',
-                              'PaletsExpected as total_pallets',
+                              'TotalUnits as total_units',
                               'CartonsExpected as total_cartons',
-                              'TotalUnits as total_units').map do |row|
+                              'PaletsExpected as total_pallets').map do |row|
       row[0] = row[0].to_s
       row
     end
