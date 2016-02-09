@@ -178,7 +178,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         <br />
         <table className="table table-striped table-condensed">
           <tbody>
-            {attachments.map(this.renderPackingList)}
+            {attachments.map(this.renderPackingList.bind(this))}
           </tbody>
         </table>
       </div>
@@ -192,9 +192,15 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     return (
         <tr key={packingListUrl}>
           <td>
+            <span className="glyphicon glyphicon-file"></span>&nbsp;
             <a target="_blank" href={packingListUrl}>
-              Download {decodeURIComponent(packingListUrl.substr(filenameIndex + 1))}
-            </a>
+              {decodeURIComponent(packingListUrl.substr(filenameIndex + 1))}
+            </a>&nbsp;
+            <button onClick={this.props.onDeletePackingList.bind(this, {
+              goodsReceivedNotice: this.props.goodsReceivedNotice,
+              packingListUrl: packingListUrl,
+            })}
+                    className="btn btn-sm btn-danger pull-right">Delete</button>
           </td>
         </tr>
       );
