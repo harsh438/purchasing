@@ -48,14 +48,6 @@ class GoodsReceivedNotice < ActiveRecord::Base
 
   after_initialize :ensure_defaults
 
-  # def received_at
-  #   date = super
-
-  #   unless date.to_s === '00/00/0000' or date.to_s === '01/01/0001'
-  #     date
-  #   end
-  # end
-
   def late?
     delivery_date < Date.today
   end
