@@ -12,7 +12,11 @@
       ENV = { RAILS_ENV: "<%= Rails.env %>",
               STOCKBUG_PATH: "<%= ENV['STOCKBUG_PATH'].html_safe %>",
               QUANTITY_EDIT_PATH: "<%= ENV['QUANTITY_EDIT_PATH'].html_safe %>",
-              SENTRY_DSN: "<% ENV['SENTRY_DSN'].to_s.html_safe %>" }
+              SENTRY_DSN: "<% ENV['SENTRY_DSN'].to_s.html_safe %>",
+              DB_NAME: "<%= ENV['DB_NAME'] %>",
+              DB_NAME_BOOKINGIN: "<%= ENV['DB_NAME_BOOKINGIN'] %>",
+              DB_CONFIG: "<%= Order.connection_config[:database] %>",
+              DB_CONFIG_BOOKINGIN: "<%= GoodsReceivedNotice.connection_config[:database] %>" }
     </script>
 
     <script src="/assets/javascripts/app.js"></script>
