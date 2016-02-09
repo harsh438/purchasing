@@ -49,5 +49,10 @@ FactoryGirl.define do
     trait :with_packing_list_with_invalid_characters do
       legacy_attachments ',Strange#filename_with_commas,,inside.xlsx'
     end
+
+    trait :with_both_packing_lists do
+      legacy_attachments ',RHYTHM SD91467-P  91468-P_DELIVERYNOTE.pdf,second.pdf,third.pdf'
+      packing_lists { build_list(:packing_list, 2) }
+    end
   end
 end
