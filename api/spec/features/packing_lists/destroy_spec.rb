@@ -16,7 +16,7 @@ feature 'Destroy Packing Lists' do
     path = delete_packing_list_goods_received_notice_path(grn_with_packing_list)
     page.driver.post path, {
         _method: 'delete',
-        packing_list: { url: grn[:packing_list_urls][1] } }
+        packing_list_attributes: { list_url: grn[:packing_list_urls][1] } }
   end
 
   def it_should_be_removed_from_the_list_of_urls(grn)
@@ -29,7 +29,7 @@ feature 'Destroy Packing Lists' do
     path = delete_packing_list_goods_received_notice_path(grn_with_both_packing_lists)
     page.driver.post path, {
         _method: 'delete',
-        packing_list: { url: packing_list } }
+        packing_list_attributes: { list_url: packing_list } }
   end
 
   let(:grn_with_packing_list) { create(:goods_received_notice, :with_multiple_packing_lists) }

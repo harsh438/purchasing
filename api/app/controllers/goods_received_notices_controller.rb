@@ -25,7 +25,7 @@ class GoodsReceivedNoticesController < ApplicationController
   end
 
   def delete_packing_list
-    url = params[:packing_list][:url]
+    url = params[:packing_list_attributes][:list_url]
     grn.delete_packing_list_by_url!(url)
     render json: grn.as_json_with_purchase_orders_and_packing_list_urls
   end
