@@ -199,7 +199,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
     const filenameIndex = packingListUrl.lastIndexOf('/');
     return (
-        <tr key={packingListUrl} style={{ 'word-break': 'break-all' }}>
+        <tr key={packingListUrl} style={{ wordBreak: 'break-all' }}>
           <td>
             <span className="glyphicon glyphicon-file"></span>&nbsp;
             <a target="_blank" href={packingListUrl}>
