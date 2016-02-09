@@ -158,7 +158,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   end
 
   def packing_list_current_urls
-    packing_lists.map(&:list).map { |list| list.list_url }.reverse
+    packing_lists.map(&:list_url).reverse
   end
 
   def packing_list_legacy_urls
