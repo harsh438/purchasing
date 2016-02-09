@@ -2,8 +2,8 @@ class GoodsReceivedNotice::Exporter
   def export(attrs)
     if attrs[:type] == 'month'
       export_month(attrs)
-    # elsif attrs[:type] == 'week'
-    #    export_week(attrs)
+    elsif attrs[:type] == 'current'
+        export_week(attrs)
     else
       raise 'GoodsReceivedNotice::Exporter#export attrs[:type] not recognised'
     end
@@ -11,11 +11,14 @@ class GoodsReceivedNotice::Exporter
 
   private
 
-  # def export_week(attrs)
-  #   export = Table::ViewModel.new
-  #   export << grn_week_columns
-  #   export.concat(grn_week_rows(attrs))
-  # end
+  def export_week(attrs)
+    export = Table::ViewModel.new
+    export << grn_week_columns
+    export.concat(grn_week_rows(attrs))
+
+    export << po_columns.map(&:humanize)
+    export.concat(week_po_rows(attrs))
+  end
 
   def export_month(attrs)
     export = Table::ViewModel.new
@@ -56,24 +59,6 @@ class GoodsReceivedNotice::Exporter
        booked_in_date)
   end
 
-
-  def grn_week_rows(attrs)
-    GoodsReceivedNotice.where('DeliveryDate >= ? AND  DeliveryDate <= ?',
-                              attrs[:start_date].to_s,
-                              attrs[:end_date].to_s)
-                       .order('week(DeliveryDate)',
-                              'DeliveryDate')
-                       .pluck('week(DeliveryDate)',
-                              'DeliveryDate',
-                              'grn',
-                              'PaletsExpected as total_pallets',
-                              'CartonsExpected as total_cartons',
-                              'TotalUnits as total_units').map do |row|
-      row[1] = row[1].to_s
-      row
-    end
-  end
-
   def grn_rows(attrs)
     GoodsReceivedNotice.where('MONTH(DeliveryDate) = ? AND YEAR(DeliveryDate) = ?',
                               attrs[:month].to_i,
@@ -93,7 +78,7 @@ class GoodsReceivedNotice::Exporter
     GoodsReceivedNoticeEvent.includes(goods_received_notice: :vendors)
                             .where('MONTH(bookingin_events.DeliveryDate) = ? AND YEAR(bookingin_events.DeliveryDate) = ?',
                                    attrs[:month].to_i,
-                                   attrs[:year])
+                                   attrs[:year].to_i)
                             .order('bookingin_events.DeliveryDate',
                                    'bookingin_events.grn')
                             .pluck('bookingin_events.DeliveryDate',
@@ -111,4 +96,44 @@ class GoodsReceivedNotice::Exporter
       row
     end
   end
+
+
+
+  def grn_week_rows(attrs)
+    start_date, end_date = attrs.values_at(:start_date, :end_date).map(&:to_date)
+    GoodsReceivedNotice.delivered_between(start_date..end_date)
+                       .group('DeliveryDate')
+                       .order('DeliveryDate')
+                       .pluck('DeliveryDate',
+                              'PaletsExpected as total_pallets',
+                              'CartonsExpected as total_cartons',
+                              'TotalUnits as total_units').map do |row|
+      row[0] = row[0].to_s
+      row
+    end
+  end
+
+
+  def week_po_rows(attrs)
+    start_date, end_date = attrs.values_at(:start_date, :end_date).map(&:to_date)
+    GoodsReceivedNoticeEvent.includes(goods_received_notice: :vendors)
+                            .where(delivery_date: start_date..end_date)
+                            .order('bookingin_events.DeliveryDate',
+                                   'bookingin_events.grn')
+                            .pluck('bookingin_events.DeliveryDate',
+                                   'goods_received_number.DeliveryDate',
+                                   'ds_vendors.venCompany',
+                                   'bookingin_events.CartonsExpected',
+                                   'bookingin_events.PaletsExpected',
+                                   'bookingin_events.po',
+                                   'bookingin_events.grn',
+                                   'bookingin_events.TotalUnits',
+                                   'bookingin_events.BookedInDate').map do |row|
+      row[0] = row[0].to_s
+      row[1] = row[1].to_s
+      row[8] = row[8].to_s
+      row
+    end
+  end
+
 end

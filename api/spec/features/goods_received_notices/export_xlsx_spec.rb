@@ -4,10 +4,10 @@ feature 'Download GRNs as XLSX', booking_db: true do
     then_the_xlsx_file_should_contain_all_grns_for_the_current_month
   end
 
-  # scenario 'Downloading current view as xlsx' do
-  #   when_a_user_downloads_xlsx_of_current_view
-  #   then_the_xlsx_file_should_contain_list_of_all_grn_for_current_view
-  # end
+  scenario 'Downloading current view as xlsx' do
+    when_a_user_downloads_xlsx_of_current_view
+    then_the_xlsx_file_should_contain_list_of_all_grn_for_current_view
+  end
 
   def when_a_user_downloads_xlsx_of_current_month_grns
     create_grns
@@ -22,13 +22,18 @@ feature 'Download GRNs as XLSX', booking_db: true do
     expect(po_result_rows.second.first).to eq(Date.new(2016, 2, 2).to_s)
   end
 
-  # def when_a_user_downloads_xlsx_of_current_view
-  #   visit goods_received_notices_path(format: :xlsx, type: :week, start_date: '2016-02-01', end_date: '2016-02-28')
-  # end
+  def when_a_user_downloads_xlsx_of_current_view
+    create_grns
+    visit goods_received_notices_path(format: :xlsx, type: :current, start_date: '2016-02-01', end_date: '2016-02-28')
+  end
 
-  # def then_the_xlsx_file_should_contain_list_of_all_grn_for_current_view
-  #    expect(xlsx_result_rows.count).to eq(2)
-  # end
+  def then_the_xlsx_file_should_contain_list_of_all_grn_for_current_view
+    expect(grn_result_rows.first.first).to eq(Date.new(2016, 2, 1).to_s)
+    expect(grn_result_rows.second.first).to eq(Date.new(2016, 2, 2).to_s)
+
+    expect(po_result_rows.first.first).to eq(Date.new(2016, 2, 1).to_s)
+    expect(po_result_rows.second.first).to eq(Date.new(2016, 2, 2).to_s)
+  end
 
   private
 
