@@ -74,7 +74,7 @@ class GoodsReceivedNotice::Exporter
   end
 
   def po_rows_for_month(attrs)
-    po_rows(GoodsReceivedNoticeEvent.includes(:goods_received_notice, :vendor)
+    po_rows(GoodsReceivedNoticeEvent.includes(:goods_received_notice)
                                     .where('MONTH(bookingin_events.DeliveryDate) = ? AND YEAR(bookingin_events.DeliveryDate) = ?',
                                            attrs[:month].to_i,
                                            attrs[:year].to_i))
