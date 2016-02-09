@@ -37,19 +37,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const startDate = moment(nextProps.location.query.startDate, 'DD/MM/YYYY');
-    const startDateFormatted = startDate.format('DD/MM/YYYY');
-
-    if (this.state.currentDate !== startDateFormatted) {
-      this.updateCurrentDate(startDate);
-    }
-
-    const currentGrn = this.props.goodsReceivedNotice || {};
-    const nextGrn = nextProps.goodsReceivedNotice || {};
-
-    if (currentGrn.id !== nextGrn.id) {
-      this.props.history.pushState(null, this.props.route.path, { startDate: nextGrn.deliveryDate });
-    }
+    this.updateCurrentDate(nextProps.location.query);
 
     const currentNotify = this.props.errorNotification || {};
     const nextNotify = nextProps.errorNotification || {};
@@ -57,17 +45,6 @@ class GoodsReceivedNoticesIndex extends React.Component {
     if (currentNotify.date !== nextNotify.date) {
       this.refs.notificationSystem.addNotification({ message: nextProps.errorNotification.text, level: 'error' });
     }
-  }
-
-  updateCurrentDate(startDate) {
-    const startDateFormatted = startDate.format('DD/MM/YYYY');
-    this.setState({
-      editing: false,
-      currentDate: startDateFormatted,
-      startDateMonth: startDate.format('MM'),
-      startDateYear: startDate.format('YYYY'),
-    });
-    this.loadCurrentDate(startDateFormatted);
   }
 
   render() {
@@ -259,6 +236,20 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   loadCurrentDate(date = this.state.currentDate) {
     this.props.dispatch(loadGoodsReceivedNotices(date));
+  }
+
+  updateCurrentDate(query) {
+    const startDate = moment(query.startDate, 'DD/MM/YYYY');
+    const startDateFormatted = startDate.format('DD/MM/YYYY');
+
+    if (this.state.currentDate !== startDateFormatted) {
+      const nextState = { editing: false,
+                          currentDate: startDateFormatted,
+                          startDateMonth: startDate.format('MM'),
+                          startDateYear: startDate.format('YYYY') };
+
+      this.setState(nextState, this.loadCurrentDate.bind(this));
+    }
   }
 
   handleGoodsReceivedNoticeClose() {
