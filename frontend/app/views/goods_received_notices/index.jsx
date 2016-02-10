@@ -139,7 +139,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
                className="btn btn-default"
                target="_blank">
               <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
-              &nbsp;Forcast
+              &nbsp;Forecast
             </a>
           </div>
         </div>
