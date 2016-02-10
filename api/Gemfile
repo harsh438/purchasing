@@ -16,6 +16,7 @@ group :test do
   gem 'brakeman'                  # Always latest
   gem 'cane',                     '2.6.2'
   gem 'capybara',                 '2.4.1'
+  gem 'database_cleaner',         '1.5.1'
   gem 'factory_girl',             '4.5.0'
   gem 'ffaker',                   '1.32.1'
   gem 'rspec_junit_formatter',    '0.2.0'

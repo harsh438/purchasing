@@ -5,8 +5,6 @@ require 'webmock/rspec'
 Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
-  config.use_transactional_fixtures = true
-
   config.filter_run :focus
   config.run_all_when_everything_filtered = true
   config.infer_spec_type_from_file_location!
@@ -32,14 +30,5 @@ RSpec.configure do |config|
 
   config.before :example do
     ActionMailer::Base.deliveries.clear
-  end
-
-  config.around :example, booking_db: true do |example|
-    GoodsReceivedNotice.transaction do
-      GoodsReceivedNoticeEvent.transaction do
-        example.run
-        raise ActiveRecord::Rollback
-      end
-    end
   end
 end
