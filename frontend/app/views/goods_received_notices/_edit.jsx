@@ -14,7 +14,13 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillReceiveProps(nextProps) {
     let { id, deliveryDate } = nextProps.goodsReceivedNotice;
     deliveryDate = deliveryDate.split('/').reverse().join('-');
-    this.setState({ id, deliveryDate, goodsReceivedNotice: nextProps.goodsReceivedNotice, packingFileName: null});
+    this.setState({
+      id,
+      deliveryDate,
+      goodsReceivedNotice: nextProps.goodsReceivedNotice,
+      packingFileName: null,
+      onPackingListUpload: false,
+    });
   }
 
   render() {
@@ -222,18 +228,28 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   renderPackingListUpload() {
     return (
-      <form onSubmit={this.handleFileUploadSubmit.bind(this)}>
-        <DropZone multiple={false}
-                  onDrop={this.handlePackingFileUpload.bind(this)}
-                  style={{ color: '#999', padding: '30px', border: '2px dashed #999' }}
-                  accept=".jpg,.jpeg,.png,.pdf,.eml">
-          <div>Add a new packing list. Try dropping some file here, or click to select file to upload.</div>
-          {this.renderPackingListUploadText()}
-        </DropZone>
-        <br />
-        <input type="submit" className="btn btn-success pull-right" value="Upload" />
-      </form>
+      <div>
+        <form onSubmit={this.handleFileUploadSubmit.bind(this)}>
+          <DropZone multiple={false}
+                    onDrop={this.handlePackingFileUpload.bind(this)}
+                    style={{ color: '#999', padding: '30px', border: '2px dashed #999' }}
+                    accept=".jpg,.jpeg,.png,.pdf,.eml">
+            <div>Add a new packing list. Try dropping some file here, or click to select file to upload.</div>
+            {this.renderPackingListUploadText()}
+          </DropZone>
+          <br />
+          {this.renderPackingListUploadButton()}
+        </form>
+      </div>
     );
+  }
+
+  renderPackingListUploadButton() {
+    if (!this.state.onPackingListUpload) {
+      return (<input type="submit" className="btn btn-success pull-right" value="Upload" />);
+    } else {
+      return (<input disabled type="submit" className="btn btn-success pull-right" value="Uploading..." />);
+    }
   }
 
   renderPackingListUploadText() {
@@ -294,6 +310,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleFileUploadSubmit(e) {
     e.preventDefault();
+    this.setState({ onPackingListUpload: true });
     this.props.onSave(this.state.goodsReceivedNotice);
   }
 
