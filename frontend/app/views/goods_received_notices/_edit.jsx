@@ -6,13 +6,15 @@ import { Nav, NavItem } from 'react-bootstrap';
 
 export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillMount() {
-    let { id, deliveryDate } = this.props.goodsReceivedNotice;
+    const { id, deliveryDate } = this.props.goodsReceivedNotice;
     const tab = 'purchaseOrders';
 
     this.state = { id,
                    deliveryDate,
                    tab,
                    goodsReceivedNotice: this.props.goodsReceivedNotice };
+
+    this.setVendorId(this.firstVendorId());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,6 +26,10 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                     goodsReceivedNotice: nextProps.goodsReceivedNotice,
                     packingFileName: null,
                     onPackingListUpload: false });
+
+    if (this.props.goodsReceivedNotice.id !== id) {
+      this.setVendorId(this.firstVendorId(nextProps));
+    }
   }
 
   render() {
@@ -89,7 +95,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         <div className="form-group">
           <select className="form-control"
                   id="vendorId"
-                  defaultValue={this.firstVendorId()}
+                  value={this.state.vendorId}
                   onChange={this.handleVendorChange.bind(this)}
                   required>
             <option value=""> -- select brand -- </option>
@@ -318,12 +324,17 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     return parseInt(cartons, 10) / 16;
   }
 
-  firstVendorId() {
-    const { goodsReceivedNoticeEvents } = this.props.goodsReceivedNotice;
+  firstVendorId({ goodsReceivedNotice } = this.props) {
+    const { goodsReceivedNoticeEvents } = goodsReceivedNotice;
 
     if (goodsReceivedNoticeEvents.length > 0) {
       return goodsReceivedNoticeEvents[0].purchaseOrder.vendorId;
     }
+  }
+
+  setVendorId(vendorId) {
+    this.setState({ vendorId });
+    this.props.onVendorChange(vendorId);
   }
 
   handleChange({ target }) {
@@ -363,7 +374,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleVendorChange(e) {
     e.stopPropagation();
-    this.props.onVendorChange(e.target.value);
+    this.setVendorId(e.target.value);
   }
 
   handleSubmit(e) {
