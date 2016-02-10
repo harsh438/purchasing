@@ -47,6 +47,6 @@ export default class GoodsReceivedNoticesFind extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ onLoading: true });
-    this.props.onSearch(parseInt(this.state.search, 10));
+    this.props.onSearch(this.state.search);
   }
 }
