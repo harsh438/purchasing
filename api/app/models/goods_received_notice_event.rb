@@ -23,10 +23,10 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   after_initialize :ensure_defaults
   after_initialize :assign_vendor_from_purchase_order
 
-  def received?; status == :received; end
-  def delivered?; status == :delivered; end
-  def late?; status == :late; end
-  def booked?; status == :booked; end
+  def received?; human_status == :received; end
+  def delivered?; human_status == :delivered; end
+  def late?; human_status == :late; end
+  def booked?; human_status == :booked; end
 
   def human_status
     case send(:Status)
