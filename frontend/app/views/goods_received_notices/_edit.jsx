@@ -91,7 +91,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           <select className="form-control"
                   id="vendorId"
                   value={this.state.vendorId}
-                  onChange={this.handleVendorChange.bind(this)}>
+                  onChange={this.handleVendorChange.bind(this)}
+                  required>
             <option value=""> -- select brand -- </option>
             {renderSelectOptions(this.props.vendors)}
           </select>
@@ -103,7 +104,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
             <select className="form-control"
                     id="purchaseOrderId"
                     name="purchaseOrderId"
-                    value={this.state.purchaseOrderId}>
+                    value={this.state.purchaseOrderId}
+                    required>
               <option value=""> -- select purchase order -- </option>
               {renderSelectOptions(map(this.props.purchaseOrders, 'id'))}
             </select>
@@ -114,7 +116,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
             <input type="number"
                    name="units"
                    className="form-control"
-                   value={this.state.units} />
+                   value={this.state.units}
+                   required />
           </div>
 
           <div className="form-group grn_edit__form_group--cartons">
@@ -122,7 +125,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
             <input type="number"
                    name="cartons"
                    className="form-control"
-                   value={this.state.cartons} />
+                   value={this.state.cartons}
+                   required />
           </div>
 
           <div className="form-group grn_edit__form_group--pallets">
@@ -131,7 +135,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                    name="pallets"
                    className="form-control"
                    step="0.0001"
-                   value={this.state.pallets} />
+                   value={this.state.pallets}
+                   required />
           </div>
 
           <div className="text-right">
