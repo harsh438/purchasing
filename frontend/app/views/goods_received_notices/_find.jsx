@@ -40,6 +40,7 @@ export default class GoodsReceivedNoticesFind extends React.Component {
 
   handleChange({ target }) {
     if (!target) { return ; }
+    this.setState({ onLoading: false });
     this.setState({ [target.name]: target.value });
   }
 
