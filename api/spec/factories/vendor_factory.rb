@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :vendor do
-    name 'Adidad'
+    name { Faker::Name.name }
 
     trait :with_details do
       discontinued false

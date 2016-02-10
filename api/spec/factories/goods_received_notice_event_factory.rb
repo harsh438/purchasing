@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :goods_received_notice_event do
-    purchase_order
+    purchase_order { create(:purchase_order, :with_balance_line_items) }
     units 10
     cartons 1
     pallets 1
