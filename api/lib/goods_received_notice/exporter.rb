@@ -82,7 +82,7 @@ class GoodsReceivedNotice::Exporter
 
   def po_rows_for_range(attrs)
     start_date, end_date = attrs.values_at(:start_date, :end_date).map(&:to_date)
-    po_rows(GoodsReceivedNoticeEvent.includes(goods_received_notice: :vendors)
+    po_rows(GoodsReceivedNoticeEvent.includes(:goods_received_notice)
                                     .where(delivery_date: start_date..end_date))
   end
 
