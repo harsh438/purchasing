@@ -6,7 +6,7 @@ export function loadGoodsReceivedNotice(id) {
   return dispatch => {
     fetch(`/api/goods_received_notices/${id}.json`, { credentials: 'same-origin' })
       .then(response => response.json())
-      .then(goodsReceivedNotice => {
+      .then(function (goodsReceivedNotice) {
         dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
       })
       .catch(() => {
@@ -38,7 +38,7 @@ export function createGoodsReceivedNotice({ currentDate, deliveryDate }) {
                                                 headers: { 'Content-Type': 'application/json' },
                                                 body: JSON.stringify(goodsReceivedNotice) })
       .then(response => response.json())
-      .then(goodsReceivedNotice => {
+      .then(function (goodsReceivedNotice) {
         dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
         dispatch(loadGoodsReceivedNotices(currentDate));
       });
@@ -52,7 +52,7 @@ function updateGrn(id, body, currentDate) {
                                                       headers: { 'Content-Type': 'application/json' },
                                                       body: JSON.stringify(body) })
       .then(response => response.json())
-      .then(goodsReceivedNotice => {
+      .then(function (goodsReceivedNotice) {
         dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
         dispatch(loadGoodsReceivedNotices(currentDate));
       });
@@ -92,23 +92,21 @@ export function deleteGoodsReceivedNotice({ id, currentDate }) {
   };
 }
 
-
 export function deleteGoodsReceivedNoticePackingList({ id, packingListUrl }) {
-  const body = {
-    packing_list_attributes: { list_url: packingListUrl },
-  };
   return dispatch => {
-    fetch(`/api/goods_received_notices/${id}/delete_packing_list.json`, { credentials: 'same-origin',
-                                                      method: 'DELETE',
-                                                      headers: { 'Content-Type': 'application/json' },
-                                                      body: JSON.stringify(body),
-                                                    })
+    const url = `/api/goods_received_notices/${id}/delete_packing_list.json`;
+    const body = { packing_list_attributes: { list_url: packingListUrl } };
+
+    fetch(url, { credentials: 'same-origin',
+                 method: 'DELETE',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify(body) })
       .then(response => response.json())
-      .then((goodsReceivedNotice) => {
+      .then(function (goodsReceivedNotice) {
         dispatch({ text: `${packingListUrl} has now been removed successfully.`, type: 'SUCCESS_NOTIFICATION' });
         dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
       })
-      .catch(() => {
+      .catch(function () {
         dispatch({ text: `Unable to delete ${packingListUrl}`, type: 'ERROR_NOTIFICATION' });
       });
   };
