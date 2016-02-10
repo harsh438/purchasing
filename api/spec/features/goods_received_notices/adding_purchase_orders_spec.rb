@@ -11,6 +11,11 @@ feature 'Adding Purchase Order to Goods Received Notice', booking_db: true do
     then_only_totals_from_new_purchase_orders_should_be_added_to_grn
   end
 
+  scenario 'Overriding pallets' do
+    when_a_buyer_has_booked_in_purchase_orders_with_inaccurate_pallets
+    then_an_intake_planner_should_be_able_to_override
+  end
+  
   def when_adding_purchase_order_to_grn
     page.driver.post goods_received_notice_path(grn), { _method: 'patch',
                                                         goods_received_notice: grn_with_po_attrs }
@@ -29,6 +34,16 @@ feature 'Adding Purchase Order to Goods Received Notice', booking_db: true do
     expect(subject['units']).to eq(subject['goods_received_notice_events'].sum { |grn_event| grn_event['units'] })
     expect(subject['cartons']).to eq(subject['goods_received_notice_events'].sum { |grn_event| grn_event['cartons'] })
     expect(subject['pallets']).to eq(subject['goods_received_notice_events'].sum { |grn_event| grn_event['pallets'].to_f }.to_s)
+  end
+
+  def when_a_buyer_has_booked_in_purchase_orders_with_inaccurate_pallets
+    path = goods_received_notice_path(grn_with_pos)
+    page.driver.post(path, _method: 'patch',
+                           goods_received_notice: { pallets: 10 })
+  end
+
+  def then_an_intake_planner_should_be_able_to_override
+    expect(subject['pallets']).to eq('10.0')
   end
 
   private
