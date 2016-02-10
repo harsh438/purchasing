@@ -15,7 +15,13 @@ feature 'Adding Purchase Order to Goods Received Notice', booking_db: true do
     when_a_buyer_has_booked_in_purchase_orders_with_inaccurate_pallets
     then_an_intake_planner_should_be_able_to_override
   end
-  
+
+  scenario 'Adding PO to GRN with overridden pallets' do
+    given_an_intake_planner_has_overridden_pallets
+    when_a_buyer_adds_another_po_to_the_overridden_grn
+    then_grn_pallets_should_increase
+  end
+
   def when_adding_purchase_order_to_grn
     page.driver.post goods_received_notice_path(grn), { _method: 'patch',
                                                         goods_received_notice: grn_with_po_attrs }
@@ -39,17 +45,33 @@ feature 'Adding Purchase Order to Goods Received Notice', booking_db: true do
   def when_a_buyer_has_booked_in_purchase_orders_with_inaccurate_pallets
     path = goods_received_notice_path(grn_with_pos)
     page.driver.post(path, _method: 'patch',
-                           goods_received_notice: { pallets: 10 })
+                           goods_received_notice: { pallets: overridden_pallets })
   end
 
   def then_an_intake_planner_should_be_able_to_override
-    expect(subject['pallets']).to eq('10.0')
+    expect(subject['pallets']).to eq(overridden_pallets)
+  end
+
+  def given_an_intake_planner_has_overridden_pallets
+    path = goods_received_notice_path(grn_with_pos)
+    page.driver.post(path, _method: 'patch',
+                           goods_received_notice: { pallets: overridden_pallets })
+  end
+
+  def when_a_buyer_adds_another_po_to_the_overridden_grn
+    page.driver.post goods_received_notice_path(grn_with_pos), { _method: 'patch',
+                                                                 goods_received_notice: grn_with_po_attrs }
+  end
+
+  def then_grn_pallets_should_increase
+    expect(subject['pallets']).to eq((overridden_pallets.to_f + 2).to_s)
   end
 
   private
 
   let(:grn) { create(:goods_received_notice) }
   let(:grn_with_pos) { create(:goods_received_notice, :with_purchase_orders) }
+  let(:overridden_pallets) { '10.0' }
 
   let(:purchase_order) { create(:purchase_order) }
 
