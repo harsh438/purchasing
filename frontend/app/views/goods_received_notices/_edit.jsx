@@ -14,7 +14,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillReceiveProps(nextProps) {
     let { id, deliveryDate } = nextProps.goodsReceivedNotice;
     deliveryDate = deliveryDate.split('/').reverse().join('-');
-    
+
     this.setState({ id,
                     deliveryDate,
                     goodsReceivedNotice: nextProps.goodsReceivedNotice,
@@ -125,6 +125,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
             <input type="number"
                    name="pallets"
                    className="form-control"
+                   step="0.0001"
                    value={this.state.pallets} />
           </div>
 
