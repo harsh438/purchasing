@@ -37,7 +37,11 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
     when 7
       :late
     else
-      :booked
+      if delivery_date.past?
+        :late
+      else
+        :booked
+      end
     end
   end
 
