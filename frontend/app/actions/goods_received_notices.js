@@ -2,9 +2,18 @@ import Qs from 'qs';
 import 'whatwg-fetch';
 import moment from 'moment';
 
+function throw404Error(response) {
+  if (response.status == 404) {
+    throw "404";
+  } else {
+    return response;
+  }
+}
+
 export function loadGoodsReceivedNotice(id) {
   return dispatch => {
     fetch(`/api/goods_received_notices/${id}.json`, { credentials: 'same-origin' })
+      .then(throw404Error)
       .then(response => response.json())
       .then(function (goodsReceivedNotice) {
         dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
