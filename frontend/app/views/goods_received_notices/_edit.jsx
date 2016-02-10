@@ -294,7 +294,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleFileUploadSubmit(e) {
     e.preventDefault();
-    console.log(this.state.goodsReceivedNotice);
     this.props.onSave(this.state.goodsReceivedNotice);
   }
 
@@ -321,7 +320,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   handleChange({ target }) {
-    console.log(target.name);
     switch (target.name) {
     case 'cartons':
       this.setState({ pallets: this.calculatePalletsFromCartons(target.value),
