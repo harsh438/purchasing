@@ -198,12 +198,17 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     if (!packingListUrl) return;
 
     const filenameIndex = packingListUrl.lastIndexOf('/');
+    let filename = packingListUrl.substr(filenameIndex + 1);
+    const queryIndex = filename.lastIndexOf('?');
+    if (queryIndex !== -1) {
+      filename = filename.substr(0, queryIndex);
+    }
     return (
         <tr key={packingListUrl} style={{ wordBreak: 'break-all' }}>
           <td>
             <span className="glyphicon glyphicon-file"></span>&nbsp;
             <a target="_blank" href={packingListUrl}>
-              {decodeURIComponent(packingListUrl.substr(filenameIndex + 1))}
+              {decodeURIComponent(filename)}
             </a>&nbsp;
             <button onClick={this.props.onDeletePackingList.bind(this, {
               goodsReceivedNotice: this.props.goodsReceivedNotice,
