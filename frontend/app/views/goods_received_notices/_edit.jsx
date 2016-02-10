@@ -317,7 +317,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   firstVendorId() {
-    const { goodsReceivedNoticeEvents} = this.props.goodsReceivedNotice;
+    const { goodsReceivedNoticeEvents } = this.props.goodsReceivedNotice;
 
     if (goodsReceivedNoticeEvents.length > 0) {
       return goodsReceivedNoticeEvents[0].purchaseOrder.vendorId;
