@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'frontend#index'
 
+  get :status, to: 'application_status#index'
+
   scope :api, format: true, defaults: { format: :json } do
     resources :skus, only: [:index, :create, :show, :update] do
       collection do
