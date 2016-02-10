@@ -62,6 +62,10 @@ class SupplierTerms < ActiveRecord::Base
     supplier.name
   end
 
+  def brand_name
+    vendor.try(:name) || supplier_name
+  end
+
   def confirmed?
     confirmation.present?
   end
