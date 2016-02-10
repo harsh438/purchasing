@@ -253,9 +253,8 @@ class GoodsReceivedNoticesIndex extends React.Component {
     const curGrn = this.props.goodsReceivedNotice;
     const queryStartDate = nextProps.location.query.startDate;
     const startDate =  queryStartDate ? moment(queryStartDate, 'DD/MM/YYYY') : moment();
-    if (curGrn
-        && nextGrn
-        && nextGrn.id !== curGrn.id
+    if (nextGrn
+        && nextGrn.id !== (curGrn || {}).id
         && nextGrn.deliveryDate
         && moment(nextGrn.deliveryDate, 'DD/MM/YYYY').week() !== startDate.week()
       ) {
