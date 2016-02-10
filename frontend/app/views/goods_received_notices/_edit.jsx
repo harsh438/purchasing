@@ -8,7 +8,12 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillMount() {
     let { id, deliveryDate } = this.props.goodsReceivedNotice;
     const tab = 'purchaseOrders';
-    this.state = { id, deliveryDate, tab, goodsReceivedNotice: this.props.goodsReceivedNotice };
+
+    this.state = { id,
+                   deliveryDate,
+                   tab,
+                   vendorId: this.firstVendorId(),
+                   goodsReceivedNotice: this.props.goodsReceivedNotice };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -288,7 +293,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       </div>
     );
   }
-  
+
   goodsReceivedNoticeEventClass({ status }) {
     let className = 'grn_edit__purchase_order';
 
