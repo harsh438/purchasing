@@ -6,11 +6,12 @@ import { Nav, NavItem } from 'react-bootstrap';
 
 export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillMount() {
-    const { id, deliveryDate } = this.props.goodsReceivedNotice;
+    const { id, deliveryDate, pallets } = this.props.goodsReceivedNotice;
     const tab = 'purchaseOrders';
 
     this.state = { id,
                    deliveryDate,
+                   pallets,
                    tab,
                    goodsReceivedNotice: this.props.goodsReceivedNotice };
 
@@ -18,11 +19,12 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let { id, deliveryDate } = nextProps.goodsReceivedNotice;
+    let { id, deliveryDate, pallets } = nextProps.goodsReceivedNotice;
     deliveryDate = deliveryDate.split('/').reverse().join('-');
 
     this.setState({ id,
                     deliveryDate,
+                    pallets,
                     goodsReceivedNotice: nextProps.goodsReceivedNotice,
                     packingFileName: null,
                     onPackingListUpload: false });
@@ -135,7 +137,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           </div>
 
           <div className="form-group grn_edit__form_group--pallets">
-            <label>Palettes</label>
+            <label htmlFor="pallets">Pallets</label>
             <input type="number"
                    name="pallets"
                    className="form-control"
@@ -282,14 +284,28 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         <form onChange={this.handleChange.bind(this)}
               onSubmit={this.handleChangeDateSubmit.bind(this)}>
           <div className="form-group">
+            <label htmlFor="deliveryDate">Delivery date</label>
             <input className="form-control"
                    type="date"
+                   id="deliveryDate"
                    name="deliveryDate"
-                   value={this.state.deliveryDate} />
+                   value={this.state.deliveryDate}
+                   required />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="pallets">Override pallets</label>
+            <input className="form-control"
+                   type="number"
+                   id="pallets"
+                   name="pallets"
+                   step="0.0001"
+                   value={this.state.pallets}
+                   required />
           </div>
 
           <div className="text-right">
-            <button className="btn btn-warning">Change date</button>
+            <button className="btn btn-warning">Save</button>
           </div>
         </form>
 
@@ -390,8 +406,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleChangeDateSubmit(e) {
     e.preventDefault();
-    const { id, deliveryDate } = this.state;
-    this.props.onSave({ id, deliveryDate });
+    const { id, deliveryDate, pallets } = this.state;
+    this.props.onSave({ id, deliveryDate, pallets });
   }
 
   handleDeletePurchaseOrder(id) {
