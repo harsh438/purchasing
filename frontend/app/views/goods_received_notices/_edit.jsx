@@ -226,10 +226,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
             <a target="_blank" href={packingListUrl}>
               {decodeURIComponent(filename)}
             </a>&nbsp;
-            <button onClick={this.props.onDeletePackingList.bind(this, {
-              goodsReceivedNotice: this.props.goodsReceivedNotice,
-              packingListUrl: packingListUrl,
-            })}
+            <button onClick={this.props.onDeletePackingList.bind(this, { goodsReceivedNotice: this.props.goodsReceivedNotice,
+                                                                         packingListUrl: packingListUrl })}
                     className="btn btn-sm btn-danger pull-right">Delete</button>
           </td>
         </tr>
