@@ -28,7 +28,7 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   def late?; status == :late; end
   def booked?; status == :booked; end
 
-  def status
+  def human_status
     case send(:Status)
     when 2
       :delivered
@@ -47,7 +47,7 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
 
   def as_json
     super.tap do |grn_event|
-      grn_event['status'] = status
+      grn_event['status'] = human_status
     end
   end
 
