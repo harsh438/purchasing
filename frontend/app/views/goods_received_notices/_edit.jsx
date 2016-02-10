@@ -263,25 +263,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     }
   }
 
-  handlePackingFileUpload(files) {
-    const self = this;
-    const reader = new FileReader();
-    const file = files[0];
-
-    reader.onload = function (upload) {
-      let grn = self.state.goodsReceivedNotice;
-      grn.packingLists = grn.packingLists || [];
-      grn.packingLists.push({
-        list: upload.target.result,
-        list_file_name: file.name,
-      });
-      self.setState({ goodsReceivedNotice: grn, packingFileName: file.name });
-    };
-
-    reader.readAsDataURL(file);
-  }
-
-
   renderAdvanced() {
     return (
       <div>
@@ -307,13 +288,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       </div>
     );
   }
-
-  handleFileUploadSubmit(e) {
-    e.preventDefault();
-    this.setState({ onPackingListUpload: true });
-    this.props.onSave(this.state.goodsReceivedNotice);
-  }
-
+  
   goodsReceivedNoticeEventClass({ status }) {
     let className = 'grn_edit__purchase_order';
 
@@ -345,6 +320,30 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     default:
       this.setState({ [target.name]: target.value });
     }
+  }
+
+  handlePackingFileUpload(files) {
+    const self = this;
+    const reader = new FileReader();
+    const file = files[0];
+
+    reader.onload = function (upload) {
+      let grn = self.state.goodsReceivedNotice;
+      grn.packingLists = grn.packingLists || [];
+      grn.packingLists.push({
+        list: upload.target.result,
+        list_file_name: file.name,
+      });
+      self.setState({ goodsReceivedNotice: grn, packingFileName: file.name });
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  handleFileUploadSubmit(e) {
+    e.preventDefault();
+    this.setState({ onPackingListUpload: true });
+    this.props.onSave(this.state.goodsReceivedNotice);
   }
 
   handleVendorChange(e) {
