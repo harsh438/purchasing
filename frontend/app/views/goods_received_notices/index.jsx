@@ -345,7 +345,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   isNow() {
-    return this.state.currentDate === this.now();
+    return moment(this.state.currentDate, 'DD/MM/YYYY').week() === moment().week()
   }
 
   monthAndYearMatches() {
