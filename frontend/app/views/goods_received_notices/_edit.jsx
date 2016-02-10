@@ -219,18 +219,18 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       filename = filename.substr(0, queryIndex);
     }
     return (
-        <tr key={packingListUrl} style={{ wordBreak: 'break-all' }}>
-          <td>
-            <span className="glyphicon glyphicon-file"></span>&nbsp;
-            <a target="_blank" href={packingListUrl}>
-              {decodeURIComponent(filename)}
-            </a>&nbsp;
-            <button onClick={this.props.onDeletePackingList.bind(this, { goodsReceivedNotice: this.props.goodsReceivedNotice,
-                                                                         packingListUrl: packingListUrl })}
-                    className="btn btn-sm btn-danger pull-right">Delete</button>
-          </td>
-        </tr>
-      );
+      <tr key={packingListUrl} style={{ wordBreak: 'break-all' }}>
+        <td>
+          <span className="glyphicon glyphicon-file"></span>&nbsp;
+          <a target="_blank" href={packingListUrl}>
+            {decodeURIComponent(filename)}
+          </a>&nbsp;
+          <button onClick={this.props.onDeletePackingList.bind(this, { goodsReceivedNotice: this.props.goodsReceivedNotice,
+                                                                       packingListUrl: packingListUrl })}
+                  className="btn btn-sm btn-danger pull-right">Delete</button>
+        </td>
+      </tr>
+    );
   }
 
   renderPackingListUpload() {
