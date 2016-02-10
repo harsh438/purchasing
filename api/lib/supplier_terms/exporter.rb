@@ -2,6 +2,7 @@ class SupplierTerms::Exporter
   class NoTermsSelectedError < RuntimeError; end
 
   CSV_COLUMNS = %w(supplier_name
+                   brand_name
                    created_at
                    confirmed?
                    default?)
