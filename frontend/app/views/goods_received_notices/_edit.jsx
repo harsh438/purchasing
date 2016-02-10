@@ -14,7 +14,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillReceiveProps(nextProps) {
     let { id, deliveryDate } = nextProps.goodsReceivedNotice;
     deliveryDate = deliveryDate.split('/').reverse().join('-');
-    this.setState({ id, deliveryDate, goodsReceivedNotice: nextProps.goodsReceivedNotice });
+    this.setState({ id, deliveryDate, goodsReceivedNotice: nextProps.goodsReceivedNotice, packingFileName: null});
   }
 
   render() {
