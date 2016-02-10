@@ -316,6 +316,14 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     return parseInt(cartons, 10) / 16;
   }
 
+  firstVendorId() {
+    const { goodsReceivedNoticeEvents} = this.props.goodsReceivedNotice;
+
+    if (goodsReceivedNoticeEvents.length > 0) {
+      return goodsReceivedNoticeEvents[0].purchaseOrder.vendorId;
+    }
+  }
+
   handleChange({ target }) {
     switch (target.name) {
     case 'cartons':
