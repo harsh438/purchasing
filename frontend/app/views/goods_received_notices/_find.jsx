@@ -2,12 +2,12 @@ import React from 'react';
 
 export default class GoodsReceivedNoticesFind extends React.Component {
   componentWillMount() {
-    this.state = {};
+    this.state = { onLoading: false };
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.goodsReceivedNotice) {
-      this.setState({ search: nextProps.goodsReceivedNotice.id });
+      this.setState({ search: nextProps.goodsReceivedNotice.id, onLoading: false });
     }
   }
 
@@ -23,12 +23,19 @@ export default class GoodsReceivedNoticesFind extends React.Component {
                value={this.state.search}
                name="search" />
         <span className="input-group-btn">
-          <input type="submit" className="btn btn-primary"
-                 value="Find" />
+          {this.renderSearchButton()}
         </span>
       </div>
     </form>
     );
+  }
+
+  renderSearchButton() {
+    if (this.state.onLoading) {
+      return <input disabled type="submit" className="btn btn-primary" value="Finding..." />;
+    } else {
+      return <input type="submit" className="btn btn-primary" value="Find" />;
+    }
   }
 
   handleChange({ target }) {
@@ -38,6 +45,7 @@ export default class GoodsReceivedNoticesFind extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    this.setState({ onLoading: true });
     this.props.onSearch(parseInt(this.state.search, 10));
   }
 }
