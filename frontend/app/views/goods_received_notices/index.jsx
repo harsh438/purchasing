@@ -37,6 +37,10 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.updateSwitchWeek(nextProps)) {
+      return ;
+    }
+
     this.updateCurrentDate(nextProps.location.query);
 
     const currentNotify = this.props.notification || {};
@@ -242,6 +246,23 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   loadCurrentDate(date = this.state.currentDate) {
     this.props.dispatch(loadGoodsReceivedNotices(date));
+  }
+
+  updateSwitchWeek(nextProps) {
+    const nextGrn = nextProps.goodsReceivedNotice;
+    const curGrn = this.props.goodsReceivedNotice;
+    const queryStartDate = nextProps.location.query.startDate;
+    const startDate =  queryStartDate ? moment(queryStartDate, 'DD/MM/YYYY') : moment();
+    if (curGrn
+        && nextGrn
+        && nextGrn.id !== curGrn.id
+        && nextGrn.deliveryDate
+        && moment(nextGrn.deliveryDate, 'DD/MM/YYYY').week() !== startDate.week()
+      ) {
+      this.props.history.pushState(null, this.props.route.path, { startDate: nextGrn.deliveryDate });
+      return true;
+    }
+    return false;
   }
 
   updateCurrentDate(query) {
