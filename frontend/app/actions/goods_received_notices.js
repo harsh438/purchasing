@@ -3,7 +3,7 @@ import 'whatwg-fetch';
 import moment from 'moment';
 
 function throw404Error(response) {
-  if (response.status == 404) {
+  if (response.status === 404) {
     throw "404";
   } else {
     return response;
