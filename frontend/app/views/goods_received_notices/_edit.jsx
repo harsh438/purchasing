@@ -12,7 +12,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     this.state = { id,
                    deliveryDate,
                    tab,
-                   vendorId: this.firstVendorId(),
                    goodsReceivedNotice: this.props.goodsReceivedNotice };
   }
 
@@ -90,7 +89,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         <div className="form-group">
           <select className="form-control"
                   id="vendorId"
-                  value={this.state.vendorId}
+                  defaultValue={this.firstVendorId()}
                   onChange={this.handleVendorChange.bind(this)}
                   required>
             <option value=""> -- select brand -- </option>
