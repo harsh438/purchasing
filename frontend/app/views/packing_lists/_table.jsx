@@ -7,6 +7,7 @@ export default class PackingListsTable extends React.Component {
       <table className="table table-striped">
         <thead>
           <tr>
+            <th>Brand</th>
             <th>GRN</th>
             <th>PO Numbers</th>
             <th>Delivery date</th>
@@ -24,9 +25,10 @@ export default class PackingListsTable extends React.Component {
     return map(this.props.packingLists, this.renderRow, this);
   }
 
-  renderRow({ grn, deliveryDate, purchaseOrderIds, url }) {
+  renderRow({ grn, vendorName, deliveryDate, purchaseOrderIds, url }) {
     return (
       <tr key={[grn, url]}>
+        <td>{vendorName}</td>
         <td>{grn}</td>
         <td>{purchaseOrderIds.join(', ')}</td>
         <td>{deliveryDate}</td>
