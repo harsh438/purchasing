@@ -21,6 +21,14 @@ class PurchaseOrder < ActiveRecord::Base
   after_initialize :ensure_defaults
   after_initialize :set_legacy
 
+  def self.from_yesterday
+    where('po_date > ?', Date.yesterday)
+  end
+
+  def self.includes_line_items
+    includes(:line_items, line_items: [:vendor, :sku, :product, :language_category, :purchase_order])
+  end
+
   def po_number
     id
   end
@@ -31,6 +39,10 @@ class PurchaseOrder < ActiveRecord::Base
 
   def total
     line_items.map(&:total).sum
+  end
+
+  def as_json_with_line_items
+    as_json.merge(purchase_order_line_items: line_items.as_json)
   end
 
   private
