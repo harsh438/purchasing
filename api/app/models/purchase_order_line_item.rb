@@ -89,6 +89,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   belongs_to :option, foreign_key: :oID
   belongs_to :purchase_order, foreign_key: :po_number
   belongs_to :sku
+  belongs_to :language_category, foreign_key: :category_id
 
   has_many :suppliers, through: :vendor
 
