@@ -248,7 +248,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           <DropZone multiple={false}
                     onDrop={this.handlePackingFileUpload.bind(this)}
                     style={{ color: '#999', padding: '30px', border: '2px dashed #999' }}
-                    accept=".jpg,.jpeg,.png,.pdf,.xls,.xlsx">
+                    accept=".jpg,.jpeg,.png,.pdf,.xls,.xlsx,.eml,.doc,.docx">
             <div>Add a new packing list. Try dropping some file here, or click to select file to upload.</div>
             {this.renderPackingListUploadText()}
           </DropZone>

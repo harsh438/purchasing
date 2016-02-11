@@ -16,7 +16,14 @@ class PackingList < ActiveRecord::Base
                                                             application/xls,
                                                             application/x-xls,
                                                             application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
-                                                            application/x-pdf)
+                                                            application/x-pdf
+                                                            message/rfc822
+                                                            text/html
+                                                            message/rfc822 eml
+                                                            application/msword
+                                                            application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                                                            application/vnd.openxmlformats-officedocument.wordprocessingml.template
+                                                            )
   def list_url
     list.expiring_url(300)
   end
