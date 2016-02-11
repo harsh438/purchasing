@@ -3,11 +3,13 @@ import moment from 'moment';
 
 export default class PackingListsFilters extends React.Component {
   componentWillMount() {
-    this.state = { submitting: false, ...this.props.filters };
+    this.state = { submitting: false };
+    this.ensureFilters();
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ submitting: false, ...nextProps.filters });
+    this.setState({ submitting: false });
+    this.ensureFilters(nextProps);
   }
 
   render() {
@@ -69,14 +71,26 @@ export default class PackingListsFilters extends React.Component {
     }
   }
 
+  ensureFilters({ filters } = this.props) {
+    const { dateFrom, dateTo } = filters;
+
+    if (!dateFrom || !dateTo) {
+      this.handleToday();
+    } else {
+      this.setState({ dateFrom, dateTo });
+    }
+  }
+
   handleToday(e) {
+    if (e) e.preventDefault();
     const today = moment().format('YYYY-MM-DD');
-    this.setState({ dateFrom: today, dateTo: today }, () => this.handleSubmit(e));
+    this.setState({ dateFrom: today, dateTo: today }, this.handleSubmit.bind(this));
   }
 
   handleTomorrow(e) {
+    e.preventDefault();
     const tomorrow = moment().add({ days: 1 }).format('YYYY-MM-DD');
-    this.setState({ dateFrom: tomorrow, dateTo: tomorrow }, () => this.handleSubmit(e));
+    this.setState({ dateFrom: tomorrow, dateTo: tomorrow }, this.handleSubmit.bind(this));
   }
 
   handleChange({ target }) {
@@ -84,7 +98,7 @@ export default class PackingListsFilters extends React.Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
     this.setState({ submitting: true });
     this.props.onSubmit(this.state);
   }

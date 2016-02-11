@@ -49,7 +49,7 @@ export default class PackingListsTable extends React.Component {
 
   renderPackingListUrl(url) {
     return (
-      <div>
+      <div key={url}>
         <a href={url} target="_blank">{url}</a>
       </div>
     );
