@@ -3,7 +3,7 @@ class GoodsReceivedOrder::WeeklyReporter
 
   def report(params)
     start_date, end_date = date_range(params)
-    notices = GoodsReceivedNotice.includes(:vendors).delivered_between(start_date..end_date).not_on_weekends
+    notices = GoodsReceivedNotice.includes(:vendors).not_archived.delivered_between(start_date..end_date).not_on_weekends
     by_week = notices.reduce(NoticesByWeek.new(start_date, end_date), &:<<)
     counted = Counter.new.count(by_week)
     formatted = Formatter.new.format(counted)

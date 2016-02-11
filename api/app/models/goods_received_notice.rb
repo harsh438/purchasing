@@ -5,12 +5,17 @@ class GoodsReceivedNotice < ActiveRecord::Base
   include BookingInConnection
   include LegacyMappings
 
+  def self.not_archived
+    joins(:goods_received_notice_events)
+      .where('bookingin_events.id IS NOT NULL OR goods_received_number.BookedInDate >= date_sub(NOW(), interval 1 hour)')
+  end
+
   def self.delivered_between(range)
     where(delivery_date: range)
   end
 
   def self.not_on_weekends
-    where('DAYOFWEEK(DeliveryDate) != 1 AND DAYOFWEEK(DeliveryDate) != 7')
+    where('DAYOFWEEK(goods_received_number.DeliveryDate) != 1 AND DAYOFWEEK(goods_received_number.DeliveryDate) != 7')
   end
 
   map_attributes id: :grn,

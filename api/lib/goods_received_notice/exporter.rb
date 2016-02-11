@@ -51,9 +51,8 @@ class GoodsReceivedNotice::Exporter
   end
 
   def grn_rows_for_month(attrs)
-    grn_rows(GoodsReceivedNotice.where('MONTH(DeliveryDate) = ? AND YEAR(DeliveryDate) = ?',
-                                       attrs[:month].to_i,
-                                       attrs[:year]))
+    grn_rows(GoodsReceivedNotice.where('MONTH(goods_received_number.DeliveryDate) = ?', attrs[:month].to_i)
+                                .where('YEAR(goods_received_number.DeliveryDate) = ?', attrs[:year]))
   end
 
   def grn_rows_for_range(attrs)
@@ -62,12 +61,13 @@ class GoodsReceivedNotice::Exporter
   end
 
   def grn_rows(grn)
-    grn.group('DeliveryDate')
-       .order('DeliveryDate')
-       .pluck('DeliveryDate',
-              'sum(TotalUnits) as total_units',
-              'sum(CartonsExpected) as total_cartons',
-              'sum(PaletsExpected) as total_pallets').map do |row|
+    grn.not_archived
+       .group('goods_received_number.DeliveryDate')
+       .order('goods_received_number.DeliveryDate')
+       .pluck('goods_received_number.DeliveryDate',
+              'sum(goods_received_number.TotalUnits) as total_units',
+              'sum(goods_received_number.CartonsExpected) as total_cartons',
+              'sum(goods_received_number.PaletsExpected) as total_pallets').map do |row|
       row[0] = row[0].to_s
       row
     end
