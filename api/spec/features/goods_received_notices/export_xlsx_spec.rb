@@ -15,11 +15,11 @@ feature 'Download GRNs as XLSX', booking_db: true do
   end
 
   def then_the_xlsx_file_should_contain_all_grns_for_the_current_month
-    expect(grn_result_rows.first.first).to eq(Date.new(2016, 2, 1).to_s)
-    expect(grn_result_rows.second.first).to eq(Date.new(2016, 2, 2).to_s)
+    expect(grn_result_rows.first.second).to eq(Date.new(2016, 2, 1).to_s)
+    expect(grn_result_rows.second.second).to eq(Date.new(2016, 2, 2).to_s)
 
-    expect(po_result_rows.first.first).to eq(Date.new(2016, 2, 1).to_s)
-    expect(po_result_rows.second.first).to eq(Date.new(2016, 2, 2).to_s)
+    expect(po_result_rows.first.second).to eq(Date.new(2016, 2, 1).to_s)
+    expect(po_result_rows.second.second).to eq(Date.new(2016, 2, 2).to_s)
   end
 
   def when_a_user_downloads_xlsx_of_current_view
@@ -28,11 +28,11 @@ feature 'Download GRNs as XLSX', booking_db: true do
   end
 
   def then_the_xlsx_file_should_contain_list_of_all_grn_for_current_view
-    expect(grn_result_rows.first.first).to eq(Date.new(2016, 2, 1).to_s)
-    expect(grn_result_rows.second.first).to eq(Date.new(2016, 2, 2).to_s)
+    expect(grn_result_rows.first.second).to eq(Date.new(2016, 2, 1).to_s)
+    expect(grn_result_rows.second.second).to eq(Date.new(2016, 2, 2).to_s)
 
-    expect(po_result_rows.first.first).to eq(Date.new(2016, 2, 1).to_s)
-    expect(po_result_rows.second.first).to eq(Date.new(2016, 2, 2).to_s)
+    expect(po_result_rows.first.second).to eq(Date.new(2016, 2, 1).to_s)
+    expect(po_result_rows.second.second).to eq(Date.new(2016, 2, 2).to_s)
   end
 
   private

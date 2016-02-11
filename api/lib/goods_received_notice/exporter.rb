@@ -32,14 +32,16 @@ class GoodsReceivedNotice::Exporter
   end
 
   def grn_columns
-    %w(delivery_date
+    %w(week
+       delivery_date
        total_units
        total_cartons
        total_pallets)
   end
 
   def po_columns
-    %w(delivery_date
+    %w(week
+       delivery_date
        original_delivery_date
        brand_name
        grn
@@ -64,11 +66,12 @@ class GoodsReceivedNotice::Exporter
     grn.not_archived
        .group('goods_received_number.DeliveryDate')
        .order('goods_received_number.DeliveryDate')
-       .pluck('goods_received_number.DeliveryDate',
+       .pluck('WEEK(goods_received_number.DeliveryDate)',
+              'goods_received_number.DeliveryDate',
               'sum(goods_received_number.TotalUnits) as total_units',
               'sum(goods_received_number.CartonsExpected) as total_cartons',
               'sum(goods_received_number.PaletsExpected) as total_pallets').map do |row|
-      row[0] = row[0].to_s
+      row[1] = row[1].to_s
       row
     end
   end
@@ -89,7 +92,8 @@ class GoodsReceivedNotice::Exporter
   def po_rows(grn_events)
     po_rows = grn_events.order('bookingin_events.DeliveryDate',
                                'bookingin_events.grn')
-                        .pluck('bookingin_events.DeliveryDate',
+                        .pluck('WEEK(bookingin_events.DeliveryDate)',
+                               'bookingin_events.DeliveryDate',
                                'goods_received_number.DeliveryDate',
                                'bookingin_events.BrandID',
                                'bookingin_events.grn',
@@ -99,12 +103,12 @@ class GoodsReceivedNotice::Exporter
                                'bookingin_events.PaletsExpected',
                                'bookingin_events.BookedInDate')
 
-    vendors = Vendor.where(id: po_rows.map { |row| row[2] }).index_by(&:id)
+    vendors = Vendor.where(id: po_rows.map { |row| row[3] }).index_by(&:id)
 
     po_rows.map do |row|
-      row[0] = row[0].to_s
       row[1] = row[1].to_s
-      row[2] = vendors[row[2]].name
+      row[2] = row[2].to_s
+      row[3] = vendors[row[3]].name
       row[8] = row[8].to_s
       row
     end
