@@ -60,6 +60,12 @@ function updateGrn(id, body, currentDate) {
                                                       method: 'PATCH',
                                                       headers: { 'Content-Type': 'application/json' },
                                                       body: JSON.stringify(body) })
+      .then((response) => {
+        if (response.status === 422) {
+          dispatch({ text: 'The file uploaded is of an invalid type, the packing file will not be stored.', type: 'ERROR_NOTIFICATION' });
+          throw "422";
+        }
+      })
       .then(response => response.json())
       .then(function (goodsReceivedNotice) {
         dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
