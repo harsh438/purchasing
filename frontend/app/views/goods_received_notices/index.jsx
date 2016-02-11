@@ -105,8 +105,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
               function (month, index) {
                 index = index + 1;
                 return { name: month, id: (index < 10) ? `0${index}` : index };
-              }))
-            }
+              }))}
           </select>
 
           <select className="form-control pull-left"

@@ -25,15 +25,33 @@ export default class PackingListsTable extends React.Component {
     return map(this.props.packingLists, this.renderRow, this);
   }
 
-  renderRow({ grn, vendorName, deliveryDate, purchaseOrderIds, url }) {
+  renderRow({ grn, vendorName, deliveryDate, purchaseOrderIds, packingListUrls, grnPaperUrl, checkSheetUrl }) {
     return (
-      <tr key={[grn, url]}>
+      <tr key={grn}>
         <td>{vendorName}</td>
         <td>{grn}</td>
         <td>{purchaseOrderIds.join(', ')}</td>
         <td>{deliveryDate}</td>
-        <td><a href={url} target="_blank">{url}</a></td>
+        <td>{map(packingListUrls, this.renderPackingListUrl, this)}</td>
+        <td>
+          <a href={checkSheetUrl}
+             target="_blank"
+             className="btn btn-default">Print goods in check sheet</a>
+        </td>
+        <td>
+          <a href={grnPaperUrl}
+             target="_blank"
+             className="btn btn-default">Print GRN paper</a>
+        </td>
       </tr>
+    );
+  }
+
+  renderPackingListUrl(url) {
+    return (
+      <div>
+        <a href={url} target="_blank">{url}</a>
+      </div>
     );
   }
 }
