@@ -5,6 +5,6 @@ export default function reduceAdvancedMode(state = false, action) {
   case 'ADVANCED_MODE':
     return true;
   default:
-    return false;
+    return state;
   }
 }
