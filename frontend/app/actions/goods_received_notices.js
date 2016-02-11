@@ -65,6 +65,7 @@ function updateGrn(id, body, currentDate) {
           dispatch({ text: 'The file uploaded is of an invalid type, the packing file will not be stored.', type: 'ERROR_NOTIFICATION' });
           throw "422";
         }
+        return response;
       })
       .then(response => response.json())
       .then(function (goodsReceivedNotice) {
