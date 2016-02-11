@@ -8,6 +8,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   def self.not_archived
     joins(:goods_received_notice_events)
       .where('bookingin_events.id IS NOT NULL OR goods_received_number.BookedInDate >= date_sub(NOW(), interval 1 hour)')
+      .uniq
   end
 
   def self.delivered_between(range)
