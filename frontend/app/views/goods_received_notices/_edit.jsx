@@ -11,8 +11,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
     this.state = { id,
                    deliveryDate,
-                   pallets,
                    tab,
+                   totalPallets: pallets,
                    goodsReceivedNotice: this.props.goodsReceivedNotice };
 
     this.setVendorId(this.firstVendorId());
@@ -24,7 +24,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
     this.setState({ id,
                     deliveryDate,
-                    pallets,
+                    totalPallets: pallets,
                     goodsReceivedNotice: nextProps.goodsReceivedNotice,
                     packingFileName: null,
                     onPackingListUpload: false });
@@ -290,9 +290,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           <input className="form-control"
                  type="number"
                  id="pallets"
-                 name="pallets"
+                 name="totalPallets"
                  step="0.0001"
-                 value={this.state.pallets}
+                 value={this.state.totalPallets}
                  required />
         </div>
 
@@ -426,8 +426,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleChangePalletsSubmit(e) {
     e.preventDefault();
-    const { id, pallets } = this.state;
-    this.props.onSave({ id, pallets });
+    const { id, totalPallets } = this.state;
+    this.props.onSave({ id, pallets: totalPallets });
   }
 
   handleDeletePurchaseOrder(id) {
