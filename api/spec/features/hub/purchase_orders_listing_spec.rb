@@ -8,7 +8,9 @@ feature 'Listing Purchase Orders for the hub' do
 
   def when_i_request_a_list_of_purchase_orders
     create_purchase_order_with_line_items
-    visit purchase_orders_hub_index_path
+    page.driver.post latest_hub_purchase_orders_path, {
+      parameters: {timestamp_from: Date.yesterday.iso8601 }
+    }
   end
 
   def then_i_should_get_purchase_orders_with_line_items
@@ -18,5 +20,6 @@ feature 'Listing Purchase Orders for the hub' do
 
   let (:create_purchase_order_with_line_items) do
     create_list(:purchase_order, 10, :with_line_items)
+    create_list(:purchase_order, 10, :with_line_items, :with_old_drop_date)
   end
 end
