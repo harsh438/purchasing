@@ -115,13 +115,15 @@ class GoodsReceivedNotice::Exporter
     vendors = Vendor.where(id: po_rows.map { |row| row[3] }).index_by(&:id)
     users = User.where(id: po_rows.map { |row| row[10] }).index_by(&:id)
 
-    po_rows.map do |row|
-      row[1] = row[1].to_s
-      row[2] = row[2].to_s
-      row[3] = vendors[row[3]].name
-      row[8] = row[8].to_s
-      row[10] = users[row[10]].try(:name)
-      row
-    end
+    po_rows.map(&method(:po_row).curry.call(vendors, users))
+  end
+
+  def po_row(vendors, users, row)
+    row[1] = row[1].to_s
+    row[2] = row[2].to_s
+    row[3] = vendors[row[3]].name
+    row[8] = row[8].to_s
+    row[10] = users[row[10]].try(:name)
+    row
   end
 end
