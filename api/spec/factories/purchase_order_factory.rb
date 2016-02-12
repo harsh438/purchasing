@@ -10,5 +10,9 @@ FactoryGirl.define do
     trait :with_balance_line_items do
       line_items { build_list(:purchase_order_line_item, 2, :balanced, vendor: vendor) }
     end
+
+    trait :with_old_drop_date do
+      drop_date { 1.year.ago }
+    end
   end
 end
