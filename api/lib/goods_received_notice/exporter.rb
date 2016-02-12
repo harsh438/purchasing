@@ -36,7 +36,8 @@ class GoodsReceivedNotice::Exporter
        delivery_date
        total_units
        total_cartons
-       total_pallets)
+       total_pallets
+       book_in_by)
   end
 
   def po_columns
@@ -49,7 +50,8 @@ class GoodsReceivedNotice::Exporter
        units
        cartons
        pallets
-       booked_in_date)
+       booked_in_date
+       book_in_by)
   end
 
   def grn_rows_for_month(attrs)
@@ -63,15 +65,21 @@ class GoodsReceivedNotice::Exporter
   end
 
   def grn_rows(grn)
-    grn.not_archived
-       .group('goods_received_number.DeliveryDate')
-       .order('goods_received_number.DeliveryDate')
-       .pluck('WEEK(goods_received_number.DeliveryDate)',
-              'goods_received_number.DeliveryDate',
-              'sum(goods_received_number.TotalUnits) as total_units',
-              'sum(goods_received_number.CartonsExpected) as total_cartons',
-              'sum(goods_received_number.PaletsExpected) as total_pallets').map do |row|
+    grn_rows = grn.not_archived
+                  .group('goods_received_number.DeliveryDate')
+                  .order('goods_received_number.DeliveryDate')
+                  .pluck('WEEK(goods_received_number.DeliveryDate)',
+                         'goods_received_number.DeliveryDate',
+                         'sum(goods_received_number.TotalUnits) as total_units',
+                         'sum(goods_received_number.CartonsExpected) as total_cartons',
+                         'sum(goods_received_number.PaletsExpected) as total_pallets',
+                         'goods_received_number.UserID')
+
+    users = User.where(id: grn_rows.map { |row| row[5] }).index_by(&:id)
+
+    grn_rows.map do |row|
       row[1] = row[1].to_s
+      row[5] = users[row[5]].try(:name)
       row
     end
   end
@@ -101,15 +109,18 @@ class GoodsReceivedNotice::Exporter
                                'bookingin_events.TotalUnits',
                                'bookingin_events.CartonsExpected',
                                'bookingin_events.PaletsExpected',
-                               'bookingin_events.BookedInDate')
+                               'bookingin_events.BookedInDate',
+                               'bookingin_events.UserID')
 
     vendors = Vendor.where(id: po_rows.map { |row| row[3] }).index_by(&:id)
+    users = User.where(id: po_rows.map { |row| row[10] }).index_by(&:id)
 
     po_rows.map do |row|
       row[1] = row[1].to_s
       row[2] = row[2].to_s
       row[3] = vendors[row[3]].name
       row[8] = row[8].to_s
+      row[10] = users[row[10]].try(:name)
       row
     end
   end
