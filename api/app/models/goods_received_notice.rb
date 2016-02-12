@@ -38,6 +38,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
                  legacy_attachments: :Attachments
 
   belongs_to :order, foreign_key: :OrderID
+  belongs_to :user, foreign_key: :UserID
 
   has_many :goods_received_notice_events, foreign_key: :grn,
                                           after_add: [:increment_totals, :set_delivery_date_on_event],

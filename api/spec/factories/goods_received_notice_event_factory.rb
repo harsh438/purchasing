@@ -5,6 +5,7 @@ FactoryGirl.define do
     cartons 1
     pallets 1
     status 1
+    user
 
     after(:build) do |grn_event|
       grn_event.vendor_id = grn_event.purchase_order.vendor_id

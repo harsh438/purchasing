@@ -6,6 +6,7 @@ FactoryGirl.define do
     pallets 0
 
     order
+    user
 
     # must be set
     received 0

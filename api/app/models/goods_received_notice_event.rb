@@ -17,8 +17,8 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
 
   belongs_to :goods_received_notice, foreign_key: :grn
   belongs_to :vendor, foreign_key: :BrandID
-
   belongs_to :purchase_order, foreign_key: :po
+  belongs_to :user, foreign_key: :UserID
 
   after_initialize :ensure_defaults
   after_initialize :assign_vendor_from_purchase_order
