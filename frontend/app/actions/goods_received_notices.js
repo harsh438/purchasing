@@ -49,7 +49,7 @@ export function createGoodsReceivedNotice({ currentDate, deliveryDate }) {
       .then(response => response.json())
       .then(function (goodsReceivedNotice) {
         dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
-        dispatch(loadGoodsReceivedNotices(currentDate));
+        dispatch(loadGoodsReceivedNotices(goodsReceivedNotice.delivery_date));
       });
   };
 }
@@ -70,7 +70,7 @@ function updateGrn(id, body, currentDate) {
       .then(response => response.json())
       .then(function (goodsReceivedNotice) {
         dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
-        dispatch(loadGoodsReceivedNotices(currentDate));
+        dispatch(loadGoodsReceivedNotices(goodsReceivedNotice.delivery_date));
       });
   };
 }

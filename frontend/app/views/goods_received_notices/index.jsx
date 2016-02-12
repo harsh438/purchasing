@@ -37,11 +37,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.updateSwitchWeek(nextProps)) {
-      return ;
-    }
-
-    this.updateCurrentDate(nextProps.location.query);
+    this.updateCurrentDate(nextProps);
 
     const currentNotify = this.props.notification || {};
     const nextNotify = nextProps.notification || {};
@@ -55,15 +51,15 @@ class GoodsReceivedNoticesIndex extends React.Component {
     let leftClass, rightClass;
 
     if (this.props.goodsReceivedNotice) {
-      leftClass = 'col-md-8';
-      rightClass = 'col-md-4';
+      leftClass = 'col-md-8 goods_received_notices_column';
+      rightClass = 'col-md-4 goods_received_notices_column';
     } else {
-      leftClass = 'col-md-12';
-      rightClass = '';
+      leftClass = 'col-md-12 goods_received_notices_column';
+      rightClass = 'goods_received_notices_column';
     }
 
     return (
-      <div className="suppliers_index container-fluid"
+      <div className="grn_index container-fluid"
            style={{ marginTop: '70px' }}>
         <div className="row" style={{ marginBottom: '20px' }}>
           <div className="col-md-4">
@@ -199,7 +195,8 @@ class GoodsReceivedNoticesIndex extends React.Component {
     return (
       <li className={className} key={week.start}>
         <Link to={`/goods-received-notices?startDate=${week.start}`}
-              className="grn_week__summary text-center">
+              className="grn_week__summary text-center"
+              onClick={this.handleGoodsReceivedNoticeClose.bind(this)}>
           <h2 className="h4">Week #{week.weekNum}</h2>
 
           <p>
@@ -247,24 +244,12 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.props.dispatch(loadGoodsReceivedNotices(date));
   }
 
-  updateSwitchWeek(nextProps) {
-    const nextGrn = nextProps.goodsReceivedNotice;
-    const curGrn = this.props.goodsReceivedNotice;
-    const queryStartDate = nextProps.location.query.startDate;
-    const startDate =  queryStartDate ? moment(queryStartDate, 'DD/MM/YYYY') : moment();
-    if (nextGrn
-        && nextGrn.id !== (curGrn || {}).id
-        && nextGrn.deliveryDate
-        && moment(nextGrn.deliveryDate, 'DD/MM/YYYY').week() !== startDate.week()
-      ) {
-      this.props.history.pushState(null, this.props.route.path, { startDate: nextGrn.deliveryDate });
-      return true;
-    }
-    return false;
-  }
+  updateCurrentDate(props = this.props) {
+    const { location, goodsReceivedNotice } = props;
+    const startDate = location.query.startDate ? moment(location.query.startDate, 'DD/MM/YYYY') : moment();
 
-  updateCurrentDate(query) {
-    const startDate = query.startDate ? moment(query.startDate, 'DD/MM/YYYY') : moment();
+    if (this.updateStartDate(startDate)) return;
+    
     const startDateFormatted = startDate.format('DD/MM/YYYY');
 
     if (this.state.currentDate !== startDateFormatted) {
@@ -274,6 +259,19 @@ class GoodsReceivedNoticesIndex extends React.Component {
                           startDateYear: startDate.format('YYYY') };
 
       this.setState(nextState, this.loadCurrentDate.bind(this));
+    }
+  }
+
+  updateStartDate(startDate) {
+    const { goodsReceivedNotice } = this.props;
+
+    if (goodsReceivedNotice) {
+      const grnDeliveryWeek = moment(goodsReceivedNotice.deliveryDate, 'DD/MM/YYYY').week();
+
+      if (grnDeliveryWeek !== startDate.week()) {
+        this.props.history.pushState(null, this.props.route.path, { startDate: goodsReceivedNotice.deliveryDate });
+        return true;
+      }
     }
   }
 
