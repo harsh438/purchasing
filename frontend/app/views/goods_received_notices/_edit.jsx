@@ -61,6 +61,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                  style={{ marginBottom: '10px' }}>
               <NavItem eventKey="purchaseOrders">Purchase orders</NavItem>
               <NavItem eventKey="packingLists">Packing lists</NavItem>
+              <NavItem eventKey="pallets">Pallets</NavItem>
               {this.props.advanced && <NavItem eventKey="advanced">Advanced</NavItem>}
             </Nav>
 
@@ -85,6 +86,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       );
     case 'packingLists':
       return this.renderPackingLists();
+    case 'pallets':
+      return this.renderChangePalletsForm();
     case 'advanced':
       return this.renderAdvanced();
     }
@@ -278,6 +281,28 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     }
   }
 
+  renderChangePalletsForm() {
+    return (
+      <form onChange={this.handleChange.bind(this)}
+            onSubmit={this.handleChangePalletsSubmit.bind(this)}>
+        <div className="form-group">
+          <label htmlFor="pallets">Total pallets:</label>
+          <input className="form-control"
+                 type="number"
+                 id="pallets"
+                 name="pallets"
+                 step="0.0001"
+                 value={this.state.pallets}
+                 required />
+        </div>
+
+        <div className="text-right">
+          <button className="btn btn-warning">Update pallets</button>
+        </div>
+      </form>
+    );
+  }
+
   renderAdvanced() {
     return (
       <div>
@@ -293,19 +318,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                    required />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="pallets">Override pallets</label>
-            <input className="form-control"
-                   type="number"
-                   id="pallets"
-                   name="pallets"
-                   step="0.0001"
-                   value={this.state.pallets}
-                   required />
-          </div>
-
           <div className="text-right">
-            <button className="btn btn-warning">Save</button>
+            <button className="btn btn-warning">Change date</button>
           </div>
         </form>
 
@@ -406,8 +420,14 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleChangeDateSubmit(e) {
     e.preventDefault();
-    const { id, deliveryDate, pallets } = this.state;
-    this.props.onSave({ id, deliveryDate, pallets });
+    const { id, deliveryDate } = this.state;
+    this.props.onSave({ id, deliveryDate });
+  }
+
+  handleChangePalletsSubmit(e) {
+    e.preventDefault();
+    const { id, pallets } = this.state;
+    this.props.onSave({ id, pallets });
   }
 
   handleDeletePurchaseOrder(id) {
