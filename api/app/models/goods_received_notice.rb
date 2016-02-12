@@ -35,7 +35,8 @@ class GoodsReceivedNotice < ActiveRecord::Base
                  cartons_received: :CartonsReceived,
                  booked_in_at: :BookedInDate,
                  order_id: :OrderID,
-                 legacy_attachments: :Attachments
+                 legacy_attachments: :Attachments,
+                 user_id: :UserID
 
   belongs_to :order, foreign_key: :OrderID
   belongs_to :user, foreign_key: :UserID
