@@ -229,6 +229,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
       return (
         <GoodsReceivedNoticesEdit advanced={this.props.advanced}
                                   goodsReceivedNotice={this.props.goodsReceivedNotice}
+                                  users={this.props.users}
                                   vendors={this.props.brands}
                                   purchaseOrders={this.props.purchaseOrders}
                                   onVendorChange={this.handleLoadPurchaseOrdersForEdit.bind(this)}

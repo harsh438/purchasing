@@ -42,7 +42,9 @@ class GoodsReceivedNotice < ActiveRecord::Base
   belongs_to :user, foreign_key: :UserID
 
   has_many :goods_received_notice_events, foreign_key: :grn,
-                                          after_add: [:increment_totals, :set_delivery_date_on_event],
+                                          after_add: [:increment_totals,
+                                                      :set_delivery_date_on_event,
+                                                      :set_user_id],
                                           after_remove: :decrement_totals,
                                           dependent: :destroy
   accepts_nested_attributes_for :goods_received_notice_events, allow_destroy: true
@@ -232,6 +234,11 @@ class GoodsReceivedNotice < ActiveRecord::Base
   def set_delivery_date_on_event(grn_event)
     grn_event.delivery_date = delivery_date
     grn_event.save!
+  end
+
+  def set_user_id(grn_event)
+    self.user_id ||= grn_event.user_id
+    save!
   end
 
   private

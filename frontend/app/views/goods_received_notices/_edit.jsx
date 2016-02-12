@@ -99,6 +99,17 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
             onSubmit={this.handleSubmit.bind(this)}>
         <div className="form-group">
           <select className="form-control"
+                  id="userId"
+                  name="userId"
+                  value={this.state.userId}
+                  required>
+            <option value=""> -- select user -- </option>
+            {renderSelectOptions(this.props.users)}
+          </select>
+        </div>
+
+        <div className="form-group">
+          <select className="form-control"
                   id="vendorId"
                   value={this.state.vendorId}
                   onChange={this.handleVendorChange.bind(this)}

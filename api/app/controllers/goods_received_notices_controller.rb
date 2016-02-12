@@ -46,6 +46,7 @@ class GoodsReceivedNoticesController < ApplicationController
                                                                 :units,
                                                                 :cartons,
                                                                 :pallets,
+                                                                :user_id,
                                                                 :_destroy])
   end
 end

@@ -82,8 +82,12 @@ export function saveGoodsReceivedNotice({ id, currentDate, deliveryDate, packing
   return updateGrn(id, body, currentDate);
 }
 
-export function addPurchaseOrderToGoodsReceivedNotice({ id, purchaseOrderId, units, cartons, pallets, currentDate }) {
-  const goods_received_notice_events_attributes = [{ units, cartons, pallets, purchase_order_id: purchaseOrderId }];
+export function addPurchaseOrderToGoodsReceivedNotice({ id, userId, purchaseOrderId, units, cartons, pallets, currentDate }) {
+  const goods_received_notice_events_attributes = [{ units,
+                                                     cartons,
+                                                     pallets,
+                                                     purchase_order_id: purchaseOrderId,
+                                                     user_id: userId }];
   const goodsReceivedNotice = { goods_received_notice: { id, goods_received_notice_events_attributes } };
   return updateGrn(id, goodsReceivedNotice, currentDate);
 }
