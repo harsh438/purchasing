@@ -6,11 +6,12 @@ import { Nav, NavItem } from 'react-bootstrap';
 
 export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillMount() {
-    const { id, deliveryDate, pallets } = this.props.goodsReceivedNotice;
+    const { id, deliveryDate, pallets, userId } = this.props.goodsReceivedNotice;
     const tab = 'purchaseOrders';
 
     this.state = { id,
                    deliveryDate,
+                   userId,
                    tab,
                    totalPallets: pallets,
                    goodsReceivedNotice: this.props.goodsReceivedNotice };
@@ -19,11 +20,12 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let { id, deliveryDate, pallets } = nextProps.goodsReceivedNotice;
+    let { id, deliveryDate, pallets, userId } = nextProps.goodsReceivedNotice;
     deliveryDate = deliveryDate.split('/').reverse().join('-');
 
     this.setState({ id,
                     deliveryDate,
+                    userId,
                     totalPallets: pallets,
                     goodsReceivedNotice: nextProps.goodsReceivedNotice,
                     packingFileName: null,
