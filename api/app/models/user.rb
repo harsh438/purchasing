@@ -4,5 +4,5 @@ class User < ActiveRecord::Base
 
   include LegacyMappings
 
-  map_attributes id: :UserID
+  map_attributes id: :userID
 end
