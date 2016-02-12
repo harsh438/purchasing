@@ -6,8 +6,8 @@ class GoodsReceivedNotice < ActiveRecord::Base
   include LegacyMappings
 
   def self.not_archived
-    joins(:goods_received_notice_events)
-      .where('bookingin_events.id IS NOT NULL OR goods_received_number.BookedInDate >= date_sub(NOW(), interval 1 hour)')
+    eager_load(:goods_received_notice_events)
+      .where('bookingin_events.id IS NOT NULL OR goods_received_number.BookedInDate >= DATE_SUB(NOW(), INTERVAL 1 DAY)')
       .uniq
   end
 
@@ -36,7 +36,6 @@ class GoodsReceivedNotice < ActiveRecord::Base
                  booked_in_at: :BookedInDate,
                  order_id: :OrderID,
                  legacy_attachments: :Attachments
-
 
   belongs_to :order, foreign_key: :OrderID
 

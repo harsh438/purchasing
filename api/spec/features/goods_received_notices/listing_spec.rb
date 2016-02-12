@@ -16,9 +16,9 @@ feature 'Listing GRNs', booking_db: true do
     then_i_should_see_empty_days
   end
 
-  scenario 'Hiding GRNs without POs older than 1 hour' do
+  scenario 'Listing GRNs without POs younger than 1 day' do
     when_i_request_grns_some_of_which_do_not_have_purchase_orders
-    then_i_should_only_see_grns_created_within_last_hour
+    then_i_should_only_see_grns_created_within_last_day
   end
 
   def when_i_request_grns_within_a_date_range
@@ -55,20 +55,26 @@ feature 'Listing GRNs', booking_db: true do
   end
 
   def when_i_request_grns_some_of_which_do_not_have_purchase_orders
-    create_grns_with_some_created_in_last_hour
-    visit goods_received_notices_path(start_date: 1.day.ago,
+    create_grns_with_some_created_in_last_day
+    visit goods_received_notices_path(start_date: 2.days.ago,
                                       end_date: 2.days.from_now)
   end
 
-  def then_i_should_only_see_grns_created_within_last_hour
+  def then_i_should_only_see_grns_created_within_last_day
     grns = subject.values.first['notices_by_date'][Date.today.to_s]['notices']
-    expect(grns).to_not include(a_hash_including('id' => grns_older_than_last_hour.first.id))
-    expect(grns).to_not include(a_hash_including('id' => grns_older_than_last_hour.second.id))
+    expect(grns).to include(a_hash_including('id' => grns_younger_than_one_day.first.id))
+    expect(grns).to_not include(a_hash_including('id' => grns_older_than_one_day.first.id))
+    expect(grns).to_not include(a_hash_including('id' => grns_older_than_one_day.second.id))
   end
 
   private
 
-  let(:grns_older_than_last_hour) do
+  let(:grns_older_than_one_day) do
+    create_list(:goods_received_notice, 2, booked_in_at: 2.days.ago,
+                                           delivery_date: Date.today)
+  end
+
+  let(:grns_younger_than_one_day) do
     create_list(:goods_received_notice, 2, booked_in_at: 2.hours.ago,
                                            delivery_date: Date.today)
   end
@@ -87,8 +93,8 @@ feature 'Listing GRNs', booking_db: true do
     create_list(:goods_received_notice, 2, delivery_date: Date.today)
   end
 
-  def create_grns_with_some_created_in_last_hour
-    create_grns
-    grns_older_than_last_hour
+  def create_grns_with_some_created_in_last_day
+    grns_younger_than_one_day
+    grns_older_than_one_day
   end
 end
