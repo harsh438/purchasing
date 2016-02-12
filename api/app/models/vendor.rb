@@ -1,5 +1,6 @@
 class Vendor < ActiveRecord::Base
-  self.table_name = :ds_vendors
+  database = Rails.configuration.database_configuration[Rails.env.to_s]['database']
+  self.table_name = "#{database}.ds_vendors"
 
   include LegacyMappings
   include Searchable
