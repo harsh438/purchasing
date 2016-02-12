@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   get :status, to: 'application_status#index'
 
   scope :api, format: true, defaults: { format: :json } do
-
     resources :skus, only: [:index, :create, :show, :update] do
       collection do
         get :supplier_summary
@@ -55,6 +54,8 @@ Rails.application.routes.draw do
     resources :supplier_terms, only: [:index, :show]
 
     resources :vendors, only: [:index, :create, :show, :update]
+
+    resources :users, only: [:index]
 
     scope :filters do
       get ':action' => 'filters#:action'
