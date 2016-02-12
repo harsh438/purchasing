@@ -44,9 +44,9 @@ feature 'Vendors Listing' do
 
   def when_i_filter_vendors_by_name
     create_list(:vendor, 10)
-    create_list(:vendor, 2, name: 'Luke Clothing Supplies')
-    create_list(:vendor, 2, name: 'Supplies by Luke')
-    visit vendors_path(filters: { name: 'Luke' })
+    create_list(:vendor, 2, name: 'Luke The Great Clothing Supplies')
+    create_list(:vendor, 2, name: 'Supplies by Luke The Great')
+    visit vendors_path(filters: { name: 'Luke The Great' })
   end
 
   def then_only_vendors_whose_name_matches_should_be_listed
