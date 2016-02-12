@@ -4,9 +4,6 @@ Rails.application.routes.draw do
   get :status, to: 'application_status#index'
 
   scope :api, format: true, defaults: { format: :json } do
-    scope :hub, format: true, defaults: { format: :json } do
-      resources :purchase_orders_hub, only: :index
-    end
 
     resources :skus, only: [:index, :create, :show, :update] do
       collection do
@@ -61,6 +58,14 @@ Rails.application.routes.draw do
 
     scope :filters do
       get ':action' => 'filters#:action'
+    end
+
+    namespace :hub do
+      resources :purchase_orders do
+        collection do
+          post :latest
+        end
+      end
     end
   end
 end
