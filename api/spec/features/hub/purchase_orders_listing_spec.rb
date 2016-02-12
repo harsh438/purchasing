@@ -9,7 +9,7 @@ feature 'Listing Purchase Orders for the hub' do
   def when_i_request_a_list_of_purchase_orders
     create_purchase_order_with_line_items
     page.driver.post latest_hub_purchase_orders_path, {
-      parameters: {timestamp_from: Date.yesterday.iso8601 }
+      parameters: { timestamp_from: Date.yesterday.iso8601 }
     }
   end
 
