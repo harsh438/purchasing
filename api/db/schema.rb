@@ -762,6 +762,21 @@ ActiveRecord::Schema.define(version: 20160205114344) do
   add_index "skus", ["season"], name: "index_skus_on_season", using: :btree
   add_index "skus", ["sku"], name: "index_skus_on_sku", using: :btree
 
+  create_table "st_sduser", primary_key: "userID", force: :cascade do |t|
+    t.string   "initials",     limit: 4,                         null: false
+    t.string   "name",         limit: 64,                        null: false
+    t.binary   "password",     limit: 65535,                     null: false
+    t.datetime "lastLoggedIn",                                   null: false
+    t.integer  "seconds",      limit: 4,                         null: false
+    t.string   "bgcolor",      limit: 7,                         null: false
+    t.integer  "userlevel",    limit: 4,     default: 11,        null: false
+    t.string   "email",        limit: 50,                        null: false
+    t.integer  "active",       limit: 1,     default: 1,         null: false
+    t.boolean  "picture",                    default: false
+    t.string   "color",        limit: 7,     default: "#888888"
+    t.string   "bugherdkey",   limit: 256,   default: ""
+  end
+
   create_table "supplier_buyers", force: :cascade do |t|
     t.string  "buyer_name",     limit: 255
     t.string  "assistant_name", limit: 255
