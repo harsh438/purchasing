@@ -17,6 +17,7 @@ import { loadGoodsReceivedNotice,
          deleteGoodsReceivedNotice,
          deleteGoodsReceivedNoticePackingList } from '../../actions/goods_received_notices';
 
+import { loadUsers } from '../../actions/users';
 import { loadVendors } from '../../actions/filters';
 import { loadPurchaseOrderList } from '../../actions/purchase_orders';
 
@@ -33,6 +34,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.state.startDateYear = this.startDateYear();
 
     this.loadCurrentDate();
+    this.props.dispatch(loadUsers());
     this.props.dispatch(loadVendors());
   }
 
@@ -249,7 +251,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
     const startDate = location.query.startDate ? moment(location.query.startDate, 'DD/MM/YYYY') : moment();
 
     if (this.updateStartDate(startDate)) return;
-    
+
     const startDateFormatted = startDate.format('DD/MM/YYYY');
 
     if (this.state.currentDate !== startDateFormatted) {
@@ -378,8 +380,9 @@ function applyState({ filters,
                       goodsReceivedNotices,
                       purchaseOrders,
                       notification,
-                      advanced }) {
-  return assign({ advanced }, filters, goodsReceivedNotices, purchaseOrders, notification);
+                      advanced,
+                      users }) {
+  return assign({ advanced }, filters, goodsReceivedNotices, purchaseOrders, notification, users);
 }
 
 export default connect(applyState)(GoodsReceivedNoticesIndex);
