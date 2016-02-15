@@ -61,7 +61,7 @@ feature 'Listing GRNs', booking_db: true do
   end
 
   def then_i_should_only_see_grns_created_within_last_day
-    grns = subject.values.first['notices_by_date'][Date.today.to_s]['notices']
+    grns = subject.values.reduce({}) { |dates, week| dates.merge(week['notices_by_date']) }[Date.today.to_s]['notices']
     expect(grns).to include(a_hash_including('id' => grns_younger_than_one_day.first.id))
     expect(grns).to_not include(a_hash_including('id' => grns_older_than_one_day.first.id))
     expect(grns).to_not include(a_hash_including('id' => grns_older_than_one_day.second.id))
