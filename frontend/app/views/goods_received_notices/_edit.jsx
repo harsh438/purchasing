@@ -43,6 +43,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           <div className="panel-heading">
             <h3 className="panel-title">
               GRN #{this.state.goodsReceivedNotice.id}
+              &nbsp;–&nbsp;
+              {this.state.goodsReceivedNotice.userName}
+
               <span className="pull-right">
                 <span className="badge" title="Units">{this.state.goodsReceivedNotice.units} U</span>&nbsp;
                 <span className="badge" title="Cartons">{this.state.goodsReceivedNotice.cartons} C</span>&nbsp;
@@ -181,7 +184,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       <table className="table table-striped table-condensed">
         <thead>
           <tr>
-            <th colSpan="2">&nbsp;</th>
+            <th colSpan="3">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -197,6 +200,12 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           key={goodsReceivedNoticeEvent.id}>
         <td style={{ fontSize: '.9em', lineHeight: '2.1em' }}>
           #{goodsReceivedNoticeEvent.purchaseOrderId}
+          &nbsp;–&nbsp;
+          {goodsReceivedNoticeEvent.userName}
+        </td>
+
+        <td>
+
         </td>
 
         <td className="text-right">

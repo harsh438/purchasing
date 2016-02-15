@@ -49,6 +49,7 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   def as_json
     super.tap do |grn_event|
       grn_event['status'] = human_status
+      grn_event['user_name'] = user.try(:name)
     end
   end
 

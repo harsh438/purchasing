@@ -85,6 +85,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
       grn[:delivery_date] = grn['delivery_date'].to_s
       grn[:status] = status
       grn[:vendor_name] = vendor_name
+      grn[:user_name] = user.try(:name)
     end
   end
 
