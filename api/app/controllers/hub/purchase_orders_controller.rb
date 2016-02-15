@@ -1,7 +1,7 @@
 class Hub::PurchaseOrdersController < ApplicationController
   def latest
     timestamp_from = params[:parameters][:timestamp_from]
-    limit = params[:parameters] || 10
+    limit = params[:parameters][:limit] || 10
     request_id = params[:request_id]
     results = PurchaseOrder.where('drop_date > ?', Time.parse(timestamp_from))
                            .includes_line_items
