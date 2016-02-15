@@ -24,10 +24,11 @@ feature 'Listing Purchase Orders for the hub' do
   }
 
   let (:create_purchase_order_with_line_items) do
-    create_list(:purchase_order, 5, :with_line_items, :with_grn_events)
+    create_list(:purchase_order, 5, :with_line_items_with_barcode, :with_grn_events)
 
     # none of these should not be listed
     create_list(:purchase_order, 2, :with_line_items)
+    create_list(:purchase_order, 2, :with_line_items, :with_grn_events)
     create_list(:purchase_order, 2, :with_line_items_sent_in_peoplevox, :with_grn_events)
     create_list(:purchase_order, 2, :with_line_items, :with_grn_events, :with_old_drop_date)
     create_list(:purchase_order, 2, :with_line_items_with_barcode, :with_grn_events, :with_old_drop_date)
