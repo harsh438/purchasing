@@ -15,7 +15,7 @@ feature 'Listing Purchase Orders for the hub' do
 
   def then_i_should_get_purchase_orders_with_line_items
     expect(subject['request_id']).to eq(request_id)
-    expect(subject['purchase_orders'].count).to be(10)
+    expect(subject['purchase_orders'].count).to be(5)
     expect(subject['purchase_orders'][0]['items'][0]).to match(a_hash_including('sku', 'line_id'))
   end
 
@@ -24,7 +24,12 @@ feature 'Listing Purchase Orders for the hub' do
   }
 
   let (:create_purchase_order_with_line_items) do
-    create_list(:purchase_order, 10, :with_line_items)
-    create_list(:purchase_order, 10, :with_line_items, :with_old_drop_date)
+    create_list(:purchase_order, 5, :with_line_items, :with_grn_events)
+
+    # all of these should not be listed
+    create_list(:purchase_order, 2, :with_line_items)
+    create_list(:purchase_order, 2, :with_line_items, :with_grn_events, :with_old_drop_date)
+    create_list(:purchase_order, 2, :with_line_items_with_barcode, :with_grn_events, :with_old_drop_date)
+    create_list(:purchase_order, 2, :with_line_items, :with_old_drop_date)
   end
 end
