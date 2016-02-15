@@ -69,6 +69,11 @@ Rails.application.routes.draw do
           post :pvx_confirm
         end
       end
+      resources :brands do
+        collection do
+          post :latest
+        end
+      end
     end
   end
 end
