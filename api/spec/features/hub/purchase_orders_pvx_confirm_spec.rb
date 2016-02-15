@@ -19,7 +19,7 @@ feature 'PVX confirm API for the hub' do
     expect(subject['purchase_orders'].count).to eq(4)
     expect(subject['purchase_orders'].map do |line_item|
       line_item['id']
-    end.not_to eq(purchase_order_list[0].id)
+    end).not_to eq(purchase_order_list[0].id)
   end
 
   let (:request_id) {
