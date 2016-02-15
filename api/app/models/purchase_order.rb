@@ -4,6 +4,7 @@ class PurchaseOrder < ActiveRecord::Base
 
   include LegacyMappings
   include Searchable
+  include ActiveModel::Serialization
 
   map_attributes id: :po_num,
                  order_type: :orderType,
