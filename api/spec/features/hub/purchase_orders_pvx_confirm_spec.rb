@@ -22,9 +22,7 @@ feature 'PVX confirm API for the hub' do
     end).not_to eq(purchase_order_list[0].id)
   end
 
-  let (:request_id) {
-    'gxrjcvvu2h4kppijw04nf3hxvz8dc97w'
-  }
+  let (:request_id) { Faker::Lorem.characters(15) }
 
   let (:purchase_order_list) do
     create_list(:purchase_order, 5, :with_line_items_with_barcode, :with_grn_events)
