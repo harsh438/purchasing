@@ -5,6 +5,8 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   include LegacyMappings
   include Searchable
 
+  map_attributes sent_in_peoplevox: :inPVX
+
   def self.filter_supplier(context)
     joins(vendor: :supplier_vendors)
       .where(suppliers_to_brands: { SupplierID: context[:supplier] })
