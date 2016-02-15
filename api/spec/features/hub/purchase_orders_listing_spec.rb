@@ -15,8 +15,8 @@ feature 'Listing Purchase Orders for the hub' do
 
   def then_i_should_get_purchase_orders_with_line_items
     expect(subject['request_id']).to eq(request_id)
-    expect(subject['orders'].count).to be(10)
-    expect(subject['orders'][0]['purchase_order_line_items'][0]).to match(a_hash_including('status', 'delivery_date'))
+    expect(subject['purchase_orders'].count).to be(10)
+    expect(subject['purchase_orders'][0]['items'][0]).to match(a_hash_including('sku', 'line_id'))
   end
 
   let (:request_id) {
