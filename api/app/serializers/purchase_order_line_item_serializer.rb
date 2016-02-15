@@ -5,7 +5,7 @@ class PurchaseOrderLineItemSerializer < ActiveModel::Serializer
   attributes :cost_price
 
   def sku
-    object.product_sku
+    object.internal_sku
   end
 
   def line_id
