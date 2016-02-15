@@ -1,4 +1,4 @@
-class GoodsReceivedOrder::WeeklyReporter
+class GoodsReceivedNotice::WeeklyReporter
   class InvalidParams < RuntimeError; end
 
   def report(params)
