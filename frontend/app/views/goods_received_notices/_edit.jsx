@@ -197,14 +197,14 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     return (
       <tr className={this.goodsReceivedNoticeEventClass(goodsReceivedNoticeEvent)}
           key={goodsReceivedNoticeEvent.id}>
-        <td style={{ fontSize: '.9em', lineHeight: '2.1em' }}>
+        <td style={{ fontSize: '.9em' }}>
           #{goodsReceivedNoticeEvent.purchaseOrderId}
           &nbsp;–&nbsp;
-          {goodsReceivedNoticeEvent.userName}
-        </td>
+          {goodsReceivedNoticeEvent.vendorName}
 
-        <td>
-
+          <div>
+            <small>By {goodsReceivedNoticeEvent.userName}</small>
+          </div>
         </td>
 
         <td className="text-right">
