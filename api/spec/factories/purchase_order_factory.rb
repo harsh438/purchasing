@@ -11,6 +11,10 @@ FactoryGirl.define do
       line_items { build_list(:purchase_order_line_item, 4, :with_barcode, vendor: vendor) }
     end
 
+    trait :with_line_items_sent_in_peoplevox do
+      line_items { build_list(:purchase_order_line_item, 4, :sent_in_peoplevox, vendor: vendor) }
+    end
+
     trait :with_balance_line_items do
       line_items { build_list(:purchase_order_line_item, 2, :balanced, vendor: vendor) }
     end
