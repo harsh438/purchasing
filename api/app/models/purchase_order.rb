@@ -31,6 +31,10 @@ class PurchaseOrder < ActiveRecord::Base
     includes(:line_items).where(purchase_orders: { inPVX: 0 })
   end
 
+  def self.without_barcodes
+    includes(:line_items).where(purchase_orders: { orderTool_barcode: nil })
+  end
+
   def self.booked_in
     joins(:goods_received_notice_events).where.not({ bookingin_events: { id: nil } })
   end
