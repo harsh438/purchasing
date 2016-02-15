@@ -1,4 +1,4 @@
-class PurchaseOrderSerializer < ActiveModel::Serialize
+class PurchaseOrderSerializer < ActiveModel::Serializer
   attributes :id
   attributes :supplier_name, :supplier_id
   has_many :items, serializer: PurchaseOrderLineItemSerializer
