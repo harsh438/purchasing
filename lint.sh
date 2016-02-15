@@ -1,5 +1,5 @@
 #!/bin/bash
-if `docker-compose run web rake cane`; then
+if docker-compose run web rake cane; then
     echo "[+] CANE - Success";
 else
     exit 1;
