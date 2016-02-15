@@ -18,4 +18,15 @@ class Hub::PurchaseOrdersController < ApplicationController
       )
     }
   end
+
+  def pvx_confirm
+    purchase_order_id = params[:purchase_order][:id]
+    purchase_order = PurchaseOrder.includes(:line_items).find(purchase_order_id)
+    purchase_order.line_items.each do |line_item|
+      line_item.sent_to_peoplevox = 1
+      line_item.save
+    end
+    message = "PurchaseOrder #{purchase_order_id} has been marked as sent to PeopleVox and won't be processed again."
+    render json: { message: message }
+  end
 end
