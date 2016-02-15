@@ -134,7 +134,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                     value={this.state.purchaseOrderId}
                     required>
               <option value=""> -- select purchase order -- </option>
-              {renderSelectOptions(map(this.props.purchaseOrders, 'id'))}
+              {renderSelectOptions(map(this.props.purchaseOrderList, 'id'))}
             </select>
           </div>
 
