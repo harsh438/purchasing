@@ -7,6 +7,10 @@ FactoryGirl.define do
     status 1
     user
 
+    trait :for_today do
+      delivery_date Date.today
+    end
+
     after(:build) do |grn_event|
       grn_event.vendor_id = grn_event.purchase_order.vendor_id
 
