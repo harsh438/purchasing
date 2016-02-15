@@ -2,12 +2,15 @@ class Hub::PurchaseOrdersController < ApplicationController
   def latest
     timestamp_from = params[:parameters][:timestamp_from]
     request_id = params[:request_id]
-    render json: {
-      request_id: request_id,
-      orders: PurchaseOrder.where('drop_date > ?', Time.parse(timestamp_from))
+    results = PurchaseOrder.where('drop_date > ?', Time.parse(timestamp_from))
                            .includes_line_items
                            .limit(10)
-                           .map(&:as_json_with_line_items)
+    render json: {
+      request_id: request_id,
+      purchase_orders: ActiveModel::ArraySerializer.new(
+        results,
+        each_serializer: PurchaseOrderSerializer
+      )
     }
   end
 end
