@@ -16,6 +16,7 @@ class PurchaseOrder < ActiveRecord::Base
 
   has_many :order_exports
   has_many :orders, through: :order_exports
+  has_many :goods_received_notice_events, foreign_key: :po
 
   belongs_to :vendor, foreign_key: :venID
 
