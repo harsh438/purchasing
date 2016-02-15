@@ -26,8 +26,12 @@ class PurchaseOrder < ActiveRecord::Base
     where('po_date > ?', Date.yesterday)
   end
 
+  def self.not_sent_in_peoplevox
+    includes(:line_items).where(purchase_orders: { inPVX: 0 })
+  end
+
   def self.includes_line_items
-    includes(:line_items, line_items: [:vendor, :sku, :product, :language_category, :purchase_order])
+    includes(:line_items, line_items: [:vendor, :sku, :product, :purchase_order])
   end
 
   def po_number
