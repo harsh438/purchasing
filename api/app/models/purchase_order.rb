@@ -31,6 +31,10 @@ class PurchaseOrder < ActiveRecord::Base
     includes(:line_items).where(purchase_orders: { inPVX: 0 })
   end
 
+  def self.booked_in
+    joins(:goods_received_notice_events).where.not({ bookingin_events: { id: nil } })
+  end
+
   def self.includes_line_items
     includes(:line_items, line_items: [:vendor, :sku, :product, :purchase_order])
   end
