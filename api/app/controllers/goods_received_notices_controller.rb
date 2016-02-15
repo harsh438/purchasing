@@ -19,6 +19,12 @@ class GoodsReceivedNoticesController < ApplicationController
     render json: grn.as_json_with_purchase_orders_and_packing_list_urls
   end
 
+  def combine
+    from = GoodsReceivedNotice.find(params[:from])
+    GoodsReceivedNotice::Combiner.new.combine(to: grn, from: from)
+    render json: grn.as_json_with_purchase_orders_and_packing_list_urls
+  end
+
   def destroy
     grn.destroy
     render json: { success: true }

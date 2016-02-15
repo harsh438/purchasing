@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
     resources :goods_received_notices, except: [:new, :edit] do
       member do
+        post :combine
         delete :delete_packing_list
       end
     end
