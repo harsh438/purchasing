@@ -34,5 +34,4 @@ feature 'Destroy Packing Lists' do
 
   let(:grn_with_packing_list) { create(:goods_received_notice, :with_multiple_packing_lists) }
   let(:grn_with_both_packing_lists) { create(:goods_received_notice, :with_both_packing_lists) }
-
 end
