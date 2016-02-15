@@ -19,9 +19,7 @@ feature 'Listing Purchase Orders for the hub' do
     expect(subject['purchase_orders'][0]['items'][0]).to match(a_hash_including('sku', 'line_id'))
   end
 
-  let (:request_id) {
-    'gxrjcvvu2h4kppijw04nf3hxvz8dc97w'
-  }
+  let (:request_id) { Faker::Lorem.characters(15) }
 
   let (:create_purchase_order_with_line_items) do
     create_list(:purchase_order, 5, :with_line_items_with_barcode, :with_grn_events)
