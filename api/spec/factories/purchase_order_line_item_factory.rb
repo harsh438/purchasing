@@ -34,6 +34,10 @@ FactoryGirl.define do
       po_number { create(:purchase_order).id }
     end
 
+    trait :with_barcode do
+      barcode 'Sample Barcode'
+    end
+
     trait :with_option do
       option_id { create(:option).id }
 
