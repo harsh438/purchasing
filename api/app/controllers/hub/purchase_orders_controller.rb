@@ -5,7 +5,7 @@ class Hub::PurchaseOrdersController < ApplicationController
     request_id = params[:request_id]
     results = PurchaseOrder.where('po_summary.drop_date > ?', Time.parse(timestamp_from))
                            .not_sent_in_peoplevox
-                           .without_barcodes
+                           .with_barcodes
                            .booked_in
                            .limit(limit)
                            .includes_line_items
