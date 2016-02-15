@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import { packingListName } from '../../utilities/packing_list';
 
 export default class PackingListsTable extends React.Component {
   render() {
@@ -50,7 +51,7 @@ export default class PackingListsTable extends React.Component {
   renderPackingListUrl(url) {
     return (
       <div key={url}>
-        <a href={url} target="_blank">{url}</a>
+        <a href={url} target="_blank">{packingListName(url)}</a>
       </div>
     );
   }

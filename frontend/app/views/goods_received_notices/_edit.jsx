@@ -3,6 +3,7 @@ import DropZone from 'react-dropzone';
 import { renderSelectOptions } from '../../utilities/dom';
 import { map } from 'lodash';
 import { Nav, NavItem } from 'react-bootstrap';
+import { packingListName } from '../../utilities/packing_list';
 
 export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillMount() {
@@ -245,18 +246,12 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   renderPackingList(packingListUrl) {
     if (!packingListUrl) return;
 
-    const filenameIndex = packingListUrl.lastIndexOf('/');
-    let filename = packingListUrl.substr(filenameIndex + 1);
-    const queryIndex = filename.lastIndexOf('?');
-    if (queryIndex !== -1) {
-      filename = filename.substr(0, queryIndex);
-    }
     return (
       <tr key={packingListUrl} style={{ wordBreak: 'break-all' }}>
         <td>
           <span className="glyphicon glyphicon-file"></span>&nbsp;
           <a target="_blank" href={packingListUrl}>
-            {decodeURIComponent(filename)}
+            {packingListName(filename)}
           </a>&nbsp;
           <button onClick={this.props.onDeletePackingList.bind(this, { goodsReceivedNotice: this.props.goodsReceivedNotice,
                                                                        packingListUrl: packingListUrl })}
