@@ -6,7 +6,6 @@ class Hub::PurchaseOrdersController < ApplicationController
     results = PurchaseOrder.where('po_summary.drop_date > ?', Time.parse(timestamp_from))
                            .includes_line_items
                            .not_sent_in_peoplevox
-                           .booked_in
                            .limit(limit)
     render json: {
       request_id: request_id,
