@@ -15,7 +15,8 @@ import { loadGoodsReceivedNotice,
          addPurchaseOrderToGoodsReceivedNotice,
          removePurchaseOrderFromGoodsReceivedNotice,
          deleteGoodsReceivedNotice,
-         deleteGoodsReceivedNoticePackingList } from '../../actions/goods_received_notices';
+         deleteGoodsReceivedNoticePackingList,
+         combineGoodsReceivedNotices } from '../../actions/goods_received_notices';
 
 import { loadUsers } from '../../actions/users';
 import { loadVendors } from '../../actions/filters';
@@ -234,6 +235,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
                                   purchaseOrders={this.props.purchaseOrders}
                                   onVendorChange={this.handleLoadPurchaseOrdersForEdit.bind(this)}
                                   onSave={this.handleGoodsReceivedNoticeSave.bind(this)}
+                                  onCombine={this.handleGoodsReceivedNoticeCombine.bind(this)}
                                   onDelete={this.handleGoodsReceivedNoticeDelete.bind(this)}
                                   onDeletePackingList={this.handleGoodsReceivedNoticeDeletePackingList.bind(this)}
                                   onPurchaseOrderAdd={this.handleAddPurchaseOrderToGoodsReceivedNotice.bind(this)}
@@ -300,6 +302,10 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   handleGoodsReceivedNoticeDelete(id) {
     this.props.dispatch(deleteGoodsReceivedNotice({ id, currentDate: this.state.currentDate }));
+  }
+
+  handleGoodsReceivedNoticeCombine({ from, to }) {
+    this.props.dispatch(combineGoodsReceivedNotices({ from, to }));
   }
 
   handleGoodsReceivedNoticeDeletePackingList({ goodsReceivedNotice, packingListUrl }) {

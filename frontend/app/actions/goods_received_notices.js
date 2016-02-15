@@ -102,6 +102,20 @@ export function removePurchaseOrderFromGoodsReceivedNotice({ id, goodsReceivedNo
   return updateGrn(id, goodsReceivedNotice, currentDate);
 }
 
+export function combineGoodsReceivedNotices({ from, to }) {
+  return dispatch => {
+    fetch(`/api/goods_received_notices/${to}/combine.json`, { credentials: 'same-origin',
+                                                              method: 'POST',
+                                                              headers: { 'Content-Type': 'application/json' },
+                                                              body: JSON.stringify({ from }) })
+      .then(response => response.json())
+      .then(function (goodsReceivedNotice) {
+        dispatch({ goodsReceivedNotice, type: 'SET_GOODS_RECEIVED_NOTICE' });
+        dispatch(loadGoodsReceivedNotices(goodsReceivedNotice.delivery_date));
+      });
+  };
+}
+
 export function deleteGoodsReceivedNotice({ id, currentDate }) {
   return dispatch => {
     fetch(`/api/goods_received_notices/${id}.json`, { credentials: 'same-origin',

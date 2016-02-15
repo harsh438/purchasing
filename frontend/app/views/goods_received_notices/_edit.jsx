@@ -24,6 +24,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
     this.setState({ id,
                     deliveryDate,
+                    combineFrom: '',
                     totalPallets: pallets,
                     goodsReceivedNotice: nextProps.goodsReceivedNotice,
                     onPackingListUpload: false,
@@ -344,6 +345,23 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           </div>
         </form>
 
+        <form onChange={this.handleChange.bind(this)}
+              onSubmit={this.handleCombine.bind(this)}>
+          <div className="form-group">
+            <label htmlFor="combineFrom">Combine with GRN</label>
+            <input className="form-control"
+                   id="combineFrom"
+                   name="combineFrom"
+                   placeholder="GRN # you want to move POs from"
+                   value={this.state.combineFrom}
+                   required />
+          </div>
+
+          <div className="text-right">
+            <button className="btn btn-warning">Combine</button>
+          </div>
+        </form>
+
         <div>
           <p>If you a really sure:</p>
           <button className="btn btn-danger"
@@ -439,16 +457,22 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     }
   }
 
+  handleChangePalletsSubmit(e) {
+    e.preventDefault();
+    const { id, totalPallets } = this.state;
+    this.props.onSave({ id, pallets: totalPallets });
+  }
+
   handleChangeDateSubmit(e) {
     e.preventDefault();
     const { id, deliveryDate } = this.state;
     this.props.onSave({ id, deliveryDate });
   }
 
-  handleChangePalletsSubmit(e) {
+  handleCombine(e) {
     e.preventDefault();
-    const { id, totalPallets } = this.state;
-    this.props.onSave({ id, pallets: totalPallets });
+    const { id, combineFrom } = this.state;
+    this.props.onCombine({ from: combineFrom, to: id });
   }
 
   handleDeletePurchaseOrder(id) {
