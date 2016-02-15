@@ -5,8 +5,6 @@ class PurchaseOrderLineItem < ActiveRecord::Base
   include LegacyMappings
   include Searchable
 
-  map_attributes sent_in_peoplevox: :inPVX
-
   def self.filter_supplier(context)
     joins(vendor: :supplier_vendors)
       .where(suppliers_to_brands: { SupplierID: context[:supplier] })
@@ -135,7 +133,8 @@ class PurchaseOrderLineItem < ActiveRecord::Base
                  original_option_id: :original_oID,
                  single_line_id: :orderTool_SingleLineID,
                  item_id: :orderToolItemID,
-                 sku_id: :sku_id
+                 sku_id: :sku_id,
+                 sent_to_peoplevox: :inPVX
 
   filters :vendor_id,
           :gender,
@@ -146,6 +145,10 @@ class PurchaseOrderLineItem < ActiveRecord::Base
           :operator
 
   paginates_per 200
+
+  def sent_to_peoplevox?
+    sent_to_peoplevox === 1
+  end
 
   def brand
     vendor.try(:name)
