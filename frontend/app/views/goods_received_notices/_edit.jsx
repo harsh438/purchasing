@@ -39,23 +39,23 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     return (
       <div className="grn_edit">
         <div className="panel panel-default panel-info">
-          <div className="panel-heading">
-            <h3 className="panel-title">
+          <div className="panel-heading clearfix">
+            <h3 className="panel-title pull-left">
               GRN #{this.state.goodsReceivedNotice.id}
-              &nbsp;–&nbsp;
-              {this.state.goodsReceivedNotice.userName}
-
-              <span className="pull-right">
-                <span className="badge" title="Units">{this.state.goodsReceivedNotice.units} U</span>&nbsp;
-                <span className="badge" title="Cartons">{this.state.goodsReceivedNotice.cartons} C</span>&nbsp;
-                <span className="badge" title="Pallets">{this.state.goodsReceivedNotice.pallets} P</span>&nbsp;
-
-                <a style={{ cursor: 'pointer', marginLeft: '10px' }}
-                   className="glyphicon glyphicon-remove"
-                   onClick={this.props.onClose}
-                   aria-label="close"></a>
-              </span>
+              <br />
+              <small>By {this.state.goodsReceivedNotice.userName}</small>
             </h3>
+
+            <span className="pull-right">
+              <span className="badge" title="Units">{this.state.goodsReceivedNotice.units} U</span>&nbsp;
+              <span className="badge" title="Cartons">{this.state.goodsReceivedNotice.cartons} C</span>&nbsp;
+              <span className="badge" title="Pallets">{this.state.goodsReceivedNotice.pallets} P</span>&nbsp;
+
+              <a style={{ cursor: 'pointer', marginLeft: '10px' }}
+                 className="glyphicon glyphicon-remove"
+                 onClick={this.props.onClose}
+                 aria-label="close"></a>
+            </span>
           </div>
 
           <div className="panel-body">
