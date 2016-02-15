@@ -26,6 +26,10 @@ FactoryGirl.define do
       qtyDone 10
     end
 
+    trait :sent_in_peoplevox do
+      sent_to_peoplevox 1
+    end
+
     trait :arrived do
       arrived_date 1.day.ago
     end
