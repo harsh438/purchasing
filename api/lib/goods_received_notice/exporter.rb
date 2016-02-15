@@ -36,8 +36,7 @@ class GoodsReceivedNotice::Exporter
        delivery_date
        total_units
        total_cartons
-       total_pallets
-       book_in_by)
+       total_pallets)
   end
 
   def po_columns
@@ -72,14 +71,12 @@ class GoodsReceivedNotice::Exporter
                          'goods_received_number.DeliveryDate',
                          'sum(goods_received_number.TotalUnits) as total_units',
                          'sum(goods_received_number.CartonsExpected) as total_cartons',
-                         'sum(goods_received_number.PaletsExpected) as total_pallets',
-                         'goods_received_number.UserID')
+                         'sum(goods_received_number.PaletsExpected) as total_pallets')
 
     users = User.where(id: grn_rows.map { |row| row[5] }).index_by(&:id)
 
     grn_rows.map do |row|
       row[1] = row[1].to_s
-      row[5] = users[row[5]].try(:name)
       row
     end
   end
