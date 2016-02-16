@@ -27,6 +27,10 @@ class Sku < ActiveRecord::Base
     joins(:barcodes).where.not({ barcodes: { id: nil } })
   end
 
+  def self.not_sent_in_peoplevox
+    where({ sent_in_peoplevox: nil })
+  end
+
   def sized?
     inv_track != 'P'
   end
