@@ -13,6 +13,7 @@ class PackingList < ActiveRecord::Base
                      application/xls
                      application/x-xls
                      application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+                     application/CDFV2-corrupt
                      application/x-pdf
                      message/rfc822
                      text/html
