@@ -23,6 +23,10 @@ class Sku < ActiveRecord::Base
 
   validates_presence_of :manufacturer_sku
 
+  def self.with_barcode
+    joins(:barcodes).where.not({ barcodes: { id: nil } })
+  end
+
   def sized?
     inv_track != 'P'
   end
