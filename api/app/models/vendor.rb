@@ -23,6 +23,10 @@ class Vendor < ActiveRecord::Base
 
   paginates_per 50
 
+  def self.not_sent_in_peoplevox
+    where({ sent_in_peoplevox: nil })
+  end
+
   def details
     super || build_details
   end
