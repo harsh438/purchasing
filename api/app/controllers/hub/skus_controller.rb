@@ -5,7 +5,7 @@ class Hub::SkusController < ApplicationController
     if params[:parameters] and params[:parameters][:limit]
       limit = params[:parameters][:limit]
     end
-    skus = Sku.not_sent_in_peoplevox.with_barcode.limit(limit)
+    skus = Sku.includes(:language_category).not_sent_in_peoplevox.with_barcode.limit(limit)
     render json: {
       request_id: request_id,
       skus: ActiveModel::ArraySerializer.new(
