@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205114344) do
+ActiveRecord::Schema.define(version: 20160216091324) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -287,24 +287,25 @@ ActiveRecord::Schema.define(version: 20160205114344) do
   add_index "ds_products", ["venID"], name: "venID", using: :btree
 
   create_table "ds_vendors", primary_key: "venID", force: :cascade do |t|
-    t.string "venActNum",         limit: 35
-    t.string "venCompany",        limit: 50
-    t.string "venContact",        limit: 80
-    t.string "venAddress1",       limit: 50
-    t.string "venAddress2",       limit: 50
-    t.string "venCity",           limit: 40
-    t.string "venState",          limit: 40
-    t.string "venZip",            limit: 25
-    t.string "venCountry",        limit: 2
-    t.string "venPhone",          limit: 25
-    t.text   "venFax",            limit: 65535
-    t.string "venUniqueShipping", limit: 1
-    t.string "memo",              limit: 35
-    t.text   "note",              limit: 65535
-    t.string "venEmail",          limit: 80
-    t.string "venUser",           limit: 15
-    t.string "venPass",           limit: 15
-    t.string "venString",         limit: 35,    default: "", null: false
+    t.string   "venActNum",         limit: 35
+    t.string   "venCompany",        limit: 50
+    t.string   "venContact",        limit: 80
+    t.string   "venAddress1",       limit: 50
+    t.string   "venAddress2",       limit: 50
+    t.string   "venCity",           limit: 40
+    t.string   "venState",          limit: 40
+    t.string   "venZip",            limit: 25
+    t.string   "venCountry",        limit: 2
+    t.string   "venPhone",          limit: 25
+    t.text     "venFax",            limit: 65535
+    t.string   "venUniqueShipping", limit: 1
+    t.string   "memo",              limit: 35
+    t.text     "note",              limit: 65535
+    t.string   "venEmail",          limit: 80
+    t.string   "venUser",           limit: 15
+    t.string   "venPass",           limit: 15
+    t.string   "venString",         limit: 35,    default: "", null: false
+    t.datetime "sent_in_peoplevox"
   end
 
   add_index "ds_vendors", ["venActNum", "venPass"], name: "venActNum", using: :btree
