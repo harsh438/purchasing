@@ -29,11 +29,11 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                     totalPallets: pallets,
                     goodsReceivedNotice: nextProps.goodsReceivedNotice,
                     onPackingListUpload: false,
-                    packingFileName: null,
-                    userId: '' });
+                    packingFileName: null });
 
     if (this.props.goodsReceivedNotice.id !== id) {
       this.setVendorId(this.firstVendorId(nextProps));
+      this.setState({ userId: '' });
     }
   }
 
