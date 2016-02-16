@@ -78,6 +78,7 @@ Rails.application.routes.draw do
       resources :skus do
         collection do
           post :latest
+          post :pvx_confirm
         end
       end
     end
