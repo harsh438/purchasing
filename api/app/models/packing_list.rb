@@ -16,7 +16,7 @@ class PackingList < ActiveRecord::Base
                      application/x-pdf
                      message/rfc822
                      text/html
-                     message/rfc822 eml
+                     message/rfc822\ eml
                      application/msword
                      application/vnd.openxmlformats-officedocument.wordprocessingml.document
                      application/vnd.openxmlformats-officedocument.wordprocessingml.template)
