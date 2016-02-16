@@ -21,9 +21,9 @@ feature 'Orders PVX confirm API for the hub' do
     end).not_to eq(brand_list[0].id)
   end
 
-  let (:request_id) { Faker::Lorem.characters(15) }
+  let(:request_id) { Faker::Lorem.characters(15) }
 
-  let (:brand_list) do
+  let(:brand_list) do
     create_list(:vendor, 5)
   end
 end
