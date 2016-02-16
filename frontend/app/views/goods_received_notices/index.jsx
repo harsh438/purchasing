@@ -232,7 +232,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
                                   goodsReceivedNotice={this.props.goodsReceivedNotice}
                                   users={this.props.users}
                                   vendors={this.props.brands}
-                                  purchaseOrders={this.props.purchaseOrders}
+                                  purchaseOrderList={this.props.purchaseOrderList}
                                   onVendorChange={this.handleLoadPurchaseOrdersForEdit.bind(this)}
                                   onSave={this.handleGoodsReceivedNoticeSave.bind(this)}
                                   onCombine={this.handleGoodsReceivedNoticeCombine.bind(this)}
