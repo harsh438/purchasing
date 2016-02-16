@@ -14,7 +14,7 @@ feature 'Listing Skus for the hub' do
   def then_i_should_have_skus_listed
     expect(subject['request_id']).to eq(request_id)
     expect(subject['skus'].count).to be(5)
-    expect(subject['skus'][0]).to match(a_hash_including('id', 'name'))
+    expect(subject['skus'][0]).to match(a_hash_including('id', 'name', 'category_name'))
   end
 
   let(:request_id) { Faker::Lorem.characters(15) }
