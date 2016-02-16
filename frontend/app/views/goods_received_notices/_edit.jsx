@@ -251,7 +251,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         <td>
           <span className="glyphicon glyphicon-file"></span>&nbsp;
           <a target="_blank" href={packingListUrl}>
-            {packingListName(filename)}
+            {packingListName(packingListUrl)}
           </a>&nbsp;
           <button onClick={this.props.onDeletePackingList.bind(this, { goodsReceivedNotice: this.props.goodsReceivedNotice,
                                                                        packingListUrl: packingListUrl })}
