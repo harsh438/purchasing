@@ -74,7 +74,7 @@ class Order::Exporter
 
   def po_line_item_product_attrs(order_line_item)
     { product_rrp: order_line_item.sku.price,
-      product_sku: order_line_item.sku.manufacturer_sku,
+      product_sku: order_line_item.sku.manufacturer_sku[0..63],
       product_name: order_line_item.product_name }
   end
 
