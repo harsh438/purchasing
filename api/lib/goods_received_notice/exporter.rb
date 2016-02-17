@@ -64,7 +64,8 @@ class GoodsReceivedNotice::Exporter
   end
 
   def grn_rows(grn)
-    grn_rows = grn.group('goods_received_number.DeliveryDate')
+    grn_rows = grn.not_on_weekends
+                  .group('goods_received_number.DeliveryDate')
                   .order('goods_received_number.DeliveryDate')
                   .pluck('WEEK(goods_received_number.DeliveryDate)',
                          'goods_received_number.DeliveryDate',
@@ -94,7 +95,8 @@ class GoodsReceivedNotice::Exporter
   end
 
   def po_rows(grn_events)
-    po_rows = grn_events.order('bookingin_events.DeliveryDate',
+    po_rows = grn_events.not_on_weekends
+                        .order('bookingin_events.DeliveryDate',
                                'bookingin_events.grn')
                         .pluck('WEEK(bookingin_events.DeliveryDate)',
                                'bookingin_events.DeliveryDate',

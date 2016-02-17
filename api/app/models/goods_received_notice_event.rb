@@ -5,6 +5,10 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   include BookingInConnection
   include LegacyMappings
 
+  def self.not_on_weekends
+    where('DAYOFWEEK(bookingin_events.DeliveryDate) != 1 AND DAYOFWEEK(bookingin_events.DeliveryDate) != 7')
+  end
+
   map_attributes id: :ID,
                  purchase_order_id: :po,
                  units: :TotalUnits,
