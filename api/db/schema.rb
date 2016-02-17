@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160216143226) do
+ActiveRecord::Schema.define(version: 20160217122610) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -306,6 +306,8 @@ ActiveRecord::Schema.define(version: 20160216143226) do
     t.string   "venPass",           limit: 15
     t.string   "venString",         limit: 35,    default: "", null: false
     t.datetime "sent_in_peoplevox"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "ds_vendors", ["venActNum", "venPass"], name: "venActNum", using: :btree
