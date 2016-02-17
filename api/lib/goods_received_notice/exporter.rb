@@ -64,8 +64,7 @@ class GoodsReceivedNotice::Exporter
   end
 
   def grn_rows(grn)
-    grn_rows = grn.not_archived
-                  .group('goods_received_number.DeliveryDate')
+    grn_rows = grn.group('goods_received_number.DeliveryDate')
                   .order('goods_received_number.DeliveryDate')
                   .pluck('WEEK(goods_received_number.DeliveryDate)',
                          'goods_received_number.DeliveryDate',

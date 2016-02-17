@@ -15,11 +15,7 @@ feature 'Download GRNs as XLSX', booking_db: true do
   end
 
   def then_the_xlsx_file_should_contain_all_grns_for_the_current_month
-    expect(grn_result_rows.first.second).to eq(Date.new(2016, 2, 1).to_s)
-    expect(grn_result_rows.second.second).to eq(Date.new(2016, 2, 2).to_s)
-
-    expect(po_result_rows.first.second).to eq(Date.new(2016, 2, 1).to_s)
-    expect(po_result_rows.second.second).to eq(Date.new(2016, 2, 2).to_s)
+    assert_valid_rows
   end
 
   def when_a_user_downloads_xlsx_of_current_view
@@ -28,11 +24,7 @@ feature 'Download GRNs as XLSX', booking_db: true do
   end
 
   def then_the_xlsx_file_should_contain_list_of_all_grn_for_current_view
-    expect(grn_result_rows.first.second).to eq(Date.new(2016, 2, 1).to_s)
-    expect(grn_result_rows.second.second).to eq(Date.new(2016, 2, 2).to_s)
-
-    expect(po_result_rows.first.second).to eq(Date.new(2016, 2, 1).to_s)
-    expect(po_result_rows.second.second).to eq(Date.new(2016, 2, 2).to_s)
+    assert_valid_rows
   end
 
   private
@@ -59,10 +51,24 @@ feature 'Download GRNs as XLSX', booking_db: true do
 
     create(:goods_received_notice,
            :with_purchase_orders,
-           delivery_date: Time.new(2016, 2, 1))
+           delivery_date: Time.new(2016, 2, 1),
+           po_count: 2)
 
     create(:goods_received_notice,
            :with_purchase_orders,
-           delivery_date: Time.new(2016, 2, 2))
+           delivery_date: Time.new(2016, 2, 2),
+           po_count: 2)
+  end
+
+  def assert_valid_rows
+    expect(grn_result_rows.first.second).to eq(Date.new(2016, 2, 1).to_s)
+    expect(grn_result_rows.first.third).to eq(20.0)
+    expect(grn_result_rows.second.second).to eq(Date.new(2016, 2, 2).to_s)
+    expect(grn_result_rows.second.third).to eq(20.0)
+
+    expect(po_result_rows.first.second).to eq(Date.new(2016, 2, 1).to_s)
+    expect(po_result_rows.second.second).to eq(Date.new(2016, 2, 1).to_s)
+    expect(po_result_rows.third.second).to eq(Date.new(2016, 2, 2).to_s)
+    expect(po_result_rows.fourth.second).to eq(Date.new(2016, 2, 2).to_s)
   end
 end
