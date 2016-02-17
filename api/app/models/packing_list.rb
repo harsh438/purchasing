@@ -1,31 +1,9 @@
 class PackingList < ActiveRecord::Base
-  CONTENT_TYPES = %w(image/jpeg
-                     image/pjpeg
-                     image/png
-                     image/x-png
-                     application/pdf
-                     application/vnd.ms-excel
-                     application/msexcel
-                     application/x-msexcel
-                     application/x-ms-excel
-                     application/x-excel
-                     application/x-dos_ms_excel
-                     application/xls
-                     application/x-xls
-                     application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-                     application/CDFV2-corrupt
-                     application/x-pdf
-                     message/rfc822
-                     text/html
-                     message/rfc822\ eml
-                     application/msword
-                     application/vnd.openxmlformats-officedocument.wordprocessingml.document
-                     application/vnd.openxmlformats-officedocument.wordprocessingml.template)
-
   belongs_to :goods_received_notice
+  
   has_attached_file :list
+  do_not_validate_attachment_file_type :list
 
-  validates_attachment_content_type :list, content_type: CONTENT_TYPES
   def list_url
     list.expiring_url(300)
   end
