@@ -75,7 +75,7 @@ export default class SupplierBuyersTable extends React.Component {
 
     return (
       <div>
-        <table className="table" style={{ tableLayout: 'fixed' }}>
+        <table className="table table-hover" style={{ tableLayout: 'fixed' }}>
           <tbody>
             <tr>
               <th style={{ width: '22%' }}>Buyer name</th>

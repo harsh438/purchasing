@@ -30,7 +30,7 @@ export default class OrderLineItemsTable extends React.Component {
 
           <hr />
 
-          <table className="table">
+          <table className="table table-hover">
             <thead>
               <tr>
                 <th style={{ width: '10%' }}>Brand Name</th>

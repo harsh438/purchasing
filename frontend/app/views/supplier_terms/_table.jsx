@@ -14,7 +14,7 @@ export default class SuppliersTermsTable extends React.Component {
     }
 
     return (
-      <table className="table">
+      <table className="table table-hover">
         <thead>
           <tr>
             {this.renderSupplierNameTitle()}

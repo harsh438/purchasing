@@ -79,7 +79,7 @@ export default class SupplierContacts extends React.Component {
 
     return (
       <div>
-        <table className="table" style={{ tableLayout: 'fixed' }}>
+        <table className="table table-hover" style={{ tableLayout: 'fixed' }}>
           <tbody>
             <tr>
               <th style={{ width: '15%' }}>Title</th>

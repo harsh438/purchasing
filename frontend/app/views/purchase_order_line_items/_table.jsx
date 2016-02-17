@@ -49,7 +49,7 @@ export default class PurchaseOrdersTable extends React.Component {
                                     table={this}
                                     totalCount={this.props.totalCount} />
 
-        <table className="table">
+        <table className="table table-hover">
           <PurchaseOrderTableHeader ref={(header) => this.header = header}
                                     summary={this.props.summary}
                                     totalPages={this.props.totalPages}

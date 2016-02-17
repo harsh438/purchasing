@@ -7,7 +7,7 @@ export class OrdersTable extends React.Component {
   render() {
     return (
       <div className="orders_table">
-        <table className="table">
+        <table className="table table-hover">
           <thead>
             <tr>
               <th style={{ width: '5%' }}>&nbsp;</th>
