@@ -8,9 +8,8 @@ class Hub::BrandsController < ApplicationController
     last_id = default_param(request_params[:last_id], 0)
 
     results = Vendor.where('(updated_at >= ? or updated_at is null) and venID > ?', last_timestamp, last_id)
-                    .order(updated_at: :desc, id: :desc)
+                    .order(updated_at: :asc, id: :asc)
                     .limit(limit)
-
     render json: {
       request_id: request_id,
       brands: ActiveModel::ArraySerializer.new(
