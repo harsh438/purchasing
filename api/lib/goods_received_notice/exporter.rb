@@ -110,10 +110,15 @@ class GoodsReceivedNotice::Exporter
                                'bookingin_events.BookedInDate',
                                'bookingin_events.UserID')
 
-    vendors = Vendor.where(id: po_rows.map { |row| row[3] }).index_by(&:id)
-    users = User.where(id: po_rows.map { |row| row[10] }).index_by(&:id)
+    po_rows.map(&method(:po_row).curry.call(vendors(po_rows), users(po_rows)))
+  end
 
-    po_rows.map(&method(:po_row).curry.call(vendors, users))
+  def vendors(po_rows)
+    Vendor.where(id: po_rows.map { |row| row[3] }).index_by(&:id)
+  end
+
+  def users(po_rows)
+    User.where(id: po_rows.map { |row| row[10] }).index_by(&:id)
   end
 
   def po_row(vendors, users, row)
