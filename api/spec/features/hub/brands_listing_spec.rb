@@ -118,6 +118,8 @@ feature 'Listing Brands for the hub' do
   def then_i_should_not_get_the_brand_if_its_over_the_limit
     request_id_should_be_identical
     expect(subject['brands'].count).to be(2)
+    expect(subject['brands'][0]['id']).to be(brands_with_recent_updated_date[3].id)
+    expect(subject['brands'][1]['id']).to be(brands_with_recent_updated_date[4].id)
   end
 
   def request_id_should_be_identical
