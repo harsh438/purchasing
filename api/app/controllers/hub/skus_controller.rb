@@ -42,6 +42,8 @@ class Hub::SkusController < ApplicationController
     }
   end
 
+  private
+
   def default_param(param, default_val)
     param.present? ? param : default_val
   end
