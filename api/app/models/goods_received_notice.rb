@@ -58,6 +58,15 @@ class GoodsReceivedNotice < ActiveRecord::Base
 
   after_initialize :ensure_defaults
 
+  def delete_packing_list_by_url!(url)
+    return nil unless is_packing_list_url?(url)
+    if is_packing_list_legacy_url?(url)
+      delete_legacy_packing_list_by_url!(url)
+    else
+      delete_current_packing_list_by_url!(url)
+    end
+  end
+
   def late?
     delivery_date < Date.today
   end
@@ -98,15 +107,6 @@ class GoodsReceivedNotice < ActiveRecord::Base
   def as_json_with_purchase_orders_and_packing_list_urls
     as_json_with_purchase_orders.tap do |grn|
       grn[:packing_list_urls] = packing_list_urls
-    end
-  end
-
-  def delete_packing_list_by_url!(url)
-    return nil unless is_packing_list_url?(url)
-    if is_packing_list_legacy_url?(url)
-      delete_legacy_packing_list_by_url!(url)
-    else
-      delete_current_packing_list_by_url!(url)
     end
   end
 
