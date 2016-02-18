@@ -14,8 +14,8 @@ class Order::Exporter
   def create_po(order_line_items, extra_params)
     PurchaseOrder.create!(vendor_id: order_line_items.first.vendor_id,
                           vendor_name: order_line_items.first.vendor_name,
-                          operator: extra_params[:operator] || 'REORDER_TOOL',
-                          order_type: OrderType.char_from(order_line_items.first.order.order_type) || 'R',
+                          operator: extra_params[:operator] || operator(order_line_items),
+                          order_type: order_type(order_line_items),
                           line_items: create_po_line_items(order_line_items, extra_params),
                           drop_date: order_line_items.first.drop_date)
   end
@@ -90,6 +90,14 @@ class Order::Exporter
     orders.each do |order|
       order.purchase_orders << purchase_order
     end
+  end
+
+  def operator(order_line_items)
+    'REORDER_TOOL'
+  end
+
+  def order_type(order_line_items)
+    OrderType.char_from(order_line_items.first.order.order_type) || 'R'
   end
 
   class GroupedOrders < Array
