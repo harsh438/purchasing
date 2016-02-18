@@ -73,8 +73,6 @@ class GoodsReceivedNotice::Exporter
                          'sum(goods_received_number.CartonsExpected) as total_cartons',
                          'sum(goods_received_number.PaletsExpected) as total_pallets')
 
-    users = User.where(id: grn_rows.map { |row| row[5] }).index_by(&:id)
-
     grn_rows.map do |row|
       row[1] = row[1].to_s
       row
