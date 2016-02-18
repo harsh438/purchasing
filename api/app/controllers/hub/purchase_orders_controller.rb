@@ -1,21 +1,34 @@
 class Hub::PurchaseOrdersController < ApplicationController
   def latest
-    timestamp_from = params[:parameters][:timestamp_from]
-    limit = params[:parameters][:limit] || 10
     request_id = params[:request_id]
-    results = PurchaseOrder.where('po_summary.drop_date > ?', Time.parse(timestamp_from))
-                           .not_sent_in_peoplevox
+    request_params = params[:parameters]
+
+    limit = default_param(request_params[:limit], 200)
+    last_timestamp = default_param(request_params[:last_timestamp], Time.now)
+    last_id = default_param(request_params[:last_id], 0)
+
+    results = PurchaseOrder.has_been_updated_since(last_timestamp, last_id)
                            .with_barcodes
                            .booked_in
+                           .order(updated_at: :asc, id: :asc)
                            .limit(limit)
                            .includes_line_items
 
-    render json: {
+    render json: create_hub_object(results, request_id, last_timestamp, last_id)
+  end
+
+  def create_hub_object(purchase_orders, request_id, last_timestamp, last_id)
+    {
       request_id: request_id,
+      summary: "Returned #{results.size} purchase orders objects.",
       purchase_orders: ActiveModel::ArraySerializer.new(
-        results,
+        purchase_orders,
         each_serializer: PurchaseOrderSerializer
-      )
+      ),
+      parameters: {
+        last_timestamp: purchase_orders.last.try(:updated_at) || last_timestamp,
+        last_id: purchase_orders.last.try(:id) || last_id
+      }
     }
   end
 
@@ -28,5 +41,11 @@ class Hub::PurchaseOrdersController < ApplicationController
     end
     message = "PurchaseOrder #{purchase_order_id} has been marked as sent to PeopleVox and won't be processed again."
     render json: { message: message }
+  end
+
+  private
+
+  def default_param(param, default_val)
+    param.present? ? param : default_val
   end
 end
