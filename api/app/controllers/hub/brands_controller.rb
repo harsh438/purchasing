@@ -10,8 +10,10 @@ class Hub::BrandsController < ApplicationController
     results = Vendor.where('(updated_at >= ? or updated_at is null) and venID > ?', last_timestamp, last_id)
                     .order(updated_at: :asc, id: :asc)
                     .limit(limit)
+
     render json: {
       request_id: request_id,
+      summary: "Returned #{results.size} brand objects.",
       brands: ActiveModel::ArraySerializer.new(
         results,
         each_serializer: ::BrandSerializer
