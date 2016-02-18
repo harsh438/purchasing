@@ -24,6 +24,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
                  cartons: :CartonsExpected,
                  pallets: :PaletsExpected,
                  delivery_date: :DeliveryDate,
+                 original_delivery_date: :LastDeliveryDate,
                  received: :isReceived,
                  checking: :isChecking,
                  checked: :isChecked,
@@ -209,6 +210,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
     self.processing ||= 0
     self.processed ||= 0
     self.booked_in_at ||= Time.now
+    self.original_delivery_date ||= delivery_date
     self.received_at ||= 0
     self.page_count ||= 0
     self.order_id ||= 0
