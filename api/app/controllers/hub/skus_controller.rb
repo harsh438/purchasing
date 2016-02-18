@@ -8,10 +8,11 @@ class Hub::SkusController < ApplicationController
     last_id = default_param(request_params[:last_id], 0)
 
     skus = Sku.includes(:language_category)
-                 .where('(skus.updated_at >= ? or skus.updated_at is null) and skus.id > ?', last_timestamp, last_id)
-                 .with_barcode
-                 .order(updated_at: :asc, id: :asc)
-                 .limit(limit)
+              .includes(:barcodes)
+              .where('(skus.updated_at >= ? or skus.updated_at is null) and skus.id > ?', last_timestamp, last_id)
+              .with_barcode
+              .order(updated_at: :asc, id: :asc)
+              .limit(limit)
     render json: create_hub_object(skus, request_id, last_timestamp, last_id)
   end
 
