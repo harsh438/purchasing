@@ -25,7 +25,8 @@ class SkuSerializer < ActiveModel::Serializer
   end
 
   def barcode
-    object.barcodes.try(:[], 0).try(:barcode) || ''
+    barcode = (object.barcodes.try(:[], 0).try(:barcode) || '')
+    barcode.gsub(/\\.| |\t|\n/, '')
   end
 
   def retail_price
