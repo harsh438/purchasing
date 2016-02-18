@@ -233,8 +233,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   end
 
   def set_delivery_date_on_event(grn_event)
-    grn_event.delivery_date = delivery_date
-    grn_event.save!
+    grn_event.update!(delivery_date: delivery_date)
   end
 
   def set_user_id(grn_event)
