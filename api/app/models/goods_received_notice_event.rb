@@ -39,8 +39,6 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
       :delivered
     when 4
       :received
-    when 7
-      :late
     else
       if delivery_date.try(:past?)
         :late
