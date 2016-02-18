@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160217122610) do
+ActiveRecord::Schema.define(version: 20160218115647) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -529,16 +529,18 @@ ActiveRecord::Schema.define(version: 20160217122610) do
   end
 
   create_table "po_summary", primary_key: "po_num", force: :cascade do |t|
-    t.string  "Brand",         limit: 64,  default: "", null: false
-    t.date    "drop_date",                              null: false
-    t.integer "status",        limit: 4,   default: 0,  null: false
-    t.date    "po_date",                                null: false
-    t.string  "operator",      limit: 64,  default: "", null: false
-    t.string  "orderGrouping", limit: 8,                null: false
-    t.string  "orderType",     limit: 8,   default: "", null: false
-    t.integer "venID",         limit: 4,   default: 0,  null: false
-    t.string  "comments",      limit: 255, default: "", null: false
-    t.string  "brandRef",      limit: 64,  default: "", null: false
+    t.string   "Brand",         limit: 64,  default: "", null: false
+    t.date     "drop_date",                              null: false
+    t.integer  "status",        limit: 4,   default: 0,  null: false
+    t.date     "po_date",                                null: false
+    t.string   "operator",      limit: 64,  default: "", null: false
+    t.string   "orderGrouping", limit: 8,                null: false
+    t.string   "orderType",     limit: 8,   default: "", null: false
+    t.integer  "venID",         limit: 4,   default: 0,  null: false
+    t.string   "comments",      limit: 255, default: "", null: false
+    t.string   "brandRef",      limit: 64,  default: "", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "po_summary", ["orderGrouping"], name: "grouping", using: :btree
