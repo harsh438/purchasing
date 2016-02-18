@@ -120,11 +120,15 @@ class GoodsReceivedNotice::Exporter
   end
 
   def po_row(vendors, users, row)
-    row[1] = row[1].to_s
-    row[2] = row[2].to_s || row[1].to_s
-    row[3] = vendors[row[3]].name
-    row[8] = row[8].to_s
-    row[10] = users[row[10]].try(:name)
+    delivery_date, original_delivery_date, vendor_id = row[1..3]
+    pallets_expected = row[8]
+    user_id = row[10]
+
+    row[1] = delivery_date.to_s
+    row[2] = original_delivery_date.to_s || delivery_date.to_s
+    row[3] = vendors[vendor_id].name
+    row[8] = pallets_expected.to_s
+    row[10] = users[user_id].try(:name)
     row
   end
 end
