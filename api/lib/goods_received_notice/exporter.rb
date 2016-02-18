@@ -97,8 +97,8 @@ class GoodsReceivedNotice::Exporter
                         .order('bookingin_events.DeliveryDate',
                                'bookingin_events.grn')
                         .pluck('WEEK(bookingin_events.DeliveryDate)',
-                               'bookingin_events.DeliveryDate',
                                'goods_received_number.DeliveryDate',
+                               'goods_received_number.LastDeliveryDate',
                                'bookingin_events.BrandID',
                                'bookingin_events.grn',
                                'bookingin_events.po',
@@ -121,7 +121,7 @@ class GoodsReceivedNotice::Exporter
 
   def po_row(vendors, users, row)
     row[1] = row[1].to_s
-    row[2] = row[2].to_s
+    row[2] = row[2].to_s || row[1].to_s
     row[3] = vendors[row[3]].name
     row[8] = row[8].to_s
     row[10] = users[row[10]].try(:name)
