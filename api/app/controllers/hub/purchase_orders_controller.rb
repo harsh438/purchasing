@@ -20,7 +20,7 @@ class Hub::PurchaseOrdersController < ApplicationController
   def create_hub_object(purchase_orders, request_id, last_timestamp, last_id)
     {
       request_id: request_id,
-      summary: "Returned #{results.size} purchase orders objects.",
+      summary: "Returned #{purchase_orders.size} purchase orders objects.",
       purchase_orders: ActiveModel::ArraySerializer.new(
         purchase_orders,
         each_serializer: PurchaseOrderSerializer
