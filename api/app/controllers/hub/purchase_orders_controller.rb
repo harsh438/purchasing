@@ -4,6 +4,8 @@ class Hub::PurchaseOrdersController < ApplicationController
     request_params = params[:parameters]
 
     limit = default_param(request_params[:limit], 10)
+    # otherwise this will destroy the server because there is too much queries
+    limit = 60 if limit > 60
     last_timestamp = default_param(request_params[:last_timestamp], Time.now)
     last_id = default_param(request_params[:last_id], 0)
 
