@@ -58,6 +58,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   accepts_nested_attributes_for :packing_lists
 
   after_initialize :ensure_defaults
+  after_update :set_delivery_date_on_all_events
 
   def delete_packing_list_by_url!(url)
     return nil unless is_packing_list_url?(url)
@@ -236,6 +237,12 @@ class GoodsReceivedNotice < ActiveRecord::Base
 
   def set_delivery_date_on_event(grn_event)
     grn_event.update!(delivery_date: delivery_date)
+  end
+
+  def set_delivery_date_on_all_events
+    if delivery_date_changed?
+      goods_received_notice_events.update_all(DeliveryDate: delivery_date)
+    end
   end
 
   def set_user_id(grn_event)
