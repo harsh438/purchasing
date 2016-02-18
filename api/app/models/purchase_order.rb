@@ -23,6 +23,10 @@ class PurchaseOrder < ActiveRecord::Base
   after_initialize :ensure_defaults
   after_initialize :set_legacy
 
+  def self.has_been_updated_since(max_timestamp, max_id = 0)
+    where('(po_summary.updated_at >= ? or po_summary.updated_at is null) and po_summary.po_num > ?', max_timestamp, max_id)
+  end
+
   def self.from_yesterday
     where('po_date > ?', Date.yesterday)
   end
