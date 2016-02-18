@@ -6,6 +6,9 @@ machine:
     version: 4.1.0
 
 dependencies:
+  pre:
+    - gem install eb_deployer
+    - gem install slack-notifier
   post:
     - npm install:
         pwd: ../frontend/
@@ -22,8 +25,14 @@ test:
     - bundle exec rake build
 
 deployment:
-  dev:
-    branch: [devops, staging, production]
+  staging:
+    branch: [devops, staging]
+    commands:
+      - aws s3 cp --recursive "s3://$S3_DEPLOYMENT_BUCKET/devops/" .
+      - chmod +x deploy-new.sh
+      - ./deploy-new.sh
+  production:
+    branch: [production]
     commands:
       - aws s3 cp --recursive "s3://$S3_DEPLOYMENT_BUCKET/devops/" .
       - chmod +x deploy.sh
