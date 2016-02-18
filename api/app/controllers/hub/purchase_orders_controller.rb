@@ -3,7 +3,7 @@ class Hub::PurchaseOrdersController < ApplicationController
     request_id = params[:request_id]
     request_params = params[:parameters]
 
-    limit = default_param(request_params[:limit], 200)
+    limit = default_param(request_params[:limit], 10)
     last_timestamp = default_param(request_params[:last_timestamp], Time.now)
     last_id = default_param(request_params[:last_id], 0)
 
