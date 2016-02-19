@@ -41,6 +41,12 @@ FactoryGirl.define do
       updated_at 5.minutes.ago
     end
 
+    trait :with_fixed_updated_date do
+      record_timestamps false
+      # does not matter which date it is as long as it's really old and the same
+      updated_at Time.parse('1948-02-18T17:26:26')
+    end
+
     factory :sku do
       product_id { create(:product, manufacturer_sku: 'MANU-FACTURER-SKU-11-reddish').id }
       option_id { create(:option).id }
