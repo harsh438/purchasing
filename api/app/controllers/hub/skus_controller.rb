@@ -9,7 +9,7 @@ class Hub::SkusController < ApplicationController
 
     skus = Sku.includes(:language_category)
               .includes(:barcodes)
-              .where('(skus.updated_at >= ? or skus.updated_at is null) and skus.id > ?', last_timestamp, last_id)
+              .updated_since(last_timestamp, last_id)
               .with_barcode
               .order(updated_at: :asc, id: :asc)
               .limit(limit)
