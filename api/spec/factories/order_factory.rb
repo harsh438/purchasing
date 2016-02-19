@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :order do
+    name 'OT_100 (Hmm)'
+
     transient do
       line_item_count 0
     end

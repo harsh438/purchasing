@@ -14,8 +14,8 @@ class Order::Exporter
   def create_po(order_line_items, extra_params)
     PurchaseOrder.create!(vendor_id: order_line_items.first.vendor_id,
                           vendor_name: order_line_items.first.vendor_name,
-                          operator: extra_params[:operator] || operator(order_line_items),
-                          order_type: order_type(order_line_items),
+                          operator: extra_params[:operator] || operator(order_line_items.first),
+                          order_type: order_type(order_line_items.first),
                           line_items: create_po_line_items(order_line_items, extra_params),
                           drop_date: order_line_items.first.drop_date)
   end
@@ -31,7 +31,7 @@ class Order::Exporter
   end
 
   def po_line_item_attrs(order_line_item, extra_params)
-    { operator: extra_params[:operator] || 'REORDER_TOOL',
+    { operator: extra_params[:operator] || operator(order_line_item),
       single_line_id: extra_params[:single_line_id] || nil,
       reporting_pid: order_line_item.reporting_pid }
       .merge(po_line_item_core_attrs(order_line_item))
@@ -92,12 +92,17 @@ class Order::Exporter
     end
   end
 
-  def operator(order_line_items)
-    'REORDER_TOOL'
+  def operator(order_line_item)
+    case order_line_item.order.order_type
+    when 'preorder'
+      order_line_item.order.name.split(' ').first
+    else
+      'REORDER_TOOL'
+    end
   end
 
-  def order_type(order_line_items)
-    OrderType.char_from(order_line_items.first.order.order_type) || 'R'
+  def order_type(order_line_item)
+    OrderType.char_from(order_line_item.order.order_type) || 'R'
   end
 
   class GroupedOrders < Array

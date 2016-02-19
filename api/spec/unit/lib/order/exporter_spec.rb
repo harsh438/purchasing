@@ -132,4 +132,26 @@ describe Order::Exporter do
       end
     end
   end
+
+  context 'when exporting preorders' do
+    let(:orders) { [create(:order, line_item_count: 2,
+                                   order_type: 'preorder',
+                                   name: 'OT_100 (Bob)')] }
+
+    context 'then the generated purchase order' do
+      subject { orders.flat_map(&:exports).map(&:purchase_order).first }
+      its(:operator) { is_expected.to eq('OT_100') }
+    end
+  end
+
+  context 'when exporting preorders' do
+    let(:orders) { [create(:order, line_item_count: 2,
+                                   order_type: 'reorder',
+                                   name: 'A reorder')] }
+
+    context 'then the generated purchase order' do
+      subject { orders.flat_map(&:exports).map(&:purchase_order).first }
+      its(:operator) { is_expected.to eq('REORDER_TOOL') }
+    end
+  end
 end
