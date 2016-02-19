@@ -219,6 +219,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
     self.units ||= 0
     self.cartons ||= 0
     self.pallets ||= 0
+    self.legacy_attachments ||= ''
   end
 
   def increment_totals(grn_event)
