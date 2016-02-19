@@ -10,8 +10,6 @@ class Hub::BrandsController < ApplicationController
     results = Vendor.updated_since(last_timestamp, last_id)
                     .order(updated_at: :asc, id: :asc)
                     .limit(limit)
-    new_timestamp = results.last.try(:updated_at)
-    new_timestamp = Time.new if (results.count < limit.to_i and last_timestamp.nil?) or results.count === 0
 
     render json: {
       request_id: request_id,
@@ -21,7 +19,7 @@ class Hub::BrandsController < ApplicationController
         each_serializer: ::BrandSerializer
       ),
       parameters: {
-        last_timestamp: new_timestamp,
+        last_timestamp: get_new_timestamp(results, last_timestamp, limit),
         last_id: results.last.try(:id)
       }
     }
@@ -36,6 +34,14 @@ class Hub::BrandsController < ApplicationController
   end
 
   private
+
+  def get_new_timestamp(results, last_timestamp, limit)
+    new_timestamp = results.last.try(:updated_at)
+    if (results.count < limit.to_i and last_timestamp.nil?) or results.count === 0
+      new_timestamp = Time.new
+    end
+    new_timestamp
+  end
 
   def default_param(param, default_val)
     param.present? ? param : default_val
