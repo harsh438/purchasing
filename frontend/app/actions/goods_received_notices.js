@@ -24,9 +24,13 @@ export function loadGoodsReceivedNotice(id) {
   };
 }
 
+function weekStartDate(middleWeekStart) {
+  return moment(middleWeekStart, 'DD/MM/YYYY').startOf('isoWeek');
+}
+
 export function loadGoodsReceivedNotices(middleWeekStart) {
-  const startDate = moment(middleWeekStart, 'DD/MM/YYYY').subtract(2, 'weeks').format('YYYY-MM-DD');
-  const endDate = moment(middleWeekStart, 'DD/MM/YYYY').add({ weeks: 2, days: 5 }).format('YYYY-MM-DD');
+  const startDate = weekStartDate(middleWeekStart).subtract(2, 'weeks').format('YYYY-MM-DD');
+  const endDate = weekStartDate(middleWeekStart).add({ weeks: 2, days: 4 }).format('YYYY-MM-DD');
 
   return dispatch => {
     const queryString = Qs.stringify({ start_date: startDate, end_date: endDate });
