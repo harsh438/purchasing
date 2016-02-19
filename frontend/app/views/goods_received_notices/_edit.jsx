@@ -25,6 +25,10 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
     this.setState({ id,
                     deliveryDate,
+                    purchaseOrderId: '',
+                    units: '',
+                    cartons: '',
+                    pallets: '',
                     combineFrom: '',
                     totalPallets: pallets,
                     goodsReceivedNotice: nextProps.goodsReceivedNotice,
