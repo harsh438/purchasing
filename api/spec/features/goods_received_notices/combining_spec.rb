@@ -19,13 +19,15 @@ feature 'Combine GRNs' do
   def then_all_grn_events_should_be_moved_to_grn
     expect(subject['id']).to eq(to_grn.id)
     expect(subject['goods_received_notice_events'].count).to eq(2)
+    expect(subject['packing_list_urls'].count).to eq(10)
     expect(GoodsReceivedNotice.count).to eq(1)
   end
 
   private
 
   let(:grns_from_same_supplier_on_same_day) do
-    create_list(:goods_received_notice, 2, :with_purchase_orders)
+    create_list(:goods_received_notice, 2, :with_purchase_orders,
+                                           :with_both_packing_lists)
   end
   alias_method :create_grns_from_same_supplier_on_same_day, :grns_from_same_supplier_on_same_day
 
