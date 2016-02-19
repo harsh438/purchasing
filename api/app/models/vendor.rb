@@ -23,6 +23,14 @@ class Vendor < ActiveRecord::Base
 
   paginates_per 50
 
+  def self.updated_since(timestamp, max_id)
+    if timestamp.nil?
+      where('(updated_at is null) and venID > ?', max_id)
+    else
+      where('(updated_at = ? and venID > ?) or (updated_at > ?)', timestamp, max_id, timestamp)
+    end
+  end
+
   def self.not_sent_in_peoplevox
     where({ sent_in_peoplevox: nil })
   end

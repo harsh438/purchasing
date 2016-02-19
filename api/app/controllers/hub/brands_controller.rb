@@ -4,12 +4,14 @@ class Hub::BrandsController < ApplicationController
     request_params = params[:parameters]
 
     limit = default_param(request_params[:limit], 200)
-    last_timestamp = default_param(request_params[:last_timestamp], Time.now)
+    last_timestamp = default_param(request_params[:last_timestamp], nil)
     last_id = default_param(request_params[:last_id], 0)
 
-    results = Vendor.where('(updated_at >= ? or updated_at is null) and venID > ?', last_timestamp, last_id)
+    results = Vendor.updated_since(last_timestamp, last_id)
                     .order(updated_at: :asc, id: :asc)
                     .limit(limit)
+    new_timestamp = results.last.try(:updated_at)
+    new_timestamp = Time.new if (results.count < limit.to_i and last_timestamp.nil?) or results.count === 0
 
     render json: {
       request_id: request_id,
@@ -19,8 +21,8 @@ class Hub::BrandsController < ApplicationController
         each_serializer: ::BrandSerializer
       ),
       parameters: {
-        last_timestamp: results.last.try(:updated_at) || last_timestamp,
-        last_id: results.last.try(:id) || last_id
+        last_timestamp: new_timestamp,
+        last_id: results.last.try(:id)
       }
     }
   end
