@@ -32,6 +32,12 @@ FactoryGirl.define do
       updated_at 1.year.ago
     end
 
+    trait :with_fixed_updated_date do
+      # does not matter which date it is as long as it's really old and the same
+      updated_at Time.parse('1948-02-18T17:26:26')
+      record_timestamps false
+    end
+
     trait :with_recent_updated_date do
       updated_at 5.minutes.ago
     end
