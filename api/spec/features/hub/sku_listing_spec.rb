@@ -28,7 +28,7 @@ feature 'Listing Skus for the hub' do
     then_i_should_have_valid_data_returned
   end
 
-   scenario 'Paging works' do
+  scenario 'Paging works' do
     when_i_request_a_limited_list_of_skus
     then_the_paging_should_work
   end
@@ -187,7 +187,6 @@ feature 'Listing Skus for the hub' do
     timestamp_returned = subject['parameters']['last_timestamp']
     expect((Time.parse(timestamp_returned) - timestamp).abs).to be < maximum_diff
   end
-
 
   def last_id_should_be(last_id)
     expect(subject['parameters']['last_id'].to_s).to eq(last_id.to_s)
