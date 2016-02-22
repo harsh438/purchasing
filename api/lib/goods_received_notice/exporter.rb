@@ -126,7 +126,13 @@ class GoodsReceivedNotice::Exporter
 
     row[1] = delivery_date.to_s
     row[2] = original_delivery_date.to_s || delivery_date.to_s
-    row[3] = vendors[vendor_id].name
+
+    if vendors[vendor_id].present?
+      row[3] = vendors[vendor_id].name
+    else
+      Raven.capture_message("GoodsReceivedNotice::Exporter could not find vendor name for '#{vendor_id}'")
+    end
+
     row[8] = pallets_expected.to_s
     row[10] = users[user_id].try(:name)
     row
