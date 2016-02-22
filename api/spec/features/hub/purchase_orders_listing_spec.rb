@@ -214,17 +214,19 @@ feature 'Listing Purchase Orders for the hub' do
   let(:recent_date) { 30.minutes.ago.iso8601 }
 
   let (:create_purchase_orders) do
-    purchase_orders_with_old_updated_date
-    purchase_orders_with_recent_updated_date
-    purchase_orders_with_fixed_date
-    purchase_orders_without_date
+    PurchaseOrder.no_touching do
+      purchase_orders_with_old_updated_date
+      purchase_orders_with_recent_updated_date
+      purchase_orders_with_fixed_date
+      purchase_orders_without_date
 
-    # none of these should not be listed
-    create_list(:purchase_order, 1, :with_line_items)
-    create_list(:purchase_order, 2, :with_line_items, :with_grn_events)
-    create_list(:purchase_order, 3, :with_line_items_sent_in_peoplevox, :with_grn_events)
-    create_list(:purchase_order, 4, :with_line_items, :with_grn_events, :with_old_updated_date)
-    create_list(:purchase_order, 5, :with_line_items, :with_old_updated_date)
+      # none of these should not be listed
+      create_list(:purchase_order, 1, :with_line_items)
+      create_list(:purchase_order, 2, :with_line_items, :with_grn_events)
+      create_list(:purchase_order, 3, :with_line_items_sent_in_peoplevox, :with_grn_events)
+      create_list(:purchase_order, 4, :with_line_items, :with_grn_events, :with_old_updated_date)
+      create_list(:purchase_order, 5, :with_line_items, :with_old_updated_date)
+    end
   end
 
   let(:purchase_orders_with_old_updated_date) do
