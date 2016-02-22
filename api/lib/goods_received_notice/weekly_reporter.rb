@@ -15,7 +15,7 @@ class GoodsReceivedNotice::WeeklyReporter
     params.values_at(:start_date, :end_date).map(&:to_date)
   rescue ArgumentError => e
     if e.message == 'invalid date'
-      [Date.today.beginning_of_week - 2.weeks, (Date.today.beginning_of_week + 2.weeks + 5.days)]
+      [Date.today.beginning_of_week - 2.weeks, (Date.today.beginning_of_week + 2.weeks + 4.days)]
     else
       raise e
     end
