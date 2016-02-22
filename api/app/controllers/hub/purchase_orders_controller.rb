@@ -6,7 +6,7 @@ class Hub::PurchaseOrdersController < ApplicationController
     limit = default_param(request_params[:limit], 10)
     # otherwise this will destroy the server because there is too much queries
     limit = 60 if limit.to_i > 60
-    last_timestamp = default_param(request_params[:last_timestamp], Time.now)
+    last_timestamp = default_param(request_params[:last_timestamp], nil)
     last_id = default_param(request_params[:last_id], 0)
 
     results = PurchaseOrder.has_been_updated_since(last_timestamp, last_id)
@@ -16,10 +16,20 @@ class Hub::PurchaseOrdersController < ApplicationController
                            .limit(limit)
                            .includes_line_items
 
-    render json: create_hub_object(results, request_id, last_timestamp, last_id)
+    render json: create_hub_object(results, request_id, last_timestamp, limit)
   end
 
-  def create_hub_object(purchase_orders, request_id, last_timestamp, last_id)
+  private
+
+  def get_new_timestamp(results, last_timestamp, limit)
+    new_timestamp = results.last.try(:updated_at)
+    if (results.count < limit.to_i and last_timestamp.nil?) or results.count === 0
+      new_timestamp = Time.new
+    end
+    new_timestamp
+  end
+
+  def create_hub_object(purchase_orders, request_id, last_timestamp, limit)
     {
       request_id: request_id,
       summary: "Returned #{purchase_orders.size} purchase orders objects.",
@@ -28,21 +38,10 @@ class Hub::PurchaseOrdersController < ApplicationController
         each_serializer: PurchaseOrderSerializer
       ),
       parameters: {
-        last_timestamp: purchase_orders.last.try(:updated_at) || last_timestamp,
-        last_id: purchase_orders.last.try(:id) || last_id
+        last_timestamp: get_new_timestamp(purchase_orders, last_timestamp, limit),
+        last_id: purchase_orders.last.try(:id)
       }
     }
-  end
-
-  def pvx_confirm
-    purchase_order_id = params[:purchase_order][:id]
-    purchase_order = PurchaseOrder.includes(:line_items).find(purchase_order_id)
-    purchase_order.line_items.each do |line_item|
-      line_item.sent_to_peoplevox = 1
-      line_item.save
-    end
-    message = "PurchaseOrder #{purchase_order_id} has been marked as sent to PeopleVox and won't be processed again."
-    render json: { message: message }
   end
 
   private
