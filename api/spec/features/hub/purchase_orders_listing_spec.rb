@@ -222,11 +222,11 @@ feature 'Listing Purchase Orders for the hub' do
 
       # none of these should not be listed
       create_list(:purchase_order, 1, :with_line_items)
-      create_list(:purchase_order, 2, :with_line_items, :with_grn_events)
-      create_list(:purchase_order, 3, :with_line_items_sent_in_peoplevox, :with_grn_events)
-      create_list(:purchase_order, 4, :with_line_items, :with_grn_events, :with_old_updated_date)
-      create_list(:purchase_order, 5, :with_line_items, :with_old_updated_date)
-      create_list(:purchase_order, 6, :with_line_items_with_barcode, :with_grn_events, :with_recent_updated_date)
+      create_list(:purchase_order, 1, :with_line_items, :with_grn_events)
+      create_list(:purchase_order, 1, :with_line_items_sent_in_peoplevox, :with_grn_events)
+      create_list(:purchase_order, 1, :with_line_items, :with_grn_events, :with_old_updated_date)
+      create_list(:purchase_order, 1, :with_line_items, :with_old_updated_date)
+      create_list(:purchase_order, 1, :with_line_items_with_barcode, :with_grn_events, :with_recent_updated_date)
     end
   end
 
