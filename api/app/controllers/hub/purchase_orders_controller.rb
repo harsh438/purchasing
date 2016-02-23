@@ -11,6 +11,7 @@ class Hub::PurchaseOrdersController < ApplicationController
 
     results = PurchaseOrder.has_been_updated_since(last_timestamp, last_id)
                            .with_barcodes
+                           .without_negative_pids
                            .booked_in
                            .order(updated_at: :asc, id: :asc)
                            .limit(limit)

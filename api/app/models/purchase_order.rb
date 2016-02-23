@@ -31,6 +31,10 @@ class PurchaseOrder < ActiveRecord::Base
     end
   end
 
+  def self.without_negative_pids
+    joins(:line_items).where('purchase_orders.pID > 0')
+  end
+
   def self.from_yesterday
     where('po_date > ?', Date.yesterday)
   end
