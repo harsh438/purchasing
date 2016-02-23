@@ -42,6 +42,10 @@ FactoryGirl.define do
       barcode 'Sample Barcode'
     end
 
+    trait :with_product do
+      product_id { create(:product).id }
+    end
+
     trait :with_option do
       option_id { create(:option).id }
 
