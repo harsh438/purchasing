@@ -20,7 +20,7 @@ FactoryGirl.define do
     end
 
     trait :with_balance_line_items do
-      line_items { build_list(:purchase_order_line_item, 2, :balanced, vendor: vendor) }
+      line_items { build_list(:purchase_order_line_item, 2, :balance, vendor: vendor) }
     end
 
     trait :with_old_drop_date do

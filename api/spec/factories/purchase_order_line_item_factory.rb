@@ -9,7 +9,7 @@ FactoryGirl.define do
     drop_date 4.days.ago
     invoice_payable_date 3.days.ago
     product_sku { Faker::Lorem.characters(32) }
-    status 4
+    status 1
     sku
 
     # These should be blank.
@@ -20,10 +20,11 @@ FactoryGirl.define do
     manufacturer_size 'MAN_SIZE'
     product_size 'SD_SIZE'
 
-    trait :balanced do
+    trait :balance do
+      status 4
       qty 10
       qtyAdded 0
-      qtyDone 10
+      qtyDone 5
     end
 
     trait :sent_in_peoplevox do

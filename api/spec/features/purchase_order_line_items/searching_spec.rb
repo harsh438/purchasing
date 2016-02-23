@@ -129,7 +129,8 @@ feature 'Listing purchase orders' do
     @po_with_strange_state = create(:purchase_order_line_item,
                                     :with_summary,
                                     status: 4,
-                                    quantity: 5)
+                                    quantity: 5,
+                                    quantity_done: 5)
   end
 
   def when_i_filter_by_balance_status
@@ -168,9 +169,7 @@ feature 'Listing purchase orders' do
     create_list(:purchase_order_line_item,
                 20,
                 :with_summary,
-                status: 4,
-                qty: 5,
-                quantity_done: 5,
+                :balance,
                 season: 'AW15',
                 delivery_date: Time.new(2013, 1, 1))
 

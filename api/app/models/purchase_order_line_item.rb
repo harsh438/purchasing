@@ -1,4 +1,4 @@
-class PurchaseOrderLineItem < ActiveRecord::Base
+  class PurchaseOrderLineItem < ActiveRecord::Base
   self.table_name = 'purchase_orders'
 
   include ActionView::Helpers::NumberHelper
@@ -23,7 +23,7 @@ class PurchaseOrderLineItem < ActiveRecord::Base
       where('(purchase_orders.status IN (?)) OR
              (purchase_orders.status=4 AND (purchase_orders.qty +
                                             purchase_orders.qtyAdded -
-                                            purchase_orders.qtyDone) = 0)', filtered_values)
+                                            purchase_orders.qtyDone) > 0)', filtered_values)
     else
       where(status: values)
     end
