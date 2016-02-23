@@ -58,7 +58,7 @@ feature 'Listing Purchase Orders for the hub' do
 
   def then_i_should_get_purchase_orders_with_line_items
     request_id_should_be_identical
-    expect(subject['purchase_orders'].count).to be(20)
+    expect(subject['purchase_orders'].count).to be(6)
     purchase_orders_should_contain_purchase_orders_fields
   end
 
@@ -67,7 +67,7 @@ feature 'Listing Purchase Orders for the hub' do
     page.driver.post latest_hub_purchase_orders_path, {
       request_id: request_id,
       parameters: {
-        limit: 10,
+        limit: 2,
         last_timestamp: a_long_time_ago,
         last_id: 0
       }
@@ -76,7 +76,7 @@ feature 'Listing Purchase Orders for the hub' do
 
   def then_i_should_have_purchase_orders_listed_with_a_limit
     request_id_should_be_identical
-    expect(subject['purchase_orders'].count).to be(10)
+    expect(subject['purchase_orders'].count).to be(2)
     purchase_orders_should_contain_purchase_orders_fields
   end
 
@@ -94,7 +94,7 @@ feature 'Listing Purchase Orders for the hub' do
 
   def then_i_should_get_a_list_of_purchase_orders_within_timestamp
     request_id_should_be_identical
-    expect(subject['purchase_orders'].count).to be(15)
+    expect(subject['purchase_orders'].count).to be(3)
     purchase_orders_should_contain_purchase_orders_fields
   end
 
@@ -106,14 +106,14 @@ feature 'Listing Purchase Orders for the hub' do
       parameters: {
         limit: 40,
         last_timestamp: fixed_date,
-        last_id: purchase_orders_with_fixed_date.third.id
+        last_id: purchase_orders_with_fixed_date.second.id
       }
     }
   end
 
   def then_i_should_get_a_list_of_purchase_orders_with_id_limit
     request_id_should_be_identical
-    expect(subject['purchase_orders'].count).to be(30 - 3)
+    expect(subject['purchase_orders'].count).to be(7)
     purchase_orders_should_contain_purchase_orders_fields
   end
 
@@ -140,35 +140,35 @@ feature 'Listing Purchase Orders for the hub' do
     create_purchase_orders
     page.driver.post latest_hub_purchase_orders_path, {
       request_id: request_id,
-      parameters: { limit: 4 }
+      parameters: { limit: 2 }
     }
   end
 
   def then_the_paging_should_work
     request_id_should_be_identical
-    expect(subject['purchase_orders'].count).to be(4)
+    expect(subject['purchase_orders'].count).to be(2)
     expect(subject['parameters']['last_timestamp']).to be(nil)
 
-    then_i_request_the_next_page(items: 4)
+    then_i_request_the_next_page(items: 2)
     expect(subject['purchase_orders'].count).to be(1)
     timestamp_should_roughly_be(Time.now)
 
-    then_i_request_the_next_page(items: 4, last_timestamp: a_long_time_ago)
+    then_i_request_the_next_page(items: 2, last_timestamp: a_long_time_ago)
     request_id_should_be_identical
-    expect(subject['purchase_orders'].count).to be(4)
-    last_id_should_be(purchase_orders_with_old_updated_date[3].id)
+    expect(subject['purchase_orders'].count).to be(2)
+    last_id_should_be(purchase_orders_with_old_updated_date[1].id)
     purchase_orders_should_contain_purchase_orders_fields
 
-    then_i_request_the_next_page(items: 4)
+    then_i_request_the_next_page(items: 2)
     request_id_should_be_identical
-    expect(subject['purchase_orders'].count).to be(4)
+    expect(subject['purchase_orders'].count).to be(2)
     timestamp_should_roughly_be(purchase_orders_with_recent_updated_date.first.updated_at)
-    last_id_should_be(purchase_orders_with_recent_updated_date[2].id)
+    last_id_should_be(purchase_orders_with_recent_updated_date.first.id)
     purchase_orders_should_contain_purchase_orders_fields
 
-    then_i_request_the_next_page(items: 40)
+    then_i_request_the_next_page(items: 20)
     request_id_should_be_identical
-    expect(subject['purchase_orders'].count).to be(12)
+    expect(subject['purchase_orders'].count).to be(2)
     timestamp_should_roughly_be(purchase_orders_with_recent_updated_date.first.updated_at)
     last_id_should_be(purchase_orders_with_recent_updated_date.last.id)
     purchase_orders_should_contain_purchase_orders_fields
@@ -231,18 +231,18 @@ feature 'Listing Purchase Orders for the hub' do
   end
 
   let(:purchase_orders_with_old_updated_date) do
-    create_list(:purchase_order, 5, :with_line_items_with_barcode_and_product, :with_grn_events, :with_old_updated_date)
+    create_list(:purchase_order, 3, :with_line_items_with_barcode_and_product, :with_grn_events, :with_old_updated_date)
   end
 
   let(:purchase_orders_with_recent_updated_date) do
-    create_list(:purchase_order, 15, :with_line_items_with_barcode_and_product, :with_grn_events, :with_recent_updated_date)
+    create_list(:purchase_order, 3, :with_line_items_with_barcode_and_product, :with_grn_events, :with_recent_updated_date)
   end
 
   let(:purchase_orders_with_fixed_date) do
-    create_list(:purchase_order, 10, :with_line_items_with_barcode_and_product, :with_grn_events, :with_fixed_updated_date)
+    create_list(:purchase_order, 3, :with_line_items_with_barcode_and_product, :with_grn_events, :with_fixed_updated_date)
   end
 
   let(:purchase_orders_without_date) do
-    create_list(:purchase_order, 5, :with_line_items_with_barcode_and_product, :with_grn_events, :without_updated_date)
+    create_list(:purchase_order, 3, :with_line_items_with_barcode_and_product, :with_grn_events, :without_updated_date)
   end
 end
