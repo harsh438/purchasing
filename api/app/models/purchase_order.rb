@@ -44,7 +44,7 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def self.with_barcodes
-    includes(:line_items).where.not(purchase_orders: { orderTool_barcode: nil })
+    includes(line_items: { sku: :barcodes }).where.not({ barcodes: { id: nil } })
   end
 
   def self.booked_in
