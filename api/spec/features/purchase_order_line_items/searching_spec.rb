@@ -14,8 +14,8 @@ feature 'Listing purchase orders' do
 
   scenario 'Pagination of purchase orders' do
     given_there_are_many_pages_of_purchase_orders
-    when_i_visit_the_third_page_of_results
-    then_i_should_see_one_result
+    when_i_visit_the_last_page_of_results
+    then_i_should_see_the_last_results
   end
 
   scenario 'Filtering by vendor' do
@@ -61,7 +61,7 @@ feature 'Listing purchase orders' do
 
   def given_there_are_many_pages_of_purchase_orders
     create_list(:purchase_order_line_item,
-                150,
+                250,
                 :with_summary,
                 status: 4,
                 season: 'AW15',
@@ -82,15 +82,15 @@ feature 'Listing purchase orders' do
   end
 
   def then_i_should_see_the_first_page_of_orders_for_that_vendor
-    expect(subject['results'].count).to eq(15)
+    expect(subject['results'].count).to eq(3)
   end
 
-  def when_i_visit_the_third_page_of_results
+  def when_i_visit_the_last_page_of_results
     visit purchase_order_line_items_path(page: 2)
   end
 
-  def then_i_should_see_one_result
-    expect(subject['results'].count).to eq(1)
+  def then_i_should_see_the_last_results
+    expect(subject['results'].count).to eq(65)
   end
 
   def when_i_filter_by_status
@@ -98,7 +98,7 @@ feature 'Listing purchase orders' do
   end
 
   def then_i_should_see_the_first_page_of_orders_with_that_status
-    expect(subject['results'].count).to eq(20)
+    expect(subject['results'].count).to eq(7)
   end
 
   def when_i_filter_by_multiple_statuses
@@ -106,7 +106,7 @@ feature 'Listing purchase orders' do
   end
 
   def then_i_should_see_the_first_page_of_orders_with_those_statuses
-    expect(subject['results'].count).to eq(35)
+    expect(subject['results'].count).to eq(10)
   end
 
   def when_i_filter_by_season
@@ -114,7 +114,7 @@ feature 'Listing purchase orders' do
   end
 
   def then_i_should_see_the_first_page_of_orders_for_that_season
-    expect(subject['results'].count).to eq(20)
+    expect(subject['results'].count).to eq(7)
   end
 
   def when_i_filter_by_date_from
@@ -122,7 +122,7 @@ feature 'Listing purchase orders' do
   end
 
   def then_i_should_see_the_first_page_of_orders_after_that_date
-    expect(subject['results'].count).to eq(35)
+    expect(subject['results'].count).to eq(10)
   end
 
   def given_there_is_a_purchase_order_with_a_balance_status_but_no_outstanding_items
@@ -167,14 +167,14 @@ feature 'Listing purchase orders' do
 
   def create_purchase_orders
     create_list(:purchase_order_line_item,
-                20,
+                7,
                 :with_summary,
                 :balance,
                 season: 'AW15',
                 delivery_date: Time.new(2013, 1, 1))
 
     create_list(:purchase_order_line_item,
-                16,
+                5,
                 :with_summary,
                 :arrived,
                 status: 5,
@@ -182,7 +182,7 @@ feature 'Listing purchase orders' do
                 delivery_date: Time.new(2011, 1, 1))
 
     create_list(:purchase_order_line_item,
-                15,
+                3,
                 :with_summary,
                 vendor: vendor,
                 status: -1,
