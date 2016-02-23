@@ -203,7 +203,7 @@ feature 'Listing Purchase Orders for the hub' do
   end
 
   def timestamp_should_roughly_be(timestamp)
-    maximum_diff = 10.minutes.to_i
+    maximum_diff = 20.minutes.to_i
     timestamp_returned = subject['parameters']['last_timestamp']
     expect((Time.parse(timestamp_returned) - timestamp).abs).to be < maximum_diff
   end
