@@ -215,5 +215,4 @@ feature 'Listing Skus for the hub' do
   let(:skus_with_fixed_updated_date) { create_list(:sku, 5, :with_fixed_updated_date) }
   let(:skus_with_recent_updated_date) { create_list(:sku, 10, :with_recent_updated_date) }
   let(:skus_with_old_updated_date) { create_list(:sku, 5, :with_old_updated_date) }
-
 end
