@@ -87,7 +87,7 @@
   belongs_to :vendor, foreign_key: :orderTool_venID
   belongs_to :product, foreign_key: :pID
   belongs_to :option, foreign_key: :oID
-  belongs_to :purchase_order, foreign_key: :po_number
+  belongs_to :purchase_order, foreign_key: :po_number, touch: true
   belongs_to :sku
   belongs_to :language_category, foreign_key: :category_id
 
