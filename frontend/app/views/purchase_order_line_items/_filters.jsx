@@ -96,7 +96,7 @@ export default class PurchaseOrdersFilters extends React.Component {
 
               <div className="row no_gutter">
                 <div className="col-md-2 form-group">
-                  <label htmlFor="dateFrom">Date From</label>
+                  <label htmlFor="dateFrom">Drop Date From</label>
 
                   <input className="form-control"
                          name="dateFrom"
@@ -106,7 +106,7 @@ export default class PurchaseOrdersFilters extends React.Component {
                 </div>
 
                 <div className="col-md-2 form-group">
-                  <label htmlFor="dateUntil">Date Until</label>
+                  <label htmlFor="dateUntil">Drop Date Until</label>
 
                   <input className="form-control"
                          name="dateUntil"
