@@ -6,12 +6,7 @@ export default class PurchaseOrderTableHeader extends React.Component {
     return (
       <thead ref="thead">
         <tr>
-          <th colSpan="2">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </th>
+          <th colSpan="2" style={{ paddingTop: '30px' }}></th>
 
           <th colSpan="9" style={{ borderLeft: '2px solid #ddd' }}>
             Product
