@@ -31,7 +31,8 @@ class SupplierTerms < ActiveRecord::Base
                                                                     image/png
                                                                     image/x-png
                                                                     application/pdf
-                                                                    application/x-pdf)
+                                                                    application/x-pdf
+                                                                    message/rfc822)
 
   paginates_per 50
 
