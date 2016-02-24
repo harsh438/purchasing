@@ -34,6 +34,14 @@ export default class OrdersFilters extends React.Component {
             </select>
           </div>
 
+          <div className="form-group col-md-2">
+            <label htmlFor="brand_name">Order Name</label>
+            <input className="form-control"
+                    id="name"
+                    name="name"
+                    value={this.getFilter('name')} />
+          </div>
+
           <div className="form-group col-md-4"
                style={{ marginTop: '1.74em' }}>
             <div className="btn-group"
