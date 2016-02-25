@@ -36,4 +36,4 @@ deployment:
     commands:
       - aws s3 cp --recursive "s3://$S3_DEPLOYMENT_BUCKET/devops/" .
       - chmod +x deploy-new.sh
-      - ./deploy-new.sh
+      - ./deploy.sh
