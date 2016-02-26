@@ -10,7 +10,11 @@ export default function reduceNotification(state = {}, action) {
   case 'SUCCESS_NOTIFICATION':
   case 'ERROR_NOTIFICATION':
     return assign({}, state, {
-      notification: { type: notificationType[action.type], text: action.text, date: new Date().toISOString() },
+      notification: {
+        type: notificationType[action.type],
+        text: action.text,
+        date: new Date().toISOString(),
+      },
     });
   default:
     return state;
