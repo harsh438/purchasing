@@ -22,6 +22,7 @@ class Product < ActiveRecord::Base
   has_many :product_categories, foreign_key: :pID
   has_many :categories, through: :product_categories
   belongs_to :product_detail, foreign_key: :pID
+  has_many :skus
 
   def as_json(*args)
     super.merge(id: id, manufacturer_sku: manufacturer_sku, price: price)
