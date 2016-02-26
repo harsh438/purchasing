@@ -34,6 +34,8 @@ Rails.application.routes.draw do
 
     resources :packing_lists, only: :index
 
+    resources :elements, only: :index
+
     resources :purchase_orders, only: [:index, :show] do
       member do
         post :cancel
