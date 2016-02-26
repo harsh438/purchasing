@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 class SkusNew extends React.Component {
   render() {
     return (<div className="skus_new container-fluid application-root-container">
-    </div>)
+    </div>);
   }
 }
 
