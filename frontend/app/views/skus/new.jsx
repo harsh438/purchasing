@@ -3,11 +3,13 @@ import NotificationSystem from 'react-notification-system';
 import { connect } from 'react-redux';
 import { assign } from 'lodash';
 import { createSkuByPid } from '../../actions/skus';
+import { loadElements } from '../../actions/elements';
 import { processNotifications } from '../../utilities/notification';
 
 class SkusNew extends React.Component {
   componentWillMount() {
-    this.state = { sku: {} };
+    this.state = { sku: {}, elements: [] };
+    this.props.dispatch(loadElements());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -42,10 +44,22 @@ class SkusNew extends React.Component {
                  placeholder="PID associated with the SKU"
                  value={this.state.sku.productId} />
           <br />
+          <label htmlFor="product_id">Surfdome Size</label>
+          <select className="form-control">
+            {this.renderElements()}
+          </select>
+          <br />
           {this.renderSubmitButton()}
         </form>
       </div>
     );
+  }
+
+  renderElements() {
+    let elements = this.props.elements;
+    return elements.map((element) => {
+      return <option key={element.id}>{element.name}</option>;
+    });
   }
 
   renderSubmitButton() {
@@ -68,8 +82,8 @@ class SkusNew extends React.Component {
   }
 }
 
-function applyState({ skus, notification }) {
-  return assign({}, skus, notification);;
+function applyState({ skus, notification, elements }) {
+  return assign({}, skus, notification, elements);
 }
 
 export default connect(applyState)(SkusNew);
