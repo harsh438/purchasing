@@ -13,6 +13,7 @@ import reduceSuppliers  from './reducers/supplier';
 import reduceSupplierTerms from './reducers/supplier_terms';
 import reduceUsers  from './reducers/users';
 import reduceVendors  from './reducers/vendor';
+import reduceElements from './reducers/elements';
 
 import thunk from 'redux-thunk';
 
@@ -31,7 +32,9 @@ const reducer = combineReducers({ advanced: reduceAdvancedMode,
                                   suppliers: reduceSuppliers,
                                   supplierTerms: reduceSupplierTerms,
                                   users: reduceUsers,
-                                  vendors: reduceVendors });
+                                  vendors: reduceVendors,
+                                  elements: reduceElements,
+                                });
 
 const store = applyMiddleware(...middleware)(createStore)(reducer);
 window.store = store;
