@@ -1,5 +1,6 @@
 import React from 'react';
 import Qs from 'qs';
+import NotificationSystem from 'react-notification-system';
 import { assign, clone, omit } from 'lodash';
 import { snakeizeKeys } from '../utilities/inspection';
 
@@ -34,4 +35,27 @@ export function saveSku(id, attrs) {
 
 export function addBarcodeToSku(id, barcode) {
   return saveSku(id, { barcodes_attributes: [{ barcode }] });
+}
+
+function throw404Error(response) {
+  if (response.status === 404) {
+    throw "404";
+  } else {
+    return response;
+  }
+}
+
+export function createSkuByPid(attrs) {
+  return dispatch => {
+    fetch(`/api/skus/create_by_pid.json`, { credentials: 'same-origin',
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ sku: snakeizeKeys(attrs) }) })
+    .then(throw404Error)
+    .then(response => response.json())
+    .then(sku => dispatch({ sku, type: 'LOAD_SKU' }))
+    .catch(() => {
+      dispatch({ text: `Unable to find PID with ID ${attrs.productId}`, type: 'ERROR_NOTIFICATION' });
+    });
+  };
 }
