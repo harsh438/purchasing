@@ -6,6 +6,11 @@ feature 'SKU generation by PID' do
     then_the_api_should_return_404
   end
 
+  scenario 'Generating skus with PID' do
+    when_i_generate_sku_from_pid
+    then_the_api_should_return_a_new_copied_sku
+  end
+
   def when_i_generate_from_an_non_existent_pid
     page.driver.post create_by_pid_skus_path, { sku: { product_id: non_existent_pid } }
   end
@@ -14,6 +19,20 @@ feature 'SKU generation by PID' do
     expect(page.driver.status_code).to be(404)
   end
 
-  let(:product) { create(:product) }
+  def when_i_generate_sku_from_pid
+    page.driver.post create_by_pid_skus_path, {
+      sku: {
+        product_id: product_with_skus.id,
+        element_id: element.id
+      }
+    }
+  end
+
+  def then_the_api_should_return_a_new_copied_sku
+
+  end
+
+  let(:product_with_skus) { create(:product, :with_skus) }
+  let(:element) { create(:element) }
   let(:non_existent_pid) { 999999999 }
 end
