@@ -13,8 +13,6 @@ fi
 if `docker-compose run frontend npm run-script build > /tmp/frontend-lint.tmp.log`; then
     echo "[+] Frontend build - Success";
 else
-    cat /tmp/front-end-lint.tmp.log;
+    cat /tmp/frontend-lint.tmp.log;
     exit 1;
 fi
-
-
