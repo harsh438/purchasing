@@ -6,6 +6,10 @@ FactoryGirl.define do
     manufacturer_sku '123456-123'
     vendor_id { create(:vendor).id }
 
+    trait :with_skus do
+      skus { build_list(:sku, 2) }
+    end
+
     after(:create) do |product, evaluator|
       option = create(:option)
       create(:language_product, product_id: product.id)
