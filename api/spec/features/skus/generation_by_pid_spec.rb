@@ -7,7 +7,7 @@ feature 'SKU generation by PID' do
   end
 
   def when_i_generate_from_an_non_existent_pid
-    page.driver.post create_by_pid_skus_path, { product_id: non_existent_pid }
+    page.driver.post create_by_pid_skus_path, { sku: { product_id: non_existent_pid } }
   end
 
   def then_the_api_should_return_404
