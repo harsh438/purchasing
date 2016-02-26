@@ -18,6 +18,7 @@ import VendorsNew from './views/vendors/new';
 import GoodsReceivedNoticesIndex from './views/goods_received_notices/index';
 import SkusIndex from './views/skus/index';
 import SkusEdit from './views/skus/edit';
+import SkusNew from './views/skus/new';
 import BarcodesIndex from './views/barcodes/index';
 import PackingListsIndex from './views/packing_lists/index';
 
@@ -25,6 +26,7 @@ export default (
   <Router history={createHistory()}>
     <Route path="/" component={PurchasingLayout}>
       <Route path="skus" component={SkusIndex} />
+      <Route path="skus/new" component={SkusNew} />
       <Route path="skus/:id/edit" component={SkusEdit} />
 
       <Route path="barcodes" component={BarcodesIndex} />
