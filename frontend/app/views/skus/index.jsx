@@ -30,6 +30,10 @@ class SkusIndex extends React.Component {
     return (
       <div className="suppliers_index container-fluid"
            style={{ marginTop: '70px' }}>
+            <Link className="pull-right btn btn-success"
+                  to={`/skus/new`}>
+              Add new SKU
+            </Link>
         <div className="row" style={{ marginBottom: '20px' }}>
           <div className="col-md-4">
             <h1>SKUs</h1>
