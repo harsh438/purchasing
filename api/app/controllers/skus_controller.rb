@@ -14,7 +14,7 @@ class SkusController < ApplicationController
 
   def create_by_pid
     begin
-      sku = Sku::Generator.new.generate_by_pid(params[:product_id])
+      sku = Sku::CreateByPid.new.create(params[:sku][:product_id])
     rescue ActiveRecord::RecordNotFound
       return render json: { message: "Unable to find PID" }, status: 404
     end
