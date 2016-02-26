@@ -12,6 +12,15 @@ class SkusController < ApplicationController
     render json: sku.as_json_with_vendor_category_and_barcodes
   end
 
+  def create_by_pid
+    begin
+      sku = Sku::Generator.new.generate_by_pid(params[:product_id])
+    rescue ActiveRecord::RecordNotFound
+      return render json: { message: "Unable to find PID" }, status: 404
+    end
+    render json: {}
+  end
+
   def show
     render json: sku.as_json_with_vendor_category_and_barcodes
   end
