@@ -7,10 +7,6 @@ class Sku::Generator
     end
   end
 
-  def generate_by_pid(pid)
-    product = Product.find(pid)
-  end
-
   private
 
   def attrs
