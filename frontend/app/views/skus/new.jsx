@@ -45,7 +45,10 @@ class SkusNew extends React.Component {
                  value={this.state.sku.productId} />
           <br />
           <label htmlFor="product_id">Surfdome Size</label>
-          <select className="form-control">
+          <select className="form-control"
+                  id="elementId"
+                  name="elementId"
+                  value={this.state.sku.elementId}>
             {this.renderElements()}
           </select>
           <br />
@@ -58,7 +61,7 @@ class SkusNew extends React.Component {
   renderElements() {
     let elements = this.props.elements;
     return elements.map((element) => {
-      return <option key={element.id}>{element.name}</option>;
+      return <option key={element.id} value={element.id}>{element.name}</option>;
     });
   }
 
