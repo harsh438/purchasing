@@ -4,7 +4,7 @@ class Sku::CreateByPid
     product = Product.find(options[:product_id].to_i)
     element = Element.find(options[:element_id].to_i)
     last_sku = product.skus.order(:created_at).last
-    sku = Sku::Generator.new.generate_new_sku(copy_sku_attributes(last_sku, product, element))
+    sku = Sku::Generator.new.generate(copy_sku_attributes(last_sku, product, element))
     save_sku(sku, product, last_sku)
   end
 
