@@ -13,6 +13,11 @@ class SkusNew extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const oldSkuId = (this.props.sku || {}).id;
+    const newSkuId = (nextProps.sku || {}).id;
+    if (oldSkuId !== newSkuId) {
+      this.props.history.pushState(null, `/skus/${nextProps.sku.id}/edit`);
+    }
     this.setState({ submitting: false });
     processNotifications.call(this, nextProps);
   }
@@ -42,13 +47,16 @@ class SkusNew extends React.Component {
                  id="productId"
                  name="productId"
                  placeholder="PID associated with the SKU"
-                 value={this.state.sku.productId} />
+                 value={this.state.sku.productId}
+                 required />
           <br />
           <label htmlFor="product_id">Surfdome Size</label>
           <select className="form-control"
                   id="elementId"
                   name="elementId"
-                  value={this.state.sku.elementId}>
+                  value={this.state.sku.elementId}
+                  required >
+            <option value="">Please select a Surfdome Size</option>
             {this.renderElements()}
           </select>
           <br />
