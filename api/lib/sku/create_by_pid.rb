@@ -1,19 +1,18 @@
 class Sku::CreateByPid
-  def create(options = {})
-    options.slice!(:product_id, :element_id)
-    product = Product.find(options[:product_id].to_i)
-    element = Element.find(options[:element_id].to_i)
-    last_sku = product.skus.order(:created_at).last
-    sku = Sku::Generator.new.generate(copy_sku_attributes(last_sku, product, element))
-    save_sku(sku, product, last_sku)
+  def create(options)
+    ActiveRecord::Base.transaction do
+      generate_sku(options)
+    end
   end
 
   private
-  def save_sku(sku, product, last_sku)
-    sku.product_id = product.id
-    sku.language_product_id = last_sku.language_product_id
-    sku.save!
-    sku
+
+  def generate_sku(options)
+    product = Product.find(options.fetch(:product_id))
+    element = Element.find(options.fetch(:element_id))
+    last_sku = product.skus.order(:created_at).last
+    sku = Sku::Generator.new.generate(copy_sku_attributes(last_sku, product, element))
+    save_sku(sku, product, last_sku)
   end
 
   def copy_sku_attributes(sku, product, element)
@@ -21,5 +20,12 @@ class Sku::CreateByPid
     sku_attrs[:internal_sku] = "#{product.id}-#{element.name}"
     sku_attrs[:size] = element.name
     sku_attrs
+  end
+
+  def save_sku(sku, product, last_sku)
+    sku.product_id = product.id
+    sku.language_product_id = last_sku.language_product_id
+    sku.save!
+    sku
   end
 end
