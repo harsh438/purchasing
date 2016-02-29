@@ -5,7 +5,11 @@ class Sku::CreateByPid
     element = Element.find(options[:element_id].to_i)
     last_sku = product.skus.order(:created_at).last
     sku_attrs = copy_sku_attributes(last_sku, product, element)
-    Sku::Generator.new.generate_new_sku(sku_attrs)
+    sku = Sku::Generator.new.generate_new_sku(sku_attrs)
+    sku.product_id = product.id
+    sku.language_product_id = last_sku.language_product_id
+    sku.save!
+    sku
   end
 
   private
