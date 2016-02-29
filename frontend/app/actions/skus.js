@@ -4,6 +4,14 @@ import NotificationSystem from 'react-notification-system';
 import { assign, clone, omit } from 'lodash';
 import { snakeizeKeys } from '../utilities/inspection';
 
+function throwErrors(response) {
+  if (response.status < 200 || response.status >= 300) {
+    throw "We are experiencing technical difficulties. Support has been notified.";
+  } else {
+    return response;
+  }
+}
+
 export function loadSkus(query) {
   const queryString = Qs.stringify(assign({}, query, { filters: snakeizeKeys(query.filters) }));
 
@@ -28,8 +36,12 @@ export function saveSku(id, attrs) {
                                     method: 'PATCH',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ sku: snakeizeKeys(attrs) }) })
+    .then(throwErrors)
     .then(response => response.json())
-    .then(sku => dispatch({ sku, type: 'LOAD_SKU' }));
+    .then(sku => dispatch({ sku, type: 'LOAD_SKU' }))
+    .catch((error) => {
+      dispatch({ text: error, type: 'ERROR_NOTIFICATION' });
+    });
   };
 }
 

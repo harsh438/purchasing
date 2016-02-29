@@ -3,17 +3,24 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { assign } from 'lodash';
 import { loadSku, addBarcodeToSku } from '../../actions/skus';
+import { processNotifications } from '../../utilities/notification';
 import SkusBarcodeForm from './_barcode_form';
 import SkusBarcodeTable from './_barcode_table';
+import NotificationSystem from 'react-notification-system';
 
 class SkusEdit extends React.Component {
   componentWillMount () {
     this.props.dispatch(loadSku(this.props.params.id));
   }
 
+  componentWillReceiveProps(nextProps) {
+    processNotifications.call(this, nextProps);
+  }
+
   render() {
     return (
       <div className="skus_edit container-fluid" style={{ marginTop: '70px' }}>
+        <NotificationSystem ref="notificationSystem" />
         <div className="row" style={{ marginBottom: '20px' }}>
           <div className="col-md-6">
             <h1>
@@ -121,8 +128,8 @@ class SkusEdit extends React.Component {
   }
 }
 
-function applyState({ skus }) {
-  return skus;
+function applyState({ skus, notification }) {
+  return assign({}, skus, notification);
 }
 
 export default connect(applyState)(SkusEdit);
