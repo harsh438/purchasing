@@ -3,8 +3,35 @@ class Sku::Generator
     @attrs = attrs.with_indifferent_access
 
     ActiveRecord::Base.transaction do
-      find_sku || generate_new_sku
+      find_sku || generate_new_sku(@attrs)
     end
+  end
+
+  def generate_new_sku(attrs)
+    @attrs = attrs.with_indifferent_access
+    sku = Sku.create!(sku: attrs[:internal_sku],
+                      manufacturer_sku: attrs[:manufacturer_sku],
+                      manufacturer_color: attrs[:manufacturer_color],
+                      manufacturer_size: attrs[:manufacturer_size],
+                      vendor_id: attrs[:vendor_id],
+                      product_name: attrs[:product_name],
+                      season: attrs[:season],
+                      color: attrs[:color],
+                      size: attrs[:size],
+                      color_family: attrs[:color_family],
+                      size_scale: attrs[:size_scale],
+                      cost_price: attrs[:cost_price],
+                      list_price: attrs[:list_price],
+                      price: attrs[:price],
+                      inv_track: attrs[:inv_track],
+                      gender: attrs[:lead_gender].try(:to_sym) || '',
+                      listing_genders: attrs[:listing_genders],
+                      category_id: find_or_create_language_category.try(:id),
+                      on_sale: attrs[:on_sale],
+                      category_name: attrs[:category_name])
+    create_barcode_for(sku)
+    Sku::Exporter.new.export(sku)
+    sku
   end
 
   private
@@ -29,32 +56,6 @@ class Sku::Generator
   def find_sku_by_reference_and_season
     Sku.find_by(sku: attrs[:internal_sku],
                 season: attrs[:season])
-  end
-
-  def generate_new_sku
-    sku = Sku.create!(sku: attrs[:internal_sku],
-                      manufacturer_sku: attrs[:manufacturer_sku],
-                      manufacturer_color: attrs[:manufacturer_color],
-                      manufacturer_size: attrs[:manufacturer_size],
-                      vendor_id: attrs[:vendor_id],
-                      product_name: attrs[:product_name],
-                      season: attrs[:season],
-                      color: attrs[:color],
-                      size: attrs[:size],
-                      color_family: attrs[:color_family],
-                      size_scale: attrs[:size_scale],
-                      cost_price: attrs[:cost_price],
-                      list_price: attrs[:list_price],
-                      price: attrs[:price],
-                      inv_track: attrs[:inv_track],
-                      gender: attrs[:lead_gender].try(:to_sym) || '',
-                      listing_genders: attrs[:listing_genders],
-                      category_id: find_or_create_language_category.try(:id),
-                      on_sale: attrs[:on_sale],
-                      category_name: attrs[:category_name])
-    create_barcode_for(sku)
-    Sku::Exporter.new.export(sku)
-    sku
   end
 
   def create_barcode_for(sku)
