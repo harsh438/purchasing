@@ -81,7 +81,10 @@ export default class SkusBarcodeTable extends React.Component {
           <input className="form-control" type="text" defaultValue={barcode.barcode} name="barcode" />
         </div>
         <div className="form-group col-md-2">
-          <input type="submit" value="Save" className="btn btn-success" />
+          <input type="submit"
+                 value="Save"
+                 className="btn btn-success"
+                 disabled={barcode.barcode === barcode.old_barcode} />
         </div>
       </form>
     );
