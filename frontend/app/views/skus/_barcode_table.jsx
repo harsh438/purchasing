@@ -1,13 +1,20 @@
 import React from 'react';
-import { map } from 'lodash';
+import { map, assign } from 'lodash';
 
 export default class SkusBarcodeTable extends React.Component {
   componentWillMount() {
     this.state = { editing: false };
+    this.setBarcodes(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ editing: false });
+    this.setBarcodes(nextProps);
+  }
+
+  setBarcodes(props) {
+    let barcodes = props.barcodes || [];
+    barcodes.forEach((barcode) => { barcode.editing = false; });
+    this.setState({ editing: false, barcodes });
   }
 
   render() {
@@ -28,12 +35,12 @@ export default class SkusBarcodeTable extends React.Component {
   }
 
   renderRows() {
-    return map(this.props.barcodes, this.renderRow, this);
+    return map(this.state.barcodes, this.renderRow, this);
   }
 
   renderRow(barcode) {
     return (
-      <tr>
+      <tr key={barcode.id}>
         <td>
           {this.renderBarcode(barcode)}
         </td>
@@ -42,7 +49,7 @@ export default class SkusBarcodeTable extends React.Component {
   }
 
   renderBarcode(barcode) {
-    if (this.state.editing) {
+    if (barcode.editing) {
       return this.renderWithEdit(barcode);
     } else {
       return this.renderWithoutEdit(barcode);
@@ -54,7 +61,7 @@ export default class SkusBarcodeTable extends React.Component {
       <div>
         <div className="col-md-10">{barcode.barcode}</div>
         <div className="col-md-2">
-          <button onClick={this.handleEditButton.bind(this)} className="btn btn-success pull-right">
+          <button onClick={this.handleEditButton.bind(this, barcode)} className="btn btn-success pull-right">
             <i className="glyphicon glyphicon-edit"></i>&nbsp;Edit
           </button>
         </div>
@@ -64,9 +71,11 @@ export default class SkusBarcodeTable extends React.Component {
 
   renderWithEdit(barcode) {
     return (
-      <form className="form">
+      <form className="form"
+            onChange={this.handleFormChange.bind(this, barcode)}
+            onSubmit={this.handleFormSubmit.bind(this)}>
         <div className="form-group col-md-10">
-          <input className="form-control" type="text" value={barcode.barcode} />
+          <input className="form-control" type="text" defaultValue={barcode.barcode} name="barcode" />
         </div>
         <div className="form-group col-md-2">
           <input type="submit" value="Save" className="btn btn-success" />
@@ -75,7 +84,18 @@ export default class SkusBarcodeTable extends React.Component {
     );
   }
 
-  handleEditButton() {
-    this.setState({ editing: true });
+  handleEditButton(barcode) {
+    barcode.editing = true;
+    this.setState({ barcodes: this.state.barcodes });
+  }
+
+  handleFormChange(edited_barcode, { target }) {
+    edited_barcode[target.name] = target.value;
+    this.setState({ barcodes: this.state.barcodes });
+  }
+
+  handleFormSubmit(e) {
+    e.preventDefault();
+    this.setState({ submitting: true });
   }
 }
