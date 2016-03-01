@@ -1,13 +1,13 @@
 import React from 'react';
+import NotificationSystem from 'react-notification-system';
+import SkusBarcodeForm from './_barcode_form';
+import SkusBarcodeTable from './_barcode_table';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { assign } from 'lodash';
 import { loadSku, addBarcodeToSku } from '../../actions/skus';
 import { updateBarcode } from '../../actions/barcodes';
 import { processNotifications } from '../../utilities/notification';
-import SkusBarcodeForm from './_barcode_form';
-import SkusBarcodeTable from './_barcode_table';
-import NotificationSystem from 'react-notification-system';
 
 class SkusEdit extends React.Component {
   componentWillMount () {
