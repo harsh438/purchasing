@@ -41,13 +41,13 @@ class SkusNew extends React.Component {
         <form className="form"
               onChange={this.handleFormChange.bind(this)}
               onSubmit={this.handleFormSubmit.bind(this)}>
-          <label htmlFor="product_id">PID</label>
-          <input type="number"
+          <label htmlFor="product_id">SKU</label>
+          <input type="text"
                  className="form-control"
-                 id="productId"
-                 name="productId"
-                 placeholder="PID associated with the SKU"
-                 value={this.state.sku.productId}
+                 id="sku"
+                 name="sku"
+                 placeholder="SKU to duplicate from"
+                 value={this.state.sku.sku}
                  required />
           <br />
           <label htmlFor="product_id">Surfdome Size</label>

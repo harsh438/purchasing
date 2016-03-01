@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :skus, only: [:index, :create, :show, :update] do
       collection do
         get :supplier_summary
-        post :create_by_pid
+        post :duplicate
       end
     end
 

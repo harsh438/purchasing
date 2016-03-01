@@ -1,7 +1,7 @@
-feature 'SKU generation by PID' do
+feature 'SKU duplication' do
   subject { JSON.parse(page.body) }
 
-  scenario 'Generating skus with an non_existent PID should fail' do
+  scenario 'Generating skus with from a non-existent SKU should fail' do
     when_i_generate_from_an_non_existent_pid
     then_the_api_should_return_404
   end
@@ -12,7 +12,7 @@ feature 'SKU generation by PID' do
   end
 
   def when_i_generate_from_an_non_existent_pid
-    page.driver.post create_by_pid_skus_path, { sku: { product_id: non_existent_pid } }
+    page.driver.post duplicate_skus_path, { sku: { sku: non_existent_sku } }
   end
 
   def then_the_api_should_return_404
@@ -20,9 +20,9 @@ feature 'SKU generation by PID' do
   end
 
   def when_i_generate_sku_from_pid
-    page.driver.post create_by_pid_skus_path, {
+    page.driver.post duplicate_skus_path, {
       sku: {
-        product_id: product_with_skus.id,
+        sku: sku.sku,
         element_id: element.id
       }
     }
@@ -37,6 +37,7 @@ feature 'SKU generation by PID' do
   end
 
   let(:product_with_skus) { create(:product, :with_skus) }
+  let(:sku) { product_with_skus.skus.first }
   let(:element) { create(:element) }
-  let(:non_existent_pid) { 999999999 }
+  let(:non_existent_sku) { Faker::Lorem.characters(15) }
 end

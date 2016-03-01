@@ -59,7 +59,7 @@ function throw404Error(response) {
 
 export function createSkuByPid(attrs) {
   return dispatch => {
-    fetch(`/api/skus/create_by_pid.json`, { credentials: 'same-origin',
+    fetch(`/api/skus/duplicate.json`, { credentials: 'same-origin',
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ sku: snakeizeKeys(attrs) }) })
@@ -67,7 +67,7 @@ export function createSkuByPid(attrs) {
     .then(response => response.json())
     .then(sku => dispatch({ sku, type: 'LOAD_SKU' }))
     .catch(() => {
-      dispatch({ text: `Unable to find PID with ID ${attrs.productId}`, type: 'ERROR_NOTIFICATION' });
+      dispatch({ text: `Unable to find SKU '${attrs.sku}'`, type: 'ERROR_NOTIFICATION' });
     });
   };
 }

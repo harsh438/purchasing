@@ -12,11 +12,11 @@ class SkusController < ApplicationController
     render json: sku.as_json_with_vendor_category_and_barcodes
   end
 
-  def create_by_pid
+  def duplicate
     begin
-      sku = Sku::CreateByPid.new.create(params[:sku])
+      sku = Sku::Duplicate.new.create(params[:sku])
     rescue ActiveRecord::RecordNotFound
-      return render json: { message: "Unable to find PID" }, status: 404
+      return render json: { message: "Unable to find SKU" }, status: 404
     end
     render json: sku.as_json_with_vendor_category_and_barcodes
   end
