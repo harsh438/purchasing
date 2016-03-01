@@ -14,6 +14,7 @@ export default function reduceNotification(state = {}, action) {
         type: notificationType[action.type],
         text: action.text,
         date: new Date().toISOString(),
+        data: action.data || {},
       },
     });
   default:
