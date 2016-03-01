@@ -51,6 +51,9 @@ export function updateBarcode(barcode) {
                                          body: JSON.stringify(barcode) })
       .then(throwErrors)
       .then(response => response.json())
-      .then(barcodes => dispatch({ barcodes, type: 'IMPORT_BARCODES' }));
+      .then(barcodes => {
+        dispatch({ barcodes, type: 'IMPORT_BARCODES' });
+        dispatch({ text: `Barcode ${barcode.barcode} has been updated sucessfully`, type: 'SUCCESS_NOTIFICATION' });
+      });
   };
 }
