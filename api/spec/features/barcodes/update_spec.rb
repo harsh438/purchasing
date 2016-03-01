@@ -6,6 +6,11 @@ feature 'Updating barcodes' do
     then_the_barcode_should_be_updated
   end
 
+  scenario 'Updating existing barcode with conflict' do
+    when_i_update_an_existing_barcode_with_conflict
+    then_the_barcode_should_not_be_updated
+  end
+
   def when_i_update_an_existing_barcode_by_barcode_id
     purchase_order_line_item
     page.driver.post barcode_path(barcode), {
@@ -24,6 +29,21 @@ feature 'Updating barcodes' do
   def and_legacy_barcode_should_also_be_updated
     po = PurchaseOrderLineItem.find(purchase_order_line_item.id)
     expect(po.orderTool_barcode).to eq(new_barcode)
+  end
+
+  def when_i_update_an_existing_barcode_with_conflict
+    purchase_order_line_item
+    page.driver.post barcode_path(barcode), {
+      _method: 'PATCH',
+      barcode: barcode.barcode
+    }
+  end
+
+  def then_the_barcode_should_not_be_updated
+    expect(page).to have_http_status(409)
+    expect(subject['message']).to include("duplication")
+    expect(subject['duplicated_sku']['id']).to eq(sku.id)
+    expect(subject['duplicated_sku']['sku']).to eq(sku.sku)
   end
 
   let(:product_with_skus) { create(:product, :with_skus) }
