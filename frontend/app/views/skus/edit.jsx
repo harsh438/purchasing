@@ -11,11 +11,18 @@ import { processNotifications } from '../../utilities/notification';
 
 class SkusEdit extends React.Component {
   componentWillMount () {
+    this.state = { sku: { barcodes: [] } };
     this.props.dispatch(loadSku(this.props.params.id));
   }
 
   componentWillReceiveProps(nextProps) {
     processNotifications.call(this, nextProps);
+    this.setState({ sku: nextProps.sku });
+    const curSku = this.props.sku || {};
+    const nextSku = nextProps.sku || {};
+    if (nextProps.params.id !== this.props.params.id) {
+      this.props.dispatch(loadSku(nextProps.params.id));
+    }
   }
 
   render() {
@@ -27,7 +34,7 @@ class SkusEdit extends React.Component {
             <h1>
               <Link to="/skus">SKUs</Link>
               &nbsp;/&nbsp;
-              {this.props.sku.sku}
+              {this.state.sku.sku}
             </h1>
           </div>
         </div>
@@ -46,7 +53,7 @@ class SkusEdit extends React.Component {
   }
 
   renderFields() {
-    const { sku } = this.props;
+    const { sku } = this.state;
 
     return (
       <table className="table">
@@ -113,10 +120,13 @@ class SkusEdit extends React.Component {
   }
 
   renderBarcodes() {
-    if (this.props.sku.barcodes.length > 0) {
+    if (this.state.sku.barcodes.length > 0) {
       return (
-        <SkusBarcodeTable barcodes={this.props.sku.barcodes}
-                          onEditBarcode={this.handleEditBarcode.bind(this)} />
+        <div>
+          {this.renderBarcodeErrorBlock()}
+          <SkusBarcodeTable barcodes={this.state.sku.barcodes}
+                            onEditBarcode={this.handleEditBarcode.bind(this)} />
+        </div>
       );
     } else {
       return (
@@ -125,8 +135,28 @@ class SkusEdit extends React.Component {
     }
   }
 
+  renderBarcodeErrorBlock() {
+    const notification = this.props.notification;
+    if (notification
+        && notification.data
+        && notification.data.duplicated_sku) {
+      const data = notification.data;
+      return (
+        <div className="alert alert-danger alert-dismissible fade in">
+          <h4>Cannot edit barcode</h4>
+          <p>{notification.text}</p>
+          <p>The barcode {data.barcode.barcode} is already assigned to SKU&nbsp;
+            <Link to={`/skus/${data.duplicated_sku.id}/edit`}>
+              {data.duplicated_sku.sku}
+            </Link>
+          </p>
+        </div>
+      );
+    }
+  }
+
   handleAddBarcode(barcode) {
-    this.props.dispatch(addBarcodeToSku(this.props.sku.id, barcode));
+    this.props.dispatch(addBarcodeToSku(this.state.sku.id, barcode));
   }
 
   handleEditBarcode(barcode) {
