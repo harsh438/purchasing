@@ -3,7 +3,7 @@ import { map, assign } from 'lodash';
 
 export default class SkusBarcodeTable extends React.Component {
   componentWillMount() {
-    this.state = { editing: false };
+    this.state = { };
     this.setBarcodes(this.props);
   }
 
@@ -13,8 +13,11 @@ export default class SkusBarcodeTable extends React.Component {
 
   setBarcodes(props) {
     let barcodes = props.barcodes || [];
-    barcodes.forEach((barcode) => { barcode.editing = false; });
-    this.setState({ editing: false, barcodes });
+    barcodes.forEach((barcode) => {
+      barcode.editing = false;
+      barcode.old_barcode = barcode.barcode;
+    });
+    this.setState({ barcodes });
   }
 
   render() {
@@ -73,7 +76,7 @@ export default class SkusBarcodeTable extends React.Component {
     return (
       <form className="form"
             onChange={this.handleFormChange.bind(this, barcode)}
-            onSubmit={this.handleFormSubmit.bind(this)}>
+            onSubmit={this.handleFormSubmit.bind(this, barcode)}>
         <div className="form-group col-md-10">
           <input className="form-control" type="text" defaultValue={barcode.barcode} name="barcode" />
         </div>
@@ -94,8 +97,9 @@ export default class SkusBarcodeTable extends React.Component {
     this.setState({ barcodes: this.state.barcodes });
   }
 
-  handleFormSubmit(e) {
+  handleFormSubmit(barcode, e) {
     e.preventDefault();
     this.setState({ submitting: true });
+    this.props.onEditBarcode(barcode);
   }
 }
