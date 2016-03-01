@@ -1,5 +1,6 @@
 import { map, values } from 'lodash';
 import { camelizeKeys, snakeizeKeys } from '../utilities/inspection';
+import { loadSku } from './skus';
 
 function throwErrors(response) {
   if (response.status < 200 || response.status >= 300) {
@@ -39,5 +40,17 @@ export function importBarcodes(barcodes, statefulResultsDispatch) {
       .then(response => response.json())
       .then(handleImportBarcodeResults(dispatch, statefulResultsDispatch))
       .catch(handleError(dispatch, statefulResultsDispatch));
+  };
+}
+
+export function updateBarcode(barcode) {
+  return dispatch => {
+    fetch(`/api/barcodes/${barcode.id}.json`, { credentials: 'same-origin',
+                                         method: 'PATCH',
+                                         headers: { 'Content-Type': 'application/json' },
+                                         body: JSON.stringify(barcode) })
+      .then(throwErrors)
+      .then(response => response.json())
+      .then(barcodes => dispatch({ barcodes, type: 'IMPORT_BARCODES' }));
   };
 }
