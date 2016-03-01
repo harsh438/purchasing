@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { assign } from 'lodash';
 import { loadSku, addBarcodeToSku } from '../../actions/skus';
+import { updateBarcode } from '../../actions/barcodes';
 import { processNotifications } from '../../utilities/notification';
 import SkusBarcodeForm from './_barcode_form';
 import SkusBarcodeTable from './_barcode_table';
@@ -114,7 +115,8 @@ class SkusEdit extends React.Component {
   renderBarcodes() {
     if (this.props.sku.barcodes.length > 0) {
       return (
-        <SkusBarcodeTable barcodes={this.props.sku.barcodes} />
+        <SkusBarcodeTable barcodes={this.props.sku.barcodes}
+                          onEditBarcode={this.handleEditBarcode.bind(this)} />
       );
     } else {
       return (
@@ -126,10 +128,14 @@ class SkusEdit extends React.Component {
   handleAddBarcode(barcode) {
     this.props.dispatch(addBarcodeToSku(this.props.sku.id, barcode));
   }
+
+  handleEditBarcode(barcode) {
+    this.props.dispatch(updateBarcode(barcode));
+  }
 }
 
-function applyState({ skus, notification }) {
-  return assign({}, skus, notification);
+function applyState({ skus, notification, barcodes }) {
+  return assign({}, skus, notification, barcodes);
 }
 
 export default connect(applyState)(SkusEdit);
