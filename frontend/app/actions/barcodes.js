@@ -44,13 +44,23 @@ export function importBarcodes(barcodes, statefulResultsDispatch) {
 }
 
 export function updateBarcode(barcode) {
+  let status = 200;
   return dispatch => {
     fetch(`/api/barcodes/${barcode.id}.json`, { credentials: 'same-origin',
                                          method: 'PATCH',
                                          headers: { 'Content-Type': 'application/json' },
                                          body: JSON.stringify(barcode) })
-      .then(throwErrors)
+      .then((response) => {
+        status = response.status;
+        return response;
+      })
       .then(response => response.json())
+      .then(response => {
+        if (status === 409) {
+          dispatch({ text: response.message, type: 'ERROR_NOTIFICATION' });
+        }
+        throwErrors({ status });
+      })
       .then(barcodes => {
         dispatch({ barcodes, type: 'IMPORT_BARCODES' });
         dispatch({ text: `Barcode ${barcode.barcode} has been updated sucessfully`, type: 'SUCCESS_NOTIFICATION' });
