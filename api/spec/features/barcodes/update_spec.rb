@@ -8,15 +8,16 @@ feature 'Updating barcodes' do
 
   def when_i_update_an_existing_barcode_by_barcode_id
     purchase_order_line_item
-    page.driver.post update_by_barcode_barcodes_path, {
-      old_barcode: barcode.barcode,
-      new_barcode: new_barcode
+    page.driver.post barcode_path(barcode), {
+      _method: 'PATCH',
+      barcode: new_barcode
     }
   end
 
   def then_the_barcode_should_be_updated
-    expect(subject['barcode']['id']).to eq(barcode.id)
-    expect(subject['barcode']['barcode']).to eq(new_barcode)
+    expect(subject['barcodes'].count).to eq(1)
+    expect(subject['barcodes'][0]['id']).to eq(barcode.id)
+    expect(subject['barcodes'][0]['barcode']).to eq(new_barcode)
     and_legacy_barcode_should_also_be_updated
   end
 
