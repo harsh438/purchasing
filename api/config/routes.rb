@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :barcodes do
       collection do
         post :import
+        post :update_by_barcode
       end
     end
 
