@@ -11,8 +11,9 @@ class Barcode::Updater
   end
 
   def self.check_barcode_uniqueness(barcode)
-    if Barcode.find_by(barcode: barcode).present?
-      raise Exceptions::BarcodeUpdateError, "Barcode #{barcode} is not unique"
+    barcode = Barcode.find_by(barcode: barcode)
+    if barcode.present?
+      raise Exceptions::BarcodeUpdateUniqueError.new(barcode), "Barcode #{barcode} is not unique"
     end
   end
 
