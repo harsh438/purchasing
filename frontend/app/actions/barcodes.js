@@ -57,7 +57,7 @@ export function updateBarcode(barcode) {
       .then(response => response.json())
       .then(response => {
         if (status === 409) {
-          dispatch({ text: response.message, type: 'ERROR_NOTIFICATION' });
+          dispatch({ text: response.message, type: 'ERROR_NOTIFICATION', data: response });
         }
         throwErrors({ status });
       })
