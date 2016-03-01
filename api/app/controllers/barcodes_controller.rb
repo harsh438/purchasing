@@ -9,8 +9,8 @@ class BarcodesController < ApplicationController
            nonexistant_skus: e.invalid_barcodes }
   end
 
-  def update_by_barcode
-    render json: { barcode: Barcode::Updater.update(params).as_json }
+  def update
+    render json: { barcodes: Barcode::Updater.update(params).as_json }
   end
 
   private
