@@ -58,16 +58,29 @@ function throw404Error(response) {
 }
 
 export function createSkuByPid(attrs) {
+  let status = 200;
   return dispatch => {
     fetch(`/api/skus/duplicate.json`, { credentials: 'same-origin',
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ sku: snakeizeKeys(attrs) }) })
-    .then(throw404Error)
+    .then((response) => {
+      status = response.status;
+      return response;
+    })
     .then(response => response.json())
+    .then(response => {
+      if (status < 200 || status >= 300) {
+        throw response.message;
+      }
+      return response;
+    })
     .then(sku => dispatch({ sku, type: 'LOAD_SKU' }))
-    .catch(() => {
-      dispatch({ text: `Unable to find SKU '${attrs.sku}'`, type: 'ERROR_NOTIFICATION' });
+    .catch((message) => {
+      if (typeof message !== 'string') {
+        message = 'We are experiencing technical difficulties. Support has been notified.';
+      }
+      dispatch({ text: message, type: 'ERROR_NOTIFICATION' });
     });
   };
 }
