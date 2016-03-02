@@ -69,19 +69,16 @@ Rails.application.routes.draw do
       resources :purchase_orders do
         collection do
           post :latest
-          post :pvx_confirm
         end
       end
       resources :brands do
         collection do
           post :latest
-          post :pvx_confirm
         end
       end
       resources :skus do
         collection do
           post :latest
-          post :pvx_confirm
         end
       end
     end
