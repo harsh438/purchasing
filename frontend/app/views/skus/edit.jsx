@@ -11,13 +11,13 @@ import { processNotifications } from '../../utilities/notification';
 
 class SkusEdit extends React.Component {
   componentWillMount () {
-    this.state = { sku: { barcodes: [] } };
+    this.state = { sku: { barcodes: [], notification: null } };
     this.props.dispatch(loadSku(this.props.params.id));
   }
 
   componentWillReceiveProps(nextProps) {
     processNotifications.call(this, nextProps);
-    this.setState({ sku: nextProps.sku });
+    this.setState({ sku: nextProps.sku, notification: nextProps.notification });
     const curSku = this.props.sku || {};
     const nextSku = nextProps.sku || {};
     if (nextProps.params.id !== this.props.params.id) {
@@ -136,10 +136,11 @@ class SkusEdit extends React.Component {
   }
 
   renderBarcodeErrorBlock() {
-    const notification = this.props.notification;
+    const notification = this.state.notification;
     if (notification
         && notification.data
-        && notification.data.duplicated_sku) {
+        && notification.data.duplicated_sku
+        && notification.data.duplicated_sku.id !== this.state.sku.id) {
       const data = notification.data;
       return (
         <div className="alert alert-danger alert-dismissible fade in">
