@@ -11,7 +11,7 @@ class Sku::Duplicator
 
   def sku_has_barcode_check(sku)
     if sku.barcodes.count === 0
-      raise Exceptions::SkuDuplicationBarcodeError, "Sku to be duplicated from must have a barcode"
+      raise Exceptions::SkuDuplicationBarcodeError, "Please use a SKU with a barcode"
     end
   end
 
