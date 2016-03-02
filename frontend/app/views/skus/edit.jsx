@@ -80,7 +80,7 @@ class SkusEdit extends React.Component {
           </tr>
           <tr>
             <th>Manufacturer Size</th>
-            <td>{sku.manufacturerSize}</td>
+            <td>{this.renderManufacturerSize(sku)}</td>
           </tr>
           <tr>
             <th>Colour</th>
@@ -117,6 +117,43 @@ class SkusEdit extends React.Component {
         </tbody>
       </table>
     );
+  }
+
+  renderManufacturerSize(sku) {
+    if (this.state.editingManufacturerSize) {
+      return this.renderManufacturerSizeEdit(sku);
+    }
+    return (
+      <div>
+        <div className="col-md-10" style={{ paddingLeft: '0' }}>
+          {sku.manufacturerSize}
+        </div>
+        <div className="col-md-2">
+          <button onClick={this.handleEditingManufacturerSize.bind(this)}
+                  className="btn btn-success pull-right">
+            <i className="glyphicon glyphicon-edit"></i>&nbsp;Edit
+          </button>
+        </div>
+      </div>);
+  }
+
+  renderManufacturerSizeEdit(sku) {
+    return (
+      <form className="form"
+            onSubmit={this.handleEditManufacturerSizeSubmit.bind(this)} >
+        <div className="col-md-10" style={{ paddingLeft: '0' }}>
+          <input className="form-control"
+                 type="text"
+                 defaultValue={sku.manufacturerSize}
+                 name="manufacturerSize"/>
+        </div>
+        <div className="form-group col-md-2">
+          <input type="submit"
+                 value="Save"
+                 className="btn btn-success"/>
+        </div>
+      </form>
+    )
   }
 
   renderBarcodes() {
@@ -162,6 +199,14 @@ class SkusEdit extends React.Component {
 
   handleEditBarcode(barcode) {
     this.props.dispatch(updateBarcode(barcode));
+  }
+
+  handleEditingManufacturerSize() {
+    this.setState({ editingManufacturerSize: true });
+  }
+
+  handleEditManufacturerSizeSubmit(e) {
+    e.preventDefault();
   }
 }
 
