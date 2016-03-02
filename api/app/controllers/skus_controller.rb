@@ -29,6 +29,8 @@ class SkusController < ApplicationController
   def update
     Sku::Updator.update(sku, sku_update_attrs)
     render json: sku.as_json_with_vendor_category_and_barcodes
+  rescue Exceptions::SkuUpdateError => e
+    return render json: { message: e.message }, status: 422
   end
 
   def supplier_summary
