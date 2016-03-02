@@ -39,6 +39,7 @@ export function saveSku(id, attrs) {
     .then(throwErrors)
     .then(response => response.json())
     .then(sku => dispatch({ sku, type: 'LOAD_SKU' }))
+    .then(() => dispatch({ text: 'SKU has been updated successfully.', type: 'SUCCESS_NOTIFICATION' }))
     .catch((error) => {
       dispatch({ text: error, type: 'ERROR_NOTIFICATION' });
     });
