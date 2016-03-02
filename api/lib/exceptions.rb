@@ -6,4 +6,6 @@ module Exceptions
       @duplicate = duplicate
     end
   end
+
+  class SkuDuplicationBarcodeError < StandardError; end
 end
