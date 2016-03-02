@@ -3,15 +3,21 @@ class Sku::Duplicator
     options.slice!(:sku, :element_id)
     old_sku = Sku.find_by!(sku: options[:sku])
     sku_has_barcode_check(old_sku)
+    sku_unsized_check(old_sku)
     element = Element.find(options[:element_id].to_i)
     Sku::Generator.new.generate(copy_sku_attributes(old_sku, element))
   end
 
   private
-
   def sku_has_barcode_check(sku)
     if sku.barcodes.count === 0
-      raise Exceptions::SkuDuplicationBarcodeError, "Please use a SKU with a barcode"
+      raise Exceptions::SkuDuplicationError, "Please use a SKU with a barcode"
+    end
+  end
+
+  def sku_unsized_check(sku)
+    unless sku.size.present?
+      raise Exceptions::SkuDuplicationError, "Please select a SKU with a size"
     end
   end
 
