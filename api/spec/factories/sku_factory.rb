@@ -47,6 +47,10 @@ FactoryGirl.define do
       updated_at Time.parse('1948-02-18T17:26:26')
     end
 
+    trait :unsized do
+      size ""
+    end
+
     factory :sku do
       product_id { create(:product, manufacturer_sku: 'MANU-FACTURER-SKU-11-reddish').id }
       option_id { create(:option).id }
