@@ -18,7 +18,7 @@ class SkusController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     sku_code = params.try(:[], :sku).try(:[], :sku)
     return render json: { message: "Unable to find SKU #{sku_code}" }, status: 404
-  rescue Exceptions::SkuDuplicationBarcodeError => e
+  rescue Exceptions::SkuDuplicationError => e
     return render json: { message: e.message }, status: 422
   end
 

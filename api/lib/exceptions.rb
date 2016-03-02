@@ -7,5 +7,5 @@ module Exceptions
     end
   end
 
-  class SkuDuplicationBarcodeError < StandardError; end
+  class SkuDuplicationError < StandardError; end
 end
