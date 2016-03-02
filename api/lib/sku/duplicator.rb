@@ -16,7 +16,7 @@ class Sku::Duplicator
   end
 
   def sku_unsized_check(sku)
-    unless sku.size.present?
+    unless sku.sized?
       raise Exceptions::SkuDuplicationError, "Please select a SKU with a size"
     end
   end
