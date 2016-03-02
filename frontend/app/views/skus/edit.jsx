@@ -5,7 +5,7 @@ import SkusBarcodeTable from './_barcode_table';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { assign } from 'lodash';
-import { loadSku, addBarcodeToSku } from '../../actions/skus';
+import { loadSku, addBarcodeToSku, saveSku } from '../../actions/skus';
 import { updateBarcode } from '../../actions/barcodes';
 import { processNotifications } from '../../utilities/notification';
 
@@ -16,6 +16,7 @@ class SkusEdit extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({ editingManufacturerSize: false });
     processNotifications.call(this, nextProps);
     this.setState({ sku: nextProps.sku, notification: nextProps.notification });
     const curSku = this.props.sku || {};
@@ -140,7 +141,9 @@ class SkusEdit extends React.Component {
   renderManufacturerSizeEdit(sku) {
     return (
       <form className="form"
-            onSubmit={this.handleEditManufacturerSizeSubmit.bind(this)} >
+            onSubmit={this.handleEditManufacturerSizeSubmit.bind(this)}
+            onChange={this.handleFormChange.bind(this)}
+            >
         <div className="col-md-10" style={{ paddingLeft: '0' }}>
           <input className="form-control"
                  type="text"
@@ -207,11 +210,18 @@ class SkusEdit extends React.Component {
 
   handleEditManufacturerSizeSubmit(e) {
     e.preventDefault();
+    this.props.dispatch(saveSku(this.state.sku.id, this.state.sku));
+  }
+
+  handleFormChange({ target }) {
+    console.log(target.name, target.value);
+    const sku = assign({}, this.state.sku, { [target.name]: target.value });
+    this.setState({ sku });
   }
 }
 
-function applyState({ skus, notification, barcodes }) {
-  return assign({}, skus, notification, barcodes);
+function applyState({ skus, notification, barcodes, sku }) {
+  return assign({}, skus, notification, barcodes, sku);
 }
 
 export default connect(applyState)(SkusEdit);
