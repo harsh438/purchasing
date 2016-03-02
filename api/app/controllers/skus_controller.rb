@@ -27,11 +27,7 @@ class SkusController < ApplicationController
   end
 
   def update
-    ActiveRecord::Base.transaction do
-      sku.update!(sku_update_attrs)
-      Sku::Exporter.new.export(sku)
-    end
-
+    Sku::Updator.update(sku, sku_update_attrs)
     render json: sku.as_json_with_vendor_category_and_barcodes
   end
 
@@ -61,7 +57,7 @@ class SkusController < ApplicationController
   end
 
   def sku_update_attrs
-    params.require(:sku).permit(:cost_price, barcodes_attributes: [:barcode])
+    params.require(:sku).permit(:manufacturer_size, :cost_price, barcodes_attributes: [:barcode])
   end
 
   def render_index_json
