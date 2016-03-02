@@ -48,7 +48,7 @@ FactoryGirl.define do
     end
 
     trait :unsized do
-      size ""
+      inv_track 'P'
     end
 
     factory :sku do
