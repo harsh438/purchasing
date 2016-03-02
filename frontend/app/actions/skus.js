@@ -31,17 +31,30 @@ export function loadSku(id) {
 }
 
 export function saveSku(id, attrs) {
+  let status = 200;
   return dispatch => {
     fetch(`/api/skus/${id}.json`, { credentials: 'same-origin',
                                     method: 'PATCH',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ sku: snakeizeKeys(attrs) }) })
-    .then(throwErrors)
+    .then((response) => {
+      status = response.status;
+      return response;
+    })
     .then(response => response.json())
+    .then(response => {
+      if (status < 200 || status >= 300) {
+        throw response.message;
+      }
+      return response;
+    })
     .then(sku => dispatch({ sku, type: 'LOAD_SKU' }))
     .then(() => dispatch({ text: 'SKU has been updated successfully.', type: 'SUCCESS_NOTIFICATION' }))
-    .catch((error) => {
-      dispatch({ text: error, type: 'ERROR_NOTIFICATION' });
+    .catch((message) => {
+      if (typeof message !== 'string') {
+        message = 'We are experiencing technical difficulties. Support has been notified.';
+      }
+      dispatch({ text: message, type: 'ERROR_NOTIFICATION' });
     });
   };
 }
