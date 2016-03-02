@@ -16,7 +16,10 @@ class SkusController < ApplicationController
     sku = Sku::Duplicator.new.duplicate(params[:sku])
     render json: sku.as_json_with_vendor_category_and_barcodes
   rescue ActiveRecord::RecordNotFound
-    return render json: { message: "Unable to find SKU" }, status: 404
+    sku_code = params.try(:[], :sku).try(:[], :sku)
+    return render json: { message: "Unable to find SKU #{sku_code}" }, status: 404
+  rescue Exceptions::SkuDuplicationBarcodeError => e
+    return render json: { message: e.message }, status: 422
   end
 
   def show
