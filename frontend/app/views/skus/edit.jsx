@@ -153,7 +153,7 @@ class SkusEdit extends React.Component {
                  className="btn btn-success"/>
         </div>
       </form>
-    )
+    );
   }
 
   renderBarcodes() {
