@@ -11,6 +11,11 @@ feature 'Updating barcodes' do
     then_the_barcode_should_not_be_updated
   end
 
+  scenario 'Cannot edit barcode of unsized sku' do
+    when_i_update_an_existing_barcode_from_an_unsized_sku
+    then_the_api_should_returned_unsized_sku_error
+  end
+
   def when_i_update_an_existing_barcode_by_barcode_id
     purchase_order_line_item
     page.driver.post barcode_path(barcode), {
@@ -46,9 +51,27 @@ feature 'Updating barcodes' do
     expect(subject['duplicated_sku']['sku']).to eq(sku.sku)
   end
 
+  def when_i_update_an_existing_barcode_from_an_unsized_sku
+    page.driver.post barcode_path(unsized_sku_barcode), {
+      _method: 'PATCH',
+      barcode: random_barcode
+    }
+  end
+
+  def then_the_api_should_returned_unsized_sku_error
+    expect(page).to have_http_status(422)
+    expect(subject['message']).to eq("Unsized skus are not editable.")
+  end
+
+  def random_barcode
+    Faker::Lorem.characters(15)
+  end
+
   let(:product_with_skus) { create(:product, :with_skus) }
   let(:sku) { product_with_skus.skus.first }
+  let(:unsized_sku) { create(:sku, :unsized) }
+  let(:unsized_sku_barcode) { unsized_sku.barcodes.first }
   let(:barcode) { sku.barcodes.first }
-  let(:new_barcode) { Faker::Lorem.characters(15) }
+  let(:new_barcode) { random_barcode }
   let(:purchase_order_line_item) { create(:purchase_order_line_item, sku_id: sku.id) }
 end
