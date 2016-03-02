@@ -17,6 +17,8 @@ class BarcodesController < ApplicationController
       duplicated_sku: e.duplicate.sku.as_json_with_vendor_category_and_barcodes,
       barcode: e.duplicate.as_json
     }, status: 409
+  rescue Exceptions::BarcodeUpdateError => e
+    return render json: { message: e.message }, status: 422
   end
 
   private
