@@ -10,7 +10,9 @@ class Sku::Updator
 
   private
   def self.update_option(sku, params)
-    sku.option.update!(size: params[:manufacturer_size])
+    if sku.option.present?
+      sku.option.update!(size: params[:manufacturer_size])
+    end
   end
 
   def self.check_empty_size(params)
