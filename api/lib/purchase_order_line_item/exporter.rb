@@ -35,7 +35,8 @@ class PurchaseOrderLineItem::Exporter
                            operator
                            weeks_on_sale
                            closing_date
-                           comment)
+                           comment,
+                           surfdome_sku)
 
   def export(attrs)
     query = PurchaseOrderLineItem.mapped
