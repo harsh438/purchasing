@@ -11,13 +11,13 @@ class Sku::Duplicator
   private
   def sku_has_barcode_check(sku)
     if sku.barcodes.count === 0
-      raise Exceptions::SkuDuplicationError, "Please use a SKU with a barcode"
+      raise Exceptions::SkuDuplicationError, 'Please use a SKU with a barcode'
     end
   end
 
   def sku_unsized_check(sku)
     unless sku.sized?
-      raise Exceptions::SkuDuplicationError, "Please select a SKU with a size"
+      raise Exceptions::SkuDuplicationError, 'Please select a SKU with a size'
     end
   end
 

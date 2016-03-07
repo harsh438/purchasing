@@ -14,7 +14,7 @@ class Barcode::Updater
   private
   def self.check_editable(barcode)
     unless barcode.sku.sized?
-      raise Exceptions::BarcodeUpdateError, "Unsized skus are not editable."
+      raise Exceptions::BarcodeUpdateError, 'Unsized skus are not editable.'
     end
   end
 

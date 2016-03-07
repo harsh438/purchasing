@@ -186,7 +186,7 @@ feature 'Listing Purchase Orders for the hub' do
 
   def no_objects_should_be_returned
     expect(subject['purchase_orders'].count).to be(0)
-    expect(subject['summary']).to eq("Returned 0 purchase orders objects.")
+    expect(subject['summary']).to eq('Returned 0 purchase orders objects.')
   end
 
   def timestamp_should_be_recent

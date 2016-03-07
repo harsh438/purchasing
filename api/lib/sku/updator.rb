@@ -17,7 +17,7 @@ class Sku::Updator
 
   def self.check_empty_size(params)
     if params.include?(:manufacturer_size) and params[:manufacturer_size].strip.empty?
-      raise Exceptions::SkuUpdateError, "Manufacturer size cannot be empty"
+      raise Exceptions::SkuUpdateError, 'Manufacturer size cannot be empty'
     end
   end
 end

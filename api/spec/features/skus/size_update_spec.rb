@@ -42,6 +42,6 @@ feature 'Editing manufacturer size' do
   end
 
   let(:new_manufacturer_size) { Faker::Lorem.characters(15) }
-  let(:empty_manufacturer_size) { "    " }
+  let(:empty_manufacturer_size) { '    ' }
   let(:sku) { create(:sku) }
 end

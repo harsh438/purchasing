@@ -46,7 +46,7 @@ feature 'Updating barcodes' do
 
   def then_the_barcode_should_not_be_updated
     expect(page).to have_http_status(409)
-    expect(subject['message']).to include("duplication")
+    expect(subject['message']).to include('duplication')
     expect(subject['duplicated_sku']['id']).to eq(sku.id)
     expect(subject['duplicated_sku']['sku']).to eq(sku.sku)
   end
@@ -60,7 +60,7 @@ feature 'Updating barcodes' do
 
   def then_the_api_should_returned_unsized_sku_error
     expect(page).to have_http_status(422)
-    expect(subject['message']).to eq("Unsized skus are not editable.")
+    expect(subject['message']).to eq('Unsized skus are not editable.')
   end
 
   def random_barcode
