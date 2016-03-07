@@ -33,6 +33,11 @@ feature 'Listing Purchase Orders for the hub' do
     then_the_paging_should_work
   end
 
+  scenario 'Ignore barcodeless purchase orders' do
+    when_a_purchase_order_contains_a_sku_without_barcode
+    then_that_purchase_order_should_not_be_exported
+  end
+
   def when_i_request_a_list_of_purchase_orders
     create_purchase_orders
     page.driver.post latest_hub_purchase_orders_path, {
@@ -167,6 +172,27 @@ feature 'Listing Purchase Orders for the hub' do
     no_objects_should_be_returned
     timestamp_should_roughly_be(Time.now)
     last_id_should_be(nil)
+  end
+
+  def when_a_purchase_order_contains_a_sku_without_barcode
+    purchase_orders_with_recent_updated_date
+
+    line_item = create(:purchase_order_line_item, sku: create(:sku_without_barcode),
+                                                  product_id: 1)
+    create(:purchase_order, :with_grn_events,
+                            :with_recent_updated_date,
+                            line_items: [line_item])
+
+    page.driver.post latest_hub_purchase_orders_path, {
+      request_id: request_id,
+      parameters: {
+        last_timestamp: 2.days.ago,
+      },
+    }
+  end
+
+  def then_that_purchase_order_should_not_be_exported
+    expect(subject['purchase_orders'].count).to eq(purchase_orders_with_recent_updated_date.count)
   end
 
   private
