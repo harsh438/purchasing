@@ -72,7 +72,13 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def not_all_barcodes_populated?
-    line_items.find { |line_item| line_item.sku.barcodes.empty? }.present?
+    line_items.find do |line_item|
+      if line_item.sku.present?
+        line_item.sku.barcodes.empty?
+      else
+        true
+      end
+    end.present?
   end
 
   def as_json_with_line_items
