@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218115647) do
+ActiveRecord::Schema.define(version: 20160307141223) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -447,6 +447,7 @@ ActiveRecord::Schema.define(version: 20160218115647) do
     t.datetime "updated_at"
     t.string   "name",       limit: 255
     t.string   "order_type", limit: 255, default: "reorder"
+    t.string   "season",     limit: 255
   end
 
   create_table "over_booking", primary_key: "over_bookings_id", force: :cascade do |t|

@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :order do
     name 'OT_100 (Hmm)'
+    season 'S16'
 
     transient do
       line_item_count 0
