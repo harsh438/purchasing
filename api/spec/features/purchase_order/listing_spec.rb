@@ -18,6 +18,7 @@ feature 'Purchase Order Listing' do
 
   def then_i_should_see_vendor_specific_pos
     expect(subject.count).to eq(2)
+    expect(subject.first).to match(a_hash_including('id'))
   end
 
   def when_i_request_purchase_orders
