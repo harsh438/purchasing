@@ -5,7 +5,7 @@ if (!isset($_REQUEST['legacy'])) {
 $pid = '';
 if ($_REQUEST['pid']) {
   $pid_param = $_REQUEST['pid'];
-  $pid = "<h2><a href='https://www.surfdome.io/admin/products/$pid_param/edit'>Edit Product name in the spree</a></h2>";
+  $pid = "<h2><a href='https://www.surfdome.io/admin/products/$pid_param/edit'>Edit Product name in spree</a></h2>";
 }
 echo <<<EOT
 <!DOCTYPE html>
