@@ -1,51 +1,59 @@
 class PurchaseOrder::HubExporter
+  DEFAULT_PURCHASE_ORDERS = 10
+  MAX_PURCHASE_ORDERS = 60
+
   def export(params)
-    request_id = params[:request_id]
-    request_params = params[:parameters]
-
-    limit = default_param(request_params[:limit], 10)
-    # otherwise this will destroy the server because there is too much queries
-    limit = 60 if limit.to_i > 60
-    last_timestamp = default_param(request_params[:last_timestamp], nil)
-    last_id = default_param(request_params[:last_id], 0)
-
-    results = PurchaseOrder.has_been_updated_since(last_timestamp, last_id)
-                           .with_barcodes
-                           .without_negative_pids
-                           .booked_in
-                           .order(updated_at: :asc, id: :asc)
-                           .limit(limit)
-                           .includes_line_items
-
-    create_hub_object(results, request_id, last_timestamp, limit)
+    hub_object(params.fetch(:request_id), params.fetch(:parameters))
   end
 
   private
 
-  def get_new_timestamp(results, last_timestamp, limit)
-    new_timestamp = results.last.try(:updated_at)
-    if (results.count < limit.to_i and last_timestamp.nil?) or results.count === 0
-      new_timestamp = Time.new
-    end
-    new_timestamp
-  end
+  def hub_object(request_id, request_params)
+    last_timestamp = request_params.fetch(:last_timestamp, nil)
+    last_id = request_params.fetch(:last_id, 0)
+    limit = safe_limit(request_params)
 
-  def create_hub_object(purchase_orders, request_id, last_timestamp, limit)
-    {
-      request_id: request_id,
+    purchase_orders = exportable_purchase_orders(last_timestamp, last_id, limit)
+
+    { request_id: request_id,
       summary: "Returned #{purchase_orders.size} purchase orders objects.",
-      purchase_orders: ActiveModel::ArraySerializer.new(
-        purchase_orders,
-        each_serializer: PurchaseOrderSerializer
-      ),
-      parameters: {
-        last_timestamp: get_new_timestamp(purchase_orders, last_timestamp, limit),
-        last_id: purchase_orders.last.try(:id)
-      }
-    }
+      purchase_orders: serialized_purchase_orders(purchase_orders),
+      parameters: { last_timestamp: next_last_timestamp(purchase_orders, last_timestamp, limit),
+                    last_id: purchase_orders.last.try(:id) } }
   end
 
-  def default_param(param, default_val)
-    param.present? ? param : default_val
+  def safe_limit(request_params)
+    if request_params[:limit].present?
+      [request_params[:limit].to_i, MAX_PURCHASE_ORDERS].min
+    else
+      DEFAULT_PURCHASE_ORDERS
+    end
+  end
+
+  def exportable_purchase_orders(last_timestamp, last_id, limit)
+    PurchaseOrder.has_been_updated_since(last_timestamp, last_id)
+                         .with_barcodes
+                         .without_negative_pids
+                         .booked_in
+                         .order(updated_at: :asc, id: :asc)
+                         .limit(limit)
+                         .includes_line_items
+  end
+
+  def next_last_timestamp(purchase_orders, last_timestamp, limit)
+    if has_reached_end_of_purchase_orders?(purchase_orders, last_timestamp, limit)
+      Time.now
+    else
+      purchase_orders.last.try(:updated_at)
+    end
+  end
+
+  def has_reached_end_of_purchase_orders?(purchase_orders, last_timestamp, limit)
+    (purchase_orders.count < limit and last_timestamp.nil?) or purchase_orders.empty?
+  end
+
+  def serialized_purchase_orders(purchase_orders)
+    ActiveModel::ArraySerializer.new(purchase_orders,
+                                     each_serializer: PurchaseOrderSerializer)
   end
 end
