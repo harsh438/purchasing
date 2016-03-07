@@ -8,6 +8,7 @@ class PurchaseOrdersController < ApplicationController
                                            .where(vendor_id: params[:vendor_id])
                                            .group(:po_number)
                                            .map(&:purchase_order)
+                                           .compact
                                            .reject(&:not_all_barcodes_populated?)
                                            .map { |po| { id: po.po_number } }
                                            .uniq
