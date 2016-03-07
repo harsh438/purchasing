@@ -57,7 +57,7 @@ feature 'SKU duplication' do
 
   def then_the_api_should_refuse_the_sku_without_barcode
     expect(page.driver.status_code).to eq(422)
-    expect(subject['message']).to eq("Please use a SKU with a barcode")
+    expect(subject['message']).to eq('Please use a SKU with a barcode')
   end
 
   def when_i_generate_unsized_sku
@@ -71,7 +71,7 @@ feature 'SKU duplication' do
 
   def then_the_api_should_refuse_the_unsized_sku
     expect(page.driver.status_code).to eq(422)
-    expect(subject['message']).to eq("Please select a SKU with a size")
+    expect(subject['message']).to eq('Please select a SKU with a size')
   end
 
   let(:product_with_skus) { create(:product, :with_skus) }

@@ -194,7 +194,7 @@ feature 'Listing Skus for the hub' do
 
   def no_objects_should_be_returned
     expect(subject['skus'].count).to be(0)
-    expect(subject['summary']).to eq("Returned 0 sku objects.")
+    expect(subject['summary']).to eq('Returned 0 sku objects.')
   end
 
 
