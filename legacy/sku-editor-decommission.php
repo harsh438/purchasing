@@ -1,6 +1,7 @@
 <?php
 
 # SKU EDITOR tool is has now been decommissioned
+if (!isset($_REQUEST['legacy'])) {
 echo <<<EOT
 <!DOCTYPE html>
 <html>
@@ -19,4 +20,5 @@ echo <<<EOT
 </html>
 EOT;
 exit;
+}
 
