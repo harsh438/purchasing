@@ -129,13 +129,21 @@ class SkusEdit extends React.Component {
         <div className="col-md-10" style={{ paddingLeft: '0' }}>
           {sku.manufacturerSize}
         </div>
+        {this.renderManufacturerSizeEditButton()}
+      </div>);
+  }
+
+  renderManufacturerSizeEditButton() {
+    if (this.props.advanced) {
+      return (
         <div className="col-md-2">
           <button onClick={this.handleEditingManufacturerSize.bind(this)}
                   className="btn btn-success pull-right">
             <i className="glyphicon glyphicon-edit"></i>&nbsp;Edit
           </button>
         </div>
-      </div>);
+      );
+    }
   }
 
   renderManufacturerSizeEdit(sku) {
@@ -165,7 +173,8 @@ class SkusEdit extends React.Component {
         <div>
           {this.renderBarcodeErrorBlock()}
           <SkusBarcodeTable barcodes={this.state.sku.barcodes}
-                            onEditBarcode={this.handleEditBarcode.bind(this)} />
+                            onEditBarcode={this.handleEditBarcode.bind(this)}
+                            advanced={this.props.advanced} />
         </div>
       );
     } else {
@@ -220,8 +229,8 @@ class SkusEdit extends React.Component {
   }
 }
 
-function applyState({ skus, notification, barcodes, sku }) {
-  return assign({}, skus, notification, barcodes, sku);
+function applyState({ advanced, skus, notification, barcodes, sku }) {
+  return assign({ advanced }, skus, notification, barcodes, sku);
 }
 
 export default connect(applyState)(SkusEdit);

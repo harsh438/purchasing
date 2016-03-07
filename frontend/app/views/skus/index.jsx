@@ -30,14 +30,11 @@ class SkusIndex extends React.Component {
     return (
       <div className="suppliers_index container-fluid"
            style={{ marginTop: '70px' }}>
-            <Link className="pull-right btn btn-success"
-                  to={`/skus/new`}>
-              Add new SKU
-            </Link>
         <div className="row" style={{ marginBottom: '20px' }}>
           <div className="col-md-4">
             <h1>SKUs</h1>
           </div>
+          {this.renderAddNewSku()}
         </div>
 
         <div className="row">
@@ -69,6 +66,16 @@ class SkusIndex extends React.Component {
     );
   }
 
+  renderAddNewSku() {
+    if (this.props.advanced) {
+      return (
+        <Link className="pull-right btn btn-success"
+              to={`/skus/new`}>
+          Add new SKU
+        </Link>);
+    }
+  }
+
   renderCSVButton() {
     const disabled = isEmpty(this.props.location.query.filters);
     const text =  'Export to Excel';
@@ -91,8 +98,9 @@ class SkusIndex extends React.Component {
   }
 }
 
-function applyState({ filters, skus }) {
-  return assign({}, filters, skus);
+function applyState({ advanced, filters, skus }) {
+  console.log('>>', advanced);
+  return assign({ advanced }, filters, skus);
 }
 
 export default connect(applyState)(SkusIndex);

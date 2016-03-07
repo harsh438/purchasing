@@ -63,13 +63,20 @@ export default class SkusBarcodeTable extends React.Component {
     return (
       <div>
         <div className="col-md-10">{barcode.barcode}</div>
+        {this.renderEditButton(barcode)}
+      </div>
+    );
+  }
+
+  renderEditButton(barcode) {
+    if (this.props.advanced) {
+      return  (
         <div className="col-md-2">
           <button onClick={this.handleEditButton.bind(this, barcode)} className="btn btn-success pull-right">
             <i className="glyphicon glyphicon-edit"></i>&nbsp;Edit
           </button>
-        </div>
-      </div>
-    );
+        </div>);
+    }
   }
 
   renderWithEdit(barcode) {
