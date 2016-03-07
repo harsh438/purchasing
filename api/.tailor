@@ -7,7 +7,7 @@ Tailor.config do |config|
     style.allow_screaming_snake_case_classes false, level: :error
     style.allow_trailing_line_spaces false, level: :error
     style.allow_unnecessary_interpolation false, level: :warn
-    style.allow_unnecessary_double_quotes false, level: :warn
+    style.allow_unnecessary_double_quotes false, level: :error
     style.allow_invalid_ruby false, level: :warn
     style.indentation_spaces 2, level: :off
     style.max_code_lines_in_class 350, level: :error
