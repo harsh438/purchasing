@@ -33,15 +33,9 @@ feature 'Listing Purchase Orders for the hub' do
     then_the_paging_should_work
   end
 
-  def then_i_request_the_next_page(params)
-    page.driver.post latest_hub_purchase_orders_path, {
-      request_id: request_id,
-      parameters: {
-        limit: params[:items],
-        last_id: params[:last_id] || subject['parameters']['last_id'],
-        last_timestamp: params[:last_timestamp] || subject['parameters']['last_timestamp'],
-      }
-    }
+  scenario 'Ignore barcodeless purchase orders' do
+    when_a_purchase_order_contains_a_sku_without_barcode
+    then_that_purchase_order_should_not_be_exported
   end
 
   def when_i_request_a_list_of_purchase_orders
@@ -149,35 +143,69 @@ feature 'Listing Purchase Orders for the hub' do
     expect(subject['purchase_orders'].count).to be(2)
     expect(subject['parameters']['last_timestamp']).to be(nil)
 
-    then_i_request_the_next_page(items: 2)
+    request_the_next_page(items: 2)
     expect(subject['purchase_orders'].count).to be(1)
     timestamp_should_roughly_be(Time.now)
 
-    then_i_request_the_next_page(items: 2, last_timestamp: a_long_time_ago)
+    request_the_next_page(items: 2, last_timestamp: a_long_time_ago)
     request_id_should_be_identical
     expect(subject['purchase_orders'].count).to be(2)
     last_id_should_be(purchase_orders_with_old_updated_date[1].id)
     purchase_orders_should_contain_purchase_orders_fields
 
-    then_i_request_the_next_page(items: 2)
+    request_the_next_page(items: 2)
     request_id_should_be_identical
     expect(subject['purchase_orders'].count).to be(2)
     timestamp_should_roughly_be(purchase_orders_with_recent_updated_date.first.updated_at)
     last_id_should_be(purchase_orders_with_recent_updated_date.first.id)
     purchase_orders_should_contain_purchase_orders_fields
 
-    then_i_request_the_next_page(items: 20)
+    request_the_next_page(items: 20)
     request_id_should_be_identical
     expect(subject['purchase_orders'].count).to be(2)
     timestamp_should_roughly_be(purchase_orders_with_recent_updated_date.first.updated_at)
     last_id_should_be(purchase_orders_with_recent_updated_date.last.id)
     purchase_orders_should_contain_purchase_orders_fields
 
-    then_i_request_the_next_page(items: 1)
+    request_the_next_page(items: 1)
     request_id_should_be_identical
     no_objects_should_be_returned
     timestamp_should_roughly_be(Time.now)
     last_id_should_be(nil)
+  end
+
+  def when_a_purchase_order_contains_a_sku_without_barcode
+    purchase_orders_with_recent_updated_date
+
+    line_item = create(:purchase_order_line_item, sku: create(:sku_without_barcode),
+                                                  product_id: 1)
+    create(:purchase_order, :with_grn_events,
+                            :with_recent_updated_date,
+                            line_items: [line_item])
+
+    page.driver.post latest_hub_purchase_orders_path, {
+      request_id: request_id,
+      parameters: {
+        last_timestamp: 2.days.ago,
+      },
+    }
+  end
+
+  def then_that_purchase_order_should_not_be_exported
+    expect(subject['purchase_orders'].count).to eq(purchase_orders_with_recent_updated_date.count)
+  end
+
+  private
+
+  def request_the_next_page(params)
+    page.driver.post latest_hub_purchase_orders_path, {
+      request_id: request_id,
+      parameters: {
+        limit: params[:items],
+        last_id: params[:last_id] || subject['parameters']['last_id'],
+        last_timestamp: params[:last_timestamp] || subject['parameters']['last_timestamp'],
+      }
+    }
   end
 
   def request_id_should_be_identical

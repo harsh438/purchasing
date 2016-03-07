@@ -43,8 +43,12 @@ class PurchaseOrder < ActiveRecord::Base
     includes(:line_items).where(purchase_orders: { inPVX: 0 })
   end
 
-  def self.with_barcodes
-    includes(line_items: { sku: :barcodes }).where.not({ barcodes: { id: nil } })
+  def self.where_all_line_items_have_barcodes
+    includes(line_items: { sku: :barcodes })
+      .includes_line_items
+      .booked_in
+      .without_negative_pids
+      .reject(&:not_all_barcodes_populated?)
   end
 
   def self.booked_in
@@ -65,6 +69,10 @@ class PurchaseOrder < ActiveRecord::Base
 
   def total
     line_items.map(&:total).sum
+  end
+
+  def not_all_barcodes_populated?
+    line_items.find { |line_item| line_item.sku.barcodes.empty? }.present?
   end
 
   def as_json_with_line_items

@@ -32,12 +32,9 @@ class PurchaseOrder::HubExporter
 
   def exportable_purchase_orders(last_timestamp, last_id, limit)
     PurchaseOrder.has_been_updated_since(last_timestamp, last_id)
-                         .with_barcodes
-                         .without_negative_pids
-                         .booked_in
-                         .order(updated_at: :asc, id: :asc)
-                         .limit(limit)
-                         .includes_line_items
+                 .limit(limit)
+                 .order(updated_at: :asc, id: :asc)
+                 .where_all_line_items_have_barcodes
   end
 
   def next_last_timestamp(purchase_orders, last_timestamp, limit)
