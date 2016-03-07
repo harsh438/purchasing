@@ -7,9 +7,10 @@ class PurchaseOrdersController < ApplicationController
     purchase_orders = PurchaseOrderLineItem.filter_status(status: 'balance')
                                            .where(vendor_id: params[:vendor_id])
                                            .group(:po_number)
-                                           .map do |po_line_item|
-      { id: po_line_item.po_number }
-    end
+                                           .map(&:purchase_order)
+                                           .reject(&:not_all_barcodes_populated?)
+                                           .map { |po| { id: po.po_number } }
+                                           .uniq
 
     render json: purchase_orders
   end
