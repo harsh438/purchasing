@@ -86,7 +86,7 @@ docker-compose run web rake build
 Staff who require advanced mode can add a bookmark with the following URL:
 
 ```
-javascript:window.store.dispatch({ type: 'ADVANCED_MODE' });alert('Advanced mode enabled');
+javascript:window.store.dispatch({ type: 'ADVANCED_MODE' });
 ```
 
 Clicking this whilst looking at the purchasing app will enable advanced
