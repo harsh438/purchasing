@@ -18,6 +18,11 @@ feature 'Manage order details' do
     then_i_should_see_the_negative_sku_in_the_order
   end
 
+  scenario 'Adding SKU that has not been ordered this season' do
+    when_i_add_a_sku_with_different_season_from_the_order
+    then_i_should_receive_error_with_all_missing_skus_with_season
+  end
+
   scenario 'Adding nonexistant sku to order' do
     when_i_add_a_nonexistant_sku_to_an_order
     then_i_should_receive_error_with_all_missing_skus
@@ -85,6 +90,20 @@ feature 'Manage order details' do
     expect(subject['line_items'].first['sku_id']).to_not eq(subject['line_items'].second['sku_id'])
   end
 
+  def when_i_add_a_sku_with_different_season_from_the_order
+    line_item_attrs = [{ internal_sku: sku_with_old_season.sku,
+                         quantity: '1',
+                         drop_date: Time.now.iso8601,
+                         discount: '0.0' }]
+    page.driver.post(order_path(itemless_order), _method: 'patch',
+                                                 order: { line_items_attributes: line_item_attrs })
+  end
+
+  def then_i_should_receive_error_with_all_missing_skus
+    expect(subject['errors'].first).to include('bleh-1')
+    expect(subject['errors'].first).to include('bleh-2')
+  end
+
   def when_i_add_a_nonexistant_sku_to_an_order
     line_item_attrs = [{ internal_sku: 'bleh-1',
                          manufacturer_size: '10',
@@ -106,9 +125,8 @@ feature 'Manage order details' do
 
   end
 
-  def then_i_should_receive_error_with_all_missing_skus
-    expect(subject['errors'].first).to include('bleh-1')
-    expect(subject['errors'].first).to include('bleh-2')
+  def then_i_should_receive_error_with_all_missing_skus_with_season
+    expect(subject['errors'].first).to include(sku_with_old_season.sku)
   end
 
   def given_i_have_added_list_items_to_an_order
@@ -128,6 +146,7 @@ feature 'Manage order details' do
   let(:product) { create(:product) }
   let(:language_product_option) { create(:language_product_option, pID: product.id) }
   let(:sku) { create(:sku) }
+  let(:sku_with_old_season) { create(:sku, :with_old_season) }
   let(:negative_sku) { create(:sku_without_barcode, sku: '-123456-largeish',
                                                     manufacturer_size: 'largeish') }
   let(:negative_sku_of_different_size) { create(:sku_without_barcode, sku: '-123456-smallish',

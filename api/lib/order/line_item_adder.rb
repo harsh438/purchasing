@@ -3,7 +3,7 @@ class Order::LineItemAdder
     ActiveRecord::Base.transaction do
       line_items_attrs.each do |line_item_attrs|
         if line_item_attrs[:internal_sku].present?
-          sku = find_sku(line_item_attrs)
+          sku = find_sku(order, line_item_attrs)
           order.line_items.create!(line_item_and_sku_attrs(line_item_attrs, sku))
         end
       end
@@ -17,13 +17,9 @@ class Order::LineItemAdder
       line_item_attrs[:season].present?
   end
 
-  def find_sku(line_item_attrs)
-    if preorder?(line_item_attrs)
-      Sku.find_by!(sku: line_item_attrs[:internal_sku],
-                   season: line_item_attrs[:season])
-    else
-      Sku.order(created_at: :desc).find_by!(sku: line_item_attrs[:internal_sku])
-    end
+  def find_sku(order, line_item_attrs)
+    Sku.order(created_at: :desc).find_by!(sku: line_item_attrs[:internal_sku],
+                                          season: (line_item_attrs[:season] || order.season))
   rescue ActiveRecord::RecordNotFound
     raise Order::SkuNotFound.new(line_item_attrs[:internal_sku])
   end

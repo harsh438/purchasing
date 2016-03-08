@@ -19,8 +19,8 @@ class OrdersController < ApplicationController
     Order::LineItemAdder.new.add(order, order_line_item_attrs)
     render json: order.as_json_with_line_items_and_purchase_orders
   rescue Order::SkuNotFound => e
-    Rails.logger.debug("Internal SKU was not recognised: #{nonexistant_skus}")
-    render json: { errors: ["Internal SKU was not recognised: #{nonexistant_skus}"] }
+    Rails.logger.debug("Internal SKU was not recognised: #{nonexistant_skus(order)}")
+    render json: { errors: ["Internal SKU was not recognised: #{nonexistant_skus(order)}"] }
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.debug("ActiveRecord::RecordInvalid in OrdersController: #{e.record}")
     render json: { errors: e.record.errors.full_messages }
@@ -64,7 +64,7 @@ class OrdersController < ApplicationController
   end
 
   def order_attrs
-    params.require(:order).permit(:name, :order_type)
+    params.require(:order).permit(:name, :order_type, :season)
   end
 
   def order_line_item_attrs
@@ -82,8 +82,8 @@ class OrdersController < ApplicationController
     end
   end
 
-  def nonexistant_skus
+  def nonexistant_skus(order)
     skus = order_line_item_attrs.map { |line_item| line_item[:internal_sku] }
-    Sku.nonexistant_skus(skus).join(', ')
+    Sku.nonexistant_skus_with_season(skus, order.season).join(', ')
   end
 end

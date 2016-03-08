@@ -6,12 +6,14 @@ import OrdersFilter from './_filters';
 import NumberedPagination from '../pagination/_numbered';
 import OrdersForm from './_form';
 import { loadOrders, createOrder, exportOrders } from '../../actions/orders';
+import { loadSeasons } from '../../actions/filters';
 
 class OrdersIndex extends React.Component {
   componentWillMount() {
     this.state = { creatingOrder: false,
                    exportingOrders: false,
                    selectedOrders: [] };
+    this.props.dispatch(loadSeasons());
     this.loadPage(this.props.location.query.page);
   }
 
@@ -36,8 +38,9 @@ class OrdersIndex extends React.Component {
             <h1>Orders</h1>
           </div>
 
-          <div className="col-md-2 col-md-offset-6">
-            <OrdersForm onCreateOrder={this.handleCreateOrder.bind(this)} />
+          <div className="col-md-6 col-md-offset-2">
+            <OrdersForm onCreateOrder={this.handleCreateOrder.bind(this)}
+                        seasons={this.props.seasons} />
           </div>
         </div>
 
@@ -104,8 +107,8 @@ class OrdersIndex extends React.Component {
   }
 }
 
-function applyState({ orders, order }) {
-  return assign({}, orders, order);
+function applyState({ filters, orders, order }) {
+  return assign({}, filters, orders, order);
 }
 
 export default connect(applyState)(OrdersIndex);
