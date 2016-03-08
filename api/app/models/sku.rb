@@ -6,6 +6,11 @@ class Sku < ActiveRecord::Base
     all_skus - existing_skus
   end
 
+  def self.nonexistant_skus_with_season(all_skus, season)
+    existing_skus = Sku.where(sku: all_skus, season: season).pluck(:sku)
+    all_skus - existing_skus
+  end
+
   scope :latest, -> { order(created_at: :desc) }
 
   paginates_per 50
