@@ -28,6 +28,10 @@ FactoryGirl.define do
 
     vendor
 
+    trait :with_old_season do
+      season :AW02
+    end
+
     trait :without_updated_date do
       updated_at nil
       record_timestamps false
