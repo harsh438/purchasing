@@ -18,7 +18,7 @@ feature 'Manage order details' do
     then_i_should_see_the_negative_sku_in_the_order
   end
 
-  scenario 'Adding sku to order when is season is not matching' do
+  scenario 'Adding SKU that has not been ordered this season' do
     when_i_add_a_sku_with_different_season_from_the_order
     then_i_should_receive_error_with_all_missing_skus_with_season
   end
