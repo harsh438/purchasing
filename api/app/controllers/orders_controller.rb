@@ -19,8 +19,9 @@ class OrdersController < ApplicationController
     Order::LineItemAdder.new.add(order, order_line_item_attrs)
     render json: order.as_json_with_line_items_and_purchase_orders
   rescue Order::SkuNotFound => e
-    Rails.logger.debug("Internal SKU was not recognised: #{nonexistant_skus(order)}")
-    render json: { errors: ["Internal SKU was not recognised: #{nonexistant_skus(order)}"] }
+    message = "Internal SKU does not exist for season #{order.season}: #{nonexistant_skus(order)}"
+    Rails.logger.debug(message)
+    render json: { errors: [message] }
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.debug("ActiveRecord::RecordInvalid in OrdersController: #{e.record}")
     render json: { errors: e.record.errors.full_messages }
