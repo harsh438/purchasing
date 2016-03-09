@@ -20,6 +20,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({ purchaseOrderLoading: false });
     let { id, deliveryDate, pallets } = nextProps.goodsReceivedNotice;
     deliveryDate = deliveryDate.split('/').reverse().join('-');
 
@@ -132,11 +133,13 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         <div>
           <div className="form-group grn_edit__form_group--purchase_order">
             <label htmlFor="purchaseOrderId">PO #</label>
+            {this.renderPurchaseOrdersLoading()}
             <select className="form-control"
                     id="purchaseOrderId"
                     name="purchaseOrderId"
                     value={this.state.purchaseOrderId}
-                    required>
+                    required
+                    disabled={this.state.purchaseOrderLoading}>
               <option value=""> -- select purchase order -- </option>
               {renderSelectOptions(map(this.props.purchaseOrderList, 'id'))}
             </select>
@@ -175,6 +178,16 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           </div>
         </div>
       </form>
+    );
+  }
+
+  renderPurchaseOrdersLoading() {
+    if (!this.state.purchaseOrderLoading) { return ;}
+    return (
+      <div style={{ position: 'absolute' }}>
+              <i className="glyphicon glyphicon-refresh spin"
+                 style={{ position:'relative', top: '9px', left: '5px' }}></i>
+      </div>
     );
   }
 
@@ -403,6 +416,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   setVendorId(vendorId) {
     this.setState({ vendorId });
+    this.setState({ purchaseOrderLoading: true });
     this.props.onVendorChange(vendorId);
   }
 
