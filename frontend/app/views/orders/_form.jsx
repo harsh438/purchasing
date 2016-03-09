@@ -18,15 +18,7 @@ export default class OrdersForm extends React.Component {
                  placeholder="Order name (optional)"
                  value={this.state.name}/>
         </div>
-        <div className="form-group">
-          <select className="form-control"
-                  name="season"
-                  value={this.state.season}
-                  required>
-            <option value="">Season</option>
-            {this.renderSeasons()}
-          </select>
-        </div>
+
         <div className="input-group">
           <span className="input-group-btn">
             <button className="btn btn-success"
@@ -37,6 +29,19 @@ export default class OrdersForm extends React.Component {
         </div>
       </form>
     );
+  }
+
+  renderSeasonBlock() {
+    return (
+      <div className="form-group">
+        <select className="form-control"
+                  name="season"
+                  value={this.state.season}
+                  required>
+          <option value="">Season</option>
+          {this.renderSeasons()}
+        </select>
+      </div>);
   }
 
   renderSeasons() {

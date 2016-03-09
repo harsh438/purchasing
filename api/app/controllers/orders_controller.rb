@@ -34,7 +34,10 @@ class OrdersController < ApplicationController
   private
 
   def build_non_existant_sku_errors
-    errors = ["Internal SKU does not exist for season #{order.season}: #{nonexistant_skus_by_season(order)}"]
+    errors = []
+    unless order.season.blank?
+      errors.push("Internal SKU does not exist for season #{order.season}: #{nonexistant_skus_by_season(order)}")
+    end
     unknown_skus = nonexistant_skus
     unless unknown_skus.empty?
       errors.push("Internal SKU does not exist for any season: #{unknown_skus}")
