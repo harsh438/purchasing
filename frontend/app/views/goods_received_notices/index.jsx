@@ -29,7 +29,8 @@ import Qs from 'qs';
 class GoodsReceivedNoticesIndex extends React.Component {
   componentWillMount() {
     this.state = { currentDate: moment().format('DD/MM/YYYY'),
-                   editing: false };
+                   editing: false,
+                   grnLoading: true };
 
     this.state.startDateMonth = this.startDateMonth();
     this.state.startDateYear = this.startDateYear();
@@ -40,6 +41,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({ grnLoading: this.isGrnLoading(nextProps) });
     this.updateCurrentDate(nextProps);
 
     const currentNotify = this.props.notification || {};
@@ -47,6 +49,24 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
     if (currentNotify.date !== nextNotify.date) {
       this.refs.notificationSystem.addNotification({ message: nextProps.notification.text, level: nextProps.notification.type });
+    }
+  }
+
+  isGrnLoading(props) {
+    if (typeof props.noticeWeeks.length === 'undefined'
+        || props.noticeWeeks.length === 0) {
+      return true;
+    }
+    return false;
+  }
+
+  renderGrnLoading() {
+    if (this.state.grnLoading) {
+      return (
+        <div>
+          <i className="glyphicon glyphicon-refresh grn_notice__loading spin"></i>
+        </div>
+      );
     }
   }
 
@@ -69,10 +89,10 @@ class GoodsReceivedNoticesIndex extends React.Component {
             <h1>Booking tool</h1>
           </div>
         </div>
-
         {this.renderNavigation()}
 
         <div className="row">
+          {this.renderGrnLoading()}
           <div className={leftClass}>
             {this.renderWeekTabs()}
             {this.renderWeek()}
