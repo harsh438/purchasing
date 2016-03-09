@@ -19,9 +19,7 @@ class OrdersController < ApplicationController
     Order::LineItemAdder.new.add(order, order_line_item_attrs)
     render json: order.as_json_with_line_items_and_purchase_orders
   rescue Order::SkuNotFound => e
-    message = "Internal SKU does not exist for season #{order.season}: #{nonexistant_skus(order)}"
-    Rails.logger.debug(message)
-    render json: { errors: [message] }
+    render json: { errors: build_non_existant_sku_errors }
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.debug("ActiveRecord::RecordInvalid in OrdersController: #{e.record}")
     render json: { errors: e.record.errors.full_messages }
@@ -34,6 +32,16 @@ class OrdersController < ApplicationController
   end
 
   private
+
+  def build_non_existant_sku_errors
+    errors = ["Internal SKU does not exist for season #{order.season}: #{nonexistant_skus_by_season(order)}"]
+    unknown_skus = nonexistant_skus
+    unless unknown_skus.empty?
+      errors.push("Internal SKU does not exist for any season: #{unknown_skus}")
+    end
+    errors.each { |error| Rails.logger.debug(error) }
+    errors
+  end
 
   def order_url_for(order)
     url = url_for(order)
@@ -83,8 +91,13 @@ class OrdersController < ApplicationController
     end
   end
 
-  def nonexistant_skus(order)
+  def nonexistant_skus_by_season(order)
     skus = order_line_item_attrs.map { |line_item| line_item[:internal_sku] }
     Sku.nonexistant_skus_with_season(skus, order.season).join(', ')
+  end
+
+  def nonexistant_skus
+    skus = order_line_item_attrs.map { |line_item| line_item[:internal_sku] }
+    Sku.nonexistant_skus(skus).join(', ')
   end
 end
