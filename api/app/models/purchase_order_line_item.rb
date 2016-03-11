@@ -323,6 +323,14 @@
     self
   end
 
+  def barcodeless?
+    if sku.present?
+      sku.barcodes.empty?
+    else
+      true
+    end
+  end
+
   private
 
   def ensure_defaults

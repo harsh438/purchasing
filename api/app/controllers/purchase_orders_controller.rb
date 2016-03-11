@@ -9,7 +9,7 @@ class PurchaseOrdersController < ApplicationController
                                            .group(:po_number)
                                            .map(&:purchase_order)
                                            .compact
-                                           .reject(&:not_all_barcodes_populated?)
+                                           .keep_if(&:bookable?)
                                            .map { |po| { id: po.po_number } }
                                            .uniq
 

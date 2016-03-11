@@ -177,7 +177,8 @@ feature 'Listing Purchase Orders for the hub' do
   def when_a_purchase_order_contains_a_sku_without_barcode
     purchase_orders_with_recent_updated_date
 
-    line_item = create(:purchase_order_line_item, sku: create(:sku_without_barcode),
+    line_item = create(:purchase_order_line_item, :balance,
+                                                  sku: create(:sku_without_barcode),
                                                   product_id: 1)
     create(:purchase_order, :with_grn_events,
                             :with_recent_updated_date,

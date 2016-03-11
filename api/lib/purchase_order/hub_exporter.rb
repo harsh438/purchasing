@@ -34,7 +34,7 @@ class PurchaseOrder::HubExporter
     PurchaseOrder.has_been_updated_since(last_timestamp, last_id)
                  .limit(limit)
                  .order(updated_at: :asc, id: :asc)
-                 .where_all_line_items_have_barcodes
+                 .booked_in
   end
 
   def next_last_timestamp(purchase_orders, last_timestamp, limit)
