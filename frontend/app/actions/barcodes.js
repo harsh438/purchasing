@@ -56,7 +56,7 @@ export function updateBarcode(barcode) {
       })
       .then(response => response.json())
       .then(response => {
-        if (status === 409) {
+        if (status < 200 || status > 300) {
           dispatch({ text: response.message, type: 'ERROR_NOTIFICATION', data: response });
         }
         throwErrors({ status });
