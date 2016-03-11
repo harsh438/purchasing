@@ -13,7 +13,7 @@ feature 'Updating barcodes' do
 
   scenario 'Can edit barcode of unsized sku' do
     when_i_update_an_existing_barcode_from_an_unsized_sku
-    then_the_api_should_return_sku_with_new_barcode
+    then_the_api_should_returned_unsized_sku_error
   end
 
   def when_i_update_an_existing_barcode_by_barcode_id
@@ -54,13 +54,13 @@ feature 'Updating barcodes' do
   def when_i_update_an_existing_barcode_from_an_unsized_sku
     page.driver.post barcode_path(unsized_sku_barcode), {
       _method: 'PATCH',
-      barcode: new_barcode
+      barcode: random_barcode
     }
   end
 
-  def then_the_api_should_return_sku_with_new_barcode
-    expect(page).to have_http_status(200)
-    expect(subject['barcodes'][0]['barcode']).to eq(new_barcode)
+  def then_the_api_should_returned_unsized_sku_error
+    expect(page).to have_http_status(422)
+    expect(subject['message']).to eq('Unsized skus are not editable.')
   end
 
   def random_barcode
