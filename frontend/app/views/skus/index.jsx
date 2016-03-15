@@ -99,7 +99,6 @@ class SkusIndex extends React.Component {
 }
 
 function applyState({ advanced, filters, skus }) {
-  console.log('>>', advanced);
   return assign({ advanced }, filters, skus);
 }
 
