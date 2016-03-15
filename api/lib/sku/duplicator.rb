@@ -22,9 +22,37 @@ class Sku::Duplicator
   end
 
   def copy_sku_attributes(old_sku, element)
-    sku_attrs = old_sku.as_json.symbolize_keys.except(:barcode, :manufacturer_size)
-    sku_attrs[:internal_sku] = "#{old_sku.product.id}-#{element.name}"
-    sku_attrs[:size] = element.name
-    sku_attrs
+    {
+      internal_sku: "#{old_sku.product.id}-#{element.name}",
+      size: element.name,
+      category_id: old_sku.language_category.category_id,
+      vendor_id: old_sku.vendor_id,
+      product_name: old_sku.product_name,
+      manufacturer_sku: old_sku.manufacturer_sku,
+      inv_track: old_sku.inv_track
+    }.merge(copy_sku_attributes_visuals(old_sku))
+     .merge(copy_sku_attributes_product(old_sku))
+  end
+
+  def copy_sku_attributes_product(old_sku)
+    {
+      price: old_sku.price,
+      cost_price: old_sku.cost_price,
+      list_price: old_sku.list_price,
+      season: old_sku.season,
+      category_name: old_sku.category_name,
+      on_sale: old_sku.on_sale
+    }
+  end
+
+  def copy_sku_attributes_visuals(old_sku)
+    {
+      color: old_sku.color,
+      color_family: old_sku.color_family,
+      size_scale: old_sku.size_scale,
+      gender: old_sku.gender,
+      listing_genders: old_sku.listing_genders,
+      manufacturer_color: old_sku.manufacturer_color
+    }
   end
 end
