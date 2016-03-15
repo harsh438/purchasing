@@ -29,11 +29,16 @@ feature 'Updating barcodes' do
     expect(subject['barcodes'][0]['id']).to eq(barcode.id)
     expect(subject['barcodes'][0]['barcode']).to eq(new_barcode)
     and_legacy_barcode_should_also_be_updated
+    and_the_sku_should_be_touched
   end
 
   def and_legacy_barcode_should_also_be_updated
     po = PurchaseOrderLineItem.find(purchase_order_line_item.id)
     expect(po.orderTool_barcode).to eq(new_barcode)
+  end
+
+  def and_the_sku_should_be_touched
+    expect((sku.updated_at - Time.now).abs < 5).to be(true)
   end
 
   def when_i_update_an_existing_barcode_with_conflict

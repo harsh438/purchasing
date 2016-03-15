@@ -5,6 +5,7 @@ class Sku::Updator
       sku.update!(params)
       Sku::Exporter.new.export(sku)
       self.update_option(sku, params) if params.include?(:manufacturer_size)
+      sku.touch
     end
   end
 
