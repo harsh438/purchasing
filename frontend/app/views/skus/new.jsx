@@ -1,5 +1,6 @@
 import React from 'react';
 import NotificationSystem from 'react-notification-system';
+import Select from 'react-select';
 import { connect } from 'react-redux';
 import { assign } from 'lodash';
 import { createSkuByPid } from '../../actions/skus';
@@ -51,14 +52,12 @@ class SkusNew extends React.Component {
                  required />
           <br />
           <label htmlFor="product_id">Surfdome Size</label>
-          <select className="form-control"
-                  id="elementId"
+          <Select id="elementId"
                   name="elementId"
-                  value={this.state.sku.elementId}
-                  required >
-            <option value="">Please select a Surfdome Size</option>
-            {this.renderElements()}
-          </select>
+                  value={this.state.sku.elementId || ''}
+                  required
+                  options={this.renderElements()}
+                  onChange={this.handleElementChange.bind(this)} />
           <br />
           {this.renderSubmitButton()}
         </form>
@@ -67,9 +66,8 @@ class SkusNew extends React.Component {
   }
 
   renderElements() {
-    let elements = this.props.elements;
-    return elements.map((element) => {
-      return <option key={element.id} value={element.id}>{element.name}</option>;
+    return this.props.elements.map((element) => {
+      return { value: element.id, label: element.name };
     });
   }
 
@@ -81,7 +79,13 @@ class SkusNew extends React.Component {
     }
   }
 
-  handleFormChange ({ target }) {
+  handleElementChange(newValue) {
+    this.handleFormChange({
+      target: { name: 'elementId', value: newValue },
+    });
+  }
+
+  handleFormChange({ target }) {
     const sku = assign({}, this.state.sku, { [target.name]: target.value });
     this.setState({ sku });
   }
