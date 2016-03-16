@@ -7,6 +7,7 @@ class Barcode::Updater
     ActiveRecord::Base.transaction do
       barcode.save!
       self.update_barcode_references(barcode)
+      barcode.sku.touch
     end
     barcode.sku.barcodes
   end
