@@ -1,5 +1,5 @@
 class Barcode < ActiveRecord::Base
-  belongs_to :sku
+  belongs_to :sku, touch: true
   validates :barcode, presence: true
 
   before_validation :strip_whitespace
