@@ -206,10 +206,12 @@ feature 'Listing Skus for the hub' do
   let(:in_the_future) { 2.days.since.iso8601 }
 
   let(:create_sku_list) do
-    skus_with_recent_updated_date
-    skus_with_old_updated_date
-    skus_with_fixed_updated_date
-    create_list(:sku_without_barcode, 3, :with_old_updated_date) # these should not show up
+    Sku.no_touching do
+      skus_with_recent_updated_date
+      skus_with_old_updated_date
+      skus_with_fixed_updated_date
+      create_list(:sku_without_barcode, 3, :with_old_updated_date) # these should not show up
+    end
   end
 
   let(:skus_with_fixed_updated_date) { create_list(:sku, 5, :with_fixed_updated_date) }

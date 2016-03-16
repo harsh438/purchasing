@@ -39,10 +39,12 @@ FactoryGirl.define do
 
     trait :with_old_updated_date do
       updated_at 1.year.ago
+      record_timestamps false
     end
 
     trait :with_recent_updated_date do
       updated_at 5.minutes.ago
+      record_timestamps false
     end
 
     trait :with_fixed_updated_date do
