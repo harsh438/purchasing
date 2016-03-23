@@ -250,28 +250,36 @@ feature 'Listing Purchase Orders for the hub' do
       purchase_orders_without_date
 
       # none of these should not be listed
-      create_list(:purchase_order, 1, :with_line_items)
-      create_list(:purchase_order, 1, :with_line_items, :with_grn_events)
+      create_list(:purchase_order, 1, :with_ready_line_items)
+      create_list(:purchase_order, 1, :with_ready_line_items, :with_grn_events)
       create_list(:purchase_order, 1, :with_line_items_sent_in_peoplevox, :with_grn_events)
-      create_list(:purchase_order, 1, :with_line_items, :with_grn_events, :with_old_updated_date)
-      create_list(:purchase_order, 1, :with_line_items, :with_old_updated_date)
-      create_list(:purchase_order, 1, :with_line_items_with_barcode, :with_grn_events, :with_recent_updated_date)
+      create_list(:purchase_order, 1, :with_ready_line_items, :with_grn_events, :with_old_updated_date)
+      create_list(:purchase_order, 1, :with_ready_line_items, :with_old_updated_date)
+      create_list(:purchase_order, 1, :with_ready_line_items_with_barcode, :with_grn_events, :with_recent_updated_date)
     end
   end
 
   let(:purchase_orders_with_old_updated_date) do
-    create_list(:purchase_order, 3, :with_line_items_with_barcode_and_product, :with_grn_events, :with_old_updated_date)
+    create_list(:purchase_order, 3, :with_ready_line_items_with_barcode_and_product,
+                                    :with_grn_events,
+                                    :with_old_updated_date)
   end
 
   let(:purchase_orders_with_recent_updated_date) do
-    create_list(:purchase_order, 3, :with_line_items_with_barcode_and_product, :with_grn_events, :with_recent_updated_date)
+    create_list(:purchase_order, 3, :with_ready_line_items_with_barcode_and_product,
+                                    :with_grn_events,
+                                    :with_recent_updated_date)
   end
 
   let(:purchase_orders_with_fixed_date) do
-    create_list(:purchase_order, 3, :with_line_items_with_barcode_and_product, :with_grn_events, :with_fixed_updated_date)
+    create_list(:purchase_order, 3, :with_ready_line_items_with_barcode_and_product,
+                                    :with_grn_events,
+                                    :with_fixed_updated_date)
   end
 
   let(:purchase_orders_without_date) do
-    create_list(:purchase_order, 3, :with_line_items_with_barcode_and_product, :with_grn_events, :without_updated_date)
+    create_list(:purchase_order, 3, :with_ready_line_items_with_barcode_and_product,
+                                    :with_grn_events,
+                                    :without_updated_date)
   end
 end

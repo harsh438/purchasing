@@ -7,12 +7,23 @@ FactoryGirl.define do
       line_items { build_list(:purchase_order_line_item, 4, vendor: vendor) }
     end
 
+    trait :with_ready_line_items do
+      line_items { build_list(:purchase_order_line_item, 4, :ready, vendor: vendor) }
+    end
+
+    trait :with_ready_line_items_with_barcode do
+      line_items { build_list(:purchase_order_line_item, 1, :with_barcode, :ready, vendor: vendor) }
+    end
+
     trait :with_line_items_with_barcode do
       line_items { build_list(:purchase_order_line_item, 1, :with_barcode, vendor: vendor) }
     end
 
-    trait :with_line_items_with_barcode_and_product do
-      line_items { build_list(:purchase_order_line_item, 1, :with_barcode, :with_product, :balance, vendor: vendor) }
+    trait :with_ready_line_items_with_barcode_and_product do
+      line_items { build_list(:purchase_order_line_item, 1, :ready,
+                                                            :with_barcode,
+                                                            :with_product,
+                                                            vendor: vendor) }
     end
 
     trait :with_line_items_sent_in_peoplevox do

@@ -12,6 +12,6 @@ class PurchaseOrderSerializer < ActiveModel::Serializer
   end
 
   def items
-    object.line_items
+    object.line_items.ready_to_be_delivered
   end
 end

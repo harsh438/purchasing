@@ -83,6 +83,7 @@
 
   scope :with_summary, -> { where.not(po_number: '').where.not(po_number: 0) }
   scope :with_valid_status, -> { where('purchase_orders.status in (-1,2,3,4,5)') }
+  scope :ready_to_be_delivered, -> { where('purchase_orders.status = 2') }
 
   belongs_to :vendor, foreign_key: :orderTool_venID
   belongs_to :product, foreign_key: :pID
