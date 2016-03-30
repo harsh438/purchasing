@@ -1,6 +1,7 @@
 class PurchaseOrder::HubExporter
   DEFAULT_PURCHASE_ORDERS = 10
   MAX_PURCHASE_ORDERS = 60
+  LINE_ITEM_CHUNK_SIZE = 10
 
   def export(params)
     hub_object(params.fetch(:request_id), params.fetch(:parameters))
@@ -17,9 +18,9 @@ class PurchaseOrder::HubExporter
 
     { request_id: request_id,
       summary: "Returned #{purchase_orders.size} purchase orders objects.",
-      purchase_orders: serialized_purchase_orders(purchase_orders),
+      purchase_orders: purchase_orders,
       parameters: { last_timestamp: next_last_timestamp(purchase_orders, last_timestamp, limit),
-                    last_id: purchase_orders.last.try(:id) } }
+                    last_id: purchase_orders.last.try(:[], :po_number) } }
   end
 
   def safe_limit(request_params)
@@ -35,22 +36,20 @@ class PurchaseOrder::HubExporter
                  .limit(limit)
                  .order(updated_at: :asc, id: :asc)
                  .booked_in
+                 .map do |po|
+                    po.serialize_by_line_item_chunks(LINE_ITEM_CHUNK_SIZE)
+                 end.flatten
   end
 
   def next_last_timestamp(purchase_orders, last_timestamp, limit)
     if has_reached_end_of_purchase_orders?(purchase_orders, last_timestamp, limit)
       Time.now
     else
-      purchase_orders.last.try(:updated_at)
+      purchase_orders.last.try(:[], :updated_at)
     end
   end
 
   def has_reached_end_of_purchase_orders?(purchase_orders, last_timestamp, limit)
     (purchase_orders.count < limit and last_timestamp.nil?) or purchase_orders.empty?
-  end
-
-  def serialized_purchase_orders(purchase_orders)
-    ActiveModel::ArraySerializer.new(purchase_orders,
-                                     each_serializer: PurchaseOrderSerializer)
   end
 end

@@ -5,6 +5,12 @@
   include LegacyMappings
   include Searchable
 
+  def self.by_chunks(chunk_size, &block)
+    self.ready_to_be_delivered
+        .order(:po_chunk_number)
+        .each_slice(chunk_size) { |chunk| block.call(chunk) }
+  end
+
   def self.filter_supplier(context)
     joins(vendor: :supplier_vendors)
       .where(suppliers_to_brands: { SupplierID: context[:supplier] })
