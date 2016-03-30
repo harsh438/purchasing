@@ -67,7 +67,8 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def self.booked_in
-    joins(:goods_received_notice_events).where.not({ bookingin_events: { id: nil } })
+    joins(:goods_received_notice_events)
+      .where.not({ bookingin_events: { id: nil } })
       .bookable
   end
 

@@ -38,10 +38,10 @@ feature 'Listing Purchase Orders for the hub' do
     then_that_purchase_order_should_not_be_exported
   end
 
-  #scenario 'Splitting big purchase orders' do
-  #  when_i_request_a_giant_purchase_order
-  #  then_it_should_come_in_multiple_parts
-  #end
+  scenario 'Splitting big purchase orders' do
+    when_i_request_a_giant_purchase_order
+    then_it_should_come_in_multiple_parts
+  end
 
   def when_i_request_a_list_of_purchase_orders
     create_purchase_orders
