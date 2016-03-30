@@ -23,6 +23,21 @@ class PurchaseOrder < ActiveRecord::Base
   after_initialize :ensure_defaults
   after_initialize :set_legacy
 
+  def serialize_by_line_item_chunks(chunk_size)
+    chunks = []
+    current_po_num = 1
+    PurchaseOrder.no_touching do
+      ActiveRecord::Base.transaction do
+        line_items.by_chunks(chunk_size) do |items_chunk|
+          update_line_item_chunk_number(items_chunk, current_po_num)
+          chunks.push(items_chunk)
+          current_po_num += 1
+        end
+      end
+    end
+    serialize_line_items_chunks(chunks)
+  end
+
   def self.has_been_updated_since(timestamp, max_id = 0)
     if timestamp.nil?
       where('po_summary.updated_at is null and po_summary.po_num > ?', max_id)
@@ -84,6 +99,19 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   private
+
+  def update_line_item_chunk_number(items_chunk, po_chunk_number)
+    items_chunk.each do |item|
+      item.po_chunk_number = po_chunk_number
+      item.save!
+    end
+  end
+
+  def serialize_line_items_chunks(line_item_chunks)
+    line_item_chunks.map do |chunk|
+      PurchaseOrderChunkSerializer.serialize(self, chunk)
+    end
+  end
 
   def ensure_defaults
     self.po_date ||= Time.now

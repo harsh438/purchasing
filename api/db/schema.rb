@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160307141223) do
+ActiveRecord::Schema.define(version: 20160329163919) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -635,6 +635,7 @@ ActiveRecord::Schema.define(version: 20160307141223) do
     t.float    "orderTool_RRP",               limit: 24
     t.integer  "sku_id",                      limit: 4
     t.string   "orderTool_SDcolor",           limit: 255
+    t.integer  "po_chunk_number",             limit: 4
   end
 
   add_index "purchase_orders", ["inv_date"], name: "invoicedate", using: :btree

@@ -38,6 +38,11 @@ feature 'Listing Purchase Orders for the hub' do
     then_that_purchase_order_should_not_be_exported
   end
 
+  scenario 'Splitting big purchase orders' do
+    when_i_request_a_giant_purchase_order
+    then_it_should_come_in_multiple_parts
+  end
+
   def when_i_request_a_list_of_purchase_orders
     create_purchase_orders
     page.driver.post latest_hub_purchase_orders_path, {
@@ -196,6 +201,35 @@ feature 'Listing Purchase Orders for the hub' do
     expect(subject['purchase_orders'].count).to eq(purchase_orders_with_recent_updated_date.count)
   end
 
+  def when_i_request_a_giant_purchase_order
+    create_large_purchase_orders
+    page.driver.post latest_hub_purchase_orders_path, {
+      request_id: request_id,
+      parameters: {
+        limit: 20,
+        last_timestamp: a_long_time_ago,
+        last_id: 0
+      }
+    }
+  end
+
+  def then_it_should_come_in_multiple_parts
+    purchase_orders = create_large_purchase_orders
+    results = subject['purchase_orders']
+    expect(results.count).to eq(4)
+    expect(results[0]['items'].count).to eq(10)
+    expect(results[1]['items'].count).to eq(2)
+    expect(results[2]['items'].count).to eq(10)
+    expect(results[3]['items'].count).to eq(2)
+    expect(results[0]['id']).to eq("#{purchase_orders[0].po_number}_1")
+    expect(results[1]['id']).to eq("#{purchase_orders[0].po_number}_2")
+    expect(results[2]['id']).to eq("#{purchase_orders[1].po_number}_1")
+    expect(results[3]['id']).to eq("#{purchase_orders[1].po_number}_2")
+    expect(results[0]['po_number']).to eq(purchase_orders[0].po_number)
+    updated_at = purchase_orders[0].updated_at.as_json[0..18]
+    expect(results[0]['updated_at'][0..18]).to eq(updated_at)
+  end
+
   private
 
   def request_the_next_page(params)
@@ -242,7 +276,15 @@ feature 'Listing Purchase Orders for the hub' do
   let(:a_long_time_ago) { 2.years.ago.iso8601 }
   let(:recent_date) { 30.minutes.ago.iso8601 }
 
-  let (:create_purchase_orders) do
+  let(:create_large_purchase_orders) do
+    PurchaseOrder.no_touching do
+      create_list(:purchase_order, 2, :with_lots_of_ready_line_items_with_barcode_and_product,
+                                      :with_grn_events,
+                                      :with_old_updated_date)
+    end
+  end
+
+  let(:create_purchase_orders) do
     PurchaseOrder.no_touching do
       purchase_orders_with_old_updated_date
       purchase_orders_with_recent_updated_date
