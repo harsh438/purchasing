@@ -217,9 +217,11 @@ feature 'Listing Purchase Orders for the hub' do
     purchase_orders = create_large_purchase_orders
     results = subject['purchase_orders']
     expect(results.count).to eq(4)
-    expect(results[0]['items'].count).to eq(10)
+    expect(results[0]['items'].count).to eq(25)
     expect(results[1]['items'].count).to eq(2)
-    expect(results[2]['items'].count).to eq(10)
+    numbers = results[1]['items'].map { |item| item['number'] }
+    expect(numbers).to eq([26, 27])
+    expect(results[2]['items'].count).to eq(25)
     expect(results[3]['items'].count).to eq(2)
     expect(results[0]['id']).to eq("#{purchase_orders[0].po_number}_1")
     expect(results[1]['id']).to eq("#{purchase_orders[0].po_number}_2")

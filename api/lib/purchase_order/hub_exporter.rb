@@ -1,7 +1,7 @@
 class PurchaseOrder::HubExporter
   DEFAULT_PURCHASE_ORDERS = 10
   MAX_PURCHASE_ORDERS = 60
-  LINE_ITEM_CHUNK_SIZE = 10
+  LINE_ITEM_CHUNK_SIZE = 25
 
   def export(params)
     hub_object(params.fetch(:request_id), params.fetch(:parameters))
