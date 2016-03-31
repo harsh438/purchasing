@@ -27,7 +27,7 @@ FactoryGirl.define do
     end
 
     trait :with_lots_of_ready_line_items_with_barcode_and_product do
-      line_items { build_list(:purchase_order_line_item, 12, :ready,
+      line_items { build_list(:purchase_order_line_item, 27, :ready,
                                                              :with_barcode,
                                                              :with_product,
                                                              vendor: vendor) }

@@ -108,8 +108,13 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def serialize_line_items_chunks(line_item_chunks)
+    start_id = 1
     line_item_chunks.map do |chunk|
-      PurchaseOrderChunkSerializer.serialize(self, chunk)
+      serialized_chunks = PurchaseOrderChunkSerializer.serialize(self,
+                                                                 chunk,
+                                                                 start_id)
+      start_id += chunk.size
+      serialized_chunks
     end
   end
 
