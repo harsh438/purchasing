@@ -6,7 +6,7 @@
   include Searchable
 
   def self.by_chunks(chunk_size, &block)
-    self.ready_to_be_delivered
+    self.filter_status(status: ['balance'])
         .order(:po_chunk_number)
         .each_slice(chunk_size) { |chunk| block.call(chunk) }
   end
@@ -26,10 +26,10 @@
 
     if context[:status].include?('balance')
       filtered_values = values - [4]
-      where('(purchase_orders.status IN (?)) OR
-             (purchase_orders.status=4 AND (purchase_orders.qty +
-                                            purchase_orders.qtyAdded -
-                                            purchase_orders.qtyDone) > 0)', filtered_values)
+      where('(purchase_orders.status IN (?)) OR' \
+            '(purchase_orders.status=4 AND (purchase_orders.qty +' \
+                                            'purchase_orders.qtyAdded -' \
+                                            'purchase_orders.qtyDone) > 0)', filtered_values)
     else
       where(status: values)
     end
@@ -89,7 +89,6 @@
 
   scope :with_summary, -> { where.not(po_number: '').where.not(po_number: 0) }
   scope :with_valid_status, -> { where('purchase_orders.status in (-1,2,3,4,5)') }
-  scope :ready_to_be_delivered, -> { where('purchase_orders.status = 2') }
 
   belongs_to :vendor, foreign_key: :orderTool_venID
   belongs_to :product, foreign_key: :pID
