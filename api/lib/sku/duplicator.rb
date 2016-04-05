@@ -36,6 +36,7 @@ class Sku::Duplicator
 
   def copy_sku_attributes_product(old_sku)
     {
+      product_id: old_sku.product_id,
       price: old_sku.price,
       cost_price: old_sku.cost_price,
       list_price: old_sku.list_price,

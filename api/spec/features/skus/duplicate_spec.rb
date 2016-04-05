@@ -8,7 +8,7 @@ feature 'SKU duplication' do
 
   scenario 'Generating skus with PID' do
     when_i_generate_sku_from_pid
-    then_the_api_should_return_a_new_copied_sku
+    then_the_api_should_return_a_new_copied_sku_with_pid
   end
 
   scenario 'Generating skus from sku without barcode should fail' do
@@ -38,12 +38,13 @@ feature 'SKU duplication' do
     }
   end
 
-  def then_the_api_should_return_a_new_copied_sku
+  def then_the_api_should_return_a_new_copied_sku_with_pid
     expect(subject['sku']).to eq("#{product_with_skus.id}-#{element.name}")
     expect(subject['size']).to eq(element.name)
     expect(subject['manufacturer_size']).to eq(nil)
     expect(subject['id']).not_to eq(product_with_skus.skus.last.id)
     expect(subject['manufacturer_sku']).to eq(product_with_skus.skus.last.manufacturer_sku)
+    expect(subject['product_id']).to eq(product_with_skus.id)
   end
 
   def when_i_generate_sku_without_barcode

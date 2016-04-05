@@ -37,6 +37,7 @@ class Sku::Generator
                       manufacturer_color: attrs[:manufacturer_color],
                       manufacturer_size: attrs[:manufacturer_size],
                       vendor_id: attrs[:vendor_id],
+                      product_id: attrs[:product_id],
                       product_name: attrs[:product_name],
                       season: attrs[:season],
                       color: attrs[:color],
