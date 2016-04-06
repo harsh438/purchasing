@@ -6,7 +6,7 @@
   include Searchable
 
   def self.by_chunks(chunk_size, &block)
-    self.filter_status(status: ['balance'])
+    self.filter_status(status: [:balance])
         .order(:po_chunk_number)
         .each_slice(chunk_size) { |chunk| block.call(chunk) }
   end
