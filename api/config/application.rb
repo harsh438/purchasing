@@ -12,7 +12,7 @@ module Purchasing
     config.autoload_paths << Rails.root.join('lib')
 
     config.action_dispatch.default_headers = {
-      'Access-Control-Allow-Origin' => '*'
+      'Access-Control-Allow-Origin' => Rails.env.production? ? 'https://www.surfdome.io' : '*'
     }
 
     config.http_auth = { enabled: true,
