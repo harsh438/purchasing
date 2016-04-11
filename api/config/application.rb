@@ -11,6 +11,10 @@ module Purchasing
     config.active_record.raise_in_transactional_callbacks = true
     config.autoload_paths << Rails.root.join('lib')
 
+    config.action_dispatch.default_headers = {
+      'Access-Control-Allow-Origin' => Rails.env.production? ? 'https://www.surfdome.io' : '*'
+    }
+
     config.http_auth = { enabled: true,
                          username: 'purchasing',
                          password: 'lastordersplease' }
