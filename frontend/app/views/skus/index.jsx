@@ -1,4 +1,6 @@
 import React from 'react';
+import NotificationSystem from 'react-notification-system';
+import Qs from 'qs';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { assign, isEqual, isEmpty } from 'lodash';
@@ -9,7 +11,7 @@ import SkusTable from './_table';
 import SkusFilters from './_filters';
 import { renderCsvExportLink } from '../../utilities/dom';
 import { snakeizeKeys } from '../../utilities/inspection';
-import Qs from 'qs';
+import { processNotifications } from '../../utilities/notification';
 
 class SkusIndex extends React.Component {
   componentWillMount() {
@@ -21,6 +23,7 @@ class SkusIndex extends React.Component {
   componentWillReceiveProps(nextProps) {
     const nextQuery = nextProps.location.query;
 
+    processNotifications.call(this, nextProps);
     if (!isEqual(this.props.location.query, nextQuery)) {
       this.loadPage(nextQuery.page, (nextQuery.filters || {}));
     }
@@ -30,6 +33,7 @@ class SkusIndex extends React.Component {
     return (
       <div className="suppliers_index container-fluid"
            style={{ marginTop: '70px' }}>
+        <NotificationSystem ref="notificationSystem" />
         <div className="row" style={{ marginBottom: '20px' }}>
           <div className="col-md-4">
             <h1>SKUs</h1>
@@ -98,8 +102,8 @@ class SkusIndex extends React.Component {
   }
 }
 
-function applyState({ advanced, filters, skus }) {
-  return assign({ advanced }, filters, skus);
+function applyState({ advanced, filters, skus, notification }) {
+  return assign({ advanced }, filters, skus, notification);
 }
 
 export default connect(applyState)(SkusIndex);

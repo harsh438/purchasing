@@ -16,6 +16,16 @@ feature 'SKU Listing' do
     then_only_skus_of_that_brand_should_be_listed
   end
 
+  scenario 'Filtering without barcode must contain a season' do
+    when_i_filter_skus_without_barcode
+    then_a_season_must_be_provided
+  end
+
+  scenario 'Filtering without barcode with a season works' do
+    when_i_filter_skus_without_barcode_with_a_season
+    then_i_should_see_paginated_list_of_skus_without_barcode
+  end
+
   def when_i_request_list_of_skus
     create_list(:sku, 52)
     visit skus_path
@@ -44,5 +54,26 @@ feature 'SKU Listing' do
 
   def then_only_skus_of_that_brand_should_be_listed
     expect(subject['skus'].count).to eq(2)
+  end
+
+  def when_i_filter_skus_without_barcode
+    visit skus_path(filters: { without_barcodes: '1' })
+  end
+
+  def then_a_season_must_be_provided
+    expect(page.status_code).to be(422)
+    expect(subject['message']).to eq('Season is mandatory if without barcode is selected')
+  end
+
+  def when_i_filter_skus_without_barcode_with_a_season
+    create_list(:sku_without_barcode, 5)
+    visit skus_path(filters: {
+      without_barcodes: '1',
+      season: 'AW15'
+    })
+  end
+
+  def then_i_should_see_paginated_list_of_skus_without_barcode
+    expect(subject['skus'].count).to eq(5)
   end
 end

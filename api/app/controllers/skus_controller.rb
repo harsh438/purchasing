@@ -69,6 +69,8 @@ class SkusController < ApplicationController
                    total_pages: skus.total_pages,
                    page: params[:page] || 1 },
            callback: params[:callback]
+  rescue Exceptions::InvalidSearchFilters => e
+    render json: { message: e.message }, status: 422
   end
 
   def render_exporter(format)
