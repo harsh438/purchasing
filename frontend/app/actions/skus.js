@@ -14,10 +14,23 @@ function throwErrors(response) {
 
 export function loadSkus(query) {
   const queryString = Qs.stringify(assign({}, query, { filters: snakeizeKeys(query.filters) }));
+  let status = 200;
 
   return dispatch => {
     fetch(`/api/skus.json?${queryString}`, { credentials: 'same-origin' })
+      .then((response) => {
+        status = response.status;
+        return response;
+      })
       .then(response => response.json())
+      .then(response => {
+        if (status < 200 || status > 300) {
+          dispatch({ text: response.message, type: 'ERROR_NOTIFICATION', data: response });
+          return { skus: [] }
+        }
+        throwErrors({ status });
+        return response;
+      })
       .then(results => dispatch({ results, type: 'LOAD_SKUS' }));
   };
 }
