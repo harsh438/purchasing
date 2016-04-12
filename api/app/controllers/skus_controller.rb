@@ -67,7 +67,8 @@ class SkusController < ApplicationController
 
     render json: { skus: skus.map(&:as_json_with_vendor_category_and_barcodes),
                    total_pages: skus.total_pages,
-                   page: params[:page] || 1 }
+                   page: params[:page] || 1 },
+           callback: params[:callback]
   end
 
   def render_exporter(format)
