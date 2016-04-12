@@ -48,6 +48,7 @@ class Sku < ActiveRecord::Base
     super.tap do |sku|
       sku['created_at'] = sku['created_at'].to_s
       sku['updated_at'] = sku['updated_at'].to_s
+      sku['list_price'] = number_to_currency(sku['list_price'], unit: '£')
       sku['cost_price'] = number_to_currency(sku['cost_price'], unit: '£')
       sku['price'] = number_to_currency(sku['price'], unit: '£')
     end
