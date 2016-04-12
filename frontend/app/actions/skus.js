@@ -26,7 +26,7 @@ export function loadSkus(query) {
       .then(response => {
         if (status < 200 || status > 300) {
           dispatch({ text: response.message, type: 'ERROR_NOTIFICATION', data: response });
-          return { skus: [] }
+          return { skus: [] };
         }
         throwErrors({ status });
         return response;
