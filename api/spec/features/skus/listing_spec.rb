@@ -74,6 +74,6 @@ feature 'SKU Listing' do
   end
 
   def then_i_should_see_paginated_list_of_skus_without_barcode
-    expect(subject['skus'].count).to eq(50)
+    expect(subject['skus'].count).to eq(5)
   end
 end

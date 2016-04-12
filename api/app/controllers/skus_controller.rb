@@ -68,7 +68,7 @@ class SkusController < ApplicationController
     render json: { skus: skus.map(&:as_json_with_vendor_category_and_barcodes),
                    total_pages: skus.total_pages,
                    page: params[:page] || 1 },
-		   callback: params[:callback]
+           callback: params[:callback]
   rescue Exceptions::InvalidSearchFilters => e
     render json: { message: e.message }, status: 422
   end
