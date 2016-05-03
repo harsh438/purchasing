@@ -6,9 +6,14 @@ feature 'SKU Listing' do
     then_i_should_see_paginated_list_of_skus
   end
 
-  scenario 'Filtering by SKU' do
+  scenario 'Filtering by full SKU' do
     when_i_request_a_specific_sku
     then_i_should_only_see_that_sku
+  end
+
+  scenario 'Filtering by SKU stem' do
+    when_i_request_the_stem_of_a_sku
+    then_i_should_see_all_the_skus_sharing_that_stem
   end
 
   scenario 'Filtering by brand' do
@@ -37,12 +42,26 @@ feature 'SKU Listing' do
   end
 
   def when_i_request_a_specific_sku
-    skus = create_list(:sku, 2)
+    skus = create_pair(:sku)
     visit skus_path(filters: { sku: skus.first.sku })
   end
 
   def then_i_should_only_see_that_sku
     expect(subject['skus'].count).to eq(1)
+  end
+
+  def when_i_request_the_stem_of_a_sku
+    related_skus = ['123-456', '123-457']
+    skus = create_list(:sku, 3)
+    related_skus.each_with_index do |sku, index|
+      skus[index].update(sku: sku)
+    end
+
+    visit skus_path(filters: { sku: '123' })
+  end
+
+  def then_i_should_see_all_the_skus_sharing_that_stem
+    expect(subject['skus'].count).to eq 2
   end
 
   def when_i_filter_skus_by_brand
