@@ -13,7 +13,7 @@ feature 'Updating barcodes' do
 
   scenario 'Can edit barcode of unsized sku' do
     when_i_update_an_existing_barcode_from_an_unsized_sku
-    then_the_api_should_returned_unsized_sku_error
+    then_the_api_should_not_returned_unsized_sku_error
   end
 
   def when_i_update_an_existing_barcode_by_barcode_id
@@ -63,9 +63,8 @@ feature 'Updating barcodes' do
     }
   end
 
-  def then_the_api_should_returned_unsized_sku_error
-    expect(page).to have_http_status(422)
-    expect(subject['message']).to eq('Unsized skus are not editable.')
+  def then_the_api_should_not_returned_unsized_sku_error
+    expect(page).to have_http_status(200)
   end
 
   def random_barcode
