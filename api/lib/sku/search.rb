@@ -10,7 +10,7 @@ class Sku::Search
 
   def apply_filters(skus, filters)
     if filters[:sku].present?
-      skus = skus.where(sku: filters[:sku])
+      skus = skus.where('sku LIKE ?', "#{filters[:sku]}%")
     end
 
     if filters[:vendor_id].present?
