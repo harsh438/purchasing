@@ -81,13 +81,15 @@ feature 'Adding a barcode to an existing sku' do
   end
 
   def when_adding_barcode_to_sku_already_associated_with_another_sku
-    add_barcode_to_sku(sku_without_barcode, sku.barcodes.first.barcode)
+    add_barcode_to_sku(sku_without_barcode_with_pid, sku.barcodes.first.barcode)
   end
 
   def then_the_new_sku_should_be_linked_to_existing_legacy_records
-    expect(subject[:product_id]).to eq(sku.product_id)
-    expect(subject[:option_id]).to eq(sku.option_id)
-    expect(subject[:language_product_id]).to eq(sku.language_product_id)
+    expect(subject[:product_id]).to eq(existing_product.id)
+    expect(subject[:option_id]).not_to eq(nil)
+    expect(subject[:language_product_id]).not_to eq(nil)
+    expect(subject[:id]).to eq(sku_without_barcode_with_pid.id)
+    expect(subject[:product_name]).to eq(sku_without_barcode_with_pid.product_name)
   end
 
   private
@@ -98,6 +100,11 @@ feature 'Adding a barcode to an existing sku' do
   let(:negative_po_line) { create(:purchase_order_line_item, sku: negative_sku) }
   let(:order_line_1) { create(:order_line_item, sku: sku_without_barcode) }
   let(:order_line_2) { create(:order_line_item, sku: sku_without_barcode) }
+
+  let(:existing_product) { create(:product) }
+  let(:sku_without_barcode_with_pid) do
+    create(:sku_without_barcode, product_id: existing_product.id)
+  end
 
   def add_barcode_to_sku(sku, barcode = '00000')
     attrs = { barcodes_attributes: [{ barcode: barcode }] }
