@@ -35,6 +35,7 @@ feature 'Updating barcodes' do
   def and_legacy_barcode_should_also_be_updated
     po = PurchaseOrderLineItem.find(purchase_order_line_item.id)
     expect(po.orderTool_barcode).to eq(new_barcode)
+    expect(sku.reload.barcodes[0].barcode).to eq(sku.option.barcode)
   end
 
   def and_the_sku_should_be_touched
@@ -68,7 +69,7 @@ feature 'Updating barcodes' do
   end
 
   def random_barcode
-    Faker::Lorem.characters(15)
+    Faker::Lorem.characters(8)
   end
 
   let(:product_with_skus) { create(:product, :with_skus) }
