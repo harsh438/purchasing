@@ -23,7 +23,9 @@ class Barcode::Updater
   def self.update_barcode_references(barcode)
     PurchaseOrderLineItem.where(sku: barcode.sku).update_all(orderTool_Barcode: barcode.barcode)
     option = barcode.sku.option
-    option.barcode = barcode.barcode
-    option.save!
+    if option.present?
+      option.barcode = barcode.barcode
+      option.save!
+    end
   end
 end

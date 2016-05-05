@@ -74,7 +74,11 @@ feature 'Updating barcodes' do
 
   let(:product_with_skus) { create(:product, :with_skus) }
   let(:sku) { product_with_skus.skus.first }
-  let(:unsized_sku) { create(:sku, :unsized) }
+  let(:unsized_sku) do
+    unsized = create(:sku, :unsized)
+    unsized.option.delete
+    unsized
+  end
   let(:unsized_sku_barcode) { unsized_sku.barcodes.first }
   let(:barcode) { sku.barcodes.first }
   let(:new_barcode) { random_barcode }
