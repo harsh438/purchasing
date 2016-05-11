@@ -39,7 +39,7 @@ feature 'SKU duplication' do
   end
 
   def then_the_api_should_return_a_new_copied_sku_with_pid
-    expect(subject['sku']).to eq("#{product_with_skus.id}-#{element.name}")
+    expect(subject['sku']).to eq("#{product_with_skus.id}-#{element.id}")
     expect(subject['size']).to eq(element.name)
     expect(subject['manufacturer_size']).to eq(nil)
     expect(subject['id']).not_to eq(product_with_skus.skus.last.id)
