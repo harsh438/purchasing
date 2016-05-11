@@ -23,7 +23,7 @@ class Sku::Duplicator
 
   def copy_sku_attributes(old_sku, element)
     {
-      internal_sku: "#{old_sku.product.id}-#{element.name}",
+      internal_sku: "#{old_sku.product.id}-#{element.id}",
       size: element.name,
       category_id: old_sku.language_category.category_id,
       vendor_id: old_sku.vendor_id,
