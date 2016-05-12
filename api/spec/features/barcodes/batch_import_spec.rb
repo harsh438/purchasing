@@ -26,6 +26,24 @@ feature 'Batch importing Barcodes' do
     then_the_barcode_should_be_associated_once
   end
 
+  scenario 'Importing barcode with product without color is raising an error' do
+    when_i_import_barcode_with_product_without_color
+    then_i_should_have_a_color_error
+  end
+
+  def when_i_import_barcode_with_product_without_color
+    barcodes = [{ sku: sku_without_product.sku,
+                  brand_size: skus.first.manufacturer_size,
+                  barcode: 'new' }]
+    page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
+  end
+
+  def then_i_should_have_a_color_error
+    sku = sku_without_product.sku
+    error = "Product of sku #{sku} does not have a color (exported barcode = 'new')"
+    expect(subject['errors']['skus'][0]).to include(error)
+  end
+
   def when_i_batch_import_several_barcodes
     barcodes = [{ sku: skus.first.sku,
                   brand_size: skus.first.manufacturer_size,
@@ -104,6 +122,14 @@ feature 'Batch importing Barcodes' do
     [create(:sku),
      create(:sku_without_barcode, sku: '-bob-small', manufacturer_size: 'small'),
      create(:sku_without_barcode, sku: '-bob-large', manufacturer_size: 'large')]
+  end
+
+  let(:sku_without_product) do
+    sku = create(:sku, manufacturer_sku: 'non-existent-manufacturer-sku')
+    sku.product.delete
+    sku.color = nil
+    sku.save!(validate: false)
+    sku
   end
 
   let(:negative_sku) { create(:sku_without_barcode) }
