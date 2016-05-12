@@ -7,6 +7,8 @@ class BarcodesController < ApplicationController
   rescue Barcode::Importer::BarcodesInvalid => e
     render json: { errors: { skus: ['Some barcodes were invalid. Can you check them and try again?'] },
            nonexistant_skus: e.invalid_barcodes }
+  rescue Sku::Exporter::ProductWithoutColor => e
+    render json: { errors: { skus: [e.message] } }
   end
 
   def update

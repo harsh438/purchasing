@@ -127,6 +127,11 @@ class Sku::Exporter
   end
 
   def create_product(sku)
+    if @product.blank? and product_attrs[:color].blank?
+      error = "Product of sku #{sku.sku} does not have a color "\
+              "(exported barcode = '#{product_attrs[:barcode]}')"
+      raise ProductWithoutColor.new(product_attrs), error
+    end
     @product ||= Product.create!(product_attrs)
   end
 
@@ -222,5 +227,13 @@ class Sku::Exporter
   def product_gender_attrs
     { product_id: product.id,
       gender: attrs[:lead_gender].try(:to_sym) || '' }
+  end
+
+  class ProductWithoutColor < StandardError
+    attr_reader :product
+
+    def initialize(sku)
+      @product = product
+    end
   end
 end
