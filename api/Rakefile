@@ -1,3 +1,45 @@
 require File.expand_path('../config/application', __FILE__)
 
+require "./app/models/barcode"
+
 Rails.application.load_tasks
+
+namespace :db do
+  desc "remove leading backticks"
+  task "barcode_fix" => :environment do
+    puts "Checking for barcodes that need fixing"
+    data = Barcode.where("barcode LIKE ?", "'%")
+    array = data.map do |row|
+      row[:sku_id]
+    end
+    if array.length > 0
+      puts "Updating #{array.length} barcodes in barcodes table in Wavehouse"
+      sku_id_list = array.join(',')
+      ActiveRecord::Base.connection.execute(
+        "update
+        barcodes
+        set
+        barcode = substring(barcode, 2, length(barcode)-1),
+        updated_at = now()
+        where
+        sku_id in (#{sku_id_list})"
+      )
+      puts "Touching affected SKUs in the skus table"
+      ActiveRecord::Base.connection.execute(
+        "update
+        skus
+        set
+        updated_at = now()
+        where id in (#{sku_id_list})"
+      )
+      res = ActiveRecord::Base.connection.execute(
+        "SELECT ROW_COUNT()"
+      )
+      puts "#{res.first} skus updated"
+      puts "Finished with no errors" if array.length == res.first
+      puts "There were #{array.length - res.first[0]} errors"
+    else
+      puts "There are no barcodes that need fixing"
+    end
+  end
+end
