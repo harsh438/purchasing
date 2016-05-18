@@ -46,6 +46,7 @@ namespace :db do
   desc "remove leading '00' from barcode"
   task :remove_leading_zeros, [:pID] => :environment do |t,args|
     pID = args[:pID]
+    abort "pID needed!" unless pID
 
     puts "Retrieving barcodes..."
     skus = [Sku.where("product_id = #{pID}")].flatten
