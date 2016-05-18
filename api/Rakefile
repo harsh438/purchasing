@@ -76,3 +76,4 @@ namespace :db do
       puts "\t#{updated_data.length} barcodes updated!"
     end
   end
+end
