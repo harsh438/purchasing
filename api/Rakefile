@@ -1,3 +1,78 @@
 require File.expand_path('../config/application', __FILE__)
 
+require "./app/models/barcode"
+
 Rails.application.load_tasks
+
+namespace :db do
+  desc "remove leading backticks"
+  task :barcode_fix => :environment do
+    puts "Checking for barcodes that need fixing"
+    data = Barcode.where("barcode LIKE ?", "'%")
+    array = data.map do |row|
+      row[:sku_id]
+    end
+    if array.length > 0
+      puts "Updating #{array.length} barcodes in barcodes table in Wavehouse"
+      sku_id_list = array.join(',')
+      ActiveRecord::Base.connection.execute(
+        "update
+        barcodes
+        set
+        barcode = substring(barcode, 2, length(barcode)-1),
+        updated_at = now()
+        where
+        sku_id in (#{sku_id_list})"
+      )
+      puts "Touching affected SKUs in the skus table"
+      ActiveRecord::Base.connection.execute(
+        "update
+        skus
+        set
+        updated_at = now()
+        where id in (#{sku_id_list})"
+      )
+      res = ActiveRecord::Base.connection.execute(
+        "SELECT ROW_COUNT()"
+      )
+      puts "#{res.first} skus updated"
+      puts "Finished with no errors" if array.length == res.first
+      puts "There were #{array.length - res.first[0]} errors"
+    else
+      puts "There are no barcodes that need fixing"
+    end
+  end
+
+    desc "remove leading '00' from barcode"
+    task :remove_leading_zeros, [:pID] => :environment do |t,args|
+      pID = args[:pID]
+
+      puts "Retrieving barcodes..."
+      skus = [Sku.where("product_id = #{pID}")].flatten
+      barcodes = skus.map do |sku|
+        Barcode.where(sku_id: sku.id).first.barcode
+      end
+      puts "\t#{barcodes.length} barcodes retrieved"
+
+      puts "Checking for leading 00s..."
+      checked_barcodes = barcodes.reject{ |barcode| barcode[0..1] != "00" }
+      puts "\t#{checked_barcodes.length} barcodes have leading 00s"
+      abort "No barcodes to update!" if checked_barcodes.empty?
+
+      puts "Updating barcodes and touching skus..."
+      db_barcodes = checked_barcodes.map do |barcode|
+        Barcode.where(barcode: barcode)
+      end
+      result = {}
+      updated_data = db_barcodes.map do |barcode|
+        old_barcode = barcode.first.barcode
+        new_barcode = old_barcode[2..(old_barcode.length-1)]
+        barcode_id, sku_id = barcode.first.id, barcode.first.sku_id
+        Barcode.update(barcode_id, barcode: new_barcode, updated_at: Time.now)
+        Sku.update(sku_id, updated_at: Time.now)
+        result[Sku.find(sku_id).sku] = [old_barcode, new_barcode]
+      end
+      puts result
+      puts "\t#{updated_data.length} barcodes updated!"
+    end
+  end
