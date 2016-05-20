@@ -33,7 +33,7 @@ class OrderLineItem < ActiveRecord::Base
   end
 
   def self.order_by_ot_number(ot_number)
-    OrderLineItem.joins(:order).where("name LIKE :query", query: "%OT_#{ot_number}%").group(:sku_id)
+    OrderLineItem.joins(:order).where('name LIKE :query', query: "%OT_#{ot_number}%").group(:sku_id)
   end
 
   private
