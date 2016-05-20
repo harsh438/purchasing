@@ -60,36 +60,14 @@ namespace :order_fix do
 
 
   desc "Deletes an old po, but keeps the po number and puts it onto a different given po."
-  task "remap_po", [:old_po, :new_po] => :environment do |t, args|
-    po1 = args[:old_po]
-    po2 = args[:new_po]
+  task "remap_po", [:po_number_being_kept, :po_number_being_changed] => :environment do |t, args|
+    po1 = args[:po_number_being_kept]
+    po2 = args[:po_number_being_changed]
     abort("We need the POs") unless po1 && po2
     abort("The POs are the same") unless po1 != po2
-    puts "Deleting old PO"
-    db = ActiveRecord::Base.connection
-
-    db.execute(
-      "delete from purchase_orders where po_number=#{po1}"
-    )
-    ActiveRecord::Base.connection.execute(
-      "update
-      purchase_orders
-      set
-      po_number =#{po1}
-      where po_number =#{po2}"
-    )
-    puts "Updating the PO"
-    ActiveRecord::Base.connection.execute(
-      "update
-      purchase_orders
-      set
-      po_number =#{po1}
-      where po_number =#{po2}"
-    )
-    puts "Cleaning up old po from po_summary"
-    ActiveRecord::Base.connection.execute(
-      "delete from purchase_orders where po_number"
-    )
+    PurchaseOrderLineItem.by_po_number(po1).each(&:destroy)
+    PurchaseOrderLineItem.move_old_po_number_across(po1, po2)
+    PurchaseOrder.destroy_all(:po_num po2)
   end
 end
 
