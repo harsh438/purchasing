@@ -405,7 +405,7 @@
 
   def self.move_old_po_number_across(po_number1, po_number2)
     ids = self.by_po_number(po_number1).map(&:id)
-    PurchaseOrderLineItem.update(ids, :po_number po_number2)
+    PurchaseOrderLineItem.update(ids, po_number: po_number2)
    end
 
 end

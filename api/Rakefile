@@ -67,7 +67,7 @@ namespace :order_fix do
     abort("The POs are the same") unless po1 != po2
     PurchaseOrderLineItem.by_po_number(po1).each(&:destroy)
     PurchaseOrderLineItem.move_old_po_number_across(po1, po2)
-    PurchaseOrder.destroy_all(:po_num po2)
+    PurchaseOrder.destroy_all(po_num: po2)
   end
 end
 
