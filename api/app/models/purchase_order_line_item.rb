@@ -390,4 +390,13 @@
       balance_cost: number_to_currency(balance_cost, options),
       balance_value: number_to_currency(balance_value, options) }
   end
+
+    def self.skus_by_operator(ot_number)
+    PurchaseOrderLineItem.joins(:sku).where(operator: "OT_#{ot_number}")
+  end
+
+  def self.po_by_operator(ot_number)
+    PurchaseOrderLineItem.where(operator: "OT_#{ot_number}").group(:po_number).pluck(:po_number, :drop_date)
+  end
+
 end

@@ -48,85 +48,14 @@ namespace :order_fix do
   desc "Checks for and deletes skus and orders that are missing data"
   task "delete_problem_data", [:OT_number] => :environment do |t, args|
     ot_number = args[:OT_number]
-    abort("No order tool id number given :( ") unless ot_number
-    puts "----------------------------------------"
-    puts "|   Checking for skus that need fixing |"
-    puts "----------------------------------------"
-    puts
-    skus = ActiveRecord::Base.connection.execute(
-      "select sku from purchase_orders p
-      join
-      skus s on p.sku_id= s.id
-      where
-      operator = \"OT_#{ot_number}\""
-    )
+    abort("No order tool id number given") unless ot_number
+    skus = PurchaseOrderLineItem.skus_by_operator(ot_number)
     abort("There were no skus found") if skus.count < 1
-    puts " \"#{skus.count}\" SKUs found"
-    puts
-    puts "----------------------------------------"
-    puts "|          Deleting skus               |"
-    puts "----------------------------------------"
-    # deleted_skus = ActiveRecord::Base.connection.execute(
-    #   "delete s from purchase_orders p
-    #   join
-    #   skus s on p.sku_id= s.id
-    #   where
-    #   operator = \"OT_#{ot_number}\""
-    # )
-    # puts
-    # puts "#{deleted_skus.count} SKUs deleted"
-    puts
-    puts "---------------------------------------------------"
-    puts "| Checking if any orders have already been placed |"
-    puts "---------------------------------------------------"
-    puts
-    orders = ActiveRecord::Base.connection.execute(
-      "select sku_id from orders o
-      join
-      order_line_items ol on o.id= ol.order_id
-      where
-      name like \"%OT_#{ot_number}%\"
-      group by sku_id"
-    )
-    if (orders.count > 1)
-      puts "#{orders.count} orders found"
-      puts "Deleting them now"
-        # ActiveRecord::Base.connection.execute(
-        #   # check this query
-        #   "delete ol, o from orders o
-        #   join
-        #   order_line_items ol on o.id= ol.order_id
-        #   where
-        #   name like \"%OT_#{ot_number}%\" "
-        # )
-    else
-      puts "No orders to worry about"
-    end
-    puts
-    puts "-----------------------------------------"
-    puts "              PO Numbers"
-    puts "-----------------------------------------"
-    puts
-    puts "These are the PO numbers we need to re-map:"
-    po_numbers = ActiveRecord::Base.connection.execute(
-      "select po_number, drop_date,count(*) from
-      purchase_orders
-      where
-      operator = \"OT_#{ot_number}\"
-      group by po_number"
-    )
-    puts "-------------------------"
-    puts "| po_number | drop_date  |"
-    puts "-------------------------"
-    info = []
-    po_numbers.each{ |ponumb|
-      p "| #{ponumb[0]}    |  #{ponumb[1]} |"
-      puts "-------------------------"
-      info << ponumb[0]
-      info << ponumb[1]
-    }
-    puts "Po data copied to clipboard:"
-    sh "echo #{info} | pbcopy"
+    skus.each(&:destroy)
+    orders = OrderLineItem.order_by_ot_number(ot_number)
+    orders.each(&:destroy) if (orders.length > 1)
+    po_numbers = PurchaseOrderLineItem.po_by_operator(ot_number)
+    po_numbers.each { | po_number | puts po_number }
   end
 
 
@@ -137,7 +66,9 @@ namespace :order_fix do
     abort("We need the POs") unless po1 && po2
     abort("The POs are the same") unless po1 != po2
     puts "Deleting old PO"
-    ActiveRecord::Base.connection.execute(
+    db = ActiveRecord::Base.connection
+
+    db.execute(
       "delete from purchase_orders where po_number=#{po1}"
     )
     ActiveRecord::Base.connection.execute(
