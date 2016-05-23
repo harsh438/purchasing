@@ -391,10 +391,6 @@
       balance_value: number_to_currency(balance_value, options) }
   end
 
-    def self.skus_by_operator(ot_number)
-    PurchaseOrderLineItem.joins(:sku).where(operator: "OT_#{ot_number}")
-  end
-
   def self.po_by_operator(ot_number)
     PurchaseOrderLineItem.where(operator: "OT_#{ot_number}").group(:po_number).pluck(:po_number, :drop_date)
   end
@@ -404,8 +400,7 @@
   end
 
   def self.move_old_po_number_across(po_number1, po_number2)
-    ids = self.by_po_number(po_number1).map(&:id)
-    PurchaseOrderLineItem.update(ids, po_number: po_number2)
-   end
+    PurchaseOrderLineItem.where(po_number: po_number2).update_all(po_number: po_number1)
+  end
 
 end

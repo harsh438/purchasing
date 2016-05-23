@@ -26,6 +26,8 @@ class Sku < ActiveRecord::Base
   has_many :barcodes
   accepts_nested_attributes_for :barcodes
 
+  has_many :purchase_order_line_items
+
   validates_presence_of :manufacturer_sku
 
   def self.updated_since(timestamp, max_id)
@@ -59,4 +61,9 @@ class Sku < ActiveRecord::Base
                   vendor_name: vendor.try(:name),
                   barcodes: barcodes.map(&:as_json))
   end
+
+  def self.po_by_operator(ot_number)
+    Sku.joins(:purchase_order_line_items).where('purchase_orders.operator =?', "OT_#{ot_number}")
+  end
+
 end
