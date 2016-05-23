@@ -7,20 +7,13 @@ Rails.application.load_tasks
 namespace :db do
   desc "remove leading backticks"
   task :barcode_fix => :environment do
-    db = ActiveRecord::Base.connection
-    update_barcode_in_barcodes = "update barcodes set
-                                  barcode = substring(barcode, 2, length(barcode)-1),
-                                  updated_at = now() where
-                                  sku_id in (#{data})"
-    touch_skus                 =  "update skus set
-                                  updated_at = now()
-                                  where id in (#{sku_IDs})"
-
-    sku_IDs = Barcode.where('barcode LIKE ?', "'%").map(&:sku_id)
-    abort("There are no barcodes that need fixing") if skus_IDs.length < 1
-    puts "Updating #{sku_IDs.length} barcodes in barcodes table in Wavehouse"
-    db.execute(update_barcode_in_barcodes)
-    puts "Touching affected SKUs in the skus table"
-    db.execute(touch_skus)
+    old_barcodes = Barcode.where('barcode LIKE ?', "'%")
+    puts "#{old_barcodes.length} Barcodes found"
+    abort("There are no barcodes that need fixing") if old_barcodes.length < 1
+    old_barcodes.each{ | barcode | 
+      new_barcode = barcode.barcode[1..-1]
+      Barcode::Updater.update(barcode: new_barcode, id: barcode.id)
+    }
+    puts "#{old_barcodes.length} Barcodes fixed"
   end
 end
