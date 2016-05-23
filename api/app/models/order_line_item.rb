@@ -32,6 +32,10 @@ class OrderLineItem < ActiveRecord::Base
     (cost * ((100 - discount) / 100)).round(2)
   end
 
+  def self.by_ot_number(ot_number)
+    OrderLineItem.joins(:order).where('name LIKE :query', query: "%OT_#{ot_number}%")
+  end
+
   private
 
   def ensure_discount_is_at_least_zero

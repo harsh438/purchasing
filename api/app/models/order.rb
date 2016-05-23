@@ -43,6 +43,10 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def self.order_by_ot_number(ot_number)
+    Order.where('name LIKE :query', query: "%OT_#{ot_number}%")
+  end
+
   private
 
   def ensure_name

@@ -390,4 +390,17 @@
       balance_cost: number_to_currency(balance_cost, options),
       balance_value: number_to_currency(balance_value, options) }
   end
+
+  def self.po_by_operator(ot_number)
+    PurchaseOrderLineItem.where(operator: "OT_#{ot_number}").group(:po_number).pluck(:po_number, :drop_date)
+  end
+
+  def self.by_po_number(po_number)
+    PurchaseOrderLineItem.where(po_number: po_number)
+  end
+
+  def self.move_old_po_number_across(po_number1, po_number2)
+    PurchaseOrderLineItem.where(po_number: po_number2).update_all(po_number: po_number1)
+  end
+
 end
