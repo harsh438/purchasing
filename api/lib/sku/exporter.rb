@@ -188,7 +188,7 @@ class Sku::Exporter
   end
 
   def product_attrs
-    { manufacturer_sku: attrs[:manufacturer_sku].to_s[0..39],
+    { manufacturer_sku: attrs[:manufacturer_sku].to_s[0..255],
       color: attrs[:color],
       price: attrs[:price],
       cost: attrs[:cost_price],
@@ -211,7 +211,7 @@ class Sku::Exporter
 
   def option_attrs
     { product_id: product.id,
-      name: "#{attrs[:manufacturer_sku]}-#{attrs[:manufacturer_size]}"[0..39],
+      name: "#{attrs[:manufacturer_sku]}-#{attrs[:manufacturer_size]}"[0..255],
       size: attrs[:manufacturer_size],
       barcode: attrs[:barcode] }
   end
