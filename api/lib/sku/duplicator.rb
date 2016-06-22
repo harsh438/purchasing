@@ -1,7 +1,7 @@
 class Sku::Duplicator
   def duplicate(options = {})
     options.slice!(:sku, :element_id)
-    old_sku = Sku.find_by!(sku: options[:sku])
+    old_sku = Sku.where(sku: options[:sku]).latest.first!
     sku_has_barcode_check(old_sku)
     sku_unsized_check(old_sku)
     element = Element.find(options[:element_id].to_i)
