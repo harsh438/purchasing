@@ -4,11 +4,13 @@ general:
 machine:
   node:
     version: 4.1.0
+  services:
+    - docker
 
 dependencies:
   pre:
-    - gem install eb_deployer
-    - gem install slack-notifier
+    - docker info
+    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
   post:
     - npm install:
         pwd: ../frontend/
@@ -25,15 +27,15 @@ test:
     - bundle exec rake build
 
 deployment:
-  staging:
-    branch: [devops, staging]
+  docker:
+    branch: [docker, staging, production]
     commands:
-      - aws s3 cp --recursive "s3://$S3_DEPLOYMENT_BUCKET/devops/" .
-      - chmod +x deploy-new.sh
-      - ./deploy-new.sh
-  production:
-    branch: [production]
-    commands:
-      - aws s3 cp --recursive "s3://$S3_DEPLOYMENT_BUCKET/devops/" .
-      - chmod +x deploy-new.sh
-      - ./deploy-new.sh
+      - docker pull surfdome/purchasing
+      - export VERSION_LABEL=`git rev-parse --short HEAD` && docker build -f Dockerfile-deploy -t surfdome/purchasing:$VERSION_LABEL .
+      - export VERSION_LABEL=`git rev-parse --short HEAD` && docker push surfdome/purchasing:$VERSION_LABEL
+      - export VERSION_LABEL=`git rev-parse --short HEAD` && sed -i -e "s/__TAG__/$VERSION_LABEL/g" /home/ubuntu/purchasing/eb-purchasing.json
+
+      - aws elasticbeanstalk delete-application-version --application-name "$EB_APP_NAME" --version-label `git rev-parse --short HEAD` --delete-source-bundle
+      - aws s3 cp "/home/ubuntu/purchasing/eb-purchasing.json" "s3://$S3_DEPLOYMENT_BUCKET/$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME-$CIRCLE_SHA1.json"
+      - aws elasticbeanstalk create-application-version --application-name "$EB_APP_NAME" --version-label `git rev-parse --short HEAD` --description "`git log -1 --pretty=%B`" --source-bundle S3Bucket="$S3_DEPLOYMENT_BUCKET",S3Key="$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME-$CIRCLE_SHA1.json"
+      - aws elasticbeanstalk update-environment --environment-name "sd-$EB_APP_NAME-$CIRCLE_BRANCH" --version-label `git rev-parse --short HEAD`

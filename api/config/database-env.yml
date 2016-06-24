@@ -1,0 +1,23 @@
+mysql: &mysql
+  adapter: mysql2
+  encoding: utf8
+  host: 127.0.0.1
+  port: 3306
+  username: root
+  password: root
+
+<%= ENV['RAILS_ENV'] %>:
+  <<: *mysql
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] %>
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+
+bookingin_<%= ENV['RAILS_ENV'] %>:
+  <<: *mysql
+  host: <%= ENV['DB_HOST_BOOKINGIN'] %>
+  port: <%= ENV['DB_PORT_BOOKINGIN'] %>
+  database: <%= ENV['DB_NAME_BOOKINGIN'] %>
+  username: <%= ENV['DB_USERNAME_BOOKINGIN'] %>
+  password: <%= ENV['DB_PASSWORD_BOOKINGIN'] %>

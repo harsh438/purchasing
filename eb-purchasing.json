@@ -1,0 +1,108 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "authentication": {
+    "bucket": "devops-eb-docker",
+    "key": "config.json"
+  },
+  "volumes": [
+    {
+      "name": "docker_sock",
+      "host": {
+        "sourcePath": "/var/run/docker.sock"
+      }
+    },
+    {
+      "name": "proc",
+      "host": {
+        "sourcePath": "/proc/"
+      }
+    },
+    {
+      "name": "cgroup",
+      "host": {
+        "sourcePath": "/cgroup/"
+      }
+    },
+    {
+      "name": "datadog_logs",
+      "host": {
+        "sourcePath": "/var/log/datadog"
+      }
+    },
+    {
+      "name": "containers_logs",
+      "host": {
+        "sourcePath": "/var/log/containers"
+      }
+    }
+  ],
+  "containerDefinitions": [
+    {
+      "name": "dd-agent",
+      "image": "datadog/docker-dd-agent:ecs",
+      "essential": false,
+      "environment": [
+        {
+          "name": "API_KEY",
+          "value": "439fc305da4c08d01fbf0712a4e7769f"
+        },
+        {
+          "name": "TAGS",
+          "value": "simple-tag-0, tag-key-1:tag-value-1"
+        }
+      ],
+      "memory": 256,
+      "mountPoints": [
+        {
+          "sourceVolume": "docker_sock",
+          "containerPath": "/var/run/docker.sock",
+          "readOnly": false
+        },
+        {
+          "sourceVolume": "proc",
+          "containerPath": "/host/proc",
+          "readOnly": true
+        },
+        {
+          "sourceVolume": "cgroup",
+          "containerPath": "/host/sys/fs/cgroup",
+          "readOnly": true
+        },
+        {
+          "sourceVolume": "datadog_logs",
+          "containerPath": "/var/log/datadog"
+        }
+      ]
+    },
+    {
+      "name": "splunkforwarder",
+      "image": "surfdome/splunkforwarder",
+      "essential": true,
+      "memory": 256,
+      "mountPoints": [
+        {
+          "sourceVolume": "datadog_logs",
+          "containerPath": "/var/log/datadog"
+        },
+        {
+          "sourceVolume": "containers_logs",
+          "containerPath": "/var/log/containers"
+        }
+      ],
+      "portMappings": []
+    },
+    {
+      "name": "purchasing",
+      "image": "surfdome/purchasing:__TAG__",
+      "essential": true,
+      "memory": 3072,
+      "mountPoints": [],
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80
+        }
+      ]
+    }
+  ]
+}
