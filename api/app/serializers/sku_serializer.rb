@@ -1,16 +1,16 @@
 class SkuSerializer < ActiveModel::Serializer
-  attributes :id
-  attributes :name
-  attributes :barcode
-  attributes :category_id
-  attributes :category_name
-  attributes :manufacturer_sku
-  attributes :cost_price
-  attributes :retail_price
-  attributes :manufacturer_color
-  attributes :manufacturer_size
-  attributes :color
-  attributes :size
+  attributes :id,
+             :name,
+             :barcode,
+             :category_id,
+             :category_name,
+             :manufacturer_sku,
+             :cost_price,
+             :retail_price,
+             :manufacturer_color,
+             :manufacturer_size,
+             :color,
+             :size
 
   def id
     object.sku

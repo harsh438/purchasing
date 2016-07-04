@@ -6,5 +6,7 @@ class Category < ActiveRecord::Base
   map_attributes id: :catID,
                  parent_id: :parentID
 
-  has_one :language_category, foreign_key: :catID
+  has_many :language_categories, foreign_key: :catID
+  has_many :product_categories, foreign_key: :catID
+  has_many :reporting_categories, foreign_key: :catid
 end

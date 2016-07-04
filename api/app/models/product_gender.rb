@@ -4,4 +4,6 @@ class ProductGender < ActiveRecord::Base
   include LegacyMappings
 
   map_attributes product_id: :pid
+
+  belongs_to :product, foreign_key: :pid
 end

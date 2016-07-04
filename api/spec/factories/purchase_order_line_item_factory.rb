@@ -15,7 +15,7 @@ FactoryGirl.define do
     # These should be blank.
 
     season :AW15
-    vendor_id 0
+    vendor
     gender ''
     manufacturer_size 'MAN_SIZE'
     product_size 'SD_SIZE'

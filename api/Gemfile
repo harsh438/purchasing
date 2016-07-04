@@ -19,7 +19,7 @@ group :test do
   gem 'capybara',                 '2.4.1'
   gem 'database_cleaner',         '1.5.1'
   gem 'factory_girl',             '4.5.0'
-  gem 'ffaker',                   '1.32.1'
+  gem 'faker'
   gem 'rspec_junit_formatter',    '0.2.0'
   gem 'rspec-its',                '1.0.1'
   gem 'rspec-rails',              '3.2.1'

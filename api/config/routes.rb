@@ -83,6 +83,11 @@ Rails.application.routes.draw do
           post :latest
         end
       end
+      resources :products do
+        collection do
+          post :latest
+        end
+      end
     end
   end
 end
