@@ -1,34 +1,22 @@
 FactoryGirl.define do
   factory :sku_without_barcode, class: Sku do
-    sku do
-      negative_pid = ((Sku.last.try(:id) || 0) + 1) *-1
-      "#{negative_pid}-biggish"
-    end
-
-    product_name 'An Example Product'
+    product_name { Faker::Commerce.product_name }
     manufacturer_sku 'MANU-FACTURER-SKU-11-reddish'
     season :AW15
-
-    inv_track { 'O' }
-
+    inv_track 'O'
     manufacturer_color :reddish
     manufacturer_size :biggish
-
-    category_id { create(:language_category, category_id: create(:category).id).id }
-
+    language_category
     color :red
     size :big
-
     price 24.99
     cost_price 19.99
     list_price 29.99
-
     gender 'M'
     listing_genders 'M'
-
     order_tool_reference 1010105
-
     vendor
+    sku { |s| [((Sku.last.try(:id) || 0) + 1) * -1, s.manufacturer_sku].join('-') }
 
     trait :with_old_season do
       season :AW02
@@ -60,28 +48,36 @@ FactoryGirl.define do
     end
 
     factory :sku do
-      product_id { create(:product, manufacturer_sku: 'MANU-FACTURER-SKU-11-reddish').id }
-      option_id { create(:option).id }
-      language_product_id { create(:language_product, product_id: product_id).id }
-      language_product_option_id { create(:language_product_option, product_id: product_id, option_id: option_id).id }
-      element_id { LanguageProductOption.find(language_product_option_id).elementID }
-
-      after(:build) do |sku|
-        sku.sku = "#{sku.product_id}-#{sku.element_id}"
-        sku.barcodes << create(:barcode)
+      transient do
+        barcode { create(:barcode) }
       end
 
-      trait :with_purchase_order_line_item do
-        transient do
-          purchase_order { create(:purchase_order) }
-        end
+      product { |sku| create(:product, manufacturer_sku: sku.manufacturer_sku) }
+      sku { |s| [s.product.id, s.manufacturer_sku].join('-') }
+      vendor { |sku| product.vendor }
+      option { |sku| create(:option, size: sku.manufacturer_size) }
+      language_product { |sku| create(:english_language_product, name: sku.product_name) }
+      language_product_option
+      element { |sku| language_product_option.element }
 
-        after(:build) do |sku, evaluator|
-          create(:purchase_order_line_item, product_id: sku.product_id,
-                                            option_id: sku.option_id,
-                                            purchase_order: evaluator.purchase_order,
-                                            sku: sku)
-        end
+      after(:build) do |sku, evaluator|
+        sku.barcodes << evaluator.barcode if evaluator.barcode.present?
+      end
+    end
+
+    trait :with_purchase_order_line_item do
+      transient do
+        purchase_order { create(:purchase_order) }
+      end
+
+      after(:build) do |sku, evaluator|
+        create(
+          :purchase_order_line_item,
+          product: sku.product,
+          option: sku.option,
+          purchase_order: evaluator.purchase_order,
+          sku: sku
+        )
       end
     end
   end

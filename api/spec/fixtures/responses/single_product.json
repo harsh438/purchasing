@@ -1,0 +1,102 @@
+{
+  "request_id": "n3nuea8nvr13ugy",
+  "summary": "Returned 1 product objects.",
+  "products": [
+    {
+      "id": 7,
+      "sku": 7,
+      "price": 15.99,
+      "cost_price": 8.17,
+      "sale_price": 0.0,
+      "active": "Y",
+      "barcode": "ABC123456",
+      "brand": "Too Awesome",
+      "properties": {
+        "Gender": "U",
+        "Colour": "blue"
+      },
+      "dropshipment": "D-R-P",
+      "use_legacy_slug": true,
+      "images": [
+        {
+          "url": "http://asset1.surfcdn.com/magic@lstringofdoom?w=400",
+          "position": 2,
+          "dimensions": {
+            "height": 1200,
+            "width": 1200
+          },
+          "elasticera_reference": "magic@lstringofdoom",
+          "legacy_id": 1
+        },
+        {
+          "url": "http://asset1.surfcdn.com/magic@lstringofdoom?w=400",
+          "position": 2,
+          "dimensions": {
+            "height": 1200,
+            "width": 1200
+          },
+          "elasticera_reference": "magic@lstringofdoom",
+          "legacy_id": 2
+        }
+      ],
+      "legacy_lead_gender": "Unisex",
+      "legacy_reporting_category": 18,
+      "legacy_season": "ss18",
+      "legacy_supplier_sku": "123456-123",
+      "legacy_reporting_category_name": "Gerry Treutel",
+      "legacy_first_received_at": "2016-07-12T00:00:00.000Z",
+      "legacy_more_from_category": 16,
+      "parts": [
+        "1234231-234",
+        "1234231-234"
+      ],
+      "children": [
+        {
+          "sku": "7-MANU-FACTURER-SKU-11-reddish",
+          "price": "24.99",
+          "cost_price": "19.99",
+          "barcode": "ABC123456",
+          "legacy_brand_size": "biggish",
+          "options": {
+            "size": "big"
+          }
+        },
+        {
+          "sku": "7-MANU-FACTURER-SKU-11-reddish",
+          "price": "24.99",
+          "cost_price": "19.99",
+          "barcode": "ABC123457",
+          "legacy_brand_size": "biggish",
+          "options": {
+            "size": "big"
+          }
+        }
+      ],
+      "contents": [
+        {
+          "lang": "en",
+          "content": {
+            "name": "Too Awesome - Boots 'n' Tings - blue",
+            "legacy_slug": "too_awesome_-_boots_n_tings_-_blue-7",
+            "teaser": "utilize best-of-breed partnerships"
+          }
+        }
+      ],
+      "options": [
+        "Size"
+      ],
+      "shipping_category": "Default",
+      "related": [
+        {
+          "sort_in_type": 1,
+          "product_id": 1,
+          "type": "also_bought"
+        }
+      ]
+    }
+  ],
+  "parameters": {
+    "last_imported_timestamp": "2016-07-21T14:34:48.000Z",
+    "last_imported_id": 7
+  }
+}

@@ -28,7 +28,7 @@ feature 'Editing manufacturer size' do
 
   def then_associated_option_should_be_updated
     expect(subject['manufacturer_size']).to eq(new_manufacturer_size.strip)
-    expect(sku.option.size).to eq(new_manufacturer_size.strip)
+    expect(sku.option(true).size).to eq(new_manufacturer_size.strip)
   end
 
   def when_i_update_manufacturer_size_to_empty_string
@@ -58,7 +58,7 @@ feature 'Editing manufacturer size' do
 
   def then_associated_option_should_be_updated_to_nothing
     expect(subject['manufacturer_size']).to eq(empty_manufacturer_size)
-    expect(sku_with_empty_size.option.size).to eq(empty_manufacturer_size)
+    expect(sku_with_empty_size.option(true).size).to eq(empty_manufacturer_size)
   end
 
   let(:new_manufacturer_size) { Faker::Lorem.characters(15) }
