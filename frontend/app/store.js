@@ -14,6 +14,7 @@ import reduceSupplierTerms from './reducers/supplier_terms';
 import reduceUsers  from './reducers/users';
 import reduceVendors  from './reducers/vendor';
 import reduceElements from './reducers/elements';
+import reduceRefusedDeliveriesLogs from './reducers/refused_deliveries_logs';
 
 import thunk from 'redux-thunk';
 
@@ -34,6 +35,7 @@ const reducer = combineReducers({ advanced: reduceAdvancedMode,
                                   users: reduceUsers,
                                   vendors: reduceVendors,
                                   elements: reduceElements,
+                                  refusedDeliveriesLogs: reduceRefusedDeliveriesLogs,
                                 });
 
 const store = applyMiddleware(...middleware)(createStore)(reducer);

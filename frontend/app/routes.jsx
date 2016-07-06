@@ -21,6 +21,8 @@ import SkusEdit from './views/skus/edit';
 import SkusNew from './views/skus/new';
 import BarcodesIndex from './views/barcodes/index';
 import PackingListsIndex from './views/packing_lists/index';
+import RefusedDeliveriesIndex from './views/refused_deliveries/index';
+import RefusedDeliveriesNew from './views/refused_deliveries/new';
 
 export default (
   <Router history={createHistory()}>
@@ -56,6 +58,8 @@ export default (
       <IndexRedirect to="packing-lists" />
       <Route path="packing-lists" component={PackingListsIndex} />
       <Route path="goods-received-notices" component={GoodsReceivedNoticesIndex} />
+      <Route path="refused-deliveries" component={RefusedDeliveriesIndex} />
+      <Route path="refused-deliveries/new" component={RefusedDeliveriesNew} />
     </Route>
   </Router>
 );

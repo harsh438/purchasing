@@ -34,6 +34,8 @@ Rails.application.routes.draw do
 
     resources :packing_lists, only: :index
 
+    resources :refused_deliveries_logs, only: [:index, :create]
+
     resources :elements, only: :index
 
     resources :purchase_orders, only: [:index, :show] do
