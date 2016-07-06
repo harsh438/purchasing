@@ -236,7 +236,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
           <button className="btn btn-sm btn-danger"
                   onClick={this.handleDeletePurchaseOrder.bind(this, goodsReceivedNoticeEvent.id)}>
-            Delete
+            <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
           </button>
         </td>
       </tr>
