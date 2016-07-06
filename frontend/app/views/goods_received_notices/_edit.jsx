@@ -202,7 +202,10 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       <table className="table table-striped table-condensed">
         <thead>
           <tr>
-            <th colSpan="3">&nbsp;</th>
+            <th colSpan="3">
+              <input type="checkbox" checked={false} style={{ display: 'inline-block' }} />
+              <span style={{ fontSize: '12px', paddingLeft: '10px' }}>Received?</span>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -216,6 +219,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     return (
       <tr className={this.goodsReceivedNoticeEventClass(goodsReceivedNoticeEvent)}
           key={goodsReceivedNoticeEvent.id}>
+        <td style={{ verticalAlign: 'middle' }}>
+          <input type="checkbox" checked={goodsReceivedNoticeEvent.isReceived} />
+        </td>
         <td style={{ fontSize: '.9em' }}>
           #{goodsReceivedNoticeEvent.purchaseOrderId}
           &nbsp;–&nbsp;
