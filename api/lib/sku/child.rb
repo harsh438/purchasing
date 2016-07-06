@@ -1,5 +1,4 @@
 class Child
-
   def initialize(sku)
     @sku = sku
   end
