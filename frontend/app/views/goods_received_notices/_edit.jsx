@@ -1,7 +1,7 @@
 import React from 'react';
 import DropZone from 'react-dropzone';
 import { renderSelectOptions } from '../../utilities/dom';
-import { map } from 'lodash';
+import { map, every } from 'lodash';
 import { Nav, NavItem } from 'react-bootstrap';
 import { packingListName } from '../../utilities/packing_list';
 
@@ -15,7 +15,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                    tab,
                    totalPallets: pallets,
                    goodsReceivedNotice: this.props.goodsReceivedNotice,
-                   goodsReceivedNoticeAllReceived: false };
+                   goodsReceivedNoticeAllReceived: this.allEventsReceivedForNotice(this.props.goodsReceivedNotice) };
 
     this.setVendorId(this.firstVendorId());
   }
@@ -34,6 +34,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                     combineFrom: '',
                     totalPallets: pallets,
                     goodsReceivedNotice: nextProps.goodsReceivedNotice,
+                    goodsReceivedNoticeAllReceived: this.allEventsReceivedForNotice(nextProps.goodsReceivedNotice),
                     onPackingListUpload: false,
                     packingFileNames: [] });
 
@@ -204,6 +205,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         <thead>
           <tr>
             <th colSpan="3">
+              <input type="checkbox"
+                     checked={this.state.goodsReceivedNoticeAllReceived}
+                     onChange={this.handleAllReceivedCheckboxChange.bind(this)} />
               <span style={{ fontSize: '12px', paddingLeft: '10px' }}>Received?</span>
             </th>
           </tr>
@@ -222,7 +226,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         <td style={{ verticalAlign: 'middle' }}>
           <input type="checkbox"
                  checked={goodsReceivedNoticeEvent.received}
-                 onChange={this.handleReceivedCheckboxChange.bind(this, index, goodsReceivedNoticeEvent.id)} />
+                 onChange={this.handleReceivedCheckboxChange.bind(this, index)} />
         </td>
         <td style={{ fontSize: '.9em' }}>
           #{goodsReceivedNoticeEvent.purchaseOrderId}
@@ -428,14 +432,53 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     this.props.onVendorChange(vendorId);
   }
 
-  handleReceivedCheckboxChange(index, eventId) {
-    let newGoodsReceivedNotice = this.state.goodsReceivedNotice;
-    let isReceived = !newGoodsReceivedNotice.goodsReceivedNoticeEvents[index].received;
-    newGoodsReceivedNotice.goodsReceivedNoticeEvents[index].received = isReceived;
+  handleAllReceivedCheckboxChange() {
+    let allReceived = !this.state.goodsReceivedNoticeAllReceived;
+    let that = this;
 
+    if (!allReceived) {
+      return;
+    }
+
+    this.setState({ goodsReceivedNoticeAllReceived: allReceived });
+
+    if (confirm('Are you sure you want to mark all POs as received?')) {
+      map(this.state.goodsReceivedNotice.goodsReceivedNoticeEvents,
+          function (e, index) { that.handleReceivedCheckboxChange(index); });
+    }
+  }
+
+  handleReceivedCheckboxChange(index) {
+    let newGoodsReceivedNotice = this.state.goodsReceivedNotice;
+    let noticeEvent = newGoodsReceivedNotice.goodsReceivedNoticeEvents[index];
+    let isReceived = !noticeEvent.received;
+    let totalCartons = newGoodsReceivedNotice.cartonsReceived;
+    let totalUnits = newGoodsReceivedNotice.unitsReceived;
+
+    if (!isReceived) {
+      return;
+    }
+
+    newGoodsReceivedNotice.goodsReceivedNoticeEvents[index].received = isReceived;
     this.setState({ goodsReceivedNotice: newGoodsReceivedNotice });
 
-    this.props.onReceiveChange(newGoodsReceivedNotice.id, eventId, isReceived);
+    totalCartons += noticeEvent.cartons;
+    totalUnits += noticeEvent.units;
+
+    let allReceived = this.allEventsReceivedForNotice(newGoodsReceivedNotice);
+
+    this.props.onReceiveChange(newGoodsReceivedNotice.id, noticeEvent.id, isReceived, totalCartons, totalUnits, allReceived);
+  }
+
+  allEventsReceivedForNotice(goodsReceivedNotice) {
+    let eventsReceived = map(goodsReceivedNotice.goodsReceivedNoticeEvents,
+                             function(e) { return e.received; });
+
+    if (every(eventsReceived)) {
+      return true;
+    }
+
+    return false;
   }
 
   handleChange({ target }) {

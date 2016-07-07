@@ -318,8 +318,8 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.props.dispatch(loadGoodsReceivedNotice(grnId));
   }
 
-  handleGoodsReceivedNoticeEventReceivedSave(grnId, grnEventId, isReceived) {
-    this.props.dispatch(markGoodsReceivedNoticeEventReceivedStatus(grnId, grnEventId, isReceived, this.state.currentDate));
+  handleGoodsReceivedNoticeEventReceivedSave(grnId, grnEventId, isReceived, totalCartons, totalUnits, allReceived) {
+    this.props.dispatch(markGoodsReceivedNoticeEventReceivedStatus(grnId, grnEventId, isReceived, totalCartons, totalUnits, allReceived, this.state.currentDate));
   }
 
   handleGoodsReceivedNoticeSave(grn) {

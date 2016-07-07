@@ -54,6 +54,7 @@ class GoodsReceivedNoticesController < ApplicationController
                                                                 :purchase_order_id,
                                                                 :units,
                                                                 :user_id,
-                                                                :received])
+                                                                :received,
+                                                                :status])
   end
 end
