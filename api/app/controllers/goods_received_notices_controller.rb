@@ -47,12 +47,13 @@ class GoodsReceivedNoticesController < ApplicationController
     grn_params.permit(:delivery_date,
                       :pallets,
                       packing_lists_attributes: [:id, :list, :list_file_name],
-                      goods_received_notice_events_attributes: [:id,
+                      goods_received_notice_events_attributes: [:_destroy,
+                                                                :cartons,
+                                                                :id,
+                                                                :pallets,
                                                                 :purchase_order_id,
                                                                 :units,
-                                                                :cartons,
-                                                                :pallets,
                                                                 :user_id,
-                                                                :_destroy])
+                                                                :received])
   end
 end

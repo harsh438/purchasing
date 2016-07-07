@@ -14,7 +14,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                    deliveryDate,
                    tab,
                    totalPallets: pallets,
-                   goodsReceivedNotice: this.props.goodsReceivedNotice };
+                   goodsReceivedNotice: this.props.goodsReceivedNotice,
+                   goodsReceivedNoticeAllReceived: false };
 
     this.setVendorId(this.firstVendorId());
   }
@@ -202,7 +203,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       <table className="table table-striped table-condensed">
         <thead>
           <tr>
-            <th colSpan="3">&nbsp;</th>
+            <th colSpan="3">
+              <span style={{ fontSize: '12px', paddingLeft: '10px' }}>Received?</span>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -212,10 +215,15 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     );
   }
 
-  renderPurchaseOrder(goodsReceivedNoticeEvent) {
+  renderPurchaseOrder(goodsReceivedNoticeEvent, index) {
     return (
       <tr className={this.goodsReceivedNoticeEventClass(goodsReceivedNoticeEvent)}
           key={goodsReceivedNoticeEvent.id}>
+        <td style={{ verticalAlign: 'middle' }}>
+          <input type="checkbox"
+                 checked={goodsReceivedNoticeEvent.received}
+                 onChange={this.handleReceivedCheckboxChange.bind(this, index, goodsReceivedNoticeEvent.id)} />
+        </td>
         <td style={{ fontSize: '.9em' }}>
           #{goodsReceivedNoticeEvent.purchaseOrderId}
           &nbsp;–&nbsp;
@@ -236,7 +244,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
           <button className="btn btn-sm btn-danger"
                   onClick={this.handleDeletePurchaseOrder.bind(this, goodsReceivedNoticeEvent.id)}>
-            Delete
+            <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
           </button>
         </td>
       </tr>
@@ -418,6 +426,16 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     this.setState({ vendorId });
     this.setState({ purchaseOrderLoading: true });
     this.props.onVendorChange(vendorId);
+  }
+
+  handleReceivedCheckboxChange(index, eventId) {
+    let newGoodsReceivedNotice = this.state.goodsReceivedNotice;
+    let isReceived = !newGoodsReceivedNotice.goodsReceivedNoticeEvents[index].received;
+    newGoodsReceivedNotice.goodsReceivedNoticeEvents[index].received = isReceived;
+
+    this.setState({ goodsReceivedNotice: newGoodsReceivedNotice });
+
+    this.props.onReceiveChange(newGoodsReceivedNotice.id, eventId, isReceived);
   }
 
   handleChange({ target }) {

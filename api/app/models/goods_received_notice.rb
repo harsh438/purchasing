@@ -48,6 +48,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
                                                       :set_user_id],
                                           after_remove: :decrement_totals,
                                           dependent: :destroy
+
   accepts_nested_attributes_for :goods_received_notice_events, allow_destroy: true
 
   has_many :vendors, through: :goods_received_notice_events

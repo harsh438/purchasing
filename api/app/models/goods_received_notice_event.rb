@@ -18,7 +18,8 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
                  status: :Status,
                  delivery_date: :DeliveryDate,
                  booked_in_at: :BookedInDate,
-                 user_id: :UserID
+                 user_id: :UserID,
+                 received: :IsReceived
 
   belongs_to :goods_received_notice, foreign_key: :grn
   belongs_to :vendor, foreign_key: :BrandID
