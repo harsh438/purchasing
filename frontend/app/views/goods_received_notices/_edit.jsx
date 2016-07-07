@@ -14,7 +14,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                    deliveryDate,
                    tab,
                    totalPallets: pallets,
-                   goodsReceivedNotice: this.props.goodsReceivedNotice };
+                   goodsReceivedNotice: this.props.goodsReceivedNotice,
+                   goodsReceivedNoticeAllReceived: false };
 
     this.setVendorId(this.firstVendorId());
   }
@@ -203,7 +204,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         <thead>
           <tr>
             <th colSpan="3">
-              <input type="checkbox" checked={false} style={{ display: 'inline-block' }} />
               <span style={{ fontSize: '12px', paddingLeft: '10px' }}>Received?</span>
             </th>
           </tr>
@@ -215,12 +215,14 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     );
   }
 
-  renderPurchaseOrder(goodsReceivedNoticeEvent) {
+  renderPurchaseOrder(goodsReceivedNoticeEvent, index) {
     return (
       <tr className={this.goodsReceivedNoticeEventClass(goodsReceivedNoticeEvent)}
           key={goodsReceivedNoticeEvent.id}>
         <td style={{ verticalAlign: 'middle' }}>
-          <input type="checkbox" checked={goodsReceivedNoticeEvent.isReceived} />
+          <input type="checkbox"
+                 checked={goodsReceivedNoticeEvent.received}
+                 onChange={this.handleReceivedCheckboxChange.bind(this, index, goodsReceivedNoticeEvent.id)} />
         </td>
         <td style={{ fontSize: '.9em' }}>
           #{goodsReceivedNoticeEvent.purchaseOrderId}
@@ -424,6 +426,16 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     this.setState({ vendorId });
     this.setState({ purchaseOrderLoading: true });
     this.props.onVendorChange(vendorId);
+  }
+
+  handleReceivedCheckboxChange(index, eventId) {
+    let newGoodsReceivedNotice = this.state.goodsReceivedNotice;
+    let isReceived = !newGoodsReceivedNotice.goodsReceivedNoticeEvents[index].received;
+    newGoodsReceivedNotice.goodsReceivedNoticeEvents[index].received = isReceived;
+
+    this.setState({ goodsReceivedNotice: newGoodsReceivedNotice });
+
+    this.props.onReceiveChange(newGoodsReceivedNotice.id, eventId, isReceived);
   }
 
   handleChange({ target }) {
