@@ -20,6 +20,7 @@ export default class Header extends React.Component {
 
             <ul className="nav navbar-nav">
               <HeaderLink to="/warehouse/packing-lists" text="Packing lists" { ...this.props } />
+              <HeaderLink to="/warehouse/goods-received-notices" text="Booking tool" { ...this.props } />
             </ul>
           </div>
         </nav>

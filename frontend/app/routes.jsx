@@ -55,6 +55,7 @@ export default (
     <Route path="/warehouse" component={WarehouseLayout}>
       <IndexRedirect to="packing-lists" />
       <Route path="packing-lists" component={PackingListsIndex} />
+      <Route path="goods-received-notices" component={GoodsReceivedNoticesIndex} />
     </Route>
   </Router>
 );
