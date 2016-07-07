@@ -1,7 +1,7 @@
 require './lib/sku/child.rb'
 
 RSpec.describe Child do
-	let(:sku)   { create(:sku) }
+	let(:sku)       { create(:sku) }
 	subject(:child) { described_class.new(sku) }
 
 	describe "#as_json" do

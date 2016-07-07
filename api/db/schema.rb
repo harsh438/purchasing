@@ -589,6 +589,31 @@ ActiveRecord::Schema.define(version: 20160329163919) do
 
   add_index "product_gender", ["pid"], name: "pID", using: :btree
 
+  create_table "product_image", force: :cascade do |t|
+    t.integer  "product_id",      limit: 4
+    t.integer  "position",        limit: 4
+    t.integer  "width",           limit: 4
+    t.integer  "height",          limit: 4
+    t.string   "md5",             limit: 256
+    t.integer  "import_batch_id", limit: 4
+    t.string   "source_path",     limit: 256
+    t.string   "its_reference",   limit: 256
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "uploaded_s3_at"
+    t.datetime "uploaded_its_at"
+    t.datetime "uploaded_san_at"
+    t.datetime "deleted_at"
+    t.datetime "accepted_at"
+    t.string   "legacy_position", limit: 1
+  end
+
+  add_index "product_image", ["accepted_at"], name: "accepted_at", using: :btree
+  add_index "product_image", ["import_batch_id"], name: "importBatchID", using: :btree
+  add_index "product_image", ["product_id", "position", "accepted_at"], name: "Product_position_accepted", using: :btree
+  add_index "product_image", ["product_id", "position"], name: "product_position", using: :btree
+  add_index "product_image", ["product_id"], name: "product_id", using: :btree
+
   create_table "product_supplier", primary_key: "pid", force: :cascade do |t|
     t.integer "supplierID", limit: 4, null: false
   end
@@ -670,6 +695,17 @@ ActiveRecord::Schema.define(version: 20160329163919) do
   end
 
   add_index "reporting_categories", ["catid"], name: "catid", using: :btree
+
+  create_table "sd_kit_manager", force: :cascade do |t|
+    t.integer "pID",       limit: 4
+    t.string  "type",      limit: 64
+    t.string  "barcode",   limit: 64
+    t.integer "discount",  limit: 4
+    t.integer "sourcepID", limit: 4
+    t.integer "sourceoID", limit: 4,  default: 0
+    t.string  "itemCode",  limit: 32
+    t.date    "dateAdded"
+  end
 
   create_table "sd_product_details", primary_key: "pID", force: :cascade do |t|
     t.string  "colour",             limit: 20, null: false
