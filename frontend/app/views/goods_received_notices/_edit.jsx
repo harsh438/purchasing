@@ -1,7 +1,7 @@
 import React from 'react';
 import DropZone from 'react-dropzone';
 import { renderSelectOptions } from '../../utilities/dom';
-import { map } from 'lodash';
+import { map, every } from 'lodash';
 import { Nav, NavItem } from 'react-bootstrap';
 import { packingListName } from '../../utilities/packing_list';
 
@@ -430,12 +430,30 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleReceivedCheckboxChange(index, eventId) {
     let newGoodsReceivedNotice = this.state.goodsReceivedNotice;
-    let isReceived = !newGoodsReceivedNotice.goodsReceivedNoticeEvents[index].received;
-    newGoodsReceivedNotice.goodsReceivedNoticeEvents[index].received = isReceived;
+    let noticeEvent = newGoodsReceivedNotice.goodsReceivedNoticeEvents[index];
+    let isReceived = !noticeEvent.received;
+    let totalCartons = newGoodsReceivedNotice.cartonsReceived;
+    let totalUnits = newGoodsReceivedNotice.unitsReceived;
+    let allReceived = false;
 
+    if (!isReceived) {
+      return;
+    }
+
+    newGoodsReceivedNotice.goodsReceivedNoticeEvents[index].received = isReceived;
     this.setState({ goodsReceivedNotice: newGoodsReceivedNotice });
 
-    this.props.onReceiveChange(newGoodsReceivedNotice.id, eventId, isReceived);
+    totalCartons += noticeEvent.cartons;
+    totalUnits += noticeEvent.units;
+
+    let eventsReceived = map(newGoodsReceivedNotice.goodsReceivedNoticeEvents,
+                             function(e) { return e.received });
+
+    if (every(eventsReceived)) {
+      allReceived = true;
+    }
+
+    this.props.onReceiveChange(newGoodsReceivedNotice.id, eventId, isReceived, totalCartons, totalUnits, allReceived);
   }
 
   handleChange({ target }) {
