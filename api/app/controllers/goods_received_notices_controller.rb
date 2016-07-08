@@ -16,6 +16,12 @@ class GoodsReceivedNoticesController < ApplicationController
 
   def update
     grn.update!(grn_attrs)
+    condition = PackingCondition.find_by(grn_id: grn.id)
+
+    if condition
+      condition.update(condition_attrs)
+    end
+
     render json: grn.as_json_with_purchase_orders_and_packing_list_urls
   end
 
@@ -40,6 +46,29 @@ class GoodsReceivedNoticesController < ApplicationController
 
   def grn
     GoodsReceivedNotice.find(params[:id])
+  end
+
+  def condition_attrs
+    grn_params = params.require(:goods_received_notice).require(:packing_condition)
+    grn_params.permit(:booked_in,
+                      :id,
+                      :grn_id,
+                      :arrived_correctly,
+                      :cartons_good_condition,
+                      :packing_list_received,
+                      :grn_or_po_marked_on_cartons,
+                      :packing_list_outside_of_carton,
+                      :cartons_sequentially_numbered,
+                      :packed_correctly,
+                      :packed_correctly_issues_id,
+                      :cartons_markings_correct,
+                      :cartons_palletised_correctly,
+                      :packing_comments,
+                      :barcoded,
+                      :poly_bagged,
+                      :general_comments,
+                      :attachments,
+                      :items_in_quarantine)
   end
 
   def grn_attrs
