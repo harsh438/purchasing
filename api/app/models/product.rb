@@ -16,10 +16,10 @@ class Product < ActiveRecord::Base
                  listing_genders: :pUDFValue3,
                  inv_track: :invTrack
 
-  has_many :product_genders, foreign_key: :pid
+  has_one :reporting_category, foreign_key: :pid
   has_one :language_product, foreign_key: :pID
   has_many :language_product_options, foreign_key: :pID
-  has_many :product_categories, foreign_key: :pID
+  has_many :product_categories, foreign_key: :pid
   has_many :categories, through: :product_categories
   belongs_to :product_detail, foreign_key: :pID
   has_many :skus
