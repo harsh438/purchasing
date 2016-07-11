@@ -27,6 +27,13 @@ class PackingCondition < ActiveRecord::Base
   private
 
   def ensure_defaults
+    ensure_boolean_defaults
+    ensure_relationship_defaults
+    ensure_unused_defaults
+    ensure_text_defaults
+  end
+
+  def ensure_boolean_defaults
     self.arrived_correctly ||= true
     self.booked_in ||= true
     self.cartons_good_condition ||= true
@@ -35,14 +42,23 @@ class PackingCondition < ActiveRecord::Base
     self.packing_list_outside_of_carton ||= true
     self.cartons_sequentially_numbered ||= false
     self.packed_correctly ||= true
-    self.packed_correctly_issues_id ||= nil
     self.cartons_markings_correct ||= true
     self.cartons_palletised_correctly ||= true
-    self.packing_comments ||= ''
-    self.barcoded ||= true
+    self.items_in_quarantine ||= false
+  end
+
+  def ensure_relationship_defaults
+    self.packed_correctly_issues_id ||= nil
+  end
+
+  def ensure_unused_defaults
     self.poly_bagged ||= true
+    self.barcoded ||= true
+  end
+
+  def ensure_text_defaults
+    self.packing_comments ||= ''
     self.general_comments ||= ''
     self.attachments ||= ''
-    self.items_in_quarantine ||= false
   end
 end
