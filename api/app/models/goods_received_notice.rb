@@ -63,15 +63,6 @@ class GoodsReceivedNotice < ActiveRecord::Base
   after_initialize :ensure_packing_condition
   after_update :set_delivery_date_on_all_events
 
-  def delete_packing_list_by_url!(url)
-    return nil unless is_packing_list_url?(url)
-    if is_packing_list_legacy_url?(url)
-      delete_legacy_packing_list_by_url!(url)
-    else
-      delete_current_packing_list_by_url!(url)
-    end
-  end
-
   def late?
     delivery_date < Date.today
   end
@@ -111,105 +102,15 @@ class GoodsReceivedNotice < ActiveRecord::Base
 
   def as_json_with_purchase_orders_and_packing_list_urls
     as_json_with_purchase_orders.tap do |grn|
-      grn[:packing_list_urls] = packing_list_urls
+      grn[:packing_list_urls] = packing_list_attachments.urls
     end
+  end
+
+  def delete_packing_list_by_url!(url)
+    packing_list_attachments.delete_by_url(url)
   end
 
   private
-
-  def ensure_packing_condition
-    self.packing_condition || build_packing_condition
-  end
-
-  def packing_list_urls
-    [].concat(packing_list_current_urls)
-      .concat(packing_list_legacy_urls)
-  end
-
-  def packing_list_current_urls
-    packing_lists.map(&:list).map { |list| list.expiring_url(300) }.reverse
-  end
-
-  def packing_list_legacy_urls
-    return [] if !legacy_attachments
-    attachement_list = []
-    current_attachment = ''
-    legacy_attachments.split(',').select do |attachment|
-      current_attachment += attachment
-      if attachment != '' and has_a_file_extension?(attachment)
-        attachement_list.push(current_attachment)
-        current_attachment = ''
-      elsif current_attachment != ''
-          current_attachment += ','
-      end
-    end
-
-    attachement_list.map { |attachment| legacy_packing_list_url(attachment) }
-  end
-
-  def is_packing_list_legacy_url?(url)
-    packing_list_legacy_urls.include?(url)
-  end
-
-  def is_packing_list_current_url?(url)
-    filename = packing_list_filename_from_url(url)
-    !!packing_lists.find_by(:list_file_name => filename)
-  end
-
-  def is_packing_list_url?(url)
-    is_packing_list_legacy_url?(url) || is_packing_list_current_url?(url)
-  end
-
-  def packing_list_filename_from_url(url)
-    slash_index = url.rindex('/')
-    return nil unless slash_index
-    encoded_filename = url[slash_index + 1..-1]
-    return nil unless encoded_filename
-    parameter_index = encoded_filename.index('?')
-    if parameter_index
-      encoded_filename = encoded_filename[0..parameter_index - 1]
-    end
-    URI.decode(encoded_filename)
-  end
-
-  def packing_list_urls
-    [].concat(packing_list_current_urls)
-      .concat(packing_list_legacy_urls)
-  end
-
-  def packing_list_current_urls
-    packing_lists.map(&:list_url).reverse
-  end
-
-  def packing_list_legacy_urls
-    return [] if !legacy_attachments
-    attachement_list = []
-    current_attachment = ''
-    legacy_attachments.split(',').select do |attachment|
-      current_attachment += attachment
-      if attachment != '' and has_a_file_extension?(attachment)
-        attachement_list.push(current_attachment)
-        current_attachment = ''
-      elsif current_attachment != ''
-          current_attachment += ','
-      end
-    end
-
-    attachement_list.map { |attachment| legacy_packing_list_url(attachment) }
-  end
-
-  def delete_current_packing_list_by_url!(url)
-    filename = packing_list_filename_from_url(url)
-    packing_list = packing_lists.find_by(:list_file_name => filename)
-    return nil unless packing_list
-    packing_list.destroy!
-  end
-
-  def delete_legacy_packing_list_by_url!(url)
-    filename = packing_list_filename_from_url(url)
-    legacy_attachments.sub!(",#{filename}", '').sub(filename, ',')
-    save!
-  end
 
   def ensure_defaults
     self.received ||= 0
@@ -227,6 +128,10 @@ class GoodsReceivedNotice < ActiveRecord::Base
     self.cartons ||= 0
     self.pallets ||= 0
     self.legacy_attachments ||= ''
+  end
+
+  def ensure_packing_condition
+    self.packing_condition || build_packing_condition
   end
 
   def increment_totals(grn_event)
@@ -258,13 +163,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
     save!
   end
 
-  private
-
-  def legacy_packing_list_url(filename)
-    "https://www.sdometools.com/tools/bookingin_tool/attachments/#{URI.escape(filename)}"
-  end
-
-  def has_a_file_extension?(filename)
-    /\.[a-z]{3,4}/.match(filename)
+  def packing_list_attachments
+    PackingListAttachments.new(self)
   end
 end
