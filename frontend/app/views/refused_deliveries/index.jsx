@@ -4,12 +4,11 @@ import { Link } from 'react-router';
 import Filters from './_filters';
 import Table from './_table';
 import { loadRefusedDeliveries } from '../../actions/refused_deliveries';
-import { assign, intersection, isEqual, map} from 'lodash';
-import { loadVendors } from '../../actions/filters';
+import { assign, isEqual } from 'lodash';
+
 
 class RefusedDeliveriesIndex extends React.Component {
   componentWillMount() {
-    this.props.dispatch(loadVendors());
     this.loadRefusedDeliveries();
   }
 
@@ -33,21 +32,20 @@ class RefusedDeliveriesIndex extends React.Component {
           <div className="col-md-2 col-md-offset-6 text-right">
             <Link to="/warehouse/refused-deliveries/new"
                   className="btn btn-success">
-              Add refused-deliveries
+              Add Refused Delivery
             </Link>
           </div>
         </div>
 
         <div className="row">
           <div className="col-md-12">
-            <Filters filters={this.props.location.query}
+            <Filters brands={this.props.brands}
+                     filters={this.props.location.query}
                      onSubmit={this.handleFiltersSubmit.bind(this)} />
-                   <Table refusedDeliveriesLogs={this.props.refusedDeliveriesLogs} />
+            <Table refusedDeliveries={this.props.refusedDeliveries} />
           </div>
         </div>
       </div>
-
-      <Filters brands={this.props.brands}/>
     );
   }
 
@@ -62,8 +60,8 @@ class RefusedDeliveriesIndex extends React.Component {
   }
 }
 
-function applyState({ refusedDeliveriesLogs }) {
-  return assign({}, refusedDeliveriesLogs);
+function applyState({ refusedDeliveries }) {
+  return assign({}, refusedDeliveries);
 }
 
 export default connect(applyState)(RefusedDeliveriesIndex);

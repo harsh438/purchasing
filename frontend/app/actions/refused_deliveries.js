@@ -1,4 +1,5 @@
 import Qs from 'qs';
+import { snakeizeKeys } from '../utilities/inspection';
 
 export function loadRefusedDeliveries({ dateFrom, dateTo }) {
   return dispatch => {
@@ -6,18 +7,18 @@ export function loadRefusedDeliveries({ dateFrom, dateTo }) {
 
     fetch(`/api/refused_deliveries_logs.json?${queryString}`, { credentials: 'same-origin' })
       .then(response => response.json())
-      .then(refusedDeliveriesLogs => dispatch({ refusedDeliveriesLogs, type: 'SET_REFUSED_DELIVERIES_LOGS' }));
+      .then(refusedDeliveries => dispatch({ refusedDeliveries, type: 'SET_REFUSED_DELIVERIES' }));
   };
 }
 
 
-export function createRefusedDeliveries(RefusedDeliveries = {}) {
+export function createRefusedDelivery(refusedDelivery) {
   return dispatch => {
     fetch('/api/refused_deliveries_logs.json', { credentials: 'same-origin',
                                    method: 'post',
                                    headers: { 'Content-Type': 'application/json' },
-                                   body: JSON.stringify({ refused_deliveries_logs: snakeizeKeys(refused_deliveries_logs) }) })
+                                   body: JSON.stringify({ refused_deliveries_log: snakeizeKeys(refusedDelivery) }) })
       .then(response => response.json())
-      .then(refused_deliveries_logs => dispatch({ refused_deliveries_logs, type: 'CREATE_REFUSED_DELIVERIES_LOGS' }));
+      .then(refusedDelivery => dispatch({ refusedDelivery, type: 'SET_REFUSED_DELIVERY' }));
   };
 }

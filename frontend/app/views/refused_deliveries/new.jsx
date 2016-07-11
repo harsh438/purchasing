@@ -1,18 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { assign } from 'lodash';
-import RefusedDeliveriesLogForm from './_form';
-import { createSupplier } from '../../actions/suppliers';
+import RefusedDeliveriesForm from './_form';
+import { createRefusedDelivery } from '../../actions/refused_deliveries';
 import { Link } from 'react-router';
+import { loadVendors } from '../../actions/filters';
 
 class RefusedDeliveriesNew extends React.Component {
   componentWillMount() {
-    this.state = { createRefusedDeliveries: false };
+    this.state = { createRefusedDelivery: false };
+    this.props.dispatch(loadVendors());
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.createRefusedDeliveries && nextProps.refusedDeliveries) {
-      this.props.history.pushState(null, `/refused-deliveries`);
+    if (this.state.createRefusedDelivery && nextProps.refusedDelivery) {
+      this.props.history.pushState(null, `/warehouse/refused-deliveries`);
     }
   }
 
@@ -23,8 +25,8 @@ class RefusedDeliveriesNew extends React.Component {
         <div className="row" style={{ marginBottom: '20px' }}>
           <div className="col-md-6">
             <h1>
-              <Link to="/refused-deliveries">refused-deliveries</Link>
-              &nbsp;/ Add Refused Deliveries
+              <Link to="/warehouse/refused-deliveries">Refused Deliveries</Link>
+              &nbsp;/ Add Refused Delivery
             </h1>
           </div>
         </div>
@@ -33,9 +35,10 @@ class RefusedDeliveriesNew extends React.Component {
           <div className="col-md-6">
             <div className="panel panel-default">
               <div className="panel-body">
-                <SuppliersForm title="Create Refused Deliveries"
-                               submitText="Add Refused Deliveries"
-                               onSubmitSupplier={this.handleCreateRefusedDeliveries.bind(this)} />
+                <RefusedDeliveriesForm title="Create Refused Delivery"
+                                       submitText="Add Refused Delivery"
+                                       brands={this.props.brands}
+                                       onSubmitRefusedDelivery={this.handleCreateRefusedDelivery.bind(this)} />
               </div>
             </div>
           </div>
@@ -44,14 +47,14 @@ class RefusedDeliveriesNew extends React.Component {
     );
   }
 
-  handleCreateRefusedDeliveries (refusedDeliveries) {
-    this.setState({ createRefusedDeliveries: true });
-    this.props.dispatch(createRefusedDeliveries(refusedDeliveries));
+  handleCreateRefusedDelivery (refusedDelivery) {
+    this.setState({ createRefusedDelivery: true });
+    this.props.dispatch(createRefusedDelivery(refusedDelivery));
   }
 }
 
-function applyState({ refusedDeliveries }) {
-  return refusedDeliveries;
+function applyState({ filters, refusedDeliveries }) {
+  return assign({}, filters, refusedDeliveries);
 }
 
 export default connect(applyState)(RefusedDeliveriesNew);

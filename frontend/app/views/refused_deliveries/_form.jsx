@@ -2,23 +2,24 @@ import React from 'react';
 import { assign, omit, get, map } from 'lodash';
 import { camelizeKeys } from '../../utilities/inspection';
 import Select from 'react-select';
+import moment from 'moment';
 import { renderSelectOptions,
          renderMultiSelectOptions } from '../../utilities/dom';
 
-export default class RefusedDeliveriesLogForm extends React.Component {
+export default class RefusedDeliveriesForm extends React.Component {
   componentWillMount() {
-    this.state = assign({ submitting: false }, this.props.refused_deliveries_logs);
+    const deliveryDate = moment().format('YYYY-MM-DD');
+    this.state = assign({ deliveryDate, submitting: false }, this.props.refusedDelivery);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ submitting: false });
 
-    if (nextProps.refused_deliveries_logs) {
-      this.setState(nextProps.refused_deliveries_logs);
+    if (nextProps.refusedDelivery) {
+      this.setState(nextProps.refusedDelivery);
     }
   }
 
-  console.log(JSON.stringify(this.props.brands, null, 2))
   render() {
     return (
       <form className="form"
@@ -38,112 +39,61 @@ export default class RefusedDeliveriesLogForm extends React.Component {
             <tr>
                 <td><label htmlFor="courier">Courier</label></td>
                 <td><input className="form-control"
-                       id="courier"
-                       name="courier"
-                       placeholder="courier"
-                       value={this.state.courier} /></td>
+                           id="courier"
+                           name="courier"
+                           placeholder="courier"
+                           required
+                           value={this.state.courier} /></td>
             </tr>
             <tr>
-                <td><label htmlFor="Brand">Brand</label></td>
-                <td>  <select className="form-control"
-                          id="vendorId"
-                          name="vendorId"
-                          value={this.getFilter('vendorId')}>
+                <td><label htmlFor="brandId">Brand</label></td>
+                <td><select className="form-control"
+                            id="brandId"
+                            name="brandId"
+                            required
+                            value={this.state.brandId}>
                     <option value=""> -- select brand -- </option>
                     {this.selectOptions(this.props.brands)}
                   </select></td>
             </tr>
             <tr>
-                <td><label htmlFor="return_address_1">Returns Address Line 1</label></td>
-                <td><input className="form-control"
-                           id="returns_address_1"
-                           name="returns_address_1"
-                           placeholder="Line 1"
-                           value={this.state.returnsAddress1} /></td>
+                <td><label htmlFor="pallets">Pallets</label></td>
+                <td><input type="number"
+                           className="form-control"
+                           id="pallets"
+                           name="pallets"
+                           placeholder="0"
+                           step="0.0001"
+                           required
+                           value={this.state.pallets} /></td>
             </tr>
             <tr>
-                <td><label htmlFor="returns_address_2">Returns Address Line 2</label></td>
-                <td><input className="form-control"
-                           id="returns_address_2"
-                           name="returns_address_2"
-                           placeholder="Line 2"
-                           value={this.state.returnsAddress2} /></td>
+                <td><label htmlFor="boxes">Boxes</label></td>
+                <td><input type="number"
+                           className="form-control"
+                           id="boxes"
+                           name="boxes"
+                           placeholder="0"
+                           required
+                           value={this.state.boxes} /></td>
             </tr>
             <tr>
-                <td><label htmlFor="returns_address_3">Returns Address Line 3</label></td>
-                <td><input className="form-control"
-                           id="returns_address_3"
-                           name="returns_address_3"
-                           placeholder="Line 3"
-                           value={this.state.returnsAddress3} /></td>
+                <td><label htmlFor="info">Po Numbers and any other info</label></td>
+                <td><textarea className="form-control"
+                              id="info"
+                              name="info"
+                              placeholder="info"
+                              required
+                              value={this.state.info} /></td>
             </tr>
             <tr>
-                <td><label htmlFor="return_address_name">Returns Postal Code</label></td>
+                <td><label htmlFor="refusalReason">Reason for refusal</label></td>
                 <td><input className="form-control"
-                           id="returns_postal_code"
-                           name="returns_postal_code"
-                           placeholder="Postal Code"
-                           value={this.state.returnsPostalCode} /></td>
-            </tr>
-            <tr>
-                <td><label htmlFor="returns_process">Return Process</label></td>
-                <td><input className="form-control"
-                           id="returns_process"
-                           name="returns_process"
-                           placeholder="Return Process"
-                           value={this.state.returnsProcess} /></td>
-            </tr>
-            <tr>
-                <td><label htmlFor="invoicer_name">Invoicer Name</label></td>
-                <td><input className="form-control"
-                           id="invoicer_name"
-                           name="invoicer_name"
-                           placeholder="Invoicer Name"
-                           value={this.state.invoicerName} /></td>
-            </tr>
-            <tr>
-                <td><label htmlFor="account_number">Account Number</label></td>
-                <td><input className="form-control"
-                           id="account_number"
-                           name="account_number"
-                           placeholder="Account Number"
-                           value={this.state.accountNumber} /></td>
-            </tr>
-            <tr>
-                <td><label htmlFor="country_of_origin">Country Of Origin</label></td>
-                <td><input className="form-control"
-                           id="country_of_origin"
-                           name="country_of_origin"
-                           placeholder="Country Of Origin"
-                           value={this.state.countryOfOrigin} /></td>
-            </tr>
-            <tr>
-              <td>
-                <div className="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="neededForIntrastat"
-                           value="1"
-                           className="checkbox"
-                           checked={this.state.neededForIntrastat}
-                           onChange={this.handleCheckboxChange.bind(this)} />
-                    Needed for Intrastat
-                  </label>
-                </div>
-                <div className="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           name="discontinued"
-                           value="1"
-                           className="checkbox"
-                           checked={this.state.discontinued}
-                           onChange={this.handleCheckboxChange.bind(this)} />
-
-                    Discontinued
-                  </label>
-                </div>
-              </td>
-              <td></td>
+                           id="refusalReason"
+                           name="refusalReason"
+                           placeholder="refusal reason"
+                           required
+                           value={this.state.refusalReason} /></td>
             </tr>
           </tbody>
         </table>
@@ -155,7 +105,6 @@ export default class RefusedDeliveriesLogForm extends React.Component {
       </form>
     );
   }
-
 
   selectOptions(options) {
     return map(options, function ({ id, name }) {
@@ -170,7 +119,7 @@ export default class RefusedDeliveriesLogForm extends React.Component {
   }
 
   handleFormChange({ target }) {
-    this.setState(camelizeKeys({ [target.name]: target.value }));
+    this.setState({ [target.name]: target.value });
   }
 
   handleCheckboxChange(e) {
@@ -186,6 +135,6 @@ export default class RefusedDeliveriesLogForm extends React.Component {
   handleFormSubmit(e) {
     e.preventDefault();
     this.setState({ submitting: true });
-    this.props.onSubmitRefusedDeliveriesLogs(this.state);
+    this.props.onSubmitRefusedDelivery(this.state);
   }
 }

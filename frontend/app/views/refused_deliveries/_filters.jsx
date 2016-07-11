@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-export default class RefusedDeliveriesLogsFilters extends React.Component {
+export default class RefusedDeliveriesFilters extends React.Component {
   componentWillMount() {
     this.state = { submitting: false };
     this.ensureFilters();

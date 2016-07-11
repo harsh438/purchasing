@@ -2,7 +2,7 @@ import React from 'react';
 import { map } from 'lodash';
 import { packingListName } from '../../utilities/packing_list';
 
-export default class RefusedDeliveriesLogsTable extends React.Component {
+export default class RefusedDeliveriesTable extends React.Component {
   render() {
     return (
       <table className="table table-striped">
@@ -25,7 +25,7 @@ export default class RefusedDeliveriesLogsTable extends React.Component {
   }
 
   renderRows() {
-    return map(this.props.refusedDeliveriesLogs, this.renderRow, this);
+    return map(this.props.refusedDeliveries, this.renderRow, this);
   }
 
   renderRow({ id, deliveryDate, courier, brand, pallets, boxes, info, refusalReason }) {
