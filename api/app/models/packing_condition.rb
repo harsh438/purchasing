@@ -22,27 +22,27 @@ class PackingCondition < ActiveRecord::Base
                  attachments: :Attachments,
                  items_in_quarantine: :items_in_quarantine
 
-  def self.find_or_create_with_grn(grn_id)
-    condition = PackingCondition.find_by(grn_id: grn_id)
-    return condition if condition
+  after_initialize :ensure_defaults
 
-    PackingCondition.create(grn_id: grn_id,
-                            arrived_correctly: true,
-                            booked_in: true,
-                            cartons_good_condition: true,
-                            packing_list_received: true,
-                            grn_or_po_marked_on_cartons: true,
-                            packing_list_outside_of_carton: true,
-                            cartons_sequentially_numbered: false,
-                            packed_correctly: true,
-                            packed_correctly_issues_id: nil,
-                            cartons_markings_correct: true,
-                            cartons_palletised_correctly: true,
-                            packing_comments: '',
-                            barcoded: true,
-                            poly_bagged: true,
-                            general_comments: '',
-                            attachments: '',
-                            items_in_quarantine: false)
+  private
+
+  def ensure_defaults
+    self.arrived_correctly ||= true
+    self.booked_in ||= true
+    self.cartons_good_condition ||= true
+    self.packing_list_received ||= true
+    self.grn_or_po_marked_on_cartons ||= true
+    self.packing_list_outside_of_carton ||= true
+    self.cartons_sequentially_numbered ||= false
+    self.packed_correctly ||= true
+    self.packed_correctly_issues_id ||= nil
+    self.cartons_markings_correct ||= true
+    self.cartons_palletised_correctly ||= true
+    self.packing_comments ||= ''
+    self.barcoded ||= true
+    self.poly_bagged ||= true
+    self.general_comments ||= ''
+    self.attachments ||= ''
+    self.items_in_quarantine ||= false
   end
 end
