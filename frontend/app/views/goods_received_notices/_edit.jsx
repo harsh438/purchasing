@@ -72,9 +72,10 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                  activeKey={this.state.tab}
                  onSelect={this.handleTabChange.bind(this)}
                  style={{ marginBottom: '10px' }}>
-              <NavItem eventKey="purchaseOrders">Purchase orders</NavItem>
+              <NavItem eventKey="purchaseOrders">POs</NavItem>
               <NavItem eventKey="packingLists">Packing lists</NavItem>
               <NavItem eventKey="pallets">Pallets</NavItem>
+              <NavItem eventKey="deliveryCondition">Condition</NavItem>
               {this.props.advanced && <NavItem eventKey="advanced">Advanced</NavItem>}
             </Nav>
 
@@ -103,6 +104,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       return this.renderChangePalletsForm();
     case 'advanced':
       return this.renderAdvanced();
+    case 'deliveryCondition':
+      return this.renderDeliveryCondition();
     }
   }
 
@@ -350,6 +353,91 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     );
   }
 
+  renderDeliveryCondition() {
+    let condition = this.state.goodsReceivedNotice.packingCondition;
+    return (
+      <div>
+        <form onChange={this.handleChange.bind(this)}>
+          <table className="table table-striped table-condensed">
+            <thead>
+              <tr>
+                <th colSpan="6">
+                  Delivery Condition
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colSpan="5">Delivery Booked In</td>
+                <td colSpan="1"><input name="booked_in"
+                                       type="checkbox"
+                                       checked={condition.booked_in}
+                                       onChange={this.handleConditionChange.bind(this)} /></td>
+              </tr>
+              <tr>
+                <td colSpan="5">Delivery Arrived Correctly</td>
+                <td colSpan="1"><input name="arrived_correctly"
+                                       type="checkbox"
+                                       checked={condition.arrived_correctly}
+                                       onChange={this.handleConditionChange.bind(this)} /></td>
+              </tr>
+              <tr>
+                <td colSpan="5">Cartons Sequentially Numbered</td>
+                <td colSpan="1"><input name="cartons_sequentially_numbered"
+                                       type="checkbox"
+                                       checked={condition.cartons_sequentially_numbered}
+                                       onChange={this.handleConditionChange.bind(this)} /></td>
+              </tr>
+
+              <tr>
+                <td colSpan="5">Packing List Received</td>
+                <td colSpan="1"><input name="packing_list_received"
+                                       type="checkbox"
+                                       checked={condition.packing_list_received}
+                                       onChange={this.handleConditionChange.bind(this)} /></td>
+              </tr>
+              <tr>
+                <td colSpan="5">Packing List on Outside of Carton</td>
+                <td colSpan="1"><input name="packing_list_outside_of_carton"
+                                       type="checkbox"
+                                       checked={condition.packing_list_outside_of_carton}
+                                       onChange={this.handleConditionChange.bind(this)} /></td>
+              </tr>
+              <tr>
+                <td colSpan="5">Any Items in Quarantine</td>
+                <td colSpan="1"><input name="items_in_quarantine"
+                                       type="checkbox"
+                                       checked={condition.items_in_quarantine}
+                                       onChange={this.handleConditionChange.bind(this)} /></td>
+              </tr>
+              <tr>
+                <td colSpan="5">Cartons in Good Condition</td>
+                <td colSpan="1"><input name="cartons_good_condition"
+                                       type="checkbox"
+                                       checked={condition.cartons_good_condition}
+                                       onChange={this.handleConditionChange.bind(this)} /></td>
+              </tr>
+              <tr>
+                <td colSpan="5">GRN or PO Marked on Cartons</td>
+                <td colSpan="1"><input name="grn_or_po_marked_on_cartons"
+                                       type="checkbox"
+                                       checked={condition.grn_or_po_marked_on_cartons}
+                                       onChange={this.handleConditionChange.bind(this)} /></td>
+              </tr>
+              <tr>
+                <td colSpan="5">Cartons Palletised Correctly (16 or more)</td>
+                <td colSpan="1"><input name="cartons_palletised_correctly"
+                                       type="checkbox"
+                                       checked={condition.cartons_palletised_correctly}
+                                       onChange={this.handleConditionChange.bind(this)} /></td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    );
+  }
+
   renderAdvanced() {
     return (
       <div>
@@ -479,6 +567,13 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     }
 
     return false;
+  }
+
+  handleConditionChange({ target }) {
+    let newGoodsReceivedNotice = this.state.goodsReceivedNotice;
+    newGoodsReceivedNotice.packingCondition[target.name] = target.checked;
+    this.setState({ goodsReceivedNotice: newGoodsReceivedNotice });
+    this.props.onSave(this.state.goodsReceivedNotice);
   }
 
   handleChange({ target }) {

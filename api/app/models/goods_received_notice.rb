@@ -56,9 +56,11 @@ class GoodsReceivedNotice < ActiveRecord::Base
   has_many :purchase_orders, through: :goods_received_notice_events
 
   has_many :packing_lists
-  accepts_nested_attributes_for :packing_lists
+  has_one :packing_condition, foreign_key: :grn
+  accepts_nested_attributes_for :packing_lists, :packing_condition
 
   after_initialize :ensure_defaults
+  after_initialize :ensure_packing_condition
   after_update :set_delivery_date_on_all_events
 
   def delete_packing_list_by_url!(url)
@@ -114,6 +116,10 @@ class GoodsReceivedNotice < ActiveRecord::Base
   end
 
   private
+
+  def ensure_packing_condition
+    self.packing_condition || build_packing_condition
+  end
 
   def packing_list_urls
     [].concat(packing_list_current_urls)
