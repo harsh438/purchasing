@@ -4,5 +4,9 @@ class RefusedDeliveriesLog < ActiveRecord::Base
 
   include BookingInConnection
 
-  belongs_to :refused_delivery_vendor, class_name: 'Vendor', foreign_key: :brand_id
+  belongs_to :vendor, class_name: 'Vendor', foreign_key: :brand_id
+
+  def as_json_with_vendor_name
+    as_json.merge(vendor_name: vendor.try(:name))
+  end
 end

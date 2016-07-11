@@ -122,16 +122,6 @@ export default class RefusedDeliveriesForm extends React.Component {
     this.setState({ [target.name]: target.value });
   }
 
-  handleCheckboxChange(e) {
-    e.stopPropagation();
-
-    if (e.target.checked) {
-      this.handleFormChange(e);
-    } else {
-      this.setState({ [e.target.name]: false });
-    }
-  }
-
   handleFormSubmit(e) {
     e.preventDefault();
     this.setState({ submitting: true });

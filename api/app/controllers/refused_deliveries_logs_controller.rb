@@ -1,6 +1,6 @@
 class RefusedDeliveriesLogsController < ApplicationController
   def index
-    render json: refused_deliveries
+    render json: as_json
   end
 
   def create
@@ -20,23 +20,11 @@ class RefusedDeliveriesLogsController < ApplicationController
                                    :refusal_reason)
   end
 
-  def refused_deliveries
+  def as_json
     date_from, date_to = date_range
-    refused_deliveries = RefusedDeliveriesLog.includes(:refused_delivery_vendor)
+    refused_deliveries = RefusedDeliveriesLog.includes(:vendor)
                                              .where(delivery_date: date_from..date_to)
-
-    refused_deliveries.map do |refused_delivery|
-      {
-        id: refused_delivery[:id],
-        delivery_date: refused_delivery[:delivery_date],
-        courier: refused_delivery[:courier],
-        brand: refused_delivery.refused_delivery_vendor.try(:name),
-        pallets: refused_delivery[:pallets],
-        boxes: refused_delivery[:boxes],
-        info: refused_delivery[:info],
-        refusal_reason: refused_delivery[:refusal_reason]
-      }
-    end
+                                             .map(&:as_json_with_vendor_name)
   end
 
   def date_range

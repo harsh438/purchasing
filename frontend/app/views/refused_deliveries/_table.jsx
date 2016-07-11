@@ -28,12 +28,12 @@ export default class RefusedDeliveriesTable extends React.Component {
     return map(this.props.refusedDeliveries, this.renderRow, this);
   }
 
-  renderRow({ id, deliveryDate, courier, brand, pallets, boxes, info, refusalReason }) {
+  renderRow({ id, deliveryDate, courier, vendorName, pallets, boxes, info, refusalReason }) {
     return (
       <tr key={id}>
         <td>{deliveryDate}</td>
         <td>{courier}</td>
-        <td>{brand}</td>
+        <td>{vendorName}</td>
         <td>{pallets}</td>
         <td>{boxes}</td>
         <td>{info}</td>

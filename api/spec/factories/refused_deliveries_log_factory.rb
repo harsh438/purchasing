@@ -8,7 +8,7 @@ FactoryGirl.define do
         brand_id 4
         pallets 5
         boxes 50
-        info { Faker::Lorem.sentence(3)}
+        info { Faker::Lorem.sentence(3) }
         refusal_reason { Faker::Lorem.sentence(3) }
     end
   end
