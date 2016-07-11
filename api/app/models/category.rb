@@ -7,4 +7,5 @@ class Category < ActiveRecord::Base
                  parent_id: :parentID
 
   has_one :language_category, foreign_key: :catID
+  has_one :product_category, foreign_key: :catID
 end

@@ -81,6 +81,14 @@ FactoryGirl.define do
                                             sku: sku)
         end
       end
+
+      trait :with_multiple_categories do
+        after(:create) do |sku|
+          create(:product_category, :with_category, pID: sku.product_id, catID: 20)
+          create(:product_category, :with_category, pID: sku.product_id, catID: 50)
+          create(:product_category, :with_different_parentID, pID: sku.product_id, catID: 999)
+        end
+      end
     end
   end
 end

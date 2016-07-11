@@ -69,7 +69,7 @@ class Sku < ActiveRecord::Base
     Sku.joins(:purchase_order_line_items).where('purchase_orders.operator =?', "OT_#{ot_number}")
   end
 
-  def lowest_catid
-    categories.order("ds_categories.parentID, ds_product_categories.catID ASC").pluck(:catID)
+  def ordered_catid
+    categories.order("ds_categories.parentID, ds_product_categories.catID ASC").pluck(:catID).first
   end
 end

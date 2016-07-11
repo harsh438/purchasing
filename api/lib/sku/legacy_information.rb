@@ -9,6 +9,7 @@ class LegacyInformation
       legacy_reporting_category: legacy_reporting_category,
       legacy_breadcrumb_category: legacy_breadcrumb_category_id,
       legacy_season: legacy_season,
+      legacy_supplier_sku: legacy_supplier_sku
     }
   end
 
@@ -25,15 +26,14 @@ class LegacyInformation
   end
 
   def legacy_breadcrumb_category_id
-    ProductCategory.joins(:category)
-                    .where(pID: sku.product_id)
-                    .order("ds_categories.parentID, ds_product_categories.catID ASC")
-                    .limit(1)
-                    .pluck(:catID)
-                    .first
+    @ordered_catid ||= sku.ordered_catid
   end
 
   def legacy_season
     @season ||= sku.season
+  end
+
+  def legacy_supplier_sku
+    @man_sku ||= sku.manufacturer_sku
   end
 end

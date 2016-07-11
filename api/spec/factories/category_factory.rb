@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :category do
-    parentID 0
-    catID 1
+    parentID 45
+    catID 666
   end
 end
