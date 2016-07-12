@@ -1,16 +1,22 @@
-require 'json'
-
 class SpreeProductInformation
-  def initialize(information)
-    @information = information
+
+  def initlaize(params)
+    @params = params
   end
 
-  def build_json
-    JSON.generate(information)
+  def as_json
+    {
+      children: params[:children],
+      options: options,
+    }
   end
 
   private
 
-  attr_reader :information
-end
+  attr_reader :params
 
+  def options
+    return [] if params[:children].empty?
+    "Size"
+  end
+end

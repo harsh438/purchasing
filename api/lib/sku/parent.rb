@@ -49,3 +49,4 @@ class Parent
     sku.vendor.name
   end
 end
+

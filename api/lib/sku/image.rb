@@ -1,5 +1,4 @@
 class Image
-
   def initialize(product_image)
     @product_image = product_image
   end
@@ -42,6 +41,6 @@ class Image
   end
 
   def legacy_id
-    product_image.id
+    @legacy_id ||= product_image.id
   end
 end

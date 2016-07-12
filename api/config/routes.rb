@@ -81,6 +81,12 @@ Rails.application.routes.draw do
           post :latest
         end
       end
+
+      resources :spree_product_info do
+        collection do
+          post :latest
+        end
+      end
     end
   end
 end

@@ -8,4 +8,5 @@ class Category < ActiveRecord::Base
 
   has_one :language_category, foreign_key: :catID
   has_one :product_category, foreign_key: :catID
+  has_one :reporting_categories, foreign_key: :catid
 end

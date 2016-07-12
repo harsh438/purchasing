@@ -17,7 +17,10 @@ class Product < ActiveRecord::Base
                  inv_track: :invTrack
 
   has_one :reporting_category, foreign_key: :pid
+  has_one :product_extend, foreign_key: :pID, dependent: :destroy
   has_one :language_product, foreign_key: :pID
+  has_one :reporting_category, foreign_key: :pid
+  has_many :pvx_ins, foreign_key: :pid
   has_many :language_product_options, foreign_key: :pID
   has_many :product_categories, foreign_key: :pid
   has_many :categories, through: :product_categories

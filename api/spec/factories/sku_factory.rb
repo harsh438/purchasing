@@ -76,17 +76,9 @@ FactoryGirl.define do
 
         after(:build) do |sku, evaluator|
           create(:purchase_order_line_item, product_id: sku.product_id,
-                                            option_id: sku.option_id,
-                                            purchase_order: evaluator.purchase_order,
-                                            sku: sku)
-        end
-      end
-
-      trait :with_multiple_categories do
-        after(:create) do |sku|
-          create(:product_category, :with_category, pID: sku.product_id, catID: 20)
-          create(:product_category, :with_category, pID: sku.product_id, catID: 50)
-          create(:product_category, :with_different_parentID, pID: sku.product_id, catID: 999)
+                 option_id: sku.option_id,
+                 purchase_order: evaluator.purchase_order,
+                 sku: sku)
         end
       end
     end

@@ -680,6 +680,27 @@ ActiveRecord::Schema.define(version: 20160329163919) do
   add_index "purchase_orders", ["sku_id"], name: "index_purchase_orders_on_sku_id", using: :btree
   add_index "purchase_orders", ["status"], name: "status", using: :btree
 
+  create_table "pvx_in", force: :cascade do |t|
+    t.string   "sku",          limit: 32
+    t.string   "ref",          limit: 50
+    t.string   "ponum",        limit: 50
+    t.integer  "qty",          limit: 3
+    t.datetime "logged"
+    t.integer  "DS_status",    limit: 3,   default: 0
+    t.integer  "OA_status",    limit: 3
+    t.integer  "status",       limit: 3,   default: 0
+    t.integer  "UserId",       limit: 4,   default: 0
+    t.integer  "loc",          limit: 3
+    t.string   "DeliveryNote", limit: 100
+    t.integer  "PO_status",    limit: 4,   default: 0
+    t.integer  "pid",          limit: 4
+  end
+
+  add_index "pvx_in", ["DeliveryNote"], name: "DeliveryNote", using: :btree
+  add_index "pvx_in", ["pid"], name: "pID", using: :btree
+  add_index "pvx_in", ["ref"], name: "status", using: :btree
+  add_index "pvx_in", ["sku"], name: "sku", using: :btree
+
   create_table "refused_deliveries_log", force: :cascade do |t|
     t.date    "delivery_date",                              null: false
     t.string  "courier",        limit: 200
@@ -767,6 +788,25 @@ ActiveRecord::Schema.define(version: 20160329163919) do
   add_index "sd_product_details", ["startDate"], name: "startSellingDate", using: :btree
   add_index "sd_product_details", ["subCategory"], name: "subcategory", using: :btree
   add_index "sd_product_details", ["volumeLine"], name: "volumeline", using: :btree
+
+  create_table "sd_product_extend", primary_key: "pID", force: :cascade do |t|
+    t.integer "photoStatus",   limit: 1,     default: 99, null: false
+    t.text    "description2",  limit: 65535
+    t.text    "description3",  limit: 65535
+    t.string  "videoID",       limit: 128
+    t.text    "flashID",       limit: 65535,              null: false
+    t.text    "embed",         limit: 65535
+    t.string  "PRList2",       limit: 32,                 null: false
+    t.text    "SizeGuide",     limit: 65535,              null: false
+    t.float   "review",        limit: 24,                 null: false
+    t.string  "banner",        limit: 8,                  null: false
+    t.string  "logo_append",   limit: 16,                 null: false
+    t.string  "Washcare",      limit: 255,                null: false
+    t.float   "reviewsRating", limit: 24
+    t.integer "reviewsCount",  limit: 4
+  end
+
+  add_index "sd_product_extend", ["banner"], name: "banner", using: :btree
 
   create_table "skus", force: :cascade do |t|
     t.string   "sku",                        limit: 255

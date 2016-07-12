@@ -43,10 +43,3 @@ RSpec.describe Parent do
   end
 end
 
-
-#     # "legacy_supplier_sku": ds_products.pNum,
-#       # "price": ds_products.price - [pPrice.to_f, 0].max
-#         # "sale_price": checks ds_options.psale for Y ? nil or ds_products.pSalePrice.to_f (!?!) why do we set sale here?
-#           # "active": ds_products.pAvail
-#             # "shipping_category": ds_product_categories. get taxons mess!! what is a shipping category?
-#                   # "dropshipment": ds_products.pUDFValue5 == 'D-R-P' -> do we sell or will someone else fulfil
