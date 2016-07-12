@@ -13,7 +13,12 @@ class Parent
       use_legacy_slug: true,
       barcode: barcode,
       active: active,
-      brand: brand
+      brand: brand,
+      properties: {
+        gender: gender,
+        colour: colour
+      },
+      dropshipment: dropship
     }
   end
 
@@ -47,6 +52,18 @@ class Parent
 
   def brand
     sku.vendor.name
+  end
+
+  def gender
+    sku.product.pUDFValue3
+  end
+
+  def colour
+    sku.product.pUDFValue2
+  end
+
+  def dropship
+    sku.product.pUDFValue5
   end
 end
 

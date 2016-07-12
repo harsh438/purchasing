@@ -82,5 +82,18 @@ FactoryGirl.define do
         end
       end
     end
+
+    factory :sku_without_product do
+      product_id 420420
+      option_id { create(:option).id }
+      language_product_id { create(:language_product, product_id: product_id).id }
+      language_product_option_id { create(:language_product_option, product_id: product_id, option_id: option_id).id }
+      element_id { LanguageProductOption.find(language_product_option_id).elementID }
+
+      after(:build) do |sku|
+        sku.sku = "#{sku.product_id}-#{sku.element_id}"
+        sku.barcodes << create(:barcode)
+      end
+    end
   end
 end
