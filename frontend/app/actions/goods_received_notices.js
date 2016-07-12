@@ -81,10 +81,10 @@ function updateGrn(id, body, currentDate) {
 
 export function saveGoodsReceivedNotice({ id, currentDate, deliveryDate, packingLists, pallets, packingCondition }) {
   const body = { goods_received_notice: { delivery_date: deliveryDate,
-                                          packing_condition: packingCondition,
+                                          packing_condition_attributes: packingCondition,
                                           packing_lists_attributes: packingLists,
                                           pallets } };
-                                          
+
   return updateGrn(id, body, currentDate);
 }
 

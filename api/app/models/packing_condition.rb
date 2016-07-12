@@ -23,6 +23,8 @@ class PackingCondition < ActiveRecord::Base
                  items_in_quarantine: :items_in_quarantine
 
   after_initialize :ensure_defaults
+  has_many :packing_condition_issues, foreign_key: :packing_conditions_id
+  accepts_nested_attributes_for :packing_condition_issues, allow_destroy: true 
 
   private
 

@@ -410,6 +410,17 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                                        checked={condition.items_in_quarantine}
                                        onChange={this.handleConditionChange.bind(this)} /></td>
               </tr>
+            </tbody>
+          </table>
+          <table className="table table-striped table-condensed">
+            <thead>
+              <tr>
+                <th colSpan="6">
+                  Carton Issues
+                </th>
+              </tr>
+            </thead>
+            <tbody>
               <tr>
                 <td colSpan="5">Cartons in Good Condition</td>
                 <td colSpan="1"><input name="cartons_good_condition"

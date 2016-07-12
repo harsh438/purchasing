@@ -82,13 +82,24 @@ class GoodsReceivedNoticesController < ApplicationController
      :items_in_quarantine]
   end
 
+  def condition_issues_attrs
+    [:issue_type,
+     :sku_list,
+     :pid_list,
+     :issue_id,
+     :comments,
+     :units_affected,
+     :time_taken_to_resolve]
+  end
+
   def grn_attrs
     grn_params = params.require(:goods_received_notice)
     grn_params.permit(:delivery_date,
                       :pallets,
                       packing_lists_attributes: packing_lists_attrs,
                       goods_received_notice_events_attributes: events_attrs,
-                      packing_condition_attributes: condition_attrs)
+                      packing_condition_attributes: condition_attrs,
+                      packing_condition_issues_attributes: condition_issues_attrs)
 
   end
 end
