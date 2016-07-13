@@ -22,10 +22,10 @@ export default class RefusedDeliveriesFilters extends React.Component {
               <div className="col-md-2"
                    style={{ marginTop: '1.8em' }}>
                 <button className="btn btn-default"
-                        onClick={this.handleToday.bind(this)}>Today</button>
+                        onClick={this.handleWeek.bind(this)}>Week</button>
                 &nbsp;
                 <button className="btn btn-default"
-                        onClick={this.handleTomorrow.bind(this)}>Tomorrow</button>
+                        onClick={this.handleMonth.bind(this)}>Month</button>
               </div>
 
               <div className="col-md-2 form-group">
@@ -75,22 +75,25 @@ export default class RefusedDeliveriesFilters extends React.Component {
     const { dateFrom, dateTo } = filters;
 
     if (!dateFrom || !dateTo) {
-      this.handleToday();
+      this.handleWeek();
     } else {
       this.setState({ dateFrom, dateTo });
     }
   }
 
-  handleToday(e) {
+  handleWeek(e) {
     if (e) e.preventDefault();
-    const today = moment().format('YYYY-MM-DD');
-    this.setState({ dateFrom: today, dateTo: today }, this.handleSubmit.bind(this));
+    const startWeek = moment().startOf('week').format('YYYY-MM-DD');
+    const endWeek = moment().endOf('week').format('YYYY-MM-DD');
+    this.setState({ dateFrom: startWeek, dateTo: endWeek }, this.handleSubmit.bind(this));
   }
 
-  handleTomorrow(e) {
+  handleMonth(e) {
     e.preventDefault();
-    const tomorrow = moment().add({ days: 1 }).format('YYYY-MM-DD');
-    this.setState({ dateFrom: tomorrow, dateTo: tomorrow }, this.handleSubmit.bind(this));
+    const startMonth = moment().startOf('month').format('YYYY-MM-DD');
+    const endMonth = moment().endOf('month').format('YYYY-MM-DD');
+
+    this.setState({ dateFrom: startMonth, dateTo: endMonth }, this.handleSubmit.bind(this));
   }
 
   handleChange({ target }) {
