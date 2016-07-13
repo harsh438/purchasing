@@ -85,7 +85,6 @@ export default class RefusedDeliveriesFilters extends React.Component {
     if (e) e.preventDefault();
     const startWeek = moment().startOf('week').format('YYYY-MM-DD');
     const endWeek = moment().endOf('week').format('YYYY-MM-DD');
-    console.log(startWeek, endWeek)
     this.setState({ dateFrom: startWeek, dateTo: endWeek }, this.handleSubmit.bind(this));
   }
 
