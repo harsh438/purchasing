@@ -1,5 +1,4 @@
 import Qs from 'qs';
-import 'whatwg-fetch';
 import moment from 'moment';
 
 function throw404Error(response) {

@@ -1,5 +1,4 @@
 import Qs from 'qs';
-import 'whatwg-fetch';
 import { map } from 'lodash';
 import { snakeizeKeys } from '../utilities/inspection';
 
