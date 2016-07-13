@@ -223,7 +223,6 @@ class SkusEdit extends React.Component {
   }
 
   handleFormChange({ target }) {
-    console.log(target.name, target.value);
     const sku = assign({}, this.state.sku, { [target.name]: target.value });
     this.setState({ sku });
   }
