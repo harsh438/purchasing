@@ -1,6 +1,7 @@
 class PackingCondition < ActiveRecord::Base
   self.table_name = :packing_conditions_new
 
+  include BookingInConnection
   include LegacyMappings
 
   map_attributes id: :ID,
