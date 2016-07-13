@@ -381,22 +381,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                 </td>
               </tr>
               <tr>
-                <td colSpan="3">Cartons Sequentially Numbered?</td>
-                <td colSpan="3">
-                  {this.renderConditionRadio(condition, 'cartons_sequentially_numbered')}
-                </td>
-              </tr>
-
-              <tr>
                 <td colSpan="3">Packing List Received?</td>
                 <td colSpan="3">
                   {this.renderConditionRadio(condition, 'packing_list_received')}
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="3">Packing List on Outside of Carton?</td>
-                <td colSpan="3">
-                  {this.renderConditionRadio(condition, 'packing_list_outside_of_carton')}
                 </td>
               </tr>
               <tr>
