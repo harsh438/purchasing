@@ -1,4 +1,3 @@
-import 'whatwg-fetch';
 import Qs from 'qs';
 import { isEmptyObject } from '../utilities/inspection';
 
