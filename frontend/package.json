@@ -5,7 +5,8 @@
   "entry": "index.js",
   "scripts": {
     "build": "eslint app/ --ext .jsx --ext .js && gulp scripts styles images fonts",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "dev": "npm rebuild node-sass && npm install && gulp watch"
   },
   "repository": {
     "type": "git",

@@ -64,8 +64,11 @@ docker-compose build
 
 **Developing frontend**
 
-JS/SCSS/Image changes are updated automatically from the frontend docker instance, no action is needed.
+In order to build the app and watch for changes you make, run
 
+```sh
+  npm run dev
+```
 
 The first build takes a bit of time but subsequent builds will be faster.
 
