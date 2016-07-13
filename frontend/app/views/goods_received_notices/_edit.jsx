@@ -446,7 +446,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           </div>
         )}
       </RadioGroup>
-    )
+    );
   }
 
   renderAdvanced() {
