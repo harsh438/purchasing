@@ -1,5 +1,6 @@
 import React from 'react';
 import DropZone from 'react-dropzone';
+import RadioGroup from 'react-radio-group';
 import { renderSelectOptions } from '../../utilities/dom';
 import { map, every } from 'lodash';
 import { Nav, NavItem } from 'react-bootstrap';
@@ -357,7 +358,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     let condition = this.state.goodsReceivedNotice.packingCondition;
     return (
       <div>
-        <form onChange={this.handleChange.bind(this)}>
+        <form onChange={this.handleConditionFormChange.bind(this)}>
           <table className="table table-striped table-condensed">
             <thead>
               <tr>
@@ -368,73 +369,83 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
             </thead>
             <tbody>
               <tr>
-                <td colSpan="5">Delivery Booked In</td>
-                <td colSpan="1"><input name="booked_in"
-                                       type="checkbox"
-                                       checked={condition.booked_in}
-                                       onChange={this.handleConditionChange.bind(this)} /></td>
+                <td colSpan="3">Delivery Booked In?</td>
+                <td colSpan="3">
+                  {this.renderConditionRadio(condition, 'booked_in')}
+                </td>
               </tr>
               <tr>
-                <td colSpan="5">Delivery Arrived Correctly</td>
-                <td colSpan="1"><input name="arrived_correctly"
-                                       type="checkbox"
-                                       checked={condition.arrived_correctly}
-                                       onChange={this.handleConditionChange.bind(this)} /></td>
+                <td colSpan="3">Delivery Arrived Correctly?</td>
+                <td colSpan="3">
+                  {this.renderConditionRadio(condition, 'arrived_correctly')}
+                </td>
               </tr>
               <tr>
-                <td colSpan="5">Cartons Sequentially Numbered</td>
-                <td colSpan="1"><input name="cartons_sequentially_numbered"
-                                       type="checkbox"
-                                       checked={condition.cartons_sequentially_numbered}
-                                       onChange={this.handleConditionChange.bind(this)} /></td>
+                <td colSpan="3">Cartons Sequentially Numbered?</td>
+                <td colSpan="3">
+                  {this.renderConditionRadio(condition, 'cartons_sequentially_numbered')}
+                </td>
               </tr>
 
               <tr>
-                <td colSpan="5">Packing List Received</td>
-                <td colSpan="1"><input name="packing_list_received"
-                                       type="checkbox"
-                                       checked={condition.packing_list_received}
-                                       onChange={this.handleConditionChange.bind(this)} /></td>
+                <td colSpan="3">Packing List Received?</td>
+                <td colSpan="3">
+                  {this.renderConditionRadio(condition, 'packing_list_received')}
+                </td>
               </tr>
               <tr>
-                <td colSpan="5">Packing List on Outside of Carton</td>
-                <td colSpan="1"><input name="packing_list_outside_of_carton"
-                                       type="checkbox"
-                                       checked={condition.packing_list_outside_of_carton}
-                                       onChange={this.handleConditionChange.bind(this)} /></td>
+                <td colSpan="3">Packing List on Outside of Carton?</td>
+                <td colSpan="3">
+                  {this.renderConditionRadio(condition, 'packing_list_outside_of_carton')}
+                </td>
               </tr>
               <tr>
-                <td colSpan="5">Any Items in Quarantine</td>
-                <td colSpan="1"><input name="items_in_quarantine"
-                                       type="checkbox"
-                                       checked={condition.items_in_quarantine}
-                                       onChange={this.handleConditionChange.bind(this)} /></td>
+                <td colSpan="3">Any Items in Quarantine?</td>
+                <td colSpan="3">
+                  {this.renderConditionRadio(condition, 'items_in_quarantine')}
+                </td>
               </tr>
               <tr>
-                <td colSpan="5">Cartons in Good Condition</td>
-                <td colSpan="1"><input name="cartons_good_condition"
-                                       type="checkbox"
-                                       checked={condition.cartons_good_condition}
-                                       onChange={this.handleConditionChange.bind(this)} /></td>
+                <td colSpan="3">Cartons in Good Condition?</td>
+                <td colSpan="3">
+                  {this.renderConditionRadio(condition, 'cartons_good_condition')}
+                </td>
               </tr>
               <tr>
-                <td colSpan="5">GRN or PO Marked on Cartons</td>
-                <td colSpan="1"><input name="grn_or_po_marked_on_cartons"
-                                       type="checkbox"
-                                       checked={condition.grn_or_po_marked_on_cartons}
-                                       onChange={this.handleConditionChange.bind(this)} /></td>
+                <td colSpan="3">GRN or PO Marked on Cartons?</td>
+                <td colSpan="3">
+                  {this.renderConditionRadio(condition, 'grn_or_po_marked_on_cartons')}
+                </td>
               </tr>
               <tr>
-                <td colSpan="5">Cartons Palletised Correctly (16 or more)</td>
-                <td colSpan="1"><input name="cartons_palletised_correctly"
-                                       type="checkbox"
-                                       checked={condition.cartons_palletised_correctly}
-                                       onChange={this.handleConditionChange.bind(this)} /></td>
+                <td colSpan="3">Cartons Palletised Correctly (16 or more)?</td>
+                <td colSpan="3">
+                  {this.renderConditionRadio(condition, 'cartons_palletised_correctly')}
+                </td>
               </tr>
             </tbody>
           </table>
         </form>
       </div>
+    );
+  }
+
+  renderConditionRadio(condition, key) {
+    return (
+      <RadioGroup name={key}
+                  selectedValue={condition[key].toString()}
+                  onChange={() => 'noop'}>
+        {Radio => (
+          <div className="form-group">
+            <label className="status-label">
+              <Radio value="1" /> Yes
+            </label>
+            <label className="status-label">
+              <Radio value="0" /> No
+            </label>
+          </div>
+        )}
+      </RadioGroup>
     );
   }
 
@@ -569,9 +580,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     return false;
   }
 
-  handleConditionChange({ target }) {
+  handleConditionFormChange({ target }) {
     let newGoodsReceivedNotice = this.state.goodsReceivedNotice;
-    newGoodsReceivedNotice.packingCondition[target.name] = target.checked;
+    newGoodsReceivedNotice.packingCondition[target.name] = parseInt(target.value);
     this.setState({ goodsReceivedNotice: newGoodsReceivedNotice });
     this.props.onSave(this.state.goodsReceivedNotice);
   }
