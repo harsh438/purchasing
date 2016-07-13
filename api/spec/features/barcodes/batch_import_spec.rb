@@ -31,6 +31,25 @@ feature 'Batch importing Barcodes' do
     then_i_should_have_a_color_error
   end
 
+  scenario 'Importing barcodes with invalid characters raises an error' do
+    when_i_import_barcodes_with_invalid_characters
+    then_an_error_is_returned
+  end
+
+  def then_an_error_is_returned
+    expect(subject['errors']).to_not be_nil
+  end
+
+  def when_i_import_barcodes_with_invalid_characters
+    barcodes = [{ sku: skus.first.sku,
+                  brand_size: skus.first.manufacturer_size,
+                  barcode: '\'invalid' },
+                { sku: skus.third.sku,
+                  brand_size: skus.third.manufacturer_size,
+                  barcode: '"invalid2' }]
+    page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
+  end
+
   def when_i_import_barcode_with_product_without_color
     barcodes = [{ sku: sku_without_product.sku,
                   brand_size: skus.first.manufacturer_size,
