@@ -103,6 +103,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   def as_json_with_purchase_orders_and_packing_list_urls
     as_json_with_purchase_orders.tap do |grn|
       grn[:packing_list_urls] = packing_list_attachments.urls
+      grn[:packing_condition] = packing_condition || ensure_packing_condition
     end
   end
 
