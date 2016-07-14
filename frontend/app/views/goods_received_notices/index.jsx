@@ -218,7 +218,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
     return (
       <li className={className} key={week.start}>
-        <Link to={`/goods-received-notices?startDate=${week.start}`}
+        <Link to={`${this.props.location.pathname}?startDate=${week.start}`}
               className="grn_week__summary text-center"
               onClick={this.handleGoodsReceivedNoticeClose.bind(this)}>
           <h2 className="h4">Week #{week.weekNum}</h2>
@@ -296,7 +296,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
       const grnDeliveryWeek = moment(goodsReceivedNotice.deliveryDate, 'DD/MM/YYYY').week();
 
       if (grnDeliveryWeek !== startDate.week()) {
-        this.props.history.pushState(null, this.props.route.path, { startDate: goodsReceivedNotice.deliveryDate });
+        this.props.history.pushState(null, this.props.location.pathname, { startDate: goodsReceivedNotice.deliveryDate });
         return true;
       }
     }
@@ -360,7 +360,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   handleFilter() {
     const nextDate = `01/${this.state.startDateMonth}/${this.state.startDateYear}`;
-    this.props.history.pushState(null, this.props.route.path, { startDate: nextDate });
+    this.props.history.pushState(null, this.props.location.pathname, { startDate: nextDate });
   }
 
   startDateMonth() {
