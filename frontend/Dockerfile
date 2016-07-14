@@ -2,4 +2,4 @@ FROM node
 
 RUN npm install -g gulp
 WORKDIR /app
-CMD ["./start.sh"]
+CMD ["npm", "run", "dev"]
