@@ -557,14 +557,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   allEventsReceivedForNotice(goodsReceivedNotice) {
-    let eventsReceived = map(goodsReceivedNotice.goodsReceivedNoticeEvents,
-                             function(e) { return e.received; });
-
-    if (every(eventsReceived)) {
-      return true;
-    }
-
-    return false;
+    return every(map(goodsReceivedNotice.goodsReceivedNoticeEvents, 'received'));
   }
 
   handleConditionFormChange({ target }) {
