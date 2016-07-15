@@ -359,7 +359,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     return (
       <div>
         <form onChange={this.handleConditionFormChange.bind(this)}>
-          <table className="table table-striped table-condensed">
+          <table className="table table-striped table-condensed"
+                 style={{ fontSize: '12px' }}>
             <thead>
               <tr>
                 <th colSpan="6">
@@ -423,7 +424,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                   selectedValue={condition[key].toString()}
                   onChange={() => 'noop'}>
         {Radio => (
-          <div className="form-group">
+          <div className="form-group" style={{ margin: 0 }}>
             <label className="status-label">
               <Radio value="1" /> Yes
             </label>
