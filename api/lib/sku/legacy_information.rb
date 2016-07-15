@@ -22,38 +22,38 @@ class LegacyInformation
   attr_reader :sku
 
   def legacy_lead_gender
-    @legacy_lead_gender ||= sku.gender
+    sku.gender
   end
 
   def legacy_reporting_category
-    @legacy_reporting_category ||= sku.reporting_category.catid
+    sku.reporting_category.catid
   end
 
   def legacy_breadcrumb_category_id
-    @ordered_catid ||= sku.ordered_catid
+    sku.ordered_catid
   end
 
   def legacy_season
-    @season ||= sku.season
+    sku.season
   end
 
   def legacy_supplier_sku
-    @man_sku ||= sku.manufacturer_sku
+    sku.manufacturer_skus
   end
 
   def legacy_video_url
-    @url ||= sku.video_url
+    sku.video_url
   end
 
   def cat_name
-    @cat_name ||= sku.language_category.catName
+    sku.language_category.catName
   end
 
   def first_received_at
-    @first_received_at ||= sku.first_received
+    sku.first_received
   end
 
   def more_from_cat
-    @more_from_cat ||= sku.ordered_catid
+    sku.ordered_catid
   end
 end

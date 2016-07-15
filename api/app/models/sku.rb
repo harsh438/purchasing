@@ -25,6 +25,7 @@ class Sku < ActiveRecord::Base
 
   has_many :barcodes
   has_many :pvx_ins, through: :product
+  has_many :product_images, foreign_key: :product_id 
   has_one :reporting_category, through: :product
   has_one :product_extend, through: :product
   has_many :product_categories, foreign_key: :pID
@@ -37,6 +38,10 @@ class Sku < ActiveRecord::Base
 
   def self.updated_since(timestamp, max_id)
     where('(skus.updated_at = ? and skus.id > ?) or (skus.updated_at > ?)', timestamp, max_id, timestamp)
+  end
+
+  def self.product_updated_since(timestamp, max_pid)
+    where('(skus.updated_at = ? and skus.product_id > ?) or (skus.updated_at > ?)', timestamp, max_id, timestamp)
   end
 
   def self.with_barcode

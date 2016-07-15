@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :product_image do
     id 1
-    product_id { create(:sku).product_id }
+    product_id 420420
     position 2
     width 1200
     height 1200

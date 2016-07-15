@@ -20,18 +20,18 @@ class Content
   attr_reader :language_product
 
   def lang
-    @langid ||= language_product.langID
+    language_product.langID
   end
 
   def name
-    @name ||= language_product.pName
+    language_product.pName
   end
 
   def legacy_slug
-    @slug ||= language_product.pName.downcase.tr(' ', '_').tr("'", "") + "-#{language_product.pID}"
+    language_product.pName.downcase.tr(' ', '_').tr("'", "") + "-#{language_product.pID}"
   end
 
   def teaser
-    @teaser ||= language_product.pTeaser
+    language_product.pTeaser
   end
 end

@@ -1,8 +1,9 @@
 require './lib/sku/content.rb'
 
 RSpec.describe Content do
+  subject(:content)      { described_class.new(language_product) }
 	let(:language_product) { create(:language_product) }
-	subject(:content)      { described_class.new(language_product) }
+
 	describe "#as_json" do
 		it "Includes a lang attribute" do
 			expect(content.as_json).to include lang: language_product.langID
@@ -23,7 +24,7 @@ RSpec.describe Content do
 
       context "a legacy_slug which..." do
         let(:language_product_set_name) { create(:language_product, name: "MarIah's DeNesik'") }
-        let(:content_new) { described_class.new(language_product_set_name) }
+        let(:content_new)               { described_class.new(language_product_set_name) }
 
         it "downcases a name" do
           expect(language_product_set_name.pName).to receive(:downcase).and_call_original
