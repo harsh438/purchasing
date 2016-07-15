@@ -520,7 +520,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleAllReceivedCheckboxChange() {
     let allReceived = !this.state.goodsReceivedNoticeAllReceived;
-    let that = this;
 
     if (!allReceived) {
       return;
@@ -529,8 +528,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     this.setState({ goodsReceivedNoticeAllReceived: allReceived });
 
     if (confirm('Are you sure you want to mark all POs as received?')) {
-      map(this.state.goodsReceivedNotice.goodsReceivedNoticeEvents,
-          function (e, index) { that.handleReceivedCheckboxChange(index); });
+      map(this.state.goodsReceivedNotice.goodsReceivedNoticeEvents, function (e, index) {
+        this.handleReceivedCheckboxChange(index);
+      }, this);
     }
   }
 
