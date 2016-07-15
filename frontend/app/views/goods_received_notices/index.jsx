@@ -188,7 +188,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
       );
     } else {
       return (
-        <Link to="/goods-received-notices"
+        <Link to={this.props.location.pathname}
               className="btn btn-default"
               style={{ width: '100%' }}
               disabled={this.isNow()}>
