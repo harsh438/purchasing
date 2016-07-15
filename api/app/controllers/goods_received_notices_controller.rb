@@ -42,6 +42,15 @@ class GoodsReceivedNoticesController < ApplicationController
     GoodsReceivedNotice.find(params[:id])
   end
 
+  def grn_attrs
+    grn_params = params.require(:goods_received_notice)
+    grn_params.permit(:delivery_date,
+                      :pallets,
+                      packing_lists_attributes: packing_lists_attrs,
+                      goods_received_notice_events_attributes: events_attrs,
+                      packing_condition_attributes: condition_attrs)
+  end
+
   def packing_lists_attrs
     [:id,
      :list,
@@ -80,15 +89,5 @@ class GoodsReceivedNoticesController < ApplicationController
      :general_comments,
      :attachments,
      :items_in_quarantine]
-  end
-
-  def grn_attrs
-    grn_params = params.require(:goods_received_notice)
-    grn_params.permit(:delivery_date,
-                      :pallets,
-                      packing_lists_attributes: packing_lists_attrs,
-                      goods_received_notice_events_attributes: events_attrs,
-                      packing_condition_attributes: condition_attrs)
-
   end
 end
