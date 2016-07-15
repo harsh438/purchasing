@@ -87,7 +87,7 @@ export function saveGoodsReceivedNotice({ id, currentDate, deliveryDate, packing
   return updateGrn(id, body, currentDate);
 }
 
-export function markGoodsReceivedNoticeEventReceivedStatus(grnId, eventId, isReceived, totalCartons, totalUnits, allReceived, currentDate) {
+export function markGoodsReceivedNoticeEventReceivedStatus(grnId, eventId, isReceived, allReceived, currentDate) {
   let eventStatus = 1;
 
   if (isReceived) {
@@ -98,8 +98,6 @@ export function markGoodsReceivedNoticeEventReceivedStatus(grnId, eventId, isRec
 
   let goodsReceivedNotice = { goods_received_notice: { id: grnId,
                                                        received: allReceived,
-                                                       cartons_received: totalCartons,
-                                                       units_received: totalUnits,
                                                        goods_received_notice_events_attributes } };
 
   return updateGrn(grnId, goodsReceivedNotice, currentDate);

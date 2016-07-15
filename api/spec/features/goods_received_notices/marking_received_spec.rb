@@ -12,8 +12,8 @@ feature 'Marking Purchase Order as received', booking_db: true do
   end
 
   def then_grn_should_report_received_units
-    expect(subject['units_received']).to eq(1)
-    expect(subject['cartons_received']).to eq(1)
+    expect(subject['units_received']).to eq(grn.goods_received_notice_events.first.units)
+    expect(subject['cartons_received']).to eq(grn.goods_received_notice_events.first.cartons)
   end
 
   private
@@ -23,9 +23,7 @@ feature 'Marking Purchase Order as received', booking_db: true do
   let(:grn_event) { grn.goods_received_notice_events.first }
 
   let(:grn_attrs) do
-    { units_received: 1,
-      cartons_received: 1,
-      goods_received_notice_events_attributes: [{ id: grn_event.id,
+    { goods_received_notice_events_attributes: [{ id: grn_event.id,
                                                   received: true }] }
   end
 end

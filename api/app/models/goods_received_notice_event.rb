@@ -34,6 +34,13 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   def late?; human_status == :late; end
   def booked?; human_status == :booked; end
 
+  def received=(received)
+    write_attribute(:IsReceived, received)
+    goods_received_notice.units_received += units
+    goods_received_notice.cartons_received += cartons
+    goods_received_notice.save!
+  end
+
   def human_status
     case send(:Status)
     when 2
