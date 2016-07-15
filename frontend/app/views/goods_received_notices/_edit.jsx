@@ -327,7 +327,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           <div key={packingName} style={{ margin: '5px 10px 0 10px' }}>
             <span className="glyphicon glyphicon-open-file"></span>&nbsp;
             <span style={{ color: 'grey' }}>File to upload: {packingName}</span>
-          </div>);
+          </div>
+        );
       });
     }
   }
