@@ -1,13 +1,14 @@
-require './lib/sku/parent.rb'
+require './lib/sku/parent_serializer.rb'
 
-RSpec.describe Parent do
+RSpec.describe ParentSerializer do
   describe "#as_json" do
-    subject(:parent) { described_class.new(sku) }
+    subject(:parent) { described_class.new(prod) }
     let(:sku)        { create(:sku_without_product, on_sale: true) }
+    let!(:vendor)    { create(:vendor, venID: prod.venID) }
     let(:gender)     { prod.pUDFValue3 }
     let(:colour)     { prod.pUDFValue2 }
     let(:dropship)   { prod.pUDFValue5 }
-    let!(:prod)      { create(:product, id: sku.product_id,
+    let(:prod)      { create(:product, id: sku.product_id,
                               pUDFValue3: "M",
                               pUDFValue2: "blue",
                               pUDFValue5: "D-R-P",

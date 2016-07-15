@@ -7,6 +7,7 @@ class Product < ActiveRecord::Base
                  manufacturer_sku: :pNum,
                  cost: :pCost,
                  price: :pPrice,
+                 sale_price: :pSalesPrice,
                  size: :pSize,
                  vendor_id: :venID,
                  on_sale: :pSale,
@@ -14,12 +15,14 @@ class Product < ActiveRecord::Base
                  season: :pUDFValue4,
                  barcode: :pUDFValue1,
                  listing_genders: :pUDFValue3,
-                 inv_track: :invTrack
+                 inv_track: :invTrack,
+                 dropshipment: :pUDFValue5
 
   has_one :reporting_category, foreign_key: :pid
   has_one :product_extend, foreign_key: :pID, dependent: :destroy
   has_one :language_product, foreign_key: :pID
   has_one :reporting_category, foreign_key: :pid
+  has_one :vendor, foreign_key: :venID
   has_many :pvx_ins, foreign_key: :pid
   has_many :language_product_options, foreign_key: :pID
   has_many :product_categories, foreign_key: :pid
