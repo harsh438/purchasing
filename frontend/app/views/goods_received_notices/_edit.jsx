@@ -327,7 +327,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           <div key={packingName} style={{ margin: '5px 10px 0 10px' }}>
             <span className="glyphicon glyphicon-open-file"></span>&nbsp;
             <span style={{ color: 'grey' }}>File to upload: {packingName}</span>
-          </div>);
+          </div>
+        );
       });
     }
   }
@@ -521,7 +522,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleAllReceivedCheckboxChange() {
     let allReceived = !this.state.goodsReceivedNoticeAllReceived;
-    let that = this;
 
     if (!allReceived) {
       return;
@@ -530,8 +530,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     this.setState({ goodsReceivedNoticeAllReceived: allReceived });
 
     if (confirm('Are you sure you want to mark all POs as received?')) {
-      map(this.state.goodsReceivedNotice.goodsReceivedNoticeEvents,
-          function (e, index) { that.handleReceivedCheckboxChange(index); });
+      map(this.state.goodsReceivedNotice.goodsReceivedNoticeEvents, function (e, index) {
+        this.handleReceivedCheckboxChange(index);
+      }, this);
     }
   }
 
@@ -558,14 +559,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   allEventsReceivedForNotice(goodsReceivedNotice) {
-    let eventsReceived = map(goodsReceivedNotice.goodsReceivedNoticeEvents,
-                             function(e) { return e.received; });
-
-    if (every(eventsReceived)) {
-      return true;
-    }
-
-    return false;
+    return every(map(goodsReceivedNotice.goodsReceivedNoticeEvents, 'received'));
   }
 
   handleConditionFormChange({ target }) {
