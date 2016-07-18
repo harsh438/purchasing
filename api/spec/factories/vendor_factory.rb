@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :vendor do
+    sequence(:venID) { |n| n + 1000 }
     name { Faker::Name.name }
 
     trait :with_details do

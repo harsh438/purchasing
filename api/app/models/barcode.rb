@@ -4,6 +4,8 @@ class Barcode < ActiveRecord::Base
 
   before_validation :strip_whitespace
 
+  scope :latest, -> { order(created_at: :desc).first }
+
   private
 
   def strip_whitespace

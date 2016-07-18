@@ -1,51 +1,33 @@
-class Images
-  def initialize(sku)
-    @sku = sku
-    @product_images = sku.product_images
-  end
-
-  def as_json
-    product_images.map{|image| get_image(image) }[0]
-  end
-
-  def get_image(image)
-    {
-      url: url(image),
-      position: position(image),
-      dimensions: {
-        height: height(image),
-        width: width(image)
-      },
-      elasticera_reference: elasticera_reference(image),
-      legacy_id: legacy_id(image)
-    }
-  end
+class ProductImageSerializer < ActiveModel::Serializer
+  attributes :url, :position, :dimensions, :elasticera_reference,
+             :legacy_id
 
   private
 
-  attr_reader :sku, :product_images
-
-  def url(image)
+  def url
     "http://asset1.surfcdn.com/#{image.its_reference}?w=400"
   end
 
-  def position(image)
-    image.position
+  def position
+    {
+      height: height,
+      width: width
+    }
   end
 
-  def height(image)
+  def height
     image.height
   end
 
-  def width(image)
+  def width
     image.width
   end
 
-  def elasticera_reference(image)
+  def elasticera_reference
     image.its_reference
   end
 
-  def legacy_id(image)
+  def legacy_id
     image.id
   end
 end

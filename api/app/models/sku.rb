@@ -25,7 +25,7 @@ class Sku < ActiveRecord::Base
 
   has_many :barcodes
   has_many :pvx_ins, through: :product
-  has_many :product_images, foreign_key: :product_id 
+  has_many :product_images, foreign_key: :product_id
   has_one :reporting_category, through: :product
   has_one :product_extend, through: :product
   has_many :product_categories, foreign_key: :pID

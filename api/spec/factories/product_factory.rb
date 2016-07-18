@@ -7,7 +7,12 @@ FactoryGirl.define do
     vendor
 
     trait :with_skus do
-      skus { build_list(:sku, 2) }
+      after(:create) do |product|
+        master = build(:sku, vendor: product.vendor)
+        master.sku = product.id
+        product.skus << master
+        product.skus += build_list(:sku, 2, vendor: product.vendor)
+      end
     end
 
     after(:create) do |product, evaluator|

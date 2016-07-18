@@ -16,7 +16,8 @@ class Product < ActiveRecord::Base
                  barcode: :pUDFValue1,
                  listing_genders: :pUDFValue3,
                  inv_track: :invTrack,
-                 dropshipment: :pUDFValue5
+                 dropshipment: :pUDFValue5,
+                 active: :pAvail
 
   has_one :reporting_category, foreign_key: :pid
   has_one :product_extend, foreign_key: :pID, dependent: :destroy
@@ -31,6 +32,10 @@ class Product < ActiveRecord::Base
   has_many :skus
 
   def as_json(*args)
-    super.merge(id: id, manufacturer_sku: manufacturer_sku, price: price)
+    ProductSerializer.new(self).as_json(*args)
+  end
+
+  def master_sku
+    skus.find_by(sku: id)
   end
 end
