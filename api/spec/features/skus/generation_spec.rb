@@ -183,7 +183,7 @@ feature 'SKU generation' do
       category_id: language_category.category.id,
       category_name: language_category.name,
       inv_track: 'O',
-      order_tool_reference: 122222}
+      order_tool_reference: 122222 }
   end
 
   let(:existing_barcode_and_season_sku_attrs) { base_sku_attrs.merge(barcode: existing_sku.barcodes.first.barcode,
