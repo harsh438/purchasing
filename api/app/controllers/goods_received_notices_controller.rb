@@ -65,8 +65,7 @@ class GoodsReceivedNoticesController < ApplicationController
      :purchase_order_id,
      :units,
      :user_id,
-     :received,
-     :status]
+     :received]
   end
 
   def condition_attrs

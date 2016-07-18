@@ -36,6 +36,7 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
 
   def received=(received)
     write_attribute(:IsReceived, received)
+    write_attribute(:Status, 4)
     goods_received_notice.units_received += units
     goods_received_notice.cartons_received += cartons
     goods_received_notice.save!
