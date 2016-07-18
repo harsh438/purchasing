@@ -19,7 +19,8 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
                  delivery_date: :DeliveryDate,
                  booked_in_at: :BookedInDate,
                  user_id: :UserID,
-                 received: :IsReceived
+                 received: :IsReceived,
+                 received_at: :DateReceived
 
   belongs_to :goods_received_notice, foreign_key: :grn
   belongs_to :vendor, foreign_key: :BrandID
@@ -38,6 +39,7 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   def received=(received)
     write_attribute(:IsReceived, received)
     write_attribute(:Status, 4)
+    self.received_at = Time.now
   end
 
   def mark_grn_as_received
