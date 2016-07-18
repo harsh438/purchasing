@@ -21,6 +21,11 @@ feature 'Listing GRNs', booking_db: true do
     then_i_should_only_see_grns_created_within_last_day
   end
 
+  scenario 'Listing GRNs with certain POs' do
+    when_i_request_grns_that_contain_certain_purchase_orders
+    then_i_should_only_see_grns_that_contain_those_purchase_orders
+  end
+
   def when_i_request_grns_within_a_date_range
     create_grns
     visit goods_received_notices_path(start_date: 3.weeks.ago,
@@ -70,6 +75,18 @@ feature 'Listing GRNs', booking_db: true do
     end
   end
 
+  def when_i_request_grns_that_contain_certain_purchase_orders
+    grn_with_certain_po
+    visit goods_received_notices_path(start_date: 2.weeks.ago,
+                                      end_date: 2.days.from_now,
+                                      purchase_order_id: po_belonging_to_certain_grn.id)
+  end
+
+  def then_i_should_only_see_grns_that_contain_those_purchase_orders
+    grns = subject.values.reduce({}) { |dates, week| dates.merge(week['notices_by_date']) }[Date.today.to_s]['notices']
+    expect(grns.count).to eq(1)
+  end
+
   private
 
   let(:grns_older_than_one_day) do
@@ -80,6 +97,14 @@ feature 'Listing GRNs', booking_db: true do
   let(:grns_younger_than_one_day) do
     create_list(:goods_received_notice, 2, booked_in_at: 2.hours.ago,
                                            delivery_date: Date.today)
+  end
+
+  let(:grn_with_certain_po) do
+    create_list(:goods_received_notice, 3, :with_purchase_orders, delivery_date: Date.today)
+  end
+
+  let(:po_belonging_to_certain_grn) do
+    grn_with_certain_po.first.purchase_orders.first
   end
 
   def last_monday

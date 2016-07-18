@@ -21,6 +21,10 @@ class GoodsReceivedNotice < ActiveRecord::Base
     where('DAYOFWEEK(goods_received_number.DeliveryDate) != 1 AND DAYOFWEEK(goods_received_number.DeliveryDate) != 7')
   end
 
+  def self.with_purchase_order_id(purchase_order_id)
+    eager_load(:goods_received_notice_events).where(bookingin_events: { po: purchase_order_id })
+  end
+
   map_attributes id: :grn,
                  units: :TotalUnits,
                  cartons: :CartonsExpected,
