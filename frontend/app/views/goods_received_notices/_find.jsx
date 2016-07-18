@@ -16,17 +16,17 @@ export default class GoodsReceivedNoticesFind extends React.Component {
       <form onChange={this.handleChange.bind(this)}
             onSubmit={this.handleSubmit.bind(this)}>
         <div className="input-group">
-        <input type="number"
-               className="form-control"
-               placeholder="GRN #"
-               onChange={this.handleChange.bind(this, 'search')}
-               value={this.state.search}
-               name="search" />
-        <span className="input-group-btn">
-          {this.renderSearchButton()}
-        </span>
-      </div>
-    </form>
+          <input type="number"
+                 className="form-control"
+                 placeholder="GRN #"
+                 onChange={this.handleChange.bind(this, 'search')}
+                 value={this.state.search}
+                 name="search" />
+          <span className="input-group-btn">
+            {this.renderSearchButton()}
+          </span>
+        </div>
+      </form>
     );
   }
 
