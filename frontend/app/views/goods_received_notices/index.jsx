@@ -168,8 +168,9 @@ class GoodsReceivedNoticesIndex extends React.Component {
         </div>
 
         <div className="col-md-3 col-md-offset-2">
-          <GoodsReceivedNoticesFind onSearch={this.handleSearch.bind(this)}
-                                    goodsReceivedNotice={this.props.goodsReceivedNotice} />
+          <GoodsReceivedNoticesFind noticeWeeks={this.props.noticeWeeks}
+                                    goodsReceivedNotice={this.props.goodsReceivedNotice}
+                                    onSearch={this.handleSearch.bind(this)} />
         </div>
       </div>
     );
@@ -267,8 +268,8 @@ class GoodsReceivedNoticesIndex extends React.Component {
     }
   }
 
-  loadCurrentDate(date = this.state.currentDate) {
-    this.props.dispatch(loadGoodsReceivedNotices(date));
+  loadCurrentDate(date = this.state.currentDate, purchaseOrderId = null) {
+    this.props.dispatch(loadGoodsReceivedNotices(date, purchaseOrderId));
   }
 
   updateCurrentDate(props = this.props) {
@@ -306,8 +307,15 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.props.dispatch(clearGoodsReceivedNotice());
   }
 
-  handleSearch(grnId) {
-    this.props.dispatch(loadGoodsReceivedNotice(grnId));
+  handleSearch({ search, type }) {
+    switch (type) {
+    case 'GRN':
+      this.props.dispatch(loadGoodsReceivedNotice(search));
+      break;
+    case 'PO':
+      this.loadCurrentDate(this.state.currentDate, search);
+      break;
+    }
   }
 
   handleGoodsReceivedNoticeAdd(deliveryDate) {

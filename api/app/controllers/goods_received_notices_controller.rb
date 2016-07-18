@@ -38,6 +38,10 @@ class GoodsReceivedNoticesController < ApplicationController
 
   private
 
+  def index_params
+    params.permit(:start_date, :end_date, :purchase_order_id)
+  end
+
   def grn
     GoodsReceivedNotice.find(params[:id])
   end
