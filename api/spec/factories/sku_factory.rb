@@ -26,6 +26,8 @@ FactoryGirl.define do
     gender 'M'
     listing_genders 'M'
 
+    order_tool_reference 1010105
+
     vendor
 
     trait :with_old_season do
