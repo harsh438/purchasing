@@ -1,4 +1,7 @@
 class GoodsReceivedNoticeEvent < ActiveRecord::Base
+  DELIVERED = 2
+  RECEIVED = 4
+
   self.table_name = :bookingin_events
   self.primary_key = :ID
 
@@ -38,7 +41,7 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
 
   def received=(received)
     write_attribute(:IsReceived, received)
-    self.status = 4
+    self.status = RECEIVED
     self.received_at = Time.current
   end
 
@@ -50,9 +53,9 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
 
   def human_status
     case send(:Status)
-    when 2
+    when DELIVERED
       :delivered
-    when 4
+    when RECEIVED
       :received
     else
       if delivery_date.try(:past?)

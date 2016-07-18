@@ -1,4 +1,6 @@
 class GoodsReceivedNotice < ActiveRecord::Base
+  RECEIVED = 1
+
   self.table_name = :goods_received_number
   self.primary_key = :grn
 
@@ -76,7 +78,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
     self.cartons_received += event.cartons
 
     if received?
-      self.received = 1
+      self.received = RECEIVED
       self.received_at = Time.current
     end
 
