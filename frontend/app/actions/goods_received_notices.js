@@ -27,12 +27,14 @@ function weekStartDate(middleWeekStart) {
   return moment(middleWeekStart, 'DD/MM/YYYY').startOf('isoWeek');
 }
 
-export function loadGoodsReceivedNotices(middleWeekStart) {
+export function loadGoodsReceivedNotices(middleWeekStart, purchaseOrderId) {
   const startDate = weekStartDate(middleWeekStart).subtract(2, 'weeks').format('YYYY-MM-DD');
   const endDate = weekStartDate(middleWeekStart).add({ weeks: 2, days: 4 }).format('YYYY-MM-DD');
 
   return dispatch => {
-    const queryString = Qs.stringify({ start_date: startDate, end_date: endDate });
+    const queryString = Qs.stringify({ start_date: startDate,
+                                       end_date: endDate,
+                                       purchase_order_id: purchaseOrderId });
 
     fetch(`/api/goods_received_notices.json?${queryString}`, { credentials: 'same-origin' })
       .then(response => response.json())

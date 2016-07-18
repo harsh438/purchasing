@@ -1,4 +1,5 @@
 import React from 'react';
+import { ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
 
 export default class GoodsReceivedNoticesFind extends React.Component {
   componentWillMount() {
@@ -6,25 +7,27 @@ export default class GoodsReceivedNoticesFind extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.goodsReceivedNotice) {
-      this.setState({ search: nextProps.goodsReceivedNotice.id, onLoading: false });
+    if (this.props.noticeWeeks !== nextProps.noticeWeeks ||
+        this.props.goodsReceivedNotice !== nextProps.goodsReceivedNotice) {
+      this.setState({ onLoading: false });
     }
   }
 
   render() {
     return (
       <form onChange={this.handleChange.bind(this)}
-            onSubmit={this.handleSubmit.bind(this)}>
-        <div className="input-group">
+            onSubmit={(e) => e.preventDefault()}>
+        <div style={{ float: 'left', width: '75%' }}>
           <input type="number"
                  className="form-control"
-                 placeholder="GRN #"
+                 placeholder="Search #"
                  onChange={this.handleChange.bind(this, 'search')}
                  value={this.state.search}
                  name="search" />
-          <span className="input-group-btn">
-            {this.renderSearchButton()}
-          </span>
+        </div>
+
+        <div style={{ float: 'right', width: '25%' }}>
+          {this.renderSearchButton()}
         </div>
       </form>
     );
@@ -32,9 +35,27 @@ export default class GoodsReceivedNoticesFind extends React.Component {
 
   renderSearchButton() {
     if (this.state.onLoading) {
-      return <input disabled type="submit" className="btn btn-primary" value="Finding..." />;
+      return (
+        <button type="submit"
+                className="btn btn-primary"
+                disabled>
+          Finding...
+        </button>
+      );
     } else {
-      return <input type="submit" className="btn btn-primary" value="Find" />;
+      return (
+        <ButtonToolbar>
+          <DropdownButton bsStyle="primary"
+                          id="search-grns"
+                          onSelect={this.handleSubmit.bind(this)}
+                          pullRight
+                          style={{ float: 'right' }}
+                          title="Find">
+            <MenuItem eventKey="GRN">Find by GRN</MenuItem>
+            <MenuItem eventKey="PO">Find by PO</MenuItem>
+          </DropdownButton>
+        </ButtonToolbar>
+      );
     }
   }
 
@@ -44,9 +65,9 @@ export default class GoodsReceivedNoticesFind extends React.Component {
     this.setState({ [target.name]: target.value });
   }
 
-  handleSubmit(e) {
+  handleSubmit(e, type) {
     e.preventDefault();
     this.setState({ onLoading: true });
-    this.props.onSearch(this.state.search);
+    this.props.onSearch({ search: this.state.search, type });
   }
 }
