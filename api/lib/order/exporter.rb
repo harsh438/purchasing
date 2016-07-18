@@ -32,7 +32,7 @@ class Order::Exporter
 
   def po_line_item_attrs(order_line_item, extra_params)
     { operator: extra_params[:operator] || operator(order_line_item),
-      single_line_id: extra_params[:single_line_id] || nil,
+      single_line_id: order_line_item.sku.try(:order_tool_reference) || 0,
       reporting_pid: order_line_item.reporting_pid }
       .merge(po_line_item_core_attrs(order_line_item))
       .merge(po_line_item_relationship_attrs(order_line_item))
@@ -54,7 +54,7 @@ class Order::Exporter
       gender: order_line_item.gender || '',
       sku: order_line_item.sku,
       category_id: order_line_item.sku.language_category.category.id,
-      barcode: attempt_barcode(order_line_item) }
+      barcode: attempt_barcode(order_line_item)}
   end
 
   def po_line_item_date_attrs(order_line_item)

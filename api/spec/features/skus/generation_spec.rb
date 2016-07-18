@@ -182,7 +182,8 @@ feature 'SKU generation' do
       vendor_id: 919,
       category_id: language_category.category.id,
       category_name: language_category.name,
-      inv_track: 'O' }
+      inv_track: 'O',
+      order_tool_reference: 122222}
   end
 
   let(:existing_barcode_and_season_sku_attrs) { base_sku_attrs.merge(barcode: existing_sku.barcodes.first.barcode,
@@ -232,5 +233,6 @@ feature 'SKU generation' do
     expect(subject[:category_id]).to eq(attrs[:category_id])
     expect(subject[:gender]).to eq(base_sku_attrs[:lead_gender])
     expect(subject[:listing_genders]).to eq(attrs[:listing_genders])
+    expect(subject[:order_tool_reference]).to eq(attrs[:order_tool_reference])
   end
 end
