@@ -540,8 +540,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     let newGoodsReceivedNotice = this.state.goodsReceivedNotice;
     let noticeEvent = newGoodsReceivedNotice.goodsReceivedNoticeEvents[index];
     let isReceived = !noticeEvent.received;
-    let totalCartons = newGoodsReceivedNotice.cartonsReceived;
-    let totalUnits = newGoodsReceivedNotice.unitsReceived;
 
     if (!isReceived) {
       return;
@@ -549,13 +547,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
     newGoodsReceivedNotice.goodsReceivedNoticeEvents[index].received = isReceived;
     this.setState({ goodsReceivedNotice: newGoodsReceivedNotice });
-
-    totalCartons += noticeEvent.cartons;
-    totalUnits += noticeEvent.units;
-
     let allReceived = this.allEventsReceivedForNotice(newGoodsReceivedNotice);
-
-    this.props.onReceiveChange(newGoodsReceivedNotice.id, noticeEvent.id, isReceived, totalCartons, totalUnits, allReceived);
+    this.props.onReceiveChange(newGoodsReceivedNotice.id, noticeEvent.id, isReceived, allReceived);
   }
 
   allEventsReceivedForNotice(goodsReceivedNotice) {

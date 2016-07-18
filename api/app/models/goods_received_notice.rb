@@ -1,4 +1,6 @@
 class GoodsReceivedNotice < ActiveRecord::Base
+  RECEIVED = 1
+
   self.table_name = :goods_received_number
   self.primary_key = :grn
 
@@ -63,8 +65,24 @@ class GoodsReceivedNotice < ActiveRecord::Base
   after_initialize :ensure_packing_condition
   after_update :set_delivery_date_on_all_events
 
+  def received?
+    status == :received
+  end
+
   def late?
     delivery_date < Date.today
+  end
+
+  def receive_event(event)
+    self.units_received += event.units
+    self.cartons_received += event.cartons
+
+    if received?
+      self.received = RECEIVED
+      self.received_at = Time.current
+    end
+
+    save!
   end
 
   def status
@@ -119,7 +137,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
     self.checked ||= 0
     self.processing ||= 0
     self.processed ||= 0
-    self.booked_in_at ||= Time.now
+    self.booked_in_at ||= Time.current
     self.original_delivery_date ||= delivery_date
     self.received_at ||= 0
     self.page_count ||= 0

@@ -1,4 +1,7 @@
 class GoodsReceivedNoticeEvent < ActiveRecord::Base
+  DELIVERED = 2
+  RECEIVED = 4
+
   self.table_name = :bookingin_events
   self.primary_key = :ID
 
@@ -19,7 +22,8 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
                  delivery_date: :DeliveryDate,
                  booked_in_at: :BookedInDate,
                  user_id: :UserID,
-                 received: :IsReceived
+                 received: :IsReceived,
+                 received_at: :DateReceived
 
   belongs_to :goods_received_notice, foreign_key: :grn
   belongs_to :vendor, foreign_key: :BrandID
@@ -28,17 +32,30 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
 
   after_initialize :ensure_defaults
   after_initialize :assign_vendor_from_purchase_order
+  after_save :mark_grn_as_received
 
-  def received?; human_status == :received; end
   def delivered?; human_status == :delivered; end
+  def received?; human_status == :received; end
   def late?; human_status == :late; end
   def booked?; human_status == :booked; end
 
+  def received=(received)
+    write_attribute(:IsReceived, received)
+    self.status = RECEIVED
+    self.received_at = Time.current
+  end
+
+  def mark_grn_as_received
+    if received_changed? and received?
+      goods_received_notice.receive_event(self)
+    end
+  end
+
   def human_status
     case send(:Status)
-    when 2
+    when DELIVERED
       :delivered
-    when 4
+    when RECEIVED
       :received
     else
       if delivery_date.try(:past?)
@@ -71,7 +88,7 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
     self.pallets ||= 0
     self.units ||= 0
     self.cartons ||= 0
-    self.booked_in_at ||= Time.now
+    self.booked_in_at ||= Time.current
   end
 
   def assign_vendor_from_purchase_order
