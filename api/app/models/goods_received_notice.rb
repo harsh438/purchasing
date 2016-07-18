@@ -77,7 +77,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
 
     if received?
       self.received = 1
-      self.received_at = Time.now
+      self.received_at = Time.current
     end
 
     save!
@@ -135,7 +135,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
     self.checked ||= 0
     self.processing ||= 0
     self.processed ||= 0
-    self.booked_in_at ||= Time.now
+    self.booked_in_at ||= Time.current
     self.original_delivery_date ||= delivery_date
     self.received_at ||= 0
     self.page_count ||= 0

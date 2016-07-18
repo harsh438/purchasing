@@ -39,7 +39,7 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   def received=(received)
     write_attribute(:IsReceived, received)
     self.status = 4
-    self.received_at = Time.now
+    self.received_at = Time.current
   end
 
   def mark_grn_as_received
@@ -85,7 +85,7 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
     self.pallets ||= 0
     self.units ||= 0
     self.cartons ||= 0
-    self.booked_in_at ||= Time.now
+    self.booked_in_at ||= Time.current
   end
 
   def assign_vendor_from_purchase_order
