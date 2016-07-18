@@ -1,5 +1,9 @@
 class ProductImage < ActiveRecord::Base
   self.table_name = :product_image
 
-  belongs_to :sku, foreign_key: :product_id
+  belongs_to :product
+
+  def as_json
+    ProductImageSerializer.new(self).as_json
+  end
 end

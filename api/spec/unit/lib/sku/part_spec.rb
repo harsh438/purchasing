@@ -1,5 +1,3 @@
-require './lib/sku/part.rb'
-
 RSpec.describe Part do
   subject(:part) { described_class.new(kit_manager) }
   let(:kit_manager) { create(:kit_manager) }

@@ -5,30 +5,21 @@ class ProductImageSerializer < ActiveModel::Serializer
   private
 
   def url
-    "http://asset1.surfcdn.com/#{image.its_reference}?w=400"
+    "http://asset1.surfcdn.com/#{object.its_reference}?w=400"
   end
 
-  def position
+  def dimensions
     {
-      height: height,
-      width: width
+      height: object.height,
+      width: object.width
     }
   end
 
-  def height
-    image.height
-  end
-
-  def width
-    image.width
-  end
-
   def elasticera_reference
-    image.its_reference
+    object.its_reference
   end
 
   def legacy_id
-    image.id
+    object.id
   end
 end
-

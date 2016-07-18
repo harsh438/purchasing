@@ -15,6 +15,18 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_reporting_category do
+      after(:create) do |product|
+        create(:reporting_category, pid: product.id)
+      end
+    end
+
+    trait :with_pvx_in do
+      after(:create) do |product, evaluator|
+        create(:pvx_in, pid: product.id)
+      end
+    end
+
     after(:create) do |product, evaluator|
       option = create(:option)
       create(:language_product, product_id: product.id)

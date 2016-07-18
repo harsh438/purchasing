@@ -789,25 +789,6 @@ ActiveRecord::Schema.define(version: 20160329163919) do
   add_index "sd_product_details", ["subCategory"], name: "subcategory", using: :btree
   add_index "sd_product_details", ["volumeLine"], name: "volumeline", using: :btree
 
-  create_table "sd_product_extend", primary_key: "pID", force: :cascade do |t|
-    t.integer "photoStatus",   limit: 1,     default: 99, null: false
-    t.text    "description2",  limit: 65535
-    t.text    "description3",  limit: 65535
-    t.string  "videoID",       limit: 128
-    t.text    "flashID",       limit: 65535,              null: false
-    t.text    "embed",         limit: 65535
-    t.string  "PRList2",       limit: 32,                 null: false
-    t.text    "SizeGuide",     limit: 65535,              null: false
-    t.float   "review",        limit: 24,                 null: false
-    t.string  "banner",        limit: 8,                  null: false
-    t.string  "logo_append",   limit: 16,                 null: false
-    t.string  "Washcare",      limit: 255,                null: false
-    t.float   "reviewsRating", limit: 24
-    t.integer "reviewsCount",  limit: 4
-  end
-
-  add_index "sd_product_extend", ["banner"], name: "banner", using: :btree
-
   create_table "skus", force: :cascade do |t|
     t.string   "sku",                        limit: 255
     t.string   "manufacturer_sku",           limit: 255

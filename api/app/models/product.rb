@@ -20,10 +20,10 @@ class Product < ActiveRecord::Base
                  active: :pAvail
 
   has_one :reporting_category, foreign_key: :pid
-  has_one :product_extend, foreign_key: :pID, dependent: :destroy
   has_one :language_product, foreign_key: :pID
   has_one :reporting_category, foreign_key: :pid
   has_one :vendor, foreign_key: :venID
+  has_many :product_images
   has_many :pvx_ins, foreign_key: :pid
   has_many :language_product_options, foreign_key: :pID
   has_many :product_categories, foreign_key: :pid

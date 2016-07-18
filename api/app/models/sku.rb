@@ -25,9 +25,8 @@ class Sku < ActiveRecord::Base
 
   has_many :barcodes
   has_many :pvx_ins, through: :product
-  has_many :product_images, foreign_key: :product_id
+  has_many :product_images, through: :product
   has_one :reporting_category, through: :product
-  has_one :product_extend, through: :product
   has_many :product_categories, foreign_key: :pID
   has_many :categories, through: :product_categories
   accepts_nested_attributes_for :barcodes
@@ -80,11 +79,11 @@ class Sku < ActiveRecord::Base
     categories.order("ds_categories.parentID, ds_product_categories.catID ASC").pluck(:catID).first
   end
 
-  def video_url
-    product_extend.embed
-  end
-
   def first_received
     pvx_ins.order("pvx_in.logged ASC").pluck(:logged).first
+  end
+
+  def master_sku
+    Sku.find_by(sku: product_id)
   end
 end

@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :pvx_in do
-    sku "123"
     ref "222"
     ponum "122233"
     qty 33
@@ -12,6 +11,6 @@ FactoryGirl.define do
     loc nil
     DeliveryNote nil
     PO_status 1
-    pid 98315
+    product
   end
 end
