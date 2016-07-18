@@ -1,7 +1,5 @@
 FactoryGirl.define do
   factory :kit_manager do
-    id 1
-    pID '12345'
     type nil
     barcode '12345654321'
     discount 10

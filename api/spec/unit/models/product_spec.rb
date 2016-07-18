@@ -8,12 +8,14 @@ RSpec.describe Product do
   let(:sales_price)        { prod.sale_price }
   let(:barcode)            { prod.master_sku.barcodes.latest }
   let(:first_received)     { prod.pvx_ins.first.logged }
+  let(:item_codes)         { prod.kit_managers.map(&:item_code) }
   let(:reporting_category) { prod.reporting_category }
   subject(:prod)           { create(
                                :product,
                                :with_skus,
                                :with_reporting_category,
                                :with_pvx_in,
+                               :with_kit_managers,
                                listing_genders: "M",
                                color: "blue",
                                dropshipment: "D-R-P",
@@ -60,6 +62,10 @@ RSpec.describe Product do
         legacy_more_from_category: prod.master_sku.ordered_catid,
         legacy_first_received_at: first_received
         )
+    end
+
+    it "Includes all the correct Part information" do
+      expect(prod.as_json).to include( parts: item_codes )
     end
   end
 end

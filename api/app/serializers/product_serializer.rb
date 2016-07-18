@@ -8,7 +8,8 @@ class ProductSerializer < ActiveModel::Serializer
              :legacy_supplier_sku,
              :legacy_reporting_category_name,
              :legacy_first_received_at,
-             :legacy_more_from_category
+             :legacy_more_from_category,
+             :parts
 
   private
 
@@ -71,5 +72,9 @@ class ProductSerializer < ActiveModel::Serializer
 
   def legacy_more_from_category
     object.master_sku.ordered_catid
+  end
+
+  def parts
+    object.kit_managers.map(&:item_code)
   end
 end
