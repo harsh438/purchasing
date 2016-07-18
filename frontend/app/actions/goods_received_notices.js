@@ -89,11 +89,7 @@ export function saveGoodsReceivedNotice({ id, currentDate, deliveryDate, packing
 
 export function markGoodsReceivedNoticeEventReceivedStatus(grnId, eventId, isReceived, allReceived, currentDate) {
   const goods_received_notice_events_attributes = [{ id: eventId, received: isReceived }];
-
-  let goodsReceivedNotice = { goods_received_notice: { id: grnId,
-                                                       received: allReceived,
-                                                       goods_received_notice_events_attributes } };
-
+  let goodsReceivedNotice = { goods_received_notice: { id: grnId, goods_received_notice_events_attributes } };
   return updateGrn(grnId, goodsReceivedNotice, currentDate);
 }
 

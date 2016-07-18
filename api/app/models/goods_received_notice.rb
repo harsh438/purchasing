@@ -63,8 +63,24 @@ class GoodsReceivedNotice < ActiveRecord::Base
   after_initialize :ensure_packing_condition
   after_update :set_delivery_date_on_all_events
 
+  def received?
+    status == :received
+  end
+
   def late?
     delivery_date < Date.today
+  end
+
+  def receive_event(event)
+    self.units_received += event.units
+    self.cartons_received += event.cartons
+
+    if received?
+      self.received = 1
+      self.received_at = Time.now
+    end
+
+    save!
   end
 
   def status
