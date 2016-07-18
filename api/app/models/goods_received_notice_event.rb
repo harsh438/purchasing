@@ -31,14 +31,14 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   after_initialize :assign_vendor_from_purchase_order
   after_save :mark_grn_as_received
 
-  def received?; human_status == :received; end
   def delivered?; human_status == :delivered; end
+  def received?; human_status == :received; end
   def late?; human_status == :late; end
   def booked?; human_status == :booked; end
 
   def received=(received)
     write_attribute(:IsReceived, received)
-    write_attribute(:Status, 4)
+    self.status = 4
     self.received_at = Time.now
   end
 
