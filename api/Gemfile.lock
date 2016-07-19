@@ -292,6 +292,3 @@ DEPENDENCIES
   timecop (= 0.8.0)
   vcr (= 2.9.2)
   webmock (= 1.19.0)
-
-BUNDLED WITH
-   1.11.2

@@ -35,4 +35,5 @@ ADD config/database-env.yml /home/app/webapp/config/database.yml
 EXPOSE 80
 
 # Use baseimage-docker's init process.
-CMD ["/sbin/my_init"]
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD ["start"]
