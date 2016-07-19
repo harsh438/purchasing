@@ -558,19 +558,10 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     const notice = this.state.goodsReceivedNotice;
     const allEventsReceived = this.allEventsReceivedForNotice(notice);
     const confirmed = !allEventsReceived || confirm('Are you sure you want to mark all POs as received?');
-
     if (!confirmed) return;
 
-    notice.goodsReceivedNoticeEvents.forEach(noticeEvent => {
-      if (noticeEvent.received) return;
-
-      this.props.onMarkAsReceived(
-        notice.id,
-        noticeEvent.id,
-        noticeEvent.received,
-        allEventsReceived
-      );
-    });
+    const updatedEvents = filter(notice.goodsReceivedNoticeEvents, 'received');
+    this.props.onMarkEventsAsReceived(notice.id, updatedEvents);
   }
 
   allEventsReceivedForNotice(goodsReceivedNotice) {
