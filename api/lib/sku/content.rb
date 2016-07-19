@@ -1,37 +1,22 @@
-class Content
-
-  def initialize(language_product)
-    @language_product = language_product
-  end
-
-  def as_json
-    {
-      lang: lang,
-      content: {
-       name: name,
-       legacy_slug: legacy_slug,
-       teaser: teaser
-      }
-    }
-  end
+class ContentSerializer < ActiveModel::Serializer
+  attributes :lang, :content
 
   private
 
-  attr_reader :language_product
-
   def lang
-    language_product.langID
+    object.language_id
   end
 
-  def name
-    language_product.pName
+  def content
+    {
+      name: object.name,
+      legacy_slug: object.name_processed,
+      teaser: object.teaser
+    }
   end
 
-  def legacy_slug
-    language_product.pName.downcase.tr(' ', '_').tr("'", "") + "-#{language_product.pID}"
-  end
-
-  def teaser
-    language_product.pTeaser
+  def name_processed
+    object.name.downcase.tr(' ', '_')
+      .tr("'", "") + "-#{object.product_id}"
   end
 end
