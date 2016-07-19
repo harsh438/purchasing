@@ -72,7 +72,7 @@ RSpec.describe Product do
           legacy_reporting_category: reporting_category.catid,
           legacy_supplier_sku: prod.manufacturer_sku,
           legacy_reporting_category_name: prod.master_sku.language_category.catName,
-          legacy_more_from_category: prod.master_sku.ordered_catid,
+          legacy_more_from_category: prod.master_sku.ordered_category_id,
           legacy_first_received_at: first_received
         )
       end

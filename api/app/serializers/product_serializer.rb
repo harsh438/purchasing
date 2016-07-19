@@ -54,7 +54,7 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def legacy_reporting_category
-    object.master_sku.reporting_category.catid
+    object.master_sku.reporting_category.category_id
   end
 
   def legacy_season
@@ -74,7 +74,7 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def legacy_more_from_category
-    object.master_sku.ordered_catid
+    object.master_sku.ordered_category_id
   end
 
   def parts

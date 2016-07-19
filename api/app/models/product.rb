@@ -20,14 +20,13 @@ class Product < ActiveRecord::Base
                  active: :pAvail
 
   has_one :reporting_category, foreign_key: :pid
-  has_one :reporting_category, foreign_key: :pid
   has_one :vendor, foreign_key: :venID
   has_many :language_products, foreign_key: :pID
   has_many :kit_managers, foreign_key: :pID
   has_many :product_images
   has_many :pvx_ins, foreign_key: :pid
   has_many :language_product_options, foreign_key: :pID
-  has_many :product_categories, foreign_key: :pid
+  has_many :product_categories, foreign_key: :pID
   has_many :categories, through: :product_categories
   belongs_to :product_detail, foreign_key: :pID
   has_many :skus
