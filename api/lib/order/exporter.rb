@@ -32,7 +32,8 @@ class Order::Exporter
 
   def po_line_item_attrs(order_line_item, extra_params)
     { operator: extra_params[:operator] || operator(order_line_item),
-      single_line_id: order_line_item.sku.try(:order_tool_reference) || 0,
+      single_line_id: extra_params[:single_line_id] || nil,
+      line_id: order_line_item.sku.try(:order_tool_reference) || 0,
       reporting_pid: order_line_item.reporting_pid }
       .merge(po_line_item_core_attrs(order_line_item))
       .merge(po_line_item_relationship_attrs(order_line_item))
