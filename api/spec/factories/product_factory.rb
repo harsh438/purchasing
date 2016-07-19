@@ -8,10 +8,15 @@ FactoryGirl.define do
 
     trait :with_skus do
       after(:create) do |product|
+        product.skus += build_list(:sku, 2, vendor: product.vendor)
+      end
+    end
+
+    trait :with_master_sku do
+       after(:create) do |product|
         master = build(:sku, vendor: product.vendor)
         master.sku = product.id
         product.skus << master
-        product.skus += build_list(:sku, 2, vendor: product.vendor)
       end
     end
 

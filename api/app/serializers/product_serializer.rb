@@ -9,7 +9,8 @@ class ProductSerializer < ActiveModel::Serializer
              :legacy_reporting_category_name,
              :legacy_first_received_at,
              :legacy_more_from_category,
-             :parts
+             :parts,
+             :children
 
   private
 
@@ -76,5 +77,12 @@ class ProductSerializer < ActiveModel::Serializer
 
   def parts
     object.kit_managers.map(&:item_code)
+  end
+
+  def children
+    return [] if object.skus.length <= 1
+    object.skus.map do |sku|
+      ChildSerializer.new(sku).as_json
+    end
   end
 end
