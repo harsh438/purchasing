@@ -15,8 +15,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                    deliveryDate,
                    tab,
                    totalPallets: pallets,
-                   goodsReceivedNotice: this.props.goodsReceivedNotice,
-                   goodsReceivedNoticeAllReceived: this.allEventsReceivedForNotice(this.props.goodsReceivedNotice) };
+                   goodsReceivedNotice: this.props.goodsReceivedNotice };
 
     this.setVendorId(this.firstVendorId());
   }
@@ -35,7 +34,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                     combineFrom: '',
                     totalPallets: pallets,
                     goodsReceivedNotice: nextProps.goodsReceivedNotice,
-                    goodsReceivedNoticeAllReceived: this.allEventsReceivedForNotice(nextProps.goodsReceivedNotice),
                     onPackingListUpload: false,
                     packingFileNames: [] });
 
@@ -211,9 +209,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
             <tr>
               <th colSpan="3">
                 <input type="checkbox"
-                  checked={this.state.goodsReceivedNoticeAllReceived}
                   name="checkAllGRNEvents"
                   id="checkAllGRNEvents"
+                  checked={this.allEventsReceivedForNotice(this.props.goodsReceivedNotice)}
                   onChange={this.handleAllReceivedCheckboxToggle.bind(this)} />
                 <label htmlFor="checkAllGRNEvents"
                        style={{ fontSize: '12px', paddingLeft: '10px' }}>
@@ -544,10 +542,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       notice.goodsReceivedNoticeEvents[index].received = checked;
     });
 
-    this.setState({
-      goodsReceivedNotice: notice,
-      goodsReceivedNoticeAllReceived: checked,
-    });
+    this.setState({ goodsReceivedNotice: notice });
   }
 
   handleReceivedCheckboxChange(index) {
@@ -557,7 +552,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     notice.goodsReceivedNoticeEvents[index].received = received;
 
     this.setState({ goodsReceivedNotice: notice });
-    this.setState({ goodsReceivedNoticeAllReceived: this.allEventsReceivedForNotice(notice) });
   }
 
   handleMarkCheckedAsReceived() {
