@@ -256,7 +256,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
                                   vendors={this.props.brands}
                                   purchaseOrderList={this.props.purchaseOrderList}
                                   onVendorChange={this.handleLoadPurchaseOrdersForEdit.bind(this)}
-                                  onReceiveChange={this.handleGoodsReceivedNoticeEventReceivedSave.bind(this)}
+                                  onMarkAsReceived={this.handleGoodsReceivedNoticeEventReceivedSave.bind(this)}
                                   onSave={this.handleGoodsReceivedNoticeSave.bind(this)}
                                   onCombine={this.handleGoodsReceivedNoticeCombine.bind(this)}
                                   onDelete={this.handleGoodsReceivedNoticeDelete.bind(this)}

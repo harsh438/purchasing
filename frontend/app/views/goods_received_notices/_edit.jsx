@@ -2,7 +2,7 @@ import React from 'react';
 import DropZone from 'react-dropzone';
 import RadioGroup from 'react-radio-group';
 import { renderSelectOptions } from '../../utilities/dom';
-import { map, every } from 'lodash';
+import { map, every, filter } from 'lodash';
 import { Nav, NavItem } from 'react-bootstrap';
 import { packingListName } from '../../utilities/packing_list';
 
@@ -205,21 +205,35 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     }
 
     return (
-      <table className="table table-striped table-condensed">
-        <thead>
-          <tr>
-            <th colSpan="3">
-              <input type="checkbox"
-                     checked={this.state.goodsReceivedNoticeAllReceived}
-                     onChange={this.handleAllReceivedCheckboxChange.bind(this)} />
-              <span style={{ fontSize: '12px', paddingLeft: '10px' }}>Received?</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {map(this.state.goodsReceivedNotice.goodsReceivedNoticeEvents, this.renderPurchaseOrder, this)}
-        </tbody>
-      </table>
+      <section>
+        <table className="table table-striped table-condensed">
+          <thead>
+            <tr>
+              <th colSpan="3">
+                <input type="checkbox"
+                  checked={this.state.goodsReceivedNoticeAllReceived}
+                  name="checkAllGRNEvents"
+                  id="checkAllGRNEvents"
+                  onChange={this.handleAllReceivedCheckboxToggle.bind(this)} />
+                <label htmlFor="checkAllGRNEvents"
+                       style={{ fontSize: '12px', paddingLeft: '10px' }}>
+                  Check All
+                </label>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {map(this.state.goodsReceivedNotice.goodsReceivedNoticeEvents, this.renderPurchaseOrder, this)}
+          </tbody>
+        </table>
+        <section>
+          <div className="text-right">
+            <button className="btn btn-success" onClick={this.handleMarkCheckedAsReceived.bind(this)}>
+              Mark as Received
+            </button>
+          </div>
+        </section>
+      </section>
     );
   }
 
@@ -520,39 +534,60 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     this.props.onVendorChange(vendorId);
   }
 
-  handleAllReceivedCheckboxChange() {
-    let allReceived = !this.state.goodsReceivedNoticeAllReceived;
+  handleAllReceivedCheckboxToggle() {
+    const notice = this.state.goodsReceivedNotice;
+    const allReceived = this.allEventsReceivedForNotice(notice);
+    const mixedReceived = this.mixedReceivedForNotice(notice);
+    const checked = mixedReceived || !allReceived;
 
-    if (!allReceived) {
-      return;
-    }
+    notice.goodsReceivedNoticeEvents.forEach(function (e, index) {
+      notice.goodsReceivedNoticeEvents[index].received = checked;
+    });
 
-    this.setState({ goodsReceivedNoticeAllReceived: allReceived });
-
-    if (confirm('Are you sure you want to mark all POs as received?')) {
-      map(this.state.goodsReceivedNotice.goodsReceivedNoticeEvents, function (e, index) {
-        this.handleReceivedCheckboxChange(index);
-      }, this);
-    }
+    this.setState({
+      goodsReceivedNotice: notice,
+      goodsReceivedNoticeAllReceived: checked,
+    });
   }
 
   handleReceivedCheckboxChange(index) {
-    let newGoodsReceivedNotice = this.state.goodsReceivedNotice;
-    let noticeEvent = newGoodsReceivedNotice.goodsReceivedNoticeEvents[index];
-    let isReceived = !noticeEvent.received;
+    const notice = this.state.goodsReceivedNotice;
+    const received = !notice.goodsReceivedNoticeEvents[index].received;
 
-    if (!isReceived) {
-      return;
-    }
+    notice.goodsReceivedNoticeEvents[index].received = received;
 
-    newGoodsReceivedNotice.goodsReceivedNoticeEvents[index].received = isReceived;
-    this.setState({ goodsReceivedNotice: newGoodsReceivedNotice });
-    let allReceived = this.allEventsReceivedForNotice(newGoodsReceivedNotice);
-    this.props.onReceiveChange(newGoodsReceivedNotice.id, noticeEvent.id, isReceived, allReceived);
+    this.setState({ goodsReceivedNotice: notice });
+    this.setState({ goodsReceivedNoticeAllReceived: this.allEventsReceivedForNotice(notice) });
+  }
+
+  handleMarkCheckedAsReceived() {
+    const notice = this.state.goodsReceivedNotice;
+    const allEventsReceived = this.allEventsReceivedForNotice(notice);
+    const confirmed = !allEventsReceived || confirm('Are you sure you want to mark all POs as received?');
+
+    if (!confirmed) return;
+
+    notice.goodsReceivedNoticeEvents.forEach(noticeEvent => {
+      if (noticeEvent.received) return;
+
+      this.props.onMarkAsReceived(
+        notice.id,
+        noticeEvent.id,
+        noticeEvent.received,
+        allEventsReceived
+      );
+    });
   }
 
   allEventsReceivedForNotice(goodsReceivedNotice) {
     return every(map(goodsReceivedNotice.goodsReceivedNoticeEvents, 'received'));
+  }
+
+  mixedReceivedForNotice(goodsReceivedNotice) {
+    const events = goodsReceivedNotice.goodsReceivedNoticeEvents;
+    const received = filter(events, 'received');
+
+    return received.length > 0 && received.length < events.length;
   }
 
   handleConditionFormChange({ target }) {
