@@ -10,7 +10,9 @@ class ProductSerializer < ActiveModel::Serializer
              :legacy_first_received_at,
              :legacy_more_from_category,
              :parts,
-             :children
+             :children,
+             :contents,
+             :options
 
   private
 
@@ -84,5 +86,16 @@ class ProductSerializer < ActiveModel::Serializer
     object.skus.map do |sku|
       ChildSerializer.new(sku).as_json
     end
+  end
+
+  def contents
+    object.language_products.map do |language_product|
+      ContentSerializer.new(language_product).as_json
+    end
+  end
+
+  def options
+    return [] if object.skus.length <= 1
+    "Size"
   end
 end

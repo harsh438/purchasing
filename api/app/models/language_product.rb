@@ -10,4 +10,6 @@ class LanguageProduct < ActiveRecord::Base
                  teaser: :pTeaser,
                  description: :pDesc,
                  email_display: :pCallEmailDisplay
+
+belongs_to :product
 end

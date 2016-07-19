@@ -40,7 +40,7 @@ FactoryGirl.define do
 
     after(:create) do |product, evaluator|
       option = create(:option)
-      create(:language_product, product_id: product.id)
+      create(:language_product, :english, product_id: product.id)
       create(:language_product_option, product_id: product.id,
                                        option_id: option.id)
     end

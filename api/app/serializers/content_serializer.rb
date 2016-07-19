@@ -3,19 +3,24 @@ class ContentSerializer < ActiveModel::Serializer
 
   private
 
+  LANGUAGE_MAP = {
+                   1 => "en",
+                   3 => "fr"
+                 }
+
   def lang
-    object.language_id
+    LANGUAGE_MAP.fetch(object.language_id)
   end
 
   def content
     {
       name: object.name,
-      legacy_slug: object.name_processed,
+      legacy_slug: name_slugged,
       teaser: object.teaser
     }
   end
 
-  def name_processed
+  def name_slugged
     object.name.downcase.tr(' ', '_')
       .tr("'", "") + "-#{object.product_id}"
   end
