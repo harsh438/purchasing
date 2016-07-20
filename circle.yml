@@ -10,7 +10,7 @@ machine:
 dependencies:
   pre:
     - docker info
-    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+    - docker login -u $ECR_USER -e none -p $ECR_PASSWORD
   post:
     - npm install:
         pwd: ../frontend/
@@ -30,9 +30,11 @@ deployment:
   docker:
     branch: [docker, staging, production]
     commands:
-      - docker pull surfdome/purchasing
-      - export VERSION_LABEL=`git rev-parse --short HEAD` && docker build -f Dockerfile-deploy -t surfdome/purchasing:$VERSION_LABEL .
-      - export VERSION_LABEL=`git rev-parse --short HEAD` && docker push surfdome/purchasing:$VERSION_LABEL
+      - export VERSION_LABEL=`git rev-parse --short HEAD` && docker pull 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest
+      - export VERSION_LABEL=`git rev-parse --short HEAD` && docker build -f Dockerfile-deploy -t 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest .
+      - export VERSION_LABEL=`git rev-parse --short HEAD` && docker push 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest
+      - export VERSION_LABEL=`git rev-parse --short HEAD` && docker tag 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:$VERSION_LABEL
+      - export VERSION_LABEL=`git rev-parse --short HEAD` && docker push 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:$VERSION_LABEL
       - export VERSION_LABEL=`git rev-parse --short HEAD` && sed -i -e "s/__TAG__/$VERSION_LABEL/g" /home/ubuntu/purchasing/eb-purchasing.json
 
       - aws elasticbeanstalk delete-application-version --application-name "$EB_APP_NAME" --version-label `git rev-parse --short HEAD` --delete-source-bundle

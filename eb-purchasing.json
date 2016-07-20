@@ -2,7 +2,7 @@
   "AWSEBDockerrunVersion": 2,
   "authentication": {
     "bucket": "devops-eb-docker",
-    "key": "config.json"
+    "key": "ecs.config"
   },
   "volumes": [
     {
@@ -39,7 +39,7 @@
   "containerDefinitions": [
     {
       "name": "dd-agent",
-      "image": "datadog/docker-dd-agent:ecs",
+      "image": "213273172953.dkr.ecr.eu-west-1.amazonaws.com/docker-dd-agent:latest",
       "essential": false,
       "environment": [
         {
@@ -76,7 +76,7 @@
     },
     {
       "name": "splunkforwarder",
-      "image": "surfdome/splunkforwarder",
+      "image": "213273172953.dkr.ecr.eu-west-1.amazonaws.com/splunkforwarder:latest",
       "essential": true,
       "memory": 256,
       "mountPoints": [
@@ -93,7 +93,7 @@
     },
     {
       "name": "purchasing",
-      "image": "surfdome/purchasing:__TAG__",
+      "image": "213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:__TAG__",
       "essential": true,
       "memory": 3072,
       "mountPoints": [],
