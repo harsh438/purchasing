@@ -2,7 +2,7 @@ import React from 'react';
 import DropZone from 'react-dropzone';
 import RadioGroup from 'react-radio-group';
 import { renderSelectOptions } from '../../utilities/dom';
-import { map, every, filter } from 'lodash';
+import { map, every, filter, some } from 'lodash';
 import { Nav, NavItem } from 'react-bootstrap';
 import { packingListName } from '../../utilities/packing_list';
 
@@ -226,7 +226,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         </table>
         <section>
           <div className="text-right">
-            <button className="btn btn-success" onClick={this.handleMarkCheckedAsReceived.bind(this)}>
+            <button className="btn btn-success"
+                    onClick={this.handleMarkCheckedAsReceived.bind(this)}
+                    disabled={this.canMarkCheckedAsReceived()}>
               Mark as Received
             </button>
           </div>
@@ -562,6 +564,10 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
     const updatedEvents = filter(notice.goodsReceivedNoticeEvents, 'checked');
     this.props.onMarkEventsAsReceived(notice.id, updatedEvents);
+  }
+
+  canMarkCheckedAsReceived() {
+    return !some(this.state.goodsReceivedNotice.goodsReceivedNoticeEvents, 'checked');
   }
 
   allEventsReceivedForNotice(goodsReceivedNotice) {
