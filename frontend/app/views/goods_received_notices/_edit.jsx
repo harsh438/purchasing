@@ -241,7 +241,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
           key={goodsReceivedNoticeEvent.id}>
         <td style={{ verticalAlign: 'middle' }}>
           <input type="checkbox"
-                 checked={goodsReceivedNoticeEvent.received}
+                 checked={goodsReceivedNoticeEvent.checked}
                  onChange={this.handleReceivedCheckboxChange.bind(this, index)} />
         </td>
         <td style={{ fontSize: '.9em' }}>
@@ -539,7 +539,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     const checked = mixedReceived || !allReceived;
 
     notice.goodsReceivedNoticeEvents.forEach(function (e, index) {
-      notice.goodsReceivedNoticeEvents[index].received = checked;
+      notice.goodsReceivedNoticeEvents[index].checked = checked;
     });
 
     this.setState({ goodsReceivedNotice: notice });
@@ -547,9 +547,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleReceivedCheckboxChange(index) {
     const notice = this.state.goodsReceivedNotice;
-    const received = !notice.goodsReceivedNoticeEvents[index].received;
+    const checked = !notice.goodsReceivedNoticeEvents[index].checked;
 
-    notice.goodsReceivedNoticeEvents[index].received = received;
+    notice.goodsReceivedNoticeEvents[index].checked = checked;
 
     this.setState({ goodsReceivedNotice: notice });
   }
@@ -560,19 +560,19 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     const confirmed = !allEventsReceived || confirm('Are you sure you want to mark all POs as received?');
     if (!confirmed) return;
 
-    const updatedEvents = filter(notice.goodsReceivedNoticeEvents, 'received');
+    const updatedEvents = filter(notice.goodsReceivedNoticeEvents, 'checked');
     this.props.onMarkEventsAsReceived(notice.id, updatedEvents);
   }
 
   allEventsReceivedForNotice(goodsReceivedNotice) {
-    return every(map(goodsReceivedNotice.goodsReceivedNoticeEvents, 'received'));
+    return every(map(goodsReceivedNotice.goodsReceivedNoticeEvents, 'checked'));
   }
 
   mixedReceivedForNotice(goodsReceivedNotice) {
     const events = goodsReceivedNotice.goodsReceivedNoticeEvents;
-    const received = filter(events, 'received');
+    const checked = filter(events, 'checked');
 
-    return received.length > 0 && received.length < events.length;
+    return checked.length > 0 && checked.length < events.length;
   }
 
   handleConditionFormChange({ target }) {
