@@ -51,7 +51,7 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
 
   def mark_grn_as_received
     if received_changed? and received?
-      goods_received_notice.receive_event(self)
+      goods_received_notice.update_received_status_and_totals
     end
   end
 
