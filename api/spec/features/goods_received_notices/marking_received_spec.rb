@@ -22,6 +22,7 @@ feature 'Marking Purchase Order as received', booking_db: true do
     expect(subject['received_at']).to be_present
     expect(subject['goods_received_notice_events'].first['status']).to eq('received')
     expect(subject['goods_received_notice_events'].first['received_at']).to be_present
+    expect(subject['goods_received_notice_events'].first['cartons_received']).to eq(grn_event.cartons)
     expect(subject['units_received']).to eq(grn.goods_received_notice_events.first.units)
     expect(subject['cartons_received']).to eq(grn.goods_received_notice_events.first.cartons)
   end
