@@ -13,7 +13,7 @@ if [ "$1" = 'start' ]; then
     # init db stuff....
     # use gosu to drop to a non-root user
     bundle exec rake db:migrate
-    "/sbin/my_init"
+    /sbin/my_init
 fi
 
 # else default to run whatever the user wanted like "bash"
