@@ -65,6 +65,7 @@ class GoodsReceivedNoticesController < ApplicationController
   def events_attrs
     [:_destroy,
      :cartons,
+     :cartons_received,
      :id,
      :pallets,
      :purchase_order_id,

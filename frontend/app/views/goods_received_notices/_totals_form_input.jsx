@@ -15,6 +15,7 @@ export default class GoodsReceivedNoticesTotalsFormInput extends React.Component
             <input className="form-control"
               id={this.props.htmlId}
               name={this.props.htmlName}
+              onChange={this.props.onChange.bind(this)}
               step="0.0001"
               type="number"
               value={this.props.value}

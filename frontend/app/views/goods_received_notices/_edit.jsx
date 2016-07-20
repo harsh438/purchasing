@@ -103,11 +103,14 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     case 'packingLists':
       return this.renderPackingLists();
     case 'totals':
-      return <GoodsReceivedNoticesTotalsForm onChange={this.handleChange.bind(this)}
-                                             onSave={this.props.onSave.bind(this)}
-                                             grnId={this.state.id}
-                                             totalUnits={this.state.totalUnits}
-                                             totalPallets={this.state.totalPallets} />;
+      return <GoodsReceivedNoticesTotalsForm
+        onChange={this.handleChange.bind(this)}
+        onEventCartonsReceivedChange={this.handleEventCartonsReceivedChange.bind(this)}
+        onSave={this.props.onSave.bind(this)}
+        grnId={this.state.id}
+        noticeEvents={this.state.goodsReceivedNotice.goodsReceivedNoticeEvents}
+        totalUnits={this.state.totalUnits}
+        totalPallets={this.state.totalPallets} />;
     case 'advanced':
       return this.renderAdvanced();
     case 'deliveryCondition':
@@ -649,5 +652,11 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleTabChange(tab) {
     this.setState({ tab });
+  }
+
+  handleEventCartonsReceivedChange(noticeEvent, index, { target }) {
+    const notice = this.props.goodsReceivedNotice;
+    notice.goodsReceivedNoticeEvents[index].cartonsReceived = target.value;
+    this.setState({ goodsReceivedNotice: notice });
   }
 }
