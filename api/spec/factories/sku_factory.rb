@@ -14,12 +14,8 @@ FactoryGirl.define do
     list_price 29.99
     gender 'M'
     listing_genders 'M'
-    vendor
     product { |sku| create(:product, manufacturer_sku: sku.manufacturer_sku) }
-    option { |sku| create(:option, size: sku.manufacturer_size) }
-    language_product
-    language_product_option
-    element { |sku| language_product_option.element }
+    vendor { |sku| product.vendor }
     sku { |s| [s.product.id * -1, s.manufacturer_sku].join("-") }
 
     trait :with_old_season do
@@ -57,6 +53,10 @@ FactoryGirl.define do
       end
 
       sku { |s| [s.product.id, s.manufacturer_sku].join("-") }
+      option { |sku| create(:option, size: sku.manufacturer_size) }
+      language_product
+      language_product_option
+      element { |sku| language_product_option.element }
 
       after(:build) do |sku, evaluator|
         sku.barcodes << evaluator.barcode

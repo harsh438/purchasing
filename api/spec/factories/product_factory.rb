@@ -1,10 +1,13 @@
 FactoryGirl.define do
   factory :product do
-    pSale 0
-
+    on_sale 0
     season 'ss18'
     manufacturer_sku '123456-123'
     vendor
+
+    after(:build) do |product|
+      product.product_categories += create_list(:product_category, 2, product: product)
+    end
 
     trait :with_skus do
       after(:create) do |product|

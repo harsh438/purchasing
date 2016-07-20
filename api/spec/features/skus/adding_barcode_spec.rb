@@ -45,7 +45,7 @@ feature 'Adding a barcode to an existing sku' do
 
   def then_legacy_records_should_be_created_for_the_sku
     expect(subject[:product_id]).to_not be(nil)
-    expected_cat_name = ProductCategory.find_by(subject[:product_id]).category.language_categories.first.name
+    expected_cat_name = ProductCategory.find_by(product_id: subject[:product_id]).category.language_categories.first.name
     expect(subject[:category_name]).to eq(expected_cat_name)
     expect(Product.find(subject[:product_id]).listing_genders).to eq('M')
   end
