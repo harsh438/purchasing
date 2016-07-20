@@ -13,13 +13,18 @@ feature 'Adding Purchase Order to Goods Received Notice', booking_db: true do
 
   scenario 'Overriding pallets' do
     when_a_buyer_has_booked_in_purchase_orders_with_inaccurate_pallets
-    then_an_intake_planner_should_be_able_to_override
+    then_an_intake_planner_should_be_able_to_override_the_pallets
   end
 
   scenario 'Adding PO to GRN with overridden pallets' do
     given_an_intake_planner_has_overridden_pallets
     when_a_buyer_adds_another_po_to_the_overridden_grn
     then_grn_pallets_should_increase
+  end
+
+  scenario 'Overriding units' do
+    when_a_buyer_has_booked_in_purchase_orders_with_inaccurate_units
+    then_an_intake_planner_should_be_able_to_override_the_units
   end
 
   def when_adding_purchase_order_to_grn
@@ -48,7 +53,7 @@ feature 'Adding Purchase Order to Goods Received Notice', booking_db: true do
                            goods_received_notice: { pallets: overridden_pallets })
   end
 
-  def then_an_intake_planner_should_be_able_to_override
+  def then_an_intake_planner_should_be_able_to_override_the_pallets
     expect(subject['pallets']).to eq(overridden_pallets)
   end
 
@@ -67,11 +72,21 @@ feature 'Adding Purchase Order to Goods Received Notice', booking_db: true do
     expect(subject['pallets']).to eq((overridden_pallets.to_f + 2).to_s)
   end
 
+  def when_a_buyer_has_booked_in_purchase_orders_with_inaccurate_units
+    path = goods_received_notice_path(grn_with_pos)
+    page.driver.post(path, _method: 'patch', goods_received_notice: { units_received: overridden_units })
+  end
+
+  def then_an_intake_planner_should_be_able_to_override_the_units
+    expect(subject['units_received']).to eq(overridden_units.to_i)
+  end
+
   private
 
   let(:grn) { create(:goods_received_notice) }
   let(:grn_with_pos) { create(:goods_received_notice, :with_purchase_orders) }
   let(:overridden_pallets) { '10.0' }
+  let(:overridden_units) { '123' }
 
   let(:purchase_order) { create(:purchase_order) }
 
