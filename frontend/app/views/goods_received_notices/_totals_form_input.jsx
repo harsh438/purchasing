@@ -16,7 +16,7 @@ export default class GoodsReceivedNoticesTotalsFormInput extends React.Component
               id={this.props.htmlId}
               name={this.props.htmlName}
               onChange={this.props.onChange.bind(this)}
-              step="0.0001"
+              step={this.props.step}
               type="number"
               value={this.props.value}
               required />
@@ -26,3 +26,7 @@ export default class GoodsReceivedNoticesTotalsFormInput extends React.Component
     );
   }
 }
+
+GoodsReceivedNoticesTotalsFormInput.defaultProps = {
+  step: "0.0001",
+};

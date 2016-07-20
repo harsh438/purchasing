@@ -36,6 +36,7 @@ export default class GoodsReceivedNoticesTotalsForm extends React.Component {
             value={event.cartonsReceived}
             onChange={this.props.onEventCartonsReceivedChange.bind(this, event, index)}
             key={`event${event.id}`}
+            step={1}
             htmlId={`event${event.id}`}
             htmlName={`event${event.id}`} />
         )}
