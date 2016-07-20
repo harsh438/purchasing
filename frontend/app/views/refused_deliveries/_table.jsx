@@ -15,6 +15,7 @@ export default class RefusedDeliveriesTable extends React.Component {
             <th>Pallets</th>
             <th>Info/Pos</th>
             <th>Reason for refusal</th>
+            <th>Images</th>
           </tr>
         </thead>
         <tbody>
@@ -28,7 +29,7 @@ export default class RefusedDeliveriesTable extends React.Component {
     return map(this.props.refusedDeliveries, this.renderRow, this);
   }
 
-  renderRow({ id, deliveryDate, courier, vendorName, pallets, boxes, info, refusalReason }) {
+  renderRow({ id, deliveryDate, courier, vendorName, pallets, boxes, info, refusalReason, images }) {
     return (
       <tr key={id}>
         <td>{deliveryDate}</td>
@@ -38,6 +39,9 @@ export default class RefusedDeliveriesTable extends React.Component {
         <td>{boxes}</td>
         <td>{info}</td>
         <td>{refusalReason}</td>
+        <td>{images.map(({ url, name }) => {
+          return (<div><a href={url} target="_blank">{name}</a></div>);
+        })}</td>
       </tr>
     );
   }
