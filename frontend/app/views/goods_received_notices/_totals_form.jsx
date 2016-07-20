@@ -30,6 +30,9 @@ export default class GoodsReceivedNoticesTotalsForm extends React.Component {
           htmlId="pallets"
           htmlName="totalPallets" />
 
+        <h4>Cartons Received</h4>
+        <hr />
+
         {this.props.noticeEvents.map((event, index) =>
           <GoodsReceivedNoticesTotalsFormInput
             title={`#${event.purchaseOrderId}`}
