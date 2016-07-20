@@ -14,7 +14,7 @@ import { loadGoodsReceivedNotice,
          saveGoodsReceivedNotice,
          addPurchaseOrderToGoodsReceivedNotice,
          removePurchaseOrderFromGoodsReceivedNotice,
-         markGoodsReceivedNoticeEventReceivedStatus,
+         markGoodsReceivedNoticeEventsReceivedStatus,
          deleteGoodsReceivedNotice,
          deleteGoodsReceivedNoticePackingList,
          combineGoodsReceivedNotices } from '../../actions/goods_received_notices';
@@ -256,7 +256,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
                                   vendors={this.props.brands}
                                   purchaseOrderList={this.props.purchaseOrderList}
                                   onVendorChange={this.handleLoadPurchaseOrdersForEdit.bind(this)}
-                                  onReceiveChange={this.handleGoodsReceivedNoticeEventReceivedSave.bind(this)}
+                                  onMarkEventsAsReceived={this.handleMarkEventsAsReceived.bind(this)}
                                   onSave={this.handleGoodsReceivedNoticeSave.bind(this)}
                                   onCombine={this.handleGoodsReceivedNoticeCombine.bind(this)}
                                   onDelete={this.handleGoodsReceivedNoticeDelete.bind(this)}
@@ -326,8 +326,8 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.props.dispatch(loadGoodsReceivedNotice(grnId));
   }
 
-  handleGoodsReceivedNoticeEventReceivedSave(grnId, grnEventId, isReceived, totalCartons, totalUnits, allReceived) {
-    this.props.dispatch(markGoodsReceivedNoticeEventReceivedStatus(grnId, grnEventId, isReceived, totalCartons, totalUnits, allReceived, this.state.currentDate));
+  handleMarkEventsAsReceived(grnId, noticeEvents) {
+    this.props.dispatch(markGoodsReceivedNoticeEventsReceivedStatus(grnId, noticeEvents, true, this.state.currentDate));
   }
 
   handleGoodsReceivedNoticeSave(grn) {

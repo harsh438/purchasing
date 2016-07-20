@@ -40,9 +40,11 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   def booked?; human_status == :booked; end
 
   def received=(received)
-    write_attribute(:IsReceived, received)
-    self.status = RECEIVED
-    self.received_at = Time.current
+    unless received?
+      write_attribute(:IsReceived, received)
+      self.status = RECEIVED
+      self.received_at = Time.current
+    end
   end
 
   def mark_grn_as_received
