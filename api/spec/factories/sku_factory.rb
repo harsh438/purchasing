@@ -16,7 +16,7 @@ FactoryGirl.define do
     listing_genders 'M'
     vendor
     product { |sku| create(:product, manufacturer_sku: sku.manufacturer_sku) }
-    option
+    option { |sku| create(:option, size: sku.manufacturer_size) }
     language_product
     language_product_option
     element { |sku| language_product_option.element }
