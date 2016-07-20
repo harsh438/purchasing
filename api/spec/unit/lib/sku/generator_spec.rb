@@ -1,7 +1,7 @@
 describe Sku::Generator do
   before { create(:sku) }
 
-  let(:lang_category) { create(:language_category, :with_a_category) }
+  let(:lang_category) { create(:language_category) }
 
   let(:new_sku_attrs) { { manufacturer_sku: 'SV507-A59',
                           product_name: 'The big name',

@@ -6,6 +6,7 @@ class LanguageCategory < ActiveRecord::Base
 
   map_attributes id: :id,
                  name: :catName,
+                 description: :catDesc,
                  language_id: :langID,
                  category_id: :catID
 

@@ -34,15 +34,13 @@ FactoryGirl.define do
 
     trait :with_kit_managers do
       after(:create) do |product|
-        create_list(:kit_manager, 2, pID: product.id)
+        create_list(:kit_manager, 2, product: product)
       end
     end
 
     after(:create) do |product, evaluator|
-      option = create(:option)
-      create(:language_product, :english, product_id: product.id)
-      create(:language_product_option, product_id: product.id,
-                                       option_id: option.id)
+      create(:english_language_product, product: product)
+      create(:language_product_option, product: product)
     end
   end
 end

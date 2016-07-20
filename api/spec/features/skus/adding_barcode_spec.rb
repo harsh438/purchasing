@@ -103,7 +103,7 @@ feature 'Adding a barcode to an existing sku' do
 
   let(:existing_product) { create(:product) }
   let(:sku_without_barcode_with_pid) do
-    create(:sku_without_barcode, product_id: existing_product.id)
+    create(:sku_without_barcode, product: existing_product)
   end
 
   def add_barcode_to_sku(sku, barcode = '00000')

@@ -54,7 +54,7 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def legacy_reporting_category
-    object.master_sku.reporting_category.category_id
+    object.master_sku.reporting_category.id
   end
 
   def legacy_season
@@ -66,7 +66,7 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def legacy_reporting_category_name
-    object.master_sku.language_category.catName
+    object.master_sku.language_category.name
   end
 
   def legacy_first_received_at
