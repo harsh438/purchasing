@@ -16,6 +16,7 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
                  purchase_order_id: :po,
                  units: :TotalUnits,
                  cartons: :CartonsExpected,
+                 cartons_received: :CartonsReceived,
                  pallets: :PaletsExpected,
                  vendor_id: :BrandID,
                  status: :Status,
@@ -42,6 +43,7 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   def received=(received)
     unless received?
       write_attribute(:IsReceived, received)
+      self.cartons_received = cartons
       self.status = RECEIVED
       self.received_at = Time.current
     end
