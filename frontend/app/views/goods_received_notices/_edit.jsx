@@ -5,6 +5,7 @@ import { renderSelectOptions } from '../../utilities/dom';
 import { map, every, filter, some } from 'lodash';
 import { Nav, NavItem } from 'react-bootstrap';
 import { packingListName } from '../../utilities/packing_list';
+import GoodsReceivedNoticesTotalsForm from './_totals_form';
 
 export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillMount() {
@@ -73,7 +74,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                  style={{ marginBottom: '10px' }}>
               <NavItem eventKey="purchaseOrders">POs</NavItem>
               <NavItem eventKey="packingLists">Packing lists</NavItem>
-              <NavItem eventKey="pallets">Pallets</NavItem>
+              <NavItem eventKey="totals">Totals</NavItem>
               <NavItem eventKey="deliveryCondition">Condition</NavItem>
               {this.props.advanced && <NavItem eventKey="advanced">Advanced</NavItem>}
             </Nav>
@@ -99,8 +100,11 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       );
     case 'packingLists':
       return this.renderPackingLists();
-    case 'pallets':
-      return this.renderChangePalletsForm();
+    case 'totals':
+      return <GoodsReceivedNoticesTotalsForm onChange={this.handleChange.bind(this)}
+                                             onSave={this.props.onSave.bind(this)}
+                                             grnId={this.state.id}
+                                             totalPallets={this.state.totalPallets} />;
     case 'advanced':
       return this.renderAdvanced();
     case 'deliveryCondition':
@@ -345,28 +349,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         );
       });
     }
-  }
-
-  renderChangePalletsForm() {
-    return (
-      <form onChange={this.handleChange.bind(this)}
-            onSubmit={this.handleChangePalletsSubmit.bind(this)}>
-        <div className="form-group">
-          <label htmlFor="pallets">Total pallets:</label>
-          <input className="form-control"
-                 type="number"
-                 id="pallets"
-                 name="totalPallets"
-                 step="0.0001"
-                 value={this.state.totalPallets}
-                 required />
-        </div>
-
-        <div className="text-right">
-          <button className="btn btn-warning">Update pallets</button>
-        </div>
-      </form>
-    );
   }
 
   renderDeliveryCondition() {
@@ -642,12 +624,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     if (confirm('Are you sure you wish to delete this GRN?') && confirm('Really?')) {
       this.props.onDelete(this.state.id);
     }
-  }
-
-  handleChangePalletsSubmit(e) {
-    e.preventDefault();
-    const { id, totalPallets } = this.state;
-    this.props.onSave({ id, pallets: totalPallets });
   }
 
   handleChangeDateSubmit(e) {
