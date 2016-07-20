@@ -77,9 +77,9 @@ class GoodsReceivedNotice < ActiveRecord::Base
     delivery_date < Date.today
   end
 
-  def receive_event(event)
-    self.units_received += event.units
-    self.cartons_received += event.cartons
+  def update_received_status_and_totals
+    self.units_received = goods_received_notice_events.sum(:units)
+    self.cartons_received = goods_received_notice_events.sum(:cartons_received)
 
     if received?
       self.received = RECEIVED
