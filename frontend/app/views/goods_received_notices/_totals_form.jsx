@@ -1,55 +1,34 @@
 import React from 'react';
+import GoodsReceivedNoticesTotalsFormInput from './_totals_form_input';
 
 export default class GoodsReceivedNoticesTotalsForm extends React.Component {
-  handleChangePalletsSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
-    const { grnId, totalPallets } = this.props;
-    this.props.onSave({ id: grnId, pallets: totalPallets });
+    const { grnId, totalPallets, totalUnits } = this.props;
+    this.props.onSave({ id: grnId, pallets: totalPallets, unitsReceived: totalUnits });
   }
 
   render() {
     return (
       <form onChange={this.props.onChange.bind(this)}
-            onSubmit={this.handleChangePalletsSubmit.bind(this)}>
-        <div className="form-group">
-          <div className="row">
-            <div className="col-md-6">
-              <label htmlFor="units">Total Received Units</label>
-            </div>
+            onSubmit={this.handleSubmit.bind(this)}>
+        <GoodsReceivedNoticesTotalsFormInput
+          title="Total Received Units"
+          value={this.props.totalUnits}
+          key="units"
+          htmlId="units"
+          htmlName="totalUnits" />
 
-            <div className="col-md-6 text-right">
-              <input className="form-control"
-                type="number"
-                id="units"
-                name="totalUnits"
-                step="0.0001"
-                value={this.props.totalUnits}
-                required />
-            </div>
-          </div>
+        <GoodsReceivedNoticesTotalsFormInput
+          title="Total Expected Pallets"
+          value={this.props.totalPallets}
+          key="pallets"
+          htmlId="pallets"
+          htmlName="totalPallets" />
 
-          <div className="row">
-            <div className="col-md-6">
-              <label htmlFor="pallets">Total Received Pallets</label>
-            </div>
-
-            <div className="col-md-6 text-right">
-              <input className="form-control"
-                type="number"
-                id="pallets"
-                name="totalPallets"
-                step="0.0001"
-                value={this.props.totalPallets}
-                required />
-            </div>
-          </div>
-        </div>
-
-        <div className="form-group">
-        </div>
 
         <div className="text-right">
-          <button className="btn btn-warning">Update pallets</button>
+          <button className="btn btn-warning">Update totals</button>
         </div>
       </form>
     );

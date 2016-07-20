@@ -80,11 +80,12 @@ function updateGrn(id, body, currentDate) {
   };
 }
 
-export function saveGoodsReceivedNotice({ id, currentDate, deliveryDate, packingLists, pallets, packingCondition }) {
+export function saveGoodsReceivedNotice({ id, currentDate, deliveryDate, packingLists, pallets, packingCondition, unitsReceived }) {
   const body = { goods_received_notice: { delivery_date: deliveryDate,
                                           packing_condition_attributes: packingCondition,
                                           packing_lists_attributes: packingLists,
-                                          pallets } };
+                                          pallets,
+                                          units_received: unitsReceived } };
 
   return updateGrn(id, body, currentDate);
 }
