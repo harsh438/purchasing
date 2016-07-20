@@ -9,6 +9,7 @@ class LanguageProductOption < ActiveRecord::Base
                  name: :pOption,
                  element_id: :elementID
 
+  belongs_to :product, foreign_key: :pID
   belongs_to :option, foreign_key: :oID
   belongs_to :element, foreign_key: :elementID
 

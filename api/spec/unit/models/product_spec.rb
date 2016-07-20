@@ -84,7 +84,7 @@ RSpec.describe Product do
       end
 
       describe "Contents:" do
-        before { create(:language_product, :french, product_id: prod.id) }
+        before { create(:french_language_product, product: prod) }
         let(:english)          { prod.language_products.first }
         let(:french)           { prod.language_products[1] }
         let(:english_contents) { json[:contents][0] }

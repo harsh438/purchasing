@@ -1,11 +1,10 @@
 FactoryGirl.define do
   factory :kit_manager do
-    type nil
-    barcode '12345654321'
+    barcode { generate :barcode_sequence }
     discount 10
-    sourcepID '123444'
-    sourceoID '1232123'
-    itemCode '1234231-234'
-    dateAdded '2016-07-07'
+    association(:source_product, factory: :product)
+    association(:source_option, factory: :option)
+    item_code '1234231-234'
+    date_added { Date.today.iso8601 }
   end
 end

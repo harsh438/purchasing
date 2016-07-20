@@ -11,5 +11,5 @@ class LanguageProduct < ActiveRecord::Base
                  description: :pDesc,
                  email_display: :pCallEmailDisplay
 
-belongs_to :product
+  belongs_to :product, foreign_key: :pID
 end
