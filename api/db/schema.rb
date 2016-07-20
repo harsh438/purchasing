@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160718141851) do
+ActiveRecord::Schema.define(version: 20160720090622) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -664,6 +664,18 @@ ActiveRecord::Schema.define(version: 20160718141851) do
     t.string  "info",           limit: 1000
     t.string  "refusal_reason", limit: 500
   end
+
+  create_table "refused_deliveries_log_images", force: :cascade do |t|
+    t.string   "image_file_name",           limit: 255
+    t.string   "image_content_type",        limit: 255
+    t.integer  "image_file_size",           limit: 4
+    t.datetime "image_updated_at"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.integer  "refused_deliveries_log_id", limit: 4
+  end
+
+  add_index "refused_deliveries_log_images", ["refused_deliveries_log_id"], name: "index_refused_deliveries_log_images_on_refused_deliveries_log_id", using: :btree
 
   create_table "reporting_categories", primary_key: "pid", force: :cascade do |t|
     t.integer "catid", limit: 4, default: 0, null: false

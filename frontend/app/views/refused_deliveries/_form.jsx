@@ -1,15 +1,16 @@
 import React from 'react';
-import { assign, omit, get, map } from 'lodash';
-import { camelizeKeys } from '../../utilities/inspection';
+import DropZone from 'react-dropzone';
 import Select from 'react-select';
 import moment from 'moment';
+import { assign, omit, get, map, filter } from 'lodash';
+import { camelizeKeys } from '../../utilities/inspection';
 import { renderSelectOptions,
          renderMultiSelectOptions } from '../../utilities/dom';
 
 export default class RefusedDeliveriesForm extends React.Component {
   componentWillMount() {
     const deliveryDate = moment().format('YYYY-MM-DD');
-    this.state = assign({ deliveryDate, submitting: false }, this.props.refusedDelivery);
+    this.state = assign({ deliveryDate, submitting: false, files: [] }, this.props.refusedDelivery);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -95,6 +96,18 @@ export default class RefusedDeliveriesForm extends React.Component {
                            required
                            value={this.state.refusalReason} /></td>
             </tr>
+            <tr>
+                <td><label htmlFor="refusalReason">Reason for refusal</label></td>
+                <td>
+                  <DropZone multiple
+                            onDrop={this.handleFile.bind(this)}
+                            style={{ color: '#999', padding: '30px', border: '2px dashed #999' }}
+                            accept=".jpg,.jpeg,.png,.pdf,.eml">
+                    <div>Confirmation file for the terms. Try dropping some files here, or click to select files to upload.</div>
+                  </DropZone>
+                  {this.renderFileUploadText()}
+                </td>
+            </tr>
           </tbody>
         </table>
 
@@ -104,6 +117,47 @@ export default class RefusedDeliveriesForm extends React.Component {
         </button>
       </form>
     );
+  }
+
+  renderFileUploadText() {
+    if (this.state.files.length) {
+      return this.state.files.map(this.renderFileUploadPreview.bind(this));
+    }
+  }
+
+  renderFileUploadPreview(file) {
+    return (
+      <div style={{ margin: '5px 10px 0 10px' }}>
+        <span className="glyphicon glyphicon-remove"
+              onClick={this.removeFileUpload.bind(this, file)}
+              style={{ cursor: 'pointer' }}></span>
+        &nbsp;
+        <span className="glyphicon glyphicon-open-file"></span>
+        <span style={{ color: 'grey' }}>File to upload: {file.imageFileName}</span>
+        <img height="50" src={file.preview} />
+      </div>
+    );
+  }
+
+  removeFileUpload(file) {
+    this.setState({ files: filter(this.state.files, ({ imageFileName }) =>  file.imageFileName !== imageFileName) });
+  }
+
+  handleFile(files) {
+    const self = this;
+    files.forEach((file) => {
+      const reader = new FileReader();
+
+      reader.onload = (upload) => {
+        let image = {};
+        image.image = upload.target.result;
+        image.imageFileName = file.name;
+        image.preview = file.preview;
+        self.setState({ files: self.state.files.concat(image) });
+      };
+
+      reader.readAsDataURL(file);
+    });
   }
 
   selectOptions(options) {
@@ -125,6 +179,9 @@ export default class RefusedDeliveriesForm extends React.Component {
   handleFormSubmit(e) {
     e.preventDefault();
     this.setState({ submitting: true });
+    this.state.files.forEach((file) => delete file.preview);
+    this.state.refusedDeliveriesLogImagesAttributes = this.state.files;
+    this.state.files = [];
     this.props.onSubmitRefusedDelivery(this.state);
   }
 }
