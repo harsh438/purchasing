@@ -9,13 +9,14 @@ import GoodsReceivedNoticesTotalsForm from './_totals_form';
 
 export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillMount() {
-    const { id, deliveryDate, pallets } = this.props.goodsReceivedNotice;
+    const { id, deliveryDate, pallets, unitsReceived } = this.props.goodsReceivedNotice;
     const tab = 'purchaseOrders';
 
     this.state = { id,
                    deliveryDate,
                    tab,
                    totalPallets: pallets,
+                   totalUnits: unitsReceived,
                    goodsReceivedNotice: this.props.goodsReceivedNotice };
 
     this.setVendorId(this.firstVendorId());
@@ -23,7 +24,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({ purchaseOrderLoading: false });
-    let { id, deliveryDate, pallets } = nextProps.goodsReceivedNotice;
+    let { id, deliveryDate, pallets, unitsReceived } = nextProps.goodsReceivedNotice;
     deliveryDate = deliveryDate.split('/').reverse().join('-');
 
     this.setState({ id,
@@ -34,6 +35,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                     pallets: '',
                     combineFrom: '',
                     totalPallets: pallets,
+                    totalUnits: unitsReceived,
                     goodsReceivedNotice: nextProps.goodsReceivedNotice,
                     onPackingListUpload: false,
                     packingFileNames: [] });
@@ -104,6 +106,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       return <GoodsReceivedNoticesTotalsForm onChange={this.handleChange.bind(this)}
                                              onSave={this.props.onSave.bind(this)}
                                              grnId={this.state.id}
+                                             totalUnits={this.state.totalUnits}
                                              totalPallets={this.state.totalPallets} />;
     case 'advanced':
       return this.renderAdvanced();
