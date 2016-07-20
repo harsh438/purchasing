@@ -165,7 +165,7 @@ feature 'SKU generation' do
                                                                     manufacturer_size: '16') }
   let(:existing_sku_without_category_id) { create(:sku, category_id: nil) }
 
-  let(:language_category) { create(:language_category) }
+  let(:language_category) { create(:language_category, :with_a_category) }
 
   let(:base_sku_attrs) do
     { manufacturer_sku: 'DA-ADFADET-WHT',

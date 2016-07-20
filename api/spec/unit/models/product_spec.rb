@@ -132,7 +132,7 @@ RSpec.describe Product do
       end
 
       it "Options" do
-        expect(json[:options]).to eq "Size"
+        expect(json[:options]).to eq ["Size"]
       end
     end
 

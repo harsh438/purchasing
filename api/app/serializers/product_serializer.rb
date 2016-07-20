@@ -96,6 +96,6 @@ class ProductSerializer < ActiveModel::Serializer
 
   def options
     return [] if object.skus.length <= 1
-    "Size"
+    ["Size"]
   end
 end
