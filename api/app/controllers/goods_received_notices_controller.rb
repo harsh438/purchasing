@@ -66,6 +66,7 @@ class GoodsReceivedNoticesController < ApplicationController
     [:_destroy,
      :cartons,
      :cartons_received,
+     :delivered,
      :id,
      :pallets,
      :purchase_order_id,
