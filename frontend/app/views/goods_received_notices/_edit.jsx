@@ -247,6 +247,12 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                     disabled={!this.canMarkCheckedAsReceived()}>
               Mark as Received
             </button>
+            &nbsp;
+            <button className="btn btn-danger"
+                    onClick={this.handleDeleteCheckedEvents.bind(this)}
+                    disabled={!this.canDeleteCheckedEvents()}>
+              Delete
+            </button>
           </div>
         </section>
       </section>
@@ -279,11 +285,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                 title="Cartons">{goodsReceivedNoticeEvent.cartons} C</span>&nbsp;
           <span className="badge"
                 title="Pallets">{goodsReceivedNoticeEvent.pallets} P</span>&nbsp;
-
-          <button className="btn btn-sm btn-danger"
-                  onClick={this.handleDeletePurchaseOrder.bind(this, goodsReceivedNoticeEvent.id)}>
-            <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
-          </button>
         </td>
       </tr>
     );
@@ -570,6 +571,18 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     this.props.onMarkEventsAsReceived(notice.id, updatedEvents);
   }
 
+  handleDeleteCheckedEvents() {
+    const notice = this.state.goodsReceivedNotice;
+    const eventsToDelete = filter(notice.goodsReceivedNoticeEvents, 'checked');
+    const confirmMessage = eventsToDelete.length === 1
+      ? 'Are you sure you wish to remove this Purchase Order?'
+      : `Are you sure you wish to remove ${eventsToDelete.length} Purchase Orders?`;
+
+    if (confirm(confirmMessage)) {
+      this.props.onDeleteCheckedEvents(notice.id, eventsToDelete);
+    }
+  }
+
   canMarkCheckedAsDelivered() {
     const grn = this.state.goodsReceivedNotice;
     return this.anyEventsCheckedForNotice(grn)
@@ -577,6 +590,10 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
   }
 
   canMarkCheckedAsReceived() {
+    return this.anyEventsCheckedForNotice(this.state.goodsReceivedNotice);
+  }
+
+  canDeleteCheckedEvents() {
     return this.anyEventsCheckedForNotice(this.state.goodsReceivedNotice);
   }
 

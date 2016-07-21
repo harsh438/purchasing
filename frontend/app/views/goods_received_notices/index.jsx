@@ -13,7 +13,7 @@ import { loadGoodsReceivedNotice,
          clearGoodsReceivedNotice,
          saveGoodsReceivedNotice,
          addPurchaseOrderToGoodsReceivedNotice,
-         removePurchaseOrderFromGoodsReceivedNotice,
+         removePurchaseOrdersFromGoodsReceivedNotice,
          markGoodsReceivedNoticeEventsDeliveredStatus,
          markGoodsReceivedNoticeEventsReceivedStatus,
          deleteGoodsReceivedNotice,
@@ -259,12 +259,12 @@ class GoodsReceivedNoticesIndex extends React.Component {
                                   onVendorChange={this.handleLoadPurchaseOrdersForEdit.bind(this)}
                                   onMarkEventsAsDelivered={this.handleMarkEventsAsDelivered.bind(this)}
                                   onMarkEventsAsReceived={this.handleMarkEventsAsReceived.bind(this)}
+                                  onDeleteCheckedEvents={this.handleDeletePurchaseOrdersFromGoodsReceivedNotice.bind(this)}
                                   onSave={this.handleGoodsReceivedNoticeSave.bind(this)}
                                   onCombine={this.handleGoodsReceivedNoticeCombine.bind(this)}
                                   onDelete={this.handleGoodsReceivedNoticeDelete.bind(this)}
                                   onDeletePackingList={this.handleGoodsReceivedNoticeDeletePackingList.bind(this)}
                                   onPurchaseOrderAdd={this.handleAddPurchaseOrderToGoodsReceivedNotice.bind(this)}
-                                  onPurchaseOrderDelete={this.handleDeletePurchaseOrderFromGoodsReceivedNotice.bind(this)}
                                   onClose={this.handleGoodsReceivedNoticeClose.bind(this)} />
       );
     }
@@ -358,10 +358,10 @@ class GoodsReceivedNoticesIndex extends React.Component {
     this.props.dispatch(addPurchaseOrderToGoodsReceivedNotice({ ...grn, currentDate: this.state.currentDate }));
   }
 
-  handleDeletePurchaseOrderFromGoodsReceivedNotice(goodsReceivedNoticeEventId) {
-    this.props.dispatch(removePurchaseOrderFromGoodsReceivedNotice({ id: this.props.goodsReceivedNotice.id,
+  handleDeletePurchaseOrdersFromGoodsReceivedNotice(grnId, noticeEvents) {
+    this.props.dispatch(removePurchaseOrdersFromGoodsReceivedNotice({ id: this.props.goodsReceivedNotice.id,
                                                                      currentDate: this.state.currentDate,
-                                                                     goodsReceivedNoticeEventId }));
+                                                                     noticeEvents }));
   }
 
   handleLoadPurchaseOrdersForEdit(vendorId) {
