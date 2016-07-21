@@ -2,7 +2,7 @@ import React from 'react';
 import DropZone from 'react-dropzone';
 import Select from 'react-select';
 import moment from 'moment';
-import { assign, omit, get, map, filter } from 'lodash';
+import { assign, omit, get, map, filter, clone } from 'lodash';
 import { camelizeKeys } from '../../utilities/inspection';
 import { renderSelectOptions,
          renderMultiSelectOptions } from '../../utilities/dom';
@@ -178,10 +178,13 @@ export default class RefusedDeliveriesForm extends React.Component {
 
   handleFormSubmit(e) {
     e.preventDefault();
+    let refusedDelivery = clone(this.state);
+
     this.setState({ submitting: true });
-    this.state.files.forEach((file) => delete file.preview);
-    this.state.refusedDeliveriesLogImagesAttributes = this.state.files;
-    this.state.files = [];
-    this.props.onSubmitRefusedDelivery(this.state);
+
+    refusedDelivery.files.forEach((file) => delete file.preview);
+    refusedDelivery.refusedDeliveriesLogImagesAttributes = refusedDelivery.files;
+    delete refusedDelivery.files;
+    this.props.onSubmitRefusedDelivery(refusedDelivery);
   }
 }
