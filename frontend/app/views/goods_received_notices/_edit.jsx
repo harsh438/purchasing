@@ -559,6 +559,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
     const updatedEvents = filter(notice.goodsReceivedNoticeEvents, 'checked');
     this.props.onMarkEventsAsDelivered(notice.id, updatedEvents);
+    this.handleTabChange('totals');
   }
 
   handleMarkCheckedAsReceived() {
@@ -569,6 +570,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
     const updatedEvents = filter(notice.goodsReceivedNoticeEvents, 'checked');
     this.props.onMarkEventsAsReceived(notice.id, updatedEvents);
+    this.handleTabChange('totals');
   }
 
   handleDeleteCheckedEvents() {
