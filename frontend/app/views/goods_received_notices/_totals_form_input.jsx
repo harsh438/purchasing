@@ -19,7 +19,7 @@ export default class GoodsReceivedNoticesTotalsFormInput extends React.Component
               step={this.props.step}
               type="number"
               value={this.props.value}
-              required />
+              required={this.props.required} />
           </div>
         </div>
       </div>
@@ -28,5 +28,6 @@ export default class GoodsReceivedNoticesTotalsFormInput extends React.Component
 }
 
 GoodsReceivedNoticesTotalsFormInput.defaultProps = {
+  required: false,
   step: "0.0001",
 };
