@@ -5,16 +5,18 @@ import { renderSelectOptions } from '../../utilities/dom';
 import { map, every, filter, some } from 'lodash';
 import { Nav, NavItem } from 'react-bootstrap';
 import { packingListName } from '../../utilities/packing_list';
+import GoodsReceivedNoticesTotalsForm from './_totals_form';
 
 export default class GoodsReceivedNoticesEdit extends React.Component {
   componentWillMount() {
-    const { id, deliveryDate, pallets } = this.props.goodsReceivedNotice;
+    const { id, deliveryDate, pallets, unitsReceived } = this.props.goodsReceivedNotice;
     const tab = 'purchaseOrders';
 
     this.state = { id,
                    deliveryDate,
                    tab,
                    totalPallets: pallets,
+                   totalUnits: unitsReceived,
                    goodsReceivedNotice: this.props.goodsReceivedNotice };
 
     this.setVendorId(this.firstVendorId());
@@ -22,7 +24,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({ purchaseOrderLoading: false });
-    let { id, deliveryDate, pallets } = nextProps.goodsReceivedNotice;
+    let { id, deliveryDate, pallets, unitsReceived } = nextProps.goodsReceivedNotice;
     deliveryDate = deliveryDate.split('/').reverse().join('-');
 
     this.setState({ id,
@@ -33,6 +35,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                     pallets: '',
                     combineFrom: '',
                     totalPallets: pallets,
+                    totalUnits: unitsReceived,
                     goodsReceivedNotice: nextProps.goodsReceivedNotice,
                     onPackingListUpload: false,
                     packingFileNames: [] });
@@ -73,7 +76,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                  style={{ marginBottom: '10px' }}>
               <NavItem eventKey="purchaseOrders">POs</NavItem>
               <NavItem eventKey="packingLists">Packing lists</NavItem>
-              <NavItem eventKey="pallets">Pallets</NavItem>
+              <NavItem eventKey="totals">Totals</NavItem>
               <NavItem eventKey="deliveryCondition">Condition</NavItem>
               {this.props.advanced && <NavItem eventKey="advanced">Advanced</NavItem>}
             </Nav>
@@ -99,8 +102,15 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
       );
     case 'packingLists':
       return this.renderPackingLists();
-    case 'pallets':
-      return this.renderChangePalletsForm();
+    case 'totals':
+      return <GoodsReceivedNoticesTotalsForm
+        onChange={this.handleChange.bind(this)}
+        onEventCartonsReceivedChange={this.handleEventCartonsReceivedChange.bind(this)}
+        onSave={this.props.onSave.bind(this)}
+        grnId={this.state.id}
+        noticeEvents={this.state.goodsReceivedNotice.goodsReceivedNoticeEvents}
+        totalUnits={this.state.totalUnits}
+        totalPallets={this.state.totalPallets} />;
     case 'advanced':
       return this.renderAdvanced();
     case 'deliveryCondition':
@@ -345,28 +355,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         );
       });
     }
-  }
-
-  renderChangePalletsForm() {
-    return (
-      <form onChange={this.handleChange.bind(this)}
-            onSubmit={this.handleChangePalletsSubmit.bind(this)}>
-        <div className="form-group">
-          <label htmlFor="pallets">Total pallets:</label>
-          <input className="form-control"
-                 type="number"
-                 id="pallets"
-                 name="totalPallets"
-                 step="0.0001"
-                 value={this.state.totalPallets}
-                 required />
-        </div>
-
-        <div className="text-right">
-          <button className="btn btn-warning">Update pallets</button>
-        </div>
-      </form>
-    );
   }
 
   renderDeliveryCondition() {
@@ -644,12 +632,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     }
   }
 
-  handleChangePalletsSubmit(e) {
-    e.preventDefault();
-    const { id, totalPallets } = this.state;
-    this.props.onSave({ id, pallets: totalPallets });
-  }
-
   handleChangeDateSubmit(e) {
     e.preventDefault();
     const { id, deliveryDate } = this.state;
@@ -670,5 +652,11 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleTabChange(tab) {
     this.setState({ tab });
+  }
+
+  handleEventCartonsReceivedChange(noticeEvent, index, { target }) {
+    const notice = this.props.goodsReceivedNotice;
+    notice.goodsReceivedNoticeEvents[index].cartonsReceived = target.value;
+    this.setState({ goodsReceivedNotice: notice });
   }
 }

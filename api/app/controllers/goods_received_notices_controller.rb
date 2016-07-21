@@ -50,6 +50,7 @@ class GoodsReceivedNoticesController < ApplicationController
     grn_params = params.require(:goods_received_notice)
     grn_params.permit(:delivery_date,
                       :pallets,
+                      :units_received,
                       packing_lists_attributes: packing_lists_attrs,
                       goods_received_notice_events_attributes: events_attrs,
                       packing_condition_attributes: condition_attrs)
@@ -64,6 +65,7 @@ class GoodsReceivedNoticesController < ApplicationController
   def events_attrs
     [:_destroy,
      :cartons,
+     :cartons_received,
      :id,
      :pallets,
      :purchase_order_id,
