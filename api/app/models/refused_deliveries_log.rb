@@ -23,7 +23,7 @@ class RefusedDeliveriesLog < ActiveRecord::Base
     refused_deliveries_log_images.map do |delivery_image|
       name = delivery_image.image_file_name
       name = 'Unknown File' if name.blank?
-      { url: delivery_image.image.url, name: name }
+      { url: delivery_image.image.expiring_url(300), name: name }
     end
   end
 end
