@@ -14,6 +14,7 @@ import { loadGoodsReceivedNotice,
          saveGoodsReceivedNotice,
          addPurchaseOrderToGoodsReceivedNotice,
          removePurchaseOrderFromGoodsReceivedNotice,
+         markGoodsReceivedNoticeEventsDeliveredStatus,
          markGoodsReceivedNoticeEventsReceivedStatus,
          deleteGoodsReceivedNotice,
          deleteGoodsReceivedNoticePackingList,
@@ -256,6 +257,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
                                   vendors={this.props.brands}
                                   purchaseOrderList={this.props.purchaseOrderList}
                                   onVendorChange={this.handleLoadPurchaseOrdersForEdit.bind(this)}
+                                  onMarkEventsAsDelivered={this.handleMarkEventsAsDelivered.bind(this)}
                                   onMarkEventsAsReceived={this.handleMarkEventsAsReceived.bind(this)}
                                   onSave={this.handleGoodsReceivedNoticeSave.bind(this)}
                                   onCombine={this.handleGoodsReceivedNoticeCombine.bind(this)}
@@ -324,6 +326,10 @@ class GoodsReceivedNoticesIndex extends React.Component {
 
   handleGoodsReceivedNoticeEdit(grnId) {
     this.props.dispatch(loadGoodsReceivedNotice(grnId));
+  }
+
+  handleMarkEventsAsDelivered(grnId, noticeEvents) {
+    this.props.dispatch(markGoodsReceivedNoticeEventsDeliveredStatus(grnId, noticeEvents, true, this.state.currentDate));
   }
 
   handleMarkEventsAsReceived(grnId, noticeEvents) {

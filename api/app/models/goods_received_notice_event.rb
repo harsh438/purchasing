@@ -40,6 +40,12 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   def late?; human_status == :late; end
   def booked?; human_status == :booked; end
 
+  def delivered=(delivered)
+    unless delivered? or received?
+      self.status = DELIVERED
+    end
+  end
+
   def received=(received)
     unless received?
       write_attribute(:IsReceived, received)

@@ -221,7 +221,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
                 <input type="checkbox"
                   name="checkAllGRNEvents"
                   id="checkAllGRNEvents"
-                  checked={this.allEventsReceivedForNotice(this.props.goodsReceivedNotice)}
+                  checked={this.allEventsCheckedForNotice(this.props.goodsReceivedNotice)}
                   onChange={this.handleAllReceivedCheckboxToggle.bind(this)} />
                 <label htmlFor="checkAllGRNEvents"
                        style={{ fontSize: '12px', paddingLeft: '10px' }}>
@@ -236,9 +236,15 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         </table>
         <section>
           <div className="text-right">
+            <button className="btn btn-warning"
+                    onClick={this.handleMarkCheckedAsDelivered.bind(this)}
+                    disabled={!this.canMarkCheckedAsDelivered()}>
+              Mark as Delivered
+            </button>
+            &nbsp;
             <button className="btn btn-success"
                     onClick={this.handleMarkCheckedAsReceived.bind(this)}
-                    disabled={this.canMarkCheckedAsReceived()}>
+                    disabled={!this.canMarkCheckedAsReceived()}>
               Mark as Received
             </button>
           </div>
@@ -524,9 +530,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleAllReceivedCheckboxToggle() {
     const notice = this.state.goodsReceivedNotice;
-    const allReceived = this.allEventsReceivedForNotice(notice);
+    const allChecked = this.allEventsCheckedForNotice(notice);
     const mixedReceived = this.mixedReceivedForNotice(notice);
-    const checked = mixedReceived || !allReceived;
+    const checked = mixedReceived || !allChecked;
 
     notice.goodsReceivedNoticeEvents.forEach(function (e, index) {
       notice.goodsReceivedNoticeEvents[index].checked = checked;
@@ -544,9 +550,19 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     this.setState({ goodsReceivedNotice: notice });
   }
 
+  handleMarkCheckedAsDelivered() {
+    const notice = this.state.goodsReceivedNotice;
+    const allEventsReceived = this.allEventsCheckedForNotice(notice);
+    const confirmed = !allEventsReceived || confirm('Are you sure you want to mark all POs as delivered?');
+    if (!confirmed) return;
+
+    const updatedEvents = filter(notice.goodsReceivedNoticeEvents, 'checked');
+    this.props.onMarkEventsAsDelivered(notice.id, updatedEvents);
+  }
+
   handleMarkCheckedAsReceived() {
     const notice = this.state.goodsReceivedNotice;
-    const allEventsReceived = this.allEventsReceivedForNotice(notice);
+    const allEventsReceived = this.allEventsCheckedForNotice(notice);
     const confirmed = !allEventsReceived || confirm('Are you sure you want to mark all POs as received?');
     if (!confirmed) return;
 
@@ -554,12 +570,22 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     this.props.onMarkEventsAsReceived(notice.id, updatedEvents);
   }
 
-  canMarkCheckedAsReceived() {
-    return !some(this.state.goodsReceivedNotice.goodsReceivedNoticeEvents, 'checked');
+  canMarkCheckedAsDelivered() {
+    const grn = this.state.goodsReceivedNotice;
+    return this.anyEventsCheckedForNotice(grn)
+        && !some(filter(grn.goodsReceivedNoticeEvents, 'checked'), 'received');
   }
 
-  allEventsReceivedForNotice(goodsReceivedNotice) {
+  canMarkCheckedAsReceived() {
+    return this.anyEventsCheckedForNotice(this.state.goodsReceivedNotice);
+  }
+
+  allEventsCheckedForNotice(goodsReceivedNotice) {
     return every(map(goodsReceivedNotice.goodsReceivedNoticeEvents, 'checked'));
+  }
+
+  anyEventsCheckedForNotice(goodsReceivedNotice) {
+    return some(map(goodsReceivedNotice.goodsReceivedNoticeEvents, 'checked'));
   }
 
   mixedReceivedForNotice(goodsReceivedNotice) {
