@@ -11,6 +11,26 @@ export default class GoodsReceivedNoticesTotalsForm extends React.Component {
                         unitsReceived: totalUnits });
   }
 
+  renderCartonsReceivedInputs() {
+    return (
+      <div>
+        <h4>Cartons Received</h4>
+        <hr />
+
+        {this.props.noticeEvents.map((event, index) =>
+          <GoodsReceivedNoticesTotalsFormInput
+            title={`#${event.purchaseOrderId}`}
+            value={event.cartonsReceived}
+            onChange={this.props.onEventCartonsReceivedChange.bind(this, event, index)}
+            key={`event${event.id}`}
+            step={1}
+            htmlId={`event${event.id}`}
+            htmlName={`event${event.id}`} />
+        )}
+      </div>
+    );
+  }
+
   render() {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
@@ -32,19 +52,7 @@ export default class GoodsReceivedNoticesTotalsForm extends React.Component {
           htmlName="totalPallets"
           required />
 
-        <h4>Cartons Received</h4>
-        <hr />
-
-        {this.props.noticeEvents.map((event, index) =>
-          <GoodsReceivedNoticesTotalsFormInput
-            title={`#${event.purchaseOrderId}`}
-            value={event.cartonsReceived}
-            onChange={this.props.onEventCartonsReceivedChange.bind(this, event, index)}
-            key={`event${event.id}`}
-            step={1}
-            htmlId={`event${event.id}`}
-            htmlName={`event${event.id}`} />
-        )}
+        {this.props.warehouseLayout && this.renderCartonsReceivedInputs()}
 
         <div className="text-right">
           <button className="btn btn-warning">Update totals</button>

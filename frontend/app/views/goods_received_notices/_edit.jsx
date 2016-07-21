@@ -77,7 +77,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
               <NavItem eventKey="purchaseOrders">POs</NavItem>
               <NavItem eventKey="packingLists">Packing lists</NavItem>
               <NavItem eventKey="totals">Totals</NavItem>
-              <NavItem eventKey="deliveryCondition">Condition</NavItem>
+              {this.props.warehouseLayout && <NavItem eventKey="deliveryCondition">Condition</NavItem>}
               {this.props.advanced && <NavItem eventKey="advanced">Advanced</NavItem>}
             </Nav>
 
@@ -110,7 +110,8 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         grnId={this.state.id}
         noticeEvents={this.state.goodsReceivedNotice.goodsReceivedNoticeEvents}
         totalUnits={this.state.totalUnits}
-        totalPallets={this.state.totalPallets} />;
+        totalPallets={this.state.totalPallets}
+        warehouseLayout={this.props.warehouseLayout} />;
     case 'advanced':
       return this.renderAdvanced();
     case 'deliveryCondition':
