@@ -20,7 +20,8 @@ export default class GoodsReceivedNoticesTotalsForm extends React.Component {
           onChange={this.props.onChange.bind(this)}
           key="units"
           htmlId="units"
-          htmlName="totalUnits" />
+          htmlName="totalUnits"
+          required />
 
         <GoodsReceivedNoticesTotalsFormInput
           title="Total Expected Pallets"
@@ -28,7 +29,8 @@ export default class GoodsReceivedNoticesTotalsForm extends React.Component {
           onChange={this.props.onChange.bind(this)}
           key="pallets"
           htmlId="pallets"
-          htmlName="totalPallets" />
+          htmlName="totalPallets"
+          required />
 
         <h4>Cartons Received</h4>
         <hr />
