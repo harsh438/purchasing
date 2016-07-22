@@ -34,6 +34,7 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   after_initialize :ensure_defaults
   after_initialize :assign_vendor_from_purchase_order
   after_save :mark_grn_as_received
+  after_save :refresh_grn_totals
 
   def delivered?; human_status == :delivered; end
   def received?; human_status == :received; end
@@ -43,21 +44,28 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   def delivered=(delivered)
     unless delivered? or received?
       self.status = DELIVERED
+      self.cartons_received ||= cartons
     end
   end
 
   def received=(received)
     unless received?
       write_attribute(:IsReceived, received)
-      self.cartons_received = cartons
       self.status = RECEIVED
       self.received_at = Time.current
+      self.cartons_received ||= cartons
+    end
+  end
+
+  def refresh_grn_totals
+    if cartons_received_changed?
+      goods_received_notice.refresh_totals
     end
   end
 
   def mark_grn_as_received
     if received_changed? and received?
-      goods_received_notice.update_received_status_and_totals
+      goods_received_notice.update_received_status
     end
   end
 

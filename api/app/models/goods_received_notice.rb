@@ -81,16 +81,20 @@ class GoodsReceivedNotice < ActiveRecord::Base
     delivery_date < Date.today
   end
 
-  def update_received_status_and_totals
-    self.units_received = goods_received_notice_events.sum(:units)
+  def refresh_totals
     self.cartons_received = goods_received_notice_events.sum(:cartons_received)
 
-    if received?
-      self.received = RECEIVED
-      self.received_at = Time.current
+    if units_received.zero?
+      self.units_received = goods_received_notice_events.sum(:units)
     end
 
     save!
+  end
+
+  def update_received_status
+    if received?
+      update!(received: RECEIVED, received_at: Time.current)
+    end
   end
 
   def status
