@@ -6,11 +6,11 @@ machine:
     version: 4.1.0
   services:
     - docker
+  post:
+    - docker info
+    - eval `aws ecr get-login --region eu-west-1`
 
 dependencies:
-  pre:
-    - docker info
-    - docker login -u $ECR_USER -e none -p $ECR_PASSWORD
   post:
     - npm install:
         pwd: ../frontend/
