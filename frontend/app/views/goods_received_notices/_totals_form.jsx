@@ -23,7 +23,7 @@ export default class GoodsReceivedNoticesTotalsForm extends React.Component {
 
         {visibleNoticeEvents.map((event, index) =>
           <GoodsReceivedNoticesTotalsFormInput
-            title={`#${event.purchaseOrderId}`}
+            title={`#${event.purchaseOrderId} - ${event.vendorName}`}
             value={event.cartonsReceived}
             onChange={this.props.onEventCartonsReceivedChange.bind(this, event, index)}
             key={`event${event.id}`}
