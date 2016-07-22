@@ -30,7 +30,7 @@ FactoryGirl.define do
     trait :with_purchase_orders do
       after(:create) do |grn, evaluator|
         evaluator.po_count.times do
-          grn.goods_received_notice_events << create(:goods_received_notice_event, delivery_date: grn.delivery_date)
+          grn.goods_received_notice_events << build(:goods_received_notice_event, delivery_date: grn.delivery_date)
         end
       end
     end

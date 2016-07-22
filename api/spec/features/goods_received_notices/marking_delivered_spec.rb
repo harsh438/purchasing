@@ -20,6 +20,9 @@ feature 'Marking Purchase Order as delivered', booking_db: true do
     expect(subject['status']).to eq('delivered')
     expect(subject['delivered']).to eq(1)
     expect(subject['goods_received_notice_events'].first['status']).to eq('delivered')
+    expect(subject['cartons_received']).to eq(grn.goods_received_notice_events.first.cartons)
+    expect(subject['goods_received_notice_events'].first['cartons_received']).to(
+      eq(grn.goods_received_notice_events.first.cartons))
   end
 
   def when_a_received_purchase_order_is_marked_as_delivered
