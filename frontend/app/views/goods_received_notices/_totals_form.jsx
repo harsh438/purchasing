@@ -1,4 +1,5 @@
 import React from 'react';
+import { includes } from 'lodash';
 import GoodsReceivedNoticesTotalsFormInput from './_totals_form_input';
 
 export default class GoodsReceivedNoticesTotalsForm extends React.Component {
@@ -12,12 +13,15 @@ export default class GoodsReceivedNoticesTotalsForm extends React.Component {
   }
 
   renderCartonsReceivedInputs() {
+    const visibleNoticeEvents = this.props.noticeEvents.filter(event =>
+      includes(['received', 'delivered'], event.status));
+
     return (
       <div>
         <h4>Cartons Received</h4>
         <hr />
 
-        {this.props.noticeEvents.map((event, index) =>
+        {visibleNoticeEvents.map((event, index) =>
           <GoodsReceivedNoticesTotalsFormInput
             title={`#${event.purchaseOrderId}`}
             value={event.cartonsReceived}
