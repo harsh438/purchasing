@@ -23,6 +23,18 @@ Originally brought to you by the [Made Tech team](https://github.com/madetech).
 
 ## Developing
 
+**Updating gems**
+
+```
+docker-compose build
+```
+
+Now run the following in another tab to setup your DB:
+
+```
+docker-compose run web rake db:setup
+```
+
 **Booting the project for the first time**
 
 ```sh
@@ -37,12 +49,6 @@ simply run:
 docker-compose env default
 ```
 
-Now run the following in another tab to setup your DB:
-
-```
-docker-compose run web rake db:setup
-```
-
 Now import the [redacted dataset][redacted-data] to your local DB. We usually
 do this using SequelPro connected to your docker DB instance. To connect to the
 DB via sequel pro, run `docker-machine env default` and use the IP of the docker
@@ -55,12 +61,6 @@ docker-compose run web rake db:reset
 ```
 
 Now import the [redacted dataset][redacted-data] to your local DB.
-
-**Updating gems**
-
-```
-docker-compose build
-```
 
 **Developing frontend**
 
