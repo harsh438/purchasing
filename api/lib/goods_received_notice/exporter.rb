@@ -50,7 +50,8 @@ class GoodsReceivedNotice::Exporter
        cartons
        pallets
        booked_in_date
-       book_in_by)
+       book_in_by
+       season)
   end
 
   def grn_rows_for_month(attrs)
@@ -96,6 +97,8 @@ class GoodsReceivedNotice::Exporter
     po_rows = grn_events.not_on_weekends
                         .order('bookingin_events.DeliveryDate',
                                'bookingin_events.grn')
+                        .joins(purchase_order: :line_items)
+                        .group(:ID)
                         .pluck('WEEK(bookingin_events.DeliveryDate)',
                                'goods_received_number.DeliveryDate',
                                'goods_received_number.LastDeliveryDate',
@@ -106,8 +109,8 @@ class GoodsReceivedNotice::Exporter
                                'bookingin_events.CartonsExpected',
                                'bookingin_events.PaletsExpected',
                                'bookingin_events.BookedInDate',
-                               'bookingin_events.UserID')
-
+                               'bookingin_events.UserID',
+                               'purchase_orders.po_season')
     po_rows.map(&method(:po_row).curry.call(vendors(po_rows), users(po_rows)))
   end
 
