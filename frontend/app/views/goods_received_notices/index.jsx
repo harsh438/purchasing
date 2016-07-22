@@ -265,7 +265,8 @@ class GoodsReceivedNoticesIndex extends React.Component {
                                   onDelete={this.handleGoodsReceivedNoticeDelete.bind(this)}
                                   onDeletePackingList={this.handleGoodsReceivedNoticeDeletePackingList.bind(this)}
                                   onPurchaseOrderAdd={this.handleAddPurchaseOrderToGoodsReceivedNotice.bind(this)}
-                                  onClose={this.handleGoodsReceivedNoticeClose.bind(this)} />
+                                  onClose={this.handleGoodsReceivedNoticeClose.bind(this)}
+                                  warehouseLayout={this.props.route.warehouse} />
       );
     }
   }
