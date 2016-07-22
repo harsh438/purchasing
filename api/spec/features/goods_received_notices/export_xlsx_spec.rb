@@ -70,5 +70,6 @@ feature 'Download GRNs as XLSX', booking_db: true do
     expect(po_result_rows.second.second).to eq(Date.new(2016, 2, 1).to_s)
     expect(po_result_rows.third.second).to eq(Date.new(2016, 2, 2).to_s)
     expect(po_result_rows.fourth.second).to eq(Date.new(2016, 2, 2).to_s)
+    expect(po_result_rows.first[11]).to eq('AW15')
   end
 end
