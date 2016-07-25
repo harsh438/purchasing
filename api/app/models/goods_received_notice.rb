@@ -85,7 +85,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
     self.cartons_received = goods_received_notice_events.sum(:cartons_received)
 
     if units_received.zero?
-      self.units_received = goods_received_notice_events.sum(:units)
+      self.units_received = goods_received_notice_events.received.sum(:units)
     end
 
     save!
