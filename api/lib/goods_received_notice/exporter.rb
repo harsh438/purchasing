@@ -1,8 +1,11 @@
 class GoodsReceivedNotice::Exporter
   def export(attrs)
-    if attrs[:type] == 'month'
+    case attrs[:type]
+    when 'date'
+      export_day(attrs)
+    when 'month'
       export_month(attrs)
-    elsif attrs[:type] == 'range'
+    when 'range'
       export_range(attrs)
     else
       raise 'GoodsReceivedNotice::Exporter#export attrs[:type] not recognised'
@@ -10,6 +13,17 @@ class GoodsReceivedNotice::Exporter
   end
 
   private
+
+  def export_day(attrs)
+    export = Table::ViewModel.new
+    date = attrs[:date].to_date
+
+    export << grn_columns.map(&:humanize)
+    export.concat(grn_rows_for_day(date))
+
+    export << po_columns.map(&:humanize)
+    export.concat(po_rows_for_day(date))
+  end
 
   def export_month(attrs)
     export = Table::ViewModel.new
@@ -53,6 +67,15 @@ class GoodsReceivedNotice::Exporter
        book_in_by
        season
        total_purchase_order_cost)
+  end
+
+  def grn_rows_for_day(date)
+    grn_rows(GoodsReceivedNotice.delivered_between(date))
+  end
+
+  def po_rows_for_day(date)
+    po_rows(GoodsReceivedNoticeEvent.includes(:goods_received_notice)
+                                    .where(delivery_date: date))
   end
 
   def grn_rows_for_month(attrs)
