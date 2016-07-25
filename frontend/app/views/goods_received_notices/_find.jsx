@@ -16,7 +16,7 @@ export default class GoodsReceivedNoticesFind extends React.Component {
     return (
       <form onChange={this.handleChange.bind(this)}
             onSubmit={e => this.handleSubmit(e, DEFAULT_SEARCH_TYPE)}>
-        <div style={{ float: 'left', width: '75%' }}>
+        <div className="search-grns-form__input">
           <input type="number"
                  className="form-control"
                  placeholder="Search #"
@@ -25,7 +25,7 @@ export default class GoodsReceivedNoticesFind extends React.Component {
                  name="search" />
         </div>
 
-        <div style={{ float: 'right', width: '25%' }}>
+        <div className="search-grns-form__button-container">
           {this.renderSearchButton()}
         </div>
       </form>
@@ -51,8 +51,7 @@ export default class GoodsReceivedNoticesFind extends React.Component {
             onSelect={this.handleSubmit.bind(this)}
             pullRight
             style={{ float: 'right' }}
-            title="Find">
-            <MenuItem eventKey="GRN">Find by GRN</MenuItem>
+            title="Find by GRN">
             <MenuItem eventKey="PO">Find by PO</MenuItem>
           </SplitButton>
         </ButtonToolbar>

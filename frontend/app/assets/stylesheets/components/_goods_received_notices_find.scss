@@ -1,0 +1,29 @@
+.search-grns-form__input {
+  float: left;
+  width: 80%;
+
+  @media (min-width: 990px) and (max-width: 1200px) {
+    width: 55%;
+  }
+
+  @media (min-width: 1201px) {
+    width: 68%;
+  }
+}
+
+.search-grns-form__button-container {
+  float: right;
+  width: 20%;
+
+  .btn-primary:first-of-type {
+    width: calc(100% - 26px);
+  }
+
+  @media (min-width: 990px) and (max-width: 1200px) {
+    width: 45%;
+  }
+
+  @media (min-width: 1201px) {
+    width: 30%;
+  }
+}
