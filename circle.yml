@@ -30,7 +30,7 @@ deployment:
   docker:
     branch: [docker, staging, production]
     commands:
-      - export VERSION_LABEL=`git rev-parse --short HEAD` && docker pull 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest
+      # - export VERSION_LABEL=`git rev-parse --short HEAD` && docker pull 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest
       - export VERSION_LABEL=`git rev-parse --short HEAD` && docker build -f Dockerfile-deploy -t 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest .
       - export VERSION_LABEL=`git rev-parse --short HEAD` && docker push 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest
       - export VERSION_LABEL=`git rev-parse --short HEAD` && docker tag 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:$VERSION_LABEL
