@@ -3,7 +3,7 @@ begin
 
   desc 'Run cane to check quality metrics'
   Cane::RakeTask.new(:cane) do |cane|
-    cane.abc_max = 15
+    cane.abc_max = 20
     cane.style_measure = 130
     cane.no_readme = true
     cane.no_doc = true
