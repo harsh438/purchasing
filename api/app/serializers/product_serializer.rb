@@ -80,7 +80,7 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def legacy_more_from_category
-    object.categories.first.id
+    object.categories.first.try(:id)
   end
 
   def parts
