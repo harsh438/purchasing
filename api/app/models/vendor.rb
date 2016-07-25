@@ -16,7 +16,7 @@ class Vendor < ActiveRecord::Base
 
   has_one :details, class_name: 'VendorDetail'
   accepts_nested_attributes_for :details
-  belongs_to :product, foreign_key: :venID
+  has_many :products, foreign_key: :venID
 
   map_attributes id: :venID,
                  name: :venCompany

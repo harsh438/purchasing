@@ -27,7 +27,7 @@ class Product < ActiveRecord::Base
                  photo_width: :pPhoto4Width
 
   has_one :reporting_category, foreign_key: :pid
-  has_one :vendor, foreign_key: :venID
+  belongs_to :vendor, foreign_key: :venID
   has_many :language_products, foreign_key: :pID
   has_many :kit_managers, foreign_key: :pID
   has_many :product_images
