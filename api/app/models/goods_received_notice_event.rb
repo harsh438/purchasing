@@ -12,6 +12,8 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
     where('DAYOFWEEK(bookingin_events.DeliveryDate) != 1 AND DAYOFWEEK(bookingin_events.DeliveryDate) != 7')
   end
 
+  scope :received, -> { where(status: RECEIVED) }
+
   map_attributes id: :ID,
                  purchase_order_id: :po,
                  units: :TotalUnits,
