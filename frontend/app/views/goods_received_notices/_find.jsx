@@ -1,5 +1,7 @@
 import React from 'react';
-import { ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
+import { ButtonToolbar, MenuItem, SplitButton } from 'react-bootstrap';
+
+const DEFAULT_SEARCH_TYPE = 'GRN';
 
 export default class GoodsReceivedNoticesFind extends React.Component {
   componentWillMount() {
@@ -7,17 +9,14 @@ export default class GoodsReceivedNoticesFind extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.noticeWeeks !== nextProps.noticeWeeks ||
-        this.props.goodsReceivedNotice !== nextProps.goodsReceivedNotice) {
-      this.setState({ onLoading: false });
-    }
+    this.setState({ onLoading: false });
   }
 
   render() {
     return (
       <form onChange={this.handleChange.bind(this)}
-            onSubmit={(e) => e.preventDefault()}>
-        <div style={{ float: 'left', width: '75%' }}>
+            onSubmit={e => this.handleSubmit(e, DEFAULT_SEARCH_TYPE)}>
+        <div className="search-grns-form__input">
           <input type="number"
                  className="form-control"
                  placeholder="Search #"
@@ -26,7 +25,7 @@ export default class GoodsReceivedNoticesFind extends React.Component {
                  name="search" />
         </div>
 
-        <div style={{ float: 'right', width: '25%' }}>
+        <div className="search-grns-form__button-container">
           {this.renderSearchButton()}
         </div>
       </form>
@@ -45,15 +44,16 @@ export default class GoodsReceivedNoticesFind extends React.Component {
     } else {
       return (
         <ButtonToolbar>
-          <DropdownButton bsStyle="primary"
-                          id="search-grns"
-                          onSelect={this.handleSubmit.bind(this)}
-                          pullRight
-                          style={{ float: 'right' }}
-                          title="Find">
-            <MenuItem eventKey="GRN">Find by GRN</MenuItem>
+          <SplitButton
+            bsStyle="primary"
+            id="search-grns"
+            onClick={e => this.handleSubmit(e, DEFAULT_SEARCH_TYPE)}
+            onSelect={this.handleSubmit.bind(this)}
+            pullRight
+            style={{ float: 'right' }}
+            title="Find by GRN">
             <MenuItem eventKey="PO">Find by PO</MenuItem>
-          </DropdownButton>
+          </SplitButton>
         </ButtonToolbar>
       );
     }
