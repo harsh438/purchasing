@@ -69,6 +69,10 @@ class GoodsReceivedNotice < ActiveRecord::Base
   after_initialize :ensure_packing_condition
   after_update :set_delivery_date_on_all_events
 
+  def booked?
+    status == :booked
+  end
+
   def delivered?
     status == :delivered
   end
@@ -117,6 +121,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
 
   def as_json(options = {})
     super.tap do |grn|
+      grn[:booked] = booked? ? 1 : 0
       grn[:delivered] = delivered? ? 1 : 0
       grn[:delivery_date] = grn['delivery_date'].to_s
       grn[:status] = status
