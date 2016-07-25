@@ -155,8 +155,14 @@ class GoodsReceivedNoticesIndex extends React.Component {
           </button>
         </div>
 
-        <div className="col-md-3">
+        <div className="col-md-4">
           <div className="btn-group" role="group">
+            <a href={this.exportDayUrl()}
+               className="btn btn-default"
+               target="_blank">
+              <span className="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+              &nbsp;Day
+            </a>
             <a href={this.exportMonthUrl()}
                className="btn btn-default"
                target="_blank">
@@ -178,7 +184,7 @@ class GoodsReceivedNoticesIndex extends React.Component {
           </div>
         </div>
 
-        <div className="col-md-3 col-md-offset-2">
+        <div className="col-md-3 col-md-offset-1">
           <GoodsReceivedNoticesFind noticeWeeks={this.props.noticeWeeks}
                                     goodsReceivedNotice={this.props.goodsReceivedNotice}
                                     onSearch={this.handleSearch.bind(this)} />
@@ -412,6 +418,13 @@ class GoodsReceivedNoticesIndex extends React.Component {
   monthAndYearMatches() {
     return this.startDateMonth() === this.state.startDateMonth && this.startDateYear() === this.state.startDateYear;
   }
+
+  exportDayUrl() {
+    const query = Qs.stringify({ date: moment(this.state.currentDate, 'DD/MM/YYYY').format('YYYY-MM-DD'),
+                                 type: 'date' });
+    return '/api/goods_received_notices.xlsx?' + query;
+  }
+
 
   exportMonthUrl() {
     const query = Qs.stringify({ month: this.state.startDateMonth,
