@@ -51,7 +51,8 @@ class GoodsReceivedNotice::Exporter
        pallets
        booked_in_date
        book_in_by
-       season)
+       season
+       total_purchase_order_cost)
   end
 
   def grn_rows_for_month(attrs)
@@ -110,7 +111,8 @@ class GoodsReceivedNotice::Exporter
                                'bookingin_events.PaletsExpected',
                                'bookingin_events.BookedInDate',
                                'bookingin_events.UserID',
-                               'purchase_orders.po_season')
+                               'purchase_orders.po_season',
+                               'sum(purchase_orders.cost)')
     po_rows.map(&method(:po_row).curry.call(vendors(po_rows), users(po_rows)))
   end
 
