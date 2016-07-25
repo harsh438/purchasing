@@ -64,6 +64,7 @@ class GoodsReceivedNoticesController < ApplicationController
 
   def events_attrs
     [:_destroy,
+     :booked,
      :cartons,
      :cartons_received,
      :delivered,

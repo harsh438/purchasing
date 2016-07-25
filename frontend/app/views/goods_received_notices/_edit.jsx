@@ -249,6 +249,12 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
               Mark as Received
             </button>
             &nbsp;
+            <button className="btn btn-default"
+                    onClick={this.handleMarkCheckedAsBooked.bind(this)}
+                    disabled={!this.canMarkCheckedAsBooked()}>
+              Reset
+            </button>
+            &nbsp;
             <button className="btn btn-danger"
                     onClick={this.handleDeleteCheckedEvents.bind(this)}
                     disabled={!this.canDeleteCheckedEvents()}>
@@ -574,6 +580,17 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     this.handleTabChange('totals');
   }
 
+  handleMarkCheckedAsBooked() {
+    const notice = this.state.goodsReceivedNotice;
+    const allEventsReceived = this.allEventsCheckedForNotice(notice);
+    const confirmed = !allEventsReceived || confirm('Are you sure you want to reset all POs to booked?');
+    if (!confirmed) return;
+
+    const updatedEvents = filter(notice.goodsReceivedNoticeEvents, 'checked');
+    this.props.onMarkEventsAsBooked(notice.id, updatedEvents);
+    this.handleTabChange('totals');
+  }
+
   handleDeleteCheckedEvents() {
     const notice = this.state.goodsReceivedNotice;
     const eventsToDelete = filter(notice.goodsReceivedNoticeEvents, 'checked');
@@ -590,6 +607,10 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     const grn = this.state.goodsReceivedNotice;
     return this.anyEventsCheckedForNotice(grn)
         && !some(filter(grn.goodsReceivedNoticeEvents, 'checked'), 'received');
+  }
+
+  canMarkCheckedAsBooked() {
+    return this.anyEventsCheckedForNotice(this.state.goodsReceivedNotice);
   }
 
   canMarkCheckedAsReceived() {

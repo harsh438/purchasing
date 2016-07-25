@@ -1,4 +1,5 @@
 class GoodsReceivedNoticeEvent < ActiveRecord::Base
+  BOOKED = 1
   DELIVERED = 2
   RECEIVED = 4
 
@@ -42,6 +43,15 @@ class GoodsReceivedNoticeEvent < ActiveRecord::Base
   def received?; human_status == :received; end
   def late?; human_status == :late; end
   def booked?; human_status == :booked; end
+
+  def booked=(booked)
+    if booked
+      write_attribute(:IsReceived, false)
+      self.status = BOOKED
+      self.cartons_received = 0
+      self.received_at = nil
+    end
+  end
 
   def delivered=(delivered)
     unless delivered? or received?
