@@ -97,7 +97,7 @@ export default class RefusedDeliveriesForm extends React.Component {
                            value={this.state.refusalReason} /></td>
             </tr>
             <tr>
-                <td><label htmlFor="refusalReason">Reason for refusal</label></td>
+                <td><label htmlFor="refusalReason">Attach Images</label></td>
                 <td>
                   <DropZone multiple
                             onDrop={this.handleFile.bind(this)}
