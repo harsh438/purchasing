@@ -9,10 +9,7 @@ export default class GoodsReceivedNoticesFind extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.noticeWeeks !== nextProps.noticeWeeks ||
-        this.props.goodsReceivedNotice !== nextProps.goodsReceivedNotice) {
-      this.setState({ onLoading: false });
-    }
+    this.setState({ onLoading: false });
   }
 
   render() {
