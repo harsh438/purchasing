@@ -98,8 +98,6 @@ class GoodsReceivedNotice::Exporter
     po_rows = grn_events.not_on_weekends
                         .order('bookingin_events.DeliveryDate',
                                'bookingin_events.grn')
-                        .joins(purchase_order: :line_items)
-                        .group(:ID)
                         .pluck('WEEK(bookingin_events.DeliveryDate)',
                                'goods_received_number.DeliveryDate',
                                'goods_received_number.LastDeliveryDate',
@@ -110,10 +108,21 @@ class GoodsReceivedNotice::Exporter
                                'bookingin_events.CartonsExpected',
                                'bookingin_events.PaletsExpected',
                                'bookingin_events.BookedInDate',
-                               'bookingin_events.UserID',
-                               'purchase_orders.po_season',
-                               'sum(purchase_orders.cost)')
+                               'bookingin_events.UserID')
+    po_rows_add_purchase_order_data(po_rows)
     po_rows.map(&method(:po_row).curry.call(vendors(po_rows), users(po_rows)))
+  end
+
+  def po_rows_add_purchase_order_data(po_rows)
+    po_data = PurchaseOrder.where(id: po_rows.map { |po_row| po_row[5] })
+                           .joins(:line_items)
+                           .group(:po_num)
+                           .pluck(:po_num, :po_season, 'sum(cost)')
+    po_rows.each do |po_row|
+      po_number = po_row[5]
+      po_fields = po_data.find { |po| po[0] === po_number }
+      po_row.concat(po_fields.slice(1, 2))
+    end
   end
 
   def vendors(po_rows)
