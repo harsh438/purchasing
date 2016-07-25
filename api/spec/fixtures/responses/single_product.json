@@ -10,7 +10,7 @@
       "sale_price": 0.0,
       "active": "Y",
       "barcode": "ABC123456",
-      "brand": "Too Awesome",
+      "brand": 8981,
       "properties": {
         "Gender": "U",
         "Colour": "blue"

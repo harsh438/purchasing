@@ -171,7 +171,7 @@ RSpec.describe Product do
           barcode: product.barcode,
           cost_price: product.cost,
           dropshipment: product.dropshipment,
-          brand: product.vendor.name,
+          brand: product.vendor.id,
           shipping_category: 'Default',
           properties: {
             'Gender' => product.listing_genders,
