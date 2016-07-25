@@ -1,6 +1,7 @@
 @import '../../../node_modules/bootstrap/dist/css/bootstrap';
 @import '../../../node_modules/react-select/dist/react-select';
 @import 'vendor/handsontable.full.min';
+@import 'variables/colours';
 @import 'components/form_container';
 @import 'components/goods_received_notices_column';
 @import 'components/goods_received_notices_day';
@@ -14,3 +15,4 @@
 @import 'components/toggle_field';
 @import 'components/page';
 @import 'components/spin';
+@import 'components/label';

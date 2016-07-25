@@ -88,8 +88,17 @@ class GoodsReceivedNoticesIndex extends React.Component {
       <div className="grn_index container-fluid"
            style={{ marginTop: '70px' }}>
         <div className="row" style={{ marginBottom: '20px' }}>
-          <div className="col-md-4">
-            <h1>Booking tool</h1>
+          <div className="col-md-8">
+            <h1 style={{ display: 'inline-block' }}>Booking tool</h1>
+            <h4 style={{ display: 'inline-block',
+                         position: 'relative',
+                         bottom: '7px',
+                         marginLeft: '25px' }}>
+              <span className="label label-white" style={{ marginRight: '3px' }}>Booked</span>
+              <span className="label label-danger" style={{ marginRight: '3px' }}>Some late</span>
+              <span className="label label-warning" style={{ marginRight: '3px' }}>Some delivered</span>
+              <span className="label label-success">All received</span>
+            </h4>
           </div>
         </div>
         {this.renderNavigation()}
