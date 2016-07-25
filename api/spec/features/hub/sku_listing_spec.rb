@@ -63,7 +63,7 @@ feature 'Listing Skus for the hub' do
     request_id_should_be_identical
     expect(subject['skus'].count).to be(0)
     no_objects_should_be_returned
-    timestamp_should_roughly_be(Time.now)
+    timestamp_should_roughly_be(Time.current)
   end
 
   def then_i_request_the_next_page(params)
@@ -185,7 +185,7 @@ feature 'Listing Skus for the hub' do
   def timestamp_should_roughly_be(timestamp)
     maximum_diff = 10.minutes.to_i
     timestamp_returned = subject['parameters']['last_timestamp']
-    expect((Time.parse(timestamp_returned) - timestamp).abs).to be < maximum_diff
+    expect((Time.zone.parse(timestamp_returned) - timestamp).abs).to be < maximum_diff
   end
 
   def last_id_should_be(last_id)

@@ -1,5 +1,11 @@
+require 'set'
+
 class Product < ActiveRecord::Base
   self.table_name = :ds_products
+
+  UGLY_SHIPPING_CATEGORIES = [
+    480, 462, 546, 784, 761, 780, 486, 635, 463, 596, 742
+  ].freeze
 
   include LegacyMappings
 
@@ -7,6 +13,7 @@ class Product < ActiveRecord::Base
                  manufacturer_sku: :pNum,
                  cost: :pCost,
                  price: :pPrice,
+                 sale_price: :pSalesPrice,
                  size: :pSize,
                  vendor_id: :venID,
                  on_sale: :pSale,
@@ -14,17 +21,75 @@ class Product < ActiveRecord::Base
                  season: :pUDFValue4,
                  barcode: :pUDFValue1,
                  listing_genders: :pUDFValue3,
-                 inv_track: :invTrack
+                 inv_track: :invTrack,
+                 dropshipment: :pUDFValue5,
+                 active: :pAvail,
+                 photo_width: :pPhoto4Width
 
-  has_many :product_genders, foreign_key: :pid
-  has_one :language_product, foreign_key: :pID
+  has_one :reporting_category, foreign_key: :pid
+  has_one :vendor, foreign_key: :venID
+  has_many :language_products, foreign_key: :pID
+  has_many :kit_managers, foreign_key: :pID
+  has_many :product_images
+  has_many :pvx_ins, foreign_key: :pid
   has_many :language_product_options, foreign_key: :pID
   has_many :product_categories, foreign_key: :pID
   has_many :categories, through: :product_categories
-  belongs_to :product_detail, foreign_key: :pID
   has_many :skus
+  has_many :genders, foreign_key: :pid, class_name: 'ProductGender'
+  belongs_to :product_detail, foreign_key: :pID
+
+  def related
+    Product
+      .joins(:language_products)
+      .where({
+        ds_language_products: { langID: 1 },
+        ds_products: { pUDFValue3: listing_genders }
+      })
+      .where('ds_language_products.pName LIKE :name AND ds_products.pID != :id', {
+        name: similar_product_name_search,
+        id: id,
+      })
+      .where('ds_products.pPhoto4Width > 0 AND ds_products.pAvail = "Y"')
+  end
 
   def as_json(*args)
-    super.merge(id: id, manufacturer_sku: manufacturer_sku, price: price)
+    ProductSerializer.new(self).as_json(*args)
+  end
+
+  def lead_gender
+    listing_genders.split(/\W+/).reduce(Set.new) do |set, gender_key|
+      char = Gender.string_from(gender_key.upcase)
+      char.nil? ? set : set << char
+    end.to_a
+  end
+
+  def has_ugly_shipping_category?
+    categories.where('ds_categories.catID IN (?)', UGLY_SHIPPING_CATEGORIES).exists?
+  end
+
+  def self.pending_import(last_imported_id, limit_count, last_import_timestamp)
+    joins(skus: [:barcodes])
+      .distinct
+      .where('skus.updated_at >= :timestamp AND ds_products.pID > :id', {
+        timestamp: last_import_timestamp,
+        id: last_imported_id,
+      })
+      .where("ds_products.pUDFValue1 != ''")
+      .order('skus.updated_at ASC, ds_products.pID ASC')
+      .limit(limit_count)
+  end
+
+  private
+
+  def similar_product_name_search
+    # Vendor Name - Product Name - Colour
+    # becomes ...
+    # Vendor Name - Product Name - %
+    language_products.find_by(langID: 1)
+      .name
+        .split(' - ')
+        .take(2)
+        .join(' - ') + ' - %'
   end
 end

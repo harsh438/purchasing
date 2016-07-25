@@ -24,6 +24,11 @@ class Sku < ActiveRecord::Base
   belongs_to :language_product_option, foreign_key: :language_product_option_id
 
   has_many :barcodes
+  has_many :pvx_ins, through: :product
+  has_many :product_images, through: :product
+  has_one :reporting_category, through: :product
+  has_many :product_categories, foreign_key: :pID
+  has_many :categories, through: :product_categories
   accepts_nested_attributes_for :barcodes
 
   has_many :purchase_order_line_items
@@ -32,6 +37,10 @@ class Sku < ActiveRecord::Base
 
   def self.updated_since(timestamp, max_id)
     where('(skus.updated_at = ? and skus.id > ?) or (skus.updated_at > ?)', timestamp, max_id, timestamp)
+  end
+
+  def self.product_updated_since(timestamp, max_pid)
+    where('(skus.updated_at = ? and skus.product_id > ?) or (skus.updated_at > ?)', timestamp, max_id, timestamp)
   end
 
   def self.with_barcode
@@ -65,5 +74,4 @@ class Sku < ActiveRecord::Base
   def self.po_by_operator(ot_number)
     Sku.joins(:purchase_order_line_items).where('purchase_orders.operator =?', "OT_#{ot_number}")
   end
-
 end

@@ -86,7 +86,7 @@ class Sku::Exporter
 
   def create_option_legacy_records(sku, product)
     @product = product
-    @language_product = product.language_product
+    @language_product = product.language_products.find_by(language_id: 1)
     create_option(sku)
     create_element(sku)
     create_language_product_option(sku)
