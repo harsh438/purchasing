@@ -114,6 +114,13 @@ export function markGoodsReceivedNoticeEventsReceivedStatus(grnId, events, recei
   return updateGrn(grnId, goodsReceivedNotice, currentDate);
 }
 
+export function markGoodsReceivedNoticeEventsBookedStatus(grnId, events, booked, currentDate) {
+  const goods_received_notice_events_attributes = events.map(event => ({ id: event.id, booked }));
+  let goodsReceivedNotice = { goods_received_notice: { id: grnId, goods_received_notice_events_attributes } };
+
+  return updateGrn(grnId, goodsReceivedNotice, currentDate);
+}
+
 export function deleteGoodsReceivedNoticeEvents(grnId, events, received, currentDate) {
   const goods_received_notice_events_attributes = events.map(event => ({ id: event.id, received }));
   let goodsReceivedNotice = { goods_received_notice: { id: grnId, goods_received_notice_events_attributes } };
