@@ -1,5 +1,7 @@
 import React from 'react';
-import { ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
+import { ButtonToolbar, MenuItem, SplitButton } from 'react-bootstrap';
+
+const DEFAULT_SEARCH_TYPE = 'GRN';
 
 export default class GoodsReceivedNoticesFind extends React.Component {
   componentWillMount() {
@@ -16,7 +18,7 @@ export default class GoodsReceivedNoticesFind extends React.Component {
   render() {
     return (
       <form onChange={this.handleChange.bind(this)}
-            onSubmit={(e) => e.preventDefault()}>
+            onSubmit={e => this.handleSubmit(e, DEFAULT_SEARCH_TYPE)}>
         <div style={{ float: 'left', width: '75%' }}>
           <input type="number"
                  className="form-control"
@@ -45,15 +47,17 @@ export default class GoodsReceivedNoticesFind extends React.Component {
     } else {
       return (
         <ButtonToolbar>
-          <DropdownButton bsStyle="primary"
-                          id="search-grns"
-                          onSelect={this.handleSubmit.bind(this)}
-                          pullRight
-                          style={{ float: 'right' }}
-                          title="Find">
+          <SplitButton
+            bsStyle="primary"
+            id="search-grns"
+            onClick={e => this.handleSubmit(e, DEFAULT_SEARCH_TYPE)}
+            onSelect={this.handleSubmit.bind(this)}
+            pullRight
+            style={{ float: 'right' }}
+            title="Find">
             <MenuItem eventKey="GRN">Find by GRN</MenuItem>
             <MenuItem eventKey="PO">Find by PO</MenuItem>
-          </DropdownButton>
+          </SplitButton>
         </ButtonToolbar>
       );
     }
