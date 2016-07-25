@@ -88,7 +88,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
   def refresh_totals
     self.cartons_received = goods_received_notice_events.sum(:cartons_received)
 
-    if units_received.zero?
+    if units_received.present? and units_received.zero?
       self.units_received = goods_received_notice_events.received.sum(:units)
     end
 
@@ -160,6 +160,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
     self.received_at ||= 0
     self.page_count ||= 0
     self.order_id ||= 0
+    self.units_received ||= 0
     self.cartons_received ||= 0
     self.units ||= 0
     self.cartons ||= 0
