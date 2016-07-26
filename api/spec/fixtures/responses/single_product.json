@@ -9,13 +9,13 @@
       "cost_price": 8.17,
       "sale_price": 0.0,
       "active": "Y",
-      "barcode": "ABC123456",
+      "barcode": "ABC123457",
       "brand": 8981,
       "properties": {
         "Gender": "U",
         "Colour": "blue"
       },
-      "dropshipment": "D-R-P",
+      "dropshipment": true,
       "use_legacy_slug": true,
       "images": [
         {
