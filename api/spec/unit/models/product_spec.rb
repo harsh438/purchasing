@@ -170,7 +170,7 @@ RSpec.describe Product do
           use_legacy_slug: true,
           barcode: product.barcodes.latest.first.barcode,
           cost_price: product.cost,
-          dropshipment: product.dropshipment,
+          dropshipment: true,
           brand: product.vendor.id,
           shipping_category: 'Default',
           properties: {
