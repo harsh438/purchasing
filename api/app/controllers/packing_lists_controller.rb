@@ -1,6 +1,20 @@
 class PackingListsController < ApplicationController
   def index
-    render json: packing_lists
+    respond_to do |format|
+      format.json { render json: packing_lists }
+      format.pdf { render pdf: PackingList::Exporter.new.export(params) }
+    end
+  end
+
+  def show
+    respond_to do |format|
+      format.pdf  do
+        pdf = PackingList::Exporter.new.export(params)
+        send_data pdf.render, filename: "#{params[:type]}-#{params[:id]}",
+                              type: 'application/pdf',
+                              disposition: 'inline'
+      end
+    end
   end
 
   private

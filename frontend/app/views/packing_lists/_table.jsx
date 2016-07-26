@@ -1,5 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
+import Qs from 'qs';
 import { packingListName } from '../../utilities/packing_list';
 
 export default class PackingListsTable extends React.Component {
@@ -35,12 +36,12 @@ export default class PackingListsTable extends React.Component {
         <td>{deliveryDate}</td>
         <td>{map(packingListUrls, this.renderPackingListUrl, this)}</td>
         <td>
-          <a href={checkSheetUrl}
+          <a href={this.checkSheet(grn)}
              target="_blank"
              className="btn btn-default">Print goods in check sheet</a>
         </td>
         <td>
-          <a href={grnPaperUrl}
+          <a href={this.grnPaper(grn)}
              target="_blank"
              className="btn btn-default">Print GRN paper</a>
         </td>
@@ -54,5 +55,15 @@ export default class PackingListsTable extends React.Component {
         <a href={url} target="_blank">{packingListName(url)}</a>
       </div>
     );
+  }
+
+  grnPaper(grn) {
+    const query = Qs.stringify({ type: 'grn' });
+    return '/api/packing_lists/'+grn+'.pdf?' + query;
+  }
+
+  checkSheet(grn) {
+    const query = Qs.stringify({ type: 'check_sheet' });
+    return '/api/packing_lists/'+grn+'.pdf?' + query;
   }
 }

@@ -32,7 +32,7 @@ Rails.application.routes.draw do
 
     resources :order_line_items, only: [:update, :destroy]
 
-    resources :packing_lists, only: :index
+    resources :packing_lists, only: [:index, :show]
 
     resources :refused_deliveries_logs, only: [:index, :create, :update]
 
