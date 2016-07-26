@@ -1,5 +1,6 @@
 import React from 'react';
 import GoodsReceivedNoticesConditionFormInput from './_condition_form_input';
+import GoodsReceivedNoticesConditionShortSubform from './_condition_short_subform';
 
 export default class GoodsReceivedNoticesConditionForm extends React.Component {
   render() {
@@ -34,7 +35,8 @@ export default class GoodsReceivedNoticesConditionForm extends React.Component {
               <GoodsReceivedNoticesConditionFormInput
                 condition={this.props.condition}
                 conditionKey="cartons_good_condition"
-                label="Cartons in Good Condition?" />
+                label="Cartons in Good Condition?"
+                subform={GoodsReceivedNoticesConditionShortSubform} />
 
               <GoodsReceivedNoticesConditionFormInput
                 condition={this.props.condition}
