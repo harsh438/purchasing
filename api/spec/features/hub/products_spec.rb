@@ -81,7 +81,9 @@ feature 'Requesting products ready for import' do
   end
 
   let!(:negative_product) do
-    create(:product, :with_skus, :with_reporting_category, barcode: '')
+    create(:product, :with_reporting_category, barcode: '').tap do |p|
+      p.skus += create_list(:sku_without_barcode, 2)
+    end
   end
 
   let(:request_id) { 'n3nuea8nvr13ugy' }
