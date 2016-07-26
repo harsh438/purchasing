@@ -15,7 +15,7 @@
         "Gender": "U",
         "Colour": "blue"
       },
-      "dropshipment": "D-R-P",
+      "dropshipment": true,
       "use_legacy_slug": true,
       "images": [
         {

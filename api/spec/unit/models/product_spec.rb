@@ -168,9 +168,9 @@ RSpec.describe Product do
           sale_price: product.sale_price,
           active: product.active,
           use_legacy_slug: true,
-          barcode: product.barcode,
+          barcode: product.barcodes.latest.first.barcode,
           cost_price: product.cost,
-          dropshipment: product.dropshipment,
+          dropshipment: true,
           brand: product.vendor.id,
           shipping_category: 'Default',
           properties: {

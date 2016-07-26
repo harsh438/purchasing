@@ -37,6 +37,7 @@ class Product < ActiveRecord::Base
   has_many :categories, through: :product_categories
   has_many :skus
   has_many :genders, foreign_key: :pid, class_name: 'ProductGender'
+  has_many :barcodes, through: :skus
   belongs_to :product_detail, foreign_key: :pID
 
   def related

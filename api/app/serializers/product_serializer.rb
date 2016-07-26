@@ -47,8 +47,12 @@ class ProductSerializer < ActiveModel::Serializer
     }
   end
 
+  def dropshipment
+    object.dropshipment == 'D-R-P'
+  end
+
   def barcode
-    object.barcode
+    object.barcodes.latest.first.try(:barcode)
   end
 
   def images
