@@ -25,7 +25,7 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def brand
-    object.vendor.name
+    object.vendor.try(:id)
   end
 
   def use_legacy_slug

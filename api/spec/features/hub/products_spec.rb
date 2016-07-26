@@ -47,7 +47,7 @@ feature 'Requesting products ready for import' do
     expect(JSON.pretty_generate(subject).strip).to eq(File.read(file).strip)
   end
 
-  let(:vendor) { create(:vendor, name: 'Too Awesome') }
+  let(:vendor) { create(:vendor, name: 'Too Awesome', id: 8981) }
 
   let(:sized_product) do
     create(
