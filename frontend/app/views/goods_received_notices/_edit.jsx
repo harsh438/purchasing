@@ -1,10 +1,10 @@
 import React from 'react';
 import DropZone from 'react-dropzone';
-import RadioGroup from 'react-radio-group';
 import { renderSelectOptions } from '../../utilities/dom';
 import { map, every, filter, some } from 'lodash';
 import { Nav, NavItem } from 'react-bootstrap';
 import { packingListName } from '../../utilities/packing_list';
+import GoodsReceivedNoticesConditionForm from './_condition_form';
 import GoodsReceivedNoticesTotalsForm from './_totals_form';
 
 export default class GoodsReceivedNoticesEdit extends React.Component {
@@ -115,7 +115,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     case 'advanced':
       return this.renderAdvanced();
     case 'deliveryCondition':
-      return this.renderDeliveryCondition();
+      return <GoodsReceivedNoticesConditionForm
+        condition={this.state.goodsReceivedNotice.packingCondition}
+        onChange={this.handleConditionFormChange.bind(this)} />;
     }
   }
 
@@ -369,89 +371,6 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
         );
       });
     }
-  }
-
-  renderDeliveryCondition() {
-    let condition = this.state.goodsReceivedNotice.packingCondition;
-    return (
-      <div>
-        <form onChange={this.handleConditionFormChange.bind(this)}>
-          <table className="table table-striped table-condensed"
-                 style={{ fontSize: '12px' }}>
-            <thead>
-              <tr>
-                <th colSpan="6">
-                  Delivery Condition
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td colSpan="3">Delivery Booked In?</td>
-                <td colSpan="3">
-                  {this.renderConditionRadio(condition, 'booked_in')}
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="3">Delivery Arrived Correctly?</td>
-                <td colSpan="3">
-                  {this.renderConditionRadio(condition, 'arrived_correctly')}
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="3">Packing List Received?</td>
-                <td colSpan="3">
-                  {this.renderConditionRadio(condition, 'packing_list_received')}
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="3">Any Items in Quarantine?</td>
-                <td colSpan="3">
-                  {this.renderConditionRadio(condition, 'items_in_quarantine')}
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="3">Cartons in Good Condition?</td>
-                <td colSpan="3">
-                  {this.renderConditionRadio(condition, 'cartons_good_condition')}
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="3">GRN or PO Marked on Cartons?</td>
-                <td colSpan="3">
-                  {this.renderConditionRadio(condition, 'grn_or_po_marked_on_cartons')}
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="3">Cartons Palletised Correctly (16 or more)?</td>
-                <td colSpan="3">
-                  {this.renderConditionRadio(condition, 'cartons_palletised_correctly')}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
-      </div>
-    );
-  }
-
-  renderConditionRadio(condition, key) {
-    return (
-      <RadioGroup name={key}
-                  selectedValue={condition[key].toString()}
-                  onChange={() => 'noop'}>
-        {Radio => (
-          <div className="form-group" style={{ margin: 0 }}>
-            <label className="status-label">
-              <Radio value="1" /> Yes
-            </label>
-            <label className="status-label">
-              <Radio value="0" /> No
-            </label>
-          </div>
-        )}
-      </RadioGroup>
-    );
   }
 
   renderAdvanced() {
