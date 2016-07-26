@@ -5,6 +5,7 @@ class ContentSerializer < ActiveModel::Serializer
 
   LANGUAGE_MAP = {
                    1 => 'en',
+                   2 => 'de',
                    3 => 'fr'
                  }
 
