@@ -71,11 +71,10 @@ class Product < ActiveRecord::Base
   def self.pending_import(last_imported_id, limit_count, last_import_timestamp)
     joins(skus: [:barcodes])
       .distinct
-      .where('skus.updated_at >= :timestamp AND ds_products.pID > :id', {
+      .where('(skus.updated_at = :timestamp AND ds_products.pID > :id) OR (skus.updated_at >= :timestamp)', {
         timestamp: last_import_timestamp,
         id: last_imported_id,
       })
-      .where("ds_products.pUDFValue1 != ''")
       .order('skus.updated_at ASC, ds_products.pID ASC')
       .limit(limit_count)
   end
