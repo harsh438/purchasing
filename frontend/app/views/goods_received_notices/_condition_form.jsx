@@ -35,8 +35,11 @@ export default class GoodsReceivedNoticesConditionForm extends React.Component {
               <GoodsReceivedNoticesConditionFormInput
                 condition={this.props.condition}
                 conditionKey="cartons_good_condition"
-                label="Cartons in Good Condition?"
-                subform={GoodsReceivedNoticesConditionShortSubform} />
+                label="Cartons in Good Condition?">
+                <GoodsReceivedNoticesConditionShortSubform
+                  unitsAffected=""
+                  files={[]} />
+              </GoodsReceivedNoticesConditionFormInput>
 
               <GoodsReceivedNoticesConditionFormInput
                 condition={this.props.condition}

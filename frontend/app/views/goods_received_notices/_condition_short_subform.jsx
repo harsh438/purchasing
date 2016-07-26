@@ -1,7 +1,15 @@
 import React from 'react';
-import DropZone from 'react-dropzone';
+import GoodsReceivedNoticesImageUpload from './_image_upload';
 
 export default class GoodsReceivedNoticesConditionShortSubform extends React.Component {
+  componentWillMount() {
+    this.state = { files: [] };
+  }
+
+  handleImage(image) {
+    this.setState({ files: [...this.state.files, image] });
+  }
+
   render() {
     return (
       <div className="row" style={{ padding: '5px' }}>
@@ -16,7 +24,7 @@ export default class GoodsReceivedNoticesConditionShortSubform extends React.Com
               step={1}
               type="number"
               placeholder="#"
-              value="" />
+              value={this.props.unitsAffected} />
           </div>
 
           <div className="form-group">
@@ -24,16 +32,10 @@ export default class GoodsReceivedNoticesConditionShortSubform extends React.Com
               Attach Images
             </label>
 
-            <DropZone
-              multiple
-              onDrop={() => {}}
-              style={{ color: '#999', padding: '30px', border: '2px dashed #999' }}
-              inputProps={{ htmlFor: 'grn_condition_attach_images' }}
-              accept=".jpg,.jpeg,.png,.pdf,.eml">
-              <div>
-                Image(s) displaying the issue. Drag and drop files here, or click to select files to upload.
-              </div>
-            </DropZone>
+            <GoodsReceivedNoticesImageUpload
+              htmlFor="grn_condition_attach_images"
+              onUpload={this.handleImage.bind(this)}
+              files={this.state.files} />
           </div>
         </div>
       </div>

@@ -4,8 +4,7 @@ import RadioGroup from 'react-radio-group';
 export default class GoodsReceivedNoticesConditionFormInput extends React.Component {
   render() {
     const value = this.props.condition[this.props.conditionKey];
-    const Subform = this.props.subform;
-    const showSubform = !value && Subform;
+    const showSubform = !value && this.props.children;
 
     return (
       <section className="grn_condition__item">
@@ -26,7 +25,7 @@ export default class GoodsReceivedNoticesConditionFormInput extends React.Compon
             )}
           </RadioGroup>
         </div>
-        {showSubform && <Subform />}
+        {showSubform && this.props.children}
       </section>
     );
   }
