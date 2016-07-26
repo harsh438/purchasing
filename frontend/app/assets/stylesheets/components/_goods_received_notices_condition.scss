@@ -1,0 +1,31 @@
+.grn_condition__header {
+  border-bottom: 2px solid #ddd;
+  font-weight: bold;
+  padding: 5px;
+}
+
+.grn_condition__item {
+  border-top: 1px solid #ddd;
+
+  &:first-of-type {
+    border-top: 0;
+  }
+
+  &:nth-of-type(odd) {
+    background: #f9f9f9;
+  }
+}
+
+.grn_condition__item_label,
+.grn_condition__item_options {
+  display: inline-block;
+  padding: 5px;
+}
+
+.grn_condition__item_label {
+  width: 67%;
+}
+
+.grn_condition__item_options {
+  width: 33%;
+}

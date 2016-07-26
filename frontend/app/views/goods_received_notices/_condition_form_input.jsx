@@ -3,14 +3,14 @@ import RadioGroup from 'react-radio-group';
 
 export default class GoodsReceivedNoticesConditionFormInput extends React.Component {
   render() {
-    const value = this.props.condition[this.props.conditionKey].toString();
+    const value = this.props.condition[this.props.conditionKey];
 
     return (
-      <tr>
-        <td colSpan="3">{this.props.label}</td>
-        <td colSpan="3">
+      <section className="grn_condition__item">
+        <div className="grn_condition__item_label">{this.props.label}</div>
+        <div className="grn_condition__item_options">
           <RadioGroup name={this.props.conditionKey}
-                      selectedValue={value}
+                      selectedValue={value.toString()}
                       onChange={() => {}}>
             {Radio => (
               <div className="form-group" style={{ margin: 0 }}>
@@ -23,8 +23,8 @@ export default class GoodsReceivedNoticesConditionFormInput extends React.Compon
               </div>
             )}
           </RadioGroup>
-        </td>
-      </tr>
+        </div>
+      </section>
     );
   }
 }
