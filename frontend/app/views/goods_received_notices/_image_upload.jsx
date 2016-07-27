@@ -9,7 +9,7 @@ export default class GoodsReceivedNoticesImageUpload extends React.Component {
       reader.onload = (upload) => {
         const image = {
           image: upload.target.result,
-          imageFileName: file.name,
+          image_file_name: file.name,
           preview: file.preview,
         };
 
@@ -23,7 +23,7 @@ export default class GoodsReceivedNoticesImageUpload extends React.Component {
   renderFilePreview(file) {
     return (
       <div key={file.preview} style={{ paddingTop: '5px' }}>
-        <span className="glyphicon glyphicon-open-file"></span> {file.imageFileName}
+        <span className="glyphicon glyphicon-open-file"></span> {file.image_file_name}
         <img width="100%" src={file.preview} />
       </div>
     );

@@ -1,17 +1,26 @@
 import React from 'react';
 import RadioGroup from 'react-radio-group';
+import GoodsReceivedNoticesConditionShortSubform from './_condition_short_subform';
 
 export default class GoodsReceivedNoticesConditionFormInput extends React.Component {
+  renderSubform() {
+    return (
+      <GoodsReceivedNoticesConditionShortSubform
+        onChange={this.props.onSubformChange.bind(this)}
+        issue={this.props.issue}
+        issueType={this.props.issueType} />
+    );
+  }
+
   render() {
-    const value = this.props.condition[this.props.conditionKey];
-    const showSubform = !value && this.props.children;
+    const showSubform = this.props.hasSubform && !this.props.value;
 
     return (
       <section className="grn_condition__item">
         <div className="grn_condition__item_label">{this.props.label}</div>
         <div className="grn_condition__item_options">
-          <RadioGroup name={this.props.conditionKey}
-                      selectedValue={value.toString()}
+          <RadioGroup name={this.props.issueType}
+                      selectedValue={this.props.value.toString()}
                       onChange={this.props.onChange.bind(this)}>
             {Radio => (
               <div className="form-group" style={{ margin: 0 }}>
@@ -25,7 +34,7 @@ export default class GoodsReceivedNoticesConditionFormInput extends React.Compon
             )}
           </RadioGroup>
         </div>
-        {showSubform && this.props.children}
+        {showSubform && this.renderSubform()}
       </section>
     );
   }

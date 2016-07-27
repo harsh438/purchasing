@@ -101,6 +101,12 @@ class GoodsReceivedNoticesController < ApplicationController
 
   def issue_attrs
     [:issue_type,
-     goods_received_notice_issue_images_attributes: [:image]]
+     :id,
+     :units_affected,
+     goods_received_notice_issue_images_attributes: issue_image_attrs]
+  end
+
+  def issue_image_attrs
+    [:id, :image, :image_file_name]
   end
 end

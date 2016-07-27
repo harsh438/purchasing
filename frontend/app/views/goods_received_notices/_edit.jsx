@@ -117,6 +117,9 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     case 'deliveryCondition':
       return <GoodsReceivedNoticesConditionForm
         condition={this.state.goodsReceivedNotice.packingCondition}
+        issues={this.state.goodsReceivedNotice.issues}
+        onChange={this.handleConditionFormChange.bind(this)}
+        onSubformChange={this.handleConditionFormSubformChange.bind(this)}
         onSubmit={this.handleConditionFormSubmit.bind(this)} />;
     }
   }
@@ -555,11 +558,25 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     return checked.length > 0 && checked.length < events.length;
   }
 
-  handleConditionFormSubmit(e, condition) {
+  handleConditionFormChange(value, { target }) {
     const goodsReceivedNotice = this.state.goodsReceivedNotice;
-    goodsReceivedNotice.packingCondition = condition;
+    goodsReceivedNotice.packingCondition[target.name] = parseInt(value);
 
     this.setState({ goodsReceivedNotice });
+  }
+
+  handleConditionFormSubformChange(issueType, updatedIssue) {
+    const goodsReceivedNotice = this.state.goodsReceivedNotice;
+    goodsReceivedNotice.issues = goodsReceivedNotice.issues.map(issue => {
+      if (issue.issue_type !== issueType) return issue;
+      return updatedIssue;
+    });
+
+    this.setState({ goodsReceivedNotice });
+  }
+
+  handleConditionFormSubmit(e) {
+    e.preventDefault();
     this.props.onSave(this.state.goodsReceivedNotice);
   }
 
