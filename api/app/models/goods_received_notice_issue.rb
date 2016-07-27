@@ -19,11 +19,23 @@ class GoodsReceivedNoticeIssue < ActiveRecord::Base
                  attachments: :Attachments
 
   belongs_to :goods_received_notice
+  has_many :goods_received_notice_issue_images
+
+  accepts_nested_attributes_for :goods_received_notice_issue_images
 
   after_initialize :ensure_defaults
 
   def issue_type=(issue_type_name)
     self.issue_type_id = ISSUE_TYPE_MAPPING[issue_type_name]
+  end
+
+  def refresh_attachments
+    if goods_received_notice_issue_images.any?
+      filenames = goods_received_notice_issue_images.pluck(:image_file_name)
+      update(attachments: ",#{filenames.join(',')}")
+    else
+      update(attachments: nil)
+    end
   end
 
   private
