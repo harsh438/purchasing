@@ -65,6 +65,10 @@ class GoodsReceivedNotice < ActiveRecord::Base
   has_one :packing_condition, foreign_key: :grn
   accepts_nested_attributes_for :packing_lists, :packing_condition
 
+  has_many :goods_received_notice_issues, foreign_key: :grn
+
+  accepts_nested_attributes_for :goods_received_notice_issues, allow_destroy: true
+
   after_initialize :ensure_defaults
   after_initialize :ensure_packing_condition
   after_update :set_delivery_date_on_all_events
