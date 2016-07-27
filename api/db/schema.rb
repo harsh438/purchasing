@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720085435) do
+ActiveRecord::Schema.define(version: 20160726173254) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -627,6 +627,18 @@ ActiveRecord::Schema.define(version: 20160720085435) do
   create_table "product_supplier", primary_key: "pid", force: :cascade do |t|
     t.integer "supplierID", limit: 4, null: false
   end
+
+  create_table "proof_of_deliveries", force: :cascade do |t|
+    t.integer  "goods_received_notice_id", limit: 4
+    t.string   "proof_file_name",          limit: 255
+    t.string   "proof_content_type",       limit: 255
+    t.integer  "proof_file_size",          limit: 4
+    t.datetime "proof_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "proof_of_deliveries", ["goods_received_notice_id"], name: "index_proof_of_deliveries_on_goods_received_notice_id", using: :btree
 
   create_table "purchase_orders", force: :cascade do |t|
     t.integer  "pID",                         limit: 4,   default: 0,   null: false
