@@ -11,8 +11,10 @@ feature 'GRN Issues', booking_db: true do
   end
 
   def then_the_issue_should_be_created_correctly
-    expect(grn.goods_received_notice_issues.first.issue_type_id).to eq(3)
-    expect(grn.goods_received_notice_issues.first.attachments).to eq(',1x1.jpg')
+    issue = grn.goods_received_notice_issues.first
+
+    expect(issue.issue_type_id).to eq(3)
+    expect(issue.goods_received_notice_issue_images).to_not be_empty
   end
 
   let(:grn) { create(:goods_received_notice, :with_purchase_orders) }

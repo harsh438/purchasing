@@ -29,15 +29,6 @@ class GoodsReceivedNoticeIssue < ActiveRecord::Base
     self.issue_type_id = ISSUE_TYPE_MAPPING[issue_type_name.to_sym]
   end
 
-  def refresh_attachments
-    if goods_received_notice_issue_images.any?
-      filenames = goods_received_notice_issue_images.pluck(:image_file_name)
-      update(attachments: ",#{filenames.join(',')}")
-    else
-      update(attachments: nil)
-    end
-  end
-
   private
 
   def ensure_defaults
