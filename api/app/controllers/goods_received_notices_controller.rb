@@ -53,7 +53,8 @@ class GoodsReceivedNoticesController < ApplicationController
                       :units_received,
                       packing_lists_attributes: packing_lists_attrs,
                       goods_received_notice_events_attributes: events_attrs,
-                      packing_condition_attributes: condition_attrs)
+                      packing_condition_attributes: condition_attrs,
+                      goods_received_notice_issues_attributes: issue_attrs)
   end
 
   def packing_lists_attrs
@@ -96,5 +97,10 @@ class GoodsReceivedNoticesController < ApplicationController
      :general_comments,
      :attachments,
      :items_in_quarantine]
+  end
+
+  def issue_attrs
+    [:issue_type,
+     goods_received_notice_issue_images_attributes: [:image]]
   end
 end

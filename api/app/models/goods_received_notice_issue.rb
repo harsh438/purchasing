@@ -26,7 +26,7 @@ class GoodsReceivedNoticeIssue < ActiveRecord::Base
   after_initialize :ensure_defaults
 
   def issue_type=(issue_type_name)
-    self.issue_type_id = ISSUE_TYPE_MAPPING[issue_type_name]
+    self.issue_type_id = ISSUE_TYPE_MAPPING[issue_type_name.to_sym]
   end
 
   def refresh_attachments
