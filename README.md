@@ -46,7 +46,7 @@ host IP at port 3000 (e.g. `http://192.168.99.100:3000/`). To find out the IP
 simply run:
 
 ```
-docker-compose env default
+docker-machine ip
 ```
 
 Now import the [redacted dataset][redacted-data] to your local DB. We usually
