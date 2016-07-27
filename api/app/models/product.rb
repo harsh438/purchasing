@@ -18,7 +18,6 @@ class Product < ActiveRecord::Base
                  vendor_id: :venID,
                  on_sale: :pSale,
                  color: :pUDFValue2,
-                 season: :pUDFValue4,
                  barcode: :pUDFValue1,
                  listing_genders: :pUDFValue3,
                  inv_track: :invTrack,
@@ -36,9 +35,21 @@ class Product < ActiveRecord::Base
   has_many :product_categories, foreign_key: :pID
   has_many :categories, through: :product_categories
   has_many :skus
+  has_many :latest_season_skus, -> (prod) {
+    joins(:season)
+      .where('seasons.SeasonId = (
+        SELECT a.SeasonId
+        FROM seasons AS a
+        INNER JOIN skus AS b ON b.season = a.SeasonNickname
+        WHERE b.product_id = ?
+        ORDER BY a.sort DESC
+        LIMIT 1
+      )', prod.id)
+  }, class_name: 'Sku'
   has_many :genders, foreign_key: :pid, class_name: 'ProductGender'
   has_many :barcodes, through: :skus
   belongs_to :product_detail, foreign_key: :pID
+  belongs_to :season, foreign_key: :pUDFValue4, primary_key: :SeasonNickname
 
   def related
     Product

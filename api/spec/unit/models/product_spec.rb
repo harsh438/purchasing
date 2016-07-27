@@ -1,4 +1,18 @@
 RSpec.describe Product do
+  describe '#latest_season_skus' do
+    let(:product) { create(:product) }
+    let(:latest_season) { Season.first }
+    let(:earliest_season) { Season.last }
+    let!(:latest_sku) { create(:sku, season: latest_season, product: product) }
+
+    before { create_list(:sku, 3, season: earliest_season, product: product) }
+
+    it 'only returns skus in the most recent season' do
+      expect(product.latest_season_skus).to include(latest_sku)
+      expect(product.latest_season_skus.count).to eq(1)
+    end
+  end
+
   describe '#has_ugly_shipping_category?' do
     subject(:product) { create(:product) }
     before { product.product_categories.create(category: category) }

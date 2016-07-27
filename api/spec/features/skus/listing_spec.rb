@@ -85,7 +85,7 @@ feature 'SKU Listing' do
   end
 
   def when_i_filter_skus_without_barcode_with_a_season
-    create_list(:sku_without_barcode, 5)
+    create_list(:sku_without_barcode, 5, season: Season.find_by(SeasonNickname: 'AW15'))
     visit skus_path(filters: {
       without_barcodes: '1',
       season: 'AW15'
