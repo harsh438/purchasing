@@ -12,7 +12,7 @@ export default class GoodsReceivedNoticesConditionFormInput extends React.Compon
         <div className="grn_condition__item_options">
           <RadioGroup name={this.props.conditionKey}
                       selectedValue={value.toString()}
-                      onChange={() => {}}>
+                      onChange={this.props.onChange.bind(this)}>
             {Radio => (
               <div className="form-group" style={{ margin: 0 }}>
                 <label className="status-label">

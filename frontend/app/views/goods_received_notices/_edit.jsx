@@ -1,7 +1,7 @@
 import React from 'react';
 import DropZone from 'react-dropzone';
 import { renderSelectOptions } from '../../utilities/dom';
-import { map, every, filter, some } from 'lodash';
+import { assign, map, every, filter, some } from 'lodash';
 import { Nav, NavItem } from 'react-bootstrap';
 import { packingListName } from '../../utilities/packing_list';
 import GoodsReceivedNoticesConditionForm from './_condition_form';
@@ -117,7 +117,7 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     case 'deliveryCondition':
       return <GoodsReceivedNoticesConditionForm
         condition={this.state.goodsReceivedNotice.packingCondition}
-        onChange={this.handleConditionFormChange.bind(this)} />;
+        onSubmit={this.handleConditionFormSubmit.bind(this)} />;
     }
   }
 
@@ -555,10 +555,11 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
     return checked.length > 0 && checked.length < events.length;
   }
 
-  handleConditionFormChange({ target }) {
-    let newGoodsReceivedNotice = this.state.goodsReceivedNotice;
-    newGoodsReceivedNotice.packingCondition[target.name] = parseInt(target.value);
-    this.setState({ goodsReceivedNotice: newGoodsReceivedNotice });
+  handleConditionFormSubmit(e, condition) {
+    const goodsReceivedNotice = this.state.goodsReceivedNotice;
+    goodsReceivedNotice.packingCondition = condition;
+
+    this.setState({ goodsReceivedNotice });
     this.props.onSave(this.state.goodsReceivedNotice);
   }
 
