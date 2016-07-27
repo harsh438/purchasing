@@ -2,7 +2,6 @@ FactoryGirl.define do
   factory :sku_without_barcode, class: Sku do
     product_name { Faker::Commerce.product_name }
     manufacturer_sku 'MANU-FACTURER-SKU-11-reddish'
-    season :AW15
     inv_track 'O'
     manufacturer_color :reddish
     manufacturer_size :biggish
@@ -17,9 +16,10 @@ FactoryGirl.define do
     order_tool_reference 1010105
     vendor
     sku { |s| [((Sku.last.try(:id) || 0) + 1) * -1, s.manufacturer_sku].join('-') }
+    season { Season.first }
 
     trait :with_old_season do
-      season :AW02
+      season { Season.last }
     end
 
     trait :without_updated_date do
@@ -52,7 +52,7 @@ FactoryGirl.define do
         barcode { create(:barcode) }
       end
 
-      product { |sku| create(:product, manufacturer_sku: sku.manufacturer_sku) }
+      product { |sku| create(:product, manufacturer_sku: sku.manufacturer_sku, season: sku.season) }
       sku { |s| [s.product.id, s.manufacturer_sku].join('-') }
       vendor { |sku| product.vendor }
       option { |sku| create(:option, size: sku.manufacturer_size) }

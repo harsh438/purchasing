@@ -22,6 +22,7 @@ class Sku < ActiveRecord::Base
   belongs_to :language_category, foreign_key: :category_id
   belongs_to :option, foreign_key: :option_id
   belongs_to :language_product_option, foreign_key: :language_product_option_id
+  belongs_to :season, foreign_key: :season, primary_key: :SeasonNickname
 
   has_many :barcodes
   has_many :pvx_ins, through: :product

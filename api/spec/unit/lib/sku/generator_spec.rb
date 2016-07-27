@@ -1,5 +1,5 @@
 describe Sku::Generator do
-  before { create(:sku) }
+  before { create(:sku, season: Season.first) }
 
   let(:lang_category) { create(:language_category) }
 
@@ -9,7 +9,7 @@ describe Sku::Generator do
                           vendor_id: create(:vendor).id,
                           manufacturer_color: 'blueish',
                           manufacturer_size: '14',
-                          season: 'witch',
+                          season: Season.first.nickname,
                           color: 'blue',
                           size: 'small',
                           color_family: 'blues',
@@ -27,7 +27,7 @@ describe Sku::Generator do
     it 'should retrieve the exitsing sku' do
       sku = subject.generate({ manufacturer_sku: 'mansku-dooby-doo',
                                barcode: Barcode.first.barcode,
-                               season: :AW15 })
+                               season: Season.first.nickname })
 
       expect(sku.sku.present?).to eq(true)
       expect(sku.size.present?).to eq(true)
@@ -66,7 +66,7 @@ describe Sku::Generator do
     end
 
     it 'should set the season correctly' do
-      expect(subject.season).to eq('witch')
+      expect(subject.season).to eq(Season.first)
     end
 
     it 'should create an option' do

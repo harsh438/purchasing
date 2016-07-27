@@ -7,7 +7,7 @@ FactoryGirl.define do
     end
 
     on_sale 0
-    season 'ss18'
+    season { Season.first }
     manufacturer_sku { Faker::Code.ean }
     vendor { create(:vendor, name: vendor_name) }
     barcode { generate(:barcode_sequence) }

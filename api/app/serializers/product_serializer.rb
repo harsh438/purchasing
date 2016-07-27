@@ -88,8 +88,8 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def children
-    return [] if object.skus.length <= 1
-    object.skus.map do |sku|
+    return [] if object.latest_season_skus.length <= 1
+    object.latest_season_skus.map do |sku|
       ChildSerializer.new(sku).as_json
     end
   end
@@ -101,7 +101,7 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def options
-    return [] if object.skus.length <= 1
+    return [] if object.latest_season_skus.length <= 1
     ['Size']
   end
 end

@@ -801,6 +801,15 @@ ActiveRecord::Schema.define(version: 20160720090622) do
   add_index "sd_product_details", ["subCategory"], name: "subcategory", using: :btree
   add_index "sd_product_details", ["volumeLine"], name: "volumeline", using: :btree
 
+  create_table "seasons", primary_key: "SeasonID", force: :cascade do |t|
+    t.string  "SeasonName",     limit: 100
+    t.string  "SeasonYear",     limit: 100
+    t.string  "SeasonNickname", limit: 100
+    t.integer "sort",           limit: 4
+  end
+
+  add_index "seasons", ["SeasonID"], name: "sadsad1", using: :btree
+
   create_table "skus", force: :cascade do |t|
     t.string   "sku",                        limit: 255
     t.string   "manufacturer_sku",           limit: 255

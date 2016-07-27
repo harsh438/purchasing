@@ -116,7 +116,7 @@ feature 'SKU generation' do
 
   def when_i_provide_new_attributes_for_a_sku
     page.driver.post skus_path(internal_sku: existing_sku_without_barcode.sku,
-                               season: existing_sku_without_barcode.season,
+                               season: existing_sku_without_barcode.season.nickname,
                                manufacturer_size: existing_sku_without_barcode.manufacturer_size,
                                manufacturer_color: 'Blue')
   end
@@ -171,7 +171,7 @@ feature 'SKU generation' do
     { manufacturer_sku: 'DA-ADFADET-WHT',
       manufacturer_color: 'Pale Blue',
       manufacturer_size: '12',
-      season: 'ss15',
+      season: 'SS15',
       color: 'Blue',
       size: '06-9 mths',
       cost_price: 12.06,
@@ -187,10 +187,10 @@ feature 'SKU generation' do
   end
 
   let(:existing_barcode_and_season_sku_attrs) { base_sku_attrs.merge(barcode: existing_sku.barcodes.first.barcode,
-                                                                     season: existing_sku.season) }
+                                                                     season: existing_sku.season.nickname) }
 
   let(:existing_season_sku_attrs) do
-    base_sku_attrs.merge(season: existing_sku_without_barcode.season,
+    base_sku_attrs.merge(season: existing_sku_without_barcode.season.nickname,
                          manufacturer_size: existing_sku_without_barcode.manufacturer_size,
                          internal_sku: existing_sku_without_barcode.sku)
   end
@@ -202,14 +202,14 @@ feature 'SKU generation' do
   let(:sku_with_no_barcode_attrs) { base_sku_attrs.merge(internal_sku: 'NEGATIVE-EXAMPLE') }
 
   let(:sku_for_new_size_attrs_with_barcode) do
-    base_sku_attrs.merge(season: existing_sku.season,
+    base_sku_attrs.merge(season: existing_sku.season.nickname,
                          manufacturer_sku: existing_sku.manufacturer_sku,
                          manufacturer_color: existing_sku.manufacturer_color,
                          barcode: '1213891231')
   end
 
   let(:sku_for_new_size_attrs_without_barcode) do
-    base_sku_attrs.merge(season: new_size_sku_without_barcode.season,
+    base_sku_attrs.merge(season: new_size_sku_without_barcode.season.nickname,
                          manufacturer_sku: new_size_sku_without_barcode.manufacturer_sku,
                          manufacturer_color: new_size_sku_without_barcode.manufacturer_color,
                          manufacturer_size: '16',
@@ -217,7 +217,7 @@ feature 'SKU generation' do
   end
 
   let(:new_sku_for_product_without_language) do
-    base_sku_attrs.merge(season: 'SS17',
+    base_sku_attrs.merge(season: 'SS10',
                          barcode: existing_sku_without_category_id.barcodes.first.barcode)
   end
 

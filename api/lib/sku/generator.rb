@@ -39,7 +39,7 @@ class Sku::Generator
                       vendor_id: attrs[:vendor_id],
                       product_id: attrs[:product_id],
                       product_name: attrs[:product_name],
-                      season: attrs[:season],
+                      season: Season.find_by(SeasonNickname: attrs[:season]),
                       color: attrs[:color],
                       size: attrs[:size],
                       color_family: attrs[:color_family],
