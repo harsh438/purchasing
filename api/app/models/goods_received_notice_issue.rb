@@ -25,8 +25,16 @@ class GoodsReceivedNoticeIssue < ActiveRecord::Base
 
   after_initialize :ensure_defaults
 
+  def issue_type
+    ISSUE_TYPE_MAPPING.select { |type, id| id == issue_type_id }.keys.first
+  end
+
   def issue_type=(issue_type_name)
     self.issue_type_id = ISSUE_TYPE_MAPPING[issue_type_name.to_sym]
+  end
+
+  def as_json_with_issue_type_name
+    as_json.merge(issue_type: issue_type)
   end
 
   private

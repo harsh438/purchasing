@@ -144,6 +144,7 @@ class GoodsReceivedNotice < ActiveRecord::Base
     as_json_with_purchase_orders.tap do |grn|
       grn[:packing_list_urls] = packing_list_attachments.urls
       grn[:packing_condition] = packing_condition || ensure_packing_condition
+      grn[:issues] = goods_received_notice_issues.map(&:as_json_with_issue_type_name)
     end
   end
 

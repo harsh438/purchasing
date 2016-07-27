@@ -55,5 +55,9 @@ FactoryGirl.define do
       legacy_attachments ',RHYTHM SD91467-P  91468-P_DELIVERYNOTE.pdf,second.pdf,third.pdf'
       packing_lists { build_list(:packing_list, 2) }
     end
+
+    trait :with_issue do
+      goods_received_notice_issues { create_list(:goods_received_notice_issue, 1) }
+    end
   end
 end
