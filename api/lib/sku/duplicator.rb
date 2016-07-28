@@ -40,7 +40,7 @@ class Sku::Duplicator
       price: old_sku.price,
       cost_price: old_sku.cost_price,
       list_price: old_sku.list_price,
-      season: old_sku.season,
+      season: old_sku.season.nickname,
       category_name: old_sku.category_name,
       on_sale: old_sku.on_sale
     }
