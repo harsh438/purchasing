@@ -38,7 +38,7 @@ class Order::LineItemAdder
       product_id: sku.product_id,
       option_id: sku.option_id || 0,
       vendor_id: sku.vendor_id,
-      season: sku.season,
+      season: sku.season.nickname,
       product_name: sku.product_name,
       gender: sku.gender,
       reporting_pid: sku.product_id }

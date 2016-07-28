@@ -200,7 +200,7 @@ RSpec.describe Product do
             'IMAGE',
           ],
           legacy_lead_gender: 'Men',
-          legacy_season: product.season,
+          legacy_season: product.season.nickname,
           legacy_reporting_category: product.reporting_category.category.id,
           legacy_supplier_sku: product.manufacturer_sku,
           legacy_reporting_category_name: product.reporting_category.category.language_categories.first.name,
