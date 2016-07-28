@@ -63,7 +63,7 @@ export default class GoodsReceivedNoticesConditionForm extends React.Component {
                 value={this.props.condition['cartons_palletised_correctly']}
                 label="Cartons Palletised Correctly (16 or more)?" />
             </section>
-            <div className="text-right" styles={{ marginTop: '10px' }}>
+            <div className="text-right" style={{ marginTop: '10px' }}>
               <button className="btn btn-warning">Update Condition</button>
             </div>
           </section>
