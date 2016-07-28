@@ -23,7 +23,9 @@ export default class GoodsReceivedNoticesImageUpload extends React.Component {
   renderFilePreview(file) {
     return (
       <div key={file.preview} style={{ paddingTop: '5px' }}>
-        <span className="glyphicon glyphicon-open-file"></span> {file.image_file_name}
+        <span className="glyphicon glyphicon-open-file"></span>
+        &nbsp;
+        <a href={file.image_url} target="_blank">{file.image_file_name}</a>
         <img width="100%" src={file.preview} />
       </div>
     );

@@ -34,9 +34,11 @@ class GoodsReceivedNoticeIssue < ActiveRecord::Base
   end
 
   def as_json_with_issue_type_name
+    images = goods_received_notice_issue_images.map(&:as_json_with_image_url)
+
     as_json.merge(
       issue_type: issue_type,
-      goods_received_notice_issue_images: goods_received_notice_issue_images.map(&:as_json)
+      goods_received_notice_issue_images: images
     )
   end
 
