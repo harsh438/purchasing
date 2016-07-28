@@ -4,7 +4,7 @@ import GoodsReceivedNoticesImageUpload from './_image_upload';
 
 export default class GoodsReceivedNoticesConditionShortSubform extends React.Component {
   componentWillMount() {
-    this.state = { ...this.props.issue };
+    this.props.onChange(this.props.issueType, this.props.issue);
   }
 
   handleChange({ target }) {
@@ -54,11 +54,3 @@ export default class GoodsReceivedNoticesConditionShortSubform extends React.Com
     );
   }
 }
-
-GoodsReceivedNoticesConditionShortSubform.defaultProps = {
-  issue: {
-    id: null,
-    units_affected: '',
-    goods_received_notice_issue_images: [],
-  },
-};

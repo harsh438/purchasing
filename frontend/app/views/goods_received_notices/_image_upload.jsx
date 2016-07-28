@@ -53,3 +53,7 @@ export default class GoodsReceivedNoticesImageUpload extends React.Component {
     );
   }
 }
+
+GoodsReceivedNoticesImageUpload.defaultProps = {
+  files: [],
+};

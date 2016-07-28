@@ -567,10 +567,16 @@ export default class GoodsReceivedNoticesEdit extends React.Component {
 
   handleConditionFormSubformChange(issueType, updatedIssue) {
     const goodsReceivedNotice = this.state.goodsReceivedNotice;
-    goodsReceivedNotice.issues = goodsReceivedNotice.issues.map(issue => {
-      if (issue.issue_type !== issueType) return issue;
-      return updatedIssue;
-    });
+    const exists = some(goodsReceivedNotice.issues, issue => issue.issue_type === issueType);
+
+    if (exists) {
+      goodsReceivedNotice.issues = goodsReceivedNotice.issues.map(issue => {
+        if (issue.issue_type !== issueType) return issue;
+        return updatedIssue;
+      });
+    } else {
+      goodsReceivedNotice.issues = [...goodsReceivedNotice.issues, updatedIssue];
+    }
 
     this.setState({ goodsReceivedNotice });
   }

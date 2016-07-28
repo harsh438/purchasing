@@ -1,10 +1,12 @@
 import React from 'react';
-import { find } from 'lodash';
+import { assign, find } from 'lodash';
 import GoodsReceivedNoticesConditionFormInput from './_condition_form_input';
 
 export default class GoodsReceivedNoticesConditionForm extends React.Component {
   issueForType(issueType) {
-    return find(this.props.issues, issue => issue.issue_type === issueType);
+    const defaults = { id: null, units_affected: '', goods_received_notice_issue_images: [] };
+    const issue = find(this.props.issues, issue => issue.issue_type === issueType);
+    return assign({ issue_type: issueType }, defaults, issue);
   }
 
   render() {
