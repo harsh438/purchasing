@@ -68,7 +68,7 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def legacy_season
-    object.season.nickname
+    object.season.try(:nickname)
   end
 
   def legacy_supplier_sku

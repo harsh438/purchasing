@@ -68,6 +68,7 @@ feature 'Requesting products ready for import' do
       name: [vendor.name, 'Boots \'n\' Tings', 'blue'].join(' - '),
       teaser: 'utilize best-of-breed partnerships',
       barcode: 'ABC123456',
+      season: Season.find_by(SeasonNickname: "SS17"),
     )
   end
 
