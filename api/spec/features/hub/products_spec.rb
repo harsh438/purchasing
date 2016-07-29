@@ -23,7 +23,7 @@ feature 'Requesting products ready for import' do
       vendor: sized_product.vendor,
       product: sized_product,
       product_name: 'Incredible Iron Pants',
-      barcode: create(:barcode, barcode: 'ABC123457'),
+      barcode: create(:barcode, :week_old, barcode: 'ABC123457'),
     )
     sized_product.skus << create(
       :sku_without_barcode,
