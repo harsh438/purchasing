@@ -91,6 +91,13 @@ class Product < ActiveRecord::Base
       .limit(limit_count)
   end
 
+  def updated_at
+    skus.joins(:barcodes)
+      .order(updated_at: 'DESC')
+      .first
+      .try(:updated_at)
+  end
+
   private
 
   def similar_product_name_search
