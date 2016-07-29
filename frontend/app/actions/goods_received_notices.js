@@ -81,10 +81,10 @@ function updateGrn(id, body, currentDate) {
   };
 }
 
-export function saveGoodsReceivedNotice({ id, currentDate, deliveryDate, issues, noticeEvents = [], packingLists, pallets, packingCondition, unitsReceived }) {
+export function saveGoodsReceivedNotice({ id, currentDate, deliveryDate, issues=[], noticeEvents = [], packingLists, pallets, packingCondition, unitsReceived }) {
   const goods_received_notice_events_attributes = noticeEvents.map(event =>
     ({ id: event.id, cartons_received: event.cartonsReceived }));
-
+    
   const issuesWithImages = issues.map(issue => {
     issue.goods_received_notice_issue_images_attributes = issue.goods_received_notice_issue_images;
     return omit(issue, 'goods_received_notice_issue_images');
