@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160728121413) do
+ActiveRecord::Schema.define(version: 20160729130442) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -172,92 +172,93 @@ ActiveRecord::Schema.define(version: 20160728121413) do
   add_index "ds_product_categories", ["pID"], name: "product ID", using: :btree
 
   create_table "ds_products", primary_key: "pID", force: :cascade do |t|
-    t.integer "venID",                  limit: 4,     default: 0,   null: false
-    t.string  "pNum",                   limit: 40,    default: "",  null: false
-    t.float   "pPrice",                 limit: 24,    default: 0.0, null: false
-    t.float   "pSalesPrice",            limit: 24,    default: 0.0, null: false
-    t.string  "pSale",                  limit: 1,                   null: false
-    t.string  "pThumb",                 limit: 70
-    t.integer "pThumbWidth",            limit: 4,     default: 0,   null: false
-    t.integer "pThumbHeight",           limit: 4,     default: 0,   null: false
-    t.string  "pPhoto",                 limit: 70,    default: "",  null: false
-    t.integer "pPhotoWidth",            limit: 4,     default: 0,   null: false
-    t.integer "pPhotoHeight",           limit: 4,     default: 0,   null: false
-    t.string  "pPhoto2",                limit: 70,    default: "",  null: false
-    t.integer "pPhoto2Width",           limit: 4,     default: 0,   null: false
-    t.integer "pPhoto2Height",          limit: 4,     default: 0,   null: false
-    t.string  "pPhoto3",                limit: 70,    default: "",  null: false
-    t.integer "pPhoto3Width",           limit: 4,     default: 0,   null: false
-    t.integer "pPhoto3Height",          limit: 4,     default: 0,   null: false
-    t.string  "pPhoto4",                limit: 70,    default: "",  null: false
-    t.integer "pPhoto4Width",           limit: 4,     default: 0,   null: false
-    t.integer "pPhoto4Height",          limit: 4,     default: 0,   null: false
-    t.string  "pPhoto5",                limit: 70,    default: "",  null: false
-    t.integer "pPhoto5Width",           limit: 4,     default: 0,   null: false
-    t.integer "pPhoto5Height",          limit: 4,     default: 0,   null: false
-    t.string  "pPhoto6",                limit: 70,    default: "",  null: false
-    t.integer "pPhoto6Width",           limit: 4,     default: 0,   null: false
-    t.integer "pPhoto6Height",          limit: 4,     default: 0,   null: false
-    t.string  "pSize",                  limit: 64,    default: "",  null: false
-    t.string  "pAvail",                 limit: 1,     default: "N", null: false
-    t.integer "invLevel",               limit: 4,     default: 0,   null: false
-    t.integer "notifyLevel",            limit: 4,     default: 0,   null: false
-    t.string  "invTrack",               limit: 1,     default: "",  null: false
-    t.string  "pUDFName1",              limit: 70,    default: "",  null: false
-    t.string  "pUDFValue1",             limit: 70,    default: "",  null: false
-    t.string  "pUDFName2",              limit: 70,    default: "",  null: false
-    t.string  "pUDFValue2",             limit: 70,    default: "",  null: false
-    t.string  "pUDFName3",              limit: 70,    default: "",  null: false
-    t.string  "pUDFValue3",             limit: 70,    default: "",  null: false
-    t.string  "pUDFName4",              limit: 70,    default: "",  null: false
-    t.string  "pUDFValue4",             limit: 70,    default: "",  null: false
-    t.string  "pUDFName5",              limit: 70
-    t.string  "pUDFValue5",             limit: 70,    default: "",  null: false
-    t.integer "pRelate1",               limit: 4,     default: 0,   null: false
-    t.integer "pRelate2",               limit: 4,     default: 0,   null: false
-    t.integer "pRelate3",               limit: 4,     default: 0,   null: false
-    t.string  "taxable",                limit: 1,     default: "Y", null: false
-    t.string  "pFeature",               limit: 1,     default: "",  null: false
-    t.string  "pNew",                   limit: 1,     default: "",  null: false
-    t.float   "pWeight",                limit: 24,    default: 0.0, null: false
-    t.string  "pFreeShip",              limit: 1,     default: "",  null: false
-    t.float   "domMethod1",             limit: 24,    default: 0.0, null: false
-    t.float   "domMethod2",             limit: 24,    default: 0.0, null: false
-    t.float   "domMethod3",             limit: 24,    default: 0.0, null: false
-    t.float   "domMethod4",             limit: 24,    default: 0.0, null: false
-    t.float   "intMethod1",             limit: 24,    default: 0.0, null: false
-    t.float   "intMethod2",             limit: 24,    default: 0.0, null: false
-    t.string  "giftCert",               limit: 1,     default: "",  null: false
-    t.string  "extraField",             limit: 1,     default: "",  null: false
-    t.string  "extraFieldName",         limit: 55,    default: "",  null: false
-    t.string  "extraFieldRequired",     limit: 1,     default: "",  null: false
-    t.float   "extraFieldPrice",        limit: 24,    default: 0.0, null: false
-    t.text    "meta_description",       limit: 65535
-    t.string  "meta_keywords",          limit: 512,   default: ""
-    t.string  "meta_title",             limit: 200
-    t.integer "inventory_notified",     limit: 1,     default: 0,   null: false
-    t.float   "pBoxHeight",             limit: 24
-    t.float   "pBoxWidth",              limit: 24
-    t.float   "pBoxLength",             limit: 24
-    t.float   "pCost",                  limit: 24,    default: 0.0, null: false
-    t.string  "pCondition",             limit: 30
-    t.date    "pExpiration"
-    t.integer "pFlag",                  limit: 4,     default: 0
-    t.string  "pProductType",           limit: 30
-    t.float   "pBoxGirth",              limit: 24
-    t.string  "pFirstClassMailType",    limit: 25
-    t.string  "pContainerType",         limit: 25
-    t.string  "pRewardsEligible",       limit: 1,     default: "Y"
-    t.string  "shippingExempt",         limit: 1,     default: "",  null: false
-    t.string  "pShipExempt",            limit: 1,     default: "N", null: false
-    t.date    "pCreated"
-    t.string  "pGiftWrapAvail",         limit: 1,     default: "",  null: false
-    t.float   "pSubscriptionPrice",     limit: 24
-    t.string  "pFileUploadEligible",    limit: 1,     default: "N"
-    t.string  "pCheckoutId",            limit: 64
-    t.string  "pQuickbooksID",          limit: 100
-    t.string  "pCallEmailDisplayPrice", limit: 1,     default: "N"
-    t.string  "pDownloadFile",          limit: 4,     default: "",  null: false
+    t.integer  "venID",                  limit: 4,     default: 0,   null: false
+    t.string   "pNum",                   limit: 40,    default: "",  null: false
+    t.float    "pPrice",                 limit: 24,    default: 0.0, null: false
+    t.float    "pSalesPrice",            limit: 24,    default: 0.0, null: false
+    t.string   "pSale",                  limit: 1,                   null: false
+    t.string   "pThumb",                 limit: 70
+    t.integer  "pThumbWidth",            limit: 4,     default: 0,   null: false
+    t.integer  "pThumbHeight",           limit: 4,     default: 0,   null: false
+    t.string   "pPhoto",                 limit: 70,    default: "",  null: false
+    t.integer  "pPhotoWidth",            limit: 4,     default: 0,   null: false
+    t.integer  "pPhotoHeight",           limit: 4,     default: 0,   null: false
+    t.string   "pPhoto2",                limit: 70,    default: "",  null: false
+    t.integer  "pPhoto2Width",           limit: 4,     default: 0,   null: false
+    t.integer  "pPhoto2Height",          limit: 4,     default: 0,   null: false
+    t.string   "pPhoto3",                limit: 70,    default: "",  null: false
+    t.integer  "pPhoto3Width",           limit: 4,     default: 0,   null: false
+    t.integer  "pPhoto3Height",          limit: 4,     default: 0,   null: false
+    t.string   "pPhoto4",                limit: 70,    default: "",  null: false
+    t.integer  "pPhoto4Width",           limit: 4,     default: 0,   null: false
+    t.integer  "pPhoto4Height",          limit: 4,     default: 0,   null: false
+    t.string   "pPhoto5",                limit: 70,    default: "",  null: false
+    t.integer  "pPhoto5Width",           limit: 4,     default: 0,   null: false
+    t.integer  "pPhoto5Height",          limit: 4,     default: 0,   null: false
+    t.string   "pPhoto6",                limit: 70,    default: "",  null: false
+    t.integer  "pPhoto6Width",           limit: 4,     default: 0,   null: false
+    t.integer  "pPhoto6Height",          limit: 4,     default: 0,   null: false
+    t.string   "pSize",                  limit: 64,    default: "",  null: false
+    t.string   "pAvail",                 limit: 1,     default: "N", null: false
+    t.integer  "invLevel",               limit: 4,     default: 0,   null: false
+    t.integer  "notifyLevel",            limit: 4,     default: 0,   null: false
+    t.string   "invTrack",               limit: 1,     default: "",  null: false
+    t.string   "pUDFName1",              limit: 70,    default: "",  null: false
+    t.string   "pUDFValue1",             limit: 70,    default: "",  null: false
+    t.string   "pUDFName2",              limit: 70,    default: "",  null: false
+    t.string   "pUDFValue2",             limit: 70,    default: "",  null: false
+    t.string   "pUDFName3",              limit: 70,    default: "",  null: false
+    t.string   "pUDFValue3",             limit: 70,    default: "",  null: false
+    t.string   "pUDFName4",              limit: 70,    default: "",  null: false
+    t.string   "pUDFValue4",             limit: 70,    default: "",  null: false
+    t.string   "pUDFName5",              limit: 70
+    t.string   "pUDFValue5",             limit: 70,    default: "",  null: false
+    t.integer  "pRelate1",               limit: 4,     default: 0,   null: false
+    t.integer  "pRelate2",               limit: 4,     default: 0,   null: false
+    t.integer  "pRelate3",               limit: 4,     default: 0,   null: false
+    t.string   "taxable",                limit: 1,     default: "Y", null: false
+    t.string   "pFeature",               limit: 1,     default: "",  null: false
+    t.string   "pNew",                   limit: 1,     default: "",  null: false
+    t.float    "pWeight",                limit: 24,    default: 0.0, null: false
+    t.string   "pFreeShip",              limit: 1,     default: "",  null: false
+    t.float    "domMethod1",             limit: 24,    default: 0.0, null: false
+    t.float    "domMethod2",             limit: 24,    default: 0.0, null: false
+    t.float    "domMethod3",             limit: 24,    default: 0.0, null: false
+    t.float    "domMethod4",             limit: 24,    default: 0.0, null: false
+    t.float    "intMethod1",             limit: 24,    default: 0.0, null: false
+    t.float    "intMethod2",             limit: 24,    default: 0.0, null: false
+    t.string   "giftCert",               limit: 1,     default: "",  null: false
+    t.string   "extraField",             limit: 1,     default: "",  null: false
+    t.string   "extraFieldName",         limit: 55,    default: "",  null: false
+    t.string   "extraFieldRequired",     limit: 1,     default: "",  null: false
+    t.float    "extraFieldPrice",        limit: 24,    default: 0.0, null: false
+    t.text     "meta_description",       limit: 65535
+    t.string   "meta_keywords",          limit: 512,   default: ""
+    t.string   "meta_title",             limit: 200
+    t.integer  "inventory_notified",     limit: 1,     default: 0,   null: false
+    t.float    "pBoxHeight",             limit: 24
+    t.float    "pBoxWidth",              limit: 24
+    t.float    "pBoxLength",             limit: 24
+    t.float    "pCost",                  limit: 24,    default: 0.0, null: false
+    t.string   "pCondition",             limit: 30
+    t.date     "pExpiration"
+    t.integer  "pFlag",                  limit: 4,     default: 0
+    t.string   "pProductType",           limit: 30
+    t.float    "pBoxGirth",              limit: 24
+    t.string   "pFirstClassMailType",    limit: 25
+    t.string   "pContainerType",         limit: 25
+    t.string   "pRewardsEligible",       limit: 1,     default: "Y"
+    t.string   "shippingExempt",         limit: 1,     default: "",  null: false
+    t.string   "pShipExempt",            limit: 1,     default: "N", null: false
+    t.date     "pCreated"
+    t.string   "pGiftWrapAvail",         limit: 1,     default: "",  null: false
+    t.float    "pSubscriptionPrice",     limit: 24
+    t.string   "pFileUploadEligible",    limit: 1,     default: "N"
+    t.string   "pCheckoutId",            limit: 64
+    t.string   "pQuickbooksID",          limit: 100
+    t.string   "pCallEmailDisplayPrice", limit: 1,     default: "N"
+    t.string   "pDownloadFile",          limit: 4,     default: "",  null: false
+    t.datetime "updated_at"
   end
 
   add_index "ds_products", ["giftCert"], name: "giftCert", using: :btree
