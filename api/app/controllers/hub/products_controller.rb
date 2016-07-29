@@ -22,7 +22,7 @@ class Hub::ProductsController < ApplicationController
   def create_hub_object(products, last_timestamp, last_id)
     {
       request_id: params[:request_id],
-      summary: "Returned #{products.size} product objects.",
+      summary: "Returned #{products.length} product objects.",
       products: ActiveModel::ArraySerializer.new(
         products,
         each_serializer: ProductSerializer
