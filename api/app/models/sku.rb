@@ -36,6 +36,8 @@ class Sku < ActiveRecord::Base
 
   validates_presence_of :manufacturer_sku
 
+  scope :with_barcode, -> { join(:barcodes) }
+
   def self.updated_since(timestamp, max_id)
     where('(skus.updated_at = ? and skus.id > ?) or (skus.updated_at > ?)', timestamp, max_id, timestamp)
   end
