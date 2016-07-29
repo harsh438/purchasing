@@ -1,16 +1,4 @@
-unless defined? FactoryGirl
-  require 'faker'
-  require 'factory_girl'
-end
-
-FactoryGirl.factories.clear
-FactoryGirl.sequences.clear
-FactoryGirl.definition_file_paths << File.join('spec', 'factories')
-FactoryGirl.find_definitions
-
-include FactoryGirl::Syntax::Methods
-
-Season.create!(SeasonName: 'DEAD', SeasonYear: 'DEAD', SeasonNickname: 'DEAD', sort: -1)
+Season.find_or_create_by!(SeasonName: 'DEAD', SeasonYear: 'DEAD', SeasonNickname: 'DEAD', sort: -1)
 
 [
   { SeasonName: 'SS',   SeasonYear: '2006', SeasonNickname: 'SS06' },
@@ -41,15 +29,3 @@ Season.create!(SeasonName: 'DEAD', SeasonYear: 'DEAD', SeasonNickname: 'DEAD', s
 ].each_with_index do |season, i|
   Season.find_or_create_by!(season.merge(sort: i + 1))
 end
-
-create_list(:order, 3, line_item_count: 2)
-create_list(:supplier, 5, contact_count: 2)
-
-50.times do
-  create(:goods_received_notice, :give_or_take_2_weeks,
-                                 :with_purchase_orders,
-                                 :with_packing_list,
-                                 po_count: [1, 2, 3, 4, 5].sample)
-end
-
-create_list(:sku, 10)

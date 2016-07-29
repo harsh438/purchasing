@@ -3,7 +3,6 @@ task build: ['build:env',
              :cane,
              :tailor,
              'db:test:prepare',
-             'db:seed',
              'build:brakeman',
              'build:spec',
              'log:clear']
