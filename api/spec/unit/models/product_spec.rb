@@ -222,5 +222,17 @@ RSpec.describe Product do
         end
       end
     end
+
+  end
+
+  describe 'Touching' do
+    let(:product) { create(:product, updated_at: Time.current) }
+    let(:sku) { create(:sku, product: product) }
+
+    it 'product is touched when a sku is touched' do
+      updated_time = product.updated_at
+      sku.touch
+      expect(product.updated_at > updated_time).to be true
+    end
   end
 end

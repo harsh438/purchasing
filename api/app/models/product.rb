@@ -82,20 +82,13 @@ class Product < ActiveRecord::Base
 
   def self.pending_import(last_imported_id, limit_count, last_import_timestamp)
     joins(skus: [:barcodes])
-      .where('(skus.updated_at = :timestamp AND ds_products.pID > :id) OR (skus.updated_at > :timestamp)', {
+      .where('(ds_products.updated_at = :timestamp AND ds_products.pID > :id) OR (ds_products.updated_at > :timestamp)', {
         timestamp: last_import_timestamp,
         id: last_imported_id,
       })
       .group('ds_products.pID')
-      .order('skus.updated_at ASC, ds_products.pID ASC')
+      .order('ds_products.updated_at ASC, ds_products.pID ASC')
       .limit(limit_count)
-  end
-
-  def updated_at
-    skus.joins(:barcodes)
-      .order(updated_at: 'DESC')
-      .first
-      .try(:updated_at)
   end
 
   private

@@ -33,6 +33,7 @@ feature 'Requesting products ready for import' do
     )
 
     sized_product.skus.update_all(updated_at: Time.parse('2016-07-21T14:39:48.000Z'))
+    sized_product.update_column(:updated_at, Time.parse('2016-07-21T14:39:48.000Z'))
   end
 
   def when_requesting_products_to_import
@@ -75,7 +76,7 @@ feature 'Requesting products ready for import' do
       name: [vendor.name, 'Boots \'n\' Tings', 'blue'].join(' - '),
       teaser: 'utilize best-of-breed partnerships',
       barcode: 'ABC123456',
-      season: Season.find_by(SeasonNickname: "SS17"),
+      season: Season.find_by(SeasonNickname: 'SS17')
     )
   end
 

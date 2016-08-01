@@ -15,7 +15,7 @@ class Sku < ActiveRecord::Base
 
   paginates_per 50
 
-  belongs_to :product
+  belongs_to :product, touch: true
   belongs_to :vendor
   belongs_to :element
   belongs_to :language_product, foreign_key: :language_product_id
