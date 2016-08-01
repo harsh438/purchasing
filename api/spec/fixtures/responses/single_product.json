@@ -19,24 +19,14 @@
       "use_legacy_slug": true,
       "images": [
         {
-          "url": "http://asset1.surfcdn.com/magic@lstringofdoom?w=400",
+          "url": "http://asset1.surfcdn.com/awesome@photo?w=400",
           "position": 2,
           "dimensions": {
             "height": 1200,
             "width": 1200
           },
-          "elasticera_reference": "magic@lstringofdoom",
-          "legacy_id": 1
-        },
-        {
-          "url": "http://asset1.surfcdn.com/magic@lstringofdoom?w=400",
-          "position": 2,
-          "dimensions": {
-            "height": 1200,
-            "width": 1200
-          },
-          "elasticera_reference": "magic@lstringofdoom",
-          "legacy_id": 2
+          "elasticera_reference": "awesome@photo",
+          "legacy_id": 3
         }
       ],
       "legacy_lead_gender": "Unisex",

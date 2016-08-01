@@ -10,7 +10,7 @@ feature 'Requesting products ready for import' do
     JSON.parse(page.body)
   end
 
-  def given_a_product_has_been_updated
+  def setup_skus
     sized_product.skus << create(
       :sku,
       vendor: sized_product.vendor,
@@ -31,6 +31,25 @@ feature 'Requesting products ready for import' do
       product: sized_product,
       product_name: 'Incredible Iron Pants',
     )
+  end
+
+  def setup_images
+    sized_product.product_images << create(
+      :product_image,
+      deleted_at: nil,
+      its_reference: 'awesome@photo',
+    )
+
+    sized_product.product_images << create(
+      :product_image,
+      deleted_at: Time.zone.now,
+      its_reference: 'crappy@photo',
+    )
+  end
+
+  def given_a_product_has_been_updated
+    setup_skus
+    setup_images
 
     sized_product.skus.update_all(updated_at: Time.parse('2016-07-21T14:39:48.000Z'))
     sized_product.update_column(:updated_at, Time.parse('2016-07-21T14:39:48.000Z'))
