@@ -1,13 +1,14 @@
 require File.join(File.dirname(__FILE__), 'support/rails')
 require 'json'
 require 'webmock/rspec'
+require 'paperclip/matchers'
 
 Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
-  config.filter_run :focus
-  config.run_all_when_everything_filtered = true
+  config.run_all_when_everything_filtered = false
   config.infer_spec_type_from_file_location!
+  config.include Paperclip::Shoulda::Matchers
 
   if config.files_to_run.one?
     config.default_formatter = 'doc'

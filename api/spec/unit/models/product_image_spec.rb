@@ -1,7 +1,11 @@
-RSpec.describe ProductImage do
-  subject(:product_image) { create(:product_image) }
+RSpec.describe ProductImage, type: :model do
+  describe "Shoulda", type: :shoulda do
+    it { should belong_to(:product) }
+  end
 
   describe "#as_json" do
+    subject(:product_image) { create(:product_image) }
+
     it "Includes the correct legacy information" do
       expect(product_image.as_json).to include(
         url: "http://asset1.surfcdn.com/#{product_image.its_reference}?w=400",

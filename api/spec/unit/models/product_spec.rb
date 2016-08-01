@@ -1,4 +1,23 @@
 RSpec.describe Product do
+  describe "shoulda", type: :model do
+    it { should have_one(:reporting_category).with_foreign_key(:pid) }
+
+    it { should belong_to(:vendor).with_foreign_key(:venID) }
+    it { should belong_to(:product_detail).with_foreign_key(:pID) }
+    it { should belong_to(:season).with_foreign_key(:pUDFValue4) }
+
+    it { should have_many(:language_products).with_foreign_key(:pID) }
+    it { should have_many(:kit_managers).with_foreign_key(:pID) }
+    it { should have_many(:product_images) }
+    it { should have_many(:pvx_ins).with_foreign_key(:pid) }
+    it { should have_many(:language_product_options).with_foreign_key(:pID) }
+    it { should have_many(:product_categories).with_foreign_key(:pID) }
+    it { should have_many(:skus) }
+    it { should have_many(:latest_season_skus) }
+    it { should have_many(:genders).with_foreign_key(:pid) }
+    it { should have_many(:barcodes).through(:skus) }
+  end
+
   describe '#color' do
     let(:product) { Product.new(color: ' Black + ') }
 
@@ -243,7 +262,6 @@ RSpec.describe Product do
         end
       end
     end
-
   end
 
   describe 'Touching' do
