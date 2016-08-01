@@ -70,10 +70,8 @@ class Product < ActiveRecord::Base
   end
 
   def lead_gender
-    listing_genders.split(/\W+/).reduce(Set.new) do |set, gender_key|
-      char = Gender.string_from(gender_key.upcase)
-      char.nil? ? set : set << char
-    end.to_a
+    gender = ProductGender.find_by(pid: pID)
+    Gender.string_from(gender.gender)
   end
 
   def has_ugly_shipping_category?

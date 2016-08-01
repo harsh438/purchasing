@@ -64,6 +64,7 @@ feature 'Requesting products ready for import' do
       :with_reporting_category,
       :with_pvx_in,
       :with_kit_managers,
+      :with_gender,
 
       product_images: build_list(:product_image, 2),
       dropshipment: 'D-R-P',
@@ -76,7 +77,8 @@ feature 'Requesting products ready for import' do
       name: [vendor.name, 'Boots \'n\' Tings', 'blue'].join(' - '),
       teaser: 'utilize best-of-breed partnerships',
       barcode: 'ABC123456',
-      season: Season.find_by(SeasonNickname: 'SS17')
+      season: Season.find_by(SeasonNickname: 'SS17'),
+      gender: 'T',
     )
   end
 

@@ -60,7 +60,7 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def legacy_lead_gender
-    object.lead_gender.join(',')
+    object.lead_gender
   end
 
   def legacy_reporting_category

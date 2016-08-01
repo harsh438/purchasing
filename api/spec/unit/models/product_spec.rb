@@ -49,20 +49,13 @@ RSpec.describe Product do
   end
 
   describe '#lead_gender' do
-    subject { described_class.new(listing_genders: 'M W') }
+    let(:product) { create(:product) }
+    let(:gender) { double(:product_gender, gender: 'Zz') }
 
     it 'uses the gender mapper' do
-      allow(Gender).to receive(:string_from).and_return('Gorrilla')
-      expect(subject.lead_gender).to eq(%w(Gorrilla))
-    end
-
-    context 'given multiple listing genders' do
-      subject { described_class.new(listing_genders: 'U K T E I') }
-      it 'only unique results are returned' do
-        expect(subject.lead_gender).to eq([
-          'Unisex', 'Kids', 'Toddler', 'Infant Boy', 'Infant'
-        ])
-      end
+      allow(ProductGender).to receive(:find_by).with(pid: product.id).and_return(gender)
+      allow(Gender).to receive(:string_from).with(gender.gender).and_return('Gorrilla')
+      expect(product.lead_gender).to eq 'Gorrilla'
     end
   end
 
@@ -124,6 +117,7 @@ RSpec.describe Product do
     subject(:json) { product.as_json }
 
     let(:vendor) { create(:vendor) }
+    let!(:product_gender) { create(:product_gender, pid: product.id, gender: 'T') }
 
     let(:product) do
       create(
@@ -199,7 +193,7 @@ RSpec.describe Product do
             'IMAGE',
             'IMAGE',
           ],
-          legacy_lead_gender: 'Men',
+          legacy_lead_gender: 'Toddler',
           legacy_season: product.season.nickname,
           legacy_reporting_category: product.reporting_category.category.id,
           legacy_supplier_sku: product.manufacturer_sku,

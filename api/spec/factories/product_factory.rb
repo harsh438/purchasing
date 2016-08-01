@@ -50,6 +50,16 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_gender do
+      transient do
+        gender 'U'
+      end
+
+      after(:create) do |product, evaluator|
+        create(:product_gender, product: product, gender: evaluator.gender)
+      end
+    end
+
     after(:create) do |product, evaluator|
       create(:english_language_product, product: product, name: evaluator.name, teaser: evaluator.teaser)
       create(:language_product_option, product: product)
