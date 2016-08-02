@@ -30,7 +30,7 @@ class Hub::SkusController < ApplicationController
   def create_hub_object(skus, request_id, last_timestamp, last_id)
     {
       request_id: request_id,
-      summary: "Returned #{skus.size} sku objects.",
+      summary: "Returned #{skus.length} sku objects.",
       skus: ActiveModel::ArraySerializer.new(
         skus,
         each_serializer: SkuSerializer

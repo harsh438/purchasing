@@ -93,7 +93,7 @@ class ProductSerializer < ActiveModel::Serializer
 
   def children
     results = object.latest_season_skus.with_barcode
-    return [] if results.count <= 1
+    return [] if results.length <= 1
     Sku::Deduplicator.new.without_duplicates(*results.to_a)
   end
 

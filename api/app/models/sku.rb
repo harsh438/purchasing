@@ -36,8 +36,6 @@ class Sku < ActiveRecord::Base
 
   validates_presence_of :manufacturer_sku
 
-  scope :with_barcode, -> { join(:barcodes) }
-
   def self.updated_since(timestamp, max_id)
     where('(skus.updated_at = ? and skus.id > ?) or (skus.updated_at > ?)', timestamp, max_id, timestamp)
   end
@@ -47,7 +45,7 @@ class Sku < ActiveRecord::Base
   end
 
   def self.with_barcode
-    joins(:barcodes).where.not({ barcodes: { id: nil } })
+    joins(:barcodes).group('skus.sku, skus.season, barcodes.barcode')
   end
 
   def self.not_sent_in_peoplevox
