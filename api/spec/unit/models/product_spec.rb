@@ -159,13 +159,15 @@ RSpec.describe Product do
 
       before do
         [
-          [ChildSerializer, 'CHILD'],
           [ProductImageSerializer, 'IMAGE'],
           [ContentSerializer, 'CONTENT'],
         ].each do |(serializer, sub)|
           allow_any_instance_of(serializer).to receive(:as_json)
             .and_return(sub)
         end
+        allow_any_instance_of(Sku::Deduplicator)
+          .to receive(:without_duplicates)
+          .and_return(%w(CHILD CHILD))
       end
 
       it 'has the necessary attributes' do

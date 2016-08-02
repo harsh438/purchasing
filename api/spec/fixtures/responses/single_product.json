@@ -45,21 +45,11 @@
           "sku": "5-MANU-FACTURER-SKU-11-reddish",
           "price": "24.99",
           "cost_price": "19.99",
-          "barcode": "ABC123456",
           "legacy_brand_size": "biggish",
           "options": {
             "size": "big"
-          }
-        },
-        {
-          "sku": "5-MANU-FACTURER-SKU-11-reddish",
-          "price": "24.99",
-          "cost_price": "19.99",
-          "barcode": "ABC123457",
-          "legacy_brand_size": "biggish",
-          "options": {
-            "size": "big"
-          }
+          },
+          "barcode": "ABC123456"
         }
       ],
       "contents": [

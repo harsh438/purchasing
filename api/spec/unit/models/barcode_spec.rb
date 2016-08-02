@@ -6,7 +6,7 @@ RSpec.describe Barcode, type: :model do
     end
     context "orders by updated_at desc" do
       it "returns ordered data" do
-        expect(Barcode.latest.pluck(:id)).to eq Barcode.order('barcodes.updated_at DESC').pluck(:id)
+        expect(Barcode.latest.pluck(:id)).to eq [4, 3, 2, 1]
       end
     end
   end

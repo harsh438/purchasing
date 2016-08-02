@@ -92,10 +92,9 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def children
-    return [] if object.latest_season_skus.with_barcode.length <= 1
-    object.latest_season_skus.with_barcode.map do |sku|
-      ChildSerializer.new(sku).as_json
-    end
+    results = object.latest_season_skus.with_barcode
+    return [] if results.count <= 1
+    Sku::Deduplicator.new.without_duplicates(*results.to_a)
   end
 
   def contents
