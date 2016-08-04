@@ -12,6 +12,7 @@ class Gender
     'E' => ['Baby Boy'],
     'F' => ['Baby Girl'],
     'I' => ['Baby Boy', 'Baby Girl'],
+    'A' => ['All'],
   }.freeze
 
   STRING_MAPPINGS = {
@@ -28,6 +29,7 @@ class Gender
     'E' => 'Infant Boy',
     'F' => 'Infant Girl',
     'P' => 'Promo Item',
+    'A' => 'All',
   }.freeze
 
   attr_reader :char, :name, :display_names
