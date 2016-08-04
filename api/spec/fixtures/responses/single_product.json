@@ -12,7 +12,7 @@
       "barcode": "ABC123456",
       "brand": 8981,
       "properties": {
-        "Gender": "U",
+        "Gender": "Men,Women",
         "Colour": "blue"
       },
       "dropshipment": true,

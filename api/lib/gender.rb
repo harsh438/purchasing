@@ -1,63 +1,56 @@
 class Gender
+  DISPLAY_MAPPINGS = {
+    'M' => ['Men'],
+    'W' => ['Women'],
+    'U' => ['Men', 'Women'],
+    'B' => ['Boy'],
+    'G' => ['Girl'],
+    'K' => ['Boy', 'Girl'],
+    'C' => ['Young Boy'],
+    'D' => ['Young Girl'],
+    'T' => ['Young Boy', 'Young Girl'],
+    'E' => ['Baby Boy'],
+    'F' => ['Baby Girl'],
+    'I' => ['Baby Boy', 'Baby Girl'],
+  }.freeze
+
+  STRING_MAPPINGS = {
+    'M' => 'Men',
+    'W' => 'Women',
+    'U' => 'Unisex',
+    'B' => 'Boys',
+    'G' => 'Girls',
+    'K' => 'Kids',
+    'T' => 'Toddler',
+    'C' => 'Toddler Boy',
+    'D' => 'Toddler Girl',
+    'I' => 'Infant',
+    'E' => 'Infant Boy',
+    'F' => 'Infant Girl',
+    'P' => 'Promo Item',
+  }.freeze
+
+  attr_reader :char, :name, :display_names
+
+  def initialize(char)
+    @char = char[0].upcase
+    @name = STRING_MAPPINGS.fetch(@char)
+    @display_names = DISPLAY_MAPPINGS.fetch(@char)
+  end
+
+  def eql?(obj)
+    obj.hash == hash
+  end
+
+  def hash
+    [Gender, char].hash
+  end
+
   def self.string_from(char)
-    case char.capitalize
-      when 'M'
-        'Men'
-      when 'W'
-        'Women'
-      when 'U'
-        'Unisex'
-      when 'B'
-        'Boys'
-      when 'G'
-        'Girls'
-      when 'K'
-        'Kids'
-      when 'T'
-        'Toddler'
-      when 'C'
-        'Toddler Boy'
-      when 'D'
-        'Toddler Girl'
-      when 'I'
-        'Infant'
-      when 'E'
-        'Infant Boy'
-      when 'F'
-        'Infant Girl'
-      when 'P'
-        'Promo Item'
-    end
+    STRING_MAPPINGS[char.capitalize]
   end
 
   def self.char_from(str)
-    case str
-      when 'Men'
-        'M'
-      when 'Women'
-        'W'
-      when 'Unisex'
-        'U'
-      when 'Boys'
-        'B'
-      when 'Girls'
-        'G'
-      when 'Kids'
-        'K'
-      when 'Toddler'
-        'T'
-      when 'Toddler Boy'
-        'C'
-      when 'Toddler Girl'
-        'D'
-      when 'Infant'
-        'I'
-      when 'Infant Boy'
-        'E'
-      when 'Infant Girl'
-        'F'
-      when 'Promo Item'
-        'P'
-    end
+    STRING_MAPPINGS.invert[str]
   end
 end

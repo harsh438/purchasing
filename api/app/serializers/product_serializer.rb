@@ -42,7 +42,7 @@ class ProductSerializer < ActiveModel::Serializer
 
   def properties
     {
-      'Gender' => object.listing_genders,
+      'Gender' => object.listing_gender_names.join(','),
       'Colour' => object.color,
     }
   end

@@ -1,4 +1,22 @@
 RSpec.describe Product do
+  describe '#listing_gender_names' do
+    def product_for(genders)
+      Product.new(listing_genders: genders)
+    end
+
+    it 'returns an array of the full listing gender names' do
+      expect(product_for('U B G').listing_gender_names).to match %w(
+        Men Women Boy Girl
+      )
+    end
+
+    it 'doesn\'t return duplicates' do
+      expect(product_for('U U').listing_gender_names).to match %w(
+        Men Women
+      )
+    end
+  end
+
   describe '#latest_season_skus' do
     let(:product) { create(:product) }
     let(:latest_season) { Season.first }
@@ -184,7 +202,7 @@ RSpec.describe Product do
           brand: product.vendor.id,
           shipping_category: 'Default',
           properties: {
-            'Gender' => product.listing_genders,
+            'Gender' => 'Men',
             'Colour' => product.color,
           },
           children: [

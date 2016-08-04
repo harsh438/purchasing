@@ -74,6 +74,12 @@ class Product < ActiveRecord::Base
     Gender.string_from(gender.gender)
   end
 
+  def listing_gender_names
+    listing_genders.split(/\W+/).each_with_object(Set.new) do |char, set|
+      Gender.new(char).display_names.each { |g| set << g }
+    end.to_a
+  end
+
   def has_ugly_shipping_category?
     categories.where('ds_categories.catID IN (?)', UGLY_SHIPPING_CATEGORIES).exists?
   end
