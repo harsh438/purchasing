@@ -1,4 +1,12 @@
 RSpec.describe Product do
+  describe '#color' do
+    let(:product) { Product.new(color: ' Black + ') }
+
+    it 'returns the first word' do
+      expect(product.color).to eq 'Black'
+    end
+  end
+
   describe '#listing_gender_names' do
     def product_for(genders)
       Product.new(listing_genders: genders)

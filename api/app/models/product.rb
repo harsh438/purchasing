@@ -65,6 +65,10 @@ class Product < ActiveRecord::Base
       .where('ds_products.pPhoto4Width > 0 AND ds_products.pAvail = "Y"')
   end
 
+  def color
+    read_attribute(:pUDFValue2).scan(/\w+/)[0]
+  end
+
   def as_json(*args)
     ProductSerializer.new(self).as_json(*args)
   end
