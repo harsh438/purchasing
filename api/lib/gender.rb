@@ -39,6 +39,7 @@ class Gender
     'D' => 'Young Girl',
     'E' => 'Baby Boy',
     'F' => 'Baby Girl',
+    'I' => 'Baby',
   }.freeze
 
   attr_reader :char, :name, :display_names, :reporting_name
