@@ -74,8 +74,8 @@ class Product < ActiveRecord::Base
   end
 
   def lead_gender
-    gender = ProductGender.find_by(pid: pID)
-    Gender.string_from(gender.gender)
+    gender = Gender.new(ProductGender.find_by(pid: pID).gender)
+    gender.reporting_name
   end
 
   def listing_gender_names

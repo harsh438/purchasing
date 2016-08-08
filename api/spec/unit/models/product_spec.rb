@@ -76,12 +76,11 @@ RSpec.describe Product do
 
   describe '#lead_gender' do
     let(:product) { create(:product) }
-    let(:gender) { double(:product_gender, gender: 'Zz') }
+    let(:gender) { double(:product_gender, gender: 'B') }
 
     it 'uses the gender mapper' do
-      allow(ProductGender).to receive(:find_by).with(pid: product.id).and_return(gender)
-      allow(Gender).to receive(:string_from).with(gender.gender).and_return('Gorrilla')
-      expect(product.lead_gender).to eq 'Gorrilla'
+      expect(ProductGender).to receive(:find_by).with(pid: product.id).and_return(gender)
+      expect(product.lead_gender).to eq 'Boy'
     end
   end
 

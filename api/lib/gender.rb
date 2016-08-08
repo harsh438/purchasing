@@ -32,12 +32,22 @@ class Gender
     'A' => 'All',
   }.freeze
 
-  attr_reader :char, :name, :display_names
+  REPORTING_GENDER_MAPPINGS = {
+    'B' => 'Boy',
+    'G' => 'Girl',
+    'C' => 'Young Boy',
+    'D' => 'Young Girl',
+    'E' => 'Baby Boy',
+    'F' => 'Baby Girl',
+  }.freeze
+
+  attr_reader :char, :name, :display_names, :reporting_name
 
   def initialize(char)
     @char = char[0].upcase
     @name = STRING_MAPPINGS.fetch(@char)
     @display_names = DISPLAY_MAPPINGS.fetch(@char)
+    @reporting_name = REPORTING_GENDER_MAPPINGS.fetch(@char, @name)
   end
 
   def eql?(obj)
