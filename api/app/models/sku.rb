@@ -27,12 +27,13 @@ class Sku < ActiveRecord::Base
   has_many :barcodes
   has_many :pvx_ins, through: :product
   has_many :product_images, through: :product
-  has_one :reporting_category, through: :product
   has_many :product_categories, foreign_key: :pID
   has_many :categories, through: :product_categories
-  accepts_nested_attributes_for :barcodes
-
   has_many :purchase_order_line_items
+
+  has_one :reporting_category, through: :product
+
+  accepts_nested_attributes_for :barcodes
 
   validates_presence_of :manufacturer_sku
 

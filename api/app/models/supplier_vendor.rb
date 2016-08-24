@@ -3,6 +3,6 @@ class SupplierVendor < ActiveRecord::Base
 
   include LegacyMappings
 
-  belongs_to :suppliers, class_name: 'Supplier', foreign_key: :SupplierID
-  belongs_to :vendors, class_name: 'Vendor', foreign_key: :BrandID
+  belongs_to :supplier, foreign_key: :SupplierID
+  belongs_to :vendor, foreign_key: :BrandID
 end
