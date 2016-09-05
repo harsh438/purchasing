@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160729130442) do
+ActiveRecord::Schema.define(version: 20160905135240) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -617,10 +617,12 @@ ActiveRecord::Schema.define(version: 20160729130442) do
     t.datetime "deleted_at"
     t.datetime "accepted_at"
     t.string   "legacy_position", limit: 1
+    t.integer  "negative_ref",    limit: 4
   end
 
   add_index "product_image", ["accepted_at"], name: "accepted_at", using: :btree
   add_index "product_image", ["import_batch_id"], name: "importBatchID", using: :btree
+  add_index "product_image", ["negative_ref"], name: "index_product_image_on_negative_ref", using: :btree
   add_index "product_image", ["product_id", "position", "accepted_at"], name: "Product_position_accepted", using: :btree
   add_index "product_image", ["product_id", "position"], name: "product_position", using: :btree
   add_index "product_image", ["product_id"], name: "product_id", using: :btree
