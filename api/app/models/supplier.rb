@@ -4,7 +4,7 @@ class Supplier < ActiveRecord::Base
 
   def self.relevant
     joins('inner join suppliers_to_brands sb on suppliers.SupplierID = sb.SupplierID')
-      .where('sb.BrandID in (select distinct orderTool_venId from purchase_orders)')
+      .where('sb.BrandID in (select distinct venID from ds_vendors)')
       .uniq
   end
 

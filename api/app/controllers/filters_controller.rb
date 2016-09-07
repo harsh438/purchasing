@@ -1,10 +1,6 @@
 class FiltersController < ApplicationController
   def vendors
-    if params[:relevant]
-      render json: Vendor.mapped.relevant
-    else
-      render json: Vendor.mapped
-    end
+    render json: Vendor.mapped
   end
 
   def suppliers
