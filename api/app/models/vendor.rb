@@ -6,7 +6,7 @@ class Vendor < ActiveRecord::Base
   include Searchable
 
   def self.relevant
-    where('venID in (select distinct orderTool_venId from purchase_orders)')
+    where(1)
   end
 
   scope :latest, -> { order(id: :desc) }
