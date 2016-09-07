@@ -5,10 +5,6 @@ class Vendor < ActiveRecord::Base
   include LegacyMappings
   include Searchable
 
-  def self.relevant
-    where(1)
-  end
-
   scope :latest, -> { order(id: :desc) }
 
   has_many :supplier_vendors, foreign_key: :BrandID, class_name: 'SupplierVendor'
