@@ -1,0 +1,46 @@
+{
+  "product_asset": {
+    "id": 230133,
+    "original_batch_name": "STOCK-2016-09-08-CA-1011",
+    "action": "replace",
+    "pid": "268840",
+    "assets": [
+      {
+        "s3": {
+          "url": "https://s3-eu-west-1.amazonaws.com/surfdome-asset-destination-production/importer/products/892024/original/d0ede476c63e5e736388f9ac8e2a1adb1105df6a20160908-16-1nhn34h.?1473326370"
+        },
+        "original_filename": "STOCK-2016-09-08-CA-1011/268840/16-09-05-C15-DK-0406-ASQC0906_MC-CAUP0908.jpg",
+        "position": 1,
+        "approved": true,
+        "meta": {
+          "pids": [
+            "268840"
+          ]
+        },
+        "elasticera": {
+          "reference": "zmy@@8M3MtLFybOsch38T9ByVnwj",
+          "width": 1800,
+          "height": 1800
+        }
+      },
+      {
+        "s3": {
+          "url": "https://s3-eu-west-1.amazonaws.com/surfdome-asset-destination-production/importer/products/892025/original/033266bb528140e57a3fe88bc28867dbaeaa661420160908-16-209qg4.?1473326371"
+        },
+        "original_filename": "STOCK-2016-09-08-CA-1011/268840/16-09-05-C15-DK-0407-ASQC0906_MC-CAUP0908.jpg",
+        "position": 2,
+        "approved": true,
+        "meta": {
+          "pids": [
+            "268840"
+          ]
+        },
+        "elasticera": {
+          "reference": "vXFA6mTBy0ZRbCFLpoJCkknv1fcj",
+          "width": 1800,
+          "height": 1800
+        }
+      }
+    ]
+  }
+}

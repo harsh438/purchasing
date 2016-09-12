@@ -103,6 +103,8 @@ GEM
     htmlentities (4.3.4)
     i18n (0.7.0)
     json (1.8.3)
+    jsonpath (0.5.8)
+      multi_json
     kaminari (0.16.2)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -276,6 +278,7 @@ DEPENDENCIES
   excon
   factory_girl (= 4.5.0)
   faker
+  jsonpath
   kaminari
   mysql2 (~> 0.3.17)
   nokogiri (= 1.6.6.2)
@@ -300,6 +303,9 @@ DEPENDENCIES
   timecop (= 0.8.0)
   vcr (= 2.9.2)
   webmock (= 1.19.0)
+
+RUBY VERSION
+   ruby 2.2.3p173
 
 BUNDLED WITH
    1.12.5
