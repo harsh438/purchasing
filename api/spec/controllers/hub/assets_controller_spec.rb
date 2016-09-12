@@ -61,7 +61,9 @@ RSpec.describe Hub::AssetsController do
           it 'calls the relevant service method' do
             expect_any_instance_of(ProductImageBatchService)
               .to receive("#{action}_assets")
-              .with(product.id, batch_id, json['product_asset']['assets'])
+              .with(product.id, batch_id, json['product_asset']['assets']) do
+                [double(:asset), double(:asset)]
+              end
             post :latest, json.merge(format: :json)
             expect(response).to be_success
           end

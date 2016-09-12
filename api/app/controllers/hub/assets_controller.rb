@@ -6,8 +6,12 @@ class Hub::AssetsController < ApplicationController
 
   def latest
     service = ProductImageBatchService.new
-    service.send("#{action}_assets", product_id, batch_id, assets)
-    render text: 'Awesome'
+    asset_count = service.send("#{action}_assets", product_id, batch_id, assets).try(:size)
+    render text: format(
+      '%d %s have been updated',
+      asset_count,
+      'product asset'.pluralize(asset_count),
+    )
   end
 
   private
