@@ -114,13 +114,14 @@ GEM
     method_source (0.8.2)
     mime-types (2.6.2)
     mimemagic (0.3.0)
-    mini_portile (0.6.2)
+    mini_portile2 (2.1.0)
     minitest (5.8.2)
     multi_json (1.11.2)
     multipart-post (2.0.0)
     mysql2 (0.3.18)
-    nokogiri (1.6.6.2)
-      mini_portile (~> 0.6.0)
+    nokogiri (1.6.8)
+      mini_portile2 (~> 2.1.0)
+      pkg-config (~> 1.1.7)
     paperclip (4.3.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -128,6 +129,7 @@ GEM
       mime-types
       mimemagic (= 0.3.0)
     parallel (1.6.1)
+    pkg-config (1.1.7)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -272,7 +274,7 @@ DEPENDENCIES
   faker
   kaminari
   mysql2 (~> 0.3.17)
-  nokogiri (= 1.6.6.2)
+  nokogiri (= 1.6.8)
   paperclip (~> 4.3)
   pry-byebug
   pry-rails
@@ -298,4 +300,4 @@ RUBY VERSION
    ruby 2.2.3p173
 
 BUNDLED WITH
-   1.12.5
+   1.13.0
