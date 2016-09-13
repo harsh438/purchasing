@@ -66,6 +66,7 @@ class ProductImageBatchService
   end
 
   def with_product_id(product_id)
+    product_id = Integer(product_id)
     pos = discover_product_id(product_id) || product_id
     neg = product_id < 0 ? product_id : nil
     yield(pos, neg) if block_given?

@@ -1,10 +1,10 @@
 class Hub::AssetsController < ApplicationController
-  before_filter :validate_action, only: [:latest]
+  before_filter :validate_action, only: [:create]
 
   rescue_from ActionController::ParameterMissing,
     with: :handle_missing_parameters
 
-  def latest
+  def create
     service = ProductImageBatchService.new
     asset_count = service.send("#{action}_assets", product_id, batch_id, assets).try(:size)
     render text: format(

@@ -83,6 +83,11 @@ RSpec.describe ProductImageBatchService do
         expect(negative_refs).to all(be(negative_pid))
       end
     end
+
+    context 'with a string id' do
+      let(:provided_id) { product_id.to_s }
+      include_examples 'replacing assets'
+    end
   end
 
   describe '#append_assets' do

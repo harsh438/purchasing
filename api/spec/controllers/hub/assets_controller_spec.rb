@@ -5,13 +5,13 @@ RSpec.describe Hub::AssetsController do
 
   shared_examples 'an error response' do |message|
     it 'returns a 500' do
-      post :latest, json.merge(format: :json)
+      post :create, json.merge(format: :json)
       expect(response.status).to eq(500)
       expect(response.body).to eq(message)
     end
   end
 
-  describe '/latest' do
+  describe 'POST /' do
     context 'without a PID' do
       let(:json) do
         modify_fixture('spec/fixtures/files/sample_asset.json') do |json|
@@ -64,7 +64,7 @@ RSpec.describe Hub::AssetsController do
               .with(product.id, batch_id, json['product_asset']['assets']) do
                 [double(:asset), double(:asset)]
               end
-            post :latest, json.merge(format: :json)
+            post :create, json.merge(format: :json)
             expect(response).to be_success
           end
         end
