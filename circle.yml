@@ -28,16 +28,7 @@ test:
 
 deployment:
   docker:
-    branch: [docker, staging, production]
+    branch: [staging, production]
     commands:
-      # - export VERSION_LABEL=`git rev-parse --short HEAD` && docker pull 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest
-      - export VERSION_LABEL=`git rev-parse --short HEAD` && docker build -f Dockerfile-deploy -t 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest .
-      - export VERSION_LABEL=`git rev-parse --short HEAD` && docker push 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest
-      - export VERSION_LABEL=`git rev-parse --short HEAD` && docker tag 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:$CIRCLE_BRANCH-$VERSION_LABEL
-      - export VERSION_LABEL=`git rev-parse --short HEAD` && docker push 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:$CIRCLE_BRANCH-$VERSION_LABEL
-      - export VERSION_LABEL=`git rev-parse --short HEAD` && sed -i -e "s/__TAG__/$CIRCLE_BRANCH-$VERSION_LABEL/g" /home/ubuntu/purchasing/eb-purchasing.json
-
-      - aws elasticbeanstalk delete-application-version --application-name "$EB_APP_NAME" --version-label $CIRCLE_BRANCH-`git rev-parse --short HEAD` --delete-source-bundle
-      - aws s3 cp "/home/ubuntu/purchasing/eb-purchasing.json" "s3://$S3_DEPLOYMENT_BUCKET/$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME-$CIRCLE_BRANCH-$CIRCLE_SHA1.json"
-      - aws elasticbeanstalk create-application-version --application-name "$EB_APP_NAME" --version-label $CIRCLE_BRANCH-`git rev-parse --short HEAD` --description "`git log -1 --pretty=%B`" --source-bundle S3Bucket="$S3_DEPLOYMENT_BUCKET",S3Key="$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME-$CIRCLE_BRANCH-$CIRCLE_SHA1.json"
-      - aws elasticbeanstalk update-environment --environment-name "sd-$EB_APP_NAME-$CIRCLE_BRANCH" --version-label $CIRCLE_BRANCH-`git rev-parse --short HEAD`
+      - chmod +x deploy.sh
+      - ./deploy.sh # deploy.sh is located in the root folder.

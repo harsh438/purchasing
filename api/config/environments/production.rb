@@ -11,6 +11,7 @@ Rails.application.configure do
   config.log_level = :debug
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
+  config.logger = Logger.new(STDOUT)
   config.log_formatter = ::Logger::Formatter.new
   config.active_record.dump_schema_after_migration = false
   config.paperclip_defaults = { storage: :s3,
