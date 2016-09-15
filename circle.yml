@@ -11,6 +11,8 @@ machine:
     - eval `aws ecr get-login --region eu-west-1`
 
 dependencies:
+  pre:
+    - go get github.com/aktau/github-release
   post:
     - npm install:
         pwd: ../frontend/

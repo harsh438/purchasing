@@ -3,9 +3,11 @@
 export VERSION_LABEL=`git rev-parse --short HEAD`
 export LAST_TAG=`git rev-list --tags="$CIRCLE_BRANCH*" --max-count=1`
 
-echo "Git Config"
-git config --global user.email "admin@surfdome.io"
-git config --global user.name "sddeploy"
+cd ..
+
+# echo "Git Config"
+# git config --global user.email "admin@surfdome.io"
+# git config --global user.name "sddeploy"
 
 echo "Add git tags"
 git tag "$CIRCLE_BRANCH-$VERSION_LABEL"
