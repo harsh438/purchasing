@@ -41,7 +41,7 @@ aws elasticbeanstalk delete-application-version --application-name "$EB_APP_NAME
 
 # Copy the eb-purchasing.json to the S3 Deployment Bucket for each Region
 echo "Copy the eb-purchasing.json to the S3 Deployment Bucket"
-aws s3 cp eb-purchasing.json "s3://$S3_DEPLOYMENT_BUCKET/$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME-$CIRCLE_SHA1.json"
+aws s3 cp ../eb-purchasing.json "s3://$S3_DEPLOYMENT_BUCKET/$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME-$CIRCLE_SHA1.json"
 
 # ElasticBeanstalk Create Application Version
 echo "ElasticBeanstalk Create Application Version"
