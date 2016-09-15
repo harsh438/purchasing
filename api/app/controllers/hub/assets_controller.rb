@@ -7,14 +7,21 @@ class Hub::AssetsController < ApplicationController
   def create
     service = ProductImageBatchService.new
     asset_count = service.send("#{action}_assets", product_id, batch_id, assets).try(:size)
-    render text: format(
-      '%d %s have been updated',
-      asset_count,
-      'product asset'.pluralize(asset_count),
-    )
+    render json: {
+      request_id: request_id,
+      summary: format(
+        '%d %s have been updated',
+        asset_count,
+        'product asset'.pluralize(asset_count),
+      ),
+    }
   end
 
   private
+
+  def request_id
+    params.require(:request_id)
+  end
 
   def product_id
     params.require(:product_asset).require(:pid)
