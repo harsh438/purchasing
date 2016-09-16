@@ -23,6 +23,8 @@ github-release release --user surfdome --repo purchasing -d "$GIT_BINARY" --tag 
 echo "Upload the binary"
 github-release upload --user surfdome --repo purchasing --tag "$CIRCLE_BRANCH-$VERSION_LABEL" --name "$CIRCLE_BRANCH-$VERSION_LABEL" -f deploy.sh
 
+echo "Remove old Bundle"
+rm -rf ./vendor/bundle
 
 echo "Run docker pull"
 docker pull 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest
@@ -31,22 +33,22 @@ docker build -f Dockerfile-deploy -t 213273172953.dkr.ecr.eu-west-1.amazonaws.co
 echo "Run docker push"
 docker push 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest
 echo "Run docker tag"
-docker tag 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:$VERSION_LABEL
+docker tag 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:$CIRCLE_BRANCH-$VERSION_LABEL
 echo "Run docker push with the new tag"
-docker push 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:$VERSION_LABEL
+docker push 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:$CIRCLE_BRANCH-$VERSION_LABEL
 sed -i -e "s/__TAG__/$VERSION_LABEL/g" ../eb-purchasing.json
 
 # ElasticBeanstalk Delete Application Version for each Region
 echo "ElasticBeanstalk Delete Application Version"
-aws elasticbeanstalk delete-application-version --application-name "$EB_APP_NAME" --version-label `git rev-parse --short HEAD` --delete-source-bundle
+- aws elasticbeanstalk delete-application-version --application-name "$EB_APP_NAME" --version-label $CIRCLE_BRANCH-`git rev-parse --short HEAD` --delete-source-bundle
 
 # Copy the eb-purchasing.json to the S3 Deployment Bucket for each Region
 echo "Copy the eb-purchasing.json to the S3 Deployment Bucket"
-aws s3 cp ../eb-purchasing.json "s3://$S3_DEPLOYMENT_BUCKET/$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME-$CIRCLE_SHA1.json"
+aws s3 cp ../eb-purchasing.json "s3://$S3_DEPLOYMENT_BUCKET/$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME-$CIRCLE_BRANCH-$CIRCLE_SHA1.json"
 
 # ElasticBeanstalk Create Application Version
 echo "ElasticBeanstalk Create Application Version"
-aws elasticbeanstalk create-application-version --application-name "$EB_APP_NAME" --version-label `git rev-parse --short HEAD` --description "`git log -1 --pretty=%B`" --source-bundle S3Bucket="$S3_DEPLOYMENT_BUCKET",S3Key="$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME-$CIRCLE_SHA1.json"
+- aws elasticbeanstalk create-application-version --application-name "$EB_APP_NAME" --version-label $CIRCLE_BRANCH-`git rev-parse --short HEAD` --description "`git log -1 --pretty=%B`" --source-bundle S3Bucket="$S3_DEPLOYMENT_BUCKET",S3Key="$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME-$CIRCLE_BRANCH-$CIRCLE_SHA1.json"
 
 
 echo -n "Waiting for $EB_APP_NAME-$CIRCLE_BRANCH to be Ready "
