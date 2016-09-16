@@ -18,10 +18,10 @@ echo "Create Git binary"
 export GIT_BINARY=`git log --pretty=format:'%h - %s' --abbrev-commit --no-merges --date=relative "$LAST_TAG".."$VERSION_LABEL"`
 
 echo "Create the release"
-github-release release --user surfdome --repo surfdome_store -d "$GIT_BINARY" --tag "$CIRCLE_BRANCH-$VERSION_LABEL" --name "$CIRCLE_BRANCH-$VERSION_LABEL"
+github-release release --user surfdome --repo purchasing -d "$GIT_BINARY" --tag "$CIRCLE_BRANCH-$VERSION_LABEL" --name "$CIRCLE_BRANCH-$VERSION_LABEL"
 
 echo "Upload the binary"
-github-release upload --user surfdome --repo surfdome_store --tag "$CIRCLE_BRANCH-$VERSION_LABEL" --name "$CIRCLE_BRANCH-$VERSION_LABEL" -f deploy.sh
+github-release upload --user surfdome --repo purchasing --tag "$CIRCLE_BRANCH-$VERSION_LABEL" --name "$CIRCLE_BRANCH-$VERSION_LABEL" -f deploy.sh
 
 
 echo "Run docker pull"
