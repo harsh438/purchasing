@@ -40,7 +40,7 @@ sed -i -e "s/__TAG__/$VERSION_LABEL/g" ../eb-purchasing.json
 
 # ElasticBeanstalk Delete Application Version for each Region
 echo "ElasticBeanstalk Delete Application Version"
-- aws elasticbeanstalk delete-application-version --application-name "$EB_APP_NAME" --version-label $CIRCLE_BRANCH-`git rev-parse --short HEAD` --delete-source-bundle
+aws elasticbeanstalk delete-application-version --application-name "$EB_APP_NAME" --version-label $CIRCLE_BRANCH-`git rev-parse --short HEAD` --delete-source-bundle
 
 # Copy the eb-purchasing.json to the S3 Deployment Bucket for each Region
 echo "Copy the eb-purchasing.json to the S3 Deployment Bucket"
@@ -48,7 +48,7 @@ aws s3 cp ../eb-purchasing.json "s3://$S3_DEPLOYMENT_BUCKET/$CIRCLE_PROJECT_REPO
 
 # ElasticBeanstalk Create Application Version
 echo "ElasticBeanstalk Create Application Version"
-- aws elasticbeanstalk create-application-version --application-name "$EB_APP_NAME" --version-label $CIRCLE_BRANCH-`git rev-parse --short HEAD` --description "`git log -1 --pretty=%B`" --source-bundle S3Bucket="$S3_DEPLOYMENT_BUCKET",S3Key="$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME-$CIRCLE_BRANCH-$CIRCLE_SHA1.json"
+aws elasticbeanstalk create-application-version --application-name "$EB_APP_NAME" --version-label $CIRCLE_BRANCH-`git rev-parse --short HEAD` --description "`git log -1 --pretty=%B`" --source-bundle S3Bucket="$S3_DEPLOYMENT_BUCKET",S3Key="$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME-$CIRCLE_BRANCH-$CIRCLE_SHA1.json"
 
 
 echo -n "Waiting for $EB_APP_NAME-$CIRCLE_BRANCH to be Ready "
