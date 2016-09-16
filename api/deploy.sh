@@ -50,13 +50,13 @@ aws elasticbeanstalk create-application-version --application-name "$EB_APP_NAME
 
 
 echo -n "Waiting for $EB_APP_NAME-$CIRCLE_BRANCH to be Ready "
-STATUS=`aws elasticbeanstalk describe-environment-health --environment-name "$EB_APP_NAME-$CIRCLE_BRANCH" --attribute-names All | sed  -n '/"Status":/p'`
+STATUS=`aws elasticbeanstalk describe-environment-health --environment-name "sd-$EB_APP_NAME-$CIRCLE_BRANCH" --attribute-names All | sed  -n '/"Status":/p'`
 while [[ !($STATUS =~ 'Status": "Ready",') ]]; do
   sleep 10
-  STATUS=`aws elasticbeanstalk describe-environment-health --environment-name "$EB_APP_NAME-$CIRCLE_BRANCH" --attribute-names All | sed  -n '/"Status":/p'`
+  STATUS=`aws elasticbeanstalk describe-environment-health --environment-name "sd-$EB_APP_NAME-$CIRCLE_BRANCH" --attribute-names All | sed  -n '/"Status":/p'`
   echo -n '.'
 done
 echo '[ OK ]'
 
 echo "ElasticBeanstalk Update Enviroment"
-aws elasticbeanstalk update-environment --region=eu-west-1 --environment-name "$EB_APP_NAME-$CIRCLE_BRANCH" --version-label `git rev-parse --short HEAD`
+aws elasticbeanstalk update-environment --region=eu-west-1 --environment-name "sd-$EB_APP_NAME-$CIRCLE_BRANCH" --version-label `git rev-parse --short HEAD`
