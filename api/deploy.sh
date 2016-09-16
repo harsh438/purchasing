@@ -61,4 +61,4 @@ done
 echo '[ OK ]'
 
 echo "ElasticBeanstalk Update Enviroment"
-aws elasticbeanstalk update-environment --region=eu-west-1 --environment-name "sd-$EB_APP_NAME-$CIRCLE_BRANCH" --version-label `git rev-parse --short HEAD`
+aws elasticbeanstalk update-environment --region=eu-west-1 --environment-name "sd-$EB_APP_NAME-$CIRCLE_BRANCH" --version-label $CIRCLE_BRANCH-`git rev-parse --short HEAD`
