@@ -27,7 +27,7 @@ github-release upload --user surfdome --repo surfdome_store --tag "$CIRCLE_BRANC
 echo "Run docker pull"
 docker pull 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest
 echo "Run docker build"
-docker build -f Dockerfile -t 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest .
+docker build -f Dockerfile-deploy -t 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest .
 echo "Run docker push"
 docker push 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest
 echo "Run docker tag"
