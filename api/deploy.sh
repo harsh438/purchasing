@@ -36,7 +36,7 @@ echo "Run docker tag"
 docker tag 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:latest 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:$CIRCLE_BRANCH-$VERSION_LABEL
 echo "Run docker push with the new tag"
 docker push 213273172953.dkr.ecr.eu-west-1.amazonaws.com/purchasing:$CIRCLE_BRANCH-$VERSION_LABEL
-sed -i -e "s/__TAG__/$VERSION_LABEL/g" ../eb-purchasing.json
+sed -i -e "s/__TAG__/$CIRCLE_BRANCH-$VERSION_LABEL/g" ../eb-purchasing.json
 
 # ElasticBeanstalk Delete Application Version for each Region
 echo "ElasticBeanstalk Delete Application Version"
