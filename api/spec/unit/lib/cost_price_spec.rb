@@ -42,7 +42,7 @@ RSpec.describe CostPrice do
       csv_data = subject.csv_data
       expect(csv_data).to match [
         a_hash_including(:discount => '5.00%'),
-        a_hash_including(:discount => '6.00%'')
+        a_hash_including(:discount => '6.00%')
       ]
     end
 
