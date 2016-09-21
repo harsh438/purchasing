@@ -41,8 +41,8 @@ RSpec.describe CostPrice do
     it '#csv_data' do
       csv_data = subject.csv_data
       expect(csv_data).to match [
-        a_hash_including(:discount => "5.00%"),
-        a_hash_including(:discount => "6.00%")
+        a_hash_including(:discount => '5.00%'),
+        a_hash_including(:discount => '6.00%'')
       ]
     end
 
@@ -90,12 +90,12 @@ RSpec.describe CostPrice do
     it '#process_csv' do
       csv_data = subject.csv_data
       result = subject.process_csv(csv_data)
-      expect(result).to eq "Updated Purchase Orders 123,234"
+      expect(result).to eq 'Updated Purchase Orders 123,234'
     end
 
     it '#process!' do
       result = subject.process!
-      expect(result).to eq "Updated Purchase Orders 123,234"
+      expect(result).to eq 'Updated Purchase Orders 123,234'
     end
   end
 end

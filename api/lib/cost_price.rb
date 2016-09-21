@@ -7,7 +7,7 @@ class CostPrice
   end
 
   def process!
-    log_count_start("start update cost price for po")
+    log_count_start('start update cost price for po')
     process_csv(csv_data)
   end
 
