@@ -1,4 +1,4 @@
-require_relative '../purchase_order_line_item/cost_price.rb'
+require_relative '../cost_price.rb'
 
 namespace :purchase_order do
   desc "update the cost price for each item in a po"
