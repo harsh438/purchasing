@@ -2,7 +2,7 @@ require_relative '../cost_price.rb'
 
 namespace :purchase_order do
   desc "update the cost price for each item in a po"
-  task :update_cost_price, [:csv_path] => :environment do |t, args|
+  task :update_cost_price, [:csv_path] => :environment do |_t, args|
     abort('Missing csv path') if args[:csv_path].blank?
     csv_path = args[:csv_path]
     logger = Logger.new(STDOUT)
