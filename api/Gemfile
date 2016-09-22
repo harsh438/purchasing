@@ -18,6 +18,7 @@ group :test do
   gem 'brakeman'                  # Always latest
   gem 'cane',                     '2.6.2'
   gem 'capybara',                 '2.4.1'
+  gem "codeclimate-test-reporter"
   gem 'database_cleaner',         '1.5.1'
   gem 'factory_girl',             '4.5.0'
   gem 'faker'
