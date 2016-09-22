@@ -2,6 +2,8 @@ require File.join(File.dirname(__FILE__), 'support/rails')
 require 'json'
 require 'webmock/rspec'
 require 'paperclip/matchers'
+require 'codeclimate-test-reporter'
+CodeClimate::TestReporter.start
 
 Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
 
