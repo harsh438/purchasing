@@ -26,6 +26,13 @@ production:
   <<: *default
   database: no_thanks
 
+semiprod:
+  <<: *default
+  host: <%= ENV['SEMI_PROD_HOST'] %>
+  username: <%= ENV['SEMI_PROD_USERNAME'] %>
+  password: <%= ENV['SEMI_PROD_PASSWORD'] %>
+  database: <%= ENV['SEMI_PROD_DATABASE'] %>
+
 bookingin_development:
   <<: *default
   database: purchasing_development

@@ -53,11 +53,12 @@ class CostPrice
     purchase_order_line.save!
   end
 
-  def update_product_cost_price(current_procduct, cost_price)
-    return true if @before_product == current_procduct
-    Product.update(current_procduct, cost: cost_price)
-    log('#{current_procduct} new cost price', cost_price)
-    @before_product = current_procduct
+  def update_product_cost_price(current_product, cost_price)
+    return true if current_product <= 0
+    return true if @before_product == current_product
+    Product.update(current_product, cost: cost_price)
+    log("#{current_product} new cost price", cost_price)
+    @before_product = current_product
   end
 
   def calculate_cost_price(price, discount_percent)
@@ -66,6 +67,7 @@ class CostPrice
   end
 
   def update_sku_cost_price(sku_id, cost_price)
+    return false unless Sku.exists?(sku_id)
     log('new sku', cost_price)
     Sku.update(sku_id, cost_price: cost_price)
   end
