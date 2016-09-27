@@ -1,4 +1,4 @@
-RSpec.describe CostPrice do
+RSpec.describe CostPrice::Base do
   let(:file) { StringIO.new }
   let(:logger) { Logger.new(file) }
 
@@ -46,15 +46,6 @@ RSpec.describe CostPrice do
       ]
     end
 
-    it '#calculate_cost_price' do
-      expect(subject.send(:calculate_cost_price, 100, '10.0%')).to eq 90
-    end
-
-    it '#purchase_order_details' do
-      purchase_orders_lines = subject.send(:purchase_order_details, 123)
-      expect(purchase_orders_lines.count).to eq 3
-    end
-
     it '#update_sku_cost_price' do
       expect(sku.cost_price).to eq 10
       subject.send(:update_sku_cost_price, sku.id, 8)
@@ -70,32 +61,10 @@ RSpec.describe CostPrice do
       expect(purchase_order_line.cost).to eq 100.0
     end
 
-    it '#update_cost_prices' do
-      po_lines = PurchaseOrderLineItem.where(po_number: 123)
-      expect(po_lines.pluck(:cost)).to match [15.0, 15.0, 15.0]
-      expect(po_lines.pluck(:supplier_list_price)).to match [15.0, 15.0, 15.0]
-      skus = Sku.where(id: po_lines.pluck(:sku_id))
-      expect(skus.pluck(:cost_price)).to match [19.99, 19.99, 19.99]
-      product = Product.where(id: po_lines.pluck(:product_id))
-      expect(subject.send(:update_cost_prices, po_lines, discount)).to be true
-      po_lines.reload
-      sku.reload
-      product.reload
-      expect(po_lines.pluck(:cost)).to match [14.25, 14.25, 14.25]
-      expect(po_lines.pluck(:supplier_list_price)).to match [15.0, 15.0, 15.0]
-      expect(skus.pluck(:cost_price)).to match [14.25, 14.25, 14.25]
-      expect(product.pluck(:cost)).to match [14.25, 14.25, 14.25]
-    end
-
     it '#process_csv' do
       csv_data = subject.csv_data
-      result = subject.process_csv(csv_data)
-      expect(result).to eq 'Updated Purchase Orders 123,234'
-    end
-
-    it '#process!' do
-      result = subject.process!
-      expect(result).to eq 'Updated Purchase Orders 123,234'
+      expect { subject.process_csv(csv_data) }
+        .to raise_error NotImplementedError
     end
   end
 end
