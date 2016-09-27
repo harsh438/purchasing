@@ -82,3 +82,50 @@ FactoryGirl.define do
     end
   end
 end
+
+FactoryGirl.define do
+  factory :unsized_sku, class: Sku do
+
+    product
+    product_name { Faker::Commerce.product_name }
+    manufacturer_sku 'MANU-FACTURER-SKU-11-reddish'
+    inv_track 'P'
+    manufacturer_color :reddish
+    language_category
+    color :red
+    price 24.99
+    cost_price 19.99
+    list_price 29.99
+    gender 'M'
+    listing_genders 'M'
+    order_tool_reference 1010105
+    vendor
+    sku { |s| [((Sku.last.try(:id) || 0) + 1) * -1, s.manufacturer_sku].join('-') }
+    season { Season.first }
+    language_product { |sku| create(:english_language_product, name: sku.product_name) }
+  end
+end
+
+FactoryGirl.define do
+  factory :sku_without_product, class: Sku do
+
+    product_name { Faker::Commerce.product_name }
+    manufacturer_sku 'MANU-FACTURER-SKU-11-reddish'
+    inv_track 'O'
+    manufacturer_color :reddish
+    language_category
+    manufacturer_size :biggish
+    size :big
+    color :red
+    price 24.99
+    cost_price 19.99
+    list_price 29.99
+    gender 'M'
+    listing_genders 'M'
+    order_tool_reference 1010105
+    vendor
+    sku { |s| [((Sku.last.try(:id) || 0) + 1) * -1, s.manufacturer_sku].join('-') }
+    season { Season.first }
+    language_product { |sku| create(:english_language_product, name: sku.product_name) }
+  end
+end
