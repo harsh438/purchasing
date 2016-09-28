@@ -35,16 +35,19 @@ class Product < ActiveRecord::Base
   has_many :product_categories, foreign_key: :pID
   has_many :categories, through: :product_categories
   has_many :skus
-  has_many :latest_season_skus, -> (prod) {
-    joins(:season)
-      .where('seasons.SeasonId = (
-        SELECT a.SeasonId
-        FROM seasons AS a
-        INNER JOIN skus AS b ON b.season = a.SeasonNickname
-        WHERE b.product_id = ?
-        ORDER BY a.sort DESC
-        LIMIT 1
-      )', prod.id)
+  has_many :latest_season_skus, -> {
+    seasons_tbl = Season.arel_table
+    seasons_alias = seasons_tbl.alias(:season_alias)
+    skus_tbl = Sku.arel_table
+    skus_alias = skus_tbl.alias(:skus_alias)
+    query = seasons_tbl.project(seasons_alias[:SeasonID])
+                       .from(seasons_alias)
+                       .join(skus_alias)
+                       .on(skus_alias[:season].eq(seasons_alias[:SeasonNickname]))
+                       .where(skus_alias[:sku].eq(skus_tbl[:sku]))
+                       .order(seasons_alias[:sort].desc)
+                       .take(1)
+    joins(:season).where(seasons_tbl[:SeasonID].eq(query).to_sql)
   }, class_name: 'Sku'
   has_many :genders, foreign_key: :pid, class_name: 'ProductGender'
   has_many :barcodes, through: :skus

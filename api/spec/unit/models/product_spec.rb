@@ -50,11 +50,15 @@ RSpec.describe Product do
     let(:earliest_season) { Season.last }
     let!(:latest_sku) { create(:sku, season: latest_season, product: product) }
 
+    let!(:older_uniq_sku) do
+      create(:sku, season: earliest_season, product: product, sku: 'UNIQ-SKU')
+    end
+
     before { create_list(:sku, 3, season: earliest_season, product: product) }
 
     it 'only returns skus in the most recent season' do
-      expect(product.latest_season_skus).to include(latest_sku)
-      expect(product.latest_season_skus.count).to eq(1)
+      expect(product.latest_season_skus).to include(latest_sku, older_uniq_sku)
+      expect(product.latest_season_skus.count).to eq(2)
     end
   end
 
