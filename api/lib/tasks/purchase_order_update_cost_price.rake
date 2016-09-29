@@ -1,4 +1,4 @@
-require_relative '../cost_price/actual_cost_spec.rb'
+require_relative '../cost_price/actual_cost.rb'
 require_relative '../cost_price/purchase_order_by_percent.rb'
 
 namespace :purchase_order do
