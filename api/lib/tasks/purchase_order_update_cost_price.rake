@@ -14,7 +14,7 @@ namespace :purchase_order do
     if update_type == "percent"
       line_cost_price = CostPrice::PurchaseOrderByPercent.new(logger, csv_path)
     elsif update_type == "actual_cost"
-      CostPrice::ActualCost.new(logger, csv_path)
+      line_cost_price = CostPrice::ActualCost.new(logger, csv_path)
     end
 
     logger.info(line_cost_price.process!)
