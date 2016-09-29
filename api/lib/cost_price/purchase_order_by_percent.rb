@@ -40,4 +40,3 @@ module CostPrice
     end
   end
 end
-
