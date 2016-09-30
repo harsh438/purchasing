@@ -45,7 +45,9 @@ feature 'Adding a barcode to an existing sku' do
 
   def then_legacy_records_should_be_created_for_the_sku
     expect(subject[:product_id]).to_not be(nil)
-    expected_cat_name = ProductCategory.find_by(product_id: subject[:product_id]).category.language_categories.last.name
+    expected_cat_name = ProductCategory.find_by(
+      product_id: subject[:product_id]
+    ).category.language_categories.first.name
     expect(subject[:category_name]).to eq(expected_cat_name)
     expect(Product.find(subject[:product_id]).listing_genders).to eq('M')
   end
@@ -94,16 +96,16 @@ feature 'Adding a barcode to an existing sku' do
 
   private
 
-  let(:sku) { create(:sku) }
-  let(:sku_without_barcode) { create(:sku_without_barcode) }
-  let(:negative_sku) { create(:sku_without_barcode, sku: 'NEGATIVE-TEST') }
+  let(:sku) { create(:base_sku, :sized, :with_product, :with_barcode) }
+  let(:sku_without_barcode) { create(:base_sku, :sized) }
+  let(:negative_sku) { create(:base_sku, :sized, sku: 'NEGATIVE-TEST') }
   let(:negative_po_line) { create(:purchase_order_line_item, sku: negative_sku) }
   let(:order_line_1) { create(:order_line_item, sku: sku_without_barcode) }
   let(:order_line_2) { create(:order_line_item, sku: sku_without_barcode) }
 
   let(:existing_product) { create(:product) }
   let(:sku_without_barcode_with_pid) do
-    create(:sku_without_barcode, product: existing_product)
+    create(:base_sku, :sized, :with_product, product: existing_product)
   end
 
   def add_barcode_to_sku(sku, barcode = '00000')

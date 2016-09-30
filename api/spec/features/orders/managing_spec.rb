@@ -145,11 +145,11 @@ feature 'Manage order details' do
 
   let(:product) { create(:product) }
   let(:language_product_option) { create(:language_product_option, pID: product.id) }
-  let(:sku) { create(:sku) }
-  let(:sku_with_old_season) { create(:sku, :with_old_season) }
-  let(:negative_sku) { create(:sku_without_barcode, sku: '-123456-largeish',
+  let(:sku) { create(:base_sku, :with_product, :with_barcode, :sized) }
+  let(:sku_with_old_season) { create(:base_sku, :with_old_season) }
+  let(:negative_sku) { create(:base_sku, :sized, sku: '-123456-largeish',
                                                     manufacturer_size: 'largeish') }
-  let(:negative_sku_of_different_size) { create(:sku_without_barcode, sku: '-123456-smallish',
+  let(:negative_sku_of_different_size) { create(:base_sku, :sized, sku: '-123456-smallish',
                                                                       manufacturer_size: :smallish) }
   let(:itemless_order) { create(:order) }
   let(:order) { create(:order, line_item_count: 2) }

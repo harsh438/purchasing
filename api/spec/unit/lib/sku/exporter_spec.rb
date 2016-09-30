@@ -4,7 +4,7 @@ RSpec.describe Sku::Exporter do
   describe 'Existing non sized product being passed in as sized' do
     let!(:product) { create(:product) }
     let!(:season) { create(:season, nickname: 'SS20', name: 'SS') }
-    let!(:existing_unsized_sku) { create(:unsized_sku, product: product) }
+    let!(:existing_unsized_sku) { create(:base_sku, :with_product, product: product) }
 
     before do
       existing_unsized_sku.product.update_attributes(
@@ -18,10 +18,11 @@ RSpec.describe Sku::Exporter do
     context 'new sku has the same barcode as existing unsized sku' do
       let!(:new_sku) do
         create(
-          :sku_without_product,
+          :base_sku,
+          :sized,
           season: season,
           manufacturer_sku: existing_unsized_sku.manufacturer_sku
-          )
+        )
       end
 
       subject { described_class.new.export(new_sku) }
@@ -30,6 +31,7 @@ RSpec.describe Sku::Exporter do
         new_sku.barcodes.create!(
           attributes_for(:barcode, barcode: '11111', sku: existing_unsized_sku)
         )
+        remove_attrs_that_wont_exist_yet(new_sku)
       end
 
       it 'the new sku\'s option is not nil' do
@@ -57,7 +59,9 @@ RSpec.describe Sku::Exporter do
     context 'new sku does not have the same barcode; lookup is done by mansku' do
       let!(:new_sku) do
         create(
-          :sku_without_product, season: season,
+          :base_sku,
+          :sized,
+          season: season,
           manufacturer_sku: existing_unsized_sku.manufacturer_sku
         )
       end
@@ -68,11 +72,20 @@ RSpec.describe Sku::Exporter do
         new_sku.barcodes.create!(
           attributes_for(:barcode)
         )
+        remove_attrs_that_wont_exist_yet(new_sku)
       end
 
-     it 'the new product has the same pid as the existing one' do
+      it 'the new product has the same pid as the existing one' do
        expect(subject.product.id).to eq existing_unsized_sku.product.id
       end
     end
+  end
+
+  def remove_attrs_that_wont_exist_yet(sku)
+    sku.option.delete
+    sku.element.delete
+    sku.language_product_option.delete
+    sku.reload
+    sku.save!
   end
 end

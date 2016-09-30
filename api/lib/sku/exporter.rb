@@ -44,11 +44,11 @@ class Sku::Exporter
 
   def find_or_create_legacy_records(sku)
     if is_product_present?(sku)
-      create_option_legacy_records(sku, sku.product)
+      create_option_legacy_records(sku.product)
     elsif last_existing_sku_by_barcode(sku).present?
       update_sku_legacy_references(sku, last_existing_sku_by_barcode(sku))
     elsif product_by_manufacturer_sku(sku).present? and sku.sized?
-      create_option_legacy_records(sku, product_by_manufacturer_sku(sku))
+      create_option_legacy_records(product_by_manufacturer_sku(sku))
     else
       create_legacy_records(sku)
     end
@@ -86,7 +86,7 @@ class Sku::Exporter
     find_or_create_product_gender
   end
 
-  def create_option_legacy_records(sku, product)
+  def create_option_legacy_records(product)
     @product = product
     @language_product = product.language_products.find_by(language_id: 1)
     create_option

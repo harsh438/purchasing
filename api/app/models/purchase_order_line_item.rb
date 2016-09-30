@@ -94,7 +94,7 @@
   belongs_to :product, foreign_key: :pID
   belongs_to :option, foreign_key: :oID
   belongs_to :purchase_order, foreign_key: :po_number, touch: true
-  belongs_to :sku
+  belongs_to :sku, foreign_key: :sku_id
   belongs_to :language_category, foreign_key: :category_id
 
   has_many :suppliers, through: :vendor

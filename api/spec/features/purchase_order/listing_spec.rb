@@ -33,7 +33,7 @@ feature 'Purchase Order Listing' do
 
   private
 
-  let(:vendor) { create(:vendor) }
+  let!(:vendor) { create(:vendor) }
 
   def create_purchase_orders
     create_list(:purchase_order_line_item, 3, :with_summary)
@@ -43,7 +43,7 @@ feature 'Purchase Order Listing' do
   def create_barcodeless_purchase_orders
     line_item = create(:purchase_order_line_item, :with_summary,
                                                   :balance,
-                                                  sku: create(:sku_without_barcode),
+                                                  sku: create(:base_sku, :with_product, :sized),
                                                   vendor: vendor)
     create(:purchase_order, line_items: [line_item])
   end

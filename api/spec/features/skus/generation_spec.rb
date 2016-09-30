@@ -157,13 +157,15 @@ feature 'SKU generation' do
 
   let(:sku) { Sku.find_by(sku: subject[:sku]) }
 
-  let(:existing_sku) { create(:sku) }
+  let(:existing_sku) { create(:base_sku, :with_product, :with_barcode, :sized) }
 
-  let(:existing_sku_without_barcode) { create(:sku_without_barcode) }
+  let(:existing_sku_without_barcode) { create(:base_sku, :sized) }
 
-  let(:new_size_sku_without_barcode) { create(:sku_without_barcode, sku: '-100000-16',
+  let(:new_size_sku_without_barcode) { create(:base_sku, :sized, sku: '-100000-16',
                                                                     manufacturer_size: '16') }
-  let(:existing_sku_without_category_id) { create(:sku, category_id: nil) }
+  let(:existing_sku_without_category_id) do
+    create(:base_sku, :sized, :with_product, :with_barcode, category_id: nil)
+  end
 
   let(:language_category) { create(:language_category) }
 

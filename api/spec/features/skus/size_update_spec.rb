@@ -63,6 +63,12 @@ feature 'Editing manufacturer size' do
 
   let(:new_manufacturer_size) { Faker::Lorem.characters(15) }
   let(:empty_manufacturer_size) { '    ' }
-  let(:sku) { create(:sku) }
-  let(:sku_with_empty_size) { create(:sku, manufacturer_size: nil) }
+  let(:sku) { create(:base_sku, :sized, :with_product, :with_barcode) }
+  let(:sku_with_empty_size) do create(
+    :base_sku,
+    :sized,
+    :with_product,
+    :with_barcode,
+    manufacturer_size: nil)
+  end
 end

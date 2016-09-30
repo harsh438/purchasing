@@ -24,7 +24,14 @@ FactoryGirl.define do
 
     trait :with_skus do
       after(:create) do |product, evaluator|
-        product.skus += build_list(:sku, 2, vendor: product.vendor, product: product, product_name: evaluator.name)
+        product.skus += build_list(
+          :base_sku, 2, :with_product,
+          :sized,
+          :with_barcode,
+          vendor: product.vendor,
+          product: product,
+          product_name: evaluator.name
+        )
       end
     end
 

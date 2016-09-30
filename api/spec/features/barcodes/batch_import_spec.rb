@@ -99,7 +99,7 @@ feature 'Batch importing Barcodes' do
   end
 
   def when_i_batch_import_barcodes_already_associated_with_the_same_skus
-    sku = create(:sku, barcodes: [barcode])
+    sku = create(:base_sku, :with_product, barcodes: [barcode])
     barcodes = [{ sku: sku.sku,
                   brand_size: sku.manufacturer_size,
                   barcode: barcode.barcode }]
@@ -111,7 +111,7 @@ feature 'Batch importing Barcodes' do
   end
 
   def when_i_batch_import_barcodes_already_associated_with_skus
-    create(:sku, barcodes: [barcode])
+    create(:base_sku, :with_product, barcodes: [barcode])
     barcodes = [{ sku: skus.first.sku,
                   brand_size: skus.first.manufacturer_size,
                   barcode: barcode.barcode }]
@@ -138,20 +138,20 @@ feature 'Batch importing Barcodes' do
   end
 
   let(:skus) do
-    [create(:sku),
-     create(:sku_without_barcode, sku: '-bob-small', manufacturer_size: 'small'),
-     create(:sku_without_barcode, sku: '-bob-large', manufacturer_size: 'large')]
+    [create(:base_sku, :with_product, :with_barcode),
+     create(:base_sku, :sized, sku: '-bob-small', manufacturer_size: 'small'),
+     create(:base_sku, :sized, sku: '-bob-large', manufacturer_size: 'large')]
   end
 
   let(:sku_without_product) do
-    sku = create(:sku, manufacturer_sku: 'non-existent-manufacturer-sku')
-    sku.product.delete
-    sku.color = nil
-    sku.save!(validate: false)
-    sku
+    create(:base_sku,
+      :with_barcode, :sized,
+      manufacturer_sku: 'non-existent-manufacturer-sku',
+      color: nil
+    )
   end
 
-  let(:negative_sku) { create(:sku_without_barcode) }
+  let(:negative_sku) { create(:base_sku, :sized) }
 
   let(:barcode) { create(:barcode, barcode: 'cool') }
 end
