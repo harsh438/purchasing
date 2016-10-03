@@ -44,11 +44,11 @@ class Sku::Exporter
 
   def find_or_create_legacy_records(sku)
     if is_product_present?(sku)
-      create_option_legacy_records(sku, sku.product)
+      create_option_legacy_records(sku.product)
     elsif last_existing_sku_by_barcode(sku).present?
       update_sku_legacy_references(sku, last_existing_sku_by_barcode(sku))
     elsif product_by_manufacturer_sku(sku).present? and sku.sized?
-      create_option_legacy_records(sku, product_by_manufacturer_sku(sku))
+      create_option_legacy_records(product_by_manufacturer_sku(sku))
     else
       create_legacy_records(sku)
     end
@@ -76,35 +76,37 @@ class Sku::Exporter
     @language_product = sku.language_product = existing_sku.language_product
 
     if sku.sized?
-      @option = sku.option = existing_sku.option
-      @element = sku.element = existing_sku.element
-      @language_product_option = sku.language_product_option = existing_sku.language_product_option
+      @option = sku.option = existing_sku.option || create_option
+      @element = sku.element = existing_sku.element || create_element
+      @language_product_option =
+        sku.language_product_option =
+          existing_sku.language_product_option || create_language_product_option
     end
 
-    find_or_create_product_gender(sku)
+    find_or_create_product_gender
   end
 
-  def create_option_legacy_records(sku, product)
+  def create_option_legacy_records(product)
     @product = product
     @language_product = product.language_products.find_by(language_id: 1)
-    create_option(sku)
-    create_element(sku)
-    create_language_product_option(sku)
-    find_or_create_product_gender(sku)
+    create_option
+    create_element
+    create_language_product_option
+    find_or_create_product_gender
   end
 
   def create_legacy_records(sku)
     create_product(sku)
-    create_language_product(sku)
+    create_language_product
 
     if sku.sized?
-      create_option(sku)
-      create_element(sku)
-      create_language_product_option(sku)
+      create_option
+      create_element
+      create_language_product_option
     end
 
     associate_category_to_product(sku)
-    find_or_create_product_gender(sku)
+    find_or_create_product_gender
   end
 
   def update_order_skus(sku)
@@ -135,23 +137,23 @@ class Sku::Exporter
     @product ||= Product.create!(product_attrs)
   end
 
-  def create_language_product(sku)
+  def create_language_product
     @language_product ||= LanguageProduct.create!(language_product_attrs)
   end
 
-  def create_option(sku)
+  def create_option
     @option ||= Option.create!(option_attrs)
   end
 
-  def create_element(sku)
+  def create_element
     @element ||= Element.find_or_create_by!(name: attrs[:size])
   end
 
-  def create_language_product_option(sku)
+  def create_language_product_option
     @language_product_option ||= LanguageProductOption.create!(language_product_option_attrs)
   end
 
-  def find_or_create_product_gender(sku)
+  def find_or_create_product_gender
     @product_gender ||= ProductGender.find_or_create_by!(product_gender_attrs)
   end
 

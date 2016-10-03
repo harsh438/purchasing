@@ -12,21 +12,24 @@ feature 'Requesting products ready for import' do
 
   def setup_skus
     sized_product.skus << create(
-      :sku,
+      :base_sku, :with_product,
+      :with_barcode, :sized,
       vendor: sized_product.vendor,
       product: sized_product,
       product_name: 'Incredible Iron Pants',
       barcode: create(:barcode, barcode: 'ABC123456'),
     )
     sized_product.skus << create(
-      :sku,
+      :base_sku, :with_product,
+      :with_barcode, :sized,
       vendor: sized_product.vendor,
       product: sized_product,
       product_name: 'Incredible Iron Pants',
       barcode: create(:barcode, :week_old, barcode: 'ABC123457'),
     )
     sized_product.skus << create(
-      :sku_without_barcode,
+      :base_sku, :with_product,
+      :sized,
       vendor: sized_product.vendor,
       product: sized_product,
       product_name: 'Incredible Iron Pants',
@@ -112,7 +115,7 @@ feature 'Requesting products ready for import' do
 
   let!(:negative_product) do
     create(:product, :with_reporting_category, barcode: '').tap do |p|
-      p.skus += create_list(:sku_without_barcode, 2)
+      p.skus += create_list(:base_sku, 2, :sized)
     end
   end
 

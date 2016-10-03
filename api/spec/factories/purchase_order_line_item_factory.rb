@@ -10,7 +10,7 @@ FactoryGirl.define do
     invoice_payable_date 3.days.ago
     product_sku { Faker::Lorem.characters(32) }
     status 1
-    sku
+    sku { create(:base_sku, :with_product, :sized, :with_barcode) }
 
     # These should be blank.
 
@@ -40,19 +40,19 @@ FactoryGirl.define do
     end
 
     trait :with_summary do
-      po_number { create(:purchase_order).id }
+      purchase_order { |po| create(:purchase_order, vendor: po.vendor) }
     end
 
     trait :with_barcode do
-      barcode 'Sample Barcode'
+      barcode { create(:barcode) }
     end
 
     trait :with_product do
-      product_id { create(:product).id }
+      product { create(:product) }
     end
 
     trait :with_option do
-      option_id { create(:option).id }
+      option { create(:option) }
 
       after(:create) do |po, evaluator|
         create(:language_product_option, oID: po.option_id, pID: po.product.id || 1)

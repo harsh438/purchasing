@@ -48,13 +48,26 @@ RSpec.describe Product do
     let(:product) { create(:product) }
     let(:latest_season) { Season.first }
     let(:earliest_season) { Season.last }
-    let!(:latest_sku) { create(:sku, season: latest_season, product: product) }
-
-    let!(:older_uniq_sku) do
-      create(:sku, season: earliest_season, product: product, sku: 'UNIQ-SKU')
+    let!(:latest_sku) do
+      create(:base_sku, :with_product, :with_barcode, :sized,
+        season: latest_season, product: product, sku: 'same'
+      )
     end
 
-    before { create_list(:sku, 3, season: earliest_season, product: product) }
+    let!(:older_uniq_sku) do
+      create(:base_sku, :with_product, :with_barcode, :sized,
+        season: earliest_season, product: product, sku: 'UNIQ-SKU'
+      )
+    end
+
+    before do
+      create_list(
+        :base_sku, 3,
+        :with_product, :with_barcode, :sized,
+        season: earliest_season, product: product,
+        sku: 'same'
+      )
+    end
 
     it 'only returns skus in the most recent season' do
       expect(product.latest_season_skus).to include(latest_sku, older_uniq_sku)
@@ -270,7 +283,7 @@ RSpec.describe Product do
 
   describe 'Touching' do
     let(:product) { create(:product, updated_at: Time.current) }
-    let(:sku) { create(:sku, product: product) }
+    let(:sku) { create(:base_sku, :with_product, :with_barcode, :sized, product: product) }
 
     it 'product is touched when a sku is touched' do
       updated_time = product.updated_at

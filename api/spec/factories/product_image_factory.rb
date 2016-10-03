@@ -13,7 +13,7 @@ FactoryGirl.define do
     uploaded_s3_at '2016-07-03'
     uploaded_its_at '2016-07-04'
     uploaded_san_at '2016-07-05'
-    deleted_at '2016-07-06'
+    deleted_at nil
     accepted_at '2016-07-07'
     legacy_position 'b'
   end

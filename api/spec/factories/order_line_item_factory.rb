@@ -7,7 +7,7 @@ FactoryGirl.define do
     drop_date { Time.now }
 
     after(:build) do |order_line_item|
-      order_line_item.sku ||= create(:sku)
+      order_line_item.sku ||= create(:base_sku, :sized, :with_barcode, :with_product)
       order_line_item.internal_sku ||= order_line_item.sku.sku
       order_line_item.product_id ||= order_line_item.sku.product_id
       order_line_item.option_id ||= order_line_item.sku.option_id

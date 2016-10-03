@@ -74,7 +74,12 @@ feature 'Sku Exporting' do
   let(:po) { create(:purchase_order) }
 
   let(:skus) do
-    create_list(:sku, 5, :with_purchase_order_line_item, purchase_order: po)
+    create_list(
+      :base_sku, 5,
+      :with_product, :with_barcode,
+      :sized, :with_purchase_order_line_item,
+      purchase_order: po
+    )
   end
   alias_method :create_purchase_order, :skus
 

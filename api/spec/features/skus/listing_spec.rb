@@ -32,7 +32,7 @@ feature 'SKU Listing' do
   end
 
   def when_i_request_list_of_skus
-    create_list(:sku, 52)
+    create_list(:base_sku, 52, :with_product, :with_barcode, :sized)
     visit skus_path
   end
 
@@ -42,7 +42,7 @@ feature 'SKU Listing' do
   end
 
   def when_i_request_a_specific_sku
-    skus = create_pair(:sku)
+    skus = create_pair(:base_sku, :with_product, :with_barcode, :sized)
     visit skus_path(filters: { sku: skus.first.sku })
   end
 
@@ -52,7 +52,7 @@ feature 'SKU Listing' do
 
   def when_i_request_the_stem_of_a_sku
     related_skus = ['123-456', '123-457']
-    skus = create_list(:sku, 3)
+    skus = create_list(:base_sku, 3, :with_product, :with_barcode, :sized)
     related_skus.each_with_index do |sku, index|
       skus[index].update(sku: sku)
     end
@@ -65,9 +65,9 @@ feature 'SKU Listing' do
   end
 
   def when_i_filter_skus_by_brand
-    create_list(:sku, 5)
+    create_list(:base_sku, 5, :with_product, :with_barcode, :sized)
     vendor = create(:vendor)
-    create_list(:sku, 2, vendor: vendor)
+    create_list(:base_sku, 2, :with_product, :with_barcode, :sized, vendor: vendor)
     visit skus_path(filters: { vendor_id: vendor.id })
   end
 
@@ -85,7 +85,7 @@ feature 'SKU Listing' do
   end
 
   def when_i_filter_skus_without_barcode_with_a_season
-    create_list(:sku_without_barcode, 5, season: Season.find_by(SeasonNickname: 'AW15'))
+    create_list(:base_sku, 5, :sized, season: Season.find_by(SeasonNickname: 'AW15'))
     visit skus_path(filters: {
       without_barcodes: '1',
       season: 'AW15'

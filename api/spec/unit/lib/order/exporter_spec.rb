@@ -26,8 +26,8 @@ describe Order::Exporter do
 
       context 'and the line items are of the same brand and drop date' do
         let(:vendor) { create(:vendor) }
-        let(:sku1) { create(:sku, vendor: vendor) }
-        let(:sku2) { create(:sku, vendor: vendor) }
+        let(:sku1) { create(:base_sku, :with_product, :sized, :with_barcode, vendor: vendor) }
+        let(:sku2) { create(:base_sku, :with_product, :sized, :with_barcode, vendor: vendor) }
 
         let(:line_items) do
           [create(:order_line_item, drop_date: 1.week.from_now,
@@ -105,8 +105,8 @@ describe Order::Exporter do
   context 'when exporting multiple orders' do
     context 'and the orders share line item brand and drop date' do
       let(:vendor) { create(:vendor) }
-      let(:sku1) { create(:sku, vendor: vendor) }
-      let(:sku2) { create(:sku, vendor: vendor) }
+      let(:sku1) { create(:base_sku, :with_product, :sized, :with_barcode, vendor: vendor) }
+      let(:sku2) { create(:base_sku, :with_product, :sized, :with_barcode, vendor: vendor) }
 
       let(:first_line_item) do
         create(:order_line_item, drop_date: 1.week.from_now, sku: sku1)

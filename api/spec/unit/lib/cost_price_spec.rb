@@ -8,7 +8,9 @@ RSpec.describe CostPrice do
 
   let(:discount) { '5.00%' }
 
-  let(:sku) { create(:sku, cost_price: 10) }
+  let(:sku) do
+    create(:base_sku, :with_product, :with_barcode, :sized, cost_price: 10)
+  end
 
   before(:each) do
     create_purchase_orders

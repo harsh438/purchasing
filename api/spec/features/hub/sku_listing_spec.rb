@@ -88,6 +88,7 @@ feature 'Listing Skus for the hub' do
   def then_i_should_have_skus_listed
     request_id_should_be_identical
     count = skus_with_recent_updated_date.count + skus_with_old_updated_date.count
+
     expect(subject['skus'].count).to be(count)
     skus_should_contain_sku_fields
   end
@@ -123,6 +124,7 @@ feature 'Listing Skus for the hub' do
 
   def then_i_should_get_a_list_of_skus_within_timestamp
     request_id_should_be_identical
+
     expect(subject['skus'].count).to be(skus_with_recent_updated_date.count)
     skus_should_contain_sku_fields
   end
@@ -209,11 +211,17 @@ feature 'Listing Skus for the hub' do
       skus_with_recent_updated_date
       skus_with_old_updated_date
       skus_with_fixed_updated_date
-      create_list(:sku_without_barcode, 3, :with_old_updated_date) # these should not show up
+      create_list(:base_sku, 3, :sized, :with_old_updated_date) # these should not show up
     end
   end
 
-  let(:skus_with_fixed_updated_date) { create_list(:sku, 5, :with_fixed_updated_date) }
-  let(:skus_with_recent_updated_date) { create_list(:sku, 10, :with_recent_updated_date) }
-  let(:skus_with_old_updated_date) { create_list(:sku, 5, :with_old_updated_date) }
+  let(:skus_with_fixed_updated_date) do
+    create_list(:base_sku, 5, :with_product, :sized, :with_barcode, :with_fixed_updated_date)
+  end
+  let(:skus_with_recent_updated_date) do
+    create_list(:base_sku, 10, :with_product, :sized, :with_barcode, :with_recent_updated_date)
+  end
+  let(:skus_with_old_updated_date) do
+    create_list(:base_sku, 5, :with_product, :sized, :with_barcode, :with_old_updated_date)
+  end
 end

@@ -77,8 +77,8 @@ feature 'SKU duplication' do
 
   let(:product_with_skus) { create(:product, :with_skus) }
   let(:sku) { product_with_skus.skus.first }
-  let(:sku_without_barcode) { create(:sku_without_barcode) }
-  let(:unsized_sku) { create(:sku, :unsized) }
+  let(:sku_without_barcode) { create(:base_sku, :sized) }
+  let(:unsized_sku) { create(:base_sku, :with_product, :with_barcode) }
   let(:element) { create(:element) }
   let(:non_existent_sku) { Faker::Lorem.characters(15) }
 end

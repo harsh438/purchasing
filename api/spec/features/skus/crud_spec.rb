@@ -28,5 +28,5 @@ feature 'SKU updating' do
     expect(subject['cost_price']).to eq('£100.00')
   end
 
-  let(:sku) { create(:sku) }
+  let(:sku) { create(:base_sku, :with_product, :with_barcode, :sized) }
 end

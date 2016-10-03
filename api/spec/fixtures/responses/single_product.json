@@ -3,8 +3,8 @@
   "summary": "Returned 1 product objects.",
   "products": [
     {
-      "id": 5,
-      "sku": 5,
+      "id": 7,
+      "sku": 7,
       "price": 15.99,
       "cost_price": 8.17,
       "sale_price": 0.0,
@@ -19,6 +19,26 @@
       "use_legacy_slug": true,
       "images": [
         {
+          "url": "http://asset1.surfcdn.com/magic@lstringofdoom?w=400",
+          "position": 2,
+          "dimensions": {
+            "height": 1200,
+            "width": 1200
+          },
+          "elasticera_reference": "magic@lstringofdoom",
+          "legacy_id": 1
+        },
+        {
+          "url": "http://asset1.surfcdn.com/magic@lstringofdoom?w=400",
+          "position": 2,
+          "dimensions": {
+            "height": 1200,
+            "width": 1200
+          },
+          "elasticera_reference": "magic@lstringofdoom",
+          "legacy_id": 2
+        },
+        {
           "url": "http://asset1.surfcdn.com/awesome@photo?w=400",
           "position": 2,
           "dimensions": {
@@ -30,19 +50,19 @@
         }
       ],
       "legacy_lead_gender": "Toddler",
-      "legacy_reporting_category": 14,
+      "legacy_reporting_category": 18,
       "legacy_season": "SS17",
       "legacy_supplier_sku": "123456-123",
       "legacy_reporting_category_name": "Gerry Treutel",
       "legacy_first_received_at": "2016-07-12T00:00:00.000Z",
-      "legacy_more_from_category": 12,
+      "legacy_more_from_category": 16,
       "parts": [
         "1234231-234",
         "1234231-234"
       ],
       "children": [
         {
-          "sku": "5-MANU-FACTURER-SKU-11-reddish",
+          "sku": "-3-MANU-FACTURER-SKU-11-reddish",
           "price": "24.99",
           "cost_price": "19.99",
           "legacy_brand_size": "biggish",
@@ -50,6 +70,16 @@
             "size": "big"
           },
           "barcode": "ABC123456"
+        },
+        {
+          "sku": "-4-MANU-FACTURER-SKU-11-reddish",
+          "price": "24.99",
+          "cost_price": "19.99",
+          "legacy_brand_size": "biggish",
+          "options": {
+            "size": "big"
+          },
+          "barcode": "ABC123457"
         }
       ],
       "contents": [
@@ -57,7 +87,7 @@
           "lang": "en",
           "content": {
             "name": "Too Awesome - Boots 'n' Tings - blue",
-            "legacy_slug": "too_awesome_-_boots_n_tings_-_blue-5",
+            "legacy_slug": "too_awesome_-_boots_n_tings_-_blue-7",
             "teaser": "utilize best-of-breed partnerships"
           }
         }
@@ -77,6 +107,6 @@
   ],
   "parameters": {
     "last_imported_timestamp": "2016-07-21T14:39:48.000Z",
-    "last_imported_id": 5
+    "last_imported_id": 7
   }
 }

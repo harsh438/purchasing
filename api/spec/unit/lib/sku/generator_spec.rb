@@ -1,5 +1,5 @@
 describe Sku::Generator do
-  before { create(:sku, season: Season.first) }
+  before { create(:base_sku, :with_product, :with_barcode, :sized, season: Season.first) }
 
   let(:lang_category) { create(:language_category) }
 
