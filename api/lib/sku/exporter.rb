@@ -9,7 +9,7 @@ class Sku::Exporter
 
   def export(sku)
     return if sku.barcodes.empty?
-    return if sku.product.present? and (!sku.sized? or sku.option.present?)
+    return if sku.product.present? and !sku.sized?
 
     set_attrs_from(sku)
     find_or_create_legacy_records(sku)
@@ -47,7 +47,7 @@ class Sku::Exporter
       create_option_legacy_records(sku.product)
     elsif last_existing_sku_by_barcode(sku).present?
       update_sku_legacy_references(sku, last_existing_sku_by_barcode(sku))
-    elsif product_by_manufacturer_sku(sku).present? and sku.sized?
+    elsif product_by_manufacturer_sku(sku).present? and sku.should_be_sized?
       create_option_legacy_records(product_by_manufacturer_sku(sku))
     else
       create_legacy_records(sku)
@@ -55,7 +55,7 @@ class Sku::Exporter
   end
 
   def is_product_present?(sku)
-    sku.product.present? and sku.sized?
+    sku.product.present? and sku.should_be_sized?
   end
 
   def last_existing_sku_by_barcode(sku)
@@ -75,7 +75,7 @@ class Sku::Exporter
     @product = sku.product = existing_sku.product
     @language_product = sku.language_product = existing_sku.language_product
 
-    if sku.sized?
+    if sku.should_be_sized?
       @option = sku.option = existing_sku.option || create_option
       @element = sku.element = existing_sku.element || create_element
       @language_product_option =
@@ -99,7 +99,7 @@ class Sku::Exporter
     create_product(sku)
     create_language_product
 
-    if sku.sized?
+    if sku.should_be_sized?
       create_option
       create_element
       create_language_product_option

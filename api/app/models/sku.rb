@@ -54,7 +54,11 @@ class Sku < ActiveRecord::Base
   end
 
   def sized?
-    inv_track != 'P'
+    inv_track == 'O' && element && option && language_product_option
+  end
+
+  def should_be_sized?
+    inv_track == 'O'
   end
 
   def as_json(options = {})
