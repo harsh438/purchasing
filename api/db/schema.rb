@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160905135240) do
+ActiveRecord::Schema.define(version: 20161004105045) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(version: 20160905135240) do
   create_table "ds_options", primary_key: "oID", force: :cascade do |t|
     t.integer "pID",                limit: 4,   default: 0,   null: false
     t.integer "parentID",           limit: 4,   default: 0,   null: false
-    t.string  "oNum",               limit: 40,  default: "",  null: false
+    t.string  "oNum",               limit: 255, default: "",  null: false
     t.integer "oInvLevel",          limit: 4,   default: 0,   null: false
     t.integer "oNotifyLevel",       limit: 4,   default: 0,   null: false
     t.float   "oPrice",             limit: 24,  default: 0.0, null: false
