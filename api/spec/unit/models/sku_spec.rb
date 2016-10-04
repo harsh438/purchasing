@@ -2,7 +2,7 @@ RSpec.describe Sku do
   describe "shoulda", type: :shoulda do
     it { should belong_to(:product).touch(true) }
     it { should belong_to(:vendor) }
-    it { should belong_to(:element) }
+    it { should belong_to(:element).with_foreign_key(:element_id) }
     it { should belong_to(:language_product).with_foreign_key(:language_product_id) }
     it { should belong_to(:language_category).with_foreign_key(:category_id) }
     it { should belong_to(:option).with_foreign_key(:option_id) }
@@ -38,6 +38,34 @@ RSpec.describe Sku do
 
     it 'returns only skus that have barcodes' do
       expect(product.skus.with_barcode.pluck(:sku)).to eq %w(DEF123 GHI123)
+    end
+  end
+
+  describe '#should_be_sized?' do
+    let(:sku) { create(:base_sku, :sized) }
+
+    it 'returns true when inv_track is O' do
+      expect(sku.should_be_sized?).to be true
+    end
+
+    it 'returns false when inv_track is P' do
+      sku.update!(inv_track: 'P')
+      expect(sku.should_be_sized?).to be false
+    end
+  end
+
+  describe '#sized?' do
+    let(:sku) { create(:base_sku, :sized) }
+
+    it "returns true if inv_track == 'O', sku has element, option and language_product_option" do
+      expect(sku.sized?).to be true
+    end
+
+    it 'returns false otherwise' do
+      sku.option.delete
+      sku.reload
+      sku.save!
+      expect(sku.sized?).to be false
     end
   end
 end

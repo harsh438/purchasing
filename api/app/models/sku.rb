@@ -17,7 +17,7 @@ class Sku < ActiveRecord::Base
 
   belongs_to :product, touch: true
   belongs_to :vendor
-  belongs_to :element
+  belongs_to :element, foreign_key: :element_id
   belongs_to :language_product, foreign_key: :language_product_id
   belongs_to :language_category, foreign_key: :category_id
   belongs_to :option, foreign_key: :option_id
@@ -54,7 +54,7 @@ class Sku < ActiveRecord::Base
   end
 
   def sized?
-    inv_track == 'O' && element && option && language_product_option
+    inv_track == 'O' && !!(element && option && language_product_option)
   end
 
   def should_be_sized?
