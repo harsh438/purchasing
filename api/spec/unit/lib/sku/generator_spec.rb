@@ -27,7 +27,8 @@ describe Sku::Generator do
     it 'should retrieve the exitsing sku' do
       sku = subject.generate({ manufacturer_sku: 'mansku-dooby-doo',
                                barcode: Barcode.first.barcode,
-                               season: Season.first.nickname })
+                               season: Season.first.nickname,
+                               inv_track: 'O' })
 
       expect(sku.sku.present?).to eq(true)
       expect(sku.size.present?).to eq(true)

@@ -118,7 +118,8 @@ feature 'SKU generation' do
     page.driver.post skus_path(internal_sku: existing_sku_without_barcode.sku,
                                season: existing_sku_without_barcode.season.nickname,
                                manufacturer_size: existing_sku_without_barcode.manufacturer_size,
-                               manufacturer_color: 'Blue')
+                               manufacturer_color: 'Blue',
+                               inv_track: 'O')
   end
 
   def then_the_sku_should_not_be_updated
