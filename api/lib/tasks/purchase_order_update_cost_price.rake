@@ -4,7 +4,7 @@ require_relative '../cost_price/purchase_order_by_percent.rb'
 
 namespace :purchase_order do
   desc "update the cost price for each item in a po"
-  task :update_cost_price, [:csv_path] => :environment do |_t, args|
+  task :update_cost_price, [:csv_path, :update_type] => :environment do |_t, args|
     abort('Missing csv path') if args[:csv_path].blank?
     csv_path = args[:csv_path]
     abort('Missing update_type') if args[:update_type].blank?
