@@ -53,7 +53,6 @@ RSpec.describe Sku::Exporter do
       it 'the new sku has the same barcode' do
         expect(subject.barcodes.map(&:barcode)).to eq existing_unsized_sku.barcodes.map(&:barcode)
       end
-
     end
 
     context 'new sku does not have the same barcode; lookup is done by mansku' do

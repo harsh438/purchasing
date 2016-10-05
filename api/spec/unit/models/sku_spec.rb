@@ -55,17 +55,30 @@ RSpec.describe Sku do
   end
 
   describe '#sized?' do
-    let(:sku) { create(:base_sku, :sized) }
+    let(:sku) { create(:base_sku, :sized, :with_barcode, :with_product) }
+
+    it 'returns false if no option' do
+      sku.option.delete
+      expect(sku.reload.sized?).to be false
+    end
+
+    it 'returns false if no element' do
+      sku.element.delete
+      expect(sku.reload.sized?).to be false
+    end
+
+    it 'returns false if no language_product_option' do
+      sku.language_product_option.delete
+      expect(sku.reload.sized?).to be false
+    end
+
+    it "returns false if inv_track == 'P'" do
+      sku.update(inv_track: 'P')
+      expect(sku.reload.sized?).to be false
+    end
 
     it "returns true if inv_track == 'O', sku has element, option and language_product_option" do
       expect(sku.sized?).to be true
-    end
-
-    it 'returns false otherwise' do
-      sku.option.delete
-      sku.reload
-      sku.save!
-      expect(sku.sized?).to be false
     end
   end
 end
