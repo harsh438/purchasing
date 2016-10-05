@@ -23,6 +23,7 @@ class Hub::ProductsController < ApplicationController
     {
       request_id: params[:request_id],
       summary: "Returned #{products.length} product objects.",
+      log_type: "product",
       products: ActiveModel::ArraySerializer.new(
         products,
         each_serializer: ProductSerializer

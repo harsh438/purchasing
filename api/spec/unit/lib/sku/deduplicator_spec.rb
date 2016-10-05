@@ -129,9 +129,6 @@ RSpec.describe Sku::Deduplicator do
           a_hash_including(barcode: barcode_4),
         ]
       end
-
     end
-
   end
-
 end

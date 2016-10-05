@@ -92,7 +92,7 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def children
-    sized? ? Sku::Deduplicator.new.without_duplicates(*latest_season_skus) : []
+    Sku::Deduplicator.new.without_duplicates(*sized_latest_season_skus)
   end
 
   def contents
@@ -106,10 +106,10 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def sized?
-    !!latest_season_skus.first.try(:sized?)
+    sized_latest_season_skus.any?
   end
 
-  def latest_season_skus
-    @skus ||= object.latest_season_skus.with_barcode.to_a
+  def sized_latest_season_skus
+    @skus ||= object.latest_season_skus.with_barcode.to_a.select(&:sized?)
   end
 end
