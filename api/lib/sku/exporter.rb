@@ -9,7 +9,7 @@ class Sku::Exporter
 
   def export(sku)
     return if sku.barcodes.empty?
-    return if sku.product.present? and !sku.sized?
+    return if sku.product.present? and (!sku.should_be_sized? or sku.option.present?)
 
     set_attrs_from(sku)
     find_or_create_legacy_records(sku)
