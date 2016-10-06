@@ -57,7 +57,5 @@ class Sku::Deduplicator
         barcode: barcode,
       }
     end
-
   end
-
 end
