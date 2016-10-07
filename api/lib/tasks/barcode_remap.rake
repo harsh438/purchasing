@@ -1,6 +1,6 @@
 namespace :barcode do
   desc "Remaps old_barcode -> new_barcode for a given sku"
-  task :remap_barcode, [:sku, :old_barcode, :new_barcode] => :environment do |t, args|
+  task :remap_barcode, [:sku, :old_barcode, :new_barcode] => :environment do |_t, args|
     sku, old_barcode, new_barcode = args.values_at(:sku, :old_barcode, :new_barcode)
 
     abort("No barcodes provided") unless old_barcode.present? && new_barcode.present?

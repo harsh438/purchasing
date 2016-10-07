@@ -1,6 +1,6 @@
 namespace :order_fix do
   desc "Checks for and deletes skus and orders that are missing data"
-  task :delete_problem_data, [:OT_number] => :environment do |t, args|
+  task :delete_problem_data, [:OT_number] => :environment do |_t, args|
     ot_number = args[:OT_number]
     abort("No order tool id number given") unless ot_number
     skus = Sku.po_by_operator(ot_number)
@@ -15,7 +15,7 @@ namespace :order_fix do
   end
 
   desc "Deletes an old po, but keeps the po number and puts it onto a different given po."
-  task :remap_po, [:po_number_being_kept, :po_number_being_changed] => :environment do |t, args|
+  task :remap_po, [:po_number_being_kept, :po_number_being_changed] => :environment do |_t, args|
     po1 = args[:po_number_being_kept]
     po2 = args[:po_number_being_changed]
     abort("We need the POs") unless po1 && po2
