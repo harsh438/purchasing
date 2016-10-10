@@ -8,6 +8,7 @@ class Sku::Exporter
               :product_gender
 
   def export(sku)
+    return unless sku
     return if sku.barcodes.empty?
     return if sku.product.present? and (!sku.should_be_sized? or sku.option.present?)
 
