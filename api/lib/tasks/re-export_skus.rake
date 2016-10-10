@@ -1,6 +1,6 @@
 namespace :sku do
   desc "Accepts csv of sku_ids. One id per line. Re-exports them"
-  task :reexport, [:csv_file] => :environment do |_t, args|
+  task :reexport, [:csv_path] => :environment do |_t, args|
     csv_path = args[:csv_path]
     exporter = Sku::Exporter.new
     logger =Logger.new(STDOUT)
