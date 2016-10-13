@@ -1,0 +1,27 @@
+{
+  "request_id": 2654,
+  "goods_in": {
+    "id" : 778767,
+    "reference": "778893",
+    "delivery_note": "1015430",
+    "user_id": 863,
+    "reconciled_date": "2016-07-01 14:48:53",
+    "items": [
+      {
+        "sku": "189013-355",
+        "quantity": 6,
+        "purchase_order_number" : 222
+      },
+      {
+        "sku": "189013-356",
+        "quantity": 6,
+        "purchase_order_number" : 222
+      },
+      {
+        "sku": "189013-357",
+        "quantity": 6,
+        "purchase_order_number" : 222
+      }
+    ]
+  }
+}

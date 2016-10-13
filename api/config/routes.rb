@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     end
 
     namespace :hub do
+      resources :goods_in, only: [:create]
       resources :assets, only: [:create]
       resources :purchase_orders do
         collection do
