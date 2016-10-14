@@ -31,16 +31,12 @@ class Hub::GoodsInController < ApplicationController
       logged: reconciled_date,
       UserId: user_id,
       DeliveryNote: delivery_note,
-      pid: product_id(item),
+      pid: item[:product_id],
     }
   end
 
   def request_id
     params.require(:request_id)
-  end
-
-  def product_id(item)
-    Sku.find_by(sku: item[:sku]).product_id
   end
 
   def reference

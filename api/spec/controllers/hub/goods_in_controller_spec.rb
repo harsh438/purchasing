@@ -8,9 +8,6 @@ RSpec.describe Hub::GoodsInController do
   let(:goods_in) { json['goods_in'] }
   let(:delivery_note) { goods_in['delivery_note'] }
   let(:item_count) { goods_in['items'].count }
-  let(:sku) { Struct.new(:product_id).new(10001) }
-
-  before { allow(Sku).to receive(:find_by).and_return(sku) }
 
   context "valid delivery_note" do
     let(:json) do
@@ -45,7 +42,7 @@ RSpec.describe Hub::GoodsInController do
           qty: goods_in['items'].first['quantity'],
           UserId: goods_in['user_id'],
           DeliveryNote: delivery_note,
-          pid: sku.product_id,
+          pid: goods_in['items'].first['product_id'],
         )
       end
       it "correct number of records" do

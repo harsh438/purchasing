@@ -10,17 +10,20 @@
       {
         "sku": "189013-355",
         "quantity": 6,
-        "purchase_order_number" : 222
+        "purchase_order_number": 222,
+        "product_id": 189013
       },
       {
         "sku": "189013-356",
         "quantity": 6,
-        "purchase_order_number" : 222
+        "purchase_order_number": 222,
+        "product_id": 189013
       },
       {
         "sku": "189013-357",
         "quantity": 6,
-        "purchase_order_number" : 222
+        "purchase_order_number": 222,
+        "product_id": 189013
       }
     ]
   }
