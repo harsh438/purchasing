@@ -41,12 +41,12 @@ class Hub::AssetsController < ApplicationController
   end
 
   def handle_missing_parameters
-    render text: 'Bad object', status: 500
+    render json: { summary: 'Bad object' }, status: 500
   end
 
   def validate_action
     unless ProductImageBatchService::SUPPORTED_ACTIONS.include? action
-      render text: 'Wrong action status', status: 500
+      render json: { summary: 'Wrong action status' }, status: 500
     end
   end
 end

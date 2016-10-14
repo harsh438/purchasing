@@ -68,14 +68,14 @@ class Hub::GoodsInController < ApplicationController
   end
 
   def handle_missing_parameters
-    render text: 'Bad object', status: 500
+    render json: { summary: 'Bad object' }, status: 500
   end
 
   def validate_grn
-    render text: 'GRN does not exist', status: 500 unless grn.present?
+    render json: { summary: 'GRN does not exist' }, status: 500 unless grn.present?
   end
 
   def validate_ref
-    render text: 'Ref already exists', status: 500 unless ref.blank?
+    render json: { summary: 'Ref already exists' }, status: 500 unless ref.blank?
   end
 end
