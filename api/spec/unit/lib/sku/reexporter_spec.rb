@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Sku::Reexporter do
   describe "#re_export" do
     let!(:sku) { create(:base_sku) }

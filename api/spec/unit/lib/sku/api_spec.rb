@@ -1,4 +1,4 @@
-describe Sku::Api do
+RSpec.describe Sku::Api do
   let (:url) { Sku::Api.new.config['url'] }
 
   context 'Retrieving sku information from the API' do

@@ -9,9 +9,7 @@ class Sku::Generator
 
   private
 
-  def attrs
-    @attrs
-  end
+  attr_reader :attrs
 
   def find_sku
     if attrs[:barcode].present?

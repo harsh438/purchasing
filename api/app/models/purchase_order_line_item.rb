@@ -131,12 +131,11 @@
                  comment: :comment,
                  cost: :cost,
                  cancelled_date: :cancelled_date,
-                 in_pvx: :inPVX,
+                 sent_to_peoplevox: :inPVX,
                  season: :po_season,
                  category_id: :orderTool_RC,
                  gender: :orderTool_LG,
                  vendor_id: :orderTool_venID,
-                 line_id: :orderToolItemID,
                  product_name: :orderTool_productName,
                  product_sku: :orderTool_SKU,
                  product_size: :orderTool_SDsize,
@@ -150,9 +149,10 @@
                  original_pid: :original_pID,
                  original_option_id: :original_oID,
                  single_line_id: :orderTool_SingleLineID,
+                 line_id: :orderToolItemID,
                  item_id: :orderToolItemID,
                  sku_id: :sku_id,
-                 sent_to_peoplevox: :inPVX
+                 order_tool_reference: :orderToolItemID
 
   filters :vendor_id,
           :gender,
@@ -195,13 +195,10 @@
   def product_cost
     cost
   end
-
-  def discounted_cost
-    cost
-  end
+  alias_method :discounted_cost, :product_cost
 
   def product_sized?
-    product_size.present? or option_id > 0
+    product_size.present? && option_id > 0
   end
 
   def supplier_style_code

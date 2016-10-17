@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Sku::Exporter do
   describe 'Existing non sized product being passed in as sized' do
     let!(:product) { create(:product) }
