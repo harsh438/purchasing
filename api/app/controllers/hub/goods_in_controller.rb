@@ -27,12 +27,18 @@ class Hub::GoodsInController < ApplicationController
       sku: item[:sku],
       ref: reference,
       qty: item[:quantity],
-      ponum: item[:purchase_order_number],
+      ponum: normalise_po_number(item),
       logged: reconciled_date,
       UserId: user_id,
       DeliveryNote: delivery_note,
       pid: item[:product_id],
     }
+  end
+
+  def normalise_po_number(item)
+    po_number = item[:purchase_order_number]
+    return po_number unless po_number
+    po_number.split('_').first
   end
 
   def request_id
