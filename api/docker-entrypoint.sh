@@ -12,6 +12,7 @@ set -e
 if [ "$1" = 'start' ]; then
     # init db stuff....
     # use gosu to drop to a non-root user
+    bundle exec rake db:migrate
     bundle exec rake assets:precompile
     foreman start
 fi
