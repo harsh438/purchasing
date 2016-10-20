@@ -3,7 +3,7 @@ namespace :studio do
   task :negative_ref_correction => [:environment] do
     logger = Logger.new(STDERR)
     logger.formatter = proc { |severity, datetime, _progname, msg|
-      format('[%s] %s -- %s', datetime, severity, msg)
+      format("[%s] %s -- %s\n", datetime, severity, msg)
     }
 
     service = ProductImageNegativeRefAdjustmentService.new
