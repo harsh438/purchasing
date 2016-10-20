@@ -1,0 +1,15 @@
+{
+  "order": {
+    "line_items_attributes": [
+      {
+        "internal_sku": "test_01",
+        "manufacturer_size": "biggish",
+        "season": "AW17",
+        "quantity": 4,
+        "cost": 10,
+        "discount": 0,
+        "drop_date": "2016-07-01 14:48:53"
+      }
+    ]
+  }
+}

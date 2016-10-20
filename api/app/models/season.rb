@@ -1,6 +1,8 @@
 class Season < ActiveRecord::Base
   include LegacyMappings
 
+  has_many :purchase_order_line_items
+
   map_attributes id: :SeasonID,
                  name: :SeasonName,
                  year: :SeasonYear,

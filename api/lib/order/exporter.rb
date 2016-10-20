@@ -31,10 +31,14 @@ class Order::Exporter
   end
 
   def po_line_item_attrs(order_line_item, extra_params)
-    { operator: extra_params[:operator] || operator(order_line_item),
+    {
+      operator: extra_params[:operator] || operator(order_line_item),
       single_line_id: extra_params[:single_line_id] || nil,
       line_id: order_line_item.sku.try(:order_tool_reference) || 0,
-      reporting_pid: order_line_item.reporting_pid }
+      reporting_pid: order_line_item.reporting_pid,
+      quantity_done: extra_params[:quantity_done] || 0,
+      status: extra_params.fetch(:status, 2)
+    }
       .merge(po_line_item_core_attrs(order_line_item))
       .merge(po_line_item_relationship_attrs(order_line_item))
       .merge(po_line_item_product_attrs(order_line_item))
@@ -47,8 +51,7 @@ class Order::Exporter
   end
 
   def po_line_item_core_attrs(order_line_item)
-    { status: 2,
-      supplier_list_price: order_line_item.cost,
+    { supplier_list_price: order_line_item.cost,
       cost: order_line_item.discounted_cost,
       quantity: order_line_item.quantity,
       season: order_line_item.season || '',

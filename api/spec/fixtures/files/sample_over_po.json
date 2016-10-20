@@ -1,0 +1,12 @@
+{
+  "over_po": {
+    "sku": "test_01",
+    "quantity": 4,
+    "user_id": 1,
+    "grn": "10001",
+    "po_numbers": [
+      1001,
+      1002
+    ]
+  }
+}

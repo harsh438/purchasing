@@ -63,6 +63,8 @@ Rails.application.routes.draw do
 
     resources :users, only: [:index]
 
+    resources :over_purchase_orders, only: [:create]
+
     scope :filters do
       get ':action' => 'filters#:action'
     end

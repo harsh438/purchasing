@@ -78,6 +78,14 @@
                          .compact
   end
 
+  def self.season(po_numbers)
+    joins(:season)
+      .where(po_number: po_numbers)
+      .order("seasons.sort DESC")
+      .limit(1)
+      .pluck(:po_season).first
+  end
+
   def self.genders
     PurchaseOrderLineItem.pluck('distinct orderTool_LG')
                          .map do |c|
@@ -96,6 +104,7 @@
   belongs_to :purchase_order, foreign_key: :po_number, touch: true
   belongs_to :sku, foreign_key: :sku_id
   belongs_to :language_category, foreign_key: :category_id
+  belongs_to :season, foreign_key: :po_season, primary_key: :SeasonNickname
 
   has_many :suppliers, through: :vendor
 
@@ -195,22 +204,18 @@
   def supplier_style_code
     (product_sku || '').split('-').first
   end
-  alias_method :brand_style_code, :supplier_style_code
 
   def supplier_color_code
     (product_sku || '').split('-').last
   end
-  alias_method :brand_color_code, :supplier_color_code
 
   def supplier_product_name
     product_name
   end
-  alias_method :brand_product_name, :supplier_product_name
 
   def supplier_color_name
     sku.try(:manufacturer_color)
   end
-  alias_method :brand_color_name, :supplier_color_name
 
   def brand_size
     manufacturer_size
@@ -231,7 +236,6 @@
   def ordered_cost
     ordered_quantity * cost
   end
-  alias_method :total, :ordered_cost
 
   def ordered_value
     ordered_quantity * product_price
@@ -254,27 +258,15 @@
   end
 
   def cancelled_quantity
-    if cancelled?
-      quantity - delivered_quantity
-    else
-      0
-    end
+    cancelled? ? (quantity - delivered_quantity) : 0
   end
 
   def cancelled_cost
-    if cancelled?
-      cancelled_quantity * cost
-    else
-      0
-    end
+    cancelled? ? (cancelled_quantity * cost) : 0
   end
 
   def cancelled_value
-    if cancelled?
-      cancelled_quantity * product_price
-    else
-      0
-    end
+    cancelled? ? (cancelled_quantity * product_price) : 0
   end
 
   def balance_quantity
@@ -298,7 +290,6 @@
   def internal_sku
     sku.try(:sku)
   end
-  alias_method :surfdome_sku, :internal_sku
 
   def as_json(options = {})
     options[:unit] ||= '£'
@@ -314,27 +305,17 @@
   end
 
   def cancel
-    unless cancelled?
-      update!(cancelled_date: Date.today, status: -1)
-    end
-
+    update!(cancelled_date: Date.today, status: -1) unless cancelled?
     self
   end
 
   def uncancel
-    if cancelled?
-      update_columns(cancelled_date: '0000-00-00', status: 2)
-    end
-
+    update_columns(cancelled_date: '0000-00-00', status: 2) if cancelled?
     self
   end
 
   def barcodeless?
-    if sku.present?
-      sku.barcodes.empty?
-    else
-      true
-    end
+    sku.present? ? sku.barcodes.empty? : true
   end
 
   private
@@ -403,4 +384,10 @@
     PurchaseOrderLineItem.where(po_number: po_number2).update_all(po_number: po_number1)
   end
 
+  alias_method :brand_product_name, :supplier_product_name
+  alias_method :total, :ordered_cost
+  alias_method :surfdome_sku, :internal_sku
+  alias_method :brand_color_code, :supplier_color_code
+  alias_method :brand_style_code, :supplier_style_code
+  alias_method :brand_color_name, :supplier_color_name
 end

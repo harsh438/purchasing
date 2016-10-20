@@ -9,4 +9,14 @@ RSpec.describe  PurchaseOrderLineItem, type: :model do
 
     it { should have_many(:suppliers).through(:vendor) }
   end
+
+  context "Class method" do
+  subject { described_class }
+  let(:purchase_order) { create(:purchase_order_line_item, po_number: 1001) }
+  let(:season) { create(:season, nickname: purchase_order.po_season) }
+
+    it "returns latest season from a list of POs" do
+      expect(subject.season([purchase_order.po_number])).to eq 'AW15'
+    end
+  end
 end
