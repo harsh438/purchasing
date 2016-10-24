@@ -36,8 +36,8 @@ RSpec.describe OverPurchaseOrdersController do
         expect(data['order_type']).to eq 'over_po'
         expect(exports.first['purchase_order_id']).to eq last_po.id
         expect(data['line_items'].count).to eq exports.count
-        expect(last_po.attributes.fetch('status')).to eq 5
-        expect(last_po.quantity_done).to eq over_po.obj['over_po']['quantity']
+        expect(last_po.attributes.fetch('status')).to eq 2
+        expect(last_po.quantity_done).to eq 0
         expect(last_po.operator).to eq 'O_U_TOOL'
         expect(last_po.id).to eq exports.first['purchase_order_id']
         expect(data['name']).to eq "OVER_#{OverDelivery.last.id}"

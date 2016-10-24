@@ -69,8 +69,8 @@ describe OverDelivery::Generator do
     it "Purchase_order" do
       po_line_item, line_item = PurchaseOrderLineItem.last, OrderLineItem.last
       expect(po_line_item.quantity).to eq attrs[:quantity]
-      expect(po_line_item.quantity_done).to eq attrs[:quantity]
-      expect(po_line_item.attributes.fetch('status')).to eq 5
+      expect(po_line_item.quantity_done).to eq 0
+      expect(po_line_item.attributes.fetch('status')).to eq 2
       expect(po_line_item.operator).to eq 'O_U_TOOL'
       expect(po_line_item.cost).to eq line_item.cost
       expect(po_line_item.po_season).to eq sku.season.nickname

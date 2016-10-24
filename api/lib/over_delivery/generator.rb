@@ -27,9 +27,7 @@ class OverDelivery::Generator
 
   def extra_params
     {
-      operator: 'O_U_TOOL',
-      status: 5,
-      quantity_done: attrs[:quantity]
+      operator: 'O_U_TOOL'
     }
   end
 
