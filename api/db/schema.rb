@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161018091052) do
+ActiveRecord::Schema.define(version: 20161024100427) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -990,6 +990,17 @@ ActiveRecord::Schema.define(version: 20161018091052) do
   end
 
   add_index "vendor_details", ["vendor_id"], name: "index_vendor_details_on_vendor_id", using: :btree
+
+  create_table "versions", force: :cascade do |t|
+    t.string   "item_type",  limit: 255,        null: false
+    t.integer  "item_id",    limit: 4,          null: false
+    t.string   "event",      limit: 255,        null: false
+    t.string   "whodunnit",  limit: 255
+    t.text     "object",     limit: 4294967295
+    t.datetime "created_at"
+  end
+
+  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
   add_foreign_key "order_exports", "orders"
   add_foreign_key "order_line_items", "orders"

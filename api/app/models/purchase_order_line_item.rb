@@ -108,6 +108,9 @@
 
   has_many :suppliers, through: :vendor
 
+  has_paper_trail on: [:create, :update, :destroy],
+                  ignore: [:updated_at, :created_at]
+
   after_initialize :set_legacy_fields
   after_initialize :ensure_defaults
 

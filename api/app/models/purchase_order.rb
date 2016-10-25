@@ -11,6 +11,9 @@ class PurchaseOrder < ActiveRecord::Base
                  vendor_id: :venID,
                  vendor_name: :Brand
 
+  has_paper_trail on: [:create, :update, :destroy],
+                  ignore: [:updated_at, :created_at]
+
   has_many :line_items, class_name: 'PurchaseOrderLineItem',
                         foreign_key: :po_number
 

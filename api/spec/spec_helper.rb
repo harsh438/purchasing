@@ -27,11 +27,16 @@ RSpec.configure do |config|
 
   config.mock_with :rspec do |mocks|
     mocks.syntax = :expect
-
     mocks.verify_partial_doubles = true
   end
 
   config.before :example do
     ActionMailer::Base.deliveries.clear
+  end
+
+  config.around(:each) do |example|
+    PaperTrail.enabled = true
+    example.run
+    PaperTrail.enabled = false
   end
 end
