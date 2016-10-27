@@ -235,7 +235,7 @@ class Sku::Exporter
   class ProductWithoutColor < StandardError
     attr_reader :product
 
-    def initialize(sku)
+    def initialize(product)
       @product = product
     end
   end
