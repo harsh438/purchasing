@@ -14,6 +14,7 @@ gem 'rails', '4.2.4'
 gem 'rake'
 gem 'sentry-raven'
 gem 'paper_trail', '~> 4.0.0'
+gem 'sidekiq'
 
 group :test do
   gem 'brakeman'                  # Always latest
@@ -49,3 +50,4 @@ group :development, :test do
   gem 'pry-rails'
   gem 'shoulda'
 end
+
