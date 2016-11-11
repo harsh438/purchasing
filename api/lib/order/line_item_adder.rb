@@ -25,7 +25,7 @@ class Order::LineItemAdder
     end
     Sku.order(created_at: :desc).find_by!(query)
   rescue ActiveRecord::RecordNotFound
-    raise Order::SkuNotFound.new(line_item_attrs[:internal_sku])
+    raise Order::SkuNotFound.new(line_item_attrs[:internal_sku], season)
   end
 
   def line_item_and_sku_attrs(line_item_attrs, sku)

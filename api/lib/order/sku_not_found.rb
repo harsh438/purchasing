@@ -1,7 +1,8 @@
 class Order::SkuNotFound < RuntimeError
-  attr_reader :sku
+  attr_reader :sku, :season
 
-  def initialize(sku)
+  def initialize(sku, season=nil)
     @sku = sku
+    @season = season
   end
 end

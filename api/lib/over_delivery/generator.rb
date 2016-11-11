@@ -6,11 +6,13 @@ class OverDelivery::Generator
   end
 
   def generate
-    @over_delivery = OverDelivery.create!(attrs.except(:po_numbers))
-    order = Order.create!(order_attrs)
-    line_item_adder.add(order, order_line_item_attrs)
-    orders = Order.where(id: order.id).includes(:line_items, :exports)
-    exporter.export(orders, extra_params)
+    ActiveRecord::Base.transaction do
+      @over_delivery = OverDelivery.create!(attrs.except(:po_numbers))
+      order = Order.create!(order_attrs)
+      line_item_adder.add(order, order_line_item_attrs)
+      orders = Order.where(id: order.id).includes(:line_items, :exports)
+      exporter.export(orders, extra_params)
+    end
   end
 
   private
