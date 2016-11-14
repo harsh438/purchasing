@@ -33,20 +33,11 @@ class OverPurchaseOrdersController < ApplicationController
 
   def generate_sku_and_reprocess(old_sku, season)
     begin
-      barcode = Barcode.find_by!(sku_id: old_sku.id).barcode
-      attrs = new_sku_attrs(old_sku, barcode, season)
+      attrs = OverDelivery::NewSkuAttributes.new(old_sku, season).build
       Sku::Generator.new.generate(attrs)
       create
     rescue ActiveRecord::RecordNotFound => e
       handle_error(e)
     end
-  end
-
-  def new_sku_attrs(sku, barcode, season)
-    attrs = sku.attributes
-    attrs[:season] = season
-    attrs[:barcode] = barcode
-    attrs[:internal_sku] = attrs['sku']
-    attrs
   end
 end
