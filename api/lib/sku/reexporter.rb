@@ -13,9 +13,9 @@ class Sku::Reexporter
     CSV.open(File.expand_path(csv_path)) do |rows|
       rows.each do |row|
         sku = Sku.find_by(id: row[0].to_i)
-        logger.info("before: #{p sku}")
+        logger.info("before: #{sku.inspect}")
         exported_sku = exporter.export(sku)
-        logger.info("after: #{p exported_sku}")
+        logger.info("after: #{exported_sku.inspect}")
       end
     end
   end
