@@ -27,7 +27,8 @@
             "width": 1200
           },
           "elasticera_reference": "magic@lstringofdoom",
-          "legacy_id": 1
+          "legacy_id": 1,
+          "s3_path": "magic@lstringofdoom.jpg"
         },
         {
           "url": "http://asset1.surfcdn.com/magic@lstringofdoom?w=400",
@@ -37,7 +38,8 @@
             "width": 1200
           },
           "elasticera_reference": "magic@lstringofdoom",
-          "legacy_id": 2
+          "legacy_id": 2,
+          "s3_path": "magic@lstringofdoom.jpg"
         },
         {
           "url": "http://asset1.surfcdn.com/awesome@photo?w=400",
@@ -47,7 +49,8 @@
             "width": 1200
           },
           "elasticera_reference": "awesome@photo",
-          "legacy_id": 3
+          "legacy_id": 3,
+          "s3_path": "magic@lstringofdoom.jpg"
         }
       ],
       "legacy_lead_gender": "Toddler",

@@ -15,7 +15,8 @@ RSpec.describe ProductImage, type: :model do
           width: product_image.width
         },
         elasticera_reference: product_image.its_reference,
-        legacy_id: product_image.id
+        legacy_id: product_image.id,
+        s3_path: product_image.s3_path
       )
     end
   end

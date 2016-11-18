@@ -1,6 +1,6 @@
 class ProductImageSerializer < ActiveModel::Serializer
   attributes :url, :position, :dimensions, :elasticera_reference,
-             :legacy_id
+             :legacy_id, :s3_path
 
   private
 

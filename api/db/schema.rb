@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161025085658) do
+ActiveRecord::Schema.define(version: 20161117143400) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -629,6 +629,7 @@ ActiveRecord::Schema.define(version: 20161025085658) do
     t.datetime "accepted_at"
     t.string   "legacy_position", limit: 1
     t.integer  "negative_ref",    limit: 4
+    t.string   "s3_path",         limit: 255
   end
 
   add_index "product_image", ["accepted_at"], name: "accepted_at", using: :btree

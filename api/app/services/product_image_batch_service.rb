@@ -6,6 +6,7 @@ class ProductImageBatchService
     height: %w( elasticera height ),
     its_reference: %w( elasticera reference ),
     source_path: %w( s3 url ),
+    s3_path: %w( s3_path )
   }.freeze
 
   def replace_assets(product_id, batch_id, assets)
