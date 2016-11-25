@@ -36,6 +36,7 @@ class Sku < ActiveRecord::Base
   accepts_nested_attributes_for :barcodes
 
   validates_presence_of :manufacturer_sku
+  validate :sku_size
 
   def self.updated_since(timestamp, max_id)
     where('(skus.updated_at = ? and skus.id > ?) or (skus.updated_at > ?)', timestamp, max_id, timestamp)
@@ -79,5 +80,12 @@ class Sku < ActiveRecord::Base
 
   def self.po_by_operator(ot_number)
     Sku.joins(:purchase_order_line_items).where('purchase_orders.operator =?', "OT_#{ot_number}")
+  end
+
+  def sku_size
+    sizes = Sku.where(sku: sku).pluck(:size)
+    return true if sizes.include?(size) and sizes.length == 1
+    return true if sizes.empty?
+    errors.add(:size, 'Invalid size for sku')
   end
 end
