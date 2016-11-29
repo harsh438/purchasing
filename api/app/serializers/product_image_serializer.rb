@@ -22,4 +22,9 @@ class ProductImageSerializer < ActiveModel::Serializer
   def legacy_id
     object.id
   end
+
+  def s3_path
+    return object.s3_path if object.s3_path.present?
+    "s3://surfdome-product-images-cdn-production/#{object.its_reference}.jpg"
+  end
 end

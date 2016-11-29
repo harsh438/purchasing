@@ -28,7 +28,7 @@
           },
           "elasticera_reference": "magic@lstringofdoom",
           "legacy_id": 1,
-          "s3_path": "magic@lstringofdoom.jpg"
+          "s3_path": "s3://surfdome-product-images-cdn-production/magic@lstringofdoom.jpg"
         },
         {
           "url": "http://asset1.surfcdn.com/magic@lstringofdoom?w=400",
@@ -39,7 +39,7 @@
           },
           "elasticera_reference": "magic@lstringofdoom",
           "legacy_id": 2,
-          "s3_path": "magic@lstringofdoom.jpg"
+          "s3_path": "s3://surfdome-product-images-cdn-production/magic@lstringofdoom.jpg"
         },
         {
           "url": "http://asset1.surfcdn.com/awesome@photo?w=400",
@@ -50,7 +50,7 @@
           },
           "elasticera_reference": "awesome@photo",
           "legacy_id": 3,
-          "s3_path": "magic@lstringofdoom.jpg"
+          "s3_path": "s3://surfdome-product-images-cdn-production/magic@lstringofdoom.jpg"
         }
       ],
       "legacy_lead_gender": "Toddler",
