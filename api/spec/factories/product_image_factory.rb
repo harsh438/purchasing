@@ -16,6 +16,6 @@ FactoryGirl.define do
     deleted_at nil
     accepted_at '2016-07-07'
     legacy_position 'b'
-    s3_path 'magic@lstringofdoom.jpg'
+    s3_path 's3://surfdome-product-images-cdn-production/magic@lstringofdoom.jpg'
   end
 end
