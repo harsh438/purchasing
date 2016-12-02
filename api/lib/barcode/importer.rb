@@ -46,7 +46,13 @@ class Barcode::Importer
   end
 
   def find_or_create_barcode(sku, barcode)
-    sku.barcodes.find_or_create_by!(barcode: barcode[:barcode])
+    if sku.barcodes.any? && sku.barcodes.map(&:barcode).exclude?(barcode[:barcode])
+      Barcode.where(sku_id: sku.id).each do |existing_barcode|
+        Barcode::Updater.update(barcode: barcode[:barcode], id: existing_barcode.id)
+      end
+    else
+      sku.barcodes.find_or_create_by!(barcode: barcode[:barcode])
+    end
   rescue ActiveRecord::RecordInvalid
     raise BarcodeInvalid.new(barcode)
   end
