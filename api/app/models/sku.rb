@@ -84,7 +84,7 @@ class Sku < ActiveRecord::Base
 
   def sku_size
     sizes = Sku.where(sku: sku).pluck(:size)
-    return true if sizes.include?(size) and sizes.length == 1
+    return true if sizes.include?(size) and sizes.uniq.length == 1
     return true if sizes.empty?
     errors.add(:size, 'Invalid size for sku')
   end
