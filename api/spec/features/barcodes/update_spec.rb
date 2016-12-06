@@ -43,18 +43,18 @@ feature 'Updating barcodes' do
   end
 
   def when_i_update_an_existing_barcode_with_conflict
-    purchase_order_line_item
+    sku_2
     page.driver.post barcode_path(barcode), {
       _method: 'PATCH',
-      barcode: barcode.barcode
+      barcode: sku_2.barcodes[0].barcode
     }
   end
 
   def then_the_barcode_should_not_be_updated
     expect(page).to have_http_status(409)
     expect(subject['message']).to include('duplication')
-    expect(subject['duplicated_sku']['id']).to eq(sku.id)
-    expect(subject['duplicated_sku']['sku']).to eq(sku.sku)
+    expect(subject['duplicated_sku']['id']).to eq(sku_2.id)
+    expect(subject['duplicated_sku']['sku']).to eq(sku_2.sku)
   end
 
   def when_i_update_an_existing_barcode_from_an_unsized_sku
@@ -79,4 +79,5 @@ feature 'Updating barcodes' do
   let(:barcode) { sku.barcodes.first }
   let(:new_barcode) { random_barcode }
   let(:purchase_order_line_item) { create(:purchase_order_line_item, sku_id: sku.id) }
+  let(:sku_2) { create(:base_sku, :with_product, barcodes: [create(:barcode)]) }
 end

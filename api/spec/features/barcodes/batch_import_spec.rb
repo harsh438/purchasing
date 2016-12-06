@@ -24,7 +24,6 @@ feature 'Batch importing Barcodes' do
   scenario 'Given sku exists already, and has a different barcode' do
     when_a_sku_exists_already_but_has_a_different_barcode
     then_the_barcode_should_be_updated_to_the_new_one
-
   end
 
   scenario 'Importing barcodes for SKU twice in one import' do
@@ -130,7 +129,21 @@ feature 'Batch importing Barcodes' do
   end
 
   def when_a_sku_exists_already_but_has_a_different_barcode
-    existing_sku = create(:base_sku, :with_product, barcodes: [create(:barcode)])
+    existing_sku = create(
+      :base_sku,
+      :with_product,
+      barcodes: [create(:barcode)],
+      season: Season.first
+    )
+
+    create(
+      :base_sku,
+      :with_product,
+      sku: existing_sku.sku,
+      barcodes: [create(:barcode)],
+      season: Season.last
+    )
+
     barcodes = [{ sku: existing_sku.sku,
                   brand_size: existing_sku.manufacturer_size,
                   barcode: 'cool' }]
@@ -138,7 +151,7 @@ feature 'Batch importing Barcodes' do
   end
 
   def then_the_barcode_should_be_updated_to_the_new_one
-    expect(Barcode.count).to eq 1
+    expect(Barcode.count).to eq 2
     expect(Sku.first.barcodes.count).to eq 1
     expect(Sku.first.barcodes.first.barcode).to eq 'cool'
   end

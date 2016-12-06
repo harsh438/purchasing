@@ -33,9 +33,9 @@ class Barcode::Importer
 
   def assign_barcode_to_skus(barcode)
     find_skus(barcode).map do |sku|
-      barcode = find_or_create_barcode(sku, barcode)
+      barcode_record = find_or_create_barcode(sku, barcode)
       Sku::Exporter.new.export(sku)
-      barcode
+      barcode_record
     end
   end
 
