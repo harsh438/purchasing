@@ -1,0 +1,15 @@
+development: &default
+  consumer_key: <%= ENV["SURFDOME_CONSUMER_KEY"] %>
+  secret_key: <%= ENV["SURFDOME_SECRET_KEY"] %>
+  host: http://localhost:3000
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+  host: https://surfdome.cc
+
+production:
+  <<: *default
+  host: https://surfdome.io
