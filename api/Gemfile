@@ -15,6 +15,7 @@ gem 'rake'
 gem 'sentry-raven'
 gem 'paper_trail', '~> 4.0.0'
 gem 'sidekiq'
+gem 'oauth2'
 
 group :test do
   gem 'brakeman'                  # Always latest

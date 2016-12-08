@@ -1,0 +1,18 @@
+<%- content_for(:title, "Login") -%>
+
+<div class="container">
+  <div class="jumbotron">
+    <%= form_tag sessions_path do %>
+      <h1>Sign in with Surfdome</h1>
+
+      <p>
+        For security reasons we must verify that you have the necessary permissions to access
+        this part of the purchasing application.
+      </p>
+
+      <button class="btn btn-primary btn-lg">
+        Sign in with Surfdome
+      </button>
+    <% end %>
+  </div>
+</div>

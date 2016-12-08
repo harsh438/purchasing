@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title><%= [content_for(:title), "Purchasing", "Surfdome"].join(' | ') %></title>
+    <link rel="stylesheet" href="/assets/stylesheets/app.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  </head>
+  <body>
+    <div class="purchasing_processing_app">
+      <%= render "global/navigation" %>
+      <div style="margin-top: 70px">
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>
