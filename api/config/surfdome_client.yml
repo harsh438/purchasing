@@ -8,8 +8,8 @@ test:
 
 staging:
   <<: *default
-  host: https://surfdome.cc
+  host: https://www.surfdome.cc
 
 production:
   <<: *default
-  host: https://surfdome.io
+  host: https://www.surfdome.io
