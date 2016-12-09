@@ -11,7 +11,7 @@ class AuthorizedController < ActionController::Base
     session[:jump] = request.fullpath
     refresh_token!
     # if we have no token then we must get authorization from the user
-    redirect_to new_session_url and return unless token
+    redirect_to new_session_path and return unless token
     # clean the session up as this request is authorized
     session.delete(:jump)
   end
