@@ -30,5 +30,6 @@ module Purchasing
                                                     secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] } }
 
     config.surfdome = config_for(:surfdome_client)
+    config.force_ssl = true
   end
 end
