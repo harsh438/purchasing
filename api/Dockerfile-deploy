@@ -1,5 +1,5 @@
-FROM 213273172953.dkr.ecr.eu-west-1.amazonaws.com/ruby_base:2.2.3
-MAINTAINER Blagovest Karakashev, blagovest.karakashev@surfdome.com
+FROM 213273172953.dkr.ecr.eu-west-1.amazonaws.com/ruby_base:2.2.3-https
+MAINTAINER Jose Pettoruti, jose.pettoruti@surfdome.com
 
 # Create app directory
 RUN mkdir -p /home/webapp/tmp/pids
