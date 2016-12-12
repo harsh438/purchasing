@@ -11,7 +11,7 @@ staging:
   # The below 2 lines are temporary
   consumer_key: 6fb4f9f998d10365be8d46057789d4ed1a6493a12db9b5e2f3901282756ea8d2
   secret_key: 248f290dd5c78b7a955ae0a4545a723e137c4501b40d000fc02bda8675691f3f
-  host: https://www.surfdome.cc
+  host: https://dev:surfd66@www.surfdome.cc
 
 production:
   <<: *default
