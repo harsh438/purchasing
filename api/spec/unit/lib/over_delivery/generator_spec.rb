@@ -15,6 +15,13 @@ describe OverDelivery::Generator do
            season: Season.all[5]
           )
   end
+  let(:sku2) do
+    create(:base_sku,
+           :with_barcode,
+           :with_product,
+           season: Season.all[5]
+          )
+  end
   let(:attrs) do
     {
       sku: sku.sku,
@@ -28,6 +35,39 @@ describe OverDelivery::Generator do
   end
 
   subject { described_class.new(attrs) }
+
+  context "over po cost" do
+    context "no purchase order lines and no skus" do
+      before do
+        attrs[:sku] = 'blahblah'
+        attrs[:po_numbers] = [2_340_594_522]
+      end
+
+      it "raises sku not found error" do
+        expect { subject.generate }.to raise_error(OverDelivery::Generator::SkuNotFoundForSeason)
+      end
+    end
+    context "no purchase order lines and a sku" do
+      before do
+        attrs[:sku] = sku2.sku
+      end
+
+      it "doesn't raise error" do
+        expect { subject.generate }.not_to raise_error
+      end
+    end
+    context "no purchase order lines and a sku and product with 0 cost" do
+      before do
+        sku2.update(cost_price: 0)
+        sku2.product.update(cost: 0)
+        attrs[:sku] = sku2.sku
+      end
+
+      it "raises missing items for cost" do
+        expect { subject.generate }.to raise_error { OverDelivery::Generator::MissingItemsForCost }
+      end
+    end
+  end
 
   context "Generates required objects for an over po" do
     [OverDelivery, Order, OrderLineItem, PurchaseOrderLineItem].each do |object|

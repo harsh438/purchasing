@@ -27,7 +27,7 @@ FactoryGirl.define do
     end
 
     trait :with_product do
-      product { |sku| create(:product, manufacturer_sku: sku.manufacturer_sku, season: sku.season) }
+      product { |sku| create(:product, manufacturer_sku: sku.manufacturer_sku, season: sku.season, cost: 9.99) }
     end
 
     trait :with_barcode do

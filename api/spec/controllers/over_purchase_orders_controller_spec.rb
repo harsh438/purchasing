@@ -32,23 +32,14 @@ RSpec.describe OverPurchaseOrdersController do
         end
       end
 
-      context 'wrong season' do
+      context 'wrong season, no barcode' do
+        let(:sku) { create(:base_sku, :with_product, season: Season.all[5], sku: over_po.obj['over_po']['sku']) }
+
         before { sku.update(season: Season.all[4]) }
 
-        context 'correct barcode' do
-          it 'generates sku for correct season, and generates over po' do
-            expect { post :create, over_po.obj.merge(format: :json) }.to change(Sku, :count).by(1)
-            data = JSON.parse(response.body).first
-            expect_over_po_data_to_have_correct_info(data)
-          end
-        end
-        context 'no barcode' do
-          let(:sku) { create(:base_sku, :with_product, sku: over_po.obj['over_po']['sku']) }
-
-          it 'raises  error' do
-            message = 'Couldn\'t find Barcode'
-            expect_create_to_handle_error_with(over_po.obj, message)
-          end
+        it 'raises  error' do
+          message = 'Couldn\'t find Barcode'
+          expect_create_to_handle_error_with(over_po.obj, message)
         end
       end
     end

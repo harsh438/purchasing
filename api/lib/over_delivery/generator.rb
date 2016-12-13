@@ -60,7 +60,10 @@ class OverDelivery::Generator
   end
 
   def cost
-    OverDelivery::Cost.new(line_items, skus).process
+    raise SkuNotFoundForSeason.new(attrs[:sku], season) if skus.blank?
+    cost_value = OverDelivery::Cost.new(line_items, skus).process
+    raise MissingItemsForCost if cost_value.nil?
+    cost_value
   end
 
   def line_items
@@ -69,5 +72,14 @@ class OverDelivery::Generator
                                                )
                                          .order('id DESC')
                                          .first
+  end
+
+  class MissingItemsForCost < StandardError; end
+  class SkuNotFoundForSeason < StandardError
+    attr_reader :sku, :season
+    def initialize(sku, season=nil)
+      @sku = sku
+      @season = season
+    end
   end
 end

@@ -28,4 +28,10 @@ describe OverDelivery::Cost do
       expect(subject.new(po_line_item_3, sku_object_2).process).to eq sku_2.product.pCost
     end
   end
+
+  context "when only 1 source has cost" do
+    it "returns cost" do
+      expect(subject.new(nil, sku_object_2).process).to eq 9.99
+    end
+  end
 end

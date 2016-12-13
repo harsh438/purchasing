@@ -1,7 +1,8 @@
 class OverPurchaseOrdersController < ApplicationController
   rescue_from ActionController::ParameterMissing, ActiveRecord::RecordInvalid,
+    OverDelivery::Generator::MissingItemsForCost,
     with: :handle_error
-  rescue_from Order::SkuNotFound,
+  rescue_from Order::SkuNotFound, OverDelivery::Generator::SkuNotFoundForSeason,
     with: :sku_not_found
 
   def create
