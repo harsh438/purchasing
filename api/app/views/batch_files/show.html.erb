@@ -1,0 +1,55 @@
+<P>
+ <%= link_to 'Batch Files', batch_files_path %> / Batch File <%= @batch_file.id %>
+</P>
+<br>
+
+
+  <div class="row">
+     <div class="col-sm-10">
+        Current Status: <span class="btn btn-info active"> <%= @batch_file.status %></span>
+    </div>
+    <div class="col-sm-2">
+       <% if @batch_file.validatable? %>
+          <%= link_to 'Validate', validate_file_lines_batch_files_path(@batch_file, :batch_files => {:batch_file_id => @batch_file.id }), class: 'btn btn-success' %>
+        <% end %>
+
+        <% if @batch_file.processable? %>
+          <%= link_to 'Process', process_file_lines_batch_files_path(@batch_file, :batch_files => {:batch_file_id => @batch_file.id }), class: 'btn btn-success' %>
+        <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <% if @batch_file_line.any? %>
+        <%= paginate @batch_file_line %>
+        <table class="table">
+          <thead>
+            <tr>
+              <% @headers.each do |header| %>
+                <th><%= header %></th>
+              <% end %>
+             <th>Processor Errors</th>
+             <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @batch_file_line.each do |line| %>
+              <% line.contents.each do |value| %>
+                <td><%= value %></td>
+              <% end %>
+              <td><%= line.readable_errors('-') %></td>
+              <td><%= line.status %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= paginate @batch_file_line %>
+      <% else %>
+        <div class="alert alert-info">
+          No Batch files lines found
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+

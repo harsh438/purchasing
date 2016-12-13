@@ -29,3 +29,5 @@ Season.find_or_create_by!(SeasonName: 'DEAD', SeasonYear: 'DEAD', SeasonNickname
 ].each_with_index do |season, i|
   Season.find_or_create_by!(season.merge(sort: i + 1))
 end
+
+BatchFileProcessor.create(processor_type: "BatchFiles::Processors::UpdatePurchaseOrderCostPriceBySku", csv_header_row: "po,sku,cost_price", available: true)

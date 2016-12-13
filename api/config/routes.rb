@@ -3,6 +3,14 @@ Rails.application.routes.draw do
 
   get :status, to: 'application_status#index'
 
+  resources :batch_files, only: [:index, :create, :show, :new] do
+    collection do
+      get :process_file_lines
+      get :validate_file_lines
+      get :status
+    end
+  end
+
   scope :api, format: true, defaults: { format: :json } do
     resources :skus, only: [:index, :create, :show, :update] do
       collection do

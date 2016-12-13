@@ -20,4 +20,13 @@ Rails.application.configure do
                                                   s3_host_name: "s3-eu-west-1.amazonaws.com",
                                                   access_key_id: ENV['AWS_ACCESS_KEY_ID'],
                                                   secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] } }
+  config.action_mailer.smtp_settings = {
+    port: ENV['SMTP_PORT'].to_i,
+    address: ENV['SMTP_HOST'],
+    user_name: ENV['SMTP_USERNAME'],
+    password: ENV['SMTP_PASSWORD'],
+    domain: 'surfdome.io',
+    enable_starttls_auto: true,
+    authentication:'login',
+  }
 end

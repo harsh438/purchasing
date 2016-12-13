@@ -1,0 +1,51 @@
+ <div class="suppliers_index container-fluid"
+           style={{ marginTop: '70px' }}>
+        <div class="row" style={{ marginBottom: '20px' }}>
+          <div class="col-md-4">
+            <h1>Batch Files</h1>
+          </div>
+
+          <div class="col-md-2 col-md-offset-6 text-right">
+            <%= link_to 'Add Batch File', new_batch_file_path, :class => "btn btn-success" %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <% if @batch_files.any? %>
+              <%= paginate @batch_files %>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Crerated By</th>
+                    <th>Processor Type</th>
+                    <th>Status</th>
+                    <th>Number of Lines</th>
+                    <th class="actions" width="35"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @batch_files.each do |batch_file| %>
+                    <tr id="<%= batch_file.id %>">
+                      <td><%= batch_file.id %></td>
+                      <td><%= batch_file.description %></td>
+                      <td><%= batch_file.user.name %></td>
+                      <td><%= batch_file.batch_file_processor.processor_type %></td>
+                      <td><%= batch_file.status %></td>
+                      <td><%= batch_file.batch_file_lines.count %></td>
+                      <td><%= link_to "Details", batch_file_path(batch_file) %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+              <%= paginate @batch_files %>
+            <% else %>
+              <div class="alert alert-info">
+                No Batch files found
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>

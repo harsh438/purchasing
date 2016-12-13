@@ -5,4 +5,8 @@ class User < ActiveRecord::Base
   include LegacyMappings
 
   map_attributes id: :userID
+
+  def self.active_users
+    where(active: 1).order(:name)
+  end
 end

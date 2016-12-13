@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   skip_before_action :verify_authenticity_token
 
-  layout false
+  # layout false
 
   def default_url_options
     if Rails.env.staging? or Rails.env.production?

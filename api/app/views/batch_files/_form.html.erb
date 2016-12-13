@@ -1,0 +1,41 @@
+<%= form_for :batch_file, url: batch_files_path, method: :posts,  html: { multipart: true, class: "dropzone"}, id: "media-dropzone"   do |f| %>
+
+  <% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
+
+  <% if flash[:error] %>
+    <div class="notice"><%= flash[:error] %></div>
+  <% end %>
+
+  <table class="table">
+    <tbody>
+      <tr>
+        <td><label htmlFor="processorId">Processor</label></td>
+        <td><%= f.select :processor_id,
+           options_from_collection_for_select(@processors, :id, :processor_type)
+         %></td>
+      </tr>
+      <tr>
+        <td><label htmlFor="user">Description</label></td>
+        <td><%= f.select :user_id,
+           options_from_collection_for_select(@user, :userID, :name)
+         %></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><label htmlFor="description">Description</label></td>
+        <td><%= f.text_field :description %></td>
+      </tr>
+      <tr>
+        <td><label htmlFor="batch file">Attach File</label></td>
+        <td>
+          <div class="fallback">
+             <input name="[batch_file]csv" type="file" />
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <%= f.submit %>
+<% end %>

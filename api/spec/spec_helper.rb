@@ -11,6 +11,7 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = false
   config.infer_spec_type_from_file_location!
   config.include Paperclip::Shoulda::Matchers
+  config.include BatchFileHelper
 
   if config.files_to_run.one?
     config.default_formatter = 'doc'

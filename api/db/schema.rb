@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161117143400) do
+ActiveRecord::Schema.define(version: 20161202091617) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -22,6 +22,35 @@ ActiveRecord::Schema.define(version: 20161117143400) do
 
   add_index "barcodes", ["barcode"], name: "index_barcodes_on_barcode", using: :btree
   add_index "barcodes", ["sku_id"], name: "index_barcodes_on_sku_id", using: :btree
+
+  create_table "batch_file_lines", force: :cascade do |t|
+    t.integer  "batch_file_id",    limit: 4
+    t.text     "contents",         limit: 65535
+    t.string   "status",           limit: 255
+    t.text     "processor_errors", limit: 65535
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  create_table "batch_file_processors", force: :cascade do |t|
+    t.string  "processor_type", limit: 255
+    t.string  "csv_header_row", limit: 255
+    t.boolean "available"
+  end
+
+  create_table "batch_files", force: :cascade do |t|
+    t.string   "description",        limit: 255
+    t.boolean  "validation_started",             default: false
+    t.integer  "processor_type_id",  limit: 4
+    t.boolean  "processing_started",             default: false
+    t.string   "csv_file_name",      limit: 255
+    t.string   "csv_content_type",   limit: 255
+    t.integer  "csv_file_size",      limit: 4
+    t.datetime "csv_updated_at"
+    t.integer  "created_by_id",      limit: 4
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+  end
 
   create_table "bookingin_events", primary_key: "ID", force: :cascade do |t|
     t.integer  "grn",                 limit: 4
@@ -77,6 +106,17 @@ ActiveRecord::Schema.define(version: 20161117143400) do
     t.integer  "NoOfPages",    limit: 4,   null: false
     t.datetime "TimeStarted",              null: false
     t.datetime "TimeFinished",             null: false
+  end
+
+  create_table "cost_price_logs", force: :cascade do |t|
+    t.integer  "purchase_order_number", limit: 4
+    t.integer  "product_id",            limit: 4
+    t.string   "sku",                   limit: 255
+    t.integer  "quantity",              limit: 4
+    t.decimal  "before_cost",                       precision: 8, scale: 2
+    t.decimal  "after_cost",                        precision: 8, scale: 2
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
   end
 
   create_table "ds_categories", primary_key: "catID", force: :cascade do |t|

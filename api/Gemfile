@@ -15,6 +15,15 @@ gem 'rake'
 gem 'sentry-raven'
 gem 'paper_trail', '~> 4.0.0'
 gem 'sidekiq'
+gem "activerecord-import", "~> 0.10.0"
+gem 'finishing_moves'
+gem 'dropzonejs-rails'
+gem 'uglifier'
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'jquery-rails'
+gem 'turbolinks'
+gem 'jbuilder'
 
 group :test do
   gem 'brakeman'                  # Always latest
@@ -51,3 +60,6 @@ group :development, :test do
   gem 'shoulda'
 end
 
+group :staging, :production do
+  gem 'therubyracer'
+end
