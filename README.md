@@ -21,6 +21,19 @@ Originally brought to you by the [Made Tech team](https://github.com/madetech).
 * Run `eval $(docker-machine env default)` to bootstrap the env vars. Either add this line to your bashrc or run it in each new tab you open (For fish shell, use `eval (docker-machine env default)`).
 * Now follow the development information below
 
+### If Not Using Docker
+
+If you aren't using docker, you may have trouble installing 'therubyracer' with bundle. In that case you may have to manually install it locally. You should try:
+
+```
+gem uninstall libv8
+gem uninstall therubyracer
+brew install v8
+gem install therubyracer
+bundle
+
+```
+
 ## Developing
 
 **Updating gems**
