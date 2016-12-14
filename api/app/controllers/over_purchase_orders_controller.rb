@@ -19,6 +19,7 @@ class OverPurchaseOrdersController < ApplicationController
   end
 
   def handle_error(e)
+    log('error', e)
     render json: { summary: e.message }, status: 500
   end
 
@@ -35,10 +36,21 @@ class OverPurchaseOrdersController < ApplicationController
   def generate_sku_and_reprocess(old_sku, season)
     begin
       attrs = OverDelivery::NewSkuAttributes.new(old_sku, season).build
-      Sku::Generator.new.generate(attrs)
+      log('attrs', attrs)
+      sku = Sku::Generator.new.generate(attrs)
+      log('sku', sku)
       create
     rescue ActiveRecord::RecordNotFound => e
       handle_error(e)
     end
+  end
+
+  def log(data_type, data)
+    Purchasing::Application.config.json_logger.info(
+      status: 'DONE',
+      log_type: 'generate_sku_from_over_po',
+      data_type: data_type,
+      data: data
+    )
   end
 end
