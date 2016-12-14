@@ -8,7 +8,7 @@ RSpec.describe BatchFile, type: :model, batch_file: true do
   let(:headers) { %w(po sku cost_price) }
   let(:contents) { [headers] }
 
-  it_behaves_like "a batchfile" do
+  it_behaves_like 'a batchfile' do
     let(:batchfile) { processor }
   end
 

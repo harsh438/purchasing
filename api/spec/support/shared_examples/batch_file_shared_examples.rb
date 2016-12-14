@@ -1,5 +1,5 @@
-RSpec.shared_examples "a batchfile" do
-  it "is a registered processor" do
+RSpec.shared_examples 'a batchfile' do
+  it 'is a registered processor' do
     expect(BatchFile.available_processors).to include batchfile.processor_type.constantize
   end
 
