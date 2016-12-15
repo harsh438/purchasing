@@ -4,7 +4,7 @@ module BatchFiles
       HEADERS = %w(po sku cost_price).freeze
 
       validates_presence_of :sku_id, message: 'Sku does not exist for po season'
-      validate :existence_of_purchase_order
+      validates_presence_of :purchase_order, message: 'does not exist'
       validate :cost_price_is_a_number
 
       def process_method
@@ -67,10 +67,6 @@ module BatchFiles
 
       def cost_price
         contents[2].to_f
-      end
-
-      def existence_of_purchase_order
-        errors[:purchase_order] = 'does not exist' if purchase_order.empty?
       end
 
       def cost_price_is_a_number

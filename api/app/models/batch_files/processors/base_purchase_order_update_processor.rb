@@ -3,8 +3,8 @@ module BatchFiles
     class BasePurchaseOrderUpdateProcessor < BatchFiles::Processors::Base
 
       validates_presence_of :product, message: 'product id does not exists'
-      validate :existence_of_purchase_order
-      validate :existence_of_purchase_order_product
+      validates_presence_of :purchase_order, message: 'does not exist'
+      validates_presence_of :purchase_order_lines, message: 'pid does not exist in this po'
 
       def self.valid_csv(batch_file_contents, errors)
         validate_header(batch_file_contents, errors, *self::HEADERS)
@@ -38,16 +38,6 @@ module BatchFiles
 
       def purchase_order
         PurchaseOrder.where(po_num: po_number)
-      end
-
-      def existence_of_purchase_order
-        errors[:purchase_order] = 'does not exist' if purchase_order.empty?
-      end
-
-      def existence_of_purchase_order_product
-        if purchase_order_lines.empty?
-         errors[:purchase_order_product] = 'pid does not exist in this po'
-        end
       end
     end
   end

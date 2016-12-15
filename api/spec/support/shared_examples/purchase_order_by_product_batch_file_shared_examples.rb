@@ -20,7 +20,7 @@ RSpec.shared_examples "a purchase_order by product batchfile" do
 
     validate_batch_file(batch_file)
 
-    expect(batch_file.batch_file_lines.last.processor_errors).to include(:purchase_order_product)
+    expect(batch_file.batch_file_lines.last.processor_errors).to include(:purchase_order_lines)
   end
 
   it "validates that the price being updated is a number " do
