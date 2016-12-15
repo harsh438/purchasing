@@ -17,5 +17,4 @@ RSpec.shared_context "batch file context" do
   let(:purchase_order) do
     create(:purchase_order, po_num: purchase_order_line_item.po_number)
   end
-
 end
