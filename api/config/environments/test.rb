@@ -11,4 +11,6 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :test
   config.active_support.test_order = :random
   config.active_support.deprecation = :stderr
+  config.logger = Logger.new('./log/test.log')
+  config.log_formatter = ::Logger::Formatter.new
 end

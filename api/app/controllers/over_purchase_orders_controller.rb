@@ -46,7 +46,7 @@ class OverPurchaseOrdersController < ApplicationController
   end
 
   def log(data_type, data)
-    Purchasing::Application.config.json_logger.info(
+    Rails.application.config.logger.info(
       status: 'DONE',
       log_type: 'generate_sku_from_over_po',
       data_type: data_type,

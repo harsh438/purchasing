@@ -24,7 +24,6 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder'
-gem 'json_logger', github: 'surfdome/json_logger'
 
 group :test do
   gem 'brakeman'                  # Always latest
