@@ -64,7 +64,7 @@ class ProductSerializer < ActiveModel::Serializer
   end
 
   def legacy_reporting_category
-    object.reporting_category.category.id
+    object.reporting_category.try(:category).try(:id)
   end
 
   def legacy_season
