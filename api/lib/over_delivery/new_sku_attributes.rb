@@ -14,6 +14,7 @@ class OverDelivery::NewSkuAttributes
     sku_attrs['category_name'] = language_category.name
     sku_attrs['internal_sku'] = sku_attrs['sku']
     sku_attrs['lead_gender'] = sku_attrs['gender']
+    sku_attrs['force_generate'] = true
     sku_attrs
   end
 
