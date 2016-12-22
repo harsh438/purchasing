@@ -12,6 +12,7 @@ class Sku::Generator
   attr_reader :attrs
 
   def find_sku
+    return if attrs[:force_generate].present?
     if attrs[:barcode].present?
       find_sku_by_barcode_season_and_sizing
     else
