@@ -19,7 +19,7 @@ module Purchasing
                          username: 'purchasing',
                          password: 'lastordersplease' }
 
-    config.pvx_credentials = { url: ENV['PVX_URL'],
+    config.pvx_credentials = { base_url: ENV['PVX_API_BASE_URL'],
                                key: ENV['PVX_KEY'],
                                token: ENV['PVX_TOKEN'] }
 

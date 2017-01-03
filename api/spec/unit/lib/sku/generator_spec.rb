@@ -96,10 +96,11 @@ RSpec.describe Sku::Generator do
       expect(subject.language_product.name).to eq('The big name')
     end
   end
-  context "size validation" do
+
+  context 'size validation' do
     subject(:generator) { described_class.new }
 
-    context "same sku, new season, new size" do
+    context 'same sku, new season, new size' do
       before do
         generator.generate(new_sku_attrs)
         new_sku_attrs[:internal_sku] = '3-1004'
@@ -107,20 +108,47 @@ RSpec.describe Sku::Generator do
         new_sku_attrs[:season] = 'SS17'
       end
 
-      it "raises error" do
+      it 'raises error' do
         expect { generator.generate(new_sku_attrs) }.to raise_error ActiveRecord::RecordInvalid
       end
     end
 
-    context "same sku, new season, same size" do
+    context 'same sku, new season, same size' do
       before do
-        generator.generate(new_sku_attrs)
         new_sku_attrs[:internal_sku] = '3-1004'
         new_sku_attrs[:season] = 'SS17'
       end
+
       it "generates sku" do
         expect { generator.generate(new_sku_attrs) }.to change(Sku, :count).by(1)
       end
+    end
+  end
+
+  context 'when the attrs include a pvx_check flag' do
+    subject do
+      described_class.new.generate(new_sku_attrs.merge( { pvx_check: true }))
+    end
+
+    before do
+      allow_any_instance_of(PVX::Wrapper).to receive(:sku_by_barcode).and_return(true)
+    end
+
+    it 'We check PVX for the sku first' do
+      expect_any_instance_of(PVX::Wrapper).to receive(:sku_by_barcode).with(new_sku_attrs[:barcode])
+        .once
+      subject
+    end
+  end
+
+  context 'when the pvx_check flag is not present' do
+    subject do
+      described_class.new.generate(new_sku_attrs)
+    end
+
+    it 'will not check pvx' do
+      expect_any_instance_of(PVX::Wrapper).not_to receive(:sku_by_barcode)
+      subject
     end
   end
 end

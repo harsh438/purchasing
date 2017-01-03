@@ -5,7 +5,6 @@ gem 'active_model_serializers', '0.9.4'
 gem 'puma',      '~> 2.10', '>= 2.10.2'
 gem 'aws-sdk'
 gem 'axlsx'
-gem 'excon'
 gem 'kaminari'
 gem 'mysql2', '~> 0.3.17'
 gem 'nokogiri', '1.6.8'
@@ -24,6 +23,7 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder'
+gem 'httparty'
 
 group :test do
   gem 'brakeman'                  # Always latest

@@ -102,7 +102,6 @@ GEM
     dropzonejs-rails (0.7.3)
       rails (> 3.1)
     erubis (2.7.0)
-    excon (0.45.4)
     execjs (2.7.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -118,6 +117,8 @@ GEM
       tilt
     highline (1.7.8)
     htmlentities (4.3.4)
+    httparty (0.14.0)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
@@ -144,6 +145,7 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.8.2)
     multi_json (1.11.2)
+    multi_xml (0.6.0)
     multipart-post (2.0.0)
     mysql2 (0.3.18)
     nokogiri (1.6.8)
@@ -335,10 +337,10 @@ DEPENDENCIES
   database_cleaner (= 1.5.1)
   dotenv-rails
   dropzonejs-rails
-  excon
   factory_girl (= 4.5.0)
   faker
   finishing_moves
+  httparty
   jbuilder
   jquery-rails
   jsonpath
@@ -378,4 +380,4 @@ RUBY VERSION
    ruby 2.2.3p173
 
 BUNDLED WITH
-   1.13.1
+   1.13.6

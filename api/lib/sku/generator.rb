@@ -14,10 +14,15 @@ class Sku::Generator
   def find_sku
     return if attrs[:force_generate].present?
     if attrs[:barcode].present?
-      find_sku_by_barcode_season_and_sizing
+      get_sku_from_pvx || find_sku_by_barcode_season_and_sizing
     else
       find_sku_by_reference_season_and_sizing
     end
+  end
+
+  def get_sku_from_pvx
+    return unless attrs[:pvx_check].present?
+    PVX::Wrapper.new.sku_by_barcode(attrs[:barcode])
   end
 
   def find_sku_by_barcode_season_and_sizing
