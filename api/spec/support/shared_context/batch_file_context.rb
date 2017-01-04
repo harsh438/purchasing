@@ -10,6 +10,7 @@ RSpec.shared_context "batch file context" do
     create(:purchase_order_line_item,
            :with_summary,
            sku_id: sku.id,
+           supplier_list_price: 100,
            po_season: Season.all[5].SeasonNickname,
            po_number: 1001)
   end
