@@ -85,7 +85,7 @@ module BatchFiles
       end
 
       def discount_is_a_number
-        errors[:discount] = 'is not a number' unless contents[1].is_a? Numeric
+        errors[:discount] = 'is not a number' unless contents[1].to_s.numeric?
       end
     end
   end
