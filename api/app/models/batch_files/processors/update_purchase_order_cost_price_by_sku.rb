@@ -1,6 +1,11 @@
 module BatchFiles
   module Processors
     class UpdatePurchaseOrderCostPriceBySku < BatchFiles::Processors::Base
+
+      def initilaize
+        @base_class = BasePurchaseOrderUpdateProcessor.new(scope: SkuScope.new)
+      end
+
       HEADERS = %w(po sku cost_price).freeze
 
       validates_presence_of :sku_id, message: 'Sku does not exist for po season'
@@ -8,10 +13,7 @@ module BatchFiles
       validate :cost_price_is_a_number
 
       def process_method
-        ActiveRecord::Base.transaction do
-          cost_price_log
-          purchase_order_line_item.update_attribute(:cost, cost_price)
-        end
+         @base_class.process_method
       end
 
       def self.valid_csv(batch_file_contents, errors)
@@ -28,16 +30,6 @@ module BatchFiles
 
       private
 
-      def cost_price_log
-        CostPriceLog.create(
-          purchase_order_number: purchase_order_line_item.po_number,
-          product_id: purchase_order_line_item.product_id,
-          sku: sku,
-          quantity: purchase_order_line_item.quantity,
-          before_cost: purchase_order_line_item.cost,
-          after_cost: cost_price
-        )
-      end
 
       def purchase_order_line_item
         @purchase_order_line_item ||= PurchaseOrderLineItem
