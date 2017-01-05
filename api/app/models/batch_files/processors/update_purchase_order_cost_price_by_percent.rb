@@ -59,7 +59,7 @@ module BatchFiles
       end
 
       def cost_price(supplier_cost_price)
-        supplier_cost_price - (supplier_cost_price * discount)
+        (supplier_cost_price - (supplier_cost_price * discount)).to_f.round(2)
       end
 
       def existing_supplier_cost_price

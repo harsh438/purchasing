@@ -1,7 +1,7 @@
 class BatchFilesController < ApplicationController
 
   def index
-    @batch_files = BatchFile.with_processor.page(params[:page]).per(3)
+    @batch_files = BatchFile.with_processor.page(params[:page]).per(75)
   end
 
   def new
