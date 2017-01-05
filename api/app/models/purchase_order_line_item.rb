@@ -143,7 +143,7 @@
                  barcode: :orderTool_barcode,
                  sell_price: :orderTool_sellPrice,
                  manufacturer_size: :orderTool_brandSize,
-                 supplier_list_price: :orderTool_SupplierListPrice,
+                 supplier_cost_price: :orderTool_SupplierListPrice,
                  product_rrp: :orderTool_RRP,
                  reporting_pid: :reporting_pID,
                  original_pid: :original_pID,

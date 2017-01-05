@@ -8,7 +8,7 @@ module BatchFiles
       def process_method
         purchase_order_lines.map do |purchase_order_line|
           ActiveRecord::Base.transaction do
-            purchase_order_line.update_attributes!(supplier_list_price: supplier_cost_price)
+            purchase_order_line.update_attributes!(supplier_cost_price: supplier_cost_price)
           end
         end
       end

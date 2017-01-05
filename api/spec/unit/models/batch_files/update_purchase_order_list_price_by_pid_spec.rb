@@ -23,7 +23,7 @@ RSpec.describe BatchFile, type: :model, batch_file: true do
   end
 
   it 'updates purchase_order product_rrp' do
-    expect(po_line_item.supplier_list_price).to_not eq 20
+    expect(po_line_item.supplier_cost_price).to_not eq 20
 
     contents << [po_line_item.po_number, product.id, 20]
     batch_file = create(:batch_file,

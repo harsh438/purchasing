@@ -4,7 +4,7 @@ class Sku::UnsizedMissingAttributes
     manufacturer_sku: :product_sku,
     product_id: :product_id,
     manufacturer_color: :product_color,
-    cost_price: :supplier_list_price,
+    cost_price: :supplier_cost_price,
     list_price: :product_rrp,
     price: :sell_price,
     category_id: :category_id,

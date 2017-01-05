@@ -18,7 +18,7 @@ class PurchaseOrder::Exporter
        brand_color_name
        brand_size
        quantity
-       supplier_list_price
+       supplier_cost_price
        discounted_cost
        total)
   end

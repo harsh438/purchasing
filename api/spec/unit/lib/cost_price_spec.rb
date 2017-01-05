@@ -24,7 +24,7 @@ RSpec.describe CostPrice do
                 season: 'AW15',
                 po_number: 123,
                 cost: 15,
-                supplier_list_price: 15,
+                supplier_cost_price: 15,
                 delivery_date: Time.new(2015, 9, 1))
 
     create_list(:purchase_order_line_item,
@@ -35,7 +35,7 @@ RSpec.describe CostPrice do
                 season: 'AW16',
                 po_number: 234,
                 cost: 15,
-                supplier_list_price: 20,
+                supplier_cost_price: 20,
                 delivery_date: Time.new(2016, 9, 1))
   end
 
@@ -75,7 +75,7 @@ RSpec.describe CostPrice do
     it '#update_cost_prices' do
       po_lines = PurchaseOrderLineItem.where(po_number: 123)
       expect(po_lines.pluck(:cost)).to match [15.0, 15.0, 15.0]
-      expect(po_lines.pluck(:supplier_list_price)).to match [15.0, 15.0, 15.0]
+      expect(po_lines.pluck(:supplier_cost_price)).to match [15.0, 15.0, 15.0]
       skus = Sku.where(id: po_lines.pluck(:sku_id))
       expect(skus.pluck(:cost_price)).to match [19.99, 19.99, 19.99]
       product = Product.where(id: po_lines.pluck(:product_id))
@@ -84,7 +84,7 @@ RSpec.describe CostPrice do
       sku.reload
       product.reload
       expect(po_lines.pluck(:cost)).to match [14.25, 14.25, 14.25]
-      expect(po_lines.pluck(:supplier_list_price)).to match [15.0, 15.0, 15.0]
+      expect(po_lines.pluck(:supplier_cost_price)).to match [15.0, 15.0, 15.0]
       expect(skus.pluck(:cost_price)).to match [14.25, 14.25, 14.25]
       expect(product.pluck(:cost)).to match [14.25, 14.25, 14.25]
     end

@@ -19,9 +19,8 @@ RSpec.describe BatchFile, type: :model, batch_file: true do
   end
 
   context 'Valid batch file' do
-    before { contents << [po_number, 8.09] }
-
     it 'creates a new UpdatePurchaseOrderCostPriceBySku batch file' do
+      contents << [po_number, 8.09]
       batch_file = create(:batch_file, processor_type_id: processor.id, contents: contents)
 
       expect { validate_and_process(batch_file) }.to change { BatchFile.count }.from(1).to(2)
@@ -30,11 +29,21 @@ RSpec.describe BatchFile, type: :model, batch_file: true do
     end
 
     it 'calculates the correct cost price for a po based on the % passed in' do
+      contents << [po_number, 8.09]
       batch_file = create(:batch_file, processor_type_id: processor.id, contents: contents)
       validate_and_process(batch_file)
       new_cost_price = BatchFileLine.last.contents[-1]
 
       expect(new_cost_price).to eq 91.91
+    end
+
+    it 'when the discount is 0 we generate a batch file with the cost price as the supplier cost price' do
+      contents << [po_number, 0]
+      batch_file = create(:batch_file, processor_type_id: processor.id, contents: contents)
+      validate_and_process(batch_file)
+      new_cost_price = BatchFileLine.last.contents[-1]
+
+      expect(new_cost_price).to eq 100
     end
   end
 
@@ -63,7 +72,7 @@ RSpec.describe BatchFile, type: :model, batch_file: true do
       expect(batch_file.batch_file_lines.last.processor_errors).to include(:purchase_order_lines)
     end
 
-    it 'if the cost price of the PO is missing, or null' do
+    it 'if the supplier cost price is missing, or null' do
       create(:purchase_order_line_item,
        :with_summary,
        sku_id: sku.id,

@@ -51,7 +51,7 @@ class Order::Exporter
   end
 
   def po_line_item_core_attrs(order_line_item)
-    { supplier_list_price: order_line_item.cost,
+    { supplier_cost_price: order_line_item.cost,
       cost: order_line_item.discounted_cost,
       quantity: order_line_item.quantity,
       season: order_line_item.season || '',

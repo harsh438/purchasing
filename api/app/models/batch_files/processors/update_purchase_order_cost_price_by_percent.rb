@@ -32,7 +32,7 @@ module BatchFiles
           csv_contents << [
             po_number,
             internal_sku(purchase_order_line.sku_id),
-            cost_price(purchase_order_line.supplier_list_price)
+            cost_price(purchase_order_line.supplier_cost_price)
           ]
         end
       end
@@ -58,8 +58,8 @@ module BatchFiles
         @csv_contents ||= [%w(po sku cost_price)]
       end
 
-      def cost_price(supplier_list_price)
-        supplier_list_price - (supplier_list_price * discount)
+      def cost_price(supplier_cost_price)
+        supplier_cost_price - (supplier_cost_price * discount)
       end
 
       def existing_supplier_cost_price

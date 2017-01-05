@@ -19,7 +19,7 @@ module MissingAttributesHelper
       product_id: 44,
       option_id: 0,
       cost: 19.99,
-      supplier_list_price: 20.0,
+      supplier_cost_price: 20.0,
       product_rrp: 24.0,
       sell_price: 25.0,
       sent_to_peoplevox: 0,
