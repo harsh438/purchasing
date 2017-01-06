@@ -2,40 +2,31 @@ module BatchFiles
   module Processors
     class BasePurchaseOrderUpdateProcessor < BatchFiles::Processors::Base
 
-      def initialize(scope: PurchaseOrder.new, price_type: CostPrice.new)
-        @price_type = price_type
-        @scope      = scope
-        # @amount = amount
+      def initialize(scope: PurchaseOrder.new, price: CostPrice.new, amount: AbsoluteAmount.new)
+        @price   = price
+        @scope   = scope
+        @amount  = amount
       end
 
-      validates_presence_of :product, message: 'product id does not exist'
+      validate :validations
       validates_presence_of :purchase_order, message: 'does not exist'
-      validates_presence_of :purchase_order_lines, message: 'pid does not exist in this po'
 
       def self.valid_csv(batch_file_contents, errors)
         validate_header(batch_file_contents, errors, *self::HEADERS)
-      end
-
-      def self.sample_file
-        [
-          self::HEADERS,
-          %w(1001 9119-11 20),
-          %w(1001 9120-11 20),
-        ]
       end
 
       def process_method
         purchase_order_lines.map do |purchase_order_line|
           ActiveRecord::Base.transaction do
             cost_price_log(purchase_order_line_item)
-            purchase_order_line.update_attributes!(price_type => cost_price)
+            purchase_order_line.update_attributes!(price.type => amount)
           end
         end
       end
 
       private
 
-      attr_reader :scope
+      attr_reader :scope, :price, :amount
 
       def cost_price_log(purchase_order_line_item)
         CostPriceLog.create(
@@ -43,29 +34,18 @@ module BatchFiles
           product_id: purchase_order_line_item.product_id,
           sku: sku(purchase_order_line_item.sku_id),
           quantity: purchase_order_line_item.quantity,
-          before_price: price ,
-          after_price: cost_price
+          before_price: purchase_order_line_item.send(price.type),
+          after_price: amount.calculate(params)
         )
       end
 
       def validations
-        # validate the inputs?
+        scope.validate(contents)
+        price.validate(contents)
       end
 
       def purchase_order_lines
         scope.scope(contents)
-      end
-
-      def update(price_type, amount)
-        @price_type.price(purchase_order_line_item)
-      end
-
-      def product
-        @product ||= Product.find_by(id: contents[1])
-      end
-
-      def po_number
-        contents[0]
       end
 
       def sku(sku_id)
@@ -73,21 +53,41 @@ module BatchFiles
       end
 
       def purchase_order
-        PurchaseOrder.where(po_num: po_number)
+        PurchaseOrder.where(po_num: contents[0])
       end
     end
   end
 end
 
+class PercentAmount
+  def calculate(params)
+    (supplier_cost_price - (supplier_cost_price * discount)).to_f.round(2)
+  end
+end
+
+class AbsoluteAmount
+  def calculate(params)
+    contents[2].to_f.round(2)
+  end
+end
+
 class CostPrice
-  def price
+  def type
     :cost
+  end
+
+  def validate(params)
+    errors[:cost_price] = 'not a number' unless params[2].to_s.numeric?
   end
 end
 
 class ListPrice
-  def price
+  def type
     :product_rrp
+  end
+
+  def validate(params)
+    errors[:list_price] = 'not a number' unless params[2].to_s.numeric?
   end
 end
 
@@ -96,26 +96,29 @@ class PurchaseOrderScope
     PurchaseOrderLineItem.where(po_number: params[0])
   end
 
-  def name
-    :purchase_order
+  def validate(params)
+    errors[:po_lines] = 'po lines do not exist for this po' if scope(params).blank?
   end
 end
 
 class ProductScope
-  validates_presence_of :product, message: 'product id does not exist'
   def scope(params)
     PurchaseOrderLineItem.where(po_number: params[0], product_id: params[1])
+  end
+
+  def validate(params)
+    errors[:product] = 'product does not exist' if Product.find_by(id: params[1]).blank?
+    errors[:po_line_item] = 'product does not exist for po' if scope(params).blank?
   end
 end
 
 class SkuScope
-  validates_presence_of :sku_id, message: 'Sku does not exist for po season'
-
   def scope(params)
     PurchaseOrderLineItem.where(po_number: params[0], sku_id: params[1])
   end
 
-  def name
-    :sku
+  def validate(params)
+    errors[:sku] = 'sku does not exist' if Sku.find_by(id: params[1]).blank?
+    errors[:po_line_item] = 'sku does not exist for po' if scope(params).blank?
   end
 end
