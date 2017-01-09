@@ -28,6 +28,7 @@ RSpec.describe BatchFile, type: :model, batch_file: true do
     batch_file = create(:batch_file,
                         processor_type_id: processor.id,
                         contents: contents)
+    
     expect { validate_and_process(batch_file) }.to change { po_line_item.reload.cost }.to(20)
   end
 end

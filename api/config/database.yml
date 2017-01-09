@@ -5,8 +5,6 @@ default: &default
   host: db
   <% end %>
 
-  username: <%= ENV['MYSQL_USER'] || 'root' %>
-  password: <%= ENV['MYSQL_PASSWORD'] || 'root' %>
   pool: 5
   timeout: 5000
 

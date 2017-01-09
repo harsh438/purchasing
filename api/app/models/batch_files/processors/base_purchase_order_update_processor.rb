@@ -1,8 +1,8 @@
 module BatchFiles
   module Processors
     class BasePurchaseOrderUpdateProcessor < BatchFiles::Processors::Base
-
-      def initialize(scope: PurchaseOrder.new, price: CostPrice.new, amount: AbsoluteAmount.new)
+      def initialize(batch_file_line, scope: PurchaseOrder.new, price: CostPrice.new, amount:)
+        super(batch_file_line)
         @price   = price
         @scope   = scope
         @amount  = amount
@@ -18,8 +18,9 @@ module BatchFiles
       def process_method
         purchase_order_lines.map do |purchase_order_line|
           ActiveRecord::Base.transaction do
-            cost_price_log(purchase_order_line_item)
-            purchase_order_line.update_attributes!(price.type => amount)
+            binding.pry
+            # cost_price_log(purchase_order_line)
+            purchase_order_line.update_attributes!({ price.type => amount })
           end
         end
       end
@@ -35,7 +36,7 @@ module BatchFiles
           sku: sku(purchase_order_line_item.sku_id),
           quantity: purchase_order_line_item.quantity,
           before_price: purchase_order_line_item.send(price.type),
-          after_price: amount.calculate(params)
+          after_price: amount
         )
       end
 
@@ -56,18 +57,6 @@ module BatchFiles
         PurchaseOrder.where(po_num: contents[0])
       end
     end
-  end
-end
-
-class PercentAmount
-  def calculate(params)
-    (supplier_cost_price - (supplier_cost_price * discount)).to_f.round(2)
-  end
-end
-
-class AbsoluteAmount
-  def calculate(params)
-    contents[2].to_f.round(2)
   end
 end
 
