@@ -96,10 +96,10 @@ class RemoveDuplicatedOption
              "ds_options " \
              "where " \
              "pid > 0 and " \
-             "oSizeL REGEXP '[^A-Za-z0-9]+' " \
+             "oSizeL is not null " \
              "group by pid, oSizeL "\
              "Having count(*) > 1 "\
-             "limit 800; "
+             "order by pid DESC limit 4000; "
     execute sql
   end
 
