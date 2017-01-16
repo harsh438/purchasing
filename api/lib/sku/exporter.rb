@@ -62,6 +62,7 @@ class Sku::Exporter
   def last_existing_sku_by_barcode(sku)
     Sku.joins(:barcodes).where(barcodes: { barcode: sku.barcodes.first.barcode })
                         .where.not(id: sku.id)
+                        .where(size: sku.size)
                         .order(created_at: :desc)
                         .first
   end

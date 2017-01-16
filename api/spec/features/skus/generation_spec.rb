@@ -45,6 +45,59 @@ feature 'SKU generation' do
     when_i_create_a_sku_for_a_an_existing_product_without_language_category
     then_the_sku_created_should_have_a_language_category
   end
+  feature 'Exporting a sku with the same barcode and man_sku as an existing sku' do
+    let(:element) { create(:element, elementID: 1666, elementname: 'Triple XL') }
+    let(:existing_sku) do
+      create(
+        :base_sku, :sized, :with_barcode, :with_product,
+        sku: '3-1666', element: element, size: 'small', season: Season.first
+      )
+    end
+
+    scenario '...but with a different size and season' do
+      when_an_existing_sku_is_equivalent_but_for_the_size_and_season
+      then_a_new_sku_should_be_made_on_the_same_product_id
+    end
+  end
+
+  def when_an_existing_sku_is_equivalent_but_for_the_size_and_season
+    new_sku_attrs = {
+      sku: '1234-UK-7',
+      manufacturer_sku: existing_sku.manufacturer_sku,
+      manufacturer_color: existing_sku.manufacturer_color,
+      manufacturer_size:  existing_sku.manufacturer_size,
+      vendor_id:  existing_sku.vendor_id,
+      product_name:  existing_sku.product_name,
+      season:  Season.last,
+      color:  existing_sku.color,
+      size:  'UK-7',
+      barcode: existing_sku.barcodes.first.barcode,
+      color_family:  existing_sku.color_family,
+      size_scale:  existing_sku.size_scale,
+      cost_price:  existing_sku.cost_price,
+      list_price:  existing_sku.list_price,
+      price:  existing_sku.price,
+      inv_track: existing_sku.inv_track,
+      gender:  existing_sku.gender,
+      listing_genders:  existing_sku.listing_genders,
+      category_id:  existing_sku.category_id,
+      on_sale:  existing_sku.on_sale,
+      category_name:  existing_sku.category_name,
+      order_tool_reference: '1234321'
+    }
+
+    expect { page.driver.post skus_path(new_sku_attrs) }
+      .to change { Option.where(product_id: existing_sku.product.id).count }.by(1)
+  end
+
+  def then_a_new_sku_should_be_made_on_the_same_product_id
+    expect(subject[:size]).to eq 'UK-7'
+    expect(subject[:element_id]).not_to eq existing_sku.element.id
+    expect(subject[:sku]).not_to eq existing_sku.sku
+    expect(subject[:option_id]).not_to eq existing_sku.option.id
+    expect(subject[:language_product_option_id]).not_to eq existing_sku.language_product_option.id
+    expect(subject[:product_id]).to eq existing_sku.product.id
+  end
 
   def when_i_generate_skus_with_a_barcode
     page.driver.post skus_path(sku_with_barcode_attrs)

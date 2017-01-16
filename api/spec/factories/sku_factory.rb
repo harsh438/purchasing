@@ -20,10 +20,10 @@ FactoryGirl.define do
     trait :sized do
       manufacturer_size :biggish
       option { |sku| create(:option, size: sku.manufacturer_size) }
-      language_product_option
+      language_product_option { create(:language_product_option) }
       element { |sku| sku.language_product_option.element }
       inv_track 'O'
-      size :big
+      size { element.name }
     end
 
     trait :with_product do

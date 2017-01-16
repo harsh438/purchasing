@@ -15,6 +15,7 @@ feature 'Requesting products ready for import' do
       :base_sku, :with_product,
       :with_barcode, :sized,
       vendor: sized_product.vendor,
+      size: 'small',
       product: sized_product,
       product_name: 'Incredible Iron Pants',
       barcode: create(:barcode, barcode: 'ABC123456'),
@@ -23,6 +24,7 @@ feature 'Requesting products ready for import' do
       :base_sku, :with_product,
       :with_barcode, :sized,
       vendor: sized_product.vendor,
+      size: 'small',
       product: sized_product,
       product_name: 'Incredible Iron Pants',
       barcode: create(:barcode, :week_old, barcode: 'ABC123457'),
@@ -31,6 +33,7 @@ feature 'Requesting products ready for import' do
       :base_sku, :with_product,
       :sized,
       vendor: sized_product.vendor,
+      size: 'small',
       product: sized_product,
       product_name: 'Incredible Iron Pants',
     )

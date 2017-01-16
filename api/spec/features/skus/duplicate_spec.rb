@@ -42,9 +42,9 @@ feature 'SKU duplication' do
     expect(subject['sku']).to eq("#{product_with_skus.id}-#{element.id}")
     expect(subject['size']).to eq(element.name)
     expect(subject['manufacturer_size']).to eq(nil)
-    expect(subject['id']).not_to eq(product_with_skus.skus.last.id)
-    expect(subject['manufacturer_sku']).to eq(product_with_skus.skus.last.manufacturer_sku)
-    expect(subject['product_id']).to eq(product_with_skus.id)
+    expect(subject['id']).not_to eq(sku.id)
+    expect(subject['manufacturer_sku']).to eq(sku.manufacturer_sku)
+    expect(subject['product_id']).to eq(sku.product.id)
   end
 
   def when_i_generate_sku_without_barcode
@@ -75,8 +75,13 @@ feature 'SKU duplication' do
     expect(subject['message']).to eq('Please select a SKU with a size')
   end
 
-  let(:product_with_skus) { create(:product, :with_skus) }
-  let(:sku) { product_with_skus.skus.first }
+  let(:product_with_skus) { sku.product }
+  let(:sku) do
+    create(
+      :base_sku, :with_product, :sized, :with_barcode, sku: "#{product.id}-2222", product: product
+    )
+  end
+  let(:product) { create(:product) }
   let(:sku_without_barcode) { create(:base_sku, :sized) }
   let(:unsized_sku) { create(:base_sku, :with_product, :with_barcode) }
   let(:element) { create(:element) }

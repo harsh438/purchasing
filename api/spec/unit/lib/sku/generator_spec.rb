@@ -102,8 +102,8 @@ RSpec.describe Sku::Generator do
 
     context 'same sku, new season, new size' do
       before do
-        generator.generate(new_sku_attrs)
-        new_sku_attrs[:internal_sku] = '3-1004'
+        new_sku = generator.generate(new_sku_attrs)
+        new_sku_attrs[:internal_sku] = new_sku.sku
         new_sku_attrs[:size] = 'medium'
         new_sku_attrs[:season] = 'SS17'
       end
@@ -119,7 +119,7 @@ RSpec.describe Sku::Generator do
         new_sku_attrs[:season] = 'SS17'
       end
 
-      it "generates sku" do
+      it 'generates sku' do
         expect { generator.generate(new_sku_attrs) }.to change(Sku, :count).by(1)
       end
     end

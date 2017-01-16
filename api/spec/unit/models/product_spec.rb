@@ -62,7 +62,7 @@ RSpec.describe Product do
 
     before do
       create(:base_sku, :with_product, :with_barcode, :sized,
-        season: earliest_season, product: product, sku: 'same'
+        season: earliest_season, product: product, sku: 'same', size: latest_sku.size
       )
     end
 

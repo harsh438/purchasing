@@ -24,7 +24,7 @@ FactoryGirl.define do
 
     trait :with_skus do
       after(:create) do |product, evaluator|
-        product.skus += build_list(
+        product.skus << build_list(
           :base_sku, 2, :with_product,
           :sized,
           :with_barcode,
@@ -46,7 +46,7 @@ FactoryGirl.define do
     end
 
     trait :with_pvx_in do
-      after(:create) do |product, evaluator|
+      after(:create) do |product, _evaluator|
         create(:pvx_in, product: product)
       end
     end

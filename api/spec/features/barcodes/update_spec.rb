@@ -72,8 +72,8 @@ feature 'Updating barcodes' do
     Faker::Lorem.characters(8)
   end
 
-  let(:product_with_skus) { create(:product, :with_skus) }
-  let(:sku) { product_with_skus.skus.first }
+  let(:product_with_skus) { sku.product }
+  let(:sku) { create(:base_sku, :sized, :with_product, :with_barcode) }
   let(:unsized_sku) { create(:base_sku, :with_product, :with_barcode) }
   let(:unsized_sku_barcode) { unsized_sku.barcodes.first }
   let(:barcode) { sku.barcodes.first }

@@ -71,7 +71,7 @@
           "cost_price": "19.99",
           "legacy_brand_size": "biggish",
           "options": {
-            "size": "big"
+            "size": "small"
           },
           "barcode": "ABC123456"
         },
@@ -81,7 +81,7 @@
           "cost_price": "19.99",
           "legacy_brand_size": "biggish",
           "options": {
-            "size": "big"
+            "size": "small"
           },
           "barcode": "ABC123457"
         }
