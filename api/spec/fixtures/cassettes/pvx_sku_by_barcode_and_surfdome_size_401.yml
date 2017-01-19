@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://endpoints.surfdome.cc/peoplevox_endpoint/api/sku_lookup
+    uri: https://endpoints.surfdome.cc/peoplevox_endpoint/api/sku_lookup_by_barcode_and_surfdome_size
     body:
       encoding: UTF-8
-      string: '{"key":"sOufQ5GM132FI","token":"2GgiGuEliQyQzQSjk4e3jliEoVJxaAlHRD3YNFVd","man_sku":"SV507-A59","size":"14"}'
+      string: '{"key":1,"token":"invalid_token","barcode":"5052094029950","size":"14"}'
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -15,23 +15,21 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 200
-      message: OK
+      code: 401
+      message: Unauthorized
     headers:
       Date:
-      - Tue, 20 Dec 2016 16:58:45 GMT
+      - Wed, 18 Jan 2017 16:02:53 GMT
       Content-Type:
       - text/html;charset=utf-8
-      Transfer-Encoding:
-      - chunked
+      Content-Length:
+      - '21'
       Connection:
       - keep-alive
       Keep-Alive:
       - timeout=5
-      Vary:
-      - Accept-Encoding
       Status:
-      - 200 OK
+      - 401 Unauthorized
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -43,8 +41,8 @@ http_interactions:
       Server:
       - ''
     body:
-      encoding: ASCII-8BIT
-      string: '{"sku":"18312-13","barcode":"5052094029950","m_sku":"SV507-A59","size":"14"}'
+      encoding: UTF-8
+      string: Authorization failure
     http_version: 
-  recorded_at: Tue, 20 Dec 2016 16:58:45 GMT
+  recorded_at: Wed, 18 Jan 2017 16:02:52 GMT
 recorded_with: VCR 2.9.2

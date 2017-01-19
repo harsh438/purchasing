@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161202091617) do
+ActiveRecord::Schema.define(version: 20170116170302) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -441,6 +441,19 @@ ActiveRecord::Schema.define(version: 20161202091617) do
     t.datetime "lastLoggedIn",               null: false
     t.integer  "Seconds",      limit: 4,     null: false
     t.string   "bgcolor",      limit: 7,     null: false
+  end
+
+  create_table "merge_jobs", force: :cascade do |t|
+    t.integer  "from_sku_id",       limit: 4
+    t.string   "from_internal_sku", limit: 255
+    t.string   "from_sku_size",     limit: 255
+    t.integer  "to_sku_id",         limit: 4
+    t.string   "to_internal_sku",   limit: 255
+    t.string   "to_sku_size",       limit: 255
+    t.string   "barcode",           limit: 255
+    t.datetime "completed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "mnp_elements", primary_key: "elementID", force: :cascade do |t|

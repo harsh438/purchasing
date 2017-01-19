@@ -1,11 +1,16 @@
 class Sku::Exporter
+  def initialize
+    @pvx = PVX::Wrapper.new
+  end
+
   attr_reader :attrs,
               :product,
               :language_product,
               :option,
               :element,
               :language_product_option,
-              :product_gender
+              :product_gender,
+              :pvx
 
   def export(sku)
     return unless sku
@@ -17,6 +22,7 @@ class Sku::Exporter
     update_order_skus(sku)
     sku.update!(sku_attrs)
     update_purchase_order_legacy_references(sku)
+    create_merge_job(sku)
 
     sku
   end
@@ -44,10 +50,12 @@ class Sku::Exporter
   end
 
   def find_or_create_legacy_records(sku)
-    if is_product_present?(sku)
+    if product_present?(sku)
       create_option_legacy_records(sku.product)
-    elsif last_existing_sku_by_barcode(sku).present?
-      update_sku_legacy_references(sku, last_existing_sku_by_barcode(sku))
+    elsif last_existing_sku_by_barcode_and_size(sku).present?
+      update_sku_legacy_references(sku, last_existing_sku_by_barcode_and_size(sku))
+    elsif sku_has_different_size_but_same_barcode?(sku)
+      create_option_legacy_records(product_from_pvx_sku_attrs)
     elsif product_by_manufacturer_sku(sku).present? and sku.should_be_sized?
       create_option_legacy_records(product_by_manufacturer_sku(sku))
     else
@@ -55,16 +63,54 @@ class Sku::Exporter
     end
   end
 
-  def is_product_present?(sku)
+  def product_present?(sku)
     sku.product.present? and sku.should_be_sized?
   end
 
-  def last_existing_sku_by_barcode(sku)
+  def last_existing_sku_by_barcode_and_size(sku)
     Sku.joins(:barcodes).where(barcodes: { barcode: sku.barcodes.first.barcode })
                         .where.not(id: sku.id)
                         .where(size: sku.size)
                         .order(created_at: :desc)
                         .first
+  end
+
+  def sku_has_different_size_but_same_barcode?(sku)
+    sku_attrs_from_pvx.present? and sku.should_be_sized?
+  end
+
+  def create_merge_job(to_sku)
+    return unless sku_has_different_size_but_same_barcode?(to_sku)
+    from_sku = Sku.joins(:barcodes).find_by(sanitized_pvx_attrs)
+
+    MergeJob.create!(
+      from_sku_id: from_sku.id,
+      from_internal_sku: from_sku.sku,
+      from_sku_size: from_sku.size,
+      to_sku_id: to_sku.id,
+      to_internal_sku: to_sku.sku,
+      to_sku_size: to_sku.size,
+      barcode: sanitized_pvx_attrs[:barcodes][:barcode],
+    )
+  end
+
+  def sanitized_pvx_attrs
+    attrs =JSON.parse(sku_attrs_from_pvx, symbolize_names: true)
+    attrs.each do |attr_name, attr_value|
+      attrs[attr_name] = nil if attr_value.blank?
+    end
+    barcode = attrs.extract!(:barcode)
+    attrs[:barcodes] = barcode
+    attrs
+  end
+
+  def sku_attrs_from_pvx
+    @sku_attrs_from_pvx ||= pvx.sku_by_barcode(attrs[:barcode])
+  end
+
+  def product_from_pvx_sku_attrs
+    pvx_attrs = JSON.parse(sku_attrs_from_pvx, symbolize_names: true)
+    Product.find_by(id: pvx_attrs[:sku].split('-')[0])
   end
 
   def product_by_manufacturer_sku(sku)

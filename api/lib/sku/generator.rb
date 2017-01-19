@@ -1,4 +1,8 @@
 class Sku::Generator
+  def initialize(exporter=Sku::Exporter.new)
+    @exporter = exporter
+  end
+
   def generate(attrs)
     @attrs = attrs.with_indifferent_access
 
@@ -9,20 +13,15 @@ class Sku::Generator
 
   private
 
-  attr_reader :attrs
+  attr_reader :attrs, :exporter
 
   def find_sku
     return if attrs[:force_generate].present?
     if attrs[:barcode].present?
-      get_sku_from_pvx || find_sku_by_barcode_season_and_sizing
+      find_sku_by_barcode_season_and_sizing
     else
       find_sku_by_reference_season_and_sizing
     end
-  end
-
-  def get_sku_from_pvx
-    return unless attrs[:pvx_check].present?
-    PVX::Wrapper.new.sku_by_barcode(attrs[:barcode])
   end
 
   def find_sku_by_barcode_season_and_sizing
@@ -47,7 +46,7 @@ class Sku::Generator
                       product_name: attrs[:product_name],
                       season: Season.find_by(SeasonNickname: attrs[:season]),
                       color: attrs[:color],
-                      size: attrs[:size],
+                      size: sanitized_size,
                       color_family: attrs[:color_family],
                       size_scale: attrs[:size_scale],
                       cost_price: attrs[:cost_price],
@@ -61,8 +60,12 @@ class Sku::Generator
                       category_name: attrs[:category_name],
                       order_tool_reference: attrs[:order_tool_reference] || 0)
     create_barcode_for(sku)
-    Sku::Exporter.new.export(sku)
+    exporter.export(sku)
     sku
+  end
+
+  def sanitized_size
+    return attrs[:size] unless attrs[:size].blank?
   end
 
   def create_barcode_for(sku)

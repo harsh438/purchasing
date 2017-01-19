@@ -1,46 +1,38 @@
 RSpec.describe Sku::Exporter do
   describe 'Existing non sized product being passed in as sized' do
-    let!(:product) { create(:product) }
-    let!(:season) { create(:season, nickname: 'SS20', name: 'SS') }
-    let!(:existing_unsized_sku) { create(:base_sku, :with_product, product: product) }
-
-    before do
-      existing_unsized_sku.product.update_attributes(
-        manufacturer_sku: existing_unsized_sku.manufacturer_sku
-      )
-      existing_unsized_sku.barcodes.create!(
-        attributes_for(:barcode, barcode: '11111', sku: existing_unsized_sku)
-      )
-    end
+    include_context 'exisiting unsized sku that\'s also in in PVX'
 
     context 'new sku has the same barcode as existing unsized sku' do
       let!(:new_sku) do
         create(
           :base_sku,
           :sized,
-          season: season,
-          manufacturer_sku: existing_unsized_sku.manufacturer_sku
+          :with_barcode,
+          season: Season.last,
+          manufacturer_sku: pvx_sku[:manufacturer_sku],
+          barcode: create(:barcode, barcode: barcode.barcode)
         )
       end
 
-      subject { described_class.new.export(new_sku) }
-
       before do
-        new_sku.barcodes.create!(
-          attributes_for(:barcode, barcode: '11111', sku: existing_unsized_sku)
-        )
         remove_attrs_that_wont_exist_yet(new_sku)
       end
 
-      it 'the new sku\'s option is not nil' do
+      subject do
+        VCR.use_cassette 'sku_exporter_unsized_prod_as_sized_barcode' do
+          described_class.new.export(new_sku)
+        end
+      end
+
+      it "the new sku's option is not nil" do
         expect(subject.option).to_not be nil
       end
 
-      it 'the new sku\'s element is not nil' do
+      it "the new sku's element is not nil" do
         expect(subject.element).to_not be nil
       end
 
-      it 'the new sku\'s language_product_option is not nil' do
+      it "the new sku's language_product_option is not nil" do
         expect(subject.language_product_option).to_not be nil
       end
 
@@ -58,12 +50,16 @@ RSpec.describe Sku::Exporter do
         create(
           :base_sku,
           :sized,
-          season: season,
-          manufacturer_sku: existing_unsized_sku.manufacturer_sku
+          season: Season.last,
+          manufacturer_sku: pvx_sku[:manufacturer_sku]
         )
       end
 
-      subject { described_class.new.export(new_sku) }
+      subject do
+        VCR.use_cassette 'sku_exporter_unsized_prod_as_sized_man_sku' do
+          described_class.new.export(new_sku)
+        end
+      end
 
       before do
         new_sku.barcodes.create!(

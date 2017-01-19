@@ -59,7 +59,9 @@ feature 'Batch importing Barcodes' do
     barcodes = [{ sku: sku_without_product.sku,
                   brand_size: skus.first.manufacturer_size,
                   barcode: 'new' }]
-    page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
+    VCR.use_cassette 'batch_import_spec_barcode_with_product_without_color' do
+      page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
+    end
   end
 
   def then_i_should_have_a_color_error
@@ -75,7 +77,9 @@ feature 'Batch importing Barcodes' do
                 { sku: skus.third.sku,
                   brand_size: skus.third.manufacturer_size,
                   barcode: 'new2' }]
-    page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
+    VCR.use_cassette 'batch_import_spec_several_barcodes' do
+      page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
+    end
   end
 
   def then_those_barcodes_should_be_associated_with_skus_of_the_correct_size
@@ -163,7 +167,9 @@ feature 'Batch importing Barcodes' do
                 { sku: negative_sku.sku,
                   brand_size: negative_sku.manufacturer_size,
                   barcode: 'cool' }]
-    page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
+    VCR.use_cassette 'batch_import_the_same_barcode_twice' do
+      page.driver.post import_barcodes_path, { _method: 'post', barcodes: barcodes }
+    end
   end
 
   def then_the_barcode_should_be_associated_once

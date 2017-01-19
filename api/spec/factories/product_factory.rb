@@ -4,6 +4,7 @@ FactoryGirl.define do
       name { Faker::Commerce.product_name }
       vendor_name { Faker::Company.name }
       teaser { Faker::Company.bs }
+      sized true
     end
 
     on_sale 0
@@ -69,7 +70,7 @@ FactoryGirl.define do
 
     after(:create) do |product, evaluator|
       create(:english_language_product, product: product, name: evaluator.name, teaser: evaluator.teaser)
-      create(:language_product_option, product: product)
+      create(:language_product_option, product: product) if evaluator.sized
     end
   end
 end

@@ -5,12 +5,16 @@ class PVX::Wrapper
     @credentials ||= Rails.application.config.pvx_credentials.with_indifferent_access
   end
 
+  def sku_by_barcode_and_surfdome_size(barcode, size, retries=1)
+    make_request(url('/sku_lookup_by_barcode_and_surfdome_size'), { barcode: barcode, size: size }, retries)
+  end
+
   def sku_by_barcode(barcode, retries=1)
     make_request(url('/sku_lookup_by_barcode'), { barcode: barcode }, retries)
   end
 
-  def sku_by_man_sku_and_size(man_sku, size, retries=1)
-    make_request(url('/sku_lookup'), { man_sku: man_sku, size: size }, retries)
+  def sku_by_man_sku_and_man_size(man_sku, man_size, retries=1)
+    make_request(url('/sku_lookup_by_man_sku_and_man_size'), { man_sku: man_sku, size: man_size }, retries)
   end
 
   private

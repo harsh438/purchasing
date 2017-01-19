@@ -1,4 +1,4 @@
-RSpec.shared_context "batch file context" do
+RSpec.shared_context 'batch file context' do
   let(:sku) do
     create(:base_sku,
            :with_barcode,

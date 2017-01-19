@@ -110,6 +110,8 @@ feature 'Adding a barcode to an existing sku' do
 
   def add_barcode_to_sku(sku, barcode = '00000')
     attrs = { barcodes_attributes: [{ barcode: barcode }] }
-    page.driver.post sku_path(sku), { _method: 'patch', sku: attrs }
+    VCR.use_cassette 'adding_barcode_spec' do
+      page.driver.post sku_path(sku), { _method: 'patch', sku: attrs }
+    end
   end
 end
