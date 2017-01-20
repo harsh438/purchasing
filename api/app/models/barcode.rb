@@ -1,6 +1,7 @@
 class Barcode < ActiveRecord::Base
   belongs_to :sku, touch: true
   validates :barcode, presence: true, format: { without: /['"]/i }
+  validates :barcode, uniqueness: { scope: :sku_id }
 
   before_validation :strip_whitespace
 
