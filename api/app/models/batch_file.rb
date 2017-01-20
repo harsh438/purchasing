@@ -26,10 +26,11 @@ class BatchFile < ActiveRecord::Base
   def self.available_processors
     [
       BatchFiles::Processors::UpdatePurchaseOrderCostPriceBySku,
+      BatchFiles::Processors::UpdatePurchaseOrderProductRRPBySku,
       BatchFiles::Processors::UpdatePurchaseOrderCostPriceByPid,
-      BatchFiles::Processors::UpdatePurchaseOrderSupplierCostPrice,
       BatchFiles::Processors::UpdatePurchaseOrderListPriceByPid,
-      BatchFiles::Processors::UpdatePurchaseOrderCostPriceByPercent,
+      BatchFiles::Processors::UpdatePurchaseOrderSupplierCostPrice,
+      BatchFiles::Processors::UpdatePurchaseOrderCostPriceByPercent
     ].sort { |a, b| a.to_s <=> b.to_s }
   end
 
