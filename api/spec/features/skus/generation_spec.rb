@@ -6,30 +6,27 @@ feature 'SKU generation' do
   feature 'Exporting new size for existing product' do
     scenario 'when the new sku has the same barcode as the existing sku' do
       when_an_existing_sku_is_equivalent_but_for_the_size_and_season
-      then_a_new_sku_should_be_made_on_the_same_product_id
+      then_a_new_sku_should_be_made_on_the_same_product_id_with_different_size
+      then_a_merge_job_should_be_created
     end
   end
 
-  feature 'Merge jobs' do
-    scenario 'when the new sku has the same barcode as the existing sku a merge is created' do
-      when_an_existing_sku_is_equivalent_but_for_the_size_and_season
-      then_a_merge_job_should_be_created
-    end
-
-    scenario 'doesnt create one otherwise' do
-      when_i_generate_skus_with_a_barcode
-      then_a_merge_job_should_not_be_created
-    end
+  scenario 'Adding a SKU with the same size and barcode as an existing sku but with a new season' do
+    when_an_existing_sku_is_equivalent_but_for_the_season
+    then_a_new_sku_should_be_made_on_that_product_with_a_new_season
+    then_a_merge_job_should_not_be_created
   end
 
   scenario 'Generating skus with a barcode' do
     when_i_generate_skus_with_a_barcode
     then_both_skus_and_legacy_records_should_be_generated
+    then_a_merge_job_should_not_be_created
   end
 
   scenario 'Generating a single-size sku' do
     when_i_generate_a_single_size_sku_with_a_barcode
     then_no_legacy_option_should_be_generated
+    then_a_merge_job_should_not_be_created
   end
 
   scenario 'Generating skus without a barcode' do
@@ -73,7 +70,7 @@ feature 'SKU generation' do
     end.to change { Option.where(product_id: existing_sku.product.id).count }.by(1)
   end
 
-  def then_a_new_sku_should_be_made_on_the_same_product_id
+  def then_a_new_sku_should_be_made_on_the_same_product_id_with_different_size
     expect(subject[:size]).to eq 'UK-7'
     expect(subject[:element_id]).not_to eq existing_sku.element.id
     expect(subject[:sku]).not_to eq existing_sku.sku
@@ -81,6 +78,22 @@ feature 'SKU generation' do
     expect(subject[:option_id]).not_to eq existing_sku.option.id
     expect(subject[:language_product_option_id]).not_to eq existing_sku.language_product_option.id
     expect(subject[:product_id]).to eq existing_sku.product.id
+  end
+
+  def when_an_existing_sku_is_equivalent_but_for_the_season
+    VCR.use_cassette 'sku_generation_spec_new_season' do
+      page.driver.post skus_path(existing_sku_with_new_season)
+    end
+  end
+
+  def then_a_new_sku_should_be_made_on_that_product_with_a_new_season
+    expect(subject[:element_id]).to eq existing_sku.element.id
+    expect(subject[:sku]).to eq existing_sku.sku
+    expect(subject[:sku]).to start_with(existing_sku.product_id.to_s)
+    expect(subject[:option_id]).to eq existing_sku.option.id
+    expect(subject[:language_product_option_id]).to eq existing_sku.language_product_option.id
+    expect(subject[:product_id]).to eq existing_sku.product.id
+    expect(subject[:season]).not_to eq existing_sku.season
   end
 
   def then_a_merge_job_should_not_be_created
@@ -203,6 +216,8 @@ feature 'SKU generation' do
   let(:existing_sku_without_category_id) do
     create(:base_sku, :sized, :with_product, :with_barcode, category_id: nil)
   end
+
+  let(:existing_sku_with_new_season) { new_sku_attrs.merge({ size: existing_sku.size }) }
 
   let(:language_category) { create(:language_category) }
 

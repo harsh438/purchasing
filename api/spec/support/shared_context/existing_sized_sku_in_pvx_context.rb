@@ -9,7 +9,7 @@ RSpec.shared_context "exisiting sized sku that's also in in PVX" do
     }
   end
 
-  let(:element) { create(:element, elementID: 1666, elementname: pvx_sku[:size]) }
+  let(:element) { create(:element, elementID: 13, elementname: pvx_sku[:size]) }
 
   let(:barcode) { create(:barcode, barcode: pvx_sku[:barcode]) }
 

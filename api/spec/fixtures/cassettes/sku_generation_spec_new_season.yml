@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://endpoints.surfdome.cc/peoplevox_endpoint/api/sku_lookup_by_barcode
+    body:
+      encoding: UTF-8
+      string: '{"key":"sOufQ5GM132FI","token":"2GgiGuEliQyQzQSjk4e3jliEoVJxaAlHRD3YNFVd","barcode":"5052094029950"}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 20 Jan 2017 10:34:03 GMT
+      Content-Type:
+      - text/html;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=5
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - ''
+    body:
+      encoding: ASCII-8BIT
+      string: '{"sku":"18312-13","barcode":"5052094029950","manufacturer_sku":"SV507-A59","manufacturer_size":"14","size":"14"}'
+    http_version: 
+  recorded_at: Fri, 20 Jan 2017 10:34:02 GMT
+recorded_with: VCR 2.9.2

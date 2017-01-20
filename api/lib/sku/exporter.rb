@@ -22,7 +22,7 @@ class Sku::Exporter
     update_order_skus(sku)
     sku.update!(sku_attrs)
     update_purchase_order_legacy_references(sku)
-    create_merge_job(sku)
+    create_merge_job(sku) if @merge_job
 
     sku
   end
@@ -56,6 +56,7 @@ class Sku::Exporter
       update_sku_legacy_references(sku, last_existing_sku_by_barcode_and_size(sku))
     elsif sku_has_different_size_but_same_barcode?(sku)
       create_option_legacy_records(product_from_pvx_sku_attrs)
+      @merge_job = true
     elsif product_by_manufacturer_sku(sku).present? and sku.should_be_sized?
       create_option_legacy_records(product_by_manufacturer_sku(sku))
     else
