@@ -191,7 +191,7 @@ class Sku::Exporter
   end
 
   def create_option
-    @option ||= Option.create!(option_attrs)
+    @option ||= Option.find_or_create_by!(option_attrs)
   end
 
   def create_element
@@ -199,7 +199,7 @@ class Sku::Exporter
   end
 
   def create_language_product_option
-    @language_product_option ||= LanguageProductOption.create!(language_product_option_attrs)
+    @language_product_option ||= LanguageProductOption.find_or_create_by!(language_product_option_attrs)
   end
 
   def find_or_create_product_gender
