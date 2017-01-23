@@ -29,11 +29,7 @@ RSpec.describe Sku do
     before do
       create(:base_sku, :sized, sku: 'ABC123', product: product)
       create(:base_sku, :with_product, :sized, :with_barcode, sku: 'DEF123', product: product)
-      # a sku with 2 of the same barcodes
       create(:base_sku, :with_product, :sized, :with_barcode, sku: 'GHI123', product: product)
-        .tap do |sku|
-          sku.barcodes.create!(barcode: sku.barcodes.first.barcode)
-        end
     end
 
     it 'returns only skus that have barcodes' do
