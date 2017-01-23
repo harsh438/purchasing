@@ -6,6 +6,13 @@ RSpec.describe Barcode, type: :model do
     it { should_not allow_value('\"123456').for(:barcode) }
   end
 
+  context 'validations' do
+    it 'should only allow one barcode per sku id' do
+      create(:barcode, sku_id: 1, barcode: '123456')
+      expect { create(:barcode, sku_id: 1, barcode: '123456') }.to raise_exception ActiveRecord::RecordInvalid
+    end
+  end
+
   describe '#latest scope' do
     before do
       4.times { create(:barcode) }
