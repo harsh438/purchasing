@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170116170302) do
+ActiveRecord::Schema.define(version: 20170124170458) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20170116170302) do
     t.datetime "updated_at"
   end
 
+  add_index "barcodes", ["barcode", "sku_id"], name: "unique_barcode_per_sku_record", unique: true, using: :btree
   add_index "barcodes", ["barcode"], name: "index_barcodes_on_barcode", using: :btree
   add_index "barcodes", ["sku_id"], name: "index_barcodes_on_sku_id", using: :btree
 
