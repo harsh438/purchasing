@@ -508,12 +508,15 @@ ActiveRecord::Schema.define(version: 20170124170458) do
   add_index "order_suppliers", ["orderID"], name: "orderID", unique: true, using: :btree
 
   create_table "orders", force: :cascade do |t|
+    t.string   "status",     limit: 255, default: "new"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name",       limit: 255
     t.string   "order_type", limit: 255, default: "reorder"
     t.string   "season",     limit: 255
   end
+
+  add_index "orders", ["status"], name: "index_orders_on_status", using: :btree
 
   create_table "over_booking", primary_key: "over_bookings_id", force: :cascade do |t|
     t.string  "message",      limit: 5000
@@ -792,6 +795,22 @@ ActiveRecord::Schema.define(version: 20170124170458) do
   add_index "pvx_in", ["ref"], name: "status", using: :btree
   add_index "pvx_in", ["sku"], name: "sku", using: :btree
 
+  create_table "pvx_in_po", force: :cascade do |t|
+    t.string   "sku",          limit: 32
+    t.string   "ponum",        limit: 50
+    t.integer  "qty",          limit: 3
+    t.datetime "logged"
+    t.integer  "status",       limit: 3,   default: 0
+    t.string   "DeliveryNote", limit: 100
+    t.integer  "pvx_in_ref",   limit: 4,               null: false
+    t.integer  "po_line",      limit: 4
+  end
+
+  add_index "pvx_in_po", ["DeliveryNote"], name: "DeliveryNote", using: :btree
+  add_index "pvx_in_po", ["logged"], name: "logged", using: :btree
+  add_index "pvx_in_po", ["sku"], name: "sku", using: :btree
+  add_index "pvx_in_po", ["status"], name: "Status", using: :btree
+
   create_table "refused_deliveries_log", force: :cascade do |t|
     t.date    "delivery_date",                              null: false
     t.string  "courier",        limit: 200
@@ -830,6 +849,32 @@ ActiveRecord::Schema.define(version: 20170124170458) do
     t.string  "itemCode",  limit: 32
     t.date    "dateAdded"
   end
+
+  create_table "sd_po_tran", force: :cascade do |t|
+    t.integer  "lineNumber",   limit: 8
+    t.integer  "pid",          limit: 4,  null: false
+    t.integer  "oid",          limit: 4,  null: false
+    t.string   "OASKU",        limit: 12
+    t.integer  "po_number",    limit: 4,  null: false
+    t.string   "type",         limit: 8,  null: false
+    t.integer  "qty",          limit: 4,  null: false
+    t.integer  "Balance",      limit: 4,  null: false
+    t.date     "arrived_date",            null: false
+    t.date     "invoice_date",            null: false
+    t.date     "pushthrough",             null: false
+    t.date     "checked",                 null: false
+    t.datetime "logged",                  null: false
+    t.string   "initials",     limit: 8,  null: false
+    t.integer  "webInv",       limit: 4
+    t.integer  "sort",         limit: 4
+    t.float    "cost",         limit: 24, null: false
+  end
+
+  add_index "sd_po_tran", ["OASKU"], name: "OASKU", using: :btree
+  add_index "sd_po_tran", ["invoice_date"], name: "invoicedate", using: :btree
+  add_index "sd_po_tran", ["lineNumber"], name: "lineNumber", using: :btree
+  add_index "sd_po_tran", ["pid"], name: "pID", using: :btree
+  add_index "sd_po_tran", ["type"], name: "type", using: :btree
 
   create_table "sd_product_details", primary_key: "pID", force: :cascade do |t|
     t.string  "colour",             limit: 20, null: false

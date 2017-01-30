@@ -88,4 +88,8 @@ class Sku < ActiveRecord::Base
     return true if sizes.empty?
     errors.add(:size, 'Invalid size for sku')
   end
+
+  def self.by_season(sku, season)
+    where(sku: sku, season: season)
+  end
 end

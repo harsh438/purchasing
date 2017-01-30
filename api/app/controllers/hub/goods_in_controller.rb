@@ -8,7 +8,8 @@ class Hub::GoodsInController < ApplicationController
   def create
     items.each do |item|
       attrs = attributes(item)
-      PvxIn.create(attrs)
+      pvx_in = PvxIn.create(attrs)
+      reconcile(pvx_in) if pvx_in.present?
     end
     render json: {
       request_id: request_id,
@@ -22,12 +23,16 @@ class Hub::GoodsInController < ApplicationController
 
   private
 
+  def reconcile(pvx_in)
+    PvxInReconcileWorker.perform_async(pvx_in.id)
+  end
+
   def attributes(item)
     {
       sku: item[:sku],
       ref: reference,
       qty: item[:quantity],
-      ponum: normalise_po_number(item),
+      po_number: normalise_po_number(item),
       logged: reconciled_date,
       UserId: user_id,
       DeliveryNote: delivery_note,

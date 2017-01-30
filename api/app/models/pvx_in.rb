@@ -8,7 +8,8 @@ class PvxIn < ActiveRecord::Base
                  user_id:       :UserId,
                  delivery_note: :DeliveryNote,
                  po_status:     :PO_status,
-                 product_id:    :pid
+                 product_id:    :pid,
+                 po_number:     :ponum
 
   belongs_to :product, foreign_key: :pid
 
