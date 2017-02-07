@@ -171,7 +171,7 @@ RSpec.describe Product do
     end
   end
 
-  describe '#as_json', a: true do
+  describe '#as_json' do
     subject(:json) { product.as_json }
 
     let(:vendor) { create(:vendor) }
