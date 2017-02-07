@@ -72,6 +72,20 @@ class Product < ActiveRecord::Base
     read_attribute(:pUDFValue2).scan(/\w+/)[0]
   end
 
+  def sku_brand_product_name
+    self.try(:brand_product_name) || skus.first.try(:brand_product_name)
+  end
+
+  def sku_product_type
+    pt = self.try(:product_type) || skus.first.try(:product_type)
+    pt.split.map(&:capitalize).join(' ') if pt
+  end
+
+  def model_name
+    model = sku_brand_product_name.downcase.match(/(.*) #{sku_product_type.downcase}/).try(:[], 1)
+    model.split.map(&:capitalize).join(' ') if model
+  end
+
   def as_json(*args)
     ProductSerializer.new(self).as_json(*args)
   end

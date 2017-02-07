@@ -14,7 +14,8 @@
       "brand": 8981,
       "properties": {
         "Gender": "Men,Women",
-        "Colour": "blue"
+        "Colour": "blue",
+        "Product Type": "Jacket"
       },
       "dropshipment": true,
       "use_legacy_slug": true,
@@ -106,7 +107,10 @@
           "product_id": 1,
           "type": "also_bought"
         }
-      ]
+      ],
+      "classification": {
+        "brand_product_name": "Modelname"
+      }
     }
   ],
   "parameters": {

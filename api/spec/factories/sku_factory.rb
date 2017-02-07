@@ -12,6 +12,8 @@ FactoryGirl.define do
     gender 'M'
     listing_genders 'M'
     order_tool_reference 1010105
+    product_type 'Jacket'
+    brand_product_name 'ModelNAME Jacket'
     vendor
     sku { |s| [((Sku.last.try(:id) || 0) + 1) * -1, s.manufacturer_sku].join('-') }
     season { Season.first }

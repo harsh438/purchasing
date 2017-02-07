@@ -6,7 +6,8 @@ class ProductSerializer < ActiveModel::Serializer
              :legacy_season, :legacy_supplier_sku,
              :legacy_reporting_category_name, :legacy_first_received_at,
              :legacy_more_from_category, :parts, :children,
-             :contents, :options, :shipping_category, :related
+             :contents, :options, :shipping_category, :related,
+             :classification
 
   private
 
@@ -44,6 +45,7 @@ class ProductSerializer < ActiveModel::Serializer
     {
       'Gender' => object.listing_gender_names.join(','),
       'Colour' => object.color,
+      'Product Type' => object.sku_product_type
     }
   end
 
@@ -111,5 +113,11 @@ class ProductSerializer < ActiveModel::Serializer
 
   def sized_latest_season_skus
     @skus ||= object.latest_season_skus.with_barcode.to_a.select(&:sized?)
+  end
+
+  def classification
+    {
+      brand_product_name: object.model_name
+    }
   end
 end
