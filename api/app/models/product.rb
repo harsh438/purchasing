@@ -77,7 +77,8 @@ class Product < ActiveRecord::Base
   end
 
   def sku_product_type
-    self.try(:product_type) || skus.first.try(:product_type)
+    pt = self.try(:product_type) || skus.first.try(:product_type)
+    pt.split.map(&:capitalize).join(' ') if pt
   end
 
   def model_name
