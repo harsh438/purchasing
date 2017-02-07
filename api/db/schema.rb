@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124170458) do
+ActiveRecord::Schema.define(version: 20170207102542) do
 
   create_table "barcodes", force: :cascade do |t|
     t.integer  "sku_id",     limit: 4
@@ -696,6 +696,15 @@ ActiveRecord::Schema.define(version: 20170124170458) do
   add_index "product_image", ["product_id", "position"], name: "product_position", using: :btree
   add_index "product_image", ["product_id"], name: "product_id", using: :btree
 
+  create_table "product_log", primary_key: "pid", force: :cascade do |t|
+    t.integer  "oid",         limit: 4,    default: 0
+    t.datetime "inserted_at"
+    t.datetime "updated_at"
+    t.string   "last_action", limit: 255
+    t.string   "aux_before",  limit: 1024
+    t.string   "aux_after",   limit: 1024
+  end
+
   create_table "product_supplier", primary_key: "pid", force: :cascade do |t|
     t.integer "supplierID", limit: 4, null: false
   end
@@ -781,7 +790,7 @@ ActiveRecord::Schema.define(version: 20170124170458) do
     t.integer  "qty",          limit: 3
     t.datetime "logged"
     t.integer  "DS_status",    limit: 3,   default: 0
-    t.integer  "OA_status",    limit: 3
+    t.integer  "OA_status",    limit: 3,   default: 0
     t.integer  "status",       limit: 3,   default: 0
     t.integer  "UserId",       limit: 4,   default: 0
     t.integer  "loc",          limit: 3
@@ -977,6 +986,8 @@ ActiveRecord::Schema.define(version: 20170124170458) do
     t.string   "listing_genders",            limit: 255
     t.datetime "sent_in_peoplevox"
     t.integer  "order_tool_reference",       limit: 4
+    t.string   "product_type",               limit: 255
+    t.string   "brand_product_name",         limit: 255
   end
 
   add_index "skus", ["manufacturer_sku"], name: "index_skus_on_manufacturer_sku", using: :btree

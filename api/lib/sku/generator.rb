@@ -58,7 +58,9 @@ class Sku::Generator
                       category_id: find_or_create_language_category.try(:id),
                       on_sale: attrs[:on_sale],
                       category_name: attrs[:category_name],
-                      order_tool_reference: attrs[:order_tool_reference] || 0)
+                      order_tool_reference: attrs[:order_tool_reference] || 0,
+                      product_type: attrs[:product_type],
+                      brand_product_name: attrs[:brand_product_name])
     create_barcode_for(sku)
     exporter.export(sku)
     sku

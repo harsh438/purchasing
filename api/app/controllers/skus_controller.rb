@@ -56,7 +56,7 @@ class SkusController < ApplicationController
                   :manufacturer_size,
                   :season, :color, :size, :color_family, :size_scale,
                   :cost_price, :list_price, :price, :barcode, :inv_track,
-                  :order_tool_reference)
+                  :order_tool_reference, :product_type, :brand_product_name)
   end
 
   def sku_update_attrs

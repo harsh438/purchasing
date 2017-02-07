@@ -19,5 +19,7 @@
   "season": "AW16",
   "on_sale": "Y",
   "listing_genders": "B G",
-  "language_product_id": 1
+  "language_product_id": 1,
+  "product_type": "Jacket",
+  "brand_product_name": "CORE DOWN JACKET"
 }

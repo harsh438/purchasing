@@ -53,7 +53,9 @@ RSpec.shared_context "exisiting sized sku that's also in in PVX" do
       category_id:  existing_sku.category_id,
       on_sale:  existing_sku.on_sale,
       category_name:  existing_sku.category_name,
-      order_tool_reference: '1234321'
+      order_tool_reference: '1234321',
+      product_type: 'Jacket',
+      brand_product_name: 'CORE DOWN JACKET'
     }
   end
 end
