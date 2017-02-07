@@ -171,7 +171,7 @@ RSpec.describe Product do
     end
   end
 
-  describe '#as_json' do
+  describe '#as_json', a: true do
     subject(:json) { product.as_json }
 
     let(:vendor) { create(:vendor) }
@@ -244,6 +244,7 @@ RSpec.describe Product do
           properties: {
             'Gender' => 'Men',
             'Colour' => product.color,
+            'Product Type' => product.sku_product_type
           },
           children: [
             'CHILD',
@@ -263,6 +264,9 @@ RSpec.describe Product do
           contents: [
             'CONTENT',
           ],
+          classification: {
+            brand_product_name: product.model_name
+          },
           parts: product.kit_managers.map(&:item_code),
           related: related_products.map.with_index do |p, i|
             {
