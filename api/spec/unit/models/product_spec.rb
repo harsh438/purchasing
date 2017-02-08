@@ -186,6 +186,7 @@ RSpec.describe Product do
         :with_kit_managers,
         :with_skus,
 
+        inv_track: 'O',
         listing_genders: 'M',
         color: 'blue',
         dropshipment: 'D-R-P',
@@ -203,6 +204,7 @@ RSpec.describe Product do
         create_list(
           :product,
           2,
+          inv_track: 'O',
           listing_genders: 'M',
           color: 'green',
           name: [vendor.name, 'Awesome Co', 'green'].join(' - '),

@@ -1,4 +1,9 @@
 class ProductSerializer < ActiveModel::Serializer
+  INV_TRACKS = {
+    'O' => 'sized',
+    'P' => 'unsized'
+  }.freeze
+
   attributes :id, :sku, :price, :cost_price, :sale_price,
              :active, :barcode, :brand, :properties,
              :dropshipment, :use_legacy_slug, :images,
@@ -6,8 +11,7 @@ class ProductSerializer < ActiveModel::Serializer
              :legacy_season, :legacy_supplier_sku,
              :legacy_reporting_category_name, :legacy_first_received_at,
              :legacy_more_from_category, :parts, :children,
-             :contents, :options, :shipping_category, :related,
-             :classification
+             :contents, :options, :shipping_category, :related, :inv_track, :classification
 
   private
 
@@ -119,5 +123,8 @@ class ProductSerializer < ActiveModel::Serializer
     {
       brand_product_name: object.model_name
     }
+  end
+  def inv_track
+    INV_TRACKS.fetch(object.inv_track)
   end
 end

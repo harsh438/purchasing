@@ -91,6 +91,7 @@ feature 'Requesting products ready for import' do
       :with_kit_managers,
       :with_gender,
 
+      inv_track: 'O',
       product_images: build_list(:product_image, 2),
       dropshipment: 'D-R-P',
       reporting_category_name: 'Gerry Treutel',

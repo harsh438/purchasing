@@ -108,6 +108,7 @@
           "type": "also_bought"
         }
       ],
+      "inv_track": "sized",
       "classification": {
         "brand_product_name": "Modelname"
       }
