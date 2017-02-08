@@ -45,6 +45,7 @@ class Gender
   attr_reader :char, :name, :display_names, :reporting_name
 
   def initialize(char)
+    char[0] = 'A' if char.nil?
     @char = char[0].upcase
     @name = STRING_MAPPINGS.fetch(@char)
     @display_names = DISPLAY_MAPPINGS.fetch(@char)
