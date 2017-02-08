@@ -3,7 +3,7 @@ feature 'SKU generation' do
 
   subject { JSON.parse(page.body).with_indifferent_access }
 
-  feature 'Exporting new size for existing product' do
+  feature 'Exporting new size for an existing product' do
     scenario 'when the new sku has the same barcode as the existing sku' do
       when_an_existing_sku_is_equivalent_but_for_the_size_and_season
       then_a_new_sku_should_be_made_on_the_same_product_id_with_different_size

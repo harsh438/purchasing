@@ -74,6 +74,29 @@ RSpec.describe Sku::Exporter do
     end
   end
 
+  describe 'exporting a sku, that needs a merge, whose barcode exists in pvx, but not in the skus table' do
+    let!(:sku) { create(:base_sku, :sized, :with_barcode) }
+    let!(:barcode) { create(:barcode, barcode: '700285558479') }
+    let!(:product) do
+      create(
+        :product,
+        id: '100010',
+        manufacturer_sku: '57-786-',
+        barcode: barcode,
+        sized: false
+      )
+    end
+
+    it 'creates a merge job with the data from pvx' do
+      VCR.use_cassette 'sku_exporter_unsized_prod_as_sized_barcode' do
+        expect { subject.export(sku) }.to change { MergeJob.count }.by(1)
+        expect(MergeJob.first.from_sku_id).to eq 0
+        expect(MergeJob.first.from_internal_sku).to eq '100010'
+        expect(MergeJob.first.completed_at).to be_nil
+      end
+    end
+  end
+
   def remove_attrs_that_wont_exist_yet(sku)
     sku.option.delete
     sku.element.delete

@@ -85,9 +85,9 @@ class Sku::Exporter
     from_sku = Sku.joins(:barcodes).find_by(sanitized_pvx_attrs)
 
     MergeJob.create!(
-      from_sku_id: from_sku.id,
-      from_internal_sku: from_sku.sku,
-      from_sku_size: from_sku.size,
+      from_sku_id: from_sku.try(:id) || 0,
+      from_internal_sku: from_sku.try(:sku) || sanitized_pvx_attrs[:sku],
+      from_sku_size: from_sku.try(:size) || sanitized_pvx_attrs[:size],
       to_sku_id: to_sku.id,
       to_internal_sku: to_sku.sku,
       to_sku_size: to_sku.size,
