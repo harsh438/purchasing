@@ -277,7 +277,7 @@ class Sku::Exporter
 
   def product_gender_attrs
     { product_id: product.id,
-      gender: attrs[:lead_gender].try(:to_sym) || '' }
+      gender: attrs[:lead_gender].try(:to_sym) || 'A' }
   end
 
   class ProductWithoutColor < StandardError
