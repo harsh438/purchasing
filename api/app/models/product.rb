@@ -82,6 +82,7 @@ class Product < ActiveRecord::Base
   end
 
   def model_name
+    return unless sku_brand_product_name.present?
     model = sku_brand_product_name.downcase.match(/(.*) #{sku_product_type.downcase}/).try(:[], 1)
     model.split.map(&:capitalize).join(' ') if model
   end
