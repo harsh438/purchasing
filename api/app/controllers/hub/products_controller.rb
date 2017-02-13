@@ -19,11 +19,14 @@ class Hub::ProductsController < ApplicationController
     )
   end
 
+  def request_id
+    params.require(:request_id)
+  end
+
   def create_hub_object(products, last_timestamp, last_id)
     {
-      request_id: params[:request_id],
+      request_id: request_id,
       summary: "Returned #{products.length} product objects.",
-      log_type: "product",
       products: ActiveModel::ArraySerializer.new(
         products,
         each_serializer: ProductSerializer

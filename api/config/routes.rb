@@ -100,6 +100,12 @@ Rails.application.routes.draw do
           post :latest
         end
       end
+      resources :merge_jobs, only: [:create] do
+        collection do
+          post :latest
+          post :completed
+        end
+      end
     end
   end
 end
