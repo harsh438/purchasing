@@ -96,6 +96,27 @@ docker-compose run web rspec
 ```sh
 docker-compose run web rake build
 ```
+## Deploying
+ensure local master is up to date
+```sh
+> git checkout master
+> git pull -r origin master
+```
+ensure local production is up to date
+```bash
+> git checkout production
+> git pull -r origin production
+```
+rebase production to master
+```bash
+> git checkout production
+> git rebase master
+```
+Push branch to github to trigger deployment
+```bash
+> git push origin production
+```
+Once CI passes, a release will be triggered. Check #tech-purchasing and #frankie-debug for info.
 
 ## Advanced mode
 
