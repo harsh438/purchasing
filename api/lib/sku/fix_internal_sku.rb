@@ -8,8 +8,11 @@ class Sku::FixInternalSku
     log_count_start("start updating internal sku")
     find_incorrect_internal_skus.each do |incorrect_internal_skus|
       @internal_sku = internal_sku_hash(incorrect_internal_skus)
+      # binding.pry
+      element_id = get_element(incorrect_internal_skus[5])
+      # binding.pry
+      next if element_id.nil?
       process_internal_sku
-      binding.pry
     end
     "updated #{@log_count} internal sku"
   end
@@ -46,8 +49,9 @@ class Sku::FixInternalSku
   end
 
   def update_pvx_in_po
-    PvxInPo.find_by(sku: @internal_sku[:from_sku])
-           .update_column(:sku, @internal_sku[:new_internal_sku])
+    pvx_in_po = PvxInPo.find_by(sku: @internal_sku[:from_sku])
+    return if pvx_in_po.nil?
+    pvx_in_po.update_column(:sku, @internal_sku[:new_internal_sku])
   end
 
   def internal_sku_hash(data)
