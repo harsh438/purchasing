@@ -30,7 +30,8 @@ class BatchFile < ActiveRecord::Base
       BatchFiles::Processors::UpdatePurchaseOrderCostPriceByPid,
       BatchFiles::Processors::UpdatePurchaseOrderListPriceByPid,
       BatchFiles::Processors::UpdatePurchaseOrderSupplierCostPrice,
-      BatchFiles::Processors::UpdatePurchaseOrderCostPriceByPercent
+      BatchFiles::Processors::UpdatePurchaseOrderCostPriceByPercent,
+      BatchFiles::Processors::AddMergeJob
     ].sort { |a, b| a.to_s <=> b.to_s }
   end
 

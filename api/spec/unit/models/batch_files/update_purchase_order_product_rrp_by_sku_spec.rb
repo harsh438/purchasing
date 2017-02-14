@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe BatchFile, type: :model, batch_file: true do
-  include_context 'batch file context'
+  include_context 'po batch file context'
 
   let(:processor) do
     create(:batch_file_processor,

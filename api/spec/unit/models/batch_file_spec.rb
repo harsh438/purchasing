@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe BatchFile, type: :model, batch_file: true do
-  include_context 'batch file context'
+  include_context 'po batch file context'
   let(:sku2) do
     create(:base_sku,
            :with_barcode,
