@@ -15,7 +15,8 @@ class PurchaseOrder::Reconciler
     ActiveRecord::Base.transaction do
       pvx_in_po_attrs = set_pvx_in_po_attrs
       if balance >= 0
-        transaction_log
+        PurchaseOrderTransactionLog.create!(transaction_log)
+
         purchase_order_line.update_attributes(received_stock)
         pvx_in_po_attrs = set_pvx_in_po_attrs(COMPLETED_PVX_IN_PO,
                                             attrs.purchase_order_line_id,
@@ -66,15 +67,19 @@ class PurchaseOrder::Reconciler
     {
       po_line_number: purchase_order_line[:id],
       product_id: sku.try(:product_id),
-      option_id: sku.try(:option_id),
+      option_id: sku.try(:option_id) || 0,
       sku: attrs[:sku],
       balance: balance,
       web_inv: 0,
+      purchase_order: purchase_order_line[:po_number],
       pushthrough_date: logged_date,
       quantity: attrs[:qty],
-      type: 'LOPVX',
+      input_type: 'LOPVX',
       arrived_date: logged_date,
       invoice_date: logged_date,
+      checked_date: logged_date,
+      initials: 'LOPVX',
+      cost: purchase_order_line.try(:cost) || 0,
       logged: Time.now.utc.to_s(:db)
     }
   end

@@ -10,6 +10,8 @@ class PurchaseOrderTransactionLog < ActiveRecord::Base
                  balance:           :Balance,
                  web_inv:           :webInv,
                  pushthrough_date:  :pushthrough,
-                 quantity:          :qty
-
+                 quantity:          :qty,
+                 input_type:        :type,
+                 purchase_order:    :po_number,
+                 checked_date:      :checked
 end
