@@ -16,7 +16,7 @@ RSpec.describe PurchaseOrder::Reconciler do
     let(:subject) { described_class.new(attrs) }
 
     it "Fully reconcile a purchase order line" do
-      expect{ subject.reconcile }.to change{ PurchaseOrderTransactionLog.count  }.from(0).to(1)
+      expect { subject.reconcile }.to change { PurchaseOrderTransactionLog.count  }.from(0).to(1)
       expect(PvxInPo.last.status).to eq 1
       expect(PurchaseOrderLineItem.last[:status]).to eq 5
     end
@@ -30,7 +30,7 @@ RSpec.describe PurchaseOrder::Reconciler do
 
     it "purchase order line with balance after reconciliation" do
       attrs.update_attribute(:qty, 1)
-      expect{ subject.reconcile }.to change{ PurchaseOrderTransactionLog.count }.from(0).to(1)
+      expect { subject.reconcile }.to change { PurchaseOrderTransactionLog.count }.from(0).to(1)
       expect(PvxInPo.last.status).to eq 1
       expect(PurchaseOrderLineItem.last[:status]).to eq 4
     end
