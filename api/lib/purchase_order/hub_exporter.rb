@@ -14,7 +14,15 @@ class PurchaseOrder::HubExporter
     last_id = request_params.fetch(:last_id, 0)
     limit = safe_limit(request_params)
 
-    purchase_orders = exportable_purchase_orders(last_timestamp, last_id, limit)
+    touched_pos = touched_pos(last_timestamp, last_id, limit)
+
+    booked_in_pos = touched_pos.booked_in
+
+    Rails.logger.debug { "These POs have been touched, but not booked in: #{touched_pos - booked_in_pos}" }
+
+    purchase_orders = booked_in_pos.map do |po|
+        po.serialize_by_line_item_chunks(LINE_ITEM_CHUNK_SIZE)
+    end.flatten
 
     { request_id: request_id,
       summary: "Returned #{purchase_orders.size} purchase orders objects.",
@@ -31,14 +39,10 @@ class PurchaseOrder::HubExporter
     end
   end
 
-  def exportable_purchase_orders(last_timestamp, last_id, limit)
+  def touched_pos(last_timestamp, last_id, limit)
     PurchaseOrder.has_been_updated_since(last_timestamp, last_id)
                  .limit(limit)
                  .order(updated_at: :asc, id: :asc)
-                 .booked_in
-                 .map do |po|
-                    po.serialize_by_line_item_chunks(LINE_ITEM_CHUNK_SIZE)
-                 end.flatten
   end
 
   def next_last_timestamp(purchase_orders, last_timestamp, limit)
