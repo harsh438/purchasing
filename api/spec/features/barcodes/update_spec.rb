@@ -52,7 +52,7 @@ feature 'Updating barcodes' do
 
   def then_the_barcode_should_not_be_updated
     expect(page).to have_http_status(409)
-    expect(subject['message']).to include('duplication')
+    expect(subject['message']).to include('is not unique')
     expect(subject['duplicated_sku']['id']).to eq(sku_2.id)
     expect(subject['duplicated_sku']['sku']).to eq(sku_2.sku)
   end

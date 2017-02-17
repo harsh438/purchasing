@@ -5,6 +5,10 @@ module Exceptions
     def initialize(duplicate)
       @duplicate = duplicate
     end
+
+    def message
+      "Barcode #{duplicate.barcode} is not unique"
+    end
   end
 
   class BarcodeUpdateError < StandardError; end

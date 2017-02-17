@@ -15,7 +15,7 @@ class BarcodesController < ApplicationController
     render json: { barcodes: Barcode::Updater.update(params).as_json }
   rescue Exceptions::BarcodeUpdateUniqueError => e
     render json: {
-      message: "Barcode update cannot be proccessed because of barcode duplication.",
+      message: e.message.as_json,
       duplicated_sku: e.duplicate.sku.as_json_with_vendor_category_and_barcodes,
       barcode: e.duplicate.as_json
     }, status: 409

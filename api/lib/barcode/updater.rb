@@ -17,7 +17,7 @@ class Barcode::Updater
     barcode = Barcode.find_by(barcode: barcode)
     new_barcode = Barcode.find_by(id: barcode_id)
     if barcode.present? && new_barcode.sku.sku != barcode.sku.sku
-      raise Exceptions::BarcodeUpdateUniqueError.new(barcode), "Barcode #{barcode} is not unique"
+      raise Exceptions::BarcodeUpdateUniqueError.new(barcode)
     end
   end
 
