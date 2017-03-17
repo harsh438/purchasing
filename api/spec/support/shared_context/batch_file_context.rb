@@ -12,6 +12,7 @@ RSpec.shared_context 'po batch file context' do
            sku_id: sku.id,
            supplier_cost_price: 100,
            po_season: Season.all[5].SeasonNickname,
+           status: 2,
            po_number: 1001)
   end
 

@@ -9,7 +9,7 @@ FactoryGirl.define do
     drop_date 4.days.ago
     invoice_payable_date 3.days.ago
     product_sku { Faker::Lorem.characters(32) }
-    status 1
+    status 2
     sku { create(:base_sku, :with_product, :sized, :with_barcode) }
 
     # These should be blank.

@@ -13,7 +13,7 @@ FactoryGirl.define do
     end
 
     trait :with_old_updated_date do
-      updated_at 1.year.ago
+      updated_at DateTime.parse('2015-02-18T17:26:26').to_s(:db)
     end
 
     trait :with_recent_updated_date do
@@ -22,7 +22,7 @@ FactoryGirl.define do
 
     trait :with_fixed_updated_date do
       # does not matter which date it is as long as it's the same
-      updated_at Time.parse('2016-02-18T17:26:26')
+      updated_at DateTime.parse('2016-02-18T17:26:26').to_s(:db)
     end
   end
 end
