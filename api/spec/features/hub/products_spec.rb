@@ -108,13 +108,28 @@ feature 'Requesting products ready for import' do
     )
   end
 
-  let!(:related_product) do
+  let!(:also_bought_product) do
     create(
       :product,
       vendor: vendor,
       color: "green",
       name: [vendor.name, 'Boots \'n\' Tings', 'green'].join(' - '),
     )
+  end
+
+  before do
+    other_color_product.skus.create(
+      attributes_for(:base_sku,
+        :sized, :with_barcode,
+        manufacturer_sku: sized_product.manufacturer_sku)
+    )
+  end
+
+  let!(:other_color_product) do
+    create(:product,
+           vendor: vendor,
+           color: 'blue',
+           manufacturer_sku: sized_product.manufacturer_sku)
   end
 
   let!(:negative_product) do

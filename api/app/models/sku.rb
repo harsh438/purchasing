@@ -54,6 +54,12 @@ class Sku < ActiveRecord::Base
     where({ sent_in_peoplevox: nil })
   end
 
+  def self.other_colors(partial_man_sku, current_pid)
+    where('skus.manufacturer_sku LIKE ? AND product_id IS NOT NULL AND product_id != ?',
+      "#{partial_man_sku}-%", current_pid
+    ).group(:product_id)
+  end
+
   def sized?
     inv_track == 'O' && !!(element && option && language_product_option)
   end

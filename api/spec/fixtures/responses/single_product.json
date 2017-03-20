@@ -3,8 +3,8 @@
   "summary": "Returned 1 product objects.",
   "products": [
     {
-      "id": 7,
-      "sku": 7,
+      "id": 4,
+      "sku": 4,
       "price": 15.99,
       "cost_price": 8.17,
       "sale_price": 0.0,
@@ -54,19 +54,19 @@
         }
       ],
       "legacy_lead_gender": "Toddler",
-      "legacy_reporting_category": 18,
+      "legacy_reporting_category": 9,
       "legacy_season": "SS17",
       "legacy_supplier_sku": "123456-123",
       "legacy_reporting_category_name": "Gerry Treutel",
       "legacy_first_received_at": "2016-07-12T00:00:00.000Z",
-      "legacy_more_from_category": 16,
+      "legacy_more_from_category": 7,
       "parts": [
         "1234231-234",
         "1234231-234"
       ],
       "children": [
         {
-          "sku": "-3-MANU-FACTURER-SKU-11-reddish",
+          "sku": "-4-MANU-FACTURER-SKU-11-reddish",
           "price": "24.99",
           "cost_price": "19.99",
           "legacy_brand_size": "biggish",
@@ -76,7 +76,7 @@
           "barcode": "ABC123456"
         },
         {
-          "sku": "-4-MANU-FACTURER-SKU-11-reddish",
+          "sku": "-5-MANU-FACTURER-SKU-11-reddish",
           "price": "24.99",
           "cost_price": "19.99",
           "legacy_brand_size": "biggish",
@@ -91,7 +91,7 @@
           "lang": "en",
           "content": {
             "name": "Too Awesome - Boots 'n' Tings - blue",
-            "legacy_slug": "too_awesome_-_boots_n_tings_-_blue-7",
+            "legacy_slug": "too_awesome_-_boots_n_tings_-_blue-4",
             "teaser": "utilize best-of-breed partnerships"
           }
         }
@@ -105,6 +105,11 @@
           "sort_in_type": 1,
           "product_id": 1,
           "type": "also_bought"
+        },
+        {
+          "sort_in_type": 1,
+          "product_id": 7,
+          "type": "other_color"
         }
       ],
       "inv_track": "sized",
@@ -115,6 +120,6 @@
   ],
   "parameters": {
     "last_imported_timestamp": "2016-07-21T14:39:48.000Z",
-    "last_imported_id": 7
+    "last_imported_id": 4
   }
 }

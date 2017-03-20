@@ -54,7 +54,7 @@ class Product < ActiveRecord::Base
   belongs_to :product_detail, foreign_key: :pID
   belongs_to :season, foreign_key: :pUDFValue4, primary_key: :SeasonNickname
 
-  def related
+  def also_bought_related
     Product
       .joins(:language_products)
       .where({
@@ -66,6 +66,11 @@ class Product < ActiveRecord::Base
         id: id,
       })
       .where('ds_products.pPhoto4Width > 0 AND ds_products.pAvail = "Y"')
+  end
+
+  def other_color_related
+    partial_man_sku = read_attribute(:pNum).split('-')[0..-2].join('-')
+    Sku.other_colors(partial_man_sku, read_attribute(:pID))
   end
 
   def color

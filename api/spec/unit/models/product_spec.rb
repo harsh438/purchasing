@@ -1,5 +1,5 @@
 RSpec.describe Product do
-  describe "shoulda", type: :model do
+  describe 'shoulda', type: :model do
     it { should have_one(:reporting_category).with_foreign_key(:pid) }
 
     it { should belong_to(:vendor).with_foreign_key(:venID) }
@@ -117,7 +117,7 @@ RSpec.describe Product do
     end
   end
 
-  describe '#related' do
+  describe '#also_bought_related' do
     let(:color_a) { Faker::Color.color_name }
     let(:color_b) { Faker::Color.color_name }
     let(:product_name) { Faker::Commerce.product_name }
@@ -167,7 +167,7 @@ RSpec.describe Product do
     end
 
     it 'returns the related product' do
-      expect(product.related.pluck(:id)).to eq([related_product.id])
+      expect(product.also_bought_related.pluck(:id)).to eq([related_product.id])
     end
   end
 
@@ -195,7 +195,8 @@ RSpec.describe Product do
         cost: 2.99,
         vendor: vendor,
         name: [vendor.name, 'Awesome Co', 'blue'].join(' - '),
-        product_images: build_list(:product_image, 2)
+        product_images: build_list(:product_image, 2),
+        manufacturer_sku: '123456749-ABC-Green'
       )
     end
 
@@ -217,6 +218,13 @@ RSpec.describe Product do
         )
       end
 
+      let!(:other_color_product) do
+        create(:product,
+          vendor: vendor,
+          color: 'Hot Pink',
+          manufacturer_sku: '123456749-ABC-Pink')
+      end
+
       before do
         [
           [ProductImageSerializer, 'IMAGE'],
@@ -228,6 +236,12 @@ RSpec.describe Product do
         allow_any_instance_of(Sku::Deduplicator)
           .to receive(:without_duplicates)
           .and_return(%w(CHILD CHILD))
+
+        other_color_product.skus.create(
+          attributes_for(:base_sku,
+            :sized, :with_barcode,
+            manufacturer_sku: other_color_product.manufacturer_sku)
+        )
       end
 
       it 'has the necessary attributes' do
@@ -270,13 +284,20 @@ RSpec.describe Product do
             brand_product_name: product.model_name
           },
           parts: product.kit_managers.map(&:item_code),
-          related: related_products.map.with_index do |p, i|
+          related: [
+            related_products.map.with_index do |p, i|
+              {
+                sort_in_type: i + 1,
+                product_id: p.id,
+                type: 'also_bought',
+              }
+            end,
             {
-              sort_in_type: i + 1,
-              product_id: p.id,
-              type: 'also_bought',
+              sort_in_type: 1,
+              product_id: other_color_product.id,
+              type: 'other_color',
             }
-          end
+          ].flatten
         }.each do |key, value|
           expect(json).to include(key => value)
         end

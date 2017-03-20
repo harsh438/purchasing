@@ -16,7 +16,21 @@ class ProductSerializer < ActiveModel::Serializer
   private
 
   def related
-    object.related.map.with_index do |product, i|
+    also_bought + other_color
+  end
+
+  def other_color
+    object.other_color_related.map.with_index do |sku, i|
+      {
+        sort_in_type: i + 1,
+        product_id: sku.product_id,
+        type: 'other_color'
+      }
+    end
+  end
+
+  def also_bought
+    object.also_bought_related.map.with_index do |product, i|
       {
         sort_in_type: i + 1,
         product_id: product.id,
