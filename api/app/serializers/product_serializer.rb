@@ -24,7 +24,7 @@ class ProductSerializer < ActiveModel::Serializer
       {
         sort_in_type: i + 1,
         product_id: sku.product_id,
-        type: 'other_color'
+        type: 'other_colors'
       }
     end
   end

@@ -295,7 +295,7 @@ RSpec.describe Product do
             {
               sort_in_type: 1,
               product_id: other_color_product.id,
-              type: 'other_color',
+              type: 'other_colors',
             }
           ].flatten
         }.each do |key, value|
