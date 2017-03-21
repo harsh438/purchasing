@@ -73,6 +73,12 @@ Rails.application.routes.draw do
 
     resources :over_purchase_orders, only: [:create]
 
+    resources :products do
+      collection do
+        get :prices
+      end
+    end
+
     scope :filters do
       get ':action' => 'filters#:action'
     end
