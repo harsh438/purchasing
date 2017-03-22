@@ -13,7 +13,7 @@ Rails.application.configure do
   config.active_support.deprecation = :stderr
   config.logger = Logger.new('./log/test.log')
   config.log_formatter = ::Logger::Formatter.new
-  config.pvx_credentials = { base_url: 'https://endpoints.surfdome.cc/peoplevox_endpoint/api',
+  config.pvx_credentials = { base_url: 'https://endpoints.surfdome.cc/peoplevox_api',
                              key: 'sOufQ5GM132FI',
                              token: '2GgiGuEliQyQzQSjk4e3jliEoVJxaAlHRD3YNFVd' }
 end

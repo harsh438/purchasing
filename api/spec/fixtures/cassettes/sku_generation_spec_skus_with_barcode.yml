@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://endpoints.surfdome.cc/peoplevox_endpoint/api/sku_lookup_by_barcode
+    uri: https://endpoints.surfdome.cc/peoplevox_api/sku_lookup_by_barcode
     body:
       encoding: UTF-8
       string: '{"key":"sOufQ5GM132FI","token":"2GgiGuEliQyQzQSjk4e3jliEoVJxaAlHRD3YNFVd","barcode":"121389123"}'
@@ -19,7 +19,7 @@ http_interactions:
       message: No Content
     headers:
       Date:
-      - Wed, 18 Jan 2017 16:01:02 GMT
+      - Wed, 22 Mar 2017 14:58:59 GMT
       Connection:
       - keep-alive
       Keep-Alive:
@@ -36,5 +36,5 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 18 Jan 2017 16:01:01 GMT
+  recorded_at: Wed, 22 Mar 2017 14:58:58 GMT
 recorded_with: VCR 2.9.2

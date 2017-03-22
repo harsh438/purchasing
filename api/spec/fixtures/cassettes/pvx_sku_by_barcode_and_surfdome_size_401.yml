@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://endpoints.surfdome.cc/peoplevox_endpoint/api/sku_lookup_by_barcode_and_surfdome_size
+    uri: https://endpoints.surfdome.cc/peoplevox_api/sku_lookup_by_barcode_and_surfdome_size
     body:
       encoding: UTF-8
       string: '{"key":1,"token":"invalid_token","barcode":"5052094029950","size":"14"}'
@@ -19,7 +19,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Wed, 18 Jan 2017 16:02:53 GMT
+      - Wed, 22 Mar 2017 15:03:36 GMT
       Content-Type:
       - text/html;charset=utf-8
       Content-Length:
@@ -44,5 +44,5 @@ http_interactions:
       encoding: UTF-8
       string: Authorization failure
     http_version: 
-  recorded_at: Wed, 18 Jan 2017 16:02:52 GMT
+  recorded_at: Wed, 22 Mar 2017 15:03:34 GMT
 recorded_with: VCR 2.9.2

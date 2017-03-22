@@ -37,4 +37,41 @@ http_interactions:
       string: ''
     http_version: 
   recorded_at: Wed, 18 Jan 2017 16:06:42 GMT
+- request:
+    method: post
+    uri: https://endpoints.surfdome.cc/peoplevox_api/sku_lookup_by_barcode
+    body:
+      encoding: UTF-8
+      string: '{"key":"sOufQ5GM132FI","token":"2GgiGuEliQyQzQSjk4e3jliEoVJxaAlHRD3YNFVd","barcode":"new"}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      Date:
+      - Wed, 22 Mar 2017 15:04:45 GMT
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=5
+      Status:
+      - 204 No Content
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      Server:
+      - ''
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Wed, 22 Mar 2017 15:04:44 GMT
 recorded_with: VCR 2.9.2
