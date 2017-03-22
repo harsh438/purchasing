@@ -26,6 +26,7 @@ class GoodsIn::Normalizer
     return if pvx_in_line.qty > balance
     pvx_in_po_attrs[:status] = READY_TO_RECOCILE
     pvx_in_po_attrs[:purchase_order_line_id] = purchase_order_line.id
+    pvx_in_po_attrs[:purchase_order_number] =  pvx_in_line.po_number
   end
 
   def purchase_order_line
@@ -58,7 +59,7 @@ class GoodsIn::Normalizer
   def set_pvx_in_po_attrs
     {
       sku: pvx_in_line[:sku],
-      purchase_order_number: pvx_in_line.po_number,
+      purchase_order_number: nil,
       qty: pvx_in_line.qty,
       logged: Time.now.utc.to_s(:db),
       status: INVLAID_PVX_IN_PO_LINE,

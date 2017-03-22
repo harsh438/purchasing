@@ -33,6 +33,7 @@ RSpec.describe GoodsIn::Normalizer do
         normalize_line = PvxInPo.last
         expect(normalize_line.status).to eq invalid_pvx_in_po
         expect(normalize_line.purchase_order_line_id).to eq nil
+        expect(normalize_line.purchase_order_number).to eq nil
       end
 
       it 'can not find sku' do
